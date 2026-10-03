@@ -99,6 +99,17 @@ function overview() {
     const g = j(path.join(GATES, f)); return { id: f.replace('.json', ''), gate: g.gate, status: g.status, file: '/gates/' + f.replace('.json', '') };
   }) : [];
   const reports = existsSync(HERE) ? readdirSync(HERE).filter(f => /\.(md|json)$/.test(f) && f !== 'index.html' && !/portal-server/.test(f)) : [];
+  const sceneTitles = {};
+  for (let i = 1; i <= 10; i++) {
+    const scene = 'E' + String(i).padStart(2, '0');
+    try {
+      const spec = j(path.join(BENCH, 'briefs', scene, 'spec.json'));
+      sceneTitles[scene] = String(spec.title || scene)
+        .replace(/^E\d+\s*/, '')
+        .replace(/\s*\([^)]*\)[\s\S]*$/, '')
+        .trim() || scene;
+    } catch { sceneTitles[scene] = scene; }
+  }
   const batchesIdx = existsSync(path.join(RESULTS, 'batches.json')) ? j(path.join(RESULTS, 'batches.json')) : { batches: [] };
   return {
     generatedAt: new Date().toISOString(),
@@ -109,6 +120,7 @@ function overview() {
       groups: aggregated ? aggregated.groups : [],
       costRatios: cost ? cost.pairedDeltasAirMinusThree.aggregate : null,
     },
+    sceneTitles,
     gates,
     batches: aggregated ? aggregated.batches : [],
     knowledgeGain: aggregated ? aggregated.knowledgeGain : [],

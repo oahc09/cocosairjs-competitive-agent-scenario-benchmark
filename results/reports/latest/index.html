@@ -76,7 +76,7 @@ th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;font-size:12
     <select id="src-mode"><option value="ref">Reference(引擎上限)</option></select>
     <select id="src-item"></select>
     <button class="btn" id="cmp-reload">重载两侧</button>
-    <span class="muted">iframe 内可直接交互(拖拽/滚轮/按钮);Reference 为可信上限实现,Run 为 Agent 实际产物</span>
+    <b id="cmp-scene" style="color:var(--gold)"></b><span class="muted">iframe 内可直接交互(拖拽/滚轮/按钮)</span>
   </div>
   <div class="dual">
     <div class="side"><div class="hd"><span style="color:var(--three)">three.js r186</span><span class="chip c-dim" id="c-t-score">–</span><span style="margin-left:auto"><a class="btn" id="c-t-open" target="_blank">独立窗口 ↗</a></span></div><div class="fr"><iframe id="c-t-frame"></iframe></div><div class="ft" id="c-t-info"></div></div>
@@ -153,15 +153,30 @@ function fillCompare() {
   $('c-t-score').textContent = (tScore ?? '–') + '/100'; $('c-a-score').textContent = (aScore ?? '–') + '/100';
   $('c-t-info').textContent = tInfo; $('c-a-info').textContent = aInfo;
   $('c-t-open').href = tUrl; $('c-a-open').href = aUrl;
+  // 常显场景名(ref:key 即场景号;run:key=batchId::pairId)
+  let sc = key;
+  if (mode !== 'ref') {
+    const pair = (OV.batches || []).flatMap(b => b.pairs).find(x => x.pairId === key.split('::')[1]);
+    if (pair) sc = pair.scene + ' · ' + ((OV.sceneTitles || {})[pair.scene] || '');
+  } else {
+    sc = key + ((OV.sceneTitles || {})[key] ? ' · ' + OV.sceneTitles[key] : '');
+  }
+  const scEl = document.getElementById('cmp-scene');
+  if (scEl) scEl.textContent = '场景:' + sc;
 }
 function rebuildSrcItems() {
   const mode = $('src-mode').value, sel = $('src-item');
+  const T = OV.sceneTitles || {};
   if (mode === 'ref') {
-    sel.innerHTML = Array.from({ length: 10 }, (_, i) => 'E' + String(i + 1).padStart(2, '0')).map(s => `<option>${s}</option>`).join('');
+    sel.innerHTML = Array.from({ length: 10 }, (_, i) => 'E' + String(i + 1).padStart(2, '0'))
+      .map(s => `<option value="${s}">${s} · ${T[s] || s}</option>`).join('');
   } else {
     const batchId = mode.startsWith('run:') ? mode.slice(4) : null;
     const batches = batchId ? OV.batches.filter(b => b.batchId === batchId) : OV.batches;
-    sel.innerHTML = batches.flatMap(b => b.pairs.map(p => `<option value="${b.batchId}::${p.pairId}">${b.batchId} · ${p.pairId}</option>`)).join('');
+    sel.innerHTML = batches.flatMap(b => b.pairs.map(p => {
+      const t = T[p.scene] || '';
+      return `<option value="${b.batchId}::${p.pairId}">${p.scene} ${t} — ${b.batchId} · ${p.pairId}</option>`;
+    })).join('');
   }
   fillCompare();
 }
