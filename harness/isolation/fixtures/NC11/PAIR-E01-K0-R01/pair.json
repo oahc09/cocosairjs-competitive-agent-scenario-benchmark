@@ -1,0 +1,21 @@
+{
+  "batchId": "NC11-drill",
+  "sceneId": "E01",
+  "knowledge": "K0",
+  "repetition": "R01",
+  "note": "fixture pair:specSha256 为 briefs/E01/spec.json 真实哈希;预算为冻结值。缺陷唯一地放在 arm-a/RUN-META.json 身份字段(缺失/为空)。",
+  "arms": {
+    "A": { "engine": "three", "status": "completed" },
+    "B": { "engine": "cocosair", "status": "completed" }
+  },
+  "status": "completed",
+  "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+  "budget": {
+    "maxToolCalls": 120,
+    "maxWallTimeMinutes": 90,
+    "maxBuildAttempts": 8,
+    "maxBrowserAttempts": 6,
+    "identicalAcrossEngines": true,
+    "source": "config/agents.yaml (agentRun.budget, FROZEN G0)"
+  }
+}

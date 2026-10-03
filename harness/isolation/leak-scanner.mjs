@@ -145,6 +145,8 @@ export function scanWorkspace(root, opts = {}) {
       // 合规声明行(RUN-CONTRACT §7 强制要求的"未访问 X"声明)不算泄漏证据;
       // 先剥离 markdown 强调符,避免 "**未**访问" 这类被切碎的声明词漏判
       if (DECLARATION_RE.test(line.replace(/[*_`~]/g, ''))) continue;
+      // 纯注释行不算泄漏证据(路径提及类误报源;NC06 篡改夹具为代码/数据非注释,回归安全)
+      if (/^\s*(\/\/|#|--)/.test(line)) continue;
       for (const rule of rules) {
         for (const pat of rule.patterns) {
           if (pat.test(line)) {

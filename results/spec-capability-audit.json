@@ -1,0 +1,99 @@
+{
+  "generatedAt": "2026-10-03T07:39:50.890Z",
+  "mode": "single",
+  "executor": "harness/runner/probe-executor.mjs",
+  "legalRegionFormsNote": "see LEGAL_REGION_FORMS in probe-executor.mjs (full / center|lower|upper:N% / upper|lower|center-third / outer-corners / center-bottom / outer-frame / ui#id / ui=id / state.path / {x,y,w,h} / pickTarget objects / arrays / \"A + B\")",
+  "visualAssertionTypes": [
+    "nonBlank",
+    "motion",
+    "pixelDelta",
+    "regionChange",
+    "networkRequest",
+    "download",
+    "domText",
+    "noNavigation",
+    "resourceRequestCount",
+    "consoleClean",
+    "colorRelation",
+    "luminanceRelation",
+    "regionCoverage",
+    "memoryDelta",
+    "assetNoReload"
+  ],
+  "specs": [
+    {
+      "briefId": "NC08",
+      "briefVersion": "1.0.0",
+      "specPath": "harness/isolation/fixtures/NC08/spec.json",
+      "sha256": "5a405f00b2a9778ff29472343738eb148ec4022d49f73a87975eff2568d8fb5a",
+      "probeCount": 1,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:800"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.diskRotation > 0.05"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "PARTIAL",
+            "region": {
+              "status": "PARTIAL",
+              "value": "accretion-torus(inner)",
+              "unknown": [
+                "accretion-torus(inner)"
+              ],
+              "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID"
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.region",
+                "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.region",
+              "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "specCount": 1,
+    "probeCount": 1,
+    "unsupportedCount": 0,
+    "partialCount": 1,
+    "unsupported": [],
+    "partial": [
+      {
+        "briefId": "NC08",
+        "probeId": "P1",
+        "field": "visualAssertion.region",
+        "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID",
+        "required": true
+      }
+    ],
+    "exitCode": 0,
+    "exitReason": "no UNSUPPORTED required assertions"
+  }
+}

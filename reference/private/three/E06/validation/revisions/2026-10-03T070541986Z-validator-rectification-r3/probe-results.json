@@ -1,0 +1,669 @@
+{
+  "runId": "REF-E06-three-reval3",
+  "generatedAt": "2026-10-03T07:06:11.458Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:05:49.963Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2502
+      },
+      "stateAssertion": {
+        "expr": "$.timeOfDay <= 0.25 && $.treeCount >= 12 && $.fireflyCount >= 16 && $.orbitEnabled == true && $.cameraOrbitAngle > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full + center-bottom",
+          "expect": "夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上部为深蓝夜空与星点"
+        },
+        "notes": [],
+        "expect": "夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上部为深蓝夜空与星点",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.2572,
+              "background": [
+                4,
+                8,
+                5
+              ]
+            },
+            {
+              "rect": {
+                "x": 256,
+                "y": 396,
+                "w": 768,
+                "h": 324
+              },
+              "litRatio": 0.1959,
+              "background": [
+                6,
+                7,
+                4
+              ]
+            }
+          ],
+          "worstLitRatio": 0.1959
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 43,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.4808,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 0.1711,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 193,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.5966,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 0.7211,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3618
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:05:53.581Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:600",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 600
+            },
+            "raw": "wait:600",
+            "performed": "waited 600ms"
+          }
+        ],
+        "durationMs": 604
+      },
+      "stateAssertion": {
+        "expr": "$.fireLightIntensity >= 0 && $.fireLightIntensity <= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "center-bottom(篝火、被照地面与近处树干)",
+          "expect": "火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散到环境,而非仅火苗自身)"
+        },
+        "notes": [],
+        "expect": "火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散到环境,而非仅火苗自身)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 256,
+                "y": 396,
+                "w": 768,
+                "h": 324
+              },
+              "diffRatio": 0.6806
+            }
+          ],
+          "bestDiffRatio": 0.6806
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 257,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.6111,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 0.9558,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 293,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.4393,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 1.0878,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-delta.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1573
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:05:55.154Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=day-night",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "day-night"
+            },
+            "raw": "click:ui=day-night",
+            "performed": "click @ (1205,31) ui=day-night"
+          }
+        ],
+        "durationMs": 164
+      },
+      "stateAssertion": {
+        "expr": "$.timeOfDay >= 0.9",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": "upper-third(天空)+ full",
+          "expect": "天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天"
+        },
+        "notes": [],
+        "expect": "天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天",
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 240
+              },
+              "diffRatio": 0.3585
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.6414
+            }
+          ],
+          "bestDiffRatio": 0.6414,
+          "missing": [],
+          "expect": "天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天"
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 351,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.4968,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 1.3004,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 632,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.5369,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 2.3308,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 6667
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:06:01.821Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:3000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 3000
+            },
+            "raw": "wait:3000",
+            "performed": "waited 3000ms"
+          }
+        ],
+        "durationMs": 3013
+      },
+      "stateAssertion": {
+        "expr": "$.cameraOrbitAngle >= 0.15 && $.orbitEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "full",
+          "expect": "环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变"
+        },
+        "notes": [],
+        "expect": "环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变",
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.65
+            }
+          ],
+          "worstDiffRatio": 0.65
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 753,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.5056,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 2.7745,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 934,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.6039,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 3.4381,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-motion-a.png",
+          "P4-motion-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5008
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:06:06.829Z",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=orbit-toggle",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "orbit-toggle"
+            },
+            "raw": "click:ui=orbit-toggle",
+            "performed": "click @ (1205,73) ui=orbit-toggle"
+          }
+        ],
+        "durationMs": 83
+      },
+      "stateAssertion": {
+        "expr": "$.orbitEnabled == false",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "outer-frame(画面边缘的树/地平线区域)",
+          "expect": "相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)"
+        },
+        "notes": [],
+        "expect": "相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 115
+              },
+              "diffRatio": 0.0523
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 605,
+                "w": 1280,
+                "h": 115
+              },
+              "diffRatio": 0.8265
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 179,
+                "h": 720
+              },
+              "diffRatio": 0.6101
+            },
+            {
+              "rect": {
+                "x": 1101,
+                "y": 0,
+                "w": 179,
+                "h": 720
+              },
+              "diffRatio": 0.7276
+            }
+          ],
+          "bestDiffRatio": 0.8265
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1053,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.5947,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 3.8744,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1083,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.3785,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 3.8927,
+          "orbitEnabled": false,
+          "treeCount": 18
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-delta.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1563
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:06:08.392Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1205,115) ui=reset"
+          }
+        ],
+        "durationMs": 66
+      },
+      "stateAssertion": {
+        "expr": "$.timeOfDay <= 0.05 && $.orbitEnabled == true && $.cameraOrbitAngle < 0.6 && $.fireflyCount >= 16 && $.treeCount >= 12",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": "upper-third(天空)",
+          "expect": "回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点"
+        },
+        "notes": [],
+        "expect": "回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点",
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 240
+              },
+              "diffRatio": 0.3331
+            }
+          ],
+          "bestDiffRatio": 0.3331,
+          "missing": [],
+          "expect": "回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点"
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1146,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.695,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 3.8927,
+          "orbitEnabled": false,
+          "treeCount": 18
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1211,
+          "resetCount": 1,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.3008,
+          "fireflyCount": 18,
+          "cameraOrbitAngle": 0.2237,
+          "orbitEnabled": true,
+          "treeCount": 18
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-region-a.png",
+          "P6-region-b.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2911
+      }
+    }
+  ]
+}

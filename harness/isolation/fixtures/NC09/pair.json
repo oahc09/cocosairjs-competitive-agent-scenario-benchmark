@@ -1,0 +1,16 @@
+{
+  "batchId": "NC09-drill",
+  "sceneId": "NC09",
+  "knowledge": "K0",
+  "repetition": "R01",
+  "pilot": true,
+  "note": "fixture pair-meta:specSha256 是 decoy 哈希(sha256('NC09-drift-decoy: ...')),与本目录 spec.json 真实哈希 7598f756eb0604cdfaa15dd6cf44e95c975e28733318cf688421c6f2401189cc 不符 —— 模拟规格冻结后被改动/错配。",
+  "arms": {
+    "A": { "engine": "three", "status": "completed" },
+    "B": { "engine": "cocosair", "status": "completed" }
+  },
+  "status": "completed",
+  "specSha256": "448b817bddbbfaa7ab7c7da0116399d3a774e27e6457a505bae7144d4bfb7e50",
+  "briefSha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "assetSetSha256": "0000000000000000000000000000000000000000000000000000000000000000"
+}

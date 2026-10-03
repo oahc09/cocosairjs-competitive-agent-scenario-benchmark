@@ -1,0 +1,10 @@
+{
+  "name": "NC09-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Negative control fixture NC09 for G4 (SPEC_DRIFT: pair.json specSha256 != spec.json sha256)",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node ../../mini-serve.mjs --root ."
+  }
+}

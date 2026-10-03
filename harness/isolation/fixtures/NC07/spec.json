@@ -1,0 +1,24 @@
+{
+  "briefId": "NC07",
+  "briefVersion": "1.0.0",
+  "frozen": false,
+  "title": "NC07 spec-audit 负向对照:未知 visualAssertion 类型(SPEC_UNSUPPORTED_ASSERTION)",
+  "note": "fixture(非冻结 brief):P1 的 visualAssertion.type='motionBlur' 不在封闭词表 {nonBlank, motion, pixelDelta, regionChange} 内。供 harness/runner/spec-audit.mjs 静态审计,预期判 SPEC_INVALID。",
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:500",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.starCount >= 50000"
+      },
+      "visualAssertion": {
+        "type": "motionBlur",
+        "params": { "region": "full", "minLitPixelRatio": 0.02 }
+      },
+      "threshold": "(不可执行)type 拼写漂移:封闭词表中不存在 motionBlur",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ]
+}

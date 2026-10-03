@@ -24,7 +24,7 @@ import { createReadStream, accessSync } from 'node:fs';
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const dist = path.join(root, 'dist');
 // exFAT 去重布局:工作区可不带自有 node_modules,沿目录向上查找
-// (引擎容器层 reference/private/<engine>/node_modules 或模板自身)
+// (引擎容器层 答案区(禁读目录)/<engine>/node_modules 或模板自身)
 function findNodeModulesDir() {
     let dir = root;
     for (;;) {

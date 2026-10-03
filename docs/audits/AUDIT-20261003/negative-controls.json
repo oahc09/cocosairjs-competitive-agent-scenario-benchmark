@@ -1,0 +1,81 @@
+{
+  "generatedAt": "2026-10-03T07:40:12.261Z",
+  "suite": "NC01-NC13(整改后)",
+  "status": "PASS",
+  "base": "PASS",
+  "extended": "PASS",
+  "cases": [
+    {
+      "id": "NC01",
+      "detected": true,
+      "caughtBy": "P1,P2,P3,P4,P6"
+    },
+    {
+      "id": "NC02",
+      "detected": true,
+      "caughtBy": "P2,P3,P4"
+    },
+    {
+      "id": "NC03",
+      "detected": true,
+      "caughtBy": "P1,P2,P3,P4,P5"
+    },
+    {
+      "id": "NC04",
+      "detected": true,
+      "caughtBy": "P3,P4"
+    },
+    {
+      "id": "NC05",
+      "detected": true,
+      "caughtBy": "P7"
+    },
+    {
+      "id": "NC06",
+      "detected": true,
+      "caughtBy": "leak-scanner R2-HARNESS-SOURCE,R1-REFERENCE-PATH,R4-SECRET-PATH,R3-PEER-ARM"
+    },
+    {
+      "id": "NC07",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "spec-audit exit 3 → SPEC_INVALID(visualAssertion.type=motionBlur 不在封闭词表)"
+    },
+    {
+      "id": "NC08",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "spec-audit PARTIAL 判定:region \"accretion-torus(inner)\" outside LEGAL_REGION_FORMS(exit 0;审计明示 strict scoring run => SPEC_"
+    },
+    {
+      "id": "NC09",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "validate exit 4 → INPUT_DRIFT(sha256(spec)=7598f756… ≠ pair.specSha256=448b817b…),浏览器前置拦截"
+    },
+    {
+      "id": "NC10",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "selftest-drift 输出含 PASS(注入的量尺漂移被识别并申报,未静默沿用旧 RULER)"
+    },
+    {
+      "id": "NC11",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "run-round --stage preflight 真实执行(exit 0):BLOCKED + 身份缺失 reasons ×5"
+    },
+    {
+      "id": "NC12",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "budget-check → BUDGET_EXHAUSTED(build.count=9 > maxBuildAttempts=8)"
+    },
+    {
+      "id": "NC13",
+      "mode": "RUN",
+      "detected": true,
+      "caughtBy": "聚合如实传播门禁:per-pair-formal-objective(FIX-B as-built);formal.total=null 且 objective.total=55(未过的门禁保持 formal=null,客观分如实呈现)"
+    }
+  ]
+}

@@ -1,0 +1,1741 @@
+{
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E07",
+  "generatedAt": "2026-10-03T07:26:01.160Z",
+  "fileCount": 105,
+  "totalBytes": 43630824,
+  "skippedDirs": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".cache"
+  ],
+  "files": [
+    {
+      "path": "validation/video.webm",
+      "bytes": 7437829,
+      "sha256": "17f7e390a942818790fdbb606cc4b6b249dadd19a70ad64ef213991a6080e4d1"
+    },
+    {
+      "path": "validation/build.log",
+      "bytes": 572,
+      "sha256": "74b1066cbd5685e60a09132ae9cf19a6ac5c999d63dbc7685e0c061c1c220d44"
+    },
+    {
+      "path": "validation/screenshots/P3-after.png",
+      "bytes": 501596,
+      "sha256": "98c5c54137cb634eddb94ed4416deebe8d6e5e669f486345e1726ae66e5c7829"
+    },
+    {
+      "path": "validation/screenshots/P5-before.png",
+      "bytes": 564649,
+      "sha256": "efc47eafcade35ef07715f32ae7bfbb2eacea6fd766f70fd80e6d25b1bffbe08"
+    },
+    {
+      "path": "validation/screenshots/P6-before.png",
+      "bytes": 575067,
+      "sha256": "cd4bb1741d699ecb99b62db34ed615e9b6c39655b4691e15524b227b7beed4d1"
+    },
+    {
+      "path": "validation/screenshots/P5-region-b.png",
+      "bytes": 568991,
+      "sha256": "9220a66ba65e0118172682c7e561dddd04e04b7c290ca0da26e2d87d87201578"
+    },
+    {
+      "path": "validation/screenshots/P1-after.png",
+      "bytes": 498267,
+      "sha256": "7f3035ec35c87e978cf3fdc9fab716b484f74b4a1356c0431dd7b4a6c2fd6dcf"
+    },
+    {
+      "path": "validation/screenshots/P8-motion-a.png",
+      "bytes": 517609,
+      "sha256": "0e86c497046b2439dbfec07efa84e5c82f7fb109f5283dbf68f50cbad507d24f"
+    },
+    {
+      "path": "validation/screenshots/P6-region-a.png",
+      "bytes": 486535,
+      "sha256": "2167f42c910b7a721e548ab82e94f3a6e107a3ca6fa23da41ea34a805f35839d"
+    },
+    {
+      "path": "validation/screenshots/initial.png",
+      "bytes": 435940,
+      "sha256": "f3a77ba3cb3fff1941589a85f70836d366a97666ba0b2dc798bd00f933038c28"
+    },
+    {
+      "path": "validation/screenshots/P7-before.png",
+      "bytes": 496825,
+      "sha256": "4adedd8adec6f13fbbd0c977b880f458858086296a3808359c5ef959e5c65500"
+    },
+    {
+      "path": "validation/screenshots/P8-before.png",
+      "bytes": 498376,
+      "sha256": "1edc03252fcf1a70164a1b1e4ee9efdfd66f9a6db116d093f23ed2c833cb7ea3"
+    },
+    {
+      "path": "validation/screenshots/P4-motion-b.png",
+      "bytes": 479691,
+      "sha256": "7ca32f03ac17cc8616296b45d91bd75c4e005a070e9f1d1019f3c2afe459cd54"
+    },
+    {
+      "path": "validation/screenshots/P2-region-b.png",
+      "bytes": 487552,
+      "sha256": "37bf6a30ece9f3d23d636b2d067ddccf1bd4ed626f763aa7fda4f2a37a84d80f"
+    },
+    {
+      "path": "validation/screenshots/extra-1.png",
+      "bytes": 477113,
+      "sha256": "a25b554e7a04e7725d01d383ad61ecbace7b7a2a2aac17086a84e7b7c4096411"
+    },
+    {
+      "path": "validation/screenshots/P8-after.png",
+      "bytes": 548963,
+      "sha256": "6baff9a6714243eddc51c5178daef8bfee0d953e236018025d5fbe437bcfa0dc"
+    },
+    {
+      "path": "validation/screenshots/P6-after.png",
+      "bytes": 485912,
+      "sha256": "5987ec130c6a3db3e251834cad284cd35afeffcd3c5f5c68dee693198386ce2a"
+    },
+    {
+      "path": "validation/screenshots/P3-delta-b.png",
+      "bytes": 550327,
+      "sha256": "c32253e06cd5d883eb7d1621793da1b9c445b85882e470d20fef71a726acc66c"
+    },
+    {
+      "path": "validation/screenshots/P5-region-a.png",
+      "bytes": 564503,
+      "sha256": "a8791dedf39e6689c4e55581f5507d630962ecee8d9a1d561889fb26fa56e57a"
+    },
+    {
+      "path": "validation/screenshots/P4-after.png",
+      "bytes": 489734,
+      "sha256": "28470e9648a30becc9f2372a9365ad6b1cd5aa9ec6780be6cff71d998140c149"
+    },
+    {
+      "path": "validation/screenshots/mid.png",
+      "bytes": 468823,
+      "sha256": "d2dbd472e50001f1ceb8620eb2eed26cf4ac9189d39640232b41ef31fc577219"
+    },
+    {
+      "path": "validation/screenshots/P2-after.png",
+      "bytes": 474262,
+      "sha256": "548b55401079b0afcae4ff50bf812f81de6a5df6f3cbd577df9cd8170c3065dc"
+    },
+    {
+      "path": "validation/screenshots/P4-motion-a.png",
+      "bytes": 478022,
+      "sha256": "bc611f45c3cc4f984714122e922cd0011d35a106528ecde6d4ba4b1b85a0fd84"
+    },
+    {
+      "path": "validation/screenshots/P2-region-a.png",
+      "bytes": 550586,
+      "sha256": "903aa844f8eec7cd76db937c6266b2e3bc8bf5f0bb19256160ecc85cdf9f832c"
+    },
+    {
+      "path": "validation/screenshots/P1-vis.png",
+      "bytes": 565949,
+      "sha256": "fd6ece26542fbba98313a1702e9f026822b3b27fa9e9805b259170770cdd204f"
+    },
+    {
+      "path": "validation/screenshots/P8-motion-b.png",
+      "bytes": 582447,
+      "sha256": "e6f177f91e51b290a4d9f387847cf49c9f51b5bca9a6d657e4a3cb5b9a564df1"
+    },
+    {
+      "path": "validation/screenshots/P6-region-b.png",
+      "bytes": 551993,
+      "sha256": "71c4232fc451e56385b2e3770f8270d91d069416e76a80994bac9cbae6777c80"
+    },
+    {
+      "path": "validation/screenshots/P7-vis.png",
+      "bytes": 453194,
+      "sha256": "8ec0b318ad97d9be2aa3163f06fe2c0f700b98f061fdb9f236f1f8bcd91cba09"
+    },
+    {
+      "path": "validation/screenshots/final.png",
+      "bytes": 437205,
+      "sha256": "ac8248f9ca21efc09dbe83a74f3932288f06acc847ae4ca05ef5b06e2568c76f"
+    },
+    {
+      "path": "validation/screenshots/P1-before.png",
+      "bytes": 465489,
+      "sha256": "eefca0bd4333199026c0a45841a8128b0f60852d01be806dc456a67ea24421a1"
+    },
+    {
+      "path": "validation/screenshots/extra-2.png",
+      "bytes": 459481,
+      "sha256": "cdd08fd91385a8eaad0e8746810987b2b1003da65caf3107c2d12c023b129842"
+    },
+    {
+      "path": "validation/screenshots/P3-delta-a.png",
+      "bytes": 540803,
+      "sha256": "fc2ee98838aea34f610e5455abd94afb34b0471e828054959bdf47e116ce7110"
+    },
+    {
+      "path": "validation/screenshots/P2-before.png",
+      "bytes": 542679,
+      "sha256": "dbb1fb09a6359e55e6441d1b142e0e6ff023a44719c7a8bded294678db06d484"
+    },
+    {
+      "path": "validation/screenshots/P7-after.png",
+      "bytes": 519177,
+      "sha256": "ab7ac580b99c968df189ed8c075dcf5552690078d1776602a93631319525e409"
+    },
+    {
+      "path": "validation/screenshots/P3-before.png",
+      "bytes": 497244,
+      "sha256": "a8993d6be4cd9453ad41e018f93c4f7eb75805fe3939bc301aa4dd98b1ea3695"
+    },
+    {
+      "path": "validation/screenshots/P5-after.png",
+      "bytes": 604552,
+      "sha256": "0f359d9908d861521f99475ea143bf66bf7dd6d56d7899e00996c55a29ce456c"
+    },
+    {
+      "path": "validation/screenshots/P4-before.png",
+      "bytes": 522582,
+      "sha256": "9efb0a7ce950ab22ffa6c5a7efdc8bc9a57e5a3b8ac34898a113a9df675441b8"
+    },
+    {
+      "path": "validation/console.json",
+      "bytes": 616,
+      "sha256": "b9456955aa09ade4b4bd3692729efe7d57d0ed60f539e6d7a7c16ca9a60d9282"
+    },
+    {
+      "path": "validation/network.json",
+      "bytes": 3284,
+      "sha256": "d4309ab82f5c6bacb7acc278d84389146867babd7a8af19cbcc2ab7325700e1d"
+    },
+    {
+      "path": "validation/perf.json",
+      "bytes": 144,
+      "sha256": "00df8e2acaac63641f49033ee89fed282bb750420ca8c031c7cf8ece7c5bb318"
+    },
+    {
+      "path": "validation/probe-results.json",
+      "bytes": 20291,
+      "sha256": "10a9b4a054263806c8eb3423b55cd369db4f197a81b46dc59a55451d2a36d279"
+    },
+    {
+      "path": "validation/serve-log.json",
+      "bytes": 3430,
+      "sha256": "66576f4c64c36a9ca5c8403a2affb6cc829560543aa6bd36b613d8bfebd698c4"
+    },
+    {
+      "path": "validation/source-sha.json",
+      "bytes": 33167,
+      "sha256": "51d6e25528c10b9652045ca9cdb49094e7e4e7c60e5c8dc413989bff5075410b"
+    },
+    {
+      "path": "validation/revisions/2026-10-02T122228208Z-original/report.json",
+      "bytes": 4546,
+      "sha256": "6f178b9920ca3a364ada85885fbc7fb004b09052d704df970df313b9d039d280"
+    },
+    {
+      "path": "validation/revisions/.original-archived",
+      "bytes": 25,
+      "sha256": "5e3930df688b995e3388bf1717c9ed81d6b9d1cdb5851d51b21f81815ffe0f36"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/initial.png",
+      "bytes": 439228,
+      "sha256": "c4892353758e90db505dd61f7137aa101cf949f74988b80cf574662b4553c9c2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P1-before.png",
+      "bytes": 464239,
+      "sha256": "f7778eac2401c06ef7df03a528637683e53910f36ec3d3ef52388159aa56ff17"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P1-vis.png",
+      "bytes": 563589,
+      "sha256": "81947efb808c7c7c64d199f13a7b06f256f76921902bc9481a06ff223a0a8d9f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P1-after.png",
+      "bytes": 499719,
+      "sha256": "0e3497d776c2827c7b0d09a3473ff274997bcf1c9458914830245d0771bee46a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P2-before.png",
+      "bytes": 543398,
+      "sha256": "3804b5ce5136d7c1414cec42b12503d0f7eedb10df6587076f4add099ca8d719"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P2-region-a.png",
+      "bytes": 538625,
+      "sha256": "648ad171298b061e727c852760033141b9b4f53fc6d9a3f74d31c33565f76d73"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P2-region-b.png",
+      "bytes": 491518,
+      "sha256": "aa7d6cc74936b1301bdf3cdcf4f27abcdad3e6c862f16b2ec1f949048fb007a4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P2-after.png",
+      "bytes": 472549,
+      "sha256": "05b0b09c3d375fb17185ed121f7f8a3aadbf85a42631c4daf154484f820e7d19"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P3-before.png",
+      "bytes": 489176,
+      "sha256": "44b419e015c26aa2e2647cdbeb1e99934dc3e838a9f013038a49f745887d67c9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P3-delta-a.png",
+      "bytes": 510482,
+      "sha256": "3b3b8f75458e2e0d8b24bb3b3bcdb2843c862a607779a0ab7d6cab4a8abb016e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P3-delta-b.png",
+      "bytes": 546399,
+      "sha256": "e16f8de8b17bcdfbf63f0504e1e049e2603f7bd7df3857875eb6339e5ba03557"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P3-after.png",
+      "bytes": 509055,
+      "sha256": "91ca4562be96b37501f12917412e7c0cadd995a52d9900dd1a7def51e905303a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P4-before.png",
+      "bytes": 534037,
+      "sha256": "b2e3b53dab6b58b17b2fd010f5b3a559033d2335620ef11ac8d6f0363a42fe15"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P4-motion-a.png",
+      "bytes": 481179,
+      "sha256": "61272cfc03d0669cafe8cc544fe43ac52a57366a8521e0b48ac45a480e473176"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P4-motion-b.png",
+      "bytes": 473187,
+      "sha256": "bd1c40d55f99b47a5fa30b1b60d95c119ff749aada18941afbfbf94484ef58c5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P4-after.png",
+      "bytes": 479955,
+      "sha256": "6e013733ed294d45f6a09f6de110edcd7f187fe926fd511ad02b48816c482622"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P5-before.png",
+      "bytes": 547975,
+      "sha256": "77e117d41280b3c68243cb75bd60ffaa3b89406041957ab4d9bcbb55feefb98e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P5-region-a.png",
+      "bytes": 595803,
+      "sha256": "8c58619c2abd1348da0ff7dceb2df25e8ff2049bca3345e0e296d01f06316d19"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P5-region-b.png",
+      "bytes": 568294,
+      "sha256": "767120a2660bfbb8c39ede913685d8542a69cd51793d0b686e8582cae9994664"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P5-after.png",
+      "bytes": 580232,
+      "sha256": "2ec696d6db7870e0239e7bda061b67258657bff7e8ec73039d2cbd22fe1e2074"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P6-before.png",
+      "bytes": 594580,
+      "sha256": "3e178ac8723db5a22650b0aea84fc77994b49580c932d4d49ca3373b75aaff62"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P6-region-a.png",
+      "bytes": 545182,
+      "sha256": "2c9afb06fdbeda71a92cd371fc7275e2de696908c5a3128cc28d0318551a0734"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P6-region-b.png",
+      "bytes": 520682,
+      "sha256": "58f6220a895fc1e9c13f9206d894bf5058e42a86c88247ec4fb9b5479106dc3f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P6-after.png",
+      "bytes": 547814,
+      "sha256": "4319cc32003838a3f226713b255b43a73d164f853cd1e2a7b3ce7501abbcbe6c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P7-before.png",
+      "bytes": 481675,
+      "sha256": "fadd6ccf3b9ed3e3b7cd67cbed9c6ace1f42134811c21092ed46704a4841e6e6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P7-vis.png",
+      "bytes": 451780,
+      "sha256": "80d9103eabecb36d0bc2ec08d402cec434615da9d98bfda9b2c42d0e14849666"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P7-after.png",
+      "bytes": 504523,
+      "sha256": "0c48fc72bb6bc0efb00716ca4ea7ddcea45e24103ef56495db32fa6376f44346"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P8-before.png",
+      "bytes": 521750,
+      "sha256": "219b1887a4cdb37d2ff149ebc7caeee932a118b2e9be07059e8365629c53ace8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P8-motion-a.png",
+      "bytes": 532199,
+      "sha256": "9b5b4c789b1a2250d3ad14e45cfea028a8e4aabb06a9e7a1fbaa5d974b34211b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P8-motion-b.png",
+      "bytes": 519426,
+      "sha256": "f6b32b093fe7a275eca1c05a8b3f883ed28e6fb182a40a813329b15870970b13"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/P8-after.png",
+      "bytes": 562002,
+      "sha256": "8fe4ddceeea3a467e7c48f85b5c4acf59e84ef141f8786203ab45f6edd65fc25"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/mid.png",
+      "bytes": 467946,
+      "sha256": "3531a516bafa56df7344465559271533e42ec660e607153fb7bad53b5de08f2f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/final.png",
+      "bytes": 482085,
+      "sha256": "1527aee224dcd8259db25959e3dd287f661bcaefac9b6d4385c6df3cfdccd252"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/extra-1.png",
+      "bytes": 462565,
+      "sha256": "9bb09e9f2a1b896bb603b73ee4ed7c0a84a473195f6725ff7903fcdb2b0076ee"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/screenshots/extra-2.png",
+      "bytes": 457830,
+      "sha256": "c1eb450748dd843d533c8d5c7a3d68a3e15d9b0d0f03e338480cf35ac58ffcae"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/source-sha.json",
+      "bytes": 40175,
+      "sha256": "2273617f8a6806af3bcbf98ba8ed484f1034899da19c362b1ce97de779624ab1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/build.log",
+      "bytes": 572,
+      "sha256": "136887fde83b0af31d3a61482e97f72fd0e9a4e3cbbed08f06020758d9dadba9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/serve-log.json",
+      "bytes": 3290,
+      "sha256": "6ff84ac2ecd5bbf510f83935be01ecdf3a7c86a4c9c38b71f81896a550aea0c1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/probe-results.json",
+      "bytes": 20339,
+      "sha256": "cdc3843bacc0e3b7bd96d9cc534754ee20bfe6c0b9bcddce49cc52a92143135b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/console.json",
+      "bytes": 604,
+      "sha256": "71f0c4eb41ccf60baf3cdd9002baee513cf5ee67ad297997fba50ce8a5bc52b6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/network.json",
+      "bytes": 3152,
+      "sha256": "c692c3465d709e4378b08428ec87dd2688e5957878a5f85e08e0474d9daaaf70"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/perf.json",
+      "bytes": 136,
+      "sha256": "07de33703ac11273be65bde2d87ebc0454efd52fe61028c1df3a861580778f16"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065323997Z-validator-rectification/report.json",
+      "bytes": 5047,
+      "sha256": "1ee00c61eed82ec8084b26b78eb6203eb06bf34644b44d08a633b37fdf92638f"
+    },
+    {
+      "path": "validation/report.json",
+      "bytes": 4546,
+      "sha256": "6f178b9920ca3a364ada85885fbc7fb004b09052d704df970df313b9d039d280"
+    },
+    {
+      "path": "template-smoke.png",
+      "bytes": 7736,
+      "sha256": "8dd14874402adcf2fb5bb2edad15a6c51fb5c511621f1b45250442c35c7313d2"
+    },
+    {
+      "path": "REFERENCE-VERDICT.md",
+      "bytes": 4104,
+      "sha256": "50947a5d725b2ba3b0f8af9ad1458e1a4ea04950d5d0464c5534c805f77273d3"
+    },
+    {
+      "path": "WORKLOG.md",
+      "bytes": 9273,
+      "sha256": "b2126c9281097a22393b8188241f47c70634aa2f382d6d3a70afbdd100c1210f"
+    },
+    {
+      "path": "ceiling-notes.md",
+      "bytes": 8017,
+      "sha256": "c56becaa808f0c11656345e4f2e6ed6d89cce58164e5c112e8677ad6b527cfe1"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1469,
+      "sha256": "3653252eb0965a0eb5aabcd6f7e2c86374f1a28f267ea7be2308c8581c15c419"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 15385,
+      "sha256": "c84154722c645c75d97fdde2bb5d978d27875715ccca4db35e99c2705f20d5de"
+    },
+    {
+      "path": "package.json",
+      "bytes": 515,
+      "sha256": "5d9be789000cb41ac3f8cf99a4795e9190261c4bf573922d406930cbcc526d17"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "bytes": 6914,
+      "sha256": "4e484c51120fbd515817d1ce452f0a6bea5d464e9185af6294ae2c1f6aedce14"
+    },
+    {
+      "path": "scripts/review-frame.mjs",
+      "bytes": 4600,
+      "sha256": "30bd31276f284f240e6be04a8163563ca1f6c53db499d262b94f27f219bc9347"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 3227,
+      "sha256": "17024f6182c6f788934cef0677e7e556de21c425ed667b87c60b0fe75199f700"
+    },
+    {
+      "path": "scripts/smoke-verify.mjs",
+      "bytes": 9787,
+      "sha256": "268fee736296f0524f3b2778554fc760777752f8635928f8eb98f2fcecb5191e"
+    },
+    {
+      "path": "scripts/soak-test.mjs",
+      "bytes": 3662,
+      "sha256": "b018f5bf2b593cb4734a415fd9521fe4ce688e4d1a2cf96dce899fb32c0303ba"
+    },
+    {
+      "path": "soak-report.json",
+      "bytes": 3167,
+      "sha256": "7d71fd047c5dd1b67870c23de9cc1d585caa4f0c7281fddfe4cdb4a0751b3780"
+    },
+    {
+      "path": "src/main.js",
+      "bytes": 42784,
+      "sha256": "ee861e2c0d1dbd2ed87ddd96fa5f20f40628da426086a83ef69f4e3d8b4f3313"
+    },
+    {
+      "path": "template-manifest.json",
+      "bytes": 683,
+      "sha256": "b4f4ffbdbd4bd463238a6e915a90497ce3a1be666cb9ff78dace368a7cd78bde"
+    },
+    {
+      "path": "template-verify.txt",
+      "bytes": 4920,
+      "sha256": "fabd32c43581aac5589935ca84f06d83066411a398cdb542c8252c27d450c943"
+    }
+  ],
+  "dist": [
+    {
+      "path": "dist/vendor/three.module.js",
+      "bytes": 662772
+    },
+    {
+      "path": "dist/vendor/three.core.js",
+      "bytes": 1458113
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/AST.js",
+      "bytes": 8174
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/ShaderToyDecoder.js",
+      "bytes": 1033
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/TranspilerUtils.js",
+      "bytes": 653
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/WGSLEncoder.js",
+      "bytes": 19452
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/Transpiler.js",
+      "bytes": 1560
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/Linker.js",
+      "bytes": 5079
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/GLSLDecoder.js",
+      "bytes": 33925
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/TSLEncoder.js",
+      "bytes": 19843
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/PersonGenerator.js",
+      "bytes": 17673
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/TrafficlightGenerator.js",
+      "bytes": 4352
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/BenchGenerator.js",
+      "bytes": 4662
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/HydrantGenerator.js",
+      "bytes": 4736
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/CarGenerator.js",
+      "bytes": 18106
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/StreetlightGenerator.js",
+      "bytes": 3793
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/StreetTreeGenerator.js",
+      "bytes": 9372
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/SidewalkGenerator.js",
+      "bytes": 8874
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/CityGeneratorUtils.js",
+      "bytes": 1201
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/InstancedMeshGenerator.js",
+      "bytes": 2144
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/SkyscraperGenerator.js",
+      "bytes": 80347
+    },
+    {
+      "path": "dist/vendor/addons/generators/city/TrashcanGenerator.js",
+      "bytes": 3800
+    },
+    {
+      "path": "dist/vendor/addons/generators/TerrainGenerator.js",
+      "bytes": 17934
+    },
+    {
+      "path": "dist/vendor/addons/generators/CityGenerator.js",
+      "bytes": 25549
+    },
+    {
+      "path": "dist/vendor/addons/generators/ForestGenerator.js",
+      "bytes": 12459
+    },
+    {
+      "path": "dist/vendor/addons/generators/TreeGenerator.js",
+      "bytes": 13002
+    },
+    {
+      "path": "dist/vendor/addons/exporters/USDZExporter.js",
+      "bytes": 35574
+    },
+    {
+      "path": "dist/vendor/addons/exporters/DRACOExporter.js",
+      "bytes": 9086
+    },
+    {
+      "path": "dist/vendor/addons/exporters/PLYExporter.js",
+      "bytes": 20567
+    },
+    {
+      "path": "dist/vendor/addons/exporters/GLTFExporter.js",
+      "bytes": 93570
+    },
+    {
+      "path": "dist/vendor/addons/exporters/OBJExporter.js",
+      "bytes": 6070
+    },
+    {
+      "path": "dist/vendor/addons/exporters/STLExporter.js",
+      "bytes": 4884
+    },
+    {
+      "path": "dist/vendor/addons/exporters/EXRExporter.js",
+      "bytes": 14668
+    },
+    {
+      "path": "dist/vendor/addons/exporters/KTX2Exporter.js",
+      "bytes": 8408
+    },
+    {
+      "path": "dist/vendor/addons/helpers/OctreeHelper.js",
+      "bytes": 2804
+    },
+    {
+      "path": "dist/vendor/addons/helpers/RectAreaLightHelper.js",
+      "bytes": 2971
+    },
+    {
+      "path": "dist/vendor/addons/helpers/ViewHelper.js",
+      "bytes": 12826
+    },
+    {
+      "path": "dist/vendor/addons/helpers/TextureHelperGPU.js",
+      "bytes": 4760
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeGridHelperWebGL.js",
+      "bytes": 5588
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeGridHelper.js",
+      "bytes": 4150
+    },
+    {
+      "path": "dist/vendor/addons/helpers/TextureHelper.js",
+      "bytes": 5355
+    },
+    {
+      "path": "dist/vendor/addons/helpers/VertexTangentsHelper.js",
+      "bytes": 2955
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeHelperGPU.js",
+      "bytes": 2223
+    },
+    {
+      "path": "dist/vendor/addons/helpers/AnimationPathHelper.js",
+      "bytes": 6400
+    },
+    {
+      "path": "dist/vendor/addons/helpers/RapierHelper.js",
+      "bytes": 1298
+    },
+    {
+      "path": "dist/vendor/addons/helpers/PositionalAudioHelper.js",
+      "bytes": 4384
+    },
+    {
+      "path": "dist/vendor/addons/helpers/VertexNormalsHelper.js",
+      "bytes": 3458
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeHelper.js",
+      "bytes": 3663
+    },
+    {
+      "path": "dist/vendor/addons/libs/mikktspace.module.js",
+      "bytes": 48841
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_simplifier.module.js",
+      "bytes": 55177
+    },
+    {
+      "path": "dist/vendor/addons/libs/lil-gui.module.min.js",
+      "bytes": 29526
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/README.md",
+      "bytes": 1388
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/basis_transcoder.js",
+      "bytes": 57529
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/basis_transcoder.wasm",
+      "bytes": 527333
+    },
+    {
+      "path": "dist/vendor/addons/libs/utif.module.js",
+      "bytes": 100835
+    },
+    {
+      "path": "dist/vendor/addons/libs/ktx-parse.module.js",
+      "bytes": 19932
+    },
+    {
+      "path": "dist/vendor/addons/libs/demuxer_mp4.js",
+      "bytes": 3526
+    },
+    {
+      "path": "dist/vendor/addons/libs/tween.module.js",
+      "bytes": 32316
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_decoder.js",
+      "bytes": 719410
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_wasm_wrapper.js",
+      "bytes": 58763
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_decoder.js",
+      "bytes": 512465
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_wasm_wrapper.js",
+      "bytes": 58456
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_decoder.wasm",
+      "bytes": 192420
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_decoder.wasm",
+      "bytes": 285747
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/README.md",
+      "bytes": 1395
+    },
+    {
+      "path": "dist/vendor/addons/libs/stats.module.js",
+      "bytes": 3514
+    },
+    {
+      "path": "dist/vendor/addons/libs/chevrotain.module.min.js",
+      "bytes": 157440
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_decoder.module.js",
+      "bytes": 29256
+    },
+    {
+      "path": "dist/vendor/addons/libs/motion-controllers.module.js",
+      "bytes": 13492
+    },
+    {
+      "path": "dist/vendor/addons/libs/potpack.module.js",
+      "bytes": 3951
+    },
+    {
+      "path": "dist/vendor/addons/libs/surfaceNet.js",
+      "bytes": 5545
+    },
+    {
+      "path": "dist/vendor/addons/libs/fflate.module.js",
+      "bytes": 89384
+    },
+    {
+      "path": "dist/vendor/addons/libs/zstddec.module.js",
+      "bytes": 39754
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_clusterizer.module.js",
+      "bytes": 35425
+    },
+    {
+      "path": "dist/vendor/addons/math/Capsule.js",
+      "bytes": 3543
+    },
+    {
+      "path": "dist/vendor/addons/math/Lut.js",
+      "bytes": 6688
+    },
+    {
+      "path": "dist/vendor/addons/math/ImprovedNoise.js",
+      "bytes": 3034
+    },
+    {
+      "path": "dist/vendor/addons/math/MeshSurfaceSampler.js",
+      "bytes": 8161
+    },
+    {
+      "path": "dist/vendor/addons/math/ColorSpaces.js",
+      "bytes": 4290
+    },
+    {
+      "path": "dist/vendor/addons/math/OBB.js",
+      "bytes": 13862
+    },
+    {
+      "path": "dist/vendor/addons/math/SimplexNoise.js",
+      "bytes": 15148
+    },
+    {
+      "path": "dist/vendor/addons/math/ColorConverter.js",
+      "bytes": 1487
+    },
+    {
+      "path": "dist/vendor/addons/math/Octree.js",
+      "bytes": 18175
+    },
+    {
+      "path": "dist/vendor/addons/math/ConvexHull.js",
+      "bytes": 32974
+    },
+    {
+      "path": "dist/vendor/addons/misc/ProgressiveLightMap.js",
+      "bytes": 12047
+    },
+    {
+      "path": "dist/vendor/addons/misc/RollerCoaster.js",
+      "bytes": 16893
+    },
+    {
+      "path": "dist/vendor/addons/misc/ConvexObjectBreaker.js",
+      "bytes": 14856
+    },
+    {
+      "path": "dist/vendor/addons/misc/Volume.js",
+      "bytes": 13292
+    },
+    {
+      "path": "dist/vendor/addons/misc/TileCreasedNormalsPlugin.js",
+      "bytes": 7301
+    },
+    {
+      "path": "dist/vendor/addons/misc/SculptorTools.js",
+      "bytes": 34245
+    },
+    {
+      "path": "dist/vendor/addons/misc/Gyroscope.js",
+      "bytes": 1617
+    },
+    {
+      "path": "dist/vendor/addons/misc/SculptorUtils.js",
+      "bytes": 9711
+    },
+    {
+      "path": "dist/vendor/addons/misc/VolumeSlice.js",
+      "bytes": 6507
+    },
+    {
+      "path": "dist/vendor/addons/misc/Sculptor.js",
+      "bytes": 46089
+    },
+    {
+      "path": "dist/vendor/addons/misc/MD2CharacterComplex.js",
+      "bytes": 15251
+    },
+    {
+      "path": "dist/vendor/addons/misc/ProgressiveLightMapGPU.js",
+      "bytes": 10075
+    },
+    {
+      "path": "dist/vendor/addons/misc/SculptGL.LICENSE.txt",
+      "bytes": 1073
+    },
+    {
+      "path": "dist/vendor/addons/misc/TubePainter.js",
+      "bytes": 15700
+    },
+    {
+      "path": "dist/vendor/addons/misc/MorphBlendMesh.js",
+      "bytes": 8091
+    },
+    {
+      "path": "dist/vendor/addons/misc/MD2Character.js",
+      "bytes": 7389
+    },
+    {
+      "path": "dist/vendor/addons/misc/GPUComputationRenderer.js",
+      "bytes": 14157
+    },
+    {
+      "path": "dist/vendor/addons/misc/SculptorMesh.js",
+      "bytes": 37322
+    },
+    {
+      "path": "dist/vendor/addons/misc/MorphAnimMesh.js",
+      "bytes": 2349
+    },
+    {
+      "path": "dist/vendor/addons/renderers/Projector.js",
+      "bytes": 26709
+    },
+    {
+      "path": "dist/vendor/addons/renderers/SVGRenderer.js",
+      "bytes": 17795
+    },
+    {
+      "path": "dist/vendor/addons/renderers/CSS3DRenderer.js",
+      "bytes": 11126
+    },
+    {
+      "path": "dist/vendor/addons/renderers/CSS2DRenderer.js",
+      "bytes": 7990
+    },
+    {
+      "path": "dist/vendor/addons/interaction/InteractionManager.js",
+      "bytes": 4845
+    },
+    {
+      "path": "dist/vendor/addons/interactive/SelectionBox.js",
+      "bytes": 8441
+    },
+    {
+      "path": "dist/vendor/addons/interactive/InteractiveGroup.js",
+      "bytes": 5806
+    },
+    {
+      "path": "dist/vendor/addons/interactive/HTMLMesh.js",
+      "bytes": 14543
+    },
+    {
+      "path": "dist/vendor/addons/interactive/SelectionHelper.js",
+      "bytes": 3623
+    },
+    {
+      "path": "dist/vendor/addons/effects/AsciiEffect.js",
+      "bytes": 7835
+    },
+    {
+      "path": "dist/vendor/addons/effects/OutlineEffect.js",
+      "bytes": 12661
+    },
+    {
+      "path": "dist/vendor/addons/effects/StereoEffect.js",
+      "bytes": 2180
+    },
+    {
+      "path": "dist/vendor/addons/effects/AnaglyphEffect.js",
+      "bytes": 8154
+    },
+    {
+      "path": "dist/vendor/addons/effects/ParallaxBarrierEffect.js",
+      "bytes": 3502
+    },
+    {
+      "path": "dist/vendor/addons/utils/WebGLTextureUtils.js",
+      "bytes": 3075
+    },
+    {
+      "path": "dist/vendor/addons/utils/SceneOptimizer.js",
+      "bytes": 10275
+    },
+    {
+      "path": "dist/vendor/addons/utils/GeometryUtils.js",
+      "bytes": 5593
+    },
+    {
+      "path": "dist/vendor/addons/utils/GaussianSplatUtils.js",
+      "bytes": 5586
+    },
+    {
+      "path": "dist/vendor/addons/utils/SkeletonUtils.js",
+      "bytes": 11535
+    },
+    {
+      "path": "dist/vendor/addons/utils/SceneUtils.js",
+      "bytes": 8634
+    },
+    {
+      "path": "dist/vendor/addons/utils/WorkerPool.js",
+      "bytes": 3110
+    },
+    {
+      "path": "dist/vendor/addons/utils/ShadowMapViewerGPU.js",
+      "bytes": 5981
+    },
+    {
+      "path": "dist/vendor/addons/utils/ColorUtils.js",
+      "bytes": 1652
+    },
+    {
+      "path": "dist/vendor/addons/utils/ShadowMapViewer.js",
+      "bytes": 6249
+    },
+    {
+      "path": "dist/vendor/addons/utils/WebGPUTextureUtils.js",
+      "bytes": 2280
+    },
+    {
+      "path": "dist/vendor/addons/utils/UVsDebug.js",
+      "bytes": 3427
+    },
+    {
+      "path": "dist/vendor/addons/utils/BufferGeometryUtils.js",
+      "bytes": 37712
+    },
+    {
+      "path": "dist/vendor/addons/utils/GeometryCompressionUtils.js",
+      "bytes": 13014
+    },
+    {
+      "path": "dist/vendor/addons/utils/SortUtils.js",
+      "bytes": 3354
+    },
+    {
+      "path": "dist/vendor/addons/utils/LDrawUtils.js",
+      "bytes": 6055
+    },
+    {
+      "path": "dist/vendor/addons/utils/CameraUtils.js",
+      "bytes": 3204
+    },
+    {
+      "path": "dist/vendor/addons/Addons.js",
+      "bytes": 12559
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderTransitionPass.js",
+      "bytes": 5847
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/BloomPass.js",
+      "bytes": 6445
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/DotScreenPass.js",
+      "bytes": 2941
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/Pass.js",
+      "bytes": 4218
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSRPass.js",
+      "bytes": 23300
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/LUTPass.js",
+      "bytes": 2230
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/BokehPass.js",
+      "bytes": 5531
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/FXAAPass.js",
+      "bytes": 738
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/EffectComposer.js",
+      "bytes": 8501
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/HalftonePass.js",
+      "bytes": 2882
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/TAARenderPass.js",
+      "bytes": 6487
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/GlitchPass.js",
+      "bytes": 4305
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/OutputPass.js",
+      "bytes": 4184
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSAOPass.js",
+      "bytes": 13463
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/TexturePass.js",
+      "bytes": 2920
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/ShaderPass.js",
+      "bytes": 3228
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/AfterimagePass.js",
+      "bytes": 4388
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/ClearPass.js",
+      "bytes": 2167
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/FilmPass.js",
+      "bytes": 2684
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SavePass.js",
+      "bytes": 2998
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/GTAOPass.js",
+      "bytes": 19910
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderPass.js",
+      "bytes": 4280
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/CubeTexturePass.js",
+      "bytes": 3519
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderPixelatedPass.js",
+      "bytes": 8151
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SMAAPass.js",
+      "bytes": 50379
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/MaskPass.js",
+      "bytes": 4694
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSAARenderPass.js",
+      "bytes": 8150
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SAOPass.js",
+      "bytes": 13105
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/OutlinePass.js",
+      "bytes": 23272
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/UnrealBloomPass.js",
+      "bytes": 15397
+    },
+    {
+      "path": "dist/vendor/addons/modifiers/CurveModifierGPU.js",
+      "bytes": 7284
+    },
+    {
+      "path": "dist/vendor/addons/modifiers/SimplifyModifier.js",
+      "bytes": 4430
+    },
+    {
+      "path": "dist/vendor/addons/modifiers/TessellateModifier.js",
+      "bytes": 7080
+    },
+    {
+      "path": "dist/vendor/addons/modifiers/EdgeSplitModifier.js",
+      "bytes": 6131
+    },
+    {
+      "path": "dist/vendor/addons/modifiers/CurveModifier.js",
+      "bytes": 10538
+    },
+    {
+      "path": "dist/vendor/addons/controls/DragControls.js",
+      "bytes": 9510
+    },
+    {
+      "path": "dist/vendor/addons/controls/ArcballControls.js",
+      "bytes": 87221
+    },
+    {
+      "path": "dist/vendor/addons/controls/TrackballControls.js",
+      "bytes": 24048
+    },
+    {
+      "path": "dist/vendor/addons/controls/TransformControls.js",
+      "bytes": 51706
+    },
+    {
+      "path": "dist/vendor/addons/controls/OrbitControls.js",
+      "bytes": 40755
+    },
+    {
+      "path": "dist/vendor/addons/controls/MapControls.js",
+      "bytes": 3070
+    },
+    {
+      "path": "dist/vendor/addons/controls/PointerLockControls.js",
+      "bytes": 5890
+    },
+    {
+      "path": "dist/vendor/addons/controls/FlyControls.js",
+      "bytes": 9025
+    },
+    {
+      "path": "dist/vendor/addons/controls/FirstPersonControls.js",
+      "bytes": 11889
+    },
+    {
+      "path": "dist/vendor/addons/lighting/DynamicLighting.js",
+      "bytes": 2065
+    },
+    {
+      "path": "dist/vendor/addons/lighting/LightProbeGrid.js",
+      "bytes": 23784
+    },
+    {
+      "path": "dist/vendor/addons/lighting/LightProbeGridUtils.js",
+      "bytes": 2990
+    },
+    {
+      "path": "dist/vendor/addons/lighting/ClusteredLighting.js",
+      "bytes": 1859
+    },
+    {
+      "path": "dist/vendor/addons/lighting/vxgi/VXGIVolume.js",
+      "bytes": 46395
+    },
+    {
+      "path": "dist/vendor/addons/lighting/vxgi/VXGIConeTracer.js",
+      "bytes": 7452
+    },
+    {
+      "path": "dist/vendor/addons/lighting/vxgi/VXGISceneCollector.js",
+      "bytes": 13761
+    },
+    {
+      "path": "dist/vendor/addons/lighting/vxgi/VXGINode.js",
+      "bytes": 19411
+    },
+    {
+      "path": "dist/vendor/addons/lighting/LightProbeGridWebGL.js",
+      "bytes": 23370
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VRMLLoader.js",
+      "bytes": 76363
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GCodeLoader.js",
+      "bytes": 7199
+    },
+    {
+      "path": "dist/vendor/addons/loaders/collada/ColladaParser.js",
+      "bytes": 36839
+    },
+    {
+      "path": "dist/vendor/addons/loaders/collada/ColladaComposer.js",
+      "bytes": 66711
+    },
+    {
+      "path": "dist/vendor/addons/loaders/AMFLoader.js",
+      "bytes": 11435
+    },
+    {
+      "path": "dist/vendor/addons/loaders/IESLoader.js",
+      "bytes": 8373
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SVGLoader.js",
+      "bytes": 76850
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VTKLoader.js",
+      "bytes": 30565
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VOXLoader.js",
+      "bytes": 21829
+    },
+    {
+      "path": "dist/vendor/addons/loaders/RGBELoader.js",
+      "bytes": 268
+    },
+    {
+      "path": "dist/vendor/addons/loaders/DRACOLoader.js",
+      "bytes": 19030
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TDSLoader.js",
+      "bytes": 25168
+    },
+    {
+      "path": "dist/vendor/addons/loaders/BVHLoader.js",
+      "bytes": 10649
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUT3dlLoader.js",
+      "bytes": 5077
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PCDLoader.js",
+      "bytes": 16583
+    },
+    {
+      "path": "dist/vendor/addons/loaders/FBXLoader.js",
+      "bytes": 113372
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GaussianSplatPLYLoader.js",
+      "bytes": 11197
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TTFLoader.js",
+      "bytes": 5578
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUTImageLoader.js",
+      "bytes": 4184
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TIFFLoader.js",
+      "bytes": 1221
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SPZLoader.js",
+      "bytes": 14902
+    },
+    {
+      "path": "dist/vendor/addons/loaders/DDSLoader.js",
+      "bytes": 9088
+    },
+    {
+      "path": "dist/vendor/addons/loaders/3MFLoader.js",
+      "bytes": 44293
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PLYLoader.js",
+      "bytes": 21869
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PVRLoader.js",
+      "bytes": 5411
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KSPLATLoader.js",
+      "bytes": 14309
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MaterialXLoader.js",
+      "bytes": 6571
+    },
+    {
+      "path": "dist/vendor/addons/loaders/OBJLoader.js",
+      "bytes": 22916
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TGALoader.js",
+      "bytes": 11792
+    },
+    {
+      "path": "dist/vendor/addons/loaders/UltraHDRLoader.js",
+      "bytes": 19696
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KTX2Loader.js",
+      "bytes": 36567
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MD2Loader.js",
+      "bytes": 13625
+    },
+    {
+      "path": "dist/vendor/addons/loaders/USDZLoader.js",
+      "bytes": 266
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KMZLoader.js",
+      "bytes": 3298
+    },
+    {
+      "path": "dist/vendor/addons/loaders/HDRCubeTextureLoader.js",
+      "bytes": 3731
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MDDLoader.js",
+      "bytes": 3936
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SPLATLoader.js",
+      "bytes": 3687
+    },
+    {
+      "path": "dist/vendor/addons/loaders/NRRDLoader.js",
+      "bytes": 14603
+    },
+    {
+      "path": "dist/vendor/addons/loaders/HDRLoader.js",
+      "bytes": 12079
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MTLLoader.js",
+      "bytes": 11356
+    },
+    {
+      "path": "dist/vendor/addons/loaders/FontLoader.js",
+      "bytes": 5292
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GLTFLoader.js",
+      "bytes": 117570
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LDrawLoader.js",
+      "bytes": 61141
+    },
+    {
+      "path": "dist/vendor/addons/loaders/ColladaLoader.js",
+      "bytes": 3988
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUTCubeLoader.js",
+      "bytes": 4635
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXUtils.js",
+      "bytes": 1313
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/compile/MaterialXCompileRegistry.js",
+      "bytes": 33733
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXNodeLibrary.js",
+      "bytes": 36255
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXHextile.js",
+      "bytes": 6250
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXArchive.js",
+      "bytes": 2219
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXDocument.js",
+      "bytes": 18477
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXLog.js",
+      "bytes": 1199
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXSurfaceMappings.js",
+      "bytes": 19238
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/parse/MaterialXParser.js",
+      "bytes": 707
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXNodeInterfaceRegistry.js",
+      "bytes": 277548
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXInterfaceValidation.js",
+      "bytes": 7755
+    },
+    {
+      "path": "dist/vendor/addons/loaders/EXRLoader.js",
+      "bytes": 86154
+    },
+    {
+      "path": "dist/vendor/addons/loaders/XYZLoader.js",
+      "bytes": 3280
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GLTFGaussianSplatLoaderExtension.js",
+      "bytes": 9063
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LWOLoader.js",
+      "bytes": 24156
+    },
+    {
+      "path": "dist/vendor/addons/loaders/3DMLoader.js",
+      "bytes": 43945
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PDBLoader.js",
+      "bytes": 8255
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KTXLoader.js",
+      "bytes": 7187
+    },
+    {
+      "path": "dist/vendor/addons/loaders/STLLoader.js",
+      "bytes": 10715
+    },
+    {
+      "path": "dist/vendor/addons/loaders/USDLoader.js",
+      "bytes": 7358
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/IFFParser.js",
+      "bytes": 26740
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/LWO3Parser.js",
+      "bytes": 9269
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/LWO2Parser.js",
+      "bytes": 10137
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDComposer.js",
+      "bytes": 112351
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDCParser.js",
+      "bytes": 43367
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDAParser.js",
+      "bytes": 19382
+    },
+    {
+      "path": "dist/vendor/addons/textures/FlakesTexture.js",
+      "bytes": 1422
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRPlanes.js",
+      "bytes": 2455
+    },
+    {
+      "path": "dist/vendor/addons/webxr/WebGLXRFallback.js",
+      "bytes": 2162
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandMeshModel.js",
+      "bytes": 4112
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRButton.js",
+      "bytes": 4959
+    },
+    {
+      "path": "dist/vendor/addons/webxr/VRButton.js",
+      "bytes": 5866
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XREstimatedLight.js",
+      "bytes": 6112
+    },
+    {
+      "path": "dist/vendor/addons/webxr/Text2D.js",
+      "bytes": 1482
+    },
+    {
+      "path": "dist/vendor/addons/webxr/OculusHandModel.js",
+      "bytes": 3795
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandPrimitiveModel.js",
+      "bytes": 3494
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandModelFactory.js",
+      "bytes": 4207
+    },
+    {
+      "path": "dist/vendor/addons/webxr/ARButton.js",
+      "bytes": 5485
+    },
+    {
+      "path": "dist/vendor/addons/webxr/OculusHandPointerModel.js",
+      "bytes": 13518
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRControllerModelFactory.js",
+      "bytes": 10185
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/ColorWheel.js",
+      "bytes": 9210
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/LUT3DStyle.js",
+      "bytes": 30164
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/CurveEditor.js",
+      "bytes": 14159
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/ColorGrading.js",
+      "bytes": 62550
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/VibranceModule.js",
+      "bytes": 1500
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/RendererModule.js",
+      "bytes": 6002
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/Module.js",
+      "bytes": 6267
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/ContrastModule.js",
+      "bytes": 1645
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/ColorWheelModule.js",
+      "bytes": 2334
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/HueModule.js",
+      "bytes": 1392
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/SaturationModule.js",
+      "bytes": 1485
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/WhiteBalanceModule.js",
+      "bytes": 1575
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/BrightnessModule.js",
+      "bytes": 1192
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/SatVibranceModule.js",
+      "bytes": 1977
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/CurvesModule.js",
+      "bytes": 2424
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/ExposureHueModule.js",
+      "bytes": 2046
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/ImportedCubeModule.js",
+      "bytes": 2049
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/OutputModule.js",
+      "bytes": 2602
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/modules/ExposureModule.js",
+      "bytes": 1195
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/color-grading/LUTMath.js",
+      "bytes": 17441
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/tsl-graph/TSLGraphLoader.js",
+      "bytes": 4885
+    },
+    {
+      "path": "dist/vendor/addons/inspector/extensions/tsl-graph/TSLGraphEditor.js",
+      "bytes": 23552
+    },
+    {
+      "path": "dist/vendor/addons/inspector/RendererInspector.js",
+      "bytes": 10602
+    },
+    {
+      "path": "dist/vendor/addons/inspector/tabs/Settings.js",
+      "bytes": 5904
+    },
+    {
+      "path": "dist/vendor/addons/inspector/tabs/Memory.js",
+      "bytes": 4700
+    },
+    {
+      "path": "dist/vendor/addons/inspector/tabs/Parameters.js",
+      "bytes": 8703
+    },
+    {
+      "path": "dist/vendor/addons/inspector/tabs/Performance.js",
+      "bytes": 6301
+    }
+  ]
+}

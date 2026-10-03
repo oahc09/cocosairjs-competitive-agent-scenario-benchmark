@@ -88,6 +88,59 @@ function copyTemplate(src, dest, skipDirs = []) {
 }
 
 // ---------------------------------------------------------------------------
+// 依赖哈希(FIX-C 证据链:pair.json dependencyHashes)
+// 口径 = validate.mjs dependencyFingerprints() 同式同键(判定侧为唯一事实源,单侧改配方
+// 会让所有新 Pair 判 ENV_DRIFT):
+//   fingerprint = SHA256( sha256(package.json) ":" sha256(package.json 的 main 入口) )
+//   main 入口取 pj.main || pj.module || 'index.js' → 本仓解析结果:
+//   three=build/three.cjs(package.json main;module 字段才是 three.module.js,注意!)
+//   cocosair(cocosair.js)=build/npm/cocosair.module.js、esbuild=lib/main.js。
+// 包目录一律取**根 node_modules**(非模板/工作区各自的副本);任一文件缺失 → null。
+// ---------------------------------------------------------------------------
+
+function dependencyFingerprint(pkgDir) {
+  const pkgJsonPath = path.join(pkgDir, 'package.json');
+  if (!fs.existsSync(pkgJsonPath)) return null;
+  const pkgJsonSha = sha256File(pkgJsonPath);
+  let mainRel = null;
+  try {
+    const pj = JSON.parse(fs.readFileSync(pkgJsonPath, 'utf8'));
+    mainRel = pj.main || pj.module || 'index.js';
+  } catch {
+    return null;
+  }
+  const mainSha = sha256File(path.join(pkgDir, mainRel.replace(/^\.\//, '')));
+  return pkgJsonSha && mainSha ? sha256Buffer(Buffer.from(`${pkgJsonSha}:${mainSha}`, 'utf8')) : null;
+}
+
+function computeDependencyHashes() {
+  const nm = path.join(BENCH_ROOT, 'node_modules');
+  return {
+    three: dependencyFingerprint(path.join(nm, 'three')),
+    cocosair: dependencyFingerprint(path.join(nm, 'cocosair.js')),
+    esbuild: dependencyFingerprint(path.join(nm, 'esbuild')),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// RUN-META.template.json(FIX-C 身份链:Runner 派发前复制为 RUN-META.json 并逐字段填写;
+// preflight stage 校验非空 + 两臂一致,缺失/BLOCKED 的 Pair 不得 validate)
+// ---------------------------------------------------------------------------
+
+function runMetaTemplateJson() {
+  return {
+    agentRuntime: null,   // Agent 运行时标识(如 zcode-cli / claude-code / human)
+    agentBinaryHash: null,
+    modelId: null,
+    modelRevision: null,
+    systemPromptHash: null,
+    toolPolicyHash: null,
+    runnerVersion: null,
+    notes: '派发前填写为 RUN-META.json',
+  };
+}
+
+// ---------------------------------------------------------------------------
 // 批次(results/<batchId>/,batchId = B-YYYYMMDD-Rnn,支持单日多轮)
 // ---------------------------------------------------------------------------
 
@@ -364,7 +417,7 @@ async function main() {
         copyTree(templateSrc, workspaceDir);
         workspaceAction = `copied-from templates/${engine} (含 vendored node_modules)`;
       } else {
-        copyTemplate(templateSrc, workspaceDir, ['node_modules']);
+        copyTemplate(templateSrc, workspaceDir, ['node_modules', '.budget']);
         workspaceAction = `copied-from templates/${engine} (无 node_modules,共享依赖向上解析)`;
       }
     } else {
@@ -382,6 +435,11 @@ async function main() {
       pairId, arm, scene, engine, knowledge, port: arm === 'A' ? portA : portB, budget,
     });
     fs.writeFileSync(path.join(armDir, 'RUN-CONTRACT.md'), contract, 'utf8');
+
+    // RUN-META.template.json(coordinator 拥有,每次覆盖;Runner 派发前复制填写为 RUN-META.json,
+    // 已填写的 RUN-META.json 永不触碰 —— 身份证据属于 Runner/Agent 侧)
+    const runMetaTemplatePath = path.join(armDir, 'RUN-META.template.json');
+    fs.writeFileSync(runMetaTemplatePath, JSON.stringify(runMetaTemplateJson(), null, 2) + '\n', 'utf8');
 
     // 模板哈希(模板就绪时取 template-manifest.json 或目录树哈希)
     let templateHash = null;
@@ -403,11 +461,13 @@ async function main() {
       knowledgeHash,
       port: arm === 'A' ? portA : portB,
       runContract: `${pairId}/${armDirName}/RUN-CONTRACT.md`,
+      runMetaTemplate: `${pairId}/${armDirName}/RUN-META.template.json`,
     };
-    console.log(`[create-pair] arm-${arm.toLowerCase()}: engine=${engine} port=${arm === 'A' ? portA : portB} workspace=${workspaceAction}`);
+    console.log(`[create-pair] arm-${arm.toLowerCase()}: engine=${engine} port=${arm === 'A' ? portA : portB} workspace=${workspaceAction} runMeta=RUN-META.template.json(待 Runner 填写)`);
   }
 
-  // ---- 5. 引擎包哈希 -------------------------------------------------------
+  // ---- 5. 引擎包哈希 + 共享依赖哈希(FIX-C dependencyHashes) ---------------
+  const dependencyHashes = computeDependencyHashes();
   const k0Tarball = path.join(BENCH_ROOT, 'vendor', 'cocosair.js-1.0.0-k0.tgz');
   const fullTarball = path.join(BENCH_ROOT, 'vendor', 'cocosair.js-1.0.0.tgz');
   const airTarball = knowledge === 'K0' && fs.existsSync(k0Tarball) ? k0Tarball : fullTarball;
@@ -468,6 +528,9 @@ async function main() {
     systemPromptHash: existing?.systemPromptHash ?? null,
     toolPolicyHash: existing?.toolPolicyHash ?? null,
     budgetConfigHash,
+    // FIX-C:共享依赖哈希(根 node_modules;配方见 computeDependencyHashes 注释,
+    // 与 validate 侧同键名同口径 —— 引擎/构建器任一漂移在此可检出)
+    dependencyHashes,
     threePackageHash,
     airPackageHash,
     airTarballUsed: airTarball ? `vendor/${path.basename(airTarball)}` : null,
@@ -506,6 +569,8 @@ async function main() {
     notes: [
       'Arm 引擎分配规则:rep 序号 mod 2(R01/R03… A=three/B=cocosair;R02… 反转);--arm-swap 时反转并记录。',
       'workspace 为空且 templateMissing:true 表示模板尚未建成(并行 Wave2),重跑本脚本可补拷,不影响 pairId/端口/时间戳。',
+      'RUN-META.template.json:Runner 派发前复制为各 Arm 的 RUN-META.json 并填写全部身份字段;run-round preflight stage 校验非空+两臂一致,缺失/BLOCKED 的 Pair 不得 validate。',
+      'dependencyHashes 配方(与 validate.mjs dependencyFingerprints 同式同键):SHA256( sha256(package.json) ":" sha256(package.json main 入口) ),包目录=根 node_modules;键 {three,cocosair,esbuild}(cocosair→node_modules/cocosair.js);main 入口解析 three=build/three.cjs、cocosair.js=build/npm/cocosair.module.js、esbuild=lib/main.js。',
       ...(pilot ? ['pilot:true — M6 前置验证 pair,不计入 Track B 统计。'] : []),
     ],
   };

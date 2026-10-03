@@ -2,16 +2,16 @@
 ========================================================================
 == S0 environment
 ========================================================================
-startedAt: 2026-10-02T10:21:56.134Z
+startedAt: 2026-10-03T07:35:26.673Z
 node: v24.14.0  platform: win32 x64
-harness dir: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\bench\harness
+harness dir: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\harness
 
 ========================================================================
 == S1 browser launch config detection
 ========================================================================
 {
   "ok": true,
-  "configPath": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\launch-config.json",
+  "configPath": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\launch-config.json",
   "config": {
     "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
     "headless": true,
@@ -27,7 +27,7 @@ harness dir: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmar
       "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
     },
     "swiftshaderFallback": false,
-    "detectedAt": "2026-10-02T10:21:58.559Z",
+    "detectedAt": "2026-10-03T07:35:29.062Z",
     "notes": "Chrome with default ANGLE backend; WebGL2 OK"
   }
 }
@@ -41,30 +41,30 @@ webgl2: {"ok":true,"version":"WebGL 2.0 (OpenGL ES 3.0 Chromium)","renderer":"AN
 ========================================================================
 == S2 process census BEFORE
 ========================================================================
-{"node":12,"chrome":20,"headless_shell":0}
+{"node":24,"chrome":33,"headless_shell":0}
 
 ========================================================================
 == S3 validate.mjs over tiny-fake-app (with video recording)
 ========================================================================
-[1/14] snapshot workspace: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\bench\harness\fixtures\tiny-fake-app
+[1/14] snapshot workspace: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\harness\fixtures\tiny-fake-app
 [2/14] npm run build ...
-       build ok=true exit=0 957ms
-[3/14] serve on 127.0.0.1:56402
+       build ok=true exit=0 923ms
+[3/14] serve on 127.0.0.1:57194
 [4/14] launch browser (headless, 1280x720, fresh profile)
 [5/14] navigate + wait __appReady (10s)
        appReady=true benchReady=true
 [7/14] execute probes
 [11/14] fps sampling (3s rAF)
-done: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.7143 fps=60.1
-report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\bench\harness\selftest-out\run1\report.json
+done: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.2
+report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\harness\selftest-out\run1\report.json
 
 ========================================================================
 == S4 report assertions
 ========================================================================
 [PASS] report.json generated
-[FAIL] validate exits 0 (infra PASS) — exit=1
+[PASS] validate exits 0 or 1 (PASS→0 / assertion FAIL→1; infra errors exit>=2) — exit=1
 [PASS] build.ok
-[PASS] appReady within 10s — durationMs=436
+[PASS] appReady within 10s — durationMs=473
 [PASS] bench contract (__bench) present
 [PASS] no uncaught errors
 [PASS] P1 nonBlank PASS — PASS
@@ -72,30 +72,30 @@ report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\ben
 [PASS] P3 frame-increment PASS — PASS
 [PASS] P4 reset PASS — PASS
 [PASS] P5 intentional FAIL judged FAIL — FAIL
-[PASS] P6 skipped after failed precondition — SKIPPED
+[PASS] P6 continues after failed predecessor (rectification §11: no cascade skip) — PASS
 [PASS] P7 key action PASS — PASS
-[PASS] probePassRate = 5/7 — 0.7143
+[PASS] probePassRate = 6/7 (P6 继续执行) — 0.8571
 [PASS] artifact source-sha.json
 [PASS] artifact build.log
 [PASS] artifact console.json
 [PASS] artifact probe-results.json
 [PASS] artifact network.json
 [PASS] artifact perf.json
-[PASS] key screenshots >= 5 — count=21
+[PASS] key screenshots >= 5 — count=23
 [PASS] video.webm recorded
 [PASS] network events recorded — count=4
-[PASS] fps sampled >= 30 — fps=60.1
-[FAIL] classification PASS — STATE_MANAGEMENT
+[PASS] fps sampled >= 30 — fps=60.2
+[PASS] classification = failed-probe domain (P5 故意 FAIL;无 sidecar→UNRESOLVED) — UNRESOLVED
 [PASS] scoreInputs.s1 complete
 [PASS] scoreInputs.s3 lifecycle+fps
 
 ========================================================================
 == S5 process census AFTER (leak check)
 ========================================================================
-{"node":14,"chrome":29,"headless_shell":0}
-delta node=2 chrome(+)headless_shell=9
-[FAIL] no node process leak — delta=2 (before=12 after=14)
-[FAIL] no chrome process leak — delta=9 (before=20 after=29)
+{"node":24,"chrome":33,"headless_shell":0}
+delta node=0 chrome(+)headless_shell=0
+[PASS] no node process leak — delta=0 (before=24 after=24)
+[PASS] no chrome process leak — delta=0 (before=33 after=33)
 
 ========================================================================
 == S6 spec dry-run parse (E01 / E03 / E10, no browser)
@@ -105,7 +105,7 @@ E01: 7 probes, verbs=["wait","pointermove","wheel","click"], allOk=true
   P2 action=ok jq=ok visual=motion
   P3 action=ok jq=ok visual=pixelDelta
   P4 action=ok jq=ok visual=pixelDelta
-  P5 action=ok jq=ok visual=nonBlank
+  P5 action=ok jq=ok visual=nonBlank(dynamic)
   P6 action=ok jq=ok visual=nonBlank
   P7 action=ok jq=ok visual=nonBlank
 [PASS] E01: all probes parse
@@ -124,7 +124,7 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
   P1 action=ok jq=ok visual=nonBlank
   P2 action=ok jq=ok visual=motion
   P3 action=ok jq=ok visual=regionChange
-  P4 action=ok jq=ok visual=regionChange
+  P4 action=ok jq=ok visual=pixelDelta
   P5 action=ok jq=ok visual=motion
   P6 action=ok jq=ok visual=nonBlank
   P7 action=ok jq=ok visual=motion
@@ -134,7 +134,7 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
 == S7 brief-freeze --check (informational, writes nothing)
 ========================================================================
 {
-  "ok": true,
+  "ok": false,
   "checkOnly": true,
   "briefCount": 10,
   "assetBackfillBriefs": [
@@ -142,32 +142,38 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
     "E09",
     "E10"
   ],
-  "changes": [],
-  "wouldChange": [],
+  "changes": [
+    {
+      "file": "briefs\\index.json",
+      "what": "10 brief.md sha256 entries"
+    }
+  ],
+  "wouldChange": [
+    "briefs\\index.json"
+  ],
   "notes": [
-    "briefs/index.json already up to date",
     "E02: spec.json already frozen (assets match MANIFEST)",
     "E09: spec.json already frozen (assets match MANIFEST)",
     "E10: spec.json already frozen (assets match MANIFEST)"
   ]
 }
-(exit=0; drift before the real freeze run is expected and handled separately)
+(exit=1; drift before the real freeze run is expected and handled separately)
 
 ========================================================================
 == S8 score.mjs smoke (runs.json + pair metrics + bootstrap)
 ========================================================================
 {
   "ok": true,
-  "runsWritten": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\selftest-out\\score-out\\runs.json",
-  "pairsWritten": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\selftest-out\\score-out\\pairs.json",
+  "runsWritten": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\selftest-out\\score-out\\runs.json",
+  "pairsWritten": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\selftest-out\\score-out\\pairs.json",
   "runCount": 3,
   "pairCount": 1,
   "pairSummary": {
     "pairCount": 1,
-    "medianRawDelta": 1,
+    "medianRawDelta": 6,
     "winTieLoss": {
-      "AIR_win": 0,
-      "TIE": 1,
+      "AIR_win": 1,
+      "TIE": 0,
       "Three_win": 0,
       "tieThreshold": 3
     },
@@ -176,8 +182,8 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
       "seed": 42,
       "method": "paired resampling, percentile CI on median delta",
       "ci95": [
-        1,
-        1
+        6,
+        6
       ]
     }
   }
@@ -185,25 +191,25 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
 [PASS] score.mjs exits 0 — exit=0
 [PASS] runs.json written — 3 runs
 [PASS] run1 S1=15 (7+5+3) — 15
-[PASS] run1 S2=round(30*5/7)=21 — 21
+[PASS] run1 S2=round(30*6/7)=26 (P6 继续执行) — 26
 [PASS] run1 S3=10 (lifecycle 6 + fps 4) — 10
 [PASS] run1 S4=5 (default placeholder) — 5
 [PASS] run1 visual=round(15*40/18)=33 — 33
-[PASS] run1 total=84 — 84
+[PASS] run1 total=89 (84+5: P6 计入) — 89
 [PASS] run2 S2=round(30*6/7)=26 — 26
 [PASS] run2 visual=round(12*40/18)=27 — 27
 [PASS] run3 visual=null (dims missing) — null
 [PASS] pairs.json written
-pair: {"pairId":"SELFTEST-PAIR","air":{"runId":"selftest-run1","total":84},"three":{"runId":"selftest-run2","total":83},"rawDelta":1,"outcome":"TIE","attainmentDelta":5.9,"attainment":{"air":93.3,"three":87.4,"ceiling":{"air":90,"three":95}}}
-[PASS] pair rawDelta = 84-83 = 1 — 1
-[PASS] pair outcome TIE (|1| <= 3) — TIE
-[PASS] pair attainmentDelta computed — 5.9
-[PASS] bootstrap CI present (2000 resamples) — [1,1]
+pair: {"pairId":"SELFTEST-PAIR","air":{"runId":"selftest-run1","total":89},"three":{"runId":"selftest-run2","total":83},"rawDelta":6,"outcome":"AIR_win","attainmentDelta":11.5,"attainment":{"air":98.9,"three":87.4,"ceiling":{"air":90,"three":95}}}
+[PASS] pair rawDelta = 89-83 = 6 — 6
+[PASS] pair outcome AIR_win (|6| > 3) — AIR_win
+[PASS] pair attainmentDelta computed — 11.5
+[PASS] bootstrap CI present (2000 resamples) — [6,6]
 
 ========================================================================
 == SUMMARY
 ========================================================================
-checks: 47/51 passed
-result: SELFTEST FAIL
+checks: 51/51 passed
+result: SELFTEST PASS
 
-generatedAt: 2026-10-02T10:22:23.306Z
+generatedAt: 2026-10-03T07:35:54.609Z

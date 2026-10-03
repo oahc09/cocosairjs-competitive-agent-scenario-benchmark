@@ -1,0 +1,24 @@
+{
+  "briefId": "NC09",
+  "briefVersion": "1.0.0",
+  "frozen": false,
+  "title": "NC09 spec-drift 负向对照:pair.json specSha256 与 spec 文件不符(SPEC_DRIFT)",
+  "note": "fixture(非冻结 brief):本 spec 本身是 dry-run 干净的最小规格;缺陷在旁边的 pair.json —— 其 specSha256 指向另一个(虚构)spec 哈希。预期 validate.mjs --pair-meta 在进入浏览器之前即判 INPUT_DRIFT。",
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:800",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.starCount >= 50000"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "full", "minLitPixelRatio": 0.02 }
+      },
+      "threshold": "(不应执行)输入漂移应在校验最前置拦",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ]
+}

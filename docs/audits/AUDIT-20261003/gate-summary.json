@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-10-03T07:40:12.283Z",
+  "gates": {
+    "G0": {
+      "status": "PASS",
+      "note": "G0 CONTRACT_FREEZE"
+    },
+    "G1": {
+      "status": "PASS",
+      "note": "G1 TEMPLATE_EQUIVALENCE"
+    },
+    "G2": {
+      "status": "PASS",
+      "note": "G2 ISOLATION"
+    },
+    "G3": {
+      "status": "CONDITIONAL",
+      "note": "16/20 Reference PASS;E04/E05 因冻结断言与真实画面不符(F-15/F-16)待 spec 升版 → 满分线待重校"
+    },
+    "G4": {
+      "status": "PASS",
+      "note": "G4 HARNESS_TRUST"
+    },
+    "G5": {
+      "status": "PASS(HISTORICAL-PROVISIONAL:历史批次为 LEGACY_PROVISIONAL,Pilot 证明的是机制有效性)",
+      "note": "G5 PILOT_VALIDITY"
+    },
+    "G6": {
+      "status": "NOT_RUN(核心矩阵未启动;本审计后按 §20 条件评估)",
+      "note": "G6 CORE_MATRIX_COMPLETENESS"
+    },
+    "G7": {
+      "status": "BLOCKED(盲评视觉轨;objective 正式口径不受影响,visual 已隔离为 provisional)",
+      "note": "G7 BLIND_JUDGE_VALIDITY | 偏好口径(Preference Win Rate / BT)不进入实验结论;六维分数口径(双 Judge 平均)仅作 visual 分参考并披露。全量 D 轨需"
+    },
+    "G8": {
+      "status": "PASS",
+      "note": "G8 EVIDENCE_COMPLETENESS"
+    }
+  }
+}

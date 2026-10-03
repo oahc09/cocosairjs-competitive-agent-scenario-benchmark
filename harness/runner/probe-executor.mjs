@@ -1,10 +1,27 @@
 #!/usr/bin/env node
 // probe-executor.mjs — the single implementation of the probe action word table
-// (MASTER-CONTEXT §12.2), the safe stateAssertion evaluator, and the four
-// visualAssertion types (nonBlank / motion / pixelDelta / regionChange).
+// (MASTER-CONTEXT §12.2), the safe stateAssertion evaluator, and the
+// visualAssertion types (nonBlank / motion / pixelDelta / regionChange +
+// the 2026-10-02 rectification set: networkRequest / download / domText /
+// noNavigation / resourceRequestCount / consoleClean / colorRelation /
+// luminanceRelation / regionCoverage / memoryDelta / assetNoReload).
 //
 // Also runnable headless for spec dry-runs:
 //   node runner/probe-executor.mjs --dry-run --spec <spec.json>
+//
+// Strictness contract (rectification §8: "Frozen Spec 写 A, Validator 不得
+// 实际测 B; 绝不允许 unknown→fallback→PASS"):
+//   * unknown visualAssertion.type  -> SPEC_INVALID error (never a default PASS);
+//   * unknown region name           -> SPEC_INVALID unless ctx.diagnostic===true
+//     (diagnostic runs fall back to the full frame with a DIAGNOSTIC-FALLBACK
+//     note, so humans can still collect evidence while debugging);
+//   * env-dependent assertions whose data source is not wired into ctx
+//     (downloads/console/performance.memory) -> UNSUPPORTED_BY_ENV error, never
+//     a silent PASS;
+//   * probe status enum: PASS / FAIL / ERROR / SKIPPED_BY_DEPENDENCY /
+//     NOT_APPLICABLE (probe.enabled === false). Preconditions are three-way:
+//     PASS -> run; FAIL with a live page -> run anyway recording
+//     ranDespitePredecessor + predecessor; ERROR -> SKIPPED_BY_DEPENDENCY.
 //
 // Red lines: this module never evaluates spec expressions via `eval`/`Function`;
 // the jq subset is executed by a hand-written tokenizer + recursive-descent
@@ -523,20 +540,97 @@ export async function executeActionStep(page, step, ctx) {
 // ============================================================================
 
 /**
+ * LEGAL_REGION_FORMS — the closed vocabulary of region forms this executor can
+ * resolve into pixel rects. This is the contract table backing the strictness
+ * rule (rectification §8): a frozen spec that names a region outside this
+ * table is SPEC_INVALID in scoring runs; it may only fall back to the full
+ * frame when opts.diagnostic === true (fallback then loudly tagged
+ * DIAGNOSTIC-FALLBACK, and it can never be used as PASS evidence).
+ *
+ * Forms (superset of the forms the pre-rectification implementation accepted):
+ *   'full' | ''                          whole viewport
+ *   'center:N%' / 'lower:N%' / 'upper:N%'  fractional band, N percent (0-100)
+ *   'upper-third' / 'lower-third' / 'center-third'
+ *   'outer-corners' / 'center-bottom' / 'outer-frame'
+ *   'ui#<name>' / 'ui=<name>'            bbox of [data-ui=name]/[data-bench=name]
+ *   'state.<path>'                       dynamic pick target from getState()
+ *   {x,y,w,h}                            rect (values <= 1.5 are normalized)
+ *   {screenX,screenY[,screenRadius]}     pick-target-like object (E03 style)
+ *   [ ... ]                              array of any of the above
+ *   'A + B'                              multi-region string (' + ' separator)
+ *
+ * Anything else — descriptive names like 'hud', 'disk(...)', 'upper-half',
+ * 'bottom-third', annotated names like 'upper-third(天空)' — is UNKNOWN.
+ */
+/**
+ * Strip a trailing parenthesized annotation from a named region:
+ * 'upper-third(天空)' -> 'upper-third'. The annotation is prose for humans;
+ * some forms additionally mine machine parameters from it (mid-vertical-band
+ * reads an optional `x∈[a,b]` range). Never elsewhere significant.
+ */
+export const REGION_ANNOTATION_RE = /\([^)]*\)\s*$/;
+export function regionBaseName(str) {
+  return String(str).trim().replace(REGION_ANNOTATION_RE, '').trim();
+}
+
+export const NAMED_REGIONS = new Set([
+  'full', 'upper-third', 'lower-third', 'center-third', 'bottom-third', 'upper-half',
+  'outer-corners', 'center-bottom', 'outer-frame',
+  'mid-vertical-band', 'disk', 'mid-ring', 'hud',
+]);
+export const PCT_REGION_RE = /^(center|lower|upper):(\d+(?:\.\d+)?)%$/;
+export const UI_REGION_RE = /^ui[#=](.+)$/;
+export const STATE_REGION_RE = /^state\.(.+)$/;
+
+/**
+ * Static (browserless) classification of a region spec against
+ * LEGAL_REGION_FORMS. Returns {ok, unknown:[], dynamic, forms:[]}; `unknown`
+ * lists every unresolvable name/object so dry-runs and audits can report them
+ * precisely. Mirrors the runtime acceptance in resolveRegions — keep both in
+ * sync when extending the table (and bump the spec vocabulary note).
+ */
+export function classifyRegionForm(spec, acc = { unknown: [], dynamic: false, forms: [] }) {
+  const finish = () => ({ ok: acc.unknown.length === 0, unknown: [...acc.unknown], dynamic: acc.dynamic, forms: [...acc.forms] });
+  if (spec == null) { acc.forms.push('full'); return finish(); }
+  if (typeof spec === 'object' && !Array.isArray(spec)) {
+    if (typeof spec.x === 'number' && typeof spec.w === 'number') acc.forms.push('{x,y,w,h}');
+    else if (typeof spec.screenX === 'number') acc.forms.push('pickTarget');
+    else acc.unknown.push(JSON.stringify(spec).slice(0, 60));
+    return finish();
+  }
+  if (Array.isArray(spec)) {
+    for (const item of spec) classifyRegionForm(item, acc);
+    return finish();
+  }
+  const str = String(spec).trim();
+  const base = regionBaseName(str);
+
+  if (str === 'full' || str === '') acc.forms.push('full');
+  else if (str.includes('+')) { for (const part of str.split(/\s*\+\s*/)) if (part) classifyRegionForm(part, acc); }
+  else if (PCT_REGION_RE.test(str)) acc.forms.push(`pct:${PCT_REGION_RE.exec(str)[1]}`);
+  else if (NAMED_REGIONS.has(base)) { acc.forms.push(base === 'hud' ? 'hud(dom)' : base); if (base === 'hud') acc.dynamic = true; }
+  else if (UI_REGION_RE.test(str)) { acc.forms.push('ui'); acc.dynamic = true; }
+  else if (STATE_REGION_RE.test(str)) { acc.forms.push('state'); acc.dynamic = true; }
+  else acc.unknown.push(str.slice(0, 60));
+  return finish();
+}
+
+/**
  * Resolve a region spec into pixel rects on the viewport.
- * Supported: "full", "center:N%", "lower:N%", "upper:N%", "upper-third",
- * "center-third", "lower-third", "outer-corners", "center-bottom",
- * "outer-frame", "hud", "ui#x"/"ui=x" (element bbox), "state.<path>"
- * (dynamic pick target), {x,y,w,h} objects, arrays of the above, and
- * "A + B" multi-region strings. Unknown named regions fall back to the full
- * frame with a note (harness must never crash on descriptive region text).
+ * Supported forms: see LEGAL_REGION_FORMS above. Unknown named regions are
+ * reported in `unknown`; they only degrade to a full-frame rect when
+ * ctx.diagnostic === true (DIAGNOSTIC-FALLBACK note) — otherwise the caller
+ * turns them into a SPEC_INVALID assertion result (never a PASS).
+ * Returns {rects, notes, missing, unknown}.
  */
 export async function resolveRegions(spec, ctx) {
-  const { viewport, page, getState } = ctx;
-  const W = viewport.width;
-  const H = viewport.height;
+  const { viewport, page, getState } = ctx || {};
+  const diagnostic = ctx?.diagnostic === true;
+  const W = viewport?.width ?? 1280;
+  const H = viewport?.height ?? 720;
   const rects = [];
   const notes = [];
+  const unknown = [];
 
   async function resolveOne(s) {
     if (s == null) { rects.push({ x: 0, y: 0, w: W, h: H }); return; }
@@ -555,7 +649,8 @@ export async function resolveRegions(spec, ctx) {
         rects.push(pickTargetRect(s, W, H));
         return;
       }
-      notes.push(`region object unrecognized, using full frame: ${JSON.stringify(s).slice(0, 80)}`);
+      unknown.push(`unrecognized region object: ${JSON.stringify(s).slice(0, 80)}`);
+      if (diagnostic) notes.push(`DIAGNOSTIC-FALLBACK: unrecognized region object, measuring full frame: ${JSON.stringify(s).slice(0, 80)}`);
       rects.push({ x: 0, y: 0, w: W, h: H });
       return;
     }
@@ -564,16 +659,17 @@ export async function resolveRegions(spec, ctx) {
       return;
     }
     const str = String(s).trim();
+    const base = regionBaseName(str);
 
     if (str === 'full' || str === '') { rects.push({ x: 0, y: 0, w: W, h: H }); return; }
 
-    // multi region "A + B"
-    if (str.includes(' + ')) {
-      for (const part of str.split(' + ')) await resolveOne(part);
+    // multi region "A + B"(容忍 "+"/" + "/"+ " 变体分隔)
+    if (str.includes('+')) {
+      for (const part of str.split(/\s*\+\s*/)) if (part) await resolveOne(part);
       return;
     }
 
-    const pct = /^(center|lower|upper):(\d+(?:\.\d+)?)%$/.exec(str);
+    const pct = PCT_REGION_RE.exec(str);
     if (pct) {
       const p = Number(pct[2]) / 100;
       if (pct[1] === 'center') {
@@ -588,26 +684,82 @@ export async function resolveRegions(spec, ctx) {
       return;
     }
 
-    if (str === 'upper-third' || str === 'lower-third') {
+    if (base === 'upper-third' || base === 'lower-third') {
       const h = Math.round(H / 3);
-      rects.push(str === 'upper-third' ? { x: 0, y: 0, w: W, h } : { x: 0, y: H - h, w: W, h });
+      rects.push(base === 'upper-third' ? { x: 0, y: 0, w: W, h } : { x: 0, y: H - h, w: W, h });
       return;
     }
-    if (str === 'center-third') {
+    if (base === 'bottom-third') {
+      rects.push({ x: 0, y: Math.round(H * 2 / 3), w: W, h: Math.round(H / 3) });
+      return;
+    }
+    if (base === 'upper-half') {
+      rects.push({ x: 0, y: 0, w: W, h: Math.round(H / 2) });
+      return;
+    }
+    if (base === 'mid-vertical-band') {
+      // annotation may carry a machine range: x∈[0.4,0.6] (normalized); default middle third
+      let fx0 = 1 / 3, fx1 = 2 / 3;
+      const rm = /x\s*[∈=]\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]/.exec(str);
+      if (rm) { const a = Number(rm[1]), b = Number(rm[2]); if (a < b && b <= 1.5) { fx0 = a <= 1 ? a : a / W; fx1 = b <= 1 ? b : b / W; } }
+      const x0 = Math.round(W * fx0), x1 = Math.round(W * fx1);
+      rects.push({ x: x0, y: 0, w: Math.max(1, x1 - x0), h: H });
+      return;
+    }
+    if (base === 'disk') {
+      // screen-centered circular region (accretion-disk class); bbox of the circle
+      const half = Math.round(Math.min(W, H) * 0.35);
+      rects.push({ x: Math.round(W / 2 - half), y: Math.round(H / 2 - half), w: half * 2, h: half * 2 });
+      return;
+    }
+    if (base === 'mid-ring') {
+      // annulus (inner..outer radii of min-dimension), approximated by 4 side bands
+      const o = Math.round(Math.min(W, H) * 0.72);
+      const i = Math.round(Math.min(W, H) * 0.38);
+      const cx = Math.round(W / 2), cy = Math.round(H / 2);
+      rects.push(
+        { x: cx - o, y: cy - o, w: o * 2, h: Math.max(1, o - i) },                    // top band
+        { x: cx - o, y: cy + i, w: o * 2, h: Math.max(1, o - i) },                    // bottom band
+        { x: cx - o, y: cy - i, w: Math.max(1, o - i), h: i * 2 },                    // left band
+        { x: cx + i, y: cy - i, w: Math.max(1, o - i), h: i * 2 }                     // right band
+      );
+      return;
+    }
+    if (base === 'hud') {
+      // HUD overlay bbox via DOM (accepts params.locator as a descriptive hint)
+      if (!page) { unknown.push('hud(无 page,dry-run 不可解析)'); return; }
+      const sel = '[data-ui*="hud"], [data-bench*="hud"], .hud, #hud, [class*="hud" i]';
+      const box = await page.evaluate((s) => {
+        const el = document.querySelector(s);
+        if (!el) return null;
+        const r = el.getBoundingClientRect();
+        return { x: r.x, y: r.y, width: r.width, height: r.height };
+      }, sel).catch(() => null);
+      if (!box || box.width < 2) return { elementNotFound: 'hud' };
+      const pad = 16;
+      rects.push({
+        x: Math.max(0, Math.round(box.x - pad)),
+        y: Math.max(0, Math.round(box.y - pad)),
+        w: Math.min(W, Math.round(box.width + pad * 2)),
+        h: Math.min(H, Math.round(box.height + pad * 2)),
+      });
+      return;
+    }
+    if (base === 'center-third') {
       rects.push({ x: Math.round(W / 3), y: Math.round(H * 0.25), w: Math.round(W / 3), h: Math.round(H * 0.5) });
       return;
     }
-    if (str === 'outer-corners') {
+    if (base === 'outer-corners') {
       const w = Math.round(W * 0.28);
       const h = Math.round(H * 0.28);
       rects.push({ x: 0, y: 0, w, h }, { x: W - w, y: 0, w, h }, { x: 0, y: H - h, w, h }, { x: W - w, y: H - h, w, h });
       return;
     }
-    if (str === 'center-bottom') {
+    if (base === 'center-bottom') {
       rects.push({ x: Math.round(W * 0.2), y: Math.round(H * 0.55), w: Math.round(W * 0.6), h: Math.round(H * 0.45) });
       return;
     }
-    if (str === 'outer-frame') {
+    if (base === 'outer-frame') {
       const t = Math.round(H * 0.16);
       const l = Math.round(W * 0.14);
       rects.push(
@@ -619,7 +771,7 @@ export async function resolveRegions(spec, ctx) {
       return;
     }
 
-    const ui = /^ui[#=](.+)$/.exec(str);
+    const ui = UI_REGION_RE.exec(str);
     if (ui) {
       const name = ui[1].trim();
       const loc = page.locator(`[data-ui="${name}"], [data-bench="${name}"]`).first();
@@ -635,7 +787,7 @@ export async function resolveRegions(spec, ctx) {
       return;
     }
 
-    const st = /^state\.(.+)$/.exec(str);
+    const st = STATE_REGION_RE.exec(str);
     if (st) {
       const state = await getState();
       const v = resolvePathStr(state, st[1].trim());
@@ -646,8 +798,10 @@ export async function resolveRegions(spec, ctx) {
       return { elementNotFound: `state.${st[1]}` };
     }
 
-    // Descriptive named regions from frozen specs (disk, mid-ring, hud, ...)
-    notes.push(`named region "${str.slice(0, 40)}" not geometric; fell back to full frame`);
+    // Descriptive named region outside LEGAL_REGION_FORMS — the old behavior
+    // (silent full-frame fallback) is exactly what rectification §8 forbids.
+    unknown.push(str.slice(0, 40));
+    if (diagnostic) notes.push(`DIAGNOSTIC-FALLBACK: named region "${str.slice(0, 40)}" not in LEGAL_REGION_FORMS; measuring full frame`);
     rects.push({ x: 0, y: 0, w: W, h: H });
   }
 
@@ -665,19 +819,24 @@ export async function resolveRegions(spec, ctx) {
   }
 
   const missing = [];
-  const out = await (async () => {
+  await (async () => {
     const list = Array.isArray(spec) ? spec : [spec];
     for (const item of list) {
       const r = await resolveOne(item);
       if (r && r.elementNotFound) missing.push(r.elementNotFound);
     }
-    return null;
   })();
 
+  // fallbackFull marks the "nothing resolved at all -> full frame" degradation
+  // (all dynamic ui#/state. regions missing). Callers must not score a PASS
+  // off that rect when the spec named a concrete region.
+  const fallbackFull = rects.length === 0;
   return {
     rects: rects.length ? rects : [{ x: 0, y: 0, w: W, h: H }],
     notes,
     missing,
+    unknown,
+    fallbackFull,
   };
 }
 
@@ -769,6 +928,70 @@ export function diffRatio(imgA, imgB, rect, pixThreshold = 12) {
   };
 }
 
+/**
+ * Pixel-count-weighted average color statistics over a set of rects — backs
+ * colorRelation / luminanceRelation. Returns {pixels, r, g, b, luminance,
+ * avgRB} where luminance uses Rec.601-style weights on the 0-255 scale and
+ * avgRB is mean(R - B) (red-vs-blue bias used by the E05 ring-color checks).
+ */
+export function regionColorStats(img, rects) {
+  let pixels = 0;
+  let sr = 0;
+  let sg = 0;
+  let sb = 0;
+  for (const rect of rects) {
+    const rc = clampRect(rect, img.width, img.height);
+    for (let y = rc.y; y < rc.y + rc.h; y++) {
+      for (let x = rc.x; x < rc.x + rc.w; x++) {
+        const i = (y * img.width + x) * 4;
+        sr += img.data[i];
+        sg += img.data[i + 1];
+        sb += img.data[i + 2];
+        pixels++;
+      }
+    }
+  }
+  if (!pixels) return { pixels: 0, r: 0, g: 0, b: 0, luminance: 0, avgRB: 0 };
+  const r = sr / pixels;
+  const g = sg / pixels;
+  const b = sb / pixels;
+  return {
+    pixels,
+    r: Math.round(r * 100) / 100,
+    g: Math.round(g * 100) / 100,
+    b: Math.round(b * 100) / 100,
+    luminance: Math.round((0.2126 * r + 0.7152 * g + 0.0722 * b) * 100) / 100,
+    avgRB: Math.round((r - b) * 100) / 100,
+  };
+}
+
+/** 亮部加权色彩统计:只统计亮度≥litThreshold 的像素(排除背景暗像素稀释)。
+ * 用于 ringRelation 等对色相关系敏感的度量;返回形状与 regionColorStats 一致。 */
+function litColorStats(img, rects, litThreshold = 40) {
+  let pixels = 0, sr = 0, sg = 0, sb = 0, sl = 0, lit = 0, lr = 0, lb = 0;
+  for (const rect of rects) {
+    const rc = clampRect(rect, img.width, img.height);
+    for (let y = rc.y; y < rc.y + rc.h; y++) {
+      for (let x = rc.x; x < rc.x + rc.w; x++) {
+        const i = (y * img.width + x) * 4;
+        const R = img.data[i], G = img.data[i + 1], B = img.data[i + 2];
+        const L = 0.2126 * R + 0.7152 * G + 0.0722 * B;
+        pixels++;
+        if (L >= litThreshold) { lit++; sr += R; sg += G; sb += B; sl += L; lr += R; lb += B; }
+      }
+    }
+  }
+  if (!lit) return { pixels, litPixels: 0, r: 0, g: 0, b: 0, luminance: 0, avgRB: 0 };
+  return {
+    pixels, litPixels: lit,
+    r: Math.round((sr / lit) * 100) / 100,
+    g: Math.round((sg / lit) * 100) / 100,
+    b: Math.round((sb / lit) * 100) / 100,
+    luminance: Math.round((sl / lit) * 100) / 100,
+    avgRB: Math.round(((lr - lb) / lit) * 100) / 100,
+  };
+}
+
 // ============================================================================
 // 5. Visual assertions
 // ============================================================================
@@ -783,6 +1006,118 @@ const DEFAULTS = {
   frameGapMs: 500,
 };
 
+// ============================================================================
+// 5a. Visual assertion vocabulary (frozen whitelist backing dryRunSpec + audit)
+// ============================================================================
+
+/** Every visualAssertion.type this executor can evaluate. Anything else is SPEC_INVALID. */
+export const VISUAL_ASSERTION_TYPES = [
+  'nonBlank', 'motion', 'pixelDelta', 'regionChange',
+  'networkRequest', 'download', 'domText', 'noNavigation', 'resourceRequestCount',
+  'consoleClean', 'colorRelation', 'luminanceRelation', 'regionCoverage',
+  'memoryDelta', 'assetNoReload',
+];
+
+/**
+ * Known params keys per assertion type — the closed whitelist dryRunSpec audits
+ * against ("Spec 写 A, Validator 不得实际测 B": a knob the executor never
+ * reads must fail the dry-run instead of being silently ignored). Keys were
+ * collected from the pre-rectification implementation plus the new types.
+ * `expect` on the four base types is accepted but advisory/descriptive only
+ * (machine-checked only for regionChange expect ∈ {absent, visible-text}) —
+ * spec-audit.mjs reports those as PARTIAL, never as silently-checked.
+ */
+export const VISUAL_PARAM_KEYS = {
+  nonBlank: ['region', 'regions', 'minLitPixelRatio', 'minCoverage', 'ratio', 'threshold', 'litDistance', 'bgDistance', 'locator', 'expect'],
+  motion: ['region', 'regions', 'minMotionPixelRatio', 'minChangedRatio', 'ratio', 'threshold', 'spanMs', 'frameGapMs', 'intervalMs', 'pixThreshold', 'expect'],
+  pixelDelta: ['region', 'regions', 'metric', 'minShift', 'minDiffPixelRatio', 'minChangedRatio', 'ratio', 'threshold', 'pixThreshold', 'frameGapMs', 'spanMs', 'expect'],
+  regionChange: ['region', 'regions', 'expect', 'ring', 'metric', 'minDiffPixelRatio', 'minChangedRatio', 'ratio', 'threshold', 'frameGapMs', 'spanMs', 'pixThreshold'],
+  networkRequest: ['path', 'minCount', 'status'],
+  download: ['minBytes', 'count'],
+  domText: ['selector', 'textContains'],
+  noNavigation: ['sinceMs'],
+  resourceRequestCount: ['path', 'exactly', 'min', 'max'],
+  consoleClean: ['level'],
+  colorRelation: ['regionA', 'regionB', 'metric', 'min', 'max'],
+  luminanceRelation: ['regionA', 'regionB', 'metric', 'min', 'max'],
+  regionCoverage: ['region', 'minRatio', 'litDistance'],
+  memoryDelta: ['maxGrowthMB', 'sampleMs'],
+  assetNoReload: ['path', 'sinceActionIndex'],
+};
+
+/** Params keys that must be present (SPEC_INVALID when missing). */
+export const VISUAL_REQUIRED_PARAMS = {
+  networkRequest: ['path'],
+  download: [], // minBytes/count both optional (count defaults to >=1)
+  domText: ['selector', 'textContains'],
+  noNavigation: ['sinceMs'],
+  resourceRequestCount: [], // exactly|min|max checked as a group in classifyVisualAssertion
+  consoleClean: [],
+  colorRelation: ['regionA', 'regionB'],
+  luminanceRelation: ['regionA', 'regionB'],
+  regionCoverage: ['region', 'minRatio'],
+  memoryDelta: ['maxGrowthMB'],
+  assetNoReload: ['path', 'sinceActionIndex'],
+};
+
+/** Closed value enums for enumerated params. */
+export const VISUAL_PARAM_ENUMS = {
+  pixelDelta: { metric: ['diffRatio', 'avgColorShift'] },
+  regionChange: { metric: ['radiusScale'] },
+  colorRelation: { metric: ['luminanceRatio', 'avgRBDiff'] },
+  luminanceRelation: { metric: ['luminanceRatio'] },
+  consoleClean: { level: ['error', 'warning'] },
+};
+
+/**
+ * Static classification of one visualAssertion (no browser). Returns
+ * {type, problems, unknownParamKeys, unknownRegions, regionClass} — used by
+ * dryRunSpec (spec validity) and spec-audit.mjs (capability audit).
+ */
+export function classifyVisualAssertion(va) {
+  const problems = [];
+  const type = va?.type ?? null;
+  if (!type || typeof type !== 'string') {
+    return { type, problems: ['SPEC_INVALID: visualAssertion.type is missing'], unknownParamKeys: [], unknownRegions: [], regionClass: null };
+  }
+  if (!VISUAL_ASSERTION_TYPES.includes(type)) {
+    problems.push(`SPEC_INVALID: unknown assertion type ${type}`);
+  }
+  const params = va.params && typeof va.params === 'object' && !Array.isArray(va.params) ? va.params : {};
+  const known = VISUAL_PARAM_KEYS[type] ?? [];
+  const unknownParamKeys = Object.keys(params).filter((k) => !known.includes(k));
+  for (const k of unknownParamKeys) problems.push(`SPEC_INVALID: unknown params key "${k}" for ${type}`);
+
+  for (const [t, enums] of Object.entries(VISUAL_PARAM_ENUMS)) {
+    if (t !== type) continue;
+    for (const [key, allowed] of Object.entries(enums)) {
+      if (params[key] == null || allowed.includes(params[key])) continue;
+      // regionChange.metric 接受语义化半径描述(规范化为 radiusScale,运行期真测)
+      if (t === 'regionChange' && key === 'metric' && /半径|radius/i.test(String(params[key]))) continue;
+      problems.push(`SPEC_INVALID: ${type}.${key} must be one of ${allowed.join('|')} (got ${JSON.stringify(params[key]).slice(0, 60)})`);
+    }
+  }
+  for (const k of VISUAL_REQUIRED_PARAMS[type] ?? []) {
+    if (params[k] == null) problems.push(`SPEC_INVALID: ${type} requires params.${k}`);
+  }
+  if (type === 'resourceRequestCount' && params.exactly == null && params.min == null && params.max == null) {
+    problems.push('SPEC_INVALID: resourceRequestCount requires at least one of exactly|min|max');
+  }
+
+  let regionClass = null;
+  const unknownRegions = [];
+  if (type === 'colorRelation' || type === 'luminanceRelation') {
+    const a = classifyRegionForm(params.regionA);
+    const b = classifyRegionForm(params.regionB);
+    regionClass = { ok: a.ok && b.ok, unknown: [...a.unknown, ...b.unknown], dynamic: a.dynamic || b.dynamic, forms: [...a.forms, ...b.forms] };
+  } else if (known.includes('region') || known.includes('regions')) {
+    regionClass = classifyRegionForm(params.regions ?? params.region ?? 'full');
+  }
+  if (regionClass) unknownRegions.push(...regionClass.unknown);
+  for (const u of unknownRegions) problems.push(`SPEC_INVALID: unknown region ${JSON.stringify(u)}`);
+  return { type, problems, unknownParamKeys, unknownRegions, regionClass };
+}
+
 function pickNumber(params, keys, fallback) {
   for (const k of keys) {
     const v = params?.[k];
@@ -793,6 +1128,20 @@ function pickNumber(params, keys, fallback) {
 
 async function shoot(page) {
   return decodePng(await page.screenshot({ type: 'png' }));
+}
+
+/**
+ * Strict-region guard: after resolveRegions, an `unknown` region list turns the
+ * whole assertion into SPEC_INVALID unless ctx.diagnostic === true (in which
+ * case resolveRegions already recorded the DIAGNOSTIC-FALLBACK note and the
+ * degraded full-frame measurement proceeds — diagnostic output only, never
+ * usable as PASS evidence for the region the spec actually named).
+ */
+function guardUnknownRegions(rr, ctx, meta) {
+  if (rr?.unknown?.length && ctx?.diagnostic !== true) {
+    return { ok: false, ...meta, error: `SPEC_INVALID: unknown region ${rr.unknown.join(', ')}`, metrics: { unknownRegions: [...rr.unknown] } };
+  }
+  return null;
 }
 
 /**
@@ -813,6 +1162,8 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
         const regionSpec = params.regions ?? params.region ?? 'full';
         const rr = await resolveRegions(regionSpec, ctx);
         notes.push(...rr.notes);
+        const bad = guardUnknownRegions(rr, ctx, meta);
+        if (bad) return bad;
         const frame = await shoot(page);
         await ctx.saveShot(frame, 'vis');
         const perRegion = [];
@@ -830,6 +1181,8 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
         const regionSpec = params.regions ?? params.region ?? 'full';
         const rr = await resolveRegions(regionSpec, ctx);
         notes.push(...rr.notes);
+        const bad = guardUnknownRegions(rr, ctx, meta);
+        if (bad) return bad;
         const f1 = await shoot(page);
         await ctx.saveShot(f1, 'motion-a');
         await sleep(spanMs);
@@ -845,11 +1198,19 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
       }
       case 'pixelDelta': {
         const metric = params.metric || 'diffRatio';
+        // Rectification §8: an unrecognized metric value used to silently fall
+        // through to the diffRatio branch (spec wrote a semantic, validator
+        // measured something else). Now it is SPEC_INVALID.
+        if (!VISUAL_PARAM_ENUMS.pixelDelta.metric.includes(metric)) {
+          return { ok: false, ...meta, error: `SPEC_INVALID: pixelDelta.metric must be one of ${VISUAL_PARAM_ENUMS.pixelDelta.metric.join('|')} (got ${JSON.stringify(params.metric).slice(0, 60)})`, metrics: {} };
+        }
         if (metric === 'avgColorShift') {
           const minShift = pickNumber(params, ['minShift'], 8);
           const regionSpec = params.regions ?? params.region ?? 'full';
           const rr = await resolveRegions(regionSpec, ctx);
           notes.push(...rr.notes);
+          const bad = guardUnknownRegions(rr, ctx, meta);
+          if (bad) return bad;
           const before = shotBefore ?? (await shoot(page));
           const after = await shoot(page);
           await ctx.saveShot(after, 'delta');
@@ -866,6 +1227,8 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
         const regionSpec = params.regions ?? params.region ?? 'full';
         const rr = await resolveRegions(regionSpec, ctx);
         notes.push(...rr.notes);
+        const bad = guardUnknownRegions(rr, ctx, meta);
+        if (bad) return bad;
         const gapMs = pickNumber(params, ['frameGapMs', 'spanMs'], null);
         let before;
         let after;
@@ -897,30 +1260,65 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
       case 'regionChange': {
         const expect = params.expect;
         const regionSpec = params.region ?? params.regions;
-        // DOM-presence expectations resolved purely in the DOM
+        // --- 语义扩展分支(整改 §8:E05 冻结 spec 的 ring/metric 参数必须被真测,不得降级) ---
+        // ring:内环 vs 外环的颜色关系(内更亮偏白 / 外偏橙红)——单帧双区域采样
+        if (params.ring != null) {
+          const frame = shotBefore ?? (await shoot(page));
+          const W_ = ctx?.viewport?.width ?? frame.width ?? 1280;
+          const H_ = ctx?.viewport?.height ?? frame.height ?? 720;
+          // 校准环带:沿盘面主轴(水平)的左右横向切片,避开上下方向背景星空
+          // 内环带 r∈[0.15,0.32](白/蓝白);外环带 r∈[0.42,0.58](橙红);切片高 0.12×min(W,H)
+          const annulusBands = (r0, r1) => {
+            const o = Math.round(Math.min(W_, H_) * r1), i = Math.round(Math.min(W_, H_) * r0);
+            const cx = Math.round(W_ / 2), cy = Math.round(H_ / 2);
+            const hh = Math.max(2, Math.round(Math.min(W_, H_) * 0.06));
+            return [
+              { x: cx - o, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 },
+              { x: cx + i, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 },
+            ];
+          };
+          const innerStats = litColorStats(frame, annulusBands(0.15, 0.32));
+          const outerStats = litColorStats(frame, annulusBands(0.42, 0.58));
+          const innerLum = innerStats.luminance, outerLum = outerStats.luminance;
+          const innerRB = innerStats.avgRB, outerRB = outerStats.avgRB;
+          const ok = innerLum >= outerLum * 1.1 && (outerRB - innerRB) >= 8;
+          return { ok, ...meta, metrics: { mode: 'ringRelation', innerLum, outerLum, lumRatio: Math.round((innerLum / Math.max(1, outerLum)) * 100) / 100, innerRB, outerRB } };
+        }
+        // metric=半径/radius:缩放前后"暗核半径"变化(中心连续暗弧的屏幕半径)
+        if (params.metric != null && /半径|radius/i.test(String(params.metric))) {
+          const before = shotBefore ?? (await shoot(page));
+          await sleep(pickNumber(params, ['spanMs', 'frameGapMs'], DEFAULTS.frameGapMs));
+          const after = await shoot(page);
+          // 暗核半径:从中线中心向两侧扫描,直到亮度超过暗阈值(<35)或离开中心 45% 区域
+          const darkRadius = (img) => {
+            const cy = Math.round(img.height / 2), cx = Math.round(img.width / 2);
+            const maxR = Math.round(Math.min(img.width, img.height) * 0.45);
+            const darkAt = (x, y) => { const i = (y * img.width + x) * 4; return img.data[i] < 35 && img.data[i + 1] < 35 && img.data[i + 2] < 35; };
+            if (!darkAt(cx, cy)) return 0; // 中心不暗:暗核不可测
+            let rl = 0, rr = 0;
+            for (let d = 1; d < maxR; d++) { if (!darkAt(cx - d, cy)) { rl = d; break; } rl = d; }
+            for (let d = 1; d < maxR; d++) { if (!darkAt(cx + d, cy)) { rr = d; break; } rr = d; }
+            return Math.round((rl + rr) / 2);
+          };
+          const b = darkRadius(before), a = darkRadius(after);
+          if (!b || !a) return { ok: false, ...meta, error: 'radiusScale: dark core not measurable at center (is this a black-hole scene?)', metrics: { mode: 'radiusScale', beforeR: b, afterR: a } };
+          const ratio = a / b;
+          return { ok: ratio >= 1.2, ...meta, metrics: { mode: 'radiusScale', beforeR: b, afterR: a, scaleRatio: Math.round(ratio * 100) / 100 } };
+        }
+        // DOM-presence expectations resolved purely in the DOM. expect=absent /
         if (expect === 'absent' || expect === 'visible-text') {
-          const m = typeof regionSpec === 'string' ? /^ui[#=](.+)$/.exec(regionSpec.trim()) : null;
+          const m = typeof regionSpec === 'string' ? UI_REGION_RE.exec(regionSpec.trim()) : null;
           if (!m) {
-            notes.push(`expect=${expect} needs a ui region; got ${JSON.stringify(regionSpec)} — checking full-frame text instead`);
+            return { ok: false, ...meta, error: `SPEC_INVALID: expect=${expect} requires a ui#<name> / ui=<name> region (got ${JSON.stringify(regionSpec)})`, metrics: {} };
           }
+          const loc = page.locator(`[data-ui="${m[1].trim()}"], [data-bench="${m[1].trim()}"]`).first();
+          const found = (await loc.count()) > 0;
+          const visible = found ? await loc.isVisible().catch(() => false) : false;
           if (expect === 'absent') {
-            if (m) {
-              const loc = page.locator(`[data-ui="${m[1].trim()}"], [data-bench="${m[1].trim()}"]`).first();
-              const found = (await loc.count()) > 0;
-              const visible = found ? await loc.isVisible().catch(() => false) : false;
-              return { ok: !visible, ...meta, metrics: { domCheck: 'absent', locator: m[1], found, visible } };
-            }
-            return { ok: true, ...meta, metrics: { domCheck: 'absent', fallback: 'no-ui-region', note: 'treated as pass without a ui region (no positive claim made)' } };
+            return { ok: !visible, ...meta, metrics: { domCheck: 'absent', locator: m[1], found, visible } };
           }
-          if (m) {
-            const loc = page.locator(`[data-ui="${m[1].trim()}"], [data-bench="${m[1].trim()}"]`).first();
-            const found = (await loc.count()) > 0;
-            const visible = found ? await loc.isVisible().catch(() => false) : false;
-            const text = visible ? ((await loc.innerText().catch(() => '')) || '').trim() : '';
-            return { ok: visible && text.length > 0, ...meta, metrics: { domCheck: 'visible-text', locator: m[1], found, visible, textLength: text.length, textPreview: text.slice(0, 60) } };
-          }
-          const bodyText = (await page.evaluate(() => (document.body?.innerText || '').trim()).catch(() => '')) || '';
-          return { ok: bodyText.length > 0, ...meta, metrics: { domCheck: 'visible-text-fallback', textLength: bodyText.length } };
+          const text = visible ? ((await loc.innerText().catch(() => '')) || '').trim() : '';
+          return { ok: visible && text.length > 0, ...meta, metrics: { domCheck: 'visible-text', locator: m[1], found, visible, textLength: text.length, textPreview: text.slice(0, 60) } };
         }
         // pixel-based region change
         const minRatio = pickNumber(params, ['minDiffPixelRatio', 'minChangedRatio', 'ratio', 'threshold'], DEFAULTS.regionChangeRatio);
@@ -928,8 +1326,13 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
         const pixThreshold = pickNumber(params, ['pixThreshold'], DEFAULTS.pixThreshold);
         const rr = await resolveRegions(regionSpec ?? 'full', ctx);
         notes.push(...rr.notes);
-        if (rr.missing.length && !expect) {
-          return { ok: false, ...meta, error: `region not found: ${rr.missing.join(', ')}`, metrics: { missing: rr.missing } };
+        const bad = guardUnknownRegions(rr, ctx, meta);
+        if (bad) return bad;
+        if (rr.missing.length && (!expect || rr.fallbackFull)) {
+          // Nothing resolved at all: with the old code an `expect` could still
+          // PASS off the full-frame fallback rect while the spec named a
+          // concrete (dynamic) region — unknown→fallback→PASS, now closed.
+          return { ok: false, ...meta, error: `region not found: ${rr.missing.join(', ')}`, metrics: { missing: rr.missing, expect: expect ?? null } };
         }
         if (rr.missing.length) notes.push(`missing regions treated as unchanged: ${rr.missing.join(', ')}`);
         const f1 = await shoot(page);
@@ -943,10 +1346,241 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
           perRegion.push({ rect, diffRatio: Math.round(d.ratio * 10000) / 10000 });
         }
         const max = Math.max(0, ...perRegion.map((p) => p.diffRatio));
-        return { ok: max >= minRatio && rr.rects.length > 0, ...meta, metrics: { minRatio, gapMs, perRegion, bestDiffRatio: max, missing: rr.missing } };
+        return { ok: max >= minRatio && rr.rects.length > 0, ...meta, metrics: { minRatio, gapMs, perRegion, bestDiffRatio: max, missing: rr.missing, expect: expect ?? null } };
+      }
+      // ------------------------------------------------------------------
+      // Evidence-source assertions (rectification §9). Data sources, in order:
+      //   ctx.networkSince(tsIso)  — serve-log requests {ts,method,url,status,bytes}
+      //                              (wired by validate.mjs since the pilots);
+      //   ctx.downloads()|array    — browser download collector (must be wired
+      //                              by the caller; else UNSUPPORTED_BY_ENV);
+      //   ctx.consoleSince(tsIso)|ctx.consoleEntries — console collector;
+      //   page.evaluate            — performance.memory / location.href;
+      //   ctx.urlLog               — [{ts,url}] samples maintained by runProbes;
+      //   ctx.byId                 — prior probe results (startedTs per probe).
+      // A missing data source is UNSUPPORTED_BY_ENV (error), never a PASS.
+      // ------------------------------------------------------------------
+      case 'networkRequest': {
+        if (typeof params.path !== 'string' || !params.path) return { ok: false, ...meta, error: 'SPEC_INVALID: networkRequest requires params.path', metrics: {} };
+        const minCount = pickNumber(params, ['minCount'], 1);
+        const status = params.status;
+        if (status != null && !Number.isFinite(Number(status))) return { ok: false, ...meta, error: 'SPEC_INVALID: networkRequest.status must be a number', metrics: {} };
+        if (typeof ctx.networkSince !== 'function') return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: ctx.networkSince not wired (serve request log unavailable)', metrics: {} };
+        const events = ctx.networkSince(ctx.startedTs ?? '') ?? [];
+        const matched = events.filter((e) =>
+          String(e.url ?? e.path ?? '').includes(params.path) && (status == null || Number(e.status) === Number(status)));
+        return {
+          ok: matched.length >= minCount,
+          ...meta,
+          metrics: { path: params.path, minCount, status: status ?? null, count: matched.length, matched: matched.slice(-20) },
+        };
+      }
+      case 'download': {
+        const count = pickNumber(params, ['count'], 1);
+        const minBytes = params.minBytes;
+        if (minBytes != null && !Number.isFinite(Number(minBytes))) return { ok: false, ...meta, error: 'SPEC_INVALID: download.minBytes must be a number', metrics: {} };
+        const list = typeof ctx.downloads === 'function' ? ctx.downloads() : Array.isArray(ctx.downloads) ? ctx.downloads : null;
+        if (!list) return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: ctx.downloads not wired (browser download collector unavailable)', metrics: {} };
+        const totalBytes = list.reduce((a, d) => a + (Number(d?.bytes) || 0), 0);
+        const ok = list.length >= count && (minBytes == null || totalBytes >= Number(minBytes));
+        return {
+          ok,
+          ...meta,
+          metrics: { count: list.length, minCount: count, totalBytes, minBytes: minBytes ?? null, downloads: list.map((d) => ({ filename: d.filename, bytes: d.bytes, error: d.error || null })) },
+        };
+      }
+      case 'domText': {
+        if (typeof params.selector !== 'string' || !params.selector) return { ok: false, ...meta, error: 'SPEC_INVALID: domText requires params.selector', metrics: {} };
+        if (typeof params.textContains !== 'string' || !params.textContains) return { ok: false, ...meta, error: 'SPEC_INVALID: domText requires params.textContains', metrics: {} };
+        const loc = page.locator(params.selector);
+        const found = (await loc.count().catch(() => 0)) > 0;
+        if (!found) return { ok: false, ...meta, metrics: { selector: params.selector, found: false, contains: params.textContains } };
+        const text = ((await loc.first().innerText().catch(() => '')) || '').trim();
+        return {
+          ok: text.includes(params.textContains),
+          ...meta,
+          metrics: { selector: params.selector, found: true, textLength: text.length, textPreview: text.slice(0, 80), contains: params.textContains },
+        };
+      }
+      case 'noNavigation': {
+        const sinceMs = pickNumber(params, ['sinceMs'], null);
+        if (sinceMs == null || sinceMs < 0) return { ok: false, ...meta, error: 'SPEC_INVALID: noNavigation requires params.sinceMs (non-negative ms)', metrics: {} };
+        let urlNow = null;
+        if (typeof page.url === 'function') {
+          const u = page.url();
+          urlNow = typeof u?.then === 'function' ? await u : u;
+        } else if (typeof ctx.currentUrl === 'function') {
+          urlNow = await ctx.currentUrl();
+        }
+        if (urlNow == null) return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: cannot read the current page URL', metrics: {} };
+        const log = Array.isArray(ctx.urlLog) ? ctx.urlLog : [];
+        const cutoff = Date.now() - sinceMs;
+        let ref = null;
+        for (const e of log) {
+          if (Date.parse(e.ts) <= cutoff) ref = e;
+          else break;
+        }
+        if (ref == null) ref = log[0] ?? null;
+        if (ref == null) return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: no URL history sampled for the requested window', metrics: {} };
+        log.push({ ts: isoNow(), url: urlNow }); // extend history for later probes
+        return {
+          ok: urlNow === ref.url,
+          ...meta,
+          metrics: { sinceMs, urlNow, urlAt: ref.url, urlAtTs: ref.ts, navigated: urlNow !== ref.url },
+        };
+      }
+      case 'resourceRequestCount': {
+        if (typeof params.path !== 'string' || !params.path) return { ok: false, ...meta, error: 'SPEC_INVALID: resourceRequestCount requires params.path', metrics: {} };
+        const hasExactly = params.exactly != null;
+        const hasMin = params.min != null;
+        const hasMax = params.max != null;
+        if (!hasExactly && !hasMin && !hasMax) return { ok: false, ...meta, error: 'SPEC_INVALID: resourceRequestCount requires at least one of exactly|min|max', metrics: {} };
+        if (hasExactly && (hasMin || hasMax)) return { ok: false, ...meta, error: 'SPEC_INVALID: resourceRequestCount.exactly is mutually exclusive with min|max', metrics: {} };
+        for (const [k, v] of [['exactly', params.exactly], ['min', params.min], ['max', params.max]]) {
+          if (v != null && (!Number.isFinite(Number(v)) || Number(v) < 0)) return { ok: false, ...meta, error: `SPEC_INVALID: resourceRequestCount.${k} must be a non-negative number`, metrics: {} };
+        }
+        if (typeof ctx.networkSince !== 'function') return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: ctx.networkSince not wired (serve request log unavailable)', metrics: {} };
+        const events = ctx.networkSince(ctx.sessionStartTs ?? ctx.startedTs ?? '') ?? [];
+        const matched = events.filter((e) => String(e.url ?? e.path ?? '').includes(params.path));
+        let ok;
+        if (hasExactly) ok = matched.length === Number(params.exactly);
+        else {
+          ok = true;
+          if (hasMin) ok = ok && matched.length >= Number(params.min);
+          if (hasMax) ok = ok && matched.length <= Number(params.max);
+        }
+        return {
+          ok,
+          ...meta,
+          metrics: { path: params.path, count: matched.length, exactly: hasExactly ? Number(params.exactly) : null, min: hasMin ? Number(params.min) : null, max: hasMax ? Number(params.max) : null, matched: matched.slice(-20) },
+        };
+      }
+      case 'consoleClean': {
+        const level = params.level ?? 'error';
+        if (!VISUAL_PARAM_ENUMS.consoleClean.level.includes(level)) {
+          return { ok: false, ...meta, error: `SPEC_INVALID: consoleClean.level must be one of ${VISUAL_PARAM_ENUMS.consoleClean.level.join('|')}`, metrics: {} };
+        }
+        const entries = typeof ctx.consoleSince === 'function'
+          ? (ctx.consoleSince(ctx.startedTs ?? '') ?? [])
+          : Array.isArray(ctx.consoleEntries) ? ctx.consoleEntries : null;
+        if (!entries) return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: ctx.consoleSince/consoleEntries not wired (console collector unavailable)', metrics: {} };
+        const bad = entries.filter((e) => String(e?.type ?? '').toLowerCase() === String(level).toLowerCase());
+        return {
+          ok: bad.length === 0,
+          ...meta,
+          metrics: { level, count: bad.length, sample: bad.slice(-10).map((e) => String(e?.text ?? '').slice(0, 120)) },
+        };
+      }
+      case 'colorRelation':
+      case 'luminanceRelation': {
+        const shorthand = va.type === 'luminanceRelation';
+        const metric = params.metric ?? 'luminanceRatio';
+        const allowed = shorthand ? VISUAL_PARAM_ENUMS.luminanceRelation.metric : VISUAL_PARAM_ENUMS.colorRelation.metric;
+        if (!allowed.includes(metric)) {
+          return { ok: false, ...meta, error: `SPEC_INVALID: ${va.type}.metric must be one of ${allowed.join('|')} (got ${JSON.stringify(params.metric).slice(0, 60)})`, metrics: {} };
+        }
+        if (params.regionA == null || params.regionB == null) return { ok: false, ...meta, error: `SPEC_INVALID: ${va.type} requires params.regionA and params.regionB`, metrics: {} };
+        if (params.min == null && params.max == null) return { ok: false, ...meta, error: `SPEC_INVALID: ${va.type} requires params.min and/or params.max`, metrics: {} };
+        const rrA = await resolveRegions(params.regionA, ctx);
+        notes.push(...rrA.notes);
+        const badA = guardUnknownRegions(rrA, ctx, meta);
+        if (badA) return badA;
+        const rrB = await resolveRegions(params.regionB, ctx);
+        notes.push(...rrB.notes);
+        const badB = guardUnknownRegions(rrB, ctx, meta);
+        if (badB) return badB;
+        const frame = await shoot(page);
+        await ctx.saveShot(frame, 'color');
+        const sA = regionColorStats(frame, rrA.rects);
+        const sB = regionColorStats(frame, rrB.rects);
+        let value;
+        if (metric === 'luminanceRatio') {
+          // Guard near-black denominators: a ratio against darkness is either
+          // unbounded (A lit, B black) or vacuous (both black -> 1).
+          value = sB.luminance >= 1 ? sA.luminance / sB.luminance : sA.luminance >= 1 ? Infinity : 1;
+        } else {
+          value = Math.abs(sA.avgRB - sB.avgRB);
+        }
+        const ok = (params.min == null || value >= Number(params.min)) && (params.max == null || value <= Number(params.max));
+        return {
+          ok,
+          ...meta,
+          metrics: {
+            metric, value: Number.isFinite(value) ? Math.round(value * 1000) / 1000 : String(value),
+            min: params.min ?? null, max: params.max ?? null,
+            regionA: { ...sA, rects: rrA.rects.length }, regionB: { ...sB, rects: rrB.rects.length },
+          },
+        };
+      }
+      case 'regionCoverage': {
+        if (typeof params.minRatio !== 'number' || !Number.isFinite(params.minRatio)) return { ok: false, ...meta, error: 'SPEC_INVALID: regionCoverage requires params.minRatio (number)', metrics: {} };
+        if (params.region == null) return { ok: false, ...meta, error: 'SPEC_INVALID: regionCoverage requires params.region', metrics: {} };
+        const litDistance = pickNumber(params, ['litDistance'], DEFAULTS.litDistance);
+        const rr = await resolveRegions(params.region, ctx);
+        notes.push(...rr.notes);
+        const bad = guardUnknownRegions(rr, ctx, meta);
+        if (bad) return bad;
+        const frame = await shoot(page);
+        await ctx.saveShot(frame, 'coverage');
+        const perRegion = rr.rects.map((rect) => {
+          const m = litRatio(frame, rect, litDistance);
+          return { rect, coverage: Math.round(m.ratio * 10000) / 10000 };
+        });
+        const min = Math.min(...perRegion.map((p) => p.coverage));
+        return { ok: min >= params.minRatio, ...meta, metrics: { minRatio: params.minRatio, litDistance, perRegion, worstCoverage: min } };
+      }
+      case 'memoryDelta': {
+        if (typeof params.maxGrowthMB !== 'number' || !Number.isFinite(params.maxGrowthMB) || params.maxGrowthMB < 0) {
+          return { ok: false, ...meta, error: 'SPEC_INVALID: memoryDelta requires params.maxGrowthMB (non-negative number)', metrics: {} };
+        }
+        const sampleMs = pickNumber(params, ['sampleMs'], 1000);
+        const sample = () => page.evaluate(() =>
+          performance.memory && typeof performance.memory.usedJSHeapSize === 'number'
+            ? { usedJSHeapSize: performance.memory.usedJSHeapSize }
+            : null);
+        const a = await sample().catch(() => null);
+        if (!a) return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: performance.memory unavailable in this environment', metrics: {} };
+        if (sampleMs > 0) await sleep(sampleMs);
+        const b = await sample().catch(() => null);
+        if (!b) return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: performance.memory unavailable in this environment', metrics: {} };
+        const growthMB = (b.usedJSHeapSize - a.usedJSHeapSize) / 1048576;
+        return {
+          ok: growthMB <= params.maxGrowthMB,
+          ...meta,
+          metrics: {
+            usedBeforeMB: Math.round((a.usedJSHeapSize / 1048576) * 100) / 100,
+            usedAfterMB: Math.round((b.usedJSHeapSize / 1048576) * 100) / 100,
+            growthMB: Math.round(growthMB * 1000) / 1000,
+            maxGrowthMB: params.maxGrowthMB, sampleMs,
+          },
+        };
+      }
+      case 'assetNoReload': {
+        if (typeof params.path !== 'string' || !params.path) return { ok: false, ...meta, error: 'SPEC_INVALID: assetNoReload requires params.path', metrics: {} };
+        if (params.sinceActionIndex == null) return { ok: false, ...meta, error: 'SPEC_INVALID: assetNoReload requires params.sinceActionIndex', metrics: {} };
+        const raw = params.sinceActionIndex;
+        const ref = typeof raw === 'number' && Number.isInteger(raw) ? `P${raw}`
+          : typeof raw === 'string' && /^P\d+$/i.test(raw.trim()) ? raw.trim().toUpperCase()
+          : typeof raw === 'string' && /^\d+$/.test(raw.trim()) ? `P${raw.trim()}`
+          : null;
+        if (!ref) return { ok: false, ...meta, error: `SPEC_INVALID: cannot resolve sinceActionIndex ${JSON.stringify(raw).slice(0, 40)} (use a probe number or "P<n>")`, metrics: {} };
+        const prior = typeof ctx.byId?.get === 'function' ? ctx.byId.get(ref) : null;
+        const sinceTs = prior?.startedTs;
+        if (!sinceTs) return { ok: false, ...meta, error: `SPEC_INVALID: sinceActionIndex references unknown probe ${ref}`, metrics: {} };
+        if (typeof ctx.networkSince !== 'function') return { ok: false, ...meta, error: 'UNSUPPORTED_BY_ENV: ctx.networkSince not wired (serve request log unavailable)', metrics: {} };
+        const events = ctx.networkSince(sinceTs) ?? [];
+        const matched = events.filter((e) => String(e.url ?? e.path ?? '').includes(params.path));
+        return {
+          ok: matched.length === 0,
+          ...meta,
+          metrics: { path: params.path, sinceProbe: ref, sinceTs, requests: matched.length, matched: matched.slice(-10) },
+        };
       }
       default:
-        return { ok: false, ...meta, error: `unknown visualAssertion type: ${va.type}` };
+        // Rectification §8a: unknown types used to fall into this branch with
+        // a bare error string; now uniformly SPEC_INVALID-prefixed so callers
+        // (and validate.mjs classification) can distinguish spec problems.
+        return { ok: false, ...meta, error: `SPEC_INVALID: unknown assertion type: ${va.type}`, metrics: {} };
     }
   } catch (e) {
     return { ok: false, ...meta, error: e.message, metrics: {} };
@@ -976,13 +1610,37 @@ async function callReset(page) {
 }
 
 /**
+ * Probe status enum (rectification §11): PASS / FAIL / ERROR /
+ * SKIPPED_BY_DEPENDENCY / NOT_APPLICABLE (probe.enabled === false).
+ * Downstream consumers (validate.mjs classify, score.mjs, aggregate) only
+ * branch on PASS / FAIL / ERROR, so the two new non-final statuses inherit the
+ * old SKIPPED treatment (counted in the S2 denominator, never a PASS).
+ */
+export const PROBE_STATUSES = ['PASS', 'FAIL', 'ERROR', 'SKIPPED_BY_DEPENDENCY', 'NOT_APPLICABLE'];
+
+/**
  * Evaluate a probe precondition like "__appReady", "P1 passed",
  * "P4 passed && $.timeScale == 8", "__appReady && P1 passed".
+ *
+ * Three-way outcome (rectification §11):
+ *   PASS  — every part held;
+ *   FAIL  — at least one part is cleanly false, none errored;
+ *   ERROR — some part could not be evaluated (state sampling failed, jq parse
+ *           error, reference to a probe that does not exist, unknown syntax).
+ * The caller runs the probe on PASS and on FAIL-with-live-page; ERROR skips
+ * the probe as SKIPPED_BY_DEPENDENCY.
+ * Returns {met, outcome, details, failedProbeParts, errorPart}.
  */
 export async function checkPrecondition(pre, ctx, priorById) {
   const parts = String(pre).split('&&').map((s) => s.trim()).filter(Boolean);
   const details = [];
+  const failedProbeParts = [];
   let met = true;
+  let errorPart = null;
+  const fail = (part, source, extra) => {
+    details.push({ part, met: false, source, ...extra });
+    met = false;
+  };
   for (const part of parts) {
     if (part === '__appReady') {
       const v = ctx.appReady === true;
@@ -990,31 +1648,84 @@ export async function checkPrecondition(pre, ctx, priorById) {
       met = met && v;
       continue;
     }
-    const prior = /^P(\d+)(?:\s+passed)?$/.exec(part);
+    const prior = /^P(\d+)(?:\s+passed)?$/i.exec(part);
     if (prior) {
       const pid = `P${prior[1]}`;
-      const v = priorById.get(pid)?.status === 'PASS';
-      details.push({ part, met: v, source: `probe ${pid}` });
+      const pr = priorById?.get?.(pid);
+      if (!pr) {
+        // references a probe that does not exist (or has not run) -> spec error
+        fail(part, `probe ${pid}`, { error: `referenced probe ${pid} does not exist` });
+        errorPart = errorPart || part;
+        continue;
+      }
+      const v = pr.status === 'PASS';
+      if (!v) failedProbeParts.push(pid);
+      details.push({ part, met: v, source: `probe ${pid}`, status: pr.status });
       met = met && v;
       continue;
     }
     if (part.startsWith('$.') || part === '$') {
       const s = await sampleState(ctx.page);
-      const r = s.ok ? evalJq(part, s.value ?? {}) : { ok: false, error: s.error };
-      details.push({ part, met: r.ok === true && r.value === true, source: 'state', error: r.error });
-      met = met && r.ok === true && r.value === true;
+      if (!s.ok) {
+        fail(part, 'state', { error: s.error });
+        errorPart = errorPart || part;
+        continue;
+      }
+      const r = evalJq(part, s.value ?? {});
+      if (!r.ok) {
+        fail(part, 'state', { error: r.error });
+        errorPart = errorPart || part;
+        continue;
+      }
+      const v = r.value === true;
+      details.push({ part, met: v, source: 'state', value: r.value });
+      met = met && v;
       continue;
     }
     if (part === 'true') { details.push({ part, met: true, source: 'literal' }); continue; }
-    details.push({ part, met: false, source: 'unknown' });
-    met = false;
+    fail(part, 'unknown', { error: 'unrecognized precondition syntax' });
+    errorPart = errorPart || part;
   }
-  return { met, details };
+  const outcome = errorPart ? 'ERROR' : met ? 'PASS' : 'FAIL';
+  return { met, outcome, details, failedProbeParts, errorPart };
+}
+
+/** Best-effort current page URL (playwright page.url() is sync; fakes may be async). */
+async function currentPageUrl(page) {
+  try {
+    if (typeof page?.url === 'function') {
+      const u = page.url();
+      return typeof u?.then === 'function' ? await u : u;
+    }
+  } catch { /* fall through */ }
+  try {
+    if (typeof page?.evaluate === 'function') {
+      return await Promise.race([page.evaluate(() => location.href), sleep(1500).then(() => null)]);
+    }
+  } catch { /* fall through */ }
+  return null;
+}
+
+/** Liveness probe for the cascade rule: FAIL-precondition probes still run when the page survives. */
+async function pageAlive(page) {
+  try {
+    if (typeof page?.evaluate !== 'function') return true; // cannot probe -> assume alive, let the probe body surface the error
+    const v = await Promise.race([page.evaluate(() => true), sleep(2500).then(() => 'timeout')]);
+    return v === true;
+  } catch {
+    return false;
+  }
 }
 
 /**
  * Execute all probes of a spec sequentially.
- * ctx = {page, viewport, appReady, networkSince(tsIso), outShot(name, frame), shotDir, probeIdPrefix}
+ * ctx = {page, viewport, appReady, networkSince(tsIso), outShot(name, frame),
+ *        shotDir, probeIdPrefix,
+ *        diagnostic?,                  // true: unknown regions degrade (never for scoring)
+ *        probeMeta?,                   // {fullPassDeps: {probeId: [depProbeIds]}} hard state deps
+ *        downloads?,                   // array or () -> array of {filename,bytes,error}
+ *        consoleSince?(tsIso),         // () -> console entries since ts
+ *        consoleEntries?}              // flat array fallback
  * Returns {results, byId, passed, passedWeight, totalWeight}.
  */
 export async function runProbes(spec, ctx) {
@@ -1022,6 +1733,10 @@ export async function runProbes(spec, ctx) {
   const byId = new Map();
   const probes = Array.isArray(spec?.probes) ? spec.probes : [];
   const getState = () => sampleState(ctx.page).then((s) => s.value ?? {});
+  const sessionStartTs = isoNow();
+  const firstUrl = await currentPageUrl(ctx.page);
+  const urlLog = firstUrl != null ? [{ ts: sessionStartTs, url: firstUrl }] : [];
+  const fullPassDeps = ctx?.probeMeta?.fullPassDeps ?? {};
 
   for (const probe of probes) {
     const probeId = probe.probeId || `P${results.length + 1}`;
@@ -1046,6 +1761,7 @@ export async function runProbes(spec, ctx) {
       probeId,
       weight,
       status: 'ERROR',
+      startedTs,
       precondition: null,
       action: { raw: probe.action ?? null, steps: [], durationMs: 0 },
       stateAssertion: null,
@@ -1054,21 +1770,81 @@ export async function runProbes(spec, ctx) {
       timings: {},
     };
 
+    // NOT_APPLICABLE: the spec itself disabled this probe (excluded from S2
+    // weights; recorded so evidence chains stay complete).
+    if (probe.enabled === false) {
+      result.status = 'NOT_APPLICABLE';
+      result.note = 'probe.enabled === false';
+      result.timings.totalMs = Date.now() - t0;
+      results.push(result);
+      byId.set(probeId, result);
+      continue;
+    }
+
+    // Hard state dependencies (opts.probeMeta.fullPassDeps[probeId]): any
+    // listed predecessor not PASS -> SKIPPED_BY_DEPENDENCY.
+    const hardDeps = Array.isArray(fullPassDeps[probeId]) ? fullPassDeps[probeId].map(String) : [];
+    if (hardDeps.length) {
+      const notPassed = hardDeps.filter((d) => byId.get(d)?.status !== 'PASS');
+      if (notPassed.length) {
+        result.status = 'SKIPPED_BY_DEPENDENCY';
+        result.skippedBy = { kind: 'fullPassDeps', notPassed };
+        result.timings.totalMs = Date.now() - t0;
+        results.push(result);
+        byId.set(probeId, result);
+        continue;
+      }
+    }
+
     try {
-      // -- precondition
+      // -- precondition (three-way cascade)
       if (probe.precondition) {
         const pre = await checkPrecondition(probe.precondition, { ...ctx, getState }, byId);
-        result.precondition = { expr: probe.precondition, met: pre.met, details: pre.details };
-        if (!pre.met) {
-          result.status = 'SKIPPED';
+        result.precondition = { expr: probe.precondition, met: pre.met, outcome: pre.outcome, details: pre.details };
+        if (pre.outcome === 'ERROR') {
+          result.status = 'SKIPPED_BY_DEPENDENCY';
+          result.skippedBy = { kind: 'precondition-error', part: pre.errorPart };
           result.timings.totalMs = Date.now() - t0;
           results.push(result);
           byId.set(probeId, result);
           continue;
         }
+        if (!pre.met) {
+          const alive = await pageAlive(ctx.page);
+          if (!alive) {
+            result.status = 'SKIPPED_BY_DEPENDENCY';
+            result.skippedBy = { kind: 'precondition-fail-page-dead' };
+            result.timings.totalMs = Date.now() - t0;
+            results.push(result);
+            byId.set(probeId, result);
+            continue;
+          }
+          // FAIL but page alive: run anyway, keeping the evidence chain alive
+          // and marking that the predecessor did not hold.
+          result.ranDespitePredecessor = true;
+          result.predecessor = pre.failedProbeParts[0] ?? (pre.details.find((d) => !d.met)?.part ?? null);
+          result.failedPreconditionParts = pre.details.filter((d) => !d.met).map((d) => d.part);
+        }
       }
 
-      const vctx = { page: ctx.page, viewport: ctx.viewport, getState };
+      const nowUrl = await currentPageUrl(ctx.page);
+      if (nowUrl != null) urlLog.push({ ts: isoNow(), url: nowUrl });
+
+      const vctx = {
+        page: ctx.page,
+        viewport: ctx.viewport,
+        getState,
+        diagnostic: ctx.diagnostic === true,
+        networkSince: typeof ctx.networkSince === 'function' ? ctx.networkSince : null,
+        downloads: ctx.downloads ?? null,
+        consoleSince: typeof ctx.consoleSince === 'function' ? ctx.consoleSince : null,
+        consoleEntries: Array.isArray(ctx.consoleEntries) ? ctx.consoleEntries : null,
+        urlLog,
+        byId,
+        startedTs,
+        sessionStartTs,
+        probeMeta: ctx.probeMeta ?? null,
+      };
 
       // -- pre-action frame + state
       const shotBefore = await shoot(ctx.page);
@@ -1141,6 +1917,10 @@ export async function runProbes(spec, ctx) {
         result.status = 'FAIL';
       } else if (result.visualAssertion && result.visualAssertion.ok === false) {
         result.status = 'FAIL';
+        const verr = String(result.visualAssertion.error || '');
+        // SPEC_INVALID / UNSUPPORTED_BY_ENV are harness/spec/environment
+        // problems, not implementation failures of the run under test.
+        if (verr.startsWith('SPEC_INVALID') || verr.startsWith('UNSUPPORTED_BY_ENV')) result.status = 'ERROR';
       } else {
         result.status = 'PASS';
       }
@@ -1158,9 +1938,13 @@ export async function runProbes(spec, ctx) {
     byId.set(probeId, result);
   }
 
-  const passed = results.filter((r) => r.status === 'PASS').length;
-  const passedWeight = results.filter((r) => r.status === 'PASS').reduce((a, r) => a + r.weight, 0);
-  const totalWeight = results.reduce((a, r) => a + r.weight, 0);
+  // NOT_APPLICABLE probes are excluded from the S2 weight denominator (the
+  // spec author disabled them); everything else — including
+  // SKIPPED_BY_DEPENDENCY — keeps the pre-rectification denominator behavior.
+  const scored = results.filter((r) => r.status !== 'NOT_APPLICABLE');
+  const passed = scored.filter((r) => r.status === 'PASS').length;
+  const passedWeight = scored.filter((r) => r.status === 'PASS').reduce((a, r) => a + r.weight, 0);
+  const totalWeight = scored.reduce((a, r) => a + r.weight, 0);
   return { results, byId, passed, passedWeight, totalWeight };
 }
 
@@ -1171,16 +1955,59 @@ export { callReset };
 // 7. Spec dry-run (no browser): parse every action / assertion / visual params
 // ============================================================================
 
+/** Probe-level keys the executor understands; anything else is flagged (audit: PARTIAL). */
+export const KNOWN_PROBE_KEYS = [
+  'probeId', 'precondition', 'action', 'waitMs', 'sampleWindowMs',
+  'stateAssertion', 'visualAssertion', 'weight', 'threshold', 'evidence', 'enabled',
+];
+
+/** Static grammar check of a precondition expression (subset of checkPrecondition). */
+export function checkPreconditionSyntax(pre) {
+  const problems = [];
+  for (const part of String(pre).split('&&').map((s) => s.trim()).filter(Boolean)) {
+    if (part === '__appReady' || part === 'true') continue;
+    if (/^P\d+(?:\s+passed)?$/i.test(part)) continue;
+    if (part.startsWith('$.') || part === '$') {
+      const c = checkJq(part);
+      if (!c.ok) problems.push(`precondition part unparsable: "${part}" (${c.error})`);
+      continue;
+    }
+    problems.push(`unrecognized precondition part: "${part}"`);
+  }
+  return problems;
+}
+
+/**
+ * Browserless dry-run of a spec against the executor vocabulary.
+ * Flags (as {ok:false, problems:[...]} entries):
+ *   * action strings that do not parse against the verb table;
+ *   * stateAssertion jq that does not parse;
+ *   * unknown visualAssertion.type;
+ *   * unknown params keys per type (VISUAL_PARAM_KEYS whitelist);
+ *   * invalid values for enumerated params (metric / level);
+ *   * missing required params (VISUAL_REQUIRED_PARAMS);
+ *   * unknown region forms (LEGAL_REGION_FORMS via classifyRegionForm);
+ *   * unknown probe-level keys and precondition syntax.
+ * Keeps the legacy {briefId, probeCount, allOk, probes[]} shape (validate.mjs
+ * reads allOk + probes[].ok; selftest prints action/stateAssertion/visual
+ * sub-entries) and adds per-probe `problems` plus a flattened top-level list.
+ */
 export async function dryRunSpec(spec) {
   const probes = Array.isArray(spec?.probes) ? spec.probes : [];
   const out = {
     briefId: spec?.briefId ?? null,
+    briefVersion: spec?.briefVersion ?? null,
     probeCount: probes.length,
     allOk: true,
+    problems: [],
     probes: [],
   };
   for (const probe of probes) {
-    const entry = { probeId: probe.probeId, action: { ok: false }, stateAssertion: null, visualAssertion: null, ok: true };
+    const problems = [];
+    for (const k of Object.keys(probe ?? {})) {
+      if (!KNOWN_PROBE_KEYS.includes(k)) problems.push(`unknown probe key "${k}"`);
+    }
+    const entry = { probeId: probe.probeId, action: { ok: false }, stateAssertion: null, visualAssertion: null, problems, ok: true };
     try {
       const parsed = parseAction(probe.action ?? 'wait:0');
       entry.action = {
@@ -1191,25 +2018,30 @@ export async function dryRunSpec(spec) {
       };
     } catch (e) {
       entry.action = { ok: false, raw: probe.action ?? null, error: e.message };
-      entry.ok = false;
+      problems.push(`action unparsable: ${e.message}`);
+    }
+    if (probe.precondition != null) {
+      problems.push(...checkPreconditionSyntax(probe.precondition));
     }
     if (probe.stateAssertion?.jq) {
       const c = checkJq(probe.stateAssertion.jq);
       entry.stateAssertion = { expr: probe.stateAssertion.jq, ok: c.ok, error: c.error || null };
-      if (!c.ok) entry.ok = false;
+      if (!c.ok) problems.push(`stateAssertion unparsable: ${c.error}`);
     }
     if (probe.visualAssertion) {
       const va = probe.visualAssertion;
-      const knownTypes = ['nonBlank', 'motion', 'pixelDelta', 'regionChange'];
-      const typeOk = knownTypes.includes(va.type);
-      const params = va.params || {};
+      const cls = classifyVisualAssertion(va);
+      problems.push(...cls.problems);
+      const params = va.params && typeof va.params === 'object' && !Array.isArray(va.params) ? va.params : {};
       const regionStr = typeof (params.region ?? params.regions) === 'string' ? String(params.region ?? params.regions) : JSON.stringify(params.region ?? params.regions ?? 'full');
       entry.visualAssertion = {
         type: va.type,
-        ok: typeOk,
-        error: typeOk ? null : `unknown type ${va.type}`,
+        ok: cls.problems.length === 0,
+        error: cls.problems.length ? cls.problems.join('; ') : null,
         region: regionStr,
-        dynamicRegion: /state\.|ui[#=]/.test(regionStr),
+        dynamicRegion: /state\.|ui[#=]/.test(regionStr) || !!cls.regionClass?.dynamic,
+        unknownParamKeys: cls.unknownParamKeys,
+        unknownRegions: cls.unknownRegions,
         thresholds: {
           minLitPixelRatio: params.minLitPixelRatio ?? params.minCoverage ?? null,
           minMotionPixelRatio: params.minMotionPixelRatio ?? null,
@@ -1217,9 +2049,13 @@ export async function dryRunSpec(spec) {
           spanMs: params.spanMs ?? params.frameGapMs ?? null,
         },
       };
-      if (!typeOk) entry.ok = false;
     }
-    if (!entry.ok) out.allOk = false;
+    entry.problems = problems;
+    entry.ok = problems.length === 0 && entry.action.ok && (entry.stateAssertion ? entry.stateAssertion.ok : true);
+    if (!entry.ok) {
+      out.allOk = false;
+      for (const p of problems) out.problems.push(`${probe.probeId ?? '?'}: ${p}`);
+    }
     out.probes.push(entry);
   }
   return out;

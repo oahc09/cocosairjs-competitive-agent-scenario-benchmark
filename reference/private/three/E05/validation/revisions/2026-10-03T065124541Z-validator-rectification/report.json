@@ -1,0 +1,220 @@
+{
+  "runId": "REF-E05-three-reval",
+  "generatedAt": "2026-10-03T06:51:24.579Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E05",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E05\\spec.json",
+    "briefId": "E05",
+    "briefVersion": "1.0.0",
+    "sha256": "5e53b2737f6f28f69732bf4eb764bf16e3111c41f7d5de70d3010228ec073493"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "5e53b2737f6f28f69732bf4eb764bf16e3111c41f7d5de70d3010228ec073493",
+  "validatorProtocolHash": "5a7f2a441e0603ad96470f9886021d2b3d5dde66d45745076b801a24bff329ba",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "1093cc131dbe35af6dd2c6aa0f632157a7a843f0d5cee0c9c7c74b6ce06693be",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 3718,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  24.2kb\n\nDone in 16ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3715ms\n"
+  },
+  "serve": {
+    "port": 7530,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E05"
+  },
+  "ready": {
+    "appReady": true,
+    "benchReady": true,
+    "durationMs": 1187
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 1,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [
+    {
+      "probeId": "P1",
+      "status": "FAIL",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": [
+        "visual"
+      ]
+    },
+    {
+      "probeId": "P2",
+      "status": "FAIL",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": [
+        "visual"
+      ]
+    },
+    {
+      "probeId": "P3",
+      "status": "FAIL",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": [
+        "visual"
+      ]
+    },
+    {
+      "probeId": "P4",
+      "status": "FAIL",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": [
+        "visual"
+      ]
+    },
+    {
+      "probeId": "P5",
+      "status": "FAIL",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": [
+        "visual"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "weight": 1,
+      "visualType": null,
+      "failedAssertions": []
+    }
+  ],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0,
+  "fps": 60.2,
+  "perf": {
+    "fps": 60.2,
+    "frames": 181,
+    "sampleMs": 3009,
+    "sampledAt": "2026-10-03T06:51:50.299Z",
+    "minFpsSpec": 30,
+    "fpsMet": true
+  },
+  "downloads": [],
+  "networkEvents": {
+    "count": 17,
+    "totalBytes": 2204588
+  },
+  "screenshots": [
+    "initial.png",
+    "mid.png",
+    "final.png",
+    "extra-1.png",
+    "extra-2.png",
+    "P1-before.png",
+    "P1-after.png",
+    "P2-before.png",
+    "P2-after.png",
+    "P3-before.png",
+    "P3-after.png",
+    "P4-before.png",
+    "P4-after.png",
+    "P5-before.png",
+    "P5-after.png"
+  ],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "probe-results.json",
+    "console.json",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "UNRESOLVED",
+  "failureCategory": "UNRESOLVED",
+  "verdict": "FAIL",
+  "error": null,
+  "scoreInputs": {
+    "s1": {
+      "buildPass": true,
+      "readyNoError": true,
+      "firstShotNonBlank": true,
+      "firstShotLitRatio": 0.4243
+    },
+    "s2": {
+      "passedWeight": 0,
+      "totalWeight": 6,
+      "probePassRate": 0,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": false,
+      "lifecycleProbeId": "P6",
+      "fpsMet": true,
+      "minFps": 30
+    }
+  },
+  "classificationEvidence": {
+    "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+    "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
+    "failedProbes": [
+      {
+        "probeId": "P1",
+        "status": "FAIL",
+        "failedAssertions": [
+          "visual"
+        ],
+        "domain": null,
+        "unresolvedReason": "probe-not-in-sidecar"
+      },
+      {
+        "probeId": "P2",
+        "status": "FAIL",
+        "failedAssertions": [
+          "visual"
+        ],
+        "domain": null,
+        "unresolvedReason": "probe-not-in-sidecar"
+      },
+      {
+        "probeId": "P3",
+        "status": "FAIL",
+        "failedAssertions": [
+          "visual"
+        ],
+        "domain": null,
+        "unresolvedReason": "probe-not-in-sidecar"
+      },
+      {
+        "probeId": "P4",
+        "status": "FAIL",
+        "failedAssertions": [
+          "visual"
+        ],
+        "domain": null,
+        "unresolvedReason": "probe-not-in-sidecar"
+      },
+      {
+        "probeId": "P5",
+        "status": "FAIL",
+        "failedAssertions": [
+          "visual"
+        ],
+        "domain": null,
+        "unresolvedReason": "probe-not-in-sidecar"
+      }
+    ]
+  },
+  "durationMs": 26380,
+  "finishedAt": "2026-10-03T06:51:50.930Z"
+}

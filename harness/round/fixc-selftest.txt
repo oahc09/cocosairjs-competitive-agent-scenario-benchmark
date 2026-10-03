@@ -1,0 +1,235 @@
+========================================================================
+== FIX-C 证据链整改自测(身份/预算/调度接线)==
+========================================================================
+startedAt: 2026-10-03T05:37:20.370Z
+node: v24.14.0  platform: win32 x64
+范围: §7 身份链(RUN-META/preflight)· §13 预算机器计数(count/verify-browser/budget-check)· §15+§3 调度接线(run-round validate)
+演练批次: results/B-00010101-R99/PAIR-E03-K0-R09(coordinator 自测批次,演练后删除);
+preflight BLOCKED 演练: results/_selftest 旧 pair(真实批次只读,ROUND.json 写临时目录 --round-out)。
+
+========================================================================
+== 1. create-pair:RUN-META.template.json + pair.json dependencyHashes ==
+========================================================================
+$ node harness/coordinator/create-pair.mjs --scene E03 --knowledge K0 --rep R09 --batch B-00010101-R99 --pilot
+[create-pair] arm-a: engine=three port=7110 workspace=copied-from templates/three (无 node_modules,共享依赖向上解析) runMeta=RUN-META.template.json(待 Runner 填写)
+[create-pair] arm-b: engine=cocosair port=7111 workspace=copied-from templates/cocosair (无 node_modules,共享依赖向上解析) runMeta=RUN-META.template.json(待 Runner 填写)
+[create-pair] DONE {
+  "pairId": "PAIR-E03-K0-R09",
+  "batchId": "B-00010101-R99",
+  "pairDir": "results\\B-00010101-R99\\PAIR-E03-K0-R09",
+  "pilot": true,
+  "armA": {
+    "engine": "three",
+    "port": 7110,
+    "workspace": "copied-from templates/three (无 node_modules,共享依赖向上解析)"
+  },
+  "armB": {
+    "engine": "cocosair",
+    "port": 7111,
+    "workspace": "copied-from templates/cocosair (无 node_modules,共享依赖向上解析)"
+  },
+  "briefSha256": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
+  "assetSetSha256": "600a9725c890ff9cef2c55b70f8b07fc31004f5887eed6f71b4b1614b794304f",
+  "budgetConfigHash": "0c384f7d9bd249d0468cdd9d37b6a79e9f3e0a85aa7d3092dcbb316980ea368e",
+  "pairJson": "results\\B-00010101-R99\\PAIR-E03-K0-R09\\pair.json"
+}
+{
+  "agentRuntime": null,
+  "agentBinaryHash": null,
+  "modelId": null,
+  "modelRevision": null,
+  "systemPromptHash": null,
+  "toolPolicyHash": null,
+  "runnerVersion": null,
+  "notes": "派发前填写为 RUN-META.json"
+}
+dependencyHashes:
+{
+  "three": "ee97b0378768230c0ca11d554c8166f64d67d7f5ffe37cdfc13c5c6f09a32712",
+  "cocosair": "77098aefd22932f0b2eb6856dab67e749f11edd2e8607238e948b5a596d7f13c",
+  "esbuild": "0e5266d31bad0f2d6283b62cbd388f2a177bd2ecb39aade638f895a55ba9cf91"
+}
+
+dependencyHashes 与 validate.mjs dependencyFingerprints()(FIX-B 判定侧)同式同键,
+端到端 validate 演练中 inputGuard PASS 交叉证实(见第 6 节)。
+
+========================================================================
+== 2. count.mjs:原子计数 + npm run build 先计后执行串联 ==
+========================================================================
+$ cd results/B-00010101-R99/PAIR-E03-K0-R09/arm-a/workspace && npm run build   # 串联验证:count 先计后执行
+[count] build #1 -> .budget/build.count
+  dist\app.js  2.0kb
+Done in 10ms
+[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)
+[build] vendor: three.module.js (662772 bytes)
+[build] vendor: three.core.js (1458113 bytes)
+[build] vendor: examples/jsm -> dist/vendor/addons (500 files)
+[build] wrote dist/index.html (relative-path variant)
+[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html
+[build] OK
+exit=0
+
+$ node scripts/count.mjs build & node scripts/count.mjs build & node scripts/count.mjs build & wait   # 原子性:3 并发
+[count] build #2 -> .budget/build.count
+[count] build #3 -> .budget/build.count
+[count] build #4 -> .budget/build.count
+
+$ cat .budget/build.count
+2026-10-03T05:35:57.360Z
+2026-10-03T05:35:59.140Z
+2026-10-03T05:35:59.180Z
+2026-10-03T05:35:59.209Z
+
+========================================================================
+== 3. verify-browser.mjs:基础三用(计数+会话 / --shot / --eval)==
+========================================================================
+$ PORT=7110 node scripts/serve.mjs &(dev server)
+$ node scripts/verify-browser.mjs --url http://127.0.0.1:7110/ --shot drill-shot.png --eval "window.__bench.getState()"   # 基础三用:计数+会话+截图+求值
+[count] browser #1 -> .budget/browser.count
+[verify-browser] {"url":"http://127.0.0.1:7110/","appReady":true,"benchReady":true,"consoleErrors":0,"uncaught":[],"shot":"drill-shot.png","evalResult":{"engine":"three","frame":5,"ready":true,"resetCount":0}}
+exit=0
+
+$ cat .budget/browser.count
+2026-10-03T05:36:06.479Z
+
+========================================================================
+== 4. budget-check:正常样本 OK / 超限样本 BUDGET_EXHAUSTED ==
+========================================================================
+$ node harness/runner/budget-check.mjs --workspace <drill workspace>   # 正常样本
+[budget-check] build    4/8
+[budget-check] browser  1/6
+[budget-check] toolcall 0/120
+[budget-check] walltime 1/90
+[budget-check] verdict: OK
+exit=0
+
+# 超限样本(synthetic: build=9 > maxBuildAttempts=8, browser=7 > maxBrowserAttempts=6)
+{
+  "verdict": "BUDGET_EXHAUSTED",
+  "exceeded": [
+    {
+      "kind": "build",
+      "used": 9,
+      "max": 8
+    },
+    {
+      "kind": "browser",
+      "used": 7,
+      "max": 6
+    }
+  ],
+  "checked": [
+    {
+      "kind": "build",
+      "used": 9,
+      "max": 8
+    },
+    {
+      "kind": "browser",
+      "used": 7,
+      "max": 6
+    },
+    {
+      "kind": "toolcall",
+      "used": 0,
+      "max": 120
+    },
+    {
+      "kind": "walltime",
+      "used": 8,
+      "max": 90
+    }
+  ],
+  "used": {
+    "build": 9,
+    "browser": 7,
+    "toolcall": 0,
+    "walltime": 8
+  },
+  "limits": {
+    "maxToolCalls": 120,
+    "maxWallTimeMinutes": 90,
+    "maxBuildAttempts": 8,
+    "maxBrowserAttempts": 6,
+    "source": "agents.yaml (agentRun.budget, FROZEN G0)"
+  },
+  "unknownFiles": [],
+  "checkedAt": "2026-10-03T05:36:12.977Z"
+}
+
+========================================================================
+== 5. preflight:旧 pair(身份缺失)BLOCKED 演练 + validate 拒绝 ==
+========================================================================
+$ node harness/round/run-round.mjs --batch _selftest --stage preflight --round-out <tmp>/fixc-pf-blocked   # 旧 pair(无身份)演练,ROUND 写临时目录,真实批次只读
+[adopt] 已为既有批次 _selftest 合成 ROUND.json(1 pairs)
+[preflight] PAIR-E03-K0-R01: BLOCKED
+           - arm-a: RUN-META.json 缺失(派发前须由 Runner 复制 RUN-META.template.json 填写)
+           - arm-a: spec.json 冻结副本 sha256 ≠ pair.specSha256(规格被改动?)
+           - arm-b: RUN-META.json 缺失(派发前须由 Runner 复制 RUN-META.template.json 填写)
+           - arm-b: spec.json 冻结副本 sha256 ≠ pair.specSha256(规格被改动?)
+[preflight] 1 个 pair:BLOCKED;BLOCKED(不得 validate): PAIR-E03-K0-R01
+exit=0
+
+$ node ... --stage validate --round-out <tmp>/fixc-pf-blocked   # BLOCKED Pair 不得 validate
+[preflight] PAIR-E03-K0-R01: BLOCKED
+           - arm-a: RUN-META.json 缺失(派发前须由 Runner 复制 RUN-META.template.json 填写)
+           - arm-a: spec.json 冻结副本 sha256 ≠ pair.specSha256(规格被改动?)
+           - arm-b: RUN-META.json 缺失(派发前须由 Runner 复制 RUN-META.template.json 填写)
+           - arm-b: spec.json 冻结副本 sha256 ≠ pair.specSha256(规格被改动?)
+[validate] preflight BLOCKED,跳过 1 个 pair: PAIR-E03-K0-R01
+[validate] 0 个臂验证:ok=0 fail=0;跳过 BLOCKED pair 1 个(无待验臂)
+exit=0
+
+补充:两臂身份一致性演练 —— 把 arm-b RUN-META.modelId 改为 gpt-9 后重跑 preflight:
+[preflight] PAIR-E03-K0-R09: BLOCKED
+           - 两臂 RUN-META.modelId 不一致(arm-a="glm-5.3", arm-b="gpt-9")
+(已恢复;_selftest 旧 pair 的 spec 副本漂移是真实检出:arm 副本==现行 briefs/E03 规格,
+ != pair.specSha256,即冻结副本曾被活文件覆盖 —— 正是 preflight 要拦的 INPUT_DRIFT 类问题)
+
+========================================================================
+== 6. validate stage 端到端接线(冻结 spec 副本 / --pair-meta / budget-check)==
+========================================================================
+$ node harness/round/run-round.mjs --batch B-00010101-R99 --stage validate --round-out <tmp>/fixc-pf-mixed   # 身份齐备的演练 Pair:端到端接线(spec 冻结副本/--pair-meta/budget-check)
+[preflight] PAIR-E03-K0-R09: PASS
+[validate] PAIR-E03-K0-R09/arm-a (three) ...
+[validate] 1 个臂验证:ok=0 fail=1 → 可进入 blind/aggregate
+exit=0
+{
+ "state": "validated",
+ "validation": {
+  "verdict": "FAIL",
+  "classification": "UNRESOLVED",
+  "leakScan": "VIOLATIONS",
+  "at": "2026-10-03T05:36:45.427Z",
+  "classificationSource": "validate.mjs",
+  "budgetVerdict": "OK",
+  "budgetUsed": {
+   "build": 4,
+   "browser": 1,
+   "toolcall": 0,
+   "walltime": 1
+  }
+ }
+}
+inputGuard: {"kind":"PASS","checked":["specSha256","dependencyHashes"],"at":"2026-10-03T05:36:25.646Z"}
+classification: UNRESOLVED | spec.path: \results\B-00010101-R99\PAIR-E03-K0-R09\arm-a\spec.json | probes passRate: 0.1111
+
+要点:
+- validate --spec 用 arm 目录冻结副本(report.spec.path = arm-a/spec.json),不再读 briefs/ 活文件;
+- --pair-meta pair.json 传入后 FIX-B 输入守卫生效:inputGuard PASS(checked specSha256+dependencyHashes);
+- budgetUsed.build=4(验证前快照)而 .budget/build.count 实际=5 —— validate.mjs 自身的 npm run build
+  产生 +1,判定窗口=Agent Run 期间,不计入 Agent 预算(见 budget-check.mjs 头注释);
+- leakScan=VIOLATIONS 仅剩 1 条 R1,来自模板自带 build.mjs 注释中的 reference/private 路径字样
+  (templates/*/scripts/build.mjs 不在 FIX-C 允改清单,属跨修复项:模板注释措辞或 leak-scanner
+  对模板预置文件的白名单需另行处理;FIX-C 新增文件 count.mjs/verify-browser.mjs 已确认零触发)。
+
+========================================================================
+== 清单 ==
+========================================================================
+改动: harness/coordinator/create-pair.mjs(RUN-META.template.json+dependencyHashes+模板拷贝跳过 .budget)
+      harness/coordinator/run-contract-template.md(§2 计数口径冻结定义+§4 红线第 12 条)
+      harness/round/run-round.mjs(preflight stage+validate 接线+budget/INVALID_EVIDENCE 标注)
+      templates/{three,cocosair}/package.json(build 行串联 count)
+新增: templates/{three,cocosair}/scripts/count.mjs、verify-browser.mjs
+      harness/runner/budget-check.mjs(模块+CLI)、harness/round/fixc-selftest.txt(本文件)
+演练产物: results/B-00010101-R99 drill 批次与临时目录均已删除,results/batches.json 已恢复原样。

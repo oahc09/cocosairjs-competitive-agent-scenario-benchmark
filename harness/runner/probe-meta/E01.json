@@ -1,0 +1,17 @@
+{
+  "lifecycleProbeIds": [
+    "P7"
+  ],
+  "fullPassDeps": {
+    "P7": ["P2", "P4"]
+  },
+  "failureDomains": {
+    "P1": "PERFORMANCE",
+    "P2": "ANIMATION",
+    "P3": "INTERACTION",
+    "P4": "INTERACTION",
+    "P5": "STATE_MANAGEMENT",
+    "P6": "PERFORMANCE",
+    "P7": "LIFECYCLE_MISUSE"
+  }
+}

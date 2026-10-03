@@ -1,7 +1,8 @@
 {
   "gate": "G4 HARNESS_TRUST",
   "status": "PASS",
-  "generatedAt": "2026-10-02T14:19:28.819Z",
+  "statusBase": "PASS",
+  "generatedAt": "2026-10-03T07:39:53.034Z",
   "runnerAvailable": true,
   "runner": "harness/runner/validate.mjs",
   "cases": [
@@ -12,7 +13,7 @@
       "expected": "FAIL",
       "detected": true,
       "caughtBy": "P1 visualAssertion(nonBlank,亮像素<2%)——状态全对但 canvas 全黑",
-      "caughtByActual": "P1",
+      "caughtByActual": "P1,P2,P3,P4,P6",
       "status": "DETECTED",
       "runs": [
         {
@@ -21,15 +22,19 @@
           "verdict": "FAIL",
           "failish": true,
           "failedProbes": [
-            "P1"
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P6"
           ],
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 310
+            "durationMs": 350
           },
           "report": "results\\nc\\NC01-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC01-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.1429 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC01-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -41,7 +46,7 @@
       "expected": "FAIL",
       "detected": true,
       "caughtBy": "P2 visualAssertion(motion,2s 采样窗零运动像素)+ 独立 perfSample 佐证",
-      "caughtByActual": "P2",
+      "caughtByActual": "P2,P3,P4",
       "status": "DETECTED",
       "runs": [
         {
@@ -50,15 +55,17 @@
           "verdict": "FAIL",
           "failish": true,
           "failedProbes": [
-            "P2"
+            "P2",
+            "P3",
+            "P4"
           ],
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 33
+            "durationMs": 38
           },
           "report": "results\\nc\\NC02-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.4286 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC02-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.4286 fps=60.6\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC02-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -70,7 +77,7 @@
       "expected": "FAIL",
       "detected": true,
       "caughtBy": "E01: network-evidence 不足(P1 无 asset request 独立观测,如实标注缺口,不改 spec);E02: P1 stateAssertion($.assetRequests >= 1)+ networkRequest 证据缺失",
-      "caughtByActual": "P1",
+      "caughtByActual": "P1,P2,P3,P4,P5",
       "status": "DETECTED",
       "runs": [
         {
@@ -82,10 +89,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 73
+            "durationMs": 248
           },
           "report": "results\\nc\\NC03-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC03-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
           "stderrTail": ""
         },
         {
@@ -94,15 +101,19 @@
           "verdict": "FAIL",
           "failish": true,
           "failedProbes": [
-            "P1"
+            "P1",
+            "P2",
+            "P3",
+            "P4",
+            "P5"
           ],
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 247
+            "durationMs": 266
           },
           "report": "results\\nc\\NC03-E02\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC03-E02\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E02\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -114,7 +125,7 @@
       "expected": "FAIL",
       "detected": true,
       "caughtBy": "P3/P4 stateAssertion(指针/滚轮交互零状态变化;pixelDelta 因背景旋转可能通过,state 双采样是必要独立观测)",
-      "caughtByActual": "P3",
+      "caughtByActual": "P3,P4",
       "status": "DETECTED",
       "runs": [
         {
@@ -123,15 +134,16 @@
           "verdict": "FAIL",
           "failish": true,
           "failedProbes": [
-            "P3"
+            "P3",
+            "P4"
           ],
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 252
+            "durationMs": 302
           },
           "report": "results\\nc\\NC04-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.5714 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC04-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.5714 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC04-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -157,10 +169,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 79
+            "durationMs": 249
           },
           "report": "results\\nc\\NC05-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.8571 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC05-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -198,18 +210,7 @@
           "R1-REFERENCE-PATH @ notes.txt:3",
           "R1-REFERENCE-PATH @ notes.txt:3",
           "R4-SECRET-PATH @ notes.txt:4",
-          "R4-SECRET-PATH @ notes.txt:4",
-          "R1-REFERENCE-PATH @ reference-answer.js:1",
-          "R1-REFERENCE-PATH @ reference-answer.js:1",
-          "R2-HARNESS-SOURCE @ src/app.js:4",
-          "R2-HARNESS-SOURCE @ src/app.js:5",
-          "R2-HARNESS-SOURCE @ src/app.js:5",
-          "R1-REFERENCE-PATH @ src/app.js:6",
-          "R1-REFERENCE-PATH @ src/app.js:6",
-          "R2-HARNESS-SOURCE @ src/app.js:8",
-          "R2-HARNESS-SOURCE @ validator.mjs:1",
-          "R2-HARNESS-SOURCE @ validator.mjs:1",
-          "R2-HARNESS-SOURCE @ validator.mjs:10"
+          "R4-SECRET-PATH @ notes.txt:4"
         ],
         "stats": {
           "files": 9,
@@ -217,15 +218,310 @@
           "skippedBinary": 0,
           "skippedLarge": 0,
           "readErrors": 0,
-          "scannedBytes": 6773
+          "scannedBytes": 6916
         }
       }
     }
   ],
+  "ncExtended": {
+    "scope": "整改 FIX-D:NC07-NC13(规格审计 / 输入漂移 / 量尺漂移 / 身份 / 预算 / 门禁传播)",
+    "status": "PASS",
+    "modeLegend": "RUN = 本轮实测;PENDING-INTEGRATION = 判定工具未建成或归集成阶段(run-round preflight),不算失败,集成阶段重跑 isolation/run-nc.mjs 自动补齐",
+    "cases": [
+      {
+        "id": "NC07",
+        "name": "spec-unsupported-assertion",
+        "kind": "specAudit",
+        "method": "runner/spec-audit.mjs --spec fixtures/NC07/spec.json",
+        "mode": "RUN",
+        "expected": "SPEC_INVALID(spec-audit exit 3)",
+        "detected": true,
+        "caughtBy": "spec-audit 封闭词表校验:visualAssertion.type=\"motionBlur\" 不在 {nonBlank,motion,pixelDelta,regionChange}(整改 §8 严格性合同:unknown 绝不 fallback→PASS)",
+        "caughtByActual": "spec-audit exit 3 → SPEC_INVALID(visualAssertion.type=motionBlur 不在封闭词表)",
+        "status": "DETECTED",
+        "runs": [
+          {
+            "tool": "harness\\runner\\spec-audit.mjs",
+            "args": [
+              "--spec",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC07\\spec.json"
+            ],
+            "exitCode": 3,
+            "timedOut": false,
+            "stdoutTail": "  [UNSUPPORTED] P1 visualAssertion.params.minLitPixelRatio: unknown params key \"minLitPixelRatio\" for motionBlur\n---\nprobes audited: 1 | UNSUPPORTED findings: 4 | PARTIAL findings: 0\nexit code 3 — UNSUPPORTED required assertion(s) present — scoring runs will classify SPEC_INVALID; fix spec (amendment) or extend executor\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\spec-capability-audit.json\n",
+            "stderrTail": ""
+          }
+        ],
+        "auxiliary": {
+          "tool": "runner/probe-executor.mjs --dry-run --spec fixtures/NC07/spec.json",
+          "exitCode": 1,
+          "rejectsUnknownType": true,
+          "stdoutTail": "      \"problems\": [\n        \"SPEC_INVALID: unknown assertion type motionBlur\",\n        \"SPEC_INVALID: unknown params key \\\"region\\\" for motionBlur\",\n        \"SPEC_INVALID: unknown params key \\\"minLitPixelRatio\\\" for motionBlur\"\n      ],\n      \"ok\": false\n    }\n  ]\n}\n"
+        }
+      },
+      {
+        "id": "NC08",
+        "name": "unknown-region",
+        "kind": "specAudit",
+        "method": "runner/spec-audit.mjs --spec fixtures/NC08/spec.json",
+        "mode": "RUN",
+        "expected": "SPEC_INVALID(spec-audit exit 3 或 PARTIAL 命中 LEGAL_REGION_FORMS)",
+        "detected": true,
+        "caughtBy": "spec-audit LEGAL_REGION_FORMS 校验:region=\"accretion-torus(inner)\" 为描述性命名 → PARTIAL(审计明示 strict scoring run => SPEC_INVALID;运行时 resolveRegions 严格模式同判;仅 diagnostic 模式可全画面兜底且永不作 PASS 证据)",
+        "caughtByActual": "spec-audit PARTIAL 判定:region \"accretion-torus(inner)\" outside LEGAL_REGION_FORMS(exit 0;审计明示 strict scoring run => SPEC_INVALID,运行时严格模式同判)—— 漂移被抓捕并申报,非静默放行",
+        "status": "DETECTED",
+        "runs": [
+          {
+            "tool": "harness\\runner\\spec-audit.mjs",
+            "args": [
+              "--spec",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC08\\spec.json"
+            ],
+            "exitCode": 0,
+            "timedOut": false,
+            "stdoutTail": "  [PARTIAL] P1 visualAssertion.region: outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID\n---\nprobes audited: 1 | UNSUPPORTED findings: 0 | PARTIAL findings: 1\nexit code 0 — no UNSUPPORTED required assertions\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\spec-capability-audit.json\n",
+            "stderrTail": ""
+          }
+        ],
+        "auxiliary": {
+          "tool": "probe-executor.classifyRegionForm(封闭表静态判定)",
+          "ok": false,
+          "unknown": [
+            "accretion-torus(inner)"
+          ],
+          "forms": []
+        },
+        "detectionRule": "exit 3(UNSUPPORTED)或 [PARTIAL]+LEGAL_REGION_FORMS+region 命中(as-built 契约:region 漂移为 PARTIAL 级,严格打分 run 判 SPEC_INVALID)"
+      },
+      {
+        "id": "NC09",
+        "name": "spec-drift",
+        "kind": "validateDrift",
+        "method": "runner/validate.mjs --workspace fixtures/NC09 --spec fixtures/NC09/spec.json --pair-meta fixtures/NC09/pair.json",
+        "mode": "RUN",
+        "expected": "INPUT_DRIFT(exit 4,浏览器前置拦截,秒级)",
+        "detected": true,
+        "caughtBy": "validate --pair-meta 前置闸门:sha256(spec.json)=7598f756… ≠ pair.specSha256=448b817b…(decoy)→ 输入漂移,该臂 INVALID_EVIDENCE",
+        "caughtByActual": "validate exit 4 → INPUT_DRIFT(sha256(spec)=7598f756… ≠ pair.specSha256=448b817b…),浏览器前置拦截",
+        "status": "DETECTED",
+        "runs": [
+          {
+            "tool": "harness\\runner\\validate.mjs",
+            "args": [
+              "--workspace",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC09",
+              "--spec",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC09\\spec.json",
+              "--pair-meta",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC09\\pair.json",
+              "--out",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC09-drift"
+            ],
+            "exitCode": 4,
+            "timedOut": false,
+            "stdoutTail": "guarded: INPUT_DRIFT -> E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC09-drift\\report.json\n",
+            "stderrTail": ""
+          }
+        ],
+        "auxiliary": {
+          "tool": "sha256(spec.json) vs pair.json.specSha256",
+          "realSpecSha256": "7598f756eb0604cdfaa15dd6cf44e95c975e28733318cf688421c6f2401189cc",
+          "pairSpecSha256": "448b817bddbbfaa7ab7c7da0116399d3a774e27e6457a505bae7144d4bfb7e50",
+          "driftConfirmed": true
+        },
+        "readinessProbe": {
+          "ready": true
+        }
+      },
+      {
+        "id": "NC10",
+        "name": "ruler-drift",
+        "kind": "rulerDrift",
+        "method": "aggregate/reference-versions.mjs --selftest-drift",
+        "mode": "RUN",
+        "expected": "selftest-drift 输出含 PASS(注入漂移被识别)",
+        "detected": true,
+        "caughtBy": "量尺账本四输入指纹比对(引擎/文档/Brief/工具链):注入篡改指纹应报 STALE 并换新 RULER 号,不静默沿用旧量尺",
+        "caughtByActual": "selftest-drift 输出含 PASS(注入的量尺漂移被识别并申报,未静默沿用旧 RULER)",
+        "status": "DETECTED",
+        "runs": [
+          {
+            "tool": "harness\\aggregate\\reference-versions.mjs",
+            "args": [
+              "--selftest-drift"
+            ],
+            "exitCode": 0,
+            "timedOut": false,
+            "stdoutTail": "  ok   改 briefSha               -> STALE                语义=[\"briefSha\"] 协议=[]\n  ok   改 specSha                -> STALE                语义=[\"specSha\"] 协议=[]\n  ok   改 validatorProtocolHash  -> NEEDS_REVALIDATION   语义=[] 协议=[\"validatorProtocolHash\"]\nSELFTEST-DRIFT PASS(改 briefSha/specSha → STALE 需重实现;改 validatorProtocolHash → NEEDS_REVALIDATION 需重验;三者均非 CURRENT)\n",
+            "stderrTail": ""
+          }
+        ],
+        "auxiliary": {
+          "tool": "aggregate/reference-versions.mjs --check(只读现状观测,非判定)",
+          "exitCode": 0,
+          "staleCount": 0,
+          "summaryTail": "  CURRENT              E10:cocosair   v1.val4 | 全部 CURRENT(量尺与全部输入一致)"
+        },
+        "readinessProbe": {
+          "ready": true
+        }
+      },
+      {
+        "id": "NC11",
+        "name": "agent-identity-missing",
+        "kind": "identityPreflight",
+        "expect": "run-round preflight BLOCKED(集成阶段)",
+        "method": "(集成阶段)round/run-round.mjs --batch <batch> --stage preflight",
+        "caughtBy": "run-round --stage preflight 真实执行(exit 0):BLOCKED + 身份缺失 reasons ×5",
+        "detected": true,
+        "status": "DETECTED",
+        "mode": "RUN",
+        "evidence": {
+          "auxiliary": {
+            "tool": "静态解析 fixture RUN-META vs run-round RUN_META_FIELDS",
+            "runRoundPreflightImplemented": true,
+            "identityFields": [
+              "agentRuntime",
+              "agentBinaryHash",
+              "modelId",
+              "modelRevision",
+              "systemPromptHash",
+              "toolPolicyHash",
+              "runnerVersion"
+            ],
+            "armReport": {
+              "arm-a": {
+                "emptyIdentityFields": [
+                  "agentBinaryHash",
+                  "modelId",
+                  "systemPromptHash"
+                ]
+              },
+              "arm-b": {
+                "emptyIdentityFields": []
+              }
+            },
+            "expectedBlockReasons": [
+              "arm-a: RUN-META.agentBinaryHash 为空",
+              "arm-a: RUN-META.modelId 为空",
+              "arm-a: RUN-META.systemPromptHash 为空"
+            ]
+          },
+          "integrationCommand": "node round/run-round.mjs --batch <batch> --stage preflight → 本 fixture Pair 应 BLOCKED(身份字段为空,不得 validate)",
+          "realRun": {
+            "exit": 0,
+            "blocked": true,
+            "identityReasons": [
+              "arm-a: RUN-META.agentBinaryHash 为空",
+              "arm-a: RUN-META.modelId 为空",
+              "arm-a: RUN-META.systemPromptHash 为空",
+              "两臂 RUN-META.modelId 不一致(arm-a=\"\", arm-b=\"GLM-5.3\")"
+            ],
+            "stdoutTail": [
+              "           - arm-a: RUN-META.agentBinaryHash 为空",
+              "           - arm-a: RUN-META.modelId 为空",
+              "           - arm-a: RUN-META.systemPromptHash 为空",
+              "           - 两臂 RUN-META.modelId 不一致(arm-a=\"\", arm-b=\"GLM-5.3\")",
+              "           - 两臂 RUN-META.systemPromptHash 不一致(arm-a=null, arm-b=\"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae\")",
+              "[preflight] 1 个 pair:BLOCKED;BLOCKED(不得 validate): PAIR-E01-K0-R01"
+            ]
+          }
+        }
+      },
+      {
+        "id": "NC12",
+        "name": "budget-exhaustion",
+        "kind": "budgetCheck",
+        "method": "runner/budget-check.mjs --workspace fixtures/NC12",
+        "mode": "RUN",
+        "expected": "BUDGET_EXHAUSTED(budget-check exit 3)",
+        "detected": true,
+        "caughtBy": "budget-check 机器计数(.budget/build.count 追加日志行数口径):build 9/8 > config/agents.yaml maxBuildAttempts=8(G0 冻结;触及上限即终止并判 BUDGET_EXHAUSTED)",
+        "caughtByActual": "budget-check → BUDGET_EXHAUSTED(build.count=9 > maxBuildAttempts=8)",
+        "status": "DETECTED",
+        "runs": [
+          {
+            "tool": "harness\\runner\\budget-check.mjs",
+            "args": [
+              "--workspace",
+              "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC12"
+            ],
+            "exitCode": 3,
+            "timedOut": false,
+            "stdoutTail": "[budget-check] build    9/8\n[budget-check] browser  0/6\n[budget-check] toolcall 0/120\n[budget-check] walltime 6/90\n[budget-check] verdict: BUDGET_EXHAUSTED(忽略非计数文件: meta.json)\n",
+            "stderrTail": ""
+          }
+        ],
+        "auxiliary": {
+          "tool": ".budget/build.count 行数(追加日志口径)vs config/agents.yaml agentRun.budget.maxBuildAttempts(G0 冻结,只读)",
+          "buildCount": 9,
+          "maxBuildAttempts": 8,
+          "countOverLimit": true
+        }
+      },
+      {
+        "id": "NC13",
+        "name": "gate-propagation",
+        "kind": "gatePropagation",
+        "method": "aggregate/aggregate-all.mjs(真实只读聚合)→ 解析 results/aggregated.json",
+        "mode": "RUN",
+        "expected": "formal.total==null && objective.total!=null",
+        "detected": true,
+        "caughtBy": "聚合器如实传播未过的门禁(G7 BLOCKED → formal.total/attainment 全 null,objective=S1+S2+S3 照常非空;不以 provisional 视觉分冒充正式总分)(整改 §17)",
+        "caughtByActual": "聚合如实传播门禁:per-pair-formal-objective(FIX-B as-built);formal.total=null 且 objective.total=55(未过的门禁保持 formal=null,客观分如实呈现)",
+        "status": "DETECTED",
+        "runs": [
+          {
+            "tool": "harness\\aggregate\\aggregate-all.mjs",
+            "args": [],
+            "exitCode": 0,
+            "timedOut": false,
+            "stdoutTail": "  ruler=RULER-20261003-R1 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]\n  E01 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E02 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=-23 CI=null W/T/L=0/0/1\n  E05 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E10 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n",
+            "stderrTail": ""
+          }
+        ],
+        "before": {
+          "generatedAt": "2026-10-03T07:35:26.326Z",
+          "batches": 1,
+          "pairs": 4,
+          "pilotPairs": 4,
+          "visualPendingArms": 0,
+          "g7": "BLOCKED"
+        },
+        "tool": "aggregate/aggregate-all.mjs(真实只读聚合:批次数据只读,重算其自身产物 results/aggregated.json)",
+        "derivation": {
+          "pairsWithFormalSection": 4,
+          "formalValuesAllNull": true,
+          "objectiveNonNullCount": 16,
+          "g7": {
+            "status": "BLOCKED",
+            "formalImpact": "INVALID — formal total/attainment/pairedDelta 全 null,视觉分仅 provisional"
+          },
+          "note": "G7(BLIND_JUDGE_VALIDITY)未过 → formal.total/attainment 全 null;objective(S1+S2+S3)照常非空 —— 门禁状态如实传播,不以 provisional 视觉分冒充正式总分"
+        },
+        "after": {
+          "generatedAt": "2026-10-03T07:39:53.002Z",
+          "batches": 1,
+          "pairs": 4,
+          "pilotPairs": 4,
+          "visualPendingArms": 0,
+          "g7": "BLOCKED"
+        },
+        "rule": "formal.total===null && objective.total!=null → DETECTED"
+      }
+    ],
+    "notes": [
+      "NC07/NC08 佐证(auxiliary,只读可复跑):probe-executor 严格性合同已拒绝未知 visualAssertion.type(dry-run exit 1)与未知 region(classifyRegionForm.ok=false);正式判定仍以 spec-audit exit 3 为准。",
+      "NC10 安全护栏:reference-versions.mjs 默认冻结模式会写 reference/private/(禁改目录),就绪探测失败即绝不执行该脚本;--check 为只读现状观测。",
+      "NC11 为设计性 PENDING-INTEGRATION:AGENT_IDENTITY_MISSING 归 run-round preflight(FIX-C)集成阶段验证,run-nc 只登记 fixture 与佐证。",
+      "NC13 为 mode:RUN 的真实聚合重算:aggregate-all 只读批次数据,重算其自身可再生产物 results/aggregated.json;判定口径 formal.total===null 且 objective.total 非 null(整改 §17)。"
+    ]
+  },
   "specCoverageNotes": [
     "NC03 双口径如实记录:E01 spec 的 P1 只有 starCount+nonBlank,无 asset 网络独立观测,检不出 fake-asset-loaded;",
     "NC03 以 E02 spec(P1: $.assetRequests >= 1 + networkRequest:assets/boat.glb 证据)作为抓捕口径 —— 不篡改任何 spec。",
-    "NC01-NC05 的\"detected\"= validate.mjs 判 FAIL;NC06 的\"detected\"= leak-scanner 判 INVALID_RUN。"
+    "NC01-NC05 的\"detected\"= validate.mjs 判 FAIL;NC06 的\"detected\"= leak-scanner 判 INVALID_RUN。",
+    "NC07-NC13 的\"detected\"见各 case.method;PENDING-INTEGRATION 的 case detected=null,不计入失败。"
   ],
   "environment": {
     "nodeVersion": "v24.14.0"

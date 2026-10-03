@@ -8,6 +8,23 @@
 //   node runner/validate.mjs --workspace <dir> --spec <spec.json> --out <dir>
 //                           [--run-id <id>] [--video] [--port <n>]
 //                           [--pair <pairId>] [--engine <three|air>]
+//                           [--pair-meta <pair.json>]   冻结输入守卫(FIX-B)
+//                           [--revision <label>]        修订版输出(FIX-B)
+//
+// FIX-B 冻结输入守卫(--pair-meta,在任何测量之前执行):
+//   * 实际 spec 文件 sha256 != pair.specSha256        -> classification=INPUT_DRIFT,exit 4
+//   * pair.dependencyHashes 存在且根 node_modules 的
+//     three/cocosair/esbuild 合并指纹不等               -> classification=ENV_DRIFT,  exit 5
+//   合并指纹 = sha256( sha256(pkg/package.json) + ':' + sha256(pkg 主入口文件) ),
+//   键名 {three, cocosair, esbuild}(cocosair 对应 node_modules/cocosair.js)。
+//
+// FIX-B --revision <label>:输出写 <out>/revisions/<ISO>-<label>/;若 <out>/report.json
+//   已存在,先一次性归档到 <out>/revisions/<其生成时间>-original/(幂等,由 marker 保证)。
+//
+// FIX-B classifyProbeFailures:失败分类依据 harness/runner/probe-meta/<SCENE>.json
+//   sidecar(可能不存在),按"失败断言类别(action/state/visual/error)× failureDomains"
+//   判定;sidecar 缺失 / 探针未映射 / 多义 一律 UNRESOLVED,不再按 probeId 正则猜测,
+//   并删除旧的 STATE_MANAGEMENT 默认兜底。sidecar 契约见下方 classifyProbeFailures 注释。
 //
 // RED LINES honored here:
 //   * never requires/imports code from the workspace under test (only spawns
@@ -27,6 +44,14 @@ import {
 import { HarnessBrowser } from './browser.mjs';
 import { runProbes, dryRunSpec, litRatio, decodePng } from './probe-executor.mjs';
 
+// probe-meta sidecar(整改 §10/§11/§12):lifecycle/fullPassDeps/failureDomains,
+// 由 fixture 维护侧提供;缺失时执行器按保守语义运行(失败分类=UNRESOLVED)
+function loadProbeMeta(sceneId) {
+  if (!sceneId) return null;
+  const p = path.join(path.dirname(fileURLToPath(import.meta.url)), 'probe-meta', `${sceneId}.json`);
+  try { return JSON.parse(fs.readFileSync(p, 'utf8')); } catch { return null; }
+}
+
 const HARNESS_DIR = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const RUNNER_DIR = path.join(HARNESS_DIR, 'runner');
 const BUILD_TIMEOUT_MS = 180000;
@@ -35,16 +60,48 @@ const READY_TIMEOUT_MS = 10000;
 const argv = parseArgv(process.argv.slice(2));
 const workspace = path.resolve(argv.workspace);
 const specPath = path.resolve(argv.spec);
-const outDir = path.resolve(argv.out || './validate-out');
+const outDirBase = path.resolve(argv.out || './validate-out');
 const runId = argv['run-id'] || `run-${new Date().toISOString().replace(/[:.]/g, '-')}`;
 const wantVideo = !!argv.video;
 const pairId = argv.pair || null;
 const engine = argv.engine || null;
+// FIX-B: --pair-meta(冻结输入守卫)与 --revision(修订版输出)
+const pairMetaPath = typeof argv['pair-meta'] === 'string' && argv['pair-meta'] ? path.resolve(argv['pair-meta']) : null;
+const revisionLabel = typeof argv.revision === 'string' && argv.revision.trim()
+  ? argv.revision.trim().replace(/[^A-Za-z0-9._-]+/g, '_')
+  : null;
 
 if (!argv.workspace || !argv.spec) {
-  process.stderr.write('usage: node runner/validate.mjs --workspace <dir> --spec <spec.json> --out <dir> [--run-id id] [--video] [--port n] [--pair id] [--engine three|air]\n');
+  process.stderr.write('usage: node runner/validate.mjs --workspace <dir> --spec <spec.json> --out <dir> [--run-id id] [--video] [--port n] [--pair id] [--engine three|air] [--pair-meta pair.json] [--revision label]\n');
   process.exit(2);
 }
+
+// --revision:先把 <out>/report.json 一次性归档到 revisions/<其时间>-original/,
+// 再把本次全部输出重定向到 <out>/revisions/<ISO>-<label>/。
+// 幂等保证:归档只在 marker 文件(revisions/.original-archived)不存在时执行一次。
+const compactIso = (iso) => String(iso).replace(/[:.]/g, '').replace(/[^0-9TZ-]/g, '');
+function resolveOutDir(base) {
+  if (!revisionLabel) return base;
+  const revRoot = path.join(base, 'revisions');
+  const existing = path.join(base, 'report.json');
+  const marker = path.join(revRoot, '.original-archived');
+  if (fs.existsSync(existing) && !fs.existsSync(marker)) {
+    let bornAt = new Date().toISOString();
+    try { bornAt = JSON.parse(fs.readFileSync(existing, 'utf8')).generatedAt || bornAt; } catch { /* 保留现时刻 */ }
+    const archiveDir = path.join(revRoot, `${compactIso(bornAt)}-original`);
+    fs.mkdirSync(archiveDir, { recursive: true });
+    fs.copyFileSync(existing, path.join(archiveDir, 'report.json'));
+    fs.rmSync(existing);
+    fs.mkdirSync(revRoot, { recursive: true });
+    fs.writeFileSync(marker, `${bornAt}\n`, 'utf8');
+    // (log 尚未定义,这里直接写 stdout)
+    process.stdout.write(`[revision] 已归档原有 report.json -> ${path.relative(base, path.join(archiveDir, 'report.json'))}\n`);
+  }
+  const dir = path.join(revRoot, `${compactIso(isoNow())}-${revisionLabel}`);
+  fs.mkdirSync(dir, { recursive: true });
+  return dir;
+}
+const outDir = resolveOutDir(outDirBase);
 
 const log = (...a) => process.stdout.write(a.join(' ') + '\n');
 const tRunStart = Date.now();
@@ -62,6 +119,22 @@ try {
 const specSha = sha256File(specPath);
 const minFps = Number(spec?.scaleAndPerformance?.minFps ?? 30);
 
+// FIX-B: 验证协议指纹(probe-executor.mjs + validate.mjs 内容合并 sha,启动时计算;
+// reference-versions.mjs 冻结账本使用同一公式,保证两边可比对)。
+const validatorProtocolHash = (() => {
+  const a = fs.readFileSync(path.join(path.dirname(fileURLToPath(import.meta.url)), 'probe-executor.mjs'));
+  const b = fs.readFileSync(fileURLToPath(import.meta.url));
+  return { hash: sha256(Buffer.concat([a, b])), probeExecutorSha256: sha256(a), validateSha256: sha256(b) };
+})();
+
+// FIX-B: pair 元数据(冻结输入守卫);sidecar 场景号优先取 spec.briefId。
+let pairMeta = null;
+let pairMetaError = null;
+if (pairMetaPath) {
+  try { pairMeta = readJson(pairMetaPath); } catch (e) { pairMetaError = e.message; }
+}
+const sceneId = spec?.briefId || pairMeta?.sceneId || null;
+
 // ---------------------------------------------------------------- out dirs
 const shotDir = path.join(outDir, 'screenshots');
 fs.mkdirSync(shotDir, { recursive: true });
@@ -75,6 +148,18 @@ const report = {
   spec: spec ? { path: specPath, briefId: spec.briefId ?? null, briefVersion: spec.briefVersion ?? null, sha256: specSha } : { path: specPath, error: specError },
   pairId,
   engine,
+  // FIX-B: 冻结输入与协议指纹(聚合/账本/qualify 据此判漂移)
+  specSha256: specSha,
+  validatorProtocolHash: validatorProtocolHash.hash,
+  validatorProtocolComponents: { probeExecutorSha256: validatorProtocolHash.probeExecutorSha256, validateSha256: validatorProtocolHash.validateSha256 },
+  pairMeta: pairMetaPath ? {
+    path: pairMetaPath,
+    pairId: pairMeta?.pairId ?? pairMeta?.sceneId ?? null,
+    batchId: pairMeta?.batchId ?? null,
+    sceneId: pairMeta?.sceneId ?? null,
+    knowledge: pairMeta?.knowledge ?? null,
+    loadError: pairMetaError,
+  } : null,
   build: { ok: false, exitCode: null, durationMs: null, attempts: 1, logFile: 'build.log' },
   serve: { port: null, root: workspace },
   ready: { appReady: false, benchReady: false, durationMs: null },
@@ -104,6 +189,75 @@ const report = {
 
 /** Extra facts gathered along the way, merged into the report at the end. */
 const extra = { consoleCollector: null, keyShots: [] };
+
+// ------------------------------------------- FIX-B: 冻结输入守卫(测量前执行)
+// 依赖合并指纹:sha256( sha256(pkg/package.json) + ':' + sha256(主入口文件) );
+// 键名 {three, cocosair, esbuild}(cocosair -> node_modules/cocosair.js)。
+function dependencyFingerprints() {
+  const root = path.join(HARNESS_DIR, '..', 'node_modules');
+  const dirs = { three: 'three', cocosair: 'cocosair.js', esbuild: 'esbuild' };
+  const out = {};
+  for (const [key, dir] of Object.entries(dirs)) {
+    const pkgDir = path.join(root, dir);
+    const pkgJsonSha = sha256File(path.join(pkgDir, 'package.json'));
+    let mainRel = null;
+    try { const pj = JSON.parse(fs.readFileSync(path.join(pkgDir, 'package.json'), 'utf8')); mainRel = pj.main || pj.module || 'index.js'; } catch { /* 缺包在下面对 null 判漂移 */ }
+    const mainSha = mainRel ? sha256File(path.join(pkgDir, mainRel)) : null;
+    out[key] = (pkgJsonSha && mainSha) ? sha256(`${pkgJsonSha}:${mainSha}`) : null;
+  }
+  return out;
+}
+
+function exitGuarded(code, classification, guardInfo) {
+  report.classification = classification;
+  report.failureCategory = classification;
+  report.verdict = 'FAIL';
+  report.inputGuard = guardInfo;
+  report.error = guardInfo.reason;
+  report.durationMs = Date.now() - tRunStart;
+  report.finishedAt = isoNow();
+  fs.mkdirSync(outDir, { recursive: true });
+  writeJson(path.join(outDir, 'report.json'), report);
+  process.stdout.write(`guarded: ${classification} -> ${path.join(outDir, 'report.json')}\n`);
+  process.exit(code);
+}
+
+if (pairMetaPath) {
+  // (a) INPUT_DRIFT:实际 spec 与 pair 冻结指纹不一致(含 pair 元数据不可读/缺 specSha256 —— 无法核验即拒跑)
+  if (pairMetaError || !pairMeta) {
+    exitGuarded(4, 'INPUT_DRIFT', { kind: 'INPUT_DRIFT', checked: 'pair-meta', reason: `pair.json 不可读: ${pairMetaError}`, pairMetaPath });
+  }
+  if (typeof pairMeta.specSha256 !== 'string' || !pairMeta.specSha256) {
+    exitGuarded(4, 'INPUT_DRIFT', { kind: 'INPUT_DRIFT', checked: 'specSha256', reason: 'pair.specSha256 缺失,冻结输入不可核验', pairMetaPath, specPath, actualSpecSha256: specSha });
+  }
+  if (specSha !== pairMeta.specSha256) {
+    exitGuarded(4, 'INPUT_DRIFT', {
+      kind: 'INPUT_DRIFT', checked: 'specSha256',
+      reason: `实际 spec sha256(${specSha}) != pair.specSha256(${pairMeta.specSha256})`,
+      pairMetaPath, specPath, actualSpecSha256: specSha, frozenSpecSha256: pairMeta.specSha256,
+    });
+  }
+  // (b) ENV_DRIFT:根 node_modules 依赖合并指纹与 pair.dependencyHashes 不一致(字段缺失则跳过 —— 历史批次未冻结)
+  const want = pairMeta.dependencyHashes;
+  if (want && typeof want === 'object') {
+    const got = dependencyFingerprints();
+    const diffs = [];
+    for (const key of ['three', 'cocosair', 'esbuild']) {
+      if (want[key] === undefined) continue; // 只比对 pair 冻结过的键
+      if (got[key] !== want[key]) diffs.push({ key, frozen: want[key], actual: got[key] });
+    }
+    if (diffs.length) {
+      exitGuarded(5, 'ENV_DRIFT', {
+        kind: 'ENV_DRIFT', checked: 'dependencyHashes',
+        reason: `依赖指纹不一致: ${diffs.map((d) => d.key).join(', ')}`,
+        diffs, computed: got,
+      });
+    }
+    report.inputGuard = { kind: 'PASS', checked: ['specSha256', 'dependencyHashes'], at: isoNow() };
+  } else {
+    report.inputGuard = { kind: 'PASS', checked: ['specSha256'], note: 'pair.dependencyHashes 缺失(历史批次未冻结依赖指纹,跳过 ENV 校验)', at: isoNow() };
+  }
+}
 
 // ---------------------------------------------------------------- helpers
 function shotPath(name) { return path.join(shotDir, name); }
@@ -247,17 +401,64 @@ function classify() {
   return 'PASS';
 }
 
+// FIX-B 重写:失败分类不再按 probeId 正则猜测,并删除旧的 STATE_MANAGEMENT 默认兜底。
+// 判定依据 = harness/runner/probe-meta/<SCENE>.json sidecar(sidecar 可能不存在):
+//   {
+//     "scene": "E01",
+//     "version": 1,
+//     "probes": {
+//       "P4": {
+//         "failureDomains": {
+//           "action": ["INTERACTION"],
+//           "state":  ["STATE_MANAGEMENT"],
+//           "visual": ["RUNTIME"],
+//           "error":  ["RUNTIME"]
+//         }
+//       }
+//     }
+//   }
+// 规则:每个失败探针取其"失败断言类别"(action/state/visual/error,来自探针证据),
+// 查 sidecar 各类别的 failureDomains 并集:唯一域 -> 判该域;多义 -> UNRESOLVED。
+// sidecar 缺失 / 探针未映射 / 类别未映射 / 失败无类别证据 -> UNRESOLVED。
+// 跨探针:全部可判且同域 -> 该域;否则 UNRESOLVED。逐探针依据写入
+// report.classificationEvidence 供聚合/人工复核。
 function classifyProbeFailures(failed) {
-  // 按探针证据映射失败分类枚举(自动初判,聚合阶段可由人工/审查细化)
-  const has = (pred) => failed.some(pred);
-  const pid = (x) => String(x.probeId || '');
-  if (has(x => /reset|lifecycle|destroy|instance/i.test(pid(x)))) return 'LIFECYCLE_MISUSE';
-  if (has(x => /asset|load|glb/i.test(pid(x)))) return 'ASSET_PIPELINE';
-  if (has(x => x.status === 'ERROR')) return 'RUNTIME';
-  if (has(x => /nonBlank/i.test(String(x.visualType || '')))) return 'RUNTIME';
-  if (has(x => /click|drag|wheel|key|pick|interact|export|feed|scatter/i.test(pid(x)))) return 'INTERACTION';
-  if (has(x => /fps|performance/i.test(pid(x)))) return 'PERFORMANCE';
-  return 'STATE_MANAGEMENT';
+  const sidecarPath = sceneId ? path.join(RUNNER_DIR, 'probe-meta', `${sceneId}.json`) : null;
+  let sidecar = null;
+  if (sidecarPath && fs.existsSync(sidecarPath)) {
+    try { sidecar = readJson(sidecarPath); } catch { sidecar = null; }
+  }
+  const perProbe = failed.map((f) => {
+    const cats = Array.isArray(f.failedAssertions) && f.failedAssertions.length
+      ? f.failedAssertions
+      : (f.status === 'ERROR' ? ['error'] : []);
+    let domain = null;
+    let unresolvedReason = null;
+    if (!sidecar) unresolvedReason = 'no-sidecar';
+    else if (!sidecar.probes || !sidecar.probes[f.probeId]) unresolvedReason = 'probe-not-in-sidecar';
+    else if (!cats.length) unresolvedReason = 'uncategorized-failure';
+    else {
+      const domains = new Set();
+      let mappedAny = false;
+      for (const c of cats) {
+        const list = sidecar.probes[f.probeId].failureDomains?.[c];
+        if (Array.isArray(list) && list.length) { mappedAny = true; for (const d of list) domains.add(d); }
+      }
+      if (!mappedAny) unresolvedReason = 'assertion-category-unmapped';
+      else if (domains.size === 1) domain = [...domains][0];
+      else unresolvedReason = 'ambiguous:' + [...domains].sort().join('+');
+    }
+    return { probeId: f.probeId, status: f.status, failedAssertions: cats, domain, unresolvedReason };
+  });
+  report.classificationEvidence = {
+    rule: 'probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)',
+    sidecar: sidecar ? sidecarPath : null,
+    failedProbes: perProbe,
+  };
+  const resolved = perProbe.filter((p) => p.domain).map((p) => p.domain);
+  const unique = [...new Set(resolved)];
+  if (perProbe.length && resolved.length === perProbe.length && unique.length === 1) return unique[0];
+  return 'UNRESOLVED';
 }
 
 let browserLaunchFailed = false;
@@ -341,6 +542,12 @@ try {
       appReady: report.ready.appReady,
       shotDir,
       networkSince: since,
+      // 独立观测通道接线(整改 §8):download/console 断言接真实采集器,缺数据时
+      // executor 返回 UNSUPPORTED_BY_ENV,绝不静默 PASS
+      downloads: collector.downloads,
+      consoleSince: (tsIso) => collector.entries.filter((e) => (e.ts ?? '') >= tsIso),
+      consoleEntries: collector.entries,
+      probeMeta: loadProbeMeta(spec?.briefId),
     });
     // refresh the network cache right after probes (serve log grows)
     networkLogCache = await fetchServeLog(serve.port);
@@ -355,12 +562,21 @@ try {
     results: probeRun.results,
   });
   report.artifacts.push('probe-results.json');
-  report.probes = probeRun.results.map((r) => ({
-    probeId: r.probeId,
-    status: r.status,
-    weight: r.weight,
-    visualType: r.assertion?.visualType || r.visualType || null,
-  }));
+  report.probes = probeRun.results.map((r) => {
+    // FIX-B: 记录该探针"失败的断言类别"(证据来自探针执行明细,供失败分类 sidecar 使用)
+    const cats = [];
+    if (r.action?.error) cats.push('action');
+    if (r.stateAssertion && (r.stateAssertion.ok === false || r.stateAssertion.error)) cats.push('state');
+    if (r.visualAssertion && r.visualAssertion.ok === false) cats.push('visual');
+    if (r.status === 'ERROR' && !cats.length) cats.push('error');
+    return {
+      probeId: r.probeId,
+      status: r.status,
+      weight: r.weight,
+      visualType: r.visualAssertion?.type || null,
+      failedAssertions: cats,
+    };
+  });
   report.probePassRate = probeRun.totalWeight > 0 ? round2(probeRun.passedWeight / probeRun.totalWeight, 4) : 0;
   report.scoreInputs.s2.passedWeight = probeRun.passedWeight;
   report.scoreInputs.s2.totalWeight = probeRun.totalWeight;

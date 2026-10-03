@@ -1,0 +1,84 @@
+# Changed Files — AUDIT-20261003
+
+> 基线 35306be → 本审计提交。修改 62 个;新增 517 个(节选关键项)。
+
+## 修改(核心)
+- gates/G4.json
+- harness/aggregate/aggregate-all.mjs
+- harness/aggregate/reference-versions.mjs
+- harness/coordinator/create-pair.mjs
+- harness/coordinator/run-contract-template.md
+- harness/isolation/leak-scanner.mjs
+- harness/isolation/run-nc.mjs
+- harness/launch-config.json
+- harness/round/run-round.mjs
+- harness/runner/probe-executor.mjs
+- harness/runner/selftest.mjs
+- harness/runner/validate.mjs
+- harness/selftest.txt
+- reference/private/REFERENCE-VERSIONS.json
+- results/aggregated.json
+- run.mjs
+- templates/cocosair/package.json
+- templates/cocosair/scripts/build.mjs
+- templates/three/package.json
+- templates/three/scripts/build.mjs
+
+## 新增(关键)
+- docs/audits/AUDIT-20261003/baseline.json
+- docs/audits/AUDIT-20261003/findings.md
+- docs/audits/AUDIT-20261003/fixes.md
+- docs/audits/AUDIT-20261003/gate-summary.json
+- docs/audits/AUDIT-20261003/historical-batch-qualification.json
+- docs/audits/AUDIT-20261003/negative-controls.json
+- docs/audits/AUDIT-20261003/remaining-risks.md
+- docs/audits/AUDIT-20261003/ruler-verification.json
+- docs/audits/AUDIT-20261003/test-results.json
+- harness/aggregate/fixb-selftest.txt
+- harness/aggregate/qualify-historical.mjs
+- harness/isolation/fixtures/NC07/expected-fail.md
+- harness/isolation/fixtures/NC07/spec.json
+- harness/isolation/fixtures/NC08/expected-fail.md
+- harness/isolation/fixtures/NC08/spec.json
+- harness/isolation/fixtures/NC09/build.mjs
+- harness/isolation/fixtures/NC09/expected-fail.md
+- harness/isolation/fixtures/NC09/index.html
+- harness/isolation/fixtures/NC09/package.json
+- harness/isolation/fixtures/NC09/pair.json
+- harness/isolation/fixtures/NC09/spec.json
+- harness/isolation/fixtures/NC09/src/app.js
+- harness/isolation/fixtures/NC10/expected-fail.md
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/arm-a/RUN-CONTRACT.md
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/arm-a/RUN-META.json
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/arm-a/spec.json
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/arm-b/RUN-CONTRACT.md
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/arm-b/RUN-META.json
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/arm-b/spec.json
+- harness/isolation/fixtures/NC11/PAIR-E01-K0-R01/pair.json
+- harness/isolation/fixtures/NC11/expected-fail.md
+- harness/isolation/fixtures/NC12/.budget/build.count
+- harness/isolation/fixtures/NC12/.budget/meta.json
+- harness/isolation/fixtures/NC12/expected-fail.md
+- harness/isolation/fixtures/NC13/expected-fail.md
+- harness/isolation/fixtures/nc-selftest.txt
+- harness/round/fixc-selftest.txt
+- harness/runner/budget-check.mjs
+- harness/runner/probe-meta/E01.json
+- harness/runner/probe-meta/E02.json
+- harness/runner/probe-meta/E03.json
+- harness/runner/probe-meta/E04.json
+- harness/runner/probe-meta/E05.json
+- harness/runner/probe-meta/E06.json
+- harness/runner/probe-meta/E07.json
+- harness/runner/probe-meta/E08.json
+- harness/runner/probe-meta/E09.json
+- harness/runner/probe-meta/E10.json
+- harness/runner/spec-audit-selftest.txt
+- harness/runner/spec-audit.mjs
+- results/nc/NC09-drift/report.json
+- templates/cocosair/scripts/count.mjs
+- templates/cocosair/scripts/verify-browser.mjs
+- templates/three/scripts/count.mjs
+- templates/three/scripts/verify-browser.mjs
+
+(results/nc/ 下的 42 个文件为 NC 套件复跑的常规产物再生。)

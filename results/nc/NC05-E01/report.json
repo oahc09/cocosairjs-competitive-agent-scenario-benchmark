@@ -1,33 +1,40 @@
 {
-  "runId": "run-2026-10-02T14-19-02-693Z",
-  "generatedAt": "2026-10-02T14:19:02.700Z",
+  "runId": "run-2026-10-03T07-39-23-590Z",
+  "generatedAt": "2026-10-03T07:39:23.601Z",
   "harnessVersion": "1.0.0",
-  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\isolation\\fixtures\\NC05",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC05",
   "spec": {
-    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E01\\spec.json",
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E01\\spec.json",
     "briefId": "E01",
     "briefVersion": "1.0.0",
-    "sha256": "9a32a744a6a9eff5f4fc87b447d112cc26b8f9c04276dc8db34056ba0657a1c6"
+    "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6"
   },
   "pairId": null,
   "engine": null,
+  "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 877,
+    "durationMs": 865,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> NC05-fixture@1.0.0 build\n> node build.mjs\n\n[NC05 build] dist/app.js written\n\n[exit code 0] duration 875ms\n"
+    "log": "$ npm run build\n\n> NC05-fixture@1.0.0 build\n> node build.mjs\n\n[NC05 build] dist/app.js written\n\n[exit code 0] duration 864ms\n"
   },
   "serve": {
     "port": 7415,
-    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\isolation\\fixtures\\NC05"
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC05"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 79
+    "durationMs": 249
   },
   "console": {
     "errors": 1,
@@ -41,43 +48,52 @@
       "probeId": "P1",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P2",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P3",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P4",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P5",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P6",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P7",
       "status": "FAIL",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": [
+        "state"
+      ]
     }
   ],
   "probeResults": "probe-results.json",
@@ -86,15 +102,15 @@
   "perf": {
     "fps": 60.2,
     "frames": 181,
-    "sampleMs": 3004,
-    "sampledAt": "2026-10-02T14:19:28.258Z",
+    "sampleMs": 3008,
+    "sampledAt": "2026-10-03T07:39:49.464Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [],
   "networkEvents": {
     "count": 4,
-    "totalBytes": 7097
+    "totalBytes": 7290
   },
   "screenshots": [
     "initial.png",
@@ -135,8 +151,8 @@
     "serve-log.json",
     "perf.json"
   ],
-  "classification": "STATE_MANAGEMENT",
-  "failureCategory": "STATE_MANAGEMENT",
+  "classification": "UNRESOLVED",
+  "failureCategory": "UNRESOLVED",
   "verdict": "FAIL",
   "error": null,
   "scoreInputs": {
@@ -159,6 +175,21 @@
       "minFps": 30
     }
   },
-  "durationMs": 26091,
-  "finishedAt": "2026-10-02T14:19:28.784Z"
+  "classificationEvidence": {
+    "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+    "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E01.json",
+    "failedProbes": [
+      {
+        "probeId": "P7",
+        "status": "FAIL",
+        "failedAssertions": [
+          "state"
+        ],
+        "domain": null,
+        "unresolvedReason": "probe-not-in-sidecar"
+      }
+    ]
+  },
+  "durationMs": 26410,
+  "finishedAt": "2026-10-03T07:39:50.001Z"
 }

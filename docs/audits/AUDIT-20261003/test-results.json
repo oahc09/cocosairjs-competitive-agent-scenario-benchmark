@@ -1,0 +1,29 @@
+{
+  "generatedAt": "2026-10-03T07:40:12.273Z",
+  "selftest": {
+    "result": "PASS",
+    "checks": "51/51",
+    "file": "harness/selftest.txt"
+  },
+  "specAudit": {
+    "exit": 0,
+    "probes": 74,
+    "unsupported": 0,
+    "partial": 22,
+    "file": "results/spec-capability-audit.json",
+    "note": "22 PARTIAL 全部为 region 描述性参数机器不可判(expect 文本),type/params 层面 SUPPORTED"
+  },
+  "negativeControls": {
+    "status": "PASS(NC01-06 base + NC07-13 extended 全 DETECTED)",
+    "file": "gates/G4.json"
+  },
+  "judgeImmutability": "PASS",
+  "doubleRun": "PASS",
+  "driftSelftest": "PASS",
+  "uniformReferenceRevalidation": {
+    "pass": 16,
+    "fail": 4,
+    "failed": "E04×2(P4) E05×2(P3)"
+  },
+  "leakScanAllPilotArms": "CLEAN×8"
+}

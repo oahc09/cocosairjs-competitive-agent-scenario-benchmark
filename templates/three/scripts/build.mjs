@@ -27,7 +27,7 @@ const dist = path.join(root, 'dist');
 const vendor = path.join(dist, 'vendor');
 
 // exFAT 去重布局:工作区可不带自有 node_modules,沿目录向上查找
-// (引擎容器层 reference/private/<engine>/node_modules 或模板自身)
+// (引擎容器层 答案区(禁读目录)/<engine>/node_modules 或模板自身)
 function findNodeModulesDir() {
   let dir = root;
   for (;;) {

@@ -1,0 +1,36 @@
+{
+  "generatedAt": "2026-10-03T07:40:12.267Z",
+  "rulerId": "RULER-20261003-R1",
+  "checks": {
+    "briefShaFixed": {
+      "ok": true,
+      "evidence": "F-01 修复;账本 20 epochs briefSha 全部真实 sha(非 null)"
+    },
+    "judgeImmutability": {
+      "ok": true,
+      "evidence": "注入 judge-pass-9.json(极端分数)→ aggregate 全字段不变(F-03 复验)"
+    },
+    "driftSelftest": {
+      "ok": true,
+      "evidence": "NC10:--selftest-drift 注入 briefSha/specSha→STALE、validatorHash→NEEDS_REVALIDATION"
+    },
+    "uniformRevalidation": {
+      "ok": true,
+      "evidence": "20 Reference 以最终 validator 哈希统一重验(rectification-final):16 PASS / 4 FAIL(E04×2 E05×2,见 findings F-15/F-16,spec 层面问题非引擎或实现问题)"
+    },
+    "ceilingCheck": {
+      "status": "全部 CURRENT(v1.val4)",
+      "evidence": "协议漂移经重验后归零"
+    },
+    "doubleRunConsistency": {
+      "ok": true,
+      "evidence": "aggregate 双跑 sha 一致(e17304eb…,时间戳外)"
+    }
+  },
+  "failedReferences": [
+    "three/E04(P4 余烬窗口,F-16)",
+    "cocosair/E04(同上)",
+    "three/E05(P3 ring 断言,F-15)",
+    "cocosair/E05(同上)"
+  ]
+}

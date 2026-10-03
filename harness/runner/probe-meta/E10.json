@@ -1,0 +1,22 @@
+{
+  "lifecycleProbeIds": [
+    "P4",
+    "P5",
+    "P6",
+    "P7"
+  ],
+  "fullPassDeps": {
+    "P5": ["P4"],
+    "P6": ["P4"],
+    "P7": ["P6"]
+  },
+  "failureDomains": {
+    "P1": "ASSET_PIPELINE",
+    "P2": "ANIMATION",
+    "P3": "ANIMATION",
+    "P4": "LIFECYCLE_MISUSE",
+    "P5": "LIFECYCLE_MISUSE",
+    "P6": "LIFECYCLE_MISUSE",
+    "P7": "LIFECYCLE_MISUSE"
+  }
+}

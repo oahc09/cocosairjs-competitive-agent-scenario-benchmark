@@ -1,6 +1,26 @@
 {
-  "generatedAt": "2026-10-03T04:43:59.223Z",
-  "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(5)+visual(round(Σ18×40/18));visual 缺失时 total=null(objectiveOnly 报告)",
+  "generatedAt": "2026-10-03T07:39:53.002Z",
+  "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
+  "rulerStatus": {
+    "rulerId": "RULER-20261003-R1",
+    "source": "reference/private/REFERENCE-VERSIONS.json(只读冻结账本;不动态扫描批次 judge 数据)",
+    "protocol": {
+      "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+      "validatorProtocolComponents": {
+        "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+        "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+      },
+      "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+      "judgeProtocolSource": "docs/metric-spec.md §8 盲评统计(Track D)(= 计划书 §18 口径)"
+    },
+    "g7": {
+      "gate": "G7 BLIND_JUDGE_VALIDITY",
+      "status": "BLOCKED",
+      "source": "gates/G7.json",
+      "formalImpact": "INVALID — formal total/attainment/pairedDelta 全 null,视觉分仅 provisional"
+    },
+    "needsRecalibration": []
+  },
   "batches": [
     {
       "batchId": "B-20261002-R1",
@@ -19,51 +39,91 @@
               "s1": 15,
               "s2": 30,
               "s3": 10,
-              "s4": 5,
-              "visual": 26,
-              "total": 86,
-              "objectiveOnly": 60,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
               "passRate": 1,
               "fps": 60.3,
               "visual18": 11.5,
+              "provisionalVisualScore": 26,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
               "report": "B-20261002-R1/PAIR-E01-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
               "s1": 15,
               "s2": 30,
               "s3": 10,
-              "s4": 5,
-              "visual": 31,
-              "total": 91,
-              "objectiveOnly": 60,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
               "passRate": 1,
               "fps": 60.3,
               "visual18": 14,
+              "provisionalVisualScore": 31,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
               "report": "B-20261002-R1/PAIR-E01-K0-R01/arm-b/validation/report.json"
             }
           },
-          "attainment": {
-            "three": 0.97,
-            "cocosair": 1.03
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 1
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": 26,
+            "cocosair": 31,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 1,
+            "validationRevision": 4,
             "rulerId": "RULER-20261003-R1",
             "refFrozenUnderRuler": "RULER-20261003-R1",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
-          },
-          "paired": {
-            "rawDeltaAirMinusThree": 5,
-            "attainmentDeltaAirMinusThree": 0.06,
-            "outcome": "AIR_WIN"
           }
         },
         {
@@ -78,51 +138,93 @@
               "s1": 15,
               "s2": 13,
               "s3": 4,
-              "s4": 5,
-              "visual": 28,
-              "total": 65,
-              "objectiveOnly": 37,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 32,
               "verdict": "FAIL",
               "classification": "STATE_MANAGEMENT",
               "passRate": 0.4286,
               "fps": 60.2,
               "visual18": 12.8,
+              "provisionalVisualScore": 28,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 32,
+                "attainment": 0.58
+              },
               "report": "B-20261002-R1/PAIR-E02-K0-R01/arm-a/validation/report.json"
             },
             "three": {
               "s1": 15,
               "s2": 30,
               "s3": 10,
-              "s4": 5,
-              "visual": 30,
-              "total": 90,
-              "objectiveOnly": 60,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
               "passRate": 1,
               "fps": 60.3,
               "visual18": 13.3,
+              "provisionalVisualScore": 30,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
               "report": "B-20261002-R1/PAIR-E02-K0-R01/arm-b/validation/report.json"
             }
           },
-          "attainment": {
-            "three": 1.05,
-            "cocosair": 0.75
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 32
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 0.58
+            },
+            "pairedDelta": -23,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": 30,
+            "cocosair": 28,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 1,
+            "validationRevision": 4,
             "rulerId": "RULER-20261003-R1",
             "refFrozenUnderRuler": "RULER-20261003-R1",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
-          },
-          "paired": {
-            "rawDeltaAirMinusThree": -25,
-            "attainmentDeltaAirMinusThree": -0.3,
-            "outcome": "THREE_WIN"
           }
         },
         {
@@ -137,51 +239,91 @@
               "s1": 15,
               "s2": 0,
               "s3": 4,
-              "s4": 5,
-              "visual": 31,
-              "total": 55,
-              "objectiveOnly": 24,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 19,
               "verdict": "FAIL",
               "classification": "STATE_MANAGEMENT",
               "passRate": 0,
               "fps": 60.1,
               "visual18": 14,
+              "provisionalVisualScore": 31,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 19,
+                "attainment": 0.35
+              },
               "report": "B-20261002-R1/PAIR-E05-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
               "s1": 15,
               "s2": 0,
               "s3": 4,
-              "s4": 5,
-              "visual": 30,
-              "total": 54,
-              "objectiveOnly": 24,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 19,
               "verdict": "FAIL",
               "classification": "STATE_MANAGEMENT",
               "passRate": 0,
               "fps": 60,
               "visual18": 13.5,
+              "provisionalVisualScore": 30,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 19,
+                "attainment": 0.35
+              },
               "report": "B-20261002-R1/PAIR-E05-K0-R01/arm-b/validation/report.json"
             }
           },
-          "attainment": {
-            "three": 0.62,
-            "cocosair": 0.61
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 19,
+              "cocosair": 19
+            },
+            "attainment": {
+              "three": 0.35,
+              "cocosair": 0.35
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": 31,
+            "cocosair": 30,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 1,
+            "validationRevision": 4,
             "rulerId": "RULER-20261003-R1",
             "refFrozenUnderRuler": "RULER-20261003-R1",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
-          },
-          "paired": {
-            "rawDeltaAirMinusThree": -1,
-            "attainmentDeltaAirMinusThree": -0.01,
-            "outcome": "TIE"
           }
         },
         {
@@ -196,51 +338,97 @@
               "s1": 15,
               "s2": 30,
               "s3": 10,
-              "s4": 5,
-              "visual": 23,
-              "total": 83,
-              "objectiveOnly": 60,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P4",
+                "P5",
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
               "passRate": 1,
               "fps": 60.2,
               "visual18": 10.5,
+              "provisionalVisualScore": 23,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
               "report": "B-20261002-R1/PAIR-E10-K0-R01/arm-a/validation/report.json"
             },
             "three": {
               "s1": 15,
               "s2": 30,
               "s3": 10,
-              "s4": 5,
-              "visual": 22,
-              "total": 82,
-              "objectiveOnly": 60,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P4",
+                "P5",
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
               "passRate": 1,
               "fps": 60.1,
               "visual18": 10,
+              "provisionalVisualScore": 22,
               "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
               "report": "B-20261002-R1/PAIR-E10-K0-R01/arm-b/validation/report.json"
             }
           },
-          "attainment": {
-            "three": 0.99,
-            "cocosair": 1
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 1
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": 22,
+            "cocosair": 23,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 1,
+            "validationRevision": 4,
             "rulerId": "RULER-20261003-R1",
             "refFrozenUnderRuler": "RULER-20261003-R1",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
-          },
-          "paired": {
-            "rawDeltaAirMinusThree": 1,
-            "attainmentDeltaAirMinusThree": 0.01,
-            "outcome": "TIE"
           }
         }
       ]
@@ -251,27 +439,30 @@
       "scene": "E01",
       "knowledge": "K0",
       "n": 1,
+      "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
-        "median": 5,
+        "median": 0,
         "iqr": null,
         "bootstrapCi95": null
       },
       "winTieLoss": {
-        "air": 1,
-        "tie": 0,
+        "air": 0,
+        "tie": 1,
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0.97,
-        "air": 1.03
+        "three": 1,
+        "air": 1,
+        "basis": "objective 对 RULER objectiveScore"
       }
     },
     {
       "scene": "E02",
       "knowledge": "K0",
       "n": 1,
+      "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
-        "median": -25,
+        "median": -23,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -281,16 +472,18 @@
         "three": 1
       },
       "attainmentMedian": {
-        "three": 1.05,
-        "air": 0.75
+        "three": 1,
+        "air": 0.58,
+        "basis": "objective 对 RULER objectiveScore"
       }
     },
     {
       "scene": "E05",
       "knowledge": "K0",
       "n": 1,
+      "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
-        "median": -1,
+        "median": 0,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -300,16 +493,18 @@
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0.62,
-        "air": 0.61
+        "three": 0.35,
+        "air": 0.35,
+        "basis": "objective 对 RULER objectiveScore"
       }
     },
     {
       "scene": "E10",
       "knowledge": "K0",
       "n": 1,
+      "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
-        "median": 1,
+        "median": 0,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -319,97 +514,342 @@
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0.99,
-        "air": 1
+        "three": 1,
+        "air": 1,
+        "basis": "objective 对 RULER objectiveScore"
       }
     }
   ],
   "knowledgeGain": [],
   "referenceCeiling": {
     "E01/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13,
-      "total": 89
+      "visual40": 29,
+      "total": 84,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "38809f4ef632dcc41a5eb6a057a57a09735d38c75c3c2de171945daede61b06c"
     },
     "E01/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 12.5,
-      "total": 88
+      "visual40": 28,
+      "total": 83,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "9f01980d69a6a8f70a23cff7859055788891bd86285b24c296bb600c071a4418"
     },
     "E02/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 11.5,
-      "total": 86
+      "visual40": 26,
+      "total": 81,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "5dc8ca6b2c8cfccd5be132f4ed30f399087b5baf9772acb52b4e68e8f10509ae"
     },
     "E02/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 12,
-      "total": 87
+      "visual40": 27,
+      "total": 82,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "8944057ef92f5c88817e644829ef18121ae5ae0bebf0c4b813266f8a96d9723d"
     },
     "E03/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 11.5,
-      "total": 86
+      "visual40": 26,
+      "total": 81,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "779cfdfef4d033b66875dd3b32560366b301a401a3b1108389ed3dd58cbed1a2"
     },
     "E03/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 11.5,
-      "total": 86
+      "visual40": 26,
+      "total": 81,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "d6b2c1d14b51682780aa7439e68a4ecf57d164079bd2594fbf6de74c00cd1009"
     },
     "E04/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 11,
-      "total": 84
+      "visual40": 24,
+      "total": 79,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "ce76c163c38e2bbee551da8165a2431d0842042819fc38ca8271a3a328da7aed"
     },
     "E04/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 11.5,
-      "total": 86
+      "visual40": 26,
+      "total": 81,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "7be303208328f597a28170d3c355eaf9e5b29b8860d48224a54ba497b7ded6ce"
     },
     "E05/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13,
-      "total": 89
+      "visual40": 29,
+      "total": 84,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "0110a6a780fcfea837aed0f285b76b0452d7021700cedf2f961b8f9bb745028c"
     },
     "E05/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13,
-      "total": 89
+      "visual40": 29,
+      "total": 84,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "2da2a3052bbce00cae6fd8c8e9c4a47aeb7b0ceeedfa542f1d109df7e28eec9f"
     },
     "E06/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13.5,
-      "total": 90
+      "visual40": 30,
+      "total": 85,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "a97fdea785c99ec14ba1218a15df10b72fc19131e311b963a8f8a442f072bdcf"
     },
     "E06/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13.5,
-      "total": 90
+      "visual40": 30,
+      "total": 85,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "debee718b2668154471d59e1e216c752a69163d07b00bc095d621b007c5f1fd8"
     },
     "E07/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 14,
-      "total": 91
+      "visual40": 31,
+      "total": 86,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "6f178b9920ca3a364ada85885fbc7fb004b09052d704df970df313b9d039d280"
     },
     "E07/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13,
-      "total": 89
+      "visual40": 29,
+      "total": 84,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "876157b1038da63ba7b6143fac334ee8a6ccd5f15b3a52ce30e00bfad4a8422a"
     },
     "E08/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 12,
-      "total": 87
+      "visual40": 27,
+      "total": 82,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "c0a9780aa9040f72d86dad7ab7f1027b53d75e48ed1fb56511025a16057b2624"
     },
     "E08/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 12,
-      "total": 87
+      "visual40": 27,
+      "total": 82,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "0846f3251349247baec609d4e1e25e3b779a83650dd14eaaa3594257b027c52b"
     },
     "E09/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 12.5,
-      "total": 88
+      "visual40": 28,
+      "total": 83,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "ad2eb5937fdfc8df2b89237b663b1b6a1dea554b76a08e3af411c9ef9b59f81c"
     },
     "E09/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 13,
-      "total": 89
+      "visual40": 29,
+      "total": 84,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "3ded78fe62e5b0550ebc1c3fba476c7ead24504b2b6e9e24a1184c752ee0ef56"
     },
     "E10/three": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 10.5,
-      "total": 83
+      "visual40": 23,
+      "total": 78,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "2f8b41fb02bebad858e8c0588a7dfe2106380bbd2d4b59e77f974e8fae07c97a"
     },
     "E10/cocosair": {
+      "objective": 55,
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
       "visual18": 10.5,
-      "total": 83
+      "visual40": 23,
+      "total": 78,
+      "totalLegacy": null,
+      "refVersion": 1,
+      "validationRevision": 4,
+      "frozenUnderRuler": "RULER-20261003-R1",
+      "evidenceHash": "328f17b948ea478eb0ce9301d8881f524f8f4beb546db2790bf9334c51cfc280"
     }
   },
   "notes": [
     "批次布局 results/<B-YYYYMMDD-Rnn>/;coordinator auto-batch 支持单日多轮。",
-    "新批次无盲评时 visual=null(visualPending),补跑 build-blind + judge 后重跑本脚本回填。",
-    "KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效。"
+    "FIX-B:Reference 满分线只读 RULER 账本冻结值(objectiveScore/totalScore/evidenceHash),来源见各 entry。账本漂移检测:node run.mjs ceiling-check。",
+    "FIX-B:gates/G7.json 非 PASS 时,每对 formal={total:null,attainment:null,pairedDelta:null,visualStatus:\"INVALID(G7 <status>)\"};objective(S1+S2+S3)与 provisionalVisualScore 照常输出。",
+    "FIX-B:S4 读 arm-*/validation/code-review.json(structure/antiPatterns/total/reviewer/protocolHash);缺失 → s4=null+s4Pending:true,不以 5 分填充。",
+    "FIX-B:attainment>1.03 → arm.ceilingBreach:true + rulerStatus.needsRecalibration(量尺可能被低估,需重校准;不截断)。",
+    "新批次无盲评时 provisionalVisualScore=null(visualPending),补跑 build-blind + judge 后重跑本脚本回填。",
+    "KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效;G7 未过期间以 objective 口径计算。"
   ]
 }

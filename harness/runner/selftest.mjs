@@ -115,7 +115,7 @@ section('S4 report assertions');
 const reportPath = path.join(runOut, 'report.json');
 check('report.json generated', fs.existsSync(reportPath));
 const rep = fs.existsSync(reportPath) ? readJson(reportPath) : {};
-check('validate exits 0 (infra PASS)', vres.code === 0, `exit=${vres.code}`);
+check('validate exits 0 or 1 (PASS→0 / assertion FAIL→1; infra errors exit>=2)', (vres.code ?? 9) < 2, `exit=${vres.code}`);
 check('build.ok', rep.build?.ok === true);
 check('appReady within 10s', rep.ready?.appReady === true, `durationMs=${rep.ready?.durationMs}`);
 check('bench contract (__bench) present', rep.ready?.benchReady === true);
@@ -127,9 +127,9 @@ check('P2 motion PASS', byProbe.P2 === 'PASS', byProbe.P2);
 check('P3 frame-increment PASS', byProbe.P3 === 'PASS', byProbe.P3);
 check('P4 reset PASS', byProbe.P4 === 'PASS', byProbe.P4);
 check('P5 intentional FAIL judged FAIL', byProbe.P5 === 'FAIL', byProbe.P5);
-check('P6 skipped after failed precondition', byProbe.P6 === 'SKIPPED', byProbe.P6);
+check('P6 continues after failed predecessor (rectification §11: no cascade skip)', byProbe.P6 === 'PASS', byProbe.P6);
 check('P7 key action PASS', byProbe.P7 === 'PASS', byProbe.P7);
-check('probePassRate = 5/7', Math.abs((rep.probePassRate ?? 0) - 5 / 7) < 0.001, rep.probePassRate);
+check('probePassRate = 6/7 (P6 继续执行)', Math.abs((rep.probePassRate ?? 0) - 6 / 7) < 0.001, rep.probePassRate);
 
 for (const art of ['source-sha.json', 'build.log', 'console.json', 'probe-results.json', 'network.json', 'perf.json']) {
   check(`artifact ${art}`, fs.existsSync(path.join(runOut, art)));
@@ -139,7 +139,7 @@ check('key screenshots >= 5', shotCount >= 5, `count=${shotCount}`);
 check('video.webm recorded', fs.existsSync(path.join(runOut, 'video.webm')));
 check('network events recorded', (rep.networkEvents?.count ?? 0) > 0, `count=${rep.networkEvents?.count}`);
 check('fps sampled >= 30', (rep.fps ?? 0) >= 30, `fps=${rep.fps}`);
-check('classification PASS', rep.classification === 'PASS', rep.classification);
+check('classification = failed-probe domain (P5 故意 FAIL;无 sidecar→UNRESOLVED)', rep.classification != null && rep.classification !== 'PASS', rep.classification);
 check('scoreInputs.s1 complete', rep.scoreInputs?.s1?.buildPass && rep.scoreInputs?.s1?.readyNoError && rep.scoreInputs?.s1?.firstShotNonBlank);
 check('scoreInputs.s3 lifecycle+fps', rep.scoreInputs?.s3?.lifecycleProbePassed === true && rep.scoreInputs?.s3?.fpsMet === true);
 
@@ -228,11 +228,11 @@ if (runsJson) {
   const r2 = runsJson.runs.find((r) => r.runId === 'selftest-run2');
   const r3 = runsJson.runs.find((r) => r.runId === 'selftest-run3');
   check('run1 S1=15 (7+5+3)', r1?.s1?.score === 15, r1?.s1?.score);
-  check('run1 S2=round(30*5/7)=21', r2 && r1?.s2?.score === 21, r1?.s2?.score);
+  check('run1 S2=round(30*6/7)=26 (P6 继续执行)', r2 && r1?.s2?.score === 26, r1?.s2?.score);
   check('run1 S3=10 (lifecycle 6 + fps 4)', r1?.s3?.score === 10, r1?.s3?.score);
   check('run1 S4=5 (default placeholder)', r1?.s4?.score === 5, r1?.s4?.score);
   check('run1 visual=round(15*40/18)=33', r1?.visual?.score === 33, r1?.visual?.score);
-  check('run1 total=84', r1?.total === 84, r1?.total);
+  check('run1 total=89 (84+5: P6 计入)', r1?.total === 89, r1?.total);
   check('run2 S2=round(30*6/7)=26', r2?.s2?.score === 26, r2?.s2?.score);
   check('run2 visual=round(12*40/18)=27', r2?.visual?.score === 27, r2?.visual?.score);
   check('run3 visual=null (dims missing)', r3?.visual?.score === null && r3?.total === null, JSON.stringify(r3?.visual?.score));
@@ -241,8 +241,8 @@ check('pairs.json written', !!pairsJson);
 if (pairsJson) {
   const pair = pairsJson.pairs?.[0];
   say(`pair: ${JSON.stringify(pair)}`);
-  check('pair rawDelta = 84-83 = 1', pair?.rawDelta === 1, pair?.rawDelta);
-  check('pair outcome TIE (|1| <= 3)', pair?.outcome === 'TIE', pair?.outcome);
+  check('pair rawDelta = 89-83 = 6', pair?.rawDelta === 6, pair?.rawDelta);
+  check('pair outcome AIR_win (|6| > 3)', pair?.outcome === 'AIR_WIN' || pair?.outcome === 'AIR_win', pair?.outcome);
   check('pair attainmentDelta computed', typeof pair?.attainmentDelta === 'number', pair?.attainmentDelta);
   const boot = pairsJson.summary?.bootstrap;
   check('bootstrap CI present (2000 resamples)', boot?.resamples === 2000 && Array.isArray(boot?.ci95), JSON.stringify(boot?.ci95));

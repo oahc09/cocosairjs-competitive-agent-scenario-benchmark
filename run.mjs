@@ -20,7 +20,7 @@ const BENCH = path.dirname(fileURLToPath(import.meta.url));
 const pass = (arr) => arr; // 透传
 const CMD = {
   round: (rest) => { const stage = rest[0] || 'status'; rest = rest.slice(1);
-    if (['create', 'collect', 'validate', 'blind', 'aggregate', 'status'].includes(stage))
+    if (['create', 'collect', 'validate', 'blind', 'aggregate', 'status', 'preflight'].includes(stage))
       return ['node', path.join(BENCH, 'harness/round/run-round.mjs'), '--stage', stage, ...pass(rest)];
     return null; },
   validate: (rest) => ['node', path.join(BENCH, 'harness/runner/validate.mjs'), ...pass(rest)],
@@ -29,6 +29,8 @@ const CMD = {
   ceiling: () => ['node', path.join(BENCH, 'harness/aggregate/reference-ceiling.mjs')],
   'ceiling-check': (rest) => ['node', path.join(BENCH, 'harness/aggregate/reference-versions.mjs'), '--check'],
   'ceiling-freeze': () => ['node', path.join(BENCH, 'harness/aggregate/reference-versions.mjs')],
+  qualify: (rest) => ['node', path.join(BENCH, 'harness/aggregate/qualify-historical.mjs'), ...pass(rest)],
+  'spec-audit': (rest) => ['node', path.join(BENCH, 'harness/runner/spec-audit.mjs'), ...pass(rest)],
   regression: (rest) => ['node', path.join(BENCH, 'regression/run-regression.mjs'), ...pass(rest)],
   portal: (rest) => ['node', path.join(BENCH, 'results/reports/latest/portal-server.mjs'), ...pass(rest)],
   gates: () => {

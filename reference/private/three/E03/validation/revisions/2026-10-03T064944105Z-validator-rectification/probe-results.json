@@ -1,0 +1,1869 @@
+{
+  "runId": "REF-E03-three-reval",
+  "generatedAt": "2026-10-03T06:50:04.115Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:49:51.611Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 500
+            },
+            "raw": "wait:500",
+            "performed": "waited 500ms"
+          }
+        ],
+        "durationMs": 502
+      },
+      "stateAssertion": {
+        "expr": "$.before.planetCount == 8 && $.before.moonCount >= 2 && $.before.asteroidCount >= 500 && $.before.ringedPlanetCount >= 1 && $.before.timeScale == 1 && $.before.selectedPlanet == null && (($.after.planets[0].orbitAngle - $.before.planets[0].orbitAngle) > 4 * ($.after.planets[7].orbitAngle - $.before.planets[7].orbitAngle))",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.03
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.0889,
+              "background": [
+                4,
+                6,
+                13
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0889
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 0.5572,
+          "selectedPlanet": null,
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.015221699361567241
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.7941506405303494
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.5770480961755402
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.3605167011221724
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.1439266474919
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.928657955488746
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.713639334260819
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.498816846974244
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.3,
+              "screenY": 360.6,
+              "screenRadius": 15.4
+            },
+            {
+              "name": "venus",
+              "screenX": 720.9,
+              "screenY": 405.3,
+              "screenRadius": 19.8
+            },
+            {
+              "name": "earth",
+              "screenX": 638.9,
+              "screenY": 456.2,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 485.4,
+              "screenY": 444.4,
+              "screenRadius": 18.8
+            },
+            {
+              "name": "jupiter",
+              "screenX": 390.8,
+              "screenY": 359.7,
+              "screenRadius": 30
+            },
+            {
+              "name": "saturn",
+              "screenX": 459.1,
+              "screenY": 260.1,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 640.3,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 883,
+              "screenY": 226.5,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": false,
+            "name": "",
+            "fieldCount": 0
+          },
+          "fps": 19.6,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 3.0737999999999985,
+          "selectedPlanet": null,
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.08397067390090697
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.8336813008904698
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.6052842821470548
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.380038014880257
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.1544681569212654
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.9361876050811504
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.719286571455122
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.503467512898964
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.5,
+              "screenY": 363.4,
+              "screenRadius": 15.5
+            },
+            {
+              "name": "venus",
+              "screenX": 717.9,
+              "screenY": 407.2,
+              "screenRadius": 19.9
+            },
+            {
+              "name": "earth",
+              "screenX": 634,
+              "screenY": 456.1,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 483,
+              "screenY": 442.4,
+              "screenRadius": 18.7
+            },
+            {
+              "name": "jupiter",
+              "screenX": 391.6,
+              "screenY": 358.2,
+              "screenRadius": 29.9
+            },
+            {
+              "name": "saturn",
+              "screenX": 460.8,
+              "screenY": 259.6,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 641.9,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 884.5,
+              "screenY": 227,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": false,
+            "name": "",
+            "fieldCount": 0
+          },
+          "fps": 60,
+          "epoch": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 2000
+      },
+      "timings": {
+        "totalMs": 3400
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-03T06:49:55.011Z",
+      "precondition": {
+        "expr": "P1 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:state.pickTargets[2]",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "state",
+              "path": "pickTargets[2]"
+            },
+            "raw": "click:state.pickTargets[2]",
+            "performed": "click @ (632,456) state=pickTargets[2]"
+          }
+        ],
+        "durationMs": 38
+      },
+      "stateAssertion": {
+        "expr": "$.selectedPlanet == \"earth\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "regionChange",
+        "params": {
+          "region": "state.pickTargets[2]",
+          "expect": "selection-highlight"
+        },
+        "notes": [],
+        "expect": "selection-highlight",
+        "error": "base is not defined",
+        "metrics": {}
+      },
+      "evidence": {
+        "stateBefore": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 3.923899999999998,
+          "selectedPlanet": null,
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.10719387316018246
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.8470346404645532
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.6148223818428287
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.3866322566452363
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.1580290474743546
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.9387310983333568
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.721194191394276
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.505038494025327
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.4,
+              "screenY": 364.3,
+              "screenRadius": 15.6
+            },
+            {
+              "name": "venus",
+              "screenX": 716.8,
+              "screenY": 407.8,
+              "screenRadius": 19.9
+            },
+            {
+              "name": "earth",
+              "screenX": 632.3,
+              "screenY": 456.1,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 482.2,
+              "screenY": 441.7,
+              "screenRadius": 18.7
+            },
+            {
+              "name": "jupiter",
+              "screenX": 391.9,
+              "screenY": 357.8,
+              "screenRadius": 29.9
+            },
+            {
+              "name": "saturn",
+              "screenX": 461.4,
+              "screenY": 259.4,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 642.4,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 885,
+              "screenY": 227.1,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": false,
+            "name": "",
+            "fieldCount": 0
+          },
+          "fps": 60,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 4.573800000000003,
+          "selectedPlanet": "earth",
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.12494796938251308
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.8572432457923933
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.6221142427912858
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.3916735432268856
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.160751342228445
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.9406755945862786
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.722652563583967
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.506239506416837
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.4,
+              "screenY": 365,
+              "screenRadius": 15.6
+            },
+            {
+              "name": "venus",
+              "screenX": 716,
+              "screenY": 408.3,
+              "screenRadius": 19.9
+            },
+            {
+              "name": "earth",
+              "screenX": 631,
+              "screenY": 456.1,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 481.6,
+              "screenY": 441.2,
+              "screenRadius": 18.7
+            },
+            {
+              "name": "jupiter",
+              "screenX": 392.1,
+              "screenY": 357.4,
+              "screenRadius": 29.8
+            },
+            {
+              "name": "saturn",
+              "screenX": 461.8,
+              "screenY": 259.2,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 642.8,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 885.4,
+              "screenY": 227.2,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": true,
+            "name": "earth",
+            "fieldCount": 5
+          },
+          "fps": 58.5,
+          "epoch": 0
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1206
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:49:56.217Z",
+      "precondition": null,
+      "action": {
+        "raw": "wait:800",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P2"
+        ]
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:49:56.218Z",
+      "precondition": {
+        "expr": "P3 passed",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P3 passed",
+            "met": false,
+            "source": "probe P3",
+            "status": "SKIPPED_BY_DEPENDENCY"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#speed-8x",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "speed-8x"
+            },
+            "raw": "click:ui#speed-8x",
+            "performed": "click @ (776,682) ui=speed-8x"
+          }
+        ],
+        "durationMs": 135
+      },
+      "stateAssertion": {
+        "expr": "$.timeScale == 8",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.03
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.0935,
+              "background": [
+                4,
+                6,
+                13
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0935
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 5.157100000000007,
+          "selectedPlanet": "earth",
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.1408826736854604
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.866405700766588
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.6286588534871391
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.396198212349945
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.163194663554897
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.942420824105173
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.723961485723138
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.507317442296155
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.3,
+              "screenY": 365.6,
+              "screenRadius": 15.6
+            },
+            {
+              "name": "venus",
+              "screenX": 715.3,
+              "screenY": 408.7,
+              "screenRadius": 19.9
+            },
+            {
+              "name": "earth",
+              "screenX": 629.9,
+              "screenY": 456,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 481.1,
+              "screenY": 440.7,
+              "screenRadius": 18.7
+            },
+            {
+              "name": "jupiter",
+              "screenX": 392.3,
+              "screenY": 357.1,
+              "screenRadius": 29.8
+            },
+            {
+              "name": "saturn",
+              "screenX": 462.2,
+              "screenY": 259.1,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 643.2,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 885.7,
+              "screenY": 227.3,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": true,
+            "name": "earth",
+            "fieldCount": 5
+          },
+          "fps": 58.5,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 8,
+          "simulationTime": 9.556900000000006,
+          "selectedPlanet": "earth",
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.26107727679210707
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.9355175975529099
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.6780244940487976
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.4303275440962766
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.1816245026979164
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.955584994921615
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.73383461383547
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.515448253682781
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 711.3,
+              "screenY": 370.5,
+              "screenRadius": 15.8
+            },
+            {
+              "name": "venus",
+              "screenX": 709.4,
+              "screenY": 411.8,
+              "screenRadius": 20.1
+            },
+            {
+              "name": "earth",
+              "screenX": 621.3,
+              "screenY": 455.5,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 477.3,
+              "screenY": 437.2,
+              "screenRadius": 18.5
+            },
+            {
+              "name": "jupiter",
+              "screenX": 393.8,
+              "screenY": 354.6,
+              "screenRadius": 29.7
+            },
+            {
+              "name": "saturn",
+              "screenX": 465.1,
+              "screenY": 258.1,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 645.9,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 888.3,
+              "screenY": 228.1,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": true,
+            "name": "earth",
+            "fieldCount": 5
+          },
+          "fps": 58.5,
+          "epoch": 0
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-vis.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1542
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P3",
+      "failedPreconditionParts": [
+        "P3 passed"
+      ]
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:49:57.760Z",
+      "precondition": {
+        "expr": "P4 passed && $.timeScale == 8",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4 passed",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          },
+          {
+            "part": "$.timeScale == 8",
+            "met": true,
+            "source": "state",
+            "value": true
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:300",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 300
+            },
+            "raw": "wait:300",
+            "performed": "waited 300ms"
+          }
+        ],
+        "durationMs": 310
+      },
+      "stateAssertion": {
+        "expr": "($.after.simulationTime - $.before.simulationTime) >= 6 && ($.after.planets[0].orbitAngle - $.before.planets[0].orbitAngle) >= 0.05",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "full",
+          "minMotionPixelRatio": 0.005
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.0666
+            }
+          ],
+          "worstDiffRatio": 0.0666
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 8,
+          "simulationTime": 16.4897,
+          "selectedPlanet": "earth",
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.45046887286869225
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 1.0444177652969464
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.7558103281516808
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.4841054047106157
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.2106645474296593
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.976327884015717
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.749391780656047
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.528260038123255
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 707.5,
+              "screenY": 378,
+              "screenRadius": 16
+            },
+            {
+              "name": "venus",
+              "screenX": 699.2,
+              "screenY": 416.1,
+              "screenRadius": 20.3
+            },
+            {
+              "name": "earth",
+              "screenX": 608,
+              "screenY": 454.2,
+              "screenRadius": 22.7
+            },
+            {
+              "name": "mars",
+              "screenX": 471.8,
+              "screenY": 431.5,
+              "screenRadius": 18.3
+            },
+            {
+              "name": "jupiter",
+              "screenX": 396.3,
+              "screenY": 350.7,
+              "screenRadius": 29.5
+            },
+            {
+              "name": "saturn",
+              "screenX": 469.7,
+              "screenY": 256.6,
+              "screenRadius": 20.4
+            },
+            {
+              "name": "uranus",
+              "screenX": 650.1,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 892.3,
+              "screenY": 229.4,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": true,
+            "name": "earth",
+            "fieldCount": 5
+          },
+          "fps": 60,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 8,
+          "simulationTime": 31.022499999999997,
+          "selectedPlanet": "earth",
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.8474787660520814
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 1.272698453877395
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.9188679628520013
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.596836608947874
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.271539397717779
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 4.019809919935803
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.782003307596111
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.555116589720956
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 691.1,
+              "screenY": 391.9,
+              "screenRadius": 16.5
+            },
+            {
+              "name": "venus",
+              "screenX": 675.1,
+              "screenY": 422.8,
+              "screenRadius": 20.6
+            },
+            {
+              "name": "earth",
+              "screenX": 581.1,
+              "screenY": 449.3,
+              "screenRadius": 22.5
+            },
+            {
+              "name": "mars",
+              "screenX": 462.5,
+              "screenY": 419.2,
+              "screenRadius": 17.9
+            },
+            {
+              "name": "jupiter",
+              "screenX": 402,
+              "screenY": 342.9,
+              "screenRadius": 29
+            },
+            {
+              "name": "saturn",
+              "screenX": 479.5,
+              "screenY": 253.5,
+              "screenRadius": 20.3
+            },
+            {
+              "name": "uranus",
+              "screenX": 659,
+              "screenY": 210.1,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 900.7,
+              "screenY": 232.1,
+              "screenRadius": 14.1
+            }
+          ],
+          "infoCard": {
+            "visible": true,
+            "name": "earth",
+            "fieldCount": 5
+          },
+          "fps": 60,
+          "epoch": 0
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-motion-a.png",
+          "P5-motion-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 1500
+      },
+      "timings": {
+        "totalMs": 3452
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:50:01.212Z",
+      "precondition": {
+        "expr": "P5 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5 passed",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui#reset",
+            "performed": "click @ (1234,29) ui=reset"
+          }
+        ],
+        "durationMs": 89
+      },
+      "stateAssertion": {
+        "expr": "$.epoch >= 1 && $.timeScale == 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.03
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.0817,
+              "background": [
+                4,
+                6,
+                13
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0817
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 8,
+          "simulationTime": 43.954500000000074,
+          "selectedPlanet": "earth",
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 1.2007576894975025
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 1.4758338348585123
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 2.0639646635527993
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.697150377333611
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.3257088326460766
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 4.058502373456015
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.81102264773627
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.579014869836381
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 668.4,
+              "screenY": 400.3,
+              "screenRadius": 16.8
+            },
+            {
+              "name": "venus",
+              "screenX": 651.4,
+              "screenY": 425.8,
+              "screenRadius": 20.7
+            },
+            {
+              "name": "earth",
+              "screenX": 559.3,
+              "screenY": 442.7,
+              "screenRadius": 22.2
+            },
+            {
+              "name": "mars",
+              "screenX": 456.6,
+              "screenY": 408.1,
+              "screenRadius": 17.5
+            },
+            {
+              "name": "jupiter",
+              "screenX": 407.7,
+              "screenY": 336.2,
+              "screenRadius": 28.6
+            },
+            {
+              "name": "saturn",
+              "screenX": 488.2,
+              "screenY": 251,
+              "screenRadius": 20.2
+            },
+            {
+              "name": "uranus",
+              "screenX": 666.9,
+              "screenY": 210.4,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 908.3,
+              "screenY": 234.6,
+              "screenRadius": 14.2
+            }
+          ],
+          "infoCard": {
+            "visible": true,
+            "name": "earth",
+            "fieldCount": 5
+          },
+          "fps": 60,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 0,
+          "selectedPlanet": null,
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.1206644613096131
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.8547802286504758
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.6203549448327734
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.390457238465445
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.160094537657267
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.9402064484640085
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.722300703992265
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.505949739694259
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.4,
+              "screenY": 364.8,
+              "screenRadius": 15.6
+            },
+            {
+              "name": "venus",
+              "screenX": 716.2,
+              "screenY": 408.2,
+              "screenRadius": 19.9
+            },
+            {
+              "name": "earth",
+              "screenX": 631.3,
+              "screenY": 456.1,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 481.8,
+              "screenY": 441.3,
+              "screenRadius": 18.7
+            },
+            {
+              "name": "jupiter",
+              "screenX": 392.1,
+              "screenY": 357.5,
+              "screenRadius": 29.9
+            },
+            {
+              "name": "saturn",
+              "screenX": 461.7,
+              "screenY": 259.2,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 642.7,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 885.3,
+              "screenY": 227.2,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": false,
+            "name": "",
+            "fieldCount": 0
+          },
+          "fps": 60,
+          "epoch": 1
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1507
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:50:02.719Z",
+      "precondition": null,
+      "action": {
+        "raw": "wait:300",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P2",
+          "P3"
+        ]
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:50:02.719Z",
+      "precondition": {
+        "expr": "P7 passed",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P7 passed",
+            "met": false,
+            "source": "probe P7",
+            "status": "SKIPPED_BY_DEPENDENCY"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#speed-0.5x",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "speed-0.5x"
+            },
+            "raw": "click:ui#speed-0.5x",
+            "performed": "click @ (592,682) ui=speed-0.5x"
+          }
+        ],
+        "durationMs": 65
+      },
+      "stateAssertion": {
+        "expr": "$.timeScale == 0.5",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.03
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.0887,
+              "background": [
+                4,
+                6,
+                13
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0887
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 1,
+          "simulationTime": 0.5500000000000003,
+          "selectedPlanet": null,
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.01502500834325554
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.7940375431948202
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.5769673123644479
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.360460850586109
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.143896488202426
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.9286364131391216
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.7136231774986
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.498803541405358
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.3,
+              "screenY": 360.6,
+              "screenRadius": 15.4
+            },
+            {
+              "name": "venus",
+              "screenX": 720.9,
+              "screenY": 405.3,
+              "screenRadius": 19.8
+            },
+            {
+              "name": "earth",
+              "screenX": 638.9,
+              "screenY": 456.2,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 485.4,
+              "screenY": 444.4,
+              "screenRadius": 18.8
+            },
+            {
+              "name": "jupiter",
+              "screenX": 390.8,
+              "screenY": 359.7,
+              "screenRadius": 30
+            },
+            {
+              "name": "saturn",
+              "screenX": 459.1,
+              "screenY": 260.1,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 640.3,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 883,
+              "screenY": 226.5,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": false,
+            "name": "",
+            "fieldCount": 0
+          },
+          "fps": 60,
+          "epoch": 1
+        },
+        "stateAfter": {
+          "planetCount": 8,
+          "moonCount": 3,
+          "asteroidCount": 1600,
+          "ringedPlanetCount": 1,
+          "timeScale": 0.5,
+          "simulationTime": 0.8168499999999997,
+          "selectedPlanet": null,
+          "planets": [
+            {
+              "name": "mercury",
+              "orbitRadius": 11,
+              "orbitAngle": 0.022314869209433232
+            },
+            {
+              "name": "venus",
+              "orbitRadius": 16,
+              "orbitAngle": 0.7982292131928724
+            },
+            {
+              "name": "earth",
+              "orbitRadius": 22,
+              "orbitAngle": 1.5799613623630566
+            },
+            {
+              "name": "mars",
+              "orbitRadius": 28,
+              "orbitAngle": 2.3625308110789742
+            },
+            {
+              "name": "jupiter",
+              "orbitRadius": 38,
+              "orbitAngle": 3.1450142668685728
+            },
+            {
+              "name": "saturn",
+              "orbitRadius": 50,
+              "orbitAngle": 3.929434826472084
+            },
+            {
+              "name": "uranus",
+              "orbitRadius": 62,
+              "orbitAngle": 4.7142219874983216
+            },
+            {
+              "name": "neptune",
+              "orbitRadius": 74,
+              "orbitAngle": 5.499296679052188
+            }
+          ],
+          "pickTargets": [
+            {
+              "name": "mercury",
+              "screenX": 712.3,
+              "screenY": 360.9,
+              "screenRadius": 15.4
+            },
+            {
+              "name": "venus",
+              "screenX": 720.6,
+              "screenY": 405.5,
+              "screenRadius": 19.8
+            },
+            {
+              "name": "earth",
+              "screenX": 638.4,
+              "screenY": 456.2,
+              "screenRadius": 22.8
+            },
+            {
+              "name": "mars",
+              "screenX": 485.1,
+              "screenY": 444.2,
+              "screenRadius": 18.8
+            },
+            {
+              "name": "jupiter",
+              "screenX": 390.9,
+              "screenY": 359.5,
+              "screenRadius": 30
+            },
+            {
+              "name": "saturn",
+              "screenX": 459.3,
+              "screenY": 260.1,
+              "screenRadius": 20.5
+            },
+            {
+              "name": "uranus",
+              "screenX": 640.5,
+              "screenY": 209.9,
+              "screenRadius": 14.5
+            },
+            {
+              "name": "neptune",
+              "screenX": 883.2,
+              "screenY": 226.6,
+              "screenRadius": 14
+            }
+          ],
+          "infoCard": {
+            "visible": false,
+            "name": "",
+            "fieldCount": 0
+          },
+          "fps": 60,
+          "epoch": 1
+        },
+        "shots": [
+          "P8-before.png",
+          "P8-vis.png",
+          "P8-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1270
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P7",
+      "failedPreconditionParts": [
+        "P7 passed"
+      ]
+    },
+    {
+      "probeId": "P9",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:50:03.990Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:(0.08,0.08)",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P2"
+        ]
+      }
+    }
+  ]
+}

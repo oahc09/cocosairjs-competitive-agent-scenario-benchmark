@@ -1,33 +1,40 @@
 {
-  "runId": "run-2026-10-02T14-18-01-652Z",
-  "generatedAt": "2026-10-02T14:18:01.659Z",
+  "runId": "run-2026-10-03T07-38-09-353Z",
+  "generatedAt": "2026-10-03T07:38:09.364Z",
   "harnessVersion": "1.0.0",
-  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\isolation\\fixtures\\NC03",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC03",
   "spec": {
-    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E01\\spec.json",
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E01\\spec.json",
     "briefId": "E01",
     "briefVersion": "1.0.0",
-    "sha256": "9a32a744a6a9eff5f4fc87b447d112cc26b8f9c04276dc8db34056ba0657a1c6"
+    "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6"
   },
   "pairId": null,
   "engine": null,
+  "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 875,
+    "durationMs": 932,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> NC03-fixture@1.0.0 build\n> node build.mjs\n\n[NC03 build] dist/app.js written\n\n[exit code 0] duration 873ms\n"
+    "log": "$ npm run build\n\n> NC03-fixture@1.0.0 build\n> node build.mjs\n\n[NC03 build] dist/app.js written\n\n[exit code 0] duration 930ms\n"
   },
   "serve": {
     "port": 7412,
-    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\harness\\isolation\\fixtures\\NC03"
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC03"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 73
+    "durationMs": 248
   },
   "console": {
     "errors": 1,
@@ -41,43 +48,50 @@
       "probeId": "P1",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P2",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P3",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P4",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P5",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P6",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P7",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     }
   ],
   "probeResults": "probe-results.json",
@@ -86,15 +100,15 @@
   "perf": {
     "fps": 60.2,
     "frames": 181,
-    "sampleMs": 3008,
-    "sampledAt": "2026-10-02T14:18:27.192Z",
+    "sampleMs": 3006,
+    "sampledAt": "2026-10-03T07:38:35.565Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [],
   "networkEvents": {
     "count": 4,
-    "totalBytes": 7644
+    "totalBytes": 7842
   },
   "screenshots": [
     "initial.png",
@@ -159,6 +173,6 @@
       "minFps": 30
     }
   },
-  "durationMs": 26047,
-  "finishedAt": "2026-10-02T14:18:27.699Z"
+  "durationMs": 26785,
+  "finishedAt": "2026-10-03T07:38:36.138Z"
 }

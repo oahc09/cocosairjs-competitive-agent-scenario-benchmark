@@ -1,0 +1,817 @@
+{
+  "runId": "REF-E02-three-final",
+  "generatedAt": "2026-10-03T07:20:02.515Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:33.841Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1507
+      },
+      "stateAssertion": {
+        "expr": "$.assetLoaded == true && $.assetRequests >= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.05,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.7829,
+              "background": [
+                24,
+                53,
+                73
+              ]
+            }
+          ],
+          "worstLitRatio": 0.7829
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.21631707985199528,
+            "z": 0
+          },
+          "wavePhase": 1.2024999999999995,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 32.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.09292047415532809,
+            "z": 0
+          },
+          "wavePhase": 2.7190999999940377,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3197
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:37.038Z",
+      "precondition": {
+        "expr": "P1 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 500
+            },
+            "raw": "wait:500",
+            "performed": "waited 500ms"
+          }
+        ],
+        "durationMs": 509
+      },
+      "stateAssertion": {
+        "expr": "$.after.wavePhase != $.before.wavePhase",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "lower:60%",
+          "minMotionPixelRatio": 0.01
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 288,
+                "w": 1280,
+                "h": 432
+              },
+              "diffRatio": 0.9181
+            }
+          ],
+          "worstDiffRatio": 0.9181
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.051234128573062775,
+            "z": 0
+          },
+          "wavePhase": 4.4190999999940335,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.25119782101163546,
+            "z": 0
+          },
+          "wavePhase": 6.452300000011909,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 1500
+      },
+      "timings": {
+        "totalMs": 4704
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:41.742Z",
+      "precondition": {
+        "expr": "P2 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2 passed",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:300",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 300
+            },
+            "raw": "wait:300",
+            "performed": "waited 300ms"
+          }
+        ],
+        "durationMs": 300
+      },
+      "stateAssertion": {
+        "expr": "$.after.boatPosition.y != $.before.boatPosition.y",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "center:40%",
+          "minMotionPixelRatio": 0.002
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.002,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 384,
+                "y": 216,
+                "w": 512,
+                "h": 288
+              },
+              "diffRatio": 0.8381
+            }
+          ],
+          "worstDiffRatio": 0.8381
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.1142839359306449,
+            "z": 0
+          },
+          "wavePhase": 9.102400000005936,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.08151671386715267,
+            "z": 0
+          },
+          "wavePhase": 10.318999999999972,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-motion-a.png",
+          "P3-motion-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 900
+      },
+      "timings": {
+        "totalMs": 3885
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:45.627Z",
+      "precondition": {
+        "expr": "P3 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3 passed",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "drag:(0.50,0.50)->(0.78,0.50)",
+        "steps": [
+          {
+            "verb": "drag",
+            "arg": {
+              "from": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "to": {
+                "x": 0.78,
+                "y": 0.5
+              }
+            },
+            "raw": "drag:(0.50,0.50)->(0.78,0.50)",
+            "performed": "drag (640,360)->(998,360)"
+          }
+        ],
+        "durationMs": 421
+      },
+      "stateAssertion": {
+        "expr": "($.after.cameraAzimuth - $.before.cameraAzimuth > 20) || ($.before.cameraAzimuth - $.after.cameraAzimuth > 20)",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "minDiffPixelRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.9612
+            }
+          ],
+          "bestDiffRatio": 0.9612
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.0898519528031912,
+            "z": 0
+          },
+          "wavePhase": 12.96880000001189,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.3663590051179511,
+            "z": 0
+          },
+          "wavePhase": 14.118800000011888,
+          "toneMix": 0,
+          "cameraAzimuth": 204.30709459897636,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-delta.png",
+          "P4-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 200
+      },
+      "timings": {
+        "totalMs": 2824
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:48.451Z",
+      "precondition": {
+        "expr": "P4 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4 passed",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#tone-toggle",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "tone-toggle"
+            },
+            "raw": "click:ui#tone-toggle",
+            "performed": "click @ (1124,41) ui=tone-toggle"
+          }
+        ],
+        "durationMs": 146
+      },
+      "stateAssertion": {
+        "expr": "$.toneMix > 0.7",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "metric": "avgColorShift",
+          "minShift": 8
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "metric": "avgColorShift",
+          "minShift": 8,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "avgColorShift": 79.89
+            }
+          ],
+          "bestShift": 79.89
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.14931114907437743,
+            "z": 0
+          },
+          "wavePhase": 15.818800000011892,
+          "toneMix": 0,
+          "cameraAzimuth": 249.15887146588682,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.2219767169498582,
+            "z": 0
+          },
+          "wavePhase": 18.469099999994008,
+          "toneMix": 0.989705873799327,
+          "cameraAzimuth": 249.79933370001785,
+          "cameraElevation": 10.5,
+          "fps": 60,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-delta.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4072
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:52.523Z",
+      "precondition": {
+        "expr": "P5 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5 passed",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui#reset",
+            "performed": "click @ (1218,41) ui=reset"
+          }
+        ],
+        "durationMs": 130
+      },
+      "stateAssertion": {
+        "expr": "$.epoch >= 1 && $.assetLoaded == true && $.toneMix < 0.05 && $.cameraAzimuth >= 32 && $.cameraAzimuth <= 38",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.05,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.7913,
+              "background": [
+                24,
+                54,
+                74
+              ]
+            }
+          ],
+          "worstLitRatio": 0.7913
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.009998373624938649,
+            "z": 0
+          },
+          "wavePhase": 19.735400000005907,
+          "toneMix": 0.9989703593844602,
+          "cameraAzimuth": 249.79997513201718,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 2,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.13023768980596379,
+            "z": 0
+          },
+          "wavePhase": 3.0666999999880766,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 1,
+          "resetCount": 1
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4707
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:19:57.230Z",
+      "precondition": {
+        "expr": "P6 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6 passed",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui#reset",
+            "performed": "click @ (1218,41) ui=reset"
+          }
+        ],
+        "durationMs": 138
+      },
+      "stateAssertion": {
+        "expr": "$.epoch >= 2 && $.assetLoaded == true && $.assetRequests >= 2 && $.toneMix < 0.05",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.05,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.7913,
+              "background": [
+                24,
+                54,
+                74
+              ]
+            }
+          ],
+          "worstLitRatio": 0.7913
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 2,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.08410239360612261,
+            "z": 0
+          },
+          "wavePhase": 4.783199999988072,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60,
+          "epoch": 1,
+          "resetCount": 1
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "assetLoaded": true,
+          "assetRequests": 3,
+          "boatPosition": {
+            "x": 0,
+            "y": -0.13171451061653627,
+            "z": 0
+          },
+          "wavePhase": 3.0832000000178783,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "cameraElevation": 10.5,
+          "fps": 60.5,
+          "epoch": 2,
+          "resetCount": 2
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-vis.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4905
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+
+========================================================================
+== A. new assertion types against in-memory fake ctx (no browser)
+========================================================================
+[PASS] A1 networkRequest minCount=1 (2 hits) — count=2
+[PASS] A1 networkRequest minCount=3 fails
+[PASS] A1 networkRequest status filter (404 != 500)
+[PASS] A1 networkRequest without path -> SPEC_INVALID
+[PASS] A2 download minBytes=1024 count=1 — {"count":1,"minCount":1,"totalBytes":2048,"minBytes":1024,"downloads":[{"filename":"export.csv","bytes":2048,"error":null}]}
+[PASS] A2 download count=2 fails (1 event)
+[PASS] A2 download without ctx.downloads -> UNSUPPORTED_BY_ENV
+[PASS] A3 domText contains — {"selector":"#out","found":true,"textLength":17,"textPreview":"Exported 42 stars","contains":"42 stars"}
+[PASS] A3 domText missing text fails
+[PASS] A3 domText missing element fails
+[PASS] A4 noNavigation stable URL — {"sinceMs":3000,"urlNow":"http://127.0.0.1:7100/","urlAt":"http://127.0.0.1:7100/","urlAtTs":"2026-10-03T05:35:09.209Z","navigated":false}
+[PASS] A4 noNavigation URL change fails
+[PASS] A4 noNavigation without sinceMs -> SPEC_INVALID
+[PASS] A5 resourceRequestCount exactly=2
+[PASS] A5 resourceRequestCount exactly=3 fails
+[PASS] A5 resourceRequestCount min/max window
+[PASS] A5 resourceRequestCount without bounds -> SPEC_INVALID
+[PASS] A6 consoleClean no errors
+[PASS] A6 consoleClean with error fails
+[PASS] A6 consoleClean level=warning
+[PASS] A6 consoleClean without collector -> UNSUPPORTED_BY_ENV
+[PASS] A6 consoleClean bad level -> SPEC_INVALID
+[PASS] A7 colorRelation luminanceRatio min=2 — value=4.826
+[PASS] A7 colorRelation luminanceRatio max=2 fails
+[PASS] A7 colorRelation avgRBDiff min=50 — value=184
+[PASS] A7 colorRelation bad metric -> SPEC_INVALID
+[PASS] A8 luminanceRelation shorthand (no metric key) — value=4.826
+[PASS] A9 regionCoverage full-frame ~0.5 >= 0.3 — worst=0.5
+[PASS] A9 regionCoverage ~0.5 < 0.9 fails
+[PASS] A9 regionCoverage without minRatio -> SPEC_INVALID
+[PASS] A10 memoryDelta +2MB <= 5MB — growth=2MB
+[PASS] A10 memoryDelta +8MB > 5MB fails
+[PASS] A10 memoryDelta without performance.memory -> UNSUPPORTED_BY_ENV
+[PASS] A11 assetNoReload no reload since P1 — requests=0
+[PASS] A11 assetNoReload reload detected (numeric index form) — requests=1
+[PASS] A11 assetNoReload unknown ref -> SPEC_INVALID
+
+========================================================================
+== B. SPEC_INVALID discipline (unknown type / region / param)
+========================================================================
+[PASS] B12 unknown assertion type -> SPEC_INVALID prefix — SPEC_INVALID: unknown assertion type: warpDrive
+[PASS] B13 unknown region "hud" strict -> SPEC_INVALID — SPEC_INVALID: unknown region hud
+[PASS] B14 diagnostic:true -> DIAGNOSTIC-FALLBACK note + evaluation — ["DIAGNOSTIC-FALLBACK: named region \"hud\" not in LEGAL_REGION_FORMS; measuring full frame"]
+[PASS] B15 dryRunSpec flags unknown param key — ["PX: SPEC_INVALID: unknown params key \"warpSpeed\" for motion","PY: SPEC_INVALID: unknown region \"warp-zone\""]
+[PASS] B15 dryRunSpec flags unknown region
+[PASS] B15 dryRunSpec clean mini-spec passes — []
+
+========================================================================
+== C. precondition cascade (three-way semantics, fake probe sequence)
+========================================================================
+[PASS] C16 P1 PASS — PASS
+[PASS] C16 P2 stateAssertion false -> FAIL — FAIL
+[PASS] C16 P3 runs despite P2 FAIL — PASS pred=P2
+[PASS] C16 P4 unknown predecessor ref -> SKIPPED_BY_DEPENDENCY — SKIPPED_BY_DEPENDENCY
+[PASS] C16 P5 enabled:false -> NOT_APPLICABLE — NOT_APPLICABLE
+[PASS] C16 P6 fullPassDeps [P2] not PASS -> SKIPPED_BY_DEPENDENCY — {"kind":"fullPassDeps","notPassed":["P2"]}
+[PASS] C16 NOT_APPLICABLE excluded from weight totals — totalWeight=5
+[PASS] C16 state sample error -> precondition ERROR -> SKIPPED_BY_DEPENDENCY — SKIPPED_BY_DEPENDENCY
+
+========================================================================
+== D. audit verdict + exit code rule
+========================================================================
+[PASS] D17 unknown type on required probe -> UNSUPPORTED — UNSUPPORTED
+[PASS] D17 unknown region -> PARTIAL (diagnostic fallback only) — PARTIAL
+[PASS] D17 UNSUPPORTED on a disabled probe alone -> exit 0 — exit=0
+[PASS] D17 required UNSUPPORTED present -> exit 3 — exit=3
+[PASS] D17 clean spec -> exit 0
+
+========================================================================
+== SUMMARY
+========================================================================
+checks: 55/55 passed
+result: SPEC-AUDIT SELFTEST PASS
+
+generatedAt: 2026-10-03T05:35:14.349Z

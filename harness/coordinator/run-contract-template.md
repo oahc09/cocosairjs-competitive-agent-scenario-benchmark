@@ -29,6 +29,19 @@
 | build 尝试次数 | {{BUDGET_BUILD_ATTEMPTS}} |
 | 浏览器验证尝试次数 | {{BUDGET_BROWSER_ATTEMPTS}} |
 
+**计数口径(冻结定义):触达上限由系统计数判定,自报仅诊断。**
+
+- **buildAttempt** = 每次 `npm run build`。workspace 的 `npm run build` 已串联为
+  `node scripts/count.mjs build && node scripts/build.mjs`(先计后执行),每次构建自动在
+  `workspace/.budget/build.count` 追加一行 ISO 时间戳 —— 构建必被计数,不可绕过。
+- **browserAttempt** = 每次创建浏览器会话。浏览器验证一律经 `node scripts/verify-browser.mjs`
+  (其创建会话前自动执行 `count.mjs browser`);若以任何其他方式打开浏览器,必须在打开**之前**
+  先执行 `node scripts/count.mjs browser`。计数进 `workspace/.budget/browser.count`。
+- **toolCall** = Agent 运行时发出的原始工具调用(含失败调用),由 Runner 侧记录。
+
+`workspace/.budget/*.count` 为系统机器计数文件,判定时由 harness 的 budget-check 判定器
+读取并与本表上限比对(见 §4 红线第 12 条)。
+
 触及任一上限即终止 Run,判 `BUDGET_EXHAUSTED`。token 消耗全程记录、独立报告,不设硬截断。
 
 ## 3. 允许访问(白名单,穷举)
@@ -49,6 +62,7 @@
 9. `npm install` 或以任何方式安装新依赖 —— 依赖已由上层共享 node_modules 提供,同样不得改动共享仓内容。
 10. 修改 `brief.md`、`spec.json`、`RUN-CONTRACT.md`、harness/validator/探针代码或探针结果文件。
 11. 探测或篡改 harness/validator 的行为与期望值(检出即 `INVALID_RUN`)。
+12. 手改、伪造、删除或重置 `workspace/.budget/` 机器计数文件,或绕过 `count.mjs` / `verify-browser.mjs` 计数直接构建、直接创建浏览器会话以规避预算判定(检出即 `INVALID_RUN`)。
 
 **只读同样禁止**:"只读"仍然读到了答案。
 

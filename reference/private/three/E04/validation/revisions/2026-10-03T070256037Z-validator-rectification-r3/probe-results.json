@@ -1,0 +1,809 @@
+{
+  "runId": "REF-E04-three-reval3",
+  "generatedAt": "2026-10-03T07:03:40.635Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:03.654Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2514
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "bottom-third",
+          "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)"
+        },
+        "notes": [],
+        "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 480,
+                "w": 1280,
+                "h": 240
+              },
+              "litRatio": 0.3166,
+              "background": [
+                23,
+                18,
+                38
+              ]
+            }
+          ],
+          "worstLitRatio": 0.3166
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 1.633
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 4.15
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5025
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:08.679Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:{x:0.5,y:0.30}",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "xy",
+              "x": 0.5,
+              "y": 0.3
+            },
+            "raw": "click:{x:0.5,y:0.30}",
+            "performed": "click @ (640,216)"
+          }
+        ],
+        "durationMs": 7
+      },
+      "stateAssertion": {
+        "expr": "$.fireworkCount == 1 && $.particlesAlive >= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "mid-vertical-band(点击列 x∈[0.4,0.6])",
+          "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)"
+        },
+        "notes": [],
+        "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)",
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 512,
+                "y": 0,
+                "w": 256,
+                "h": 720
+              },
+              "diffRatio": 0.0364
+            }
+          ],
+          "worstDiffRatio": 0.0364
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 6.6
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 1,
+          "particlesAlive": 59,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 7.117
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4198
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:12.877Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1200",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1200
+            },
+            "raw": "wait:1200",
+            "performed": "waited 1200ms"
+          }
+        ],
+        "durationMs": 1206
+      },
+      "stateAssertion": {
+        "expr": "$.particlesAlive >= 40",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "upper-half",
+          "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)"
+        },
+        "notes": [],
+        "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 360
+              },
+              "diffRatio": 0.0115
+            }
+          ],
+          "bestDiffRatio": 0.0115
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 1,
+          "particlesAlive": 101,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 10.8
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 1,
+          "particlesAlive": 63,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 12.017
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-delta.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3589
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-03T07:03:16.466Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2600",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2600
+            },
+            "raw": "wait:2600",
+            "performed": "waited 2600ms"
+          }
+        ],
+        "durationMs": 2605
+      },
+      "stateAssertion": {
+        "expr": "$.particlesAlive >= 1 && $.particlesAlive < 40",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "motion",
+        "params": {
+          "region": "upper-half",
+          "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)"
+        },
+        "notes": [],
+        "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)",
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 360
+              },
+              "diffRatio": 0.0004
+            }
+          ],
+          "worstDiffRatio": 0.0004
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 1,
+          "particlesAlive": 26,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 14.383
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 1,
+          "particlesAlive": 15,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 17
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-motion-a.png",
+          "P4-motion-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 6233
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:22.699Z",
+      "precondition": {
+        "expr": "P4",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P4",
+            "met": false,
+            "source": "probe P4",
+            "status": "FAIL"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=auto-show",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "auto-show"
+            },
+            "raw": "click:ui=auto-show",
+            "performed": "click @ (1205,31) ui=auto-show"
+          }
+        ],
+        "durationMs": 133
+      },
+      "stateAssertion": {
+        "expr": "$.autoShow == true && $.fireworkCount >= 4",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "upper-half",
+          "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)"
+        },
+        "notes": [],
+        "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 360
+              },
+              "diffRatio": 0.0226
+            }
+          ],
+          "bestDiffRatio": 0.0226
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 1,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 20.6
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 6,
+          "particlesAlive": 812,
+          "autoShow": true,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 24.733
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-delta.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 6569
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P4",
+      "failedPreconditionParts": [
+        "P4"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:29.268Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=auto-show",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "auto-show"
+            },
+            "raw": "click:ui=auto-show",
+            "performed": "click @ (1205,31) ui=auto-show"
+          }
+        ],
+        "durationMs": 70
+      },
+      "stateAssertion": {
+        "expr": "$.autoShow == false",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "upper-half",
+          "expect": "无新爆炸脉冲(既有粒子仅自然衰减)"
+        },
+        "notes": [],
+        "expect": "无新爆炸脉冲(既有粒子仅自然衰减)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 360
+              },
+              "diffRatio": 0.0396
+            }
+          ],
+          "bestDiffRatio": 0.0396
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 10,
+          "particlesAlive": 1034,
+          "autoShow": true,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 27.183
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 10,
+          "particlesAlive": 813,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 29.766
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-delta.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4995
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:34.263Z",
+      "precondition": {
+        "expr": "P6",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=pause",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "pause"
+            },
+            "raw": "click:ui=pause",
+            "performed": "click @ (1205,72) ui=pause"
+          }
+        ],
+        "durationMs": 59
+      },
+      "stateAssertion": {
+        "expr": "$.enabled == false",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "expect": "全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均停止)"
+        },
+        "notes": [],
+        "expect": "全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均停止)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.0285
+            }
+          ],
+          "bestDiffRatio": 0.0285
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 10,
+          "particlesAlive": 290,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 32.183
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 10,
+          "particlesAlive": 285,
+          "autoShow": false,
+          "enabled": false,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 32.233
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-delta.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2750
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T07:03:37.013Z",
+      "precondition": {
+        "expr": "P7",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P7",
+            "met": true,
+            "source": "probe P7",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1205,113) ui=reset"
+          }
+        ],
+        "durationMs": 61
+      },
+      "stateAssertion": {
+        "expr": "$.fireworkCount == 0 && $.particlesAlive == 0 && $.autoShow == false && $.enabled == true && $.buildingCount >= 24",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "expect": "回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)"
+        },
+        "notes": [],
+        "expect": "回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.1834,
+              "background": [
+                11,
+                9,
+                22
+              ]
+            }
+          ],
+          "worstLitRatio": 0.1834
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 10,
+          "particlesAlive": 285,
+          "autoShow": false,
+          "enabled": false,
+          "buildingCount": 28,
+          "resetCount": 0,
+          "debugSimTime": 32.233
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "resetCount": 1,
+          "debugSimTime": 32.849
+        },
+        "shots": [
+          "P8-before.png",
+          "P8-vis.png",
+          "P8-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3043
+      }
+    }
+  ]
+}

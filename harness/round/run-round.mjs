@@ -8,26 +8,37 @@
 // 用法:
 //   node round/run-round.mjs --plan <planFile.json|--matrix "E01,E02|K0,K1|R01,R02"> [--batch auto]
 //        stage: create     建 Pair(coordinator)+ 写 ROUND.json + 生成 DISPATCH.md
+//   node round/run-round.mjs --batch <id> --stage preflight
+//        身份/冻结一致性门禁(FIX-C):各臂 RUN-META.json 存在且身份字段非空、两臂身份与
+//        预算一致(仅 engine/knowledge/template 允许不同)、arm spec.json sha==pair.specSha256;
+//        不过 → pairs[i].preflight={status:'BLOCKED',reasons[]},该 Pair 不得 validate
 //   node round/run-round.mjs --batch <id> --stage collect
 //        扫描各臂 RESULT.md 完成标记,汇报 pending
 //   node round/run-round.mjs --batch <id> --stage validate [--force]
-//        对"已完成且未验证"的臂串行跑 validate.mjs + leak-scanner(--force 全部重验)
+//        开头自动执行 preflight;对"已完成且未验证"且未被 BLOCKED 的臂串行跑
+//        validate.mjs(以 arm 内 spec.json 冻结副本为 --spec,传 --pair-meta pair.json)
+//        + leak-scanner + budget-check(机器计数超限 → classification 覆盖 BUDGET_EXHAUSTED;
+//        validate 报 INPUT_DRIFT/ENV_DRIFT → 该臂标 INVALID_EVIDENCE)(--force 全部重验)
 //   node round/run-round.mjs --batch <id> --stage blind
 //        build-blind 生成盲评材料 + JUDGE-INSTRUCTIONS.md;已存在 visual-scores.json 则标记就绪
 //   node round/run-round.mjs --batch <id> --stage aggregate
 //        aggregate-all 全量聚合(视觉分缺失的臂如实标 visualPending)
 //   node round/run-round.mjs --batch <id> --stage status
 //        打印本轮仪表盘(各臂状态/各阶段时间线)
+//   [--round-out <dir>] 演练专用:ROUND.json 读写重定向到 <dir>(pair/spec/RUN-META 证据
+//        仍只读真实批次目录),供 preflight BLOCKED 演练不触碰 results/ 已有内容。
 //
 // 状态机(ROUND.json):
 //   pair.arm.state: created → dispatched(标记) → completed(RESULT.md) → validated
-//   stages: {create, collect, validate, blind, aggregate} 各记 lastRunAt/summary
-// 零依赖。
+//   pair.preflight: { status: PASS|BLOCKED, reasons[] }(preflight/validate stage 写入)
+//   stages: {create, preflight, collect, validate, blind, aggregate} 各记 lastRunAt/summary
+// 零依赖(validate/budget-check 等 harness 模块除外)。
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import crypto from 'node:crypto';
+import { readBudgetCounts, readLimits, checkBudget } from '../runner/budget-check.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const HARN = path.resolve(__dirname, '..');              // bench/harness
@@ -55,9 +66,11 @@ function parsePlan() {
 }
 
 // ---------- ROUND.json 读写 ----------
-const roundPath = (batch) => path.join(RESULTS, batch, 'ROUND.json');
+// --round-out <dir>:演练专用重定向(见文件头用法);生产路径不变。
+const ROUND_OUT_DIR = arg('round-out');
+const roundPath = (batch) => (ROUND_OUT_DIR ? path.join(ROUND_OUT_DIR, 'ROUND.json') : path.join(RESULTS, batch, 'ROUND.json'));
 const loadRound = (batch) => JSON.parse(fs.readFileSync(roundPath(batch), 'utf8'));
-const saveRound = (r) => { r.updatedAt = iso(); fs.writeFileSync(roundPath(r.batchId), JSON.stringify(r, null, 2) + '\n'); };
+const saveRound = (r) => { r.updatedAt = iso(); const f = roundPath(r.batchId); fs.mkdirSync(path.dirname(f), { recursive: true }); fs.writeFileSync(f, JSON.stringify(r, null, 2) + '\n'); };
 
 function armStateFile(batch, pairId, armDir) { return path.join(RESULTS, batch, pairId, armDir); }
 
@@ -105,6 +118,8 @@ function writeDispatch(round) {
   const lines = [`# DISPATCH — 批次 ${round.batchId} 的 Agent Run 任务清单`, '',
     '> 执行者:任意 AI Agent 运行时(或人)。规则:同一 Pair 的两臂**同批启动**(时差 ≤30s,记录实际时间);',
     '> 每个 Arm 用**全新会话**执行下列提示词(仅工作目录不同);执行期间禁止读取 bench/ 其余目录;',
+    '> 派发前:Runner 把各 Arm 目录的 RUN-META.template.json 复制为 RUN-META.json 并填写全部身份字段',
+    '> (两臂同值,engine/knowledge 除外)—— run-round 的 preflight stage 会校验,缺失/BLOCKED 的 Pair 不得 validate;',
     '> 全部臂完成后运行 `node harness/round/run-round.mjs --batch ${round.batchId} --stage collect`。', ''];
   for (const p of round.plan.pairs) {
     lines.push(`## ${p.pairId}`);
@@ -139,43 +154,198 @@ function stageCollect(round) {
   console.log(`[collect] 完成 ${done}/${round.pairs.length * 2}` + (pending.length ? `;未完成: ${pending.join(', ')}` : ' — 全部就绪,可进入 validate'));
 }
 
+// ---------- stage: preflight(FIX-C 身份/冻结一致性门禁) ----------
+// RUN-META 身份字段全集(与 coordinator 写出的 RUN-META.template.json 一一对应)
+const RUN_META_FIELDS = ['agentRuntime', 'agentBinaryHash', 'modelId', 'modelRevision', 'systemPromptHash', 'toolPolicyHash', 'runnerVersion'];
+// 两臂必须一致的字段(engine/knowledge/template 天然允许不同,不在 RUN-META 内)
+const RUN_META_CONSISTENCY_FIELDS = ['agentRuntime', 'modelId', 'modelRevision', 'systemPromptHash', 'toolPolicyHash'];
+
+function readRunMeta(armDir) {
+  const p = path.join(armDir, 'RUN-META.json');
+  if (!fs.existsSync(p)) return { missing: true };
+  try {
+    return { meta: JSON.parse(fs.readFileSync(p, 'utf8')) };
+  } catch (e) {
+    return { error: e.message };
+  }
+}
+
+/** 解析 RUN-CONTRACT §2 预算表(表行格式为模板冻结契约;解析不出 → null)。 */
+function parseContractBudget(contractText) {
+  const row = (label) => {
+    const m = new RegExp(`\\|\\s*${label}\\s*\\|\\s*(\\d+)`).exec(contractText);
+    return m ? Number(m[1]) : null;
+  };
+  const b = {
+    maxToolCalls: row('工具调用次数'),
+    maxWallTimeMinutes: row('墙钟时间'),
+    maxBuildAttempts: row('build 尝试次数'),
+    maxBrowserAttempts: row('浏览器验证尝试次数'),
+  };
+  return Object.values(b).every((v) => Number.isFinite(v)) ? b : null;
+}
+
+function runPreflight(round) {
+  for (const p of round.pairs) {
+    const pairDir = path.join(RESULTS, round.batchId, p.pairId);
+    const reasons = [];
+    let pj = null;
+    try {
+      pj = JSON.parse(fs.readFileSync(path.join(pairDir, 'pair.json'), 'utf8'));
+    } catch (e) {
+      reasons.push(`pair.json 不可读: ${e.message}`);
+    }
+    // ① 各臂 RUN-META.json 存在且身份字段非空
+    const metas = {};
+    for (const arm of ['arm-a', 'arm-b']) {
+      const armDir = path.join(pairDir, arm);
+      const r = readRunMeta(armDir);
+      if (r.missing) reasons.push(`${arm}: RUN-META.json 缺失(派发前须由 Runner 复制 RUN-META.template.json 填写)`);
+      else if (r.error) reasons.push(`${arm}: RUN-META.json 解析失败: ${r.error}`);
+      else {
+        metas[arm] = r.meta;
+        for (const f of RUN_META_FIELDS) {
+          const v = r.meta[f];
+          if (v === null || v === undefined || String(v).trim() === '') reasons.push(`${arm}: RUN-META.${f} 为空`);
+        }
+      }
+      // ② arm 内 spec.json 冻结副本哈希 == pair.specSha256(活 briefs 漂移在此检出)
+      const specCopy = path.join(armDir, 'spec.json');
+      if (!fs.existsSync(specCopy)) reasons.push(`${arm}: spec.json 冻结副本缺失`);
+      else if (pj?.specSha256 && sha(specCopy) !== pj.specSha256) reasons.push(`${arm}: spec.json 冻结副本 sha256 ≠ pair.specSha256(规格被改动?)`);
+    }
+    // ③ 两臂身份一致(测量仪器恒定:仅 engine/knowledge/template 允许不同)
+    if (metas['arm-a'] && metas['arm-b']) {
+      for (const f of RUN_META_CONSISTENCY_FIELDS) {
+        if (metas['arm-a'][f] !== metas['arm-b'][f]) {
+          reasons.push(`两臂 RUN-META.${f} 不一致(arm-a=${JSON.stringify(metas['arm-a'][f]) ?? 'null'}, arm-b=${JSON.stringify(metas['arm-b'][f]) ?? 'null'})`);
+        }
+      }
+    }
+    // ④ 两臂预算一致,且与 pair.json 冻结预算一致(预算漂移 = Pair 失效,agents.yaml driftPolicy)
+    const contractBudgets = {};
+    for (const arm of ['arm-a', 'arm-b']) {
+      const c = path.join(pairDir, arm, 'RUN-CONTRACT.md');
+      contractBudgets[arm] = fs.existsSync(c) ? parseContractBudget(fs.readFileSync(c, 'utf8')) : null;
+    }
+    if (!contractBudgets['arm-a'] || !contractBudgets['arm-b']) {
+      reasons.push('RUN-CONTRACT §2 预算段缺失或不可解析');
+    } else if (JSON.stringify(contractBudgets['arm-a']) !== JSON.stringify(contractBudgets['arm-b'])) {
+      reasons.push(`两臂 RUN-CONTRACT 预算不一致(a=${JSON.stringify(contractBudgets['arm-a'])}, b=${JSON.stringify(contractBudgets['arm-b'])})`);
+    } else if (pj?.budget) {
+      const want = {
+        maxToolCalls: pj.budget.maxToolCalls, maxWallTimeMinutes: pj.budget.maxWallTimeMinutes,
+        maxBuildAttempts: pj.budget.maxBuildAttempts, maxBrowserAttempts: pj.budget.maxBrowserAttempts,
+      };
+      if (JSON.stringify(contractBudgets['arm-a']) !== JSON.stringify(want)) {
+        reasons.push(`RUN-CONTRACT 预算与 pair.json 冻结预算不一致(contract=${JSON.stringify(contractBudgets['arm-a'])}, pair=${JSON.stringify(want)})`);
+      }
+    }
+    const status = reasons.length ? 'BLOCKED' : 'PASS';
+    p.preflight = { status, reasons, checkedAt: iso() };
+    console.log(`[preflight] ${p.pairId}: ${status}` + (reasons.length ? `\n           - ${reasons.join('\n           - ')}` : ''));
+  }
+  const blocked = round.pairs.filter((p) => p.preflight?.status === 'BLOCKED').map((p) => p.pairId);
+  round.stages.preflight = { lastRunAt: iso(), summary: blocked.length ? 'BLOCKED' : 'PASS', blocked, pairs: round.pairs.length };
+  return round.stages.preflight;
+}
+
+function stagePreflight(round) {
+  runPreflight(round);
+  saveRound(round);
+  const b = round.stages.preflight;
+  console.log(`[preflight] ${b.pairs} 个 pair:${b.summary}` + (b.blocked.length ? `;BLOCKED(不得 validate): ${b.blocked.join(', ')}` : ''));
+}
+
 // ---------- stage: validate ----------
 function stageValidate(round, force) {
+  // FIX-C:validate 开头自动执行 preflight —— BLOCKED 的 Pair 证据链身份/冻结校验未过,不得 validate
+  const pre = runPreflight(round);
+  const blockedPairs = pre.blocked.slice();
+  if (blockedPairs.length) console.log(`[validate] preflight BLOCKED,跳过 ${blockedPairs.length} 个 pair: ${blockedPairs.join(', ')}`);
+  const limits = readLimits(path.join(BENCH, 'config', 'agents.yaml'));
   const jobs = [];
   for (const p of round.pairs) {
-    const pj = JSON.parse(fs.readFileSync(path.join(RESULTS, round.batchId, p.pairId, 'pair.json'), 'utf8'));
+    if (p.preflight?.status === 'BLOCKED') continue;
+    const pairDir = path.join(RESULTS, round.batchId, p.pairId);
+    const pairJsonPath = path.join(pairDir, 'pair.json');
+    const pj = JSON.parse(fs.readFileSync(pairJsonPath, 'utf8'));
     for (const arm of ['arm-a', 'arm-b']) {
       const st = p.arms[arm];
       if (st.state !== 'completed' && st.state !== 'validated') continue;
-      const already = fs.existsSync(path.join(RESULTS, round.batchId, p.pairId, arm, 'validation', 'report.json'));
+      const already = fs.existsSync(path.join(pairDir, arm, 'validation', 'report.json'));
       if (already && !force) { st.state = 'validated'; continue; }
       if (st.state !== 'completed') continue; // force 时仅重验已完成臂
       const engine = pj.arms[arm === 'arm-a' ? 'A' : 'B'].engine;
-      const scene = pj.sceneId;
-      jobs.push({ p, arm, engine, scene, pairId: p.pairId });
+      jobs.push({ p, arm, engine, scene: pj.sceneId, pairId: p.pairId, pairDir, pairJsonPath });
     }
   }
-  let ok = 0, fail = 0;
+  let ok = 0, fail = 0, budgetExhausted = 0, invalidEvidence = 0;
   for (const j of jobs) {
-    const base = path.join(RESULTS, round.batchId, j.pairId, j.arm);
+    const base = path.join(j.pairDir, j.arm);
+    const ws = path.join(base, 'workspace');
     console.log(`[validate] ${j.pairId}/${j.arm} (${j.engine}) ...`);
+    // spec 一律用 arm 目录内冻结副本(briefs/ 活文件升版/漂移不影响既往 Pair 的判定);
+    // 副本缺失 = 冻结证据链断裂,本臂直接判错,不回退活文件。
+    const specCopy = path.join(base, 'spec.json');
+    if (!fs.existsSync(specCopy)) {
+      j.p.arms[j.arm].state = 'validated';
+      j.p.arms[j.arm].validation = { verdict: 'ERROR', classification: 'INVALID_EVIDENCE', classificationSource: 'run-round(spec 冻结副本缺失)', leakScan: 'SKIPPED', at: iso() };
+      fail++; invalidEvidence++;
+      console.log('           verdict=ERROR — spec.json 冻结副本缺失');
+      continue;
+    }
+    // 预算机器计数快照(spawn validate 之前):validate.mjs 自身会执行一次 npm run build
+    // 产生 +1 build 计数;判定窗口 = Agent Run 期间,故以验证前快照为准。
+    const countsBefore = readBudgetCounts(ws);
     const v = spawnSync('node', [path.join(HARN, 'runner', 'validate.mjs'),
-      '--workspace', path.join(base, 'workspace'),
-      '--spec', path.join(BENCH, 'briefs', j.scene, 'spec.json'),
+      '--workspace', ws,
+      '--spec', specCopy,
+      '--pair-meta', j.pairJsonPath, // FIX-B validate 侧消费:pair 元数据交叉核对(现版本安全忽略)
       '--out', path.join(base, 'validation'),
       '--run-id', `RUN-${j.pairId}-${j.arm.slice(4)}`, '--video'], { encoding: 'utf8' });
-    const verdict = /done: (\w+)/.exec(v.stdout)?.[1] || 'ERROR';
+    let verdict = /done: (\w+)/.exec(v.stdout)?.[1] || 'ERROR';
+    // report.json = 判定唯一事实源(AGENTS.md 硬约束 4);stdout 正则仅兜底
+    const reportPath = path.join(base, 'validation', 'report.json');
+    let classification = null;
+    if (fs.existsSync(reportPath)) {
+      try {
+        const rep = JSON.parse(fs.readFileSync(reportPath, 'utf8'));
+        classification = rep.classification ?? null;
+        if (rep.verdict) verdict = rep.verdict;
+      } catch { /* report 损坏:保留 stdout 兜底 */ }
+    }
     const ls = spawnSync('node', [path.join(HARN, 'isolation', 'leak-scanner.mjs'),
       '--workspace', base, '--peer-arm', j.arm === 'arm-a' ? 'arm-b' : 'arm-a', '--json'], { encoding: 'utf8' });
     const leak = /"status":\s*"(\w+)"/.exec(ls.stdout)?.[1] || 'ERROR';
+    // 每臂验证后调 budget-check(机器计数判定;RUN-CONTRACT §2 触达上限由系统计数判定)
+    const bc = checkBudget(countsBefore, limits);
+    const entry = { verdict, classification: classification ?? (verdict === 'PASS' ? 'PASS' : 'FAIL'), leakScan: leak, at: iso() };
+    if (classification) entry.classificationSource = 'validate.mjs';
+    entry.budgetVerdict = bc.verdict;
+    entry.budgetUsed = bc.used;
+    if (bc.verdict !== 'OK') {
+      entry.classification = 'BUDGET_EXHAUSTED';
+      entry.classificationSource = 'budget-check@run-round(机器计数,验证后判定;计数窗口=Agent Run 期间)';
+      entry.budgetExceeded = bc.exceeded;
+      budgetExhausted++;
+    }
+    if (classification === 'INPUT_DRIFT' || classification === 'ENV_DRIFT') {
+      entry.evidenceFlag = 'INVALID_EVIDENCE'; // 输入/环境漂移:该臂证据不可用,ROUND 层标注
+      invalidEvidence++;
+    }
     j.p.arms[j.arm].state = 'validated';
-    j.p.arms[j.arm].validation = { verdict, leakScan: leak, at: iso() };
-    if (verdict === 'PASS' && leak === 'CLEAN') ok++; else fail++;
-    console.log(`           verdict=${verdict} leak=${leak}`);
+    j.p.arms[j.arm].validation = entry;
+    if (verdict === 'PASS' && leak === 'CLEAN' && entry.classification === 'PASS' && !entry.evidenceFlag) ok++; else fail++;
+    console.log(`           verdict=${verdict} classification=${entry.classification} leak=${leak} budget=${bc.verdict}${entry.evidenceFlag ? ` evidence=${entry.evidenceFlag}` : ''}`);
   }
-  round.stages.validate = { lastRunAt: iso(), jobs: jobs.length, ok, fail, forced: !!force };
+  round.stages.validate = { lastRunAt: iso(), jobs: jobs.length, ok, fail, forced: !!force, blockedPairs, budgetExhausted, invalidEvidence };
   saveRound(round);
-  console.log(`[validate] ${jobs.length} 个臂验证:ok=${ok} fail=${fail}` + (jobs.length ? ' → 可进入 blind/aggregate' : '(无待验臂)'));
+  console.log(`[validate] ${jobs.length} 个臂验证:ok=${ok} fail=${fail}` +
+    (blockedPairs.length ? `;跳过 BLOCKED pair ${blockedPairs.length} 个` : '') +
+    (budgetExhausted ? `;BUDGET_EXHAUSTED ${budgetExhausted}` : '') +
+    (invalidEvidence ? `;INVALID_EVIDENCE ${invalidEvidence}` : '') +
+    (jobs.length ? ' → 可进入 blind/aggregate' : '(无待验臂)'));
 }
 
 // ---------- stage: blind ----------
@@ -203,8 +373,13 @@ function stageStatus(round) {
   console.log(`批次 ${round.batchId}(创建于 ${round.createdAt})`);
   console.log(`引擎: three@${round.engine.three.version} | cocosair ${round.engine.cocosair.tarball} (${round.engine.cocosair.sha256.slice(0, 8)}…)`);
   for (const p of round.pairs) {
-    const cells = ['arm-a', 'arm-b'].map(a => `${a}:${p.arms[a].state}${p.arms[a].validation ? `(${p.arms[a].validation.verdict}/${p.arms[a].validation.leakScan})` : ''}`);
-    console.log(`  ${p.pairId}  ${cells.join('  ')}`);
+    const cells = ['arm-a', 'arm-b'].map(a => {
+      const v = p.arms[a].validation;
+      const extra = v ? `(${v.verdict}/${v.leakScan}${v.budgetVerdict && v.budgetVerdict !== 'OK' ? `/budget:${v.budgetVerdict}` : ''}${v.evidenceFlag ? `/${v.evidenceFlag}` : ''})` : '';
+      return `${a}:${p.arms[a].state}${extra}`;
+    });
+    const pf = p.preflight ? ` preflight:${p.preflight.status}` : ' preflight:未检';
+    console.log(`  ${p.pairId}  ${cells.join('  ')}${pf}`);
   }
   for (const [k, v] of Object.entries(round.stages)) console.log(`  [${k}] ${JSON.stringify(v).slice(0, 120)}`);
 }
@@ -242,10 +417,11 @@ if (!fs.existsSync(roundPath(batch))) {
 }
 const round = loadRound(batch);
 switch (stage) {
+  case 'preflight': stagePreflight(round); break;
   case 'collect': stageCollect(round); break;
   case 'validate': stageValidate(round, has('force')); break;
   case 'blind': stageBlind(round); break;
   case 'aggregate': stageAggregate(round); break;
   case 'status': stageStatus(round); break;
-  default: die('未知 --stage;可用:create/collect/validate/blind/aggregate/status');
+  default: die('未知 --stage;可用:create/preflight/collect/validate/blind/aggregate/status');
 }

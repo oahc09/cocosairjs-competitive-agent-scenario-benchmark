@@ -1,0 +1,749 @@
+{
+  "runId": "REF-E01-three-reval",
+  "generatedAt": "2026-10-03T06:47:50.239Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:47:28.297Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2510
+      },
+      "stateAssertion": {
+        "expr": "$.starCount >= 50000",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.1633,
+              "background": [
+                5,
+                9,
+                17
+              ]
+            }
+          ],
+          "worstLitRatio": 0.1633
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.04893000000119209,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 45.866985741077485,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.17476500000059603,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 60,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3686
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:47:31.983Z",
+      "precondition": {
+        "expr": "__appReady && P1 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          },
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 500
+            },
+            "raw": "wait:500",
+            "performed": "waited 500ms"
+          }
+        ],
+        "durationMs": 502
+      },
+      "stateAssertion": {
+        "expr": "$.after.rotationPhase - $.before.rotationPhase > 0.001",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "center:80%",
+          "minMotionPixelRatio": 0.005
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 128,
+                "y": 72,
+                "w": 1024,
+                "h": 576
+              },
+              "diffRatio": 0.3067
+            }
+          ],
+          "worstDiffRatio": 0.3067
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.2314300000011922,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 59.99798326088655,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.357260000000894,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 60.00300014982869,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 2000
+      },
+      "timings": {
+        "totalMs": 4524
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:47:36.507Z",
+      "precondition": {
+        "expr": "P2 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2 passed",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "pointermove:(0.50,0.50)->(0.68,0.50)",
+        "steps": [
+          {
+            "verb": "pointermove",
+            "arg": {
+              "from": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "to": {
+                "x": 0.68,
+                "y": 0.5
+              }
+            },
+            "raw": "pointermove:(0.50,0.50)->(0.68,0.50)",
+            "performed": "pointermove -> (870,360)"
+          }
+        ],
+        "durationMs": 288
+      },
+      "stateAssertion": {
+        "expr": "$.after.parallaxOffset.x != $.before.parallaxOffset.x || $.after.parallaxOffset.y != $.before.parallaxOffset.y",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "minDiffPixelRatio": 0.003
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.003,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.224
+            }
+          ],
+          "bestDiffRatio": 0.224
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.45727000000029794,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 59.99193385781283,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.523095000000298,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0.3574829073334883,
+            "y": -0.0002092557909251629
+          },
+          "fps": 59.997983260886535,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-delta.png",
+          "P3-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 600
+      },
+      "timings": {
+        "totalMs": 2443
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:47:38.950Z",
+      "precondition": {
+        "expr": "P3 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3 passed",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wheel:deltaY=-600",
+        "steps": [
+          {
+            "verb": "wheel",
+            "arg": {
+              "dy": -600
+            },
+            "raw": "wheel:deltaY=-600",
+            "performed": "wheel dy=-600"
+          }
+        ],
+        "durationMs": 21
+      },
+      "stateAssertion": {
+        "expr": "$.after.cameraDistance < $.before.cameraDistance - 5",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "minDiffPixelRatio": 0.01
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.5231
+            }
+          ],
+          "bestDiffRatio": 0.5231
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.5797600000008941,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0.35936845344651003,
+            "y": -7.240153997854552e-7
+          },
+          "fps": 59.997983260886535,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.6222650000005959,
+          "cameraDistance": 65.81776397291789,
+          "parallaxOffset": {
+            "x": 0.3593749066651088,
+            "y": -1.0322362544782335e-8
+          },
+          "fps": 59.997983260886585,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-delta.png",
+          "P4-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 300
+      },
+      "timings": {
+        "totalMs": 2233
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-03T06:47:41.184Z",
+      "precondition": {
+        "expr": "__appReady && P1 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          },
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1005
+      },
+      "stateAssertion": {
+        "expr": "$.hudVisible == true && $.fps > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "nonBlank",
+        "params": {
+          "region": "hud",
+          "locator": "按 HUD 可见文本定位其包围盒"
+        },
+        "notes": [],
+        "expect": null,
+        "error": "base is not defined",
+        "metrics": {}
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.6972550000011918,
+          "cameraDistance": 60.08012023249538,
+          "parallaxOffset": {
+            "x": 0.3593749999483263,
+            "y": -5.714849379084863e-12
+          },
+          "fps": 60,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.7480900000005953,
+          "cameraDistance": 60.00438711251759,
+          "parallaxOffset": {
+            "x": 0.3593749999996797,
+            "y": -3.5421650193219875e-14
+          },
+          "fps": 60.00300014982863,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2008
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:47:43.192Z",
+      "precondition": {
+        "expr": "__appReady && P1 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          },
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:3000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 3000
+            },
+            "raw": "wait:3000",
+            "performed": "waited 3000ms"
+          }
+        ],
+        "durationMs": 3013
+      },
+      "stateAssertion": {
+        "expr": "$.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.4121,
+              "background": [
+                6,
+                9,
+                18
+              ]
+            }
+          ],
+          "worstLitRatio": 0.4121
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.7989150000005952,
+          "cameraDistance": 60,
+          "parallaxOffset": {
+            "x": 0.35937499999999795,
+            "y": -2.1976933071774548e-16
+          },
+          "fps": 60.00100842085054,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.9497450000002965,
+          "cameraDistance": 60,
+          "parallaxOffset": {
+            "x": 0.3593749999999997,
+            "y": -6.187331929133986e-23
+          },
+          "fps": 60.00300014982863,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4572
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T06:47:47.764Z",
+      "precondition": {
+        "expr": "P4 passed && P3 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4 passed",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          },
+          {
+            "part": "P3 passed",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui#reset",
+            "performed": "click @ (147,154) ui=reset"
+          }
+        ],
+        "durationMs": 139
+      },
+      "stateAssertion": {
+        "expr": "$.epoch >= 1 && $.cameraDistance >= 115 && $.cameraDistance <= 125 && $.parallaxOffset.x > -0.01 && $.parallaxOffset.x < 0.01 && $.parallaxOffset.y > -0.01 && $.parallaxOffset.y < 0.01 && $.rotationPhase < 0.1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.1725,
+              "background": [
+                5,
+                9,
+                17
+              ]
+            }
+          ],
+          "worstLitRatio": 0.1725
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 1.0264200000002959,
+          "cameraDistance": 60,
+          "parallaxOffset": {
+            "x": 0.3593749999999997,
+            "y": -2.894346187470681e-26
+          },
+          "fps": 60.00600060059652,
+          "hudVisible": true,
+          "epoch": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "starCount": 65000,
+          "rotationPhase": 0.04083499999940332,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 59,
+          "hudVisible": true,
+          "epoch": 1
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-vis.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2264
+      }
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "briefId": "NC08",
+  "briefVersion": "1.0.0",
+  "frozen": false,
+  "title": "NC08 spec-audit 负向对照:未知 region 形式(UNKNOWN_REGION)",
+  "note": "fixture(非冻结 brief):P1 的 visualAssertion region='accretion-torus(inner)' 是带括号注记的描述性命名,不在 LEGAL_REGION_FORMS 封闭表内。供 harness/runner/spec-audit.mjs 静态审计,预期判 SPEC_INVALID。",
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:800",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.diskRotation > 0.05"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "accretion-torus(inner)", "minMotionPixelRatio": 0.005 }
+      },
+      "threshold": "(不可执行)region 'accretion-torus(inner)' 无法解析为像素矩形 —— 描述性命名不在 LEGAL_REGION_FORMS 表内",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ]
+}

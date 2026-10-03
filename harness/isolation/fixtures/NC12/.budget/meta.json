@@ -1,0 +1,11 @@
+{
+  "fixture": "NC12",
+  "counters": {
+    "build.count": 9
+  },
+  "frozenLimit": {
+    "source": "config/agents.yaml agentRun.budget (FROZEN G0)",
+    "maxBuildAttempts": 8
+  },
+  "note": "机器计数 9 > 冻结上限 8 → budget-check.mjs 应判 BUDGET_EXHAUSTED。其余计数器刻意不放置,保证缺陷唯一。"
+}

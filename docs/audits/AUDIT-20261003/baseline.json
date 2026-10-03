@@ -1,0 +1,73 @@
+{
+  "auditId": "AUDIT-20261003",
+  "startedAt": "2026-10-03T13:00:00+08:00",
+  "baselineHead": "35306be53f81771f48f4b98db008529bf9fbecd2",
+  "headAtAuditStart": "35306be53f81771f48f4b98db008529bf9fbecd2",
+  "scope": "整改指令 24 节:证据链冻结(输入→Pair→Run→验证→证据→RULER)、验证器严格化、G7传播、S4、Agent身份、预算、隔离、历史批次处置",
+  "preCheck": {
+    "gitStatusClean": true,
+    "headMatchesBaseline": true
+  },
+  "confirmedIssues": [
+    {
+      "id": "I1",
+      "issue": "briefs/index.json 为 {entries:[]},reference-versions 用 briefIdx[scene] 直接取 → briefSha 恒 null,Brief 变化不触发 STALE",
+      "verified": true
+    },
+    {
+      "id": "I2",
+      "issue": "run-round validate 用 briefs/<scene>/spec.json 全局最新版验证历史 Pair(E10 历史跑在 v1.0.0,现行 v1.0.1 会静默重解释)",
+      "verified": true
+    },
+    {
+      "id": "I3",
+      "issue": "aggregate refCeilingVisual() 动态扫批次 judge 文件重取 Reference visual → 新增 judge 文件会静默改历史 Ceiling",
+      "verified": true
+    },
+    {
+      "id": "I4",
+      "issue": "G7=BLOCKED 时 aggregate 仍输出含 visual 的 total/attainment/pairedDelta",
+      "verified": true
+    },
+    {
+      "id": "I5",
+      "issue": "S4 硬编码 const s4=5(无 code-review 证据恒满分)",
+      "verified": true
+    },
+    {
+      "id": "I6",
+      "issue": "Pair agentBinaryHash/modelId/systemPromptHash/toolPolicyHash 全 null(同一Agent前提不可验证)",
+      "verified": true
+    },
+    {
+      "id": "I7",
+      "issue": "Frozen Spec 高级语义(hud/disk/mid-ring/bottom-third/upper-half/ring/metric)超出执行器词表,unknown region 静默退化 full-frame → spec写A validator测B",
+      "verified": true
+    },
+    {
+      "id": "I8",
+      "issue": "失败分类靠探针名正则猜测,默认兜底 STATE_MANAGEMENT",
+      "verified": true
+    },
+    {
+      "id": "I9",
+      "issue": "precondition 硬链 P1→P2→…,P1 局部失败放大为 S2=0",
+      "verified": true
+    },
+    {
+      "id": "I10",
+      "issue": "S3 生命周期 = 找第一个含 reset 的探针(E02 双 reset/资产释放只测一半)",
+      "verified": true
+    },
+    {
+      "id": "I11",
+      "issue": "预算自报口径可事后解释(browser 7/6 判合规)",
+      "verified": true
+    },
+    {
+      "id": "I12",
+      "issue": "共享 node_modules 可变,重验无依赖哈希守卫",
+      "verified": true
+    }
+  ]
+}

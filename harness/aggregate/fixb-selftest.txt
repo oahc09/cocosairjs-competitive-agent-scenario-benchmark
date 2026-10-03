@@ -1,0 +1,143 @@
+================================================================================
+FIX-B 自测报告 —— 证据链整改(§2 §3验证侧 §4 §5 §6 §10 §16 §18)
+仓库:cocosairjs-competitive-agent-scenario-benchmark
+生成:2026-10-03T05:39Z(整改完成后一次性固化;全部命令可在仓库根复跑)
+执行人:FIX-B 聚合/冻结工程师(未 git commit;改动仅限 validate.mjs /
+        aggregate-all.mjs / reference-versions.mjs / qualify-historical.mjs /
+        本文件;results/ 下仅新增 QUALIFICATION.json 并再生 aggregated.json)
+================================================================================
+
+【1】aggregate 跑通,formal 全 null(G7 现为 BLOCKED)........................PASS
+--------------------------------------------------------------------------------
+$ node harness/aggregate/aggregate-all.mjs
+aggregated.json: 1 batches / 4 pairs / 4 groups / kgEntries=0
+  ruler=RULER-20261003-R1 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]
+  E01 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0
+  E02 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=-23 CI=null W/T/L=0/0/1
+  E05 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0
+  E10 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0
+
+逐对 formal(必须全 null + INVALID 标注):
+  PAIR-E01-K0-R01  total=null attainment=null pairedDelta=null visualStatus='INVALID(G7 BLOCKED)'
+  PAIR-E02-K0-R01  total=null attainment=null pairedDelta=null visualStatus='INVALID(G7 BLOCKED)'
+  PAIR-E05-K0-R01  total=null attainment=null pairedDelta=null visualStatus='INVALID(G7 BLOCKED)'
+  PAIR-E10-K0-R01  total=null attainment=null pairedDelta=null visualStatus='INVALID(G7 BLOCKED)'
+
+G7 前后字段对照(样例 PAIR-E01-K0-R01):
+  字段                       整改前(旧聚合/pilot-aggregate)      整改后(aggregated.json)
+  -------------------------  ----------------------------------  ------------------------------------------------
+  arms.three.total           86(S4 默认 5,visual=26 计入)        null(formal 不可定义;objectiveTotal=55)
+  arms.cocosair.total        91(S4 默认 5,visual=31 计入)        null(objectiveTotal=55)
+  arms.*.s4                  5(硬编码默认)                       null + s4Pending:true(无 code-review.json)
+  attainment(three/air)      0.97 / 1.03(对 60+visual 旧天花板)  formal=null;objective 口径 1.0 / 1.0(对 RULER objectiveScore=55)
+  paired.rawDelta            5(outcome=AIR_WIN)                  formal.pairedDelta=null;objective.pairedDelta=0
+  视觉分                     直接计入总分                          provisionalVisualScore{three:26,cocosair:31,"仅参考,非正式"}
+  ceiling 来源               动态扫批次 judge-pass-1 referenceItems 只读 RULER 账本冻结值(objectiveScore=55/totalScore=84,
+                                                                  visualRaw18=13,evidenceHash=38809f4e…)
+  needsRecalibration         无此机制                              rulerStatus.needsRecalibration=[](attainment>1.03 时列出,不 clamp)
+
+【2】双跑 aggregate 除时间戳外一致..........................................PASS
+--------------------------------------------------------------------------------
+run1 generatedAt=2026-10-03T05:38:33.527Z  run2 generatedAt=2026-10-03T05:38:33.932Z
+json identical except generatedAt: True
+content sha256(去 generatedAt 后): a615763b8de61d9a492f6f1d9636a4941e7b0b7e12aad259caa788309eac05fa
+(bootstrap 固定种子 42;脚本无其他时间/随机源;stdout 双跑亦逐字节一致)
+
+【3】reference-versions --selftest-drift.....................................PASS
+--------------------------------------------------------------------------------
+$ node harness/aggregate/reference-versions.mjs --selftest-drift   (exit 0)
+  ok   改 briefSha               -> STALE                语义=["briefSha"] 协议=[]
+  ok   改 specSha                -> STALE                语义=["specSha"] 协议=[]
+  ok   改 validatorProtocolHash  -> NEEDS_REVALIDATION   语义=[] 协议=["validatorProtocolHash"]
+SELFTEST-DRIFT PASS(改 briefSha/specSha → STALE 需重实现;改 validatorProtocolHash →
+NEEDS_REVALIDATION 需重验;三者均非 CURRENT)(内存模拟,不写任何文件;供 NC10)
+
+【4】qualify-historical 对 B-20261002-R1 出报告.............................PASS
+--------------------------------------------------------------------------------
+$ node harness/aggregate/qualify-historical.mjs --batch B-20261002-R1
+QUALIFICATION.json -> results/B-20261002-R1/QUALIFICATION.json
+批次 B-20261002-R1: status=LEGACY_PROVISIONAL / 4 pairs
+  PAIR-E01-K0-R01 LEGACY_PROVISIONAL failedChecks=[specExact,validatorKnown,agentIdentityComplete,budgetMachineCounted,visualGate]
+  PAIR-E02-K0-R01 LEGACY_PROVISIONAL failedChecks=[同上]
+  PAIR-E05-K0-R01 LEGACY_PROVISIONAL failedChecks=[同上]
+  PAIR-E10-K0-R01 LEGACY_PROVISIONAL failedChecks=[同上,另:验证时实际 spec(63b74e45,v1.0.1)
+                    != pair.specSha256(df299b68) —— 回溯判定 INPUT_DRIFT]
+
+E10 特别核(证据推断,四份指纹互不相等):
+  pair 建对冻结 spec   df299b68(当时 v1.0.0 口径)
+  验证时实际使用       63b74e45 / v1.0.1(report.spec.sha256 = 唯一事实源;中间版,现行库无此文件)
+  arm 落盘 spec(现存) 70c862a9 / v1.0.0(与验证时所用不同 —— 事后被覆盖)
+  现行全局 briefs      83c8d350 / v1.0.1(与验证时 v1.0.1 内容也不同,sha 不等)
+  结论:历史验证实际运行于 v1.0.1 中间版;对现行 v1.0.1 无证明力;重跑时新版
+        validate.mjs --pair-meta 会将此类漂移在入口拦截为 INPUT_DRIFT(exit 4)。
+
+  另:E01/E02/E05 存在"同版本号不同内容"(pair 冻结版与现行版同 v1.0.0 但 sha 不同,
+  spec 在运行后被改动且未升版)—— 违反"改动必须升版"纪律的历史事实,已如实记录。
+
+reusableMetrics(5):冻结输入指纹组;objective S1/S2/S3 逐臂分(provisional);
+  objective 成对 delta;效率/诊断口径;引擎哈希溯源(air 与 RULER matched)。
+invalidOrPendingMetrics(5):visual 六维/Preference(G7=BLOCKED);formal
+  total/attainment/pairedDelta;S4(pending);Attainment 对 RULER 绝对值(量尺晚于批次,
+  E10 叠加 spec 漂移);历史 STATE_MANAGEMENT 分类(旧正则兜底产物,应视为 UNRESOLVED 重归类)。
+
+【5】validate.mjs 冻结输入守卫冒烟(临时目录,不触仓库)...................PASS
+--------------------------------------------------------------------------------
+(a) INPUT_DRIFT:
+    --pair-meta PAIR-E01-K0-R01/pair.json --spec briefs/E01/spec.json
+    pair.specSha256=9a32a744… != 实际 5ed6b649… → 'guarded: INPUT_DRIFT',EXIT=4,未跑构建/浏览器。
+(b) --revision 归档(一次性幂等):
+    预置 out/report.json(generatedAt=2026-10-02T08:00:00Z)→ 运行后:
+      revisions/2026-10-02T080000000Z-original/report.json   (旧报告归档)
+      revisions/2026-10-03T053606387Z-fixb-drift-test/report.json (本次守卫报告)
+      revisions/.original-archived                           (幂等 marker)
+    第二次运行(--revision fixb-drift-test2):-original 目录仍只有 1 个 → 幂等成立。
+(c) ENV_DRIFT:
+    合成 pair(dependencyHashes.three='0000…',其余真实)→ 'guarded: ENV_DRIFT',EXIT=5,
+    diffs=[{key:'three',frozen:'0000…',actual:'ee97b037…'}]。
+(d) 守卫通过路径:
+    合成 pair(specSha256=现行 briefs/E01 sha;dependencyHashes=真实指纹)→
+    report.inputGuard={"kind":"PASS","checked":["specSha256","dependencyHashes"]},
+    report.specSha256=5ed6b649…,report.validatorProtocolHash=140c6e49…(与 RULER 账本一致);
+    后续管道按预期继续(临时空 workspace 构建失败 → FAIL 报告正常落盘,exit 1)。
+(e) 依赖合并指纹公式:sha256( sha256(pkg/package.json) + ':' + sha256(主入口文件) ),
+    键 {three:node_modules/three, cocosair:node_modules/cocosair.js, esbuild:node_modules/esbuild}。
+
+【6】RULER 冻结样例(reference/private/REFERENCE-VERSIONS.json,epochs['E01:three'])----
+--------------------------------------------------------------------------------
+  refVersion: 1   validationRevision: 2   frozenUnderRuler: RULER-20261003-R1
+  inputs: { engine: "three@0.186.1", briefSha: 0faeaf83…(bug 修复后经 entries 映射取到),
+            specSha: 5ed6b649…, docsSha: 3965e245…, toolchain: nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58,
+            validatorProtocolHash: 140c6e49…, judgeProtocolHash: 3d86417c…(metric-spec §8=计划书 §18 口径段) }
+  objectiveBreakdown: {s1:15, s2:30, s3:10}   objectiveScore: 55
+  visualRaw18: 13   visualEvidence: {batchId:'B-20261002-R1', itemId:'REF-E01-X-0914'}
+  visualScore40: 29   totalScore: 84   ceiling(兼容别名): 84
+  evidenceHash: 38809f4e…(validation/report.json sha)
+  changedProtocol: ['validatorProtocolHash'](见【7】第 4 条),changedSemantic: []
+
+【7】过程中发现并如实记录的仓库既有问题(不属于 FIX-B 修复范围)--------------
+--------------------------------------------------------------------------------
+1. briefs/E01/spec.json 现版对现行 probe-executor dry-run 为 SPEC_INVALID:
+   P5 visualAssertion 使用未知参数键 "locator" 与未知区域 "hud"(历史验证用的是
+   运行时旧版 spec sha 9a32a744,故当时未暴露)。briefs 与 probe-executor 均为
+   冻结/他人管辖文件,FIX-B 不改,仅记录。
+2. E01/E02/E05:pair 冻结 spec 与现行 spec 同版本号(v1.0.0)不同内容(未升版);
+   E10:验证时用中间版 v1.0.1,现行 v1.0.1 为另一内容(见【4】)。历史批次对现行
+   spec 一律无证明力,以 QUALIFICATION.json 为引用前提。
+3. results/B-00010101-R99(coordinator 自测批次,batches.json selftestNote 声明
+   "未运行任何 Agent Run")在本次会话中被并行流程临时重建并注册;aggregate-all
+   按该声明将其排除(excludedBatches 注记),不污染正式看板。
+4. 会话期间 harness/runner/probe-executor.mjs 被并行修改(13:32:00+08:00)→
+   账本 validatorProtocolHash 随之漂移并被 drift 机制捕获:重冻结后全部 20 个
+   Reference 记为 NEEDS_REVALIDATION、validationRevision 1→2、量尺 RULER 号与
+   refVersion 不变(测量协议漂移不动尺子)—— 两类漂移区分机制在真实事件上验证通过。
+5. 历史批次的 STATE_MANAGEMENT 分类(E02/E05)来自已废除的 probeId 正则兜底,
+   新版 validate 无 sidecar 时判 UNRESOLVED;harness/runner/probe-meta/<SCENE>.json
+   sidecar 目前均不存在,补齐 sidecar 后自动恢复精确定类。
+
+【8】结论........................................................................
+--------------------------------------------------------------------------------
+四项自测全部 PASS:aggregate 跑通且 formal 全 null(G7 BLOCKED 传播正确)、双跑
+一致、selftest-drift PASS、qualify 出报告。整改后:正式口径零带病出数,objective
+口径与 provisionalVisualScore 保持可用,RULER 账本含完整可复算指标与两类漂移
+追踪,历史批次状态明确为 LEGACY_PROVISIONAL 并附逐项原因。
+================================================================================

@@ -1,0 +1,547 @@
+{
+  "generatedAt": "2026-10-03T07:32:49.481Z",
+  "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
+  "batch": "B-20261002-R1",
+  "status": "LEGACY_PROVISIONAL",
+  "statusDefinition": {
+    "QUALIFIED": "全部鉴定项通过,指标按正式口径引用",
+    "LEGACY_PROVISIONAL": "整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制",
+    "DISQUALIFIED": "冻结输入断裂且无法溯源,全部指标作废"
+  },
+  "context": {
+    "ruler": {
+      "rulerId": "RULER-20261003-R1",
+      "updatedAt": "2026-10-03T07:32:41.723Z"
+    },
+    "g7": {
+      "status": "BLOCKED",
+      "source": "gates/G7.json"
+    },
+    "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9"
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K0-R01",
+      "scene": "E01",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": true,
+      "status": "LEGACY_PROVISIONAL",
+      "failedChecks": [
+        "specExact",
+        "validatorKnown",
+        "agentIdentityComplete",
+        "budgetMachineCounted",
+        "visualGate"
+      ],
+      "reasons": [
+        "pair 冻结 spec(9a32a744)≠现行 briefs spec(5ed6b649 v1.0.0)",
+        "验证协议哈希未记录(整改前 report 格式)",
+        "Agent 身份字段缺失: agentBinaryHash, modelId, modelRevisionId, systemPromptHash, toolPolicyHash",
+        "预算机器计数证据未归档(仅声明口径)",
+        "G7=BLOCKED,视觉口径作废"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": false
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": false,
+          "runVsPair": true,
+          "diskVsPair": false,
+          "pairVsCurrent": false,
+          "runTimeSpec": {
+            "sha256": "9a32a744a6a9eff5f4fc87b447d112cc26b8f9c04276dc8db34056ba0657a1c6",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "9a32a744a6a9eff5f4fc87b447d112cc26b8f9c04276dc8db34056ba0657a1c6",
+          "currentBriefs": {
+            "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+            "version": "1.0.0",
+            "briefSha256": "0faeaf8397104f8b2fa84efdfb15494fa94f36bc4bb1c75f0eb637f4258789fb"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据",
+          "sameVersionDifferentContent": "pair 冻结版与现行版版本号同为 v1.0.0 但内容 sha 不同 —— spec 在运行后被改动且未升版本号(违反\"改动必须升版\"纪律的历史事实,如实记录)"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": false,
+          "validatorProtocolHash": null,
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "matchesCurrent": false,
+          "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": false,
+          "missing": [
+            "agentBinaryHash",
+            "modelId",
+            "modelRevisionId",
+            "systemPromptHash",
+            "toolPolicyHash"
+          ],
+          "note": "Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按\"同一仪器\"的声明口径采信,无法机器复核"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": false,
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": null,
+            "arm-b": null
+          },
+          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": false,
+          "g7Status": "BLOCKED",
+          "blindMaterials": [
+            "blinding-key-legacy.json",
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "blind 材料存在,但 G7=BLOCKED → 视觉口径(六维/Preference)一律不得引用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-02T13:23:02.778Z",
+            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
+          },
+          "rulerId": "RULER-20261003-R1"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E02-K0-R01",
+      "scene": "E02",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": true,
+      "status": "LEGACY_PROVISIONAL",
+      "failedChecks": [
+        "specExact",
+        "validatorKnown",
+        "agentIdentityComplete",
+        "budgetMachineCounted",
+        "visualGate"
+      ],
+      "reasons": [
+        "pair 冻结 spec(4a25bda6)≠现行 briefs spec(788e8531 v1.0.0)",
+        "验证协议哈希未记录(整改前 report 格式)",
+        "Agent 身份字段缺失: agentBinaryHash, modelId, modelRevisionId, systemPromptHash, toolPolicyHash",
+        "预算机器计数证据未归档(仅声明口径)",
+        "G7=BLOCKED,视觉口径作废"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": false
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": false,
+          "runVsPair": true,
+          "diskVsPair": false,
+          "pairVsCurrent": false,
+          "runTimeSpec": {
+            "sha256": "4a25bda60dd7f2017e7de908eac762c61dc91f3b2db1dfc68ea504901785ad7f",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "4a25bda60dd7f2017e7de908eac762c61dc91f3b2db1dfc68ea504901785ad7f",
+          "currentBriefs": {
+            "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+            "version": "1.0.0",
+            "briefSha256": "a979a396b199c6b4575e09206778f67391beaca7e3502f1c33c946ec735cb6a6"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据",
+          "sameVersionDifferentContent": "pair 冻结版与现行版版本号同为 v1.0.0 但内容 sha 不同 —— spec 在运行后被改动且未升版本号(违反\"改动必须升版\"纪律的历史事实,如实记录)"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": false,
+          "validatorProtocolHash": null,
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "matchesCurrent": false,
+          "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": false,
+          "missing": [
+            "agentBinaryHash",
+            "modelId",
+            "modelRevisionId",
+            "systemPromptHash",
+            "toolPolicyHash"
+          ],
+          "note": "Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按\"同一仪器\"的声明口径采信,无法机器复核"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": false,
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": null,
+            "arm-b": null
+          },
+          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": false,
+          "g7Status": "BLOCKED",
+          "blindMaterials": [
+            "blinding-key-legacy.json",
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "blind 材料存在,但 G7=BLOCKED → 视觉口径(六维/Preference)一律不得引用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-02T13:23:10.060Z",
+            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
+          },
+          "rulerId": "RULER-20261003-R1"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E05-K0-R01",
+      "scene": "E05",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": true,
+      "status": "LEGACY_PROVISIONAL",
+      "failedChecks": [
+        "specExact",
+        "validatorKnown",
+        "agentIdentityComplete",
+        "budgetMachineCounted",
+        "visualGate"
+      ],
+      "reasons": [
+        "pair 冻结 spec(b2dbb7ae)≠现行 briefs spec(5e53b273 v1.0.0)",
+        "验证协议哈希未记录(整改前 report 格式)",
+        "Agent 身份字段缺失: agentBinaryHash, modelId, modelRevisionId, systemPromptHash, toolPolicyHash",
+        "预算机器计数证据未归档(仅声明口径)",
+        "G7=BLOCKED,视觉口径作废"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": false
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": false,
+          "runVsPair": true,
+          "diskVsPair": false,
+          "pairVsCurrent": false,
+          "runTimeSpec": {
+            "sha256": "b2dbb7aee0f61b17d3854e112358bdaa8318acbd184efa998408aaa9a775a61f",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "5e53b2737f6f28f69732bf4eb764bf16e3111c41f7d5de70d3010228ec073493",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "b2dbb7aee0f61b17d3854e112358bdaa8318acbd184efa998408aaa9a775a61f",
+          "currentBriefs": {
+            "specSha256": "5e53b2737f6f28f69732bf4eb764bf16e3111c41f7d5de70d3010228ec073493",
+            "version": "1.0.0",
+            "briefSha256": "6611fb092230242d9e048c477eb2b63825a31939bcdd4c5a803760fdd8aa803e"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据",
+          "sameVersionDifferentContent": "pair 冻结版与现行版版本号同为 v1.0.0 但内容 sha 不同 —— spec 在运行后被改动且未升版本号(违反\"改动必须升版\"纪律的历史事实,如实记录)"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": false,
+          "validatorProtocolHash": null,
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "matchesCurrent": false,
+          "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": false,
+          "missing": [
+            "agentBinaryHash",
+            "modelId",
+            "modelRevisionId",
+            "systemPromptHash",
+            "toolPolicyHash"
+          ],
+          "note": "Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按\"同一仪器\"的声明口径采信,无法机器复核"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": false,
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": null,
+            "arm-b": null
+          },
+          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": false,
+          "g7Status": "BLOCKED",
+          "blindMaterials": [
+            "blinding-key-legacy.json",
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "blind 材料存在,但 G7=BLOCKED → 视觉口径(六维/Preference)一律不得引用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-02T13:23:16.319Z",
+            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
+          },
+          "rulerId": "RULER-20261003-R1"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E10-K0-R01",
+      "scene": "E10",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": true,
+      "status": "LEGACY_PROVISIONAL",
+      "failedChecks": [
+        "specExact",
+        "validatorKnown",
+        "agentIdentityComplete",
+        "budgetMachineCounted",
+        "visualGate"
+      ],
+      "reasons": [
+        "验证时实际 spec(sha=63b74e45, v1.0.1)与 pair.specSha256(df299b68)不一致 —— 回溯判定 INPUT_DRIFT",
+        "pair 冻结 spec(df299b68)≠现行 briefs spec(83c8d350 v1.0.1)",
+        "验证协议哈希未记录(整改前 report 格式)",
+        "Agent 身份字段缺失: agentBinaryHash, modelId, modelRevisionId, systemPromptHash, toolPolicyHash",
+        "预算机器计数证据未归档(仅声明口径)",
+        "G7=BLOCKED,视觉口径作废"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": false
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": false,
+          "runVsPair": false,
+          "diskVsPair": false,
+          "pairVsCurrent": false,
+          "runTimeSpec": {
+            "sha256": "63b74e45865e1ae76295dd0331a9c1858e90816dbb4dd6a45a4c1db4f7592496",
+            "briefVersion": "1.0.1"
+          },
+          "diskSpec": {
+            "sha256": "70c862a94d55ebd376f211477ca1865fd1fab9ac4fe3aa865ef2e79d15e92597",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "df299b6801a3c02789b1a06c468cf128df124bb690cf71ce6e0647f120305d82",
+          "currentBriefs": {
+            "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "version": "1.0.1",
+            "briefSha256": "94c7f67f6b79b3cc78f324fa9402737d9e8d8b0fc153e3e84c1cd5e68fec0f94"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": false,
+          "validatorProtocolHash": null,
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "matchesCurrent": false,
+          "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": false,
+          "missing": [
+            "agentBinaryHash",
+            "modelId",
+            "modelRevisionId",
+            "systemPromptHash",
+            "toolPolicyHash"
+          ],
+          "note": "Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按\"同一仪器\"的声明口径采信,无法机器复核"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": false,
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": null,
+            "arm-b": null
+          },
+          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": false,
+          "g7Status": "BLOCKED",
+          "blindMaterials": [
+            "blinding-key-legacy.json",
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "blind 材料存在,但 G7=BLOCKED → 视觉口径(六维/Preference)一律不得引用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-02T13:23:22.317Z",
+            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
+          },
+          "rulerId": "RULER-20261003-R1"
+        }
+      },
+      "e10SpecialCheck": {
+        "mandate": "E10 特别核:arm spec=v1.0.0、现行全局 v1.0.1,历史验证实际 spec 版本从证据推断如实记录",
+        "inference": {
+          "pairCreatedAt": "2026-10-02T13:23:22.317Z",
+          "pairSpecSha256": "df299b6801a3c02789b1a06c468cf128df124bb690cf71ce6e0647f120305d82",
+          "validationTimeSpec": {
+            "sha256": "63b74e45865e1ae76295dd0331a9c1858e90816dbb4dd6a45a4c1db4f7592496",
+            "briefVersion": "1.0.1"
+          },
+          "diskSpecNow": {
+            "sha256": "70c862a94d55ebd376f211477ca1865fd1fab9ac4fe3aa865ef2e79d15e92597",
+            "briefVersion": "1.0.0"
+          },
+          "currentGlobalSpec": {
+            "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "version": "1.0.1",
+            "briefSha256": "94c7f67f6b79b3cc78f324fa9402737d9e8d8b0fc153e3e84c1cd5e68fec0f94"
+          }
+        },
+        "conclusion": "历史验证实际运行于 1.0.1(sha=63b74e45,中间版,现行库中无此文件);现行全局 v1.0.1(sha=83c8d350)内容与之不同(sha 不等);arm 落盘 spec 为 v1.0.0(sha=70c862a9,与验证时所用亦不同)。四份指纹互不相等 → E10 两臂的验证结论只对其运行时那个中间版 spec 负责,对 v1.0.1 现行 spec 无证明力。",
+        "action": "E10 需在现行 v1.0.1 下重跑(重跑时新版 validate.mjs --pair-meta 会在入口拦截此类漂移为 INPUT_DRIFT)"
+      }
+    }
+  ],
+  "batchLevel": {
+    "reusableMetrics": [
+      "冻结输入指纹组(brief/spec/assets/templates/knowledge/engine sha)—— pair.json 完整",
+      "objective S1/S2/S3 逐臂分(证据:validation/report.json;标记 provisional:验证协议哈希未记录)",
+      "objective 成对 delta(AIR−Three,S1+S2+S3 口径)",
+      "效率/诊断口径(fps、console、探针明细、网络/截图证据)",
+      "引擎哈希溯源(pair.airPackageHash 与 RULER 账本 matched)"
+    ],
+    "invalidOrPendingMetrics": [
+      "visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)",
+      "formal total/attainment/pairedDelta(依赖 visual 与 S4,当前不可定义)",
+      "S4 代码健康(无 validation/code-review.json → s4Pending)",
+      "Attainment 对 RULER 的绝对值(量尺晚于批次,只能回溯套用;E10 还叠加 spec 漂移)",
+      "历史失败分类 STATE_MANAGEMENT(E02/E05)系已废除的 probeId 正则兜底所判;新版判 UNRESOLVED,历史分类建议按 classificationEvidence 重新人工归类"
+    ],
+    "reasons": [
+      "E02/E05 的 STATE_MANAGEMENT 分类是旧启发式兜底产物,证据链上应视为未归类(UNRESOLVED)",
+      "存在\"验证时 spec ≠ pair 冻结 spec\"的对(E10):回溯 INPUT_DRIFT",
+      "全部 pair 的 Agent 身份五元组与验证协议哈希未记录 → 整批只能按 LEGACY_PROVISIONAL 口径引用"
+    ]
+  }
+}

@@ -1,0 +1,419 @@
+{
+  "runId": "REF-E04-cocosair-reval",
+  "generatedAt": "2026-10-03T06:51:17.956Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-03T06:51:06.015Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2511
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "nonBlank",
+        "params": {
+          "region": "bottom-third",
+          "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)"
+        },
+        "notes": [],
+        "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)",
+        "error": "base is not defined",
+        "metrics": {}
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "ready": true,
+          "frame": 80,
+          "resetCount": 0,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "windowCount": 138,
+          "starCount": 170
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "ready": true,
+          "frame": 231,
+          "resetCount": 0,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "windowCount": 138,
+          "starCount": 170
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3964
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-03T06:51:09.979Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:{x:0.5,y:0.30}",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "xy",
+              "x": 0.5,
+              "y": 0.3
+            },
+            "raw": "click:{x:0.5,y:0.30}",
+            "performed": "click @ (640,216)"
+          }
+        ],
+        "durationMs": 9
+      },
+      "stateAssertion": {
+        "expr": "$.fireworkCount == 1 && $.particlesAlive >= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "motion",
+        "params": {
+          "region": "mid-vertical-band(点击列 x∈[0.4,0.6])",
+          "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)"
+        },
+        "notes": [],
+        "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)",
+        "error": "base is not defined",
+        "metrics": {}
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "ready": true,
+          "frame": 318,
+          "resetCount": 0,
+          "fireworkCount": 0,
+          "particlesAlive": 0,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "windowCount": 138,
+          "starCount": 170
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "ready": true,
+          "frame": 350,
+          "resetCount": 0,
+          "fireworkCount": 1,
+          "particlesAlive": 40,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "windowCount": 138,
+          "starCount": 170
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1951
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:51:11.930Z",
+      "precondition": null,
+      "action": {
+        "raw": "wait:1200",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P2"
+        ]
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:51:11.930Z",
+      "precondition": null,
+      "action": {
+        "raw": "wait:2600",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P3"
+        ]
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-03T06:51:11.930Z",
+      "precondition": {
+        "expr": "P4",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P4",
+            "met": false,
+            "source": "probe P4",
+            "status": "SKIPPED_BY_DEPENDENCY"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=auto-show",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "auto-show"
+            },
+            "raw": "click:ui=auto-show",
+            "performed": "click @ (1209,25) ui=auto-show"
+          }
+        ],
+        "durationMs": 136
+      },
+      "stateAssertion": {
+        "expr": "$.autoShow == true && $.fireworkCount >= 4",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "pixelDelta",
+        "params": {
+          "region": "upper-half",
+          "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)"
+        },
+        "notes": [],
+        "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)",
+        "error": "base is not defined",
+        "metrics": {}
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "ready": true,
+          "frame": 434,
+          "resetCount": 0,
+          "fireworkCount": 1,
+          "particlesAlive": 219,
+          "autoShow": false,
+          "enabled": true,
+          "buildingCount": 28,
+          "windowCount": 138,
+          "starCount": 170
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "ready": true,
+          "frame": 683,
+          "resetCount": 0,
+          "fireworkCount": 5,
+          "particlesAlive": 832,
+          "autoShow": true,
+          "enabled": true,
+          "buildingCount": 28,
+          "windowCount": 138,
+          "starCount": 170
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5539
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P4",
+      "failedPreconditionParts": [
+        "P4"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:51:17.469Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:ui=auto-show",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P5"
+        ]
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:51:17.469Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:ui=pause",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P5"
+        ]
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-03T06:51:17.469Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P5",
+          "P7"
+        ]
+      }
+    }
+  ]
+}
