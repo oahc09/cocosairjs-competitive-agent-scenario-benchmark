@@ -414,6 +414,13 @@
       "repro": "quad ignores size (±0.5 hardcoded); plane is XZ; no Quaternion export; clearColor/light.color assign-not-mutate; getScrollY=-deltaY*5; screenPointToRay param order differs component vs render-scene; getComponent(string) fails; Node.addChild returns void; fog.enabled before fog.type; missing minPos/maxPos silently culls; createDynamicMesh location differs repo vs tarball; dual-side needs USE_TWOSIDE + cullMode",
       "impact": "Each small, together the main K0 trial-and-error tax (E06 reference itself crashed 2 rounds on Quat)",
       "source": "E08/ceiling-notes.md 坑位1/2/6/9; E06 §6; E05 §5; E07 §4-5; E09 §3.1-4"
+    },
+    {
+      "title": "ScreenAdapter/View 对 0×0 resize(DPR 变化时页面隐藏)assert 抛未捕获异常,无跳过/延迟保护",
+      "repro": "display:none 容器内启动 cocosair 页面 → 浏览器缩放或跨 DPI 移动窗口触发 matchMedia(resolution) change → _updateAdaptResult(0,0) assert(false) Uncaught",
+      "impact": "隐藏容器加载/缩放场景页面崩溃(门户/嵌入式集成场景);全屏正常验证不受影响",
+      "source": "AUDIT-20261003 F-23 用户实测 + 引擎源码核对(cocosair.module.js L45830-45842/L15074-15085)",
+      "recommendation": "_updateAdaptResult 对非法尺寸改为保留上次有效尺寸并跳过(或延迟到有效尺寸事件),移除 assert 抛出"
     }
   ],
   "agentDx": [

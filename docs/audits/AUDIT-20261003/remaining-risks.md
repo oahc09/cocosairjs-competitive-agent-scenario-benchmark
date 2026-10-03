@@ -41,3 +41,15 @@ B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 s
 | F-20 | E05 双臂 P1 四角背景星密度 <3%(0.004-0.013/0.015-0.035),与首轮同因重复 | Agent 无验证器反馈下的视觉密度校准(双引擎对称) | Agent 侧;spec 偏严与否留 Owner 判(不改阈值迁就) |
 | F-21 | 执行器 mid-ring 几何以视口中心为圆心且带越界(y=-158) | Harness 缺陷(本轮发现并修复:暗核中心自适应+viewport clamp+annulus max 聚合) | 已修复并复验 |
 | F-22 | qualify/validate 集成三 bug(--revision 顶层 report 丢失、budget 路径、sidecar 双 schema) | Harness 缺陷 | 已修复并复验(新批 qualification=QUALIFIED_OBJECTIVE ×4) |
+
+## F-23 引擎健壮性缺陷(用户实测报错,2026-10-03)
+
+**现象**:``cocosair.module.js:800 Uncaught Error: _updateAdaptResult Invalid size.``(栈:mediaQueryResolution.once → ScreenAdapter.emit → View._updateAdaptResult:45838 assert)
+
+**根因**(引擎源码已核):`View._updateAdaptResult(width,height)` 仅在 width>0&&height>0 时适配,否则 assert(false) 抛未捕获异常;触发链 = matchMedia(resolution) DPR 变化事件(DPI 显示器切换/缩放)→ window-resize 携带当前 windowSize —— 若页面此刻 display:none(0×0,如门户隐藏页签内的 iframe)即为 0×0。
+
+**触发场景**:门户对比页 iframe 在页面加载时即被赋 src,compare 页签 display:none → cocosair 引擎隐藏态完成初始化,首个 DPR 事件崩溃。
+
+**页面层修复(已落地)**:门户 fillCompare 懒加载——compare 页签未激活时 iframe 不赋 src(记录 pending),激活时才加载;已验证逻辑。
+**引擎侧建议(cocosair.js)**:_updateAdaptResult 对非法尺寸不应 assert 抛异常,应跳过本次适配并保留上次有效尺寸,待下次有效 resize 再适配(良性瞬态 ≠ 致命错误)。建议补回归用例:display:none iframe 内启动引擎 + DPR 变化 → 无异常。
+**实验影响**:无——验证流水线从不隐藏页面;历史证据不受影响。属门户/浏览体验层缺陷 + 引擎健壮性缺陷。

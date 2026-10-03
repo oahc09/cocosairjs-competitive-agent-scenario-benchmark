@@ -99,6 +99,11 @@ const fmtArm = (a) => a ? `${a.total ?? '–'}/100${a.visualPending ? '(视觉�
 document.querySelectorAll('nav button').forEach(b => b.addEventListener('click', () => {
   document.querySelectorAll('nav button').forEach(x => x.classList.toggle('active', x === b));
   document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.id === 'tab-' + b.dataset.tab));
+  // 懒加载守卫:compare 页签激活时消费待加载的 iframe URL(避免 cocosair 在 0×0 隐藏容器内启动)
+  if (b.dataset.tab === 'compare' && window.__pendingCompare) {
+    const pend = window.__pendingCompare; window.__pendingCompare = null;
+    $('c-t-frame').src = pend.tUrl; $('c-a-frame').src = pend.aUrl;
+  }
 }));
 
 function statusClass(s) { return s === 'PASS' ? 'c-good' : (s === 'NOT-RUN' || s === 'BLOCKED' ? 'c-bad' : 'c-warn'); }
@@ -135,7 +140,15 @@ function fillCompare() {
     tScore = pair.arms.three?.total ?? '–'; aScore = pair.arms.cocosair?.total ?? '–';
     tInfo = `Agent Run:${fmtArm(pair.arms.three)}`; aInfo = `Agent Run:${fmtArm(pair.arms.cocosair)}`;
   }
-  $('c-t-frame').src = tUrl; $('c-a-frame').src = aUrl;
+  // 懒加载守卫(引擎缺陷 F-23):cocosair 在 0×0(display:none)下初始化会在首个 DPR 事件抛
+  // "_updateAdaptResult Invalid size"。compare 页签未激活时只记录待加载 URL,激活时才赋 src。
+  const compareVisible = $('tab-compare').classList.contains('active');
+  window.__pendingCompare = compareVisible ? null : { tUrl, aUrl, tScore, aScore, tInfo, aInfo };
+  if (compareVisible) {
+    $('c-t-frame').src = tUrl; $('c-a-frame').src = aUrl;
+  } else {
+    $('c-t-frame').removeAttribute('src'); $('c-a-frame').removeAttribute('src');
+  }
   $('c-t-score').textContent = (tScore ?? '–') + '/100'; $('c-a-score').textContent = (aScore ?? '–') + '/100';
   $('c-t-info').textContent = tInfo; $('c-a-info').textContent = aInfo;
   $('c-t-open').href = tUrl; $('c-a-open').href = aUrl;
