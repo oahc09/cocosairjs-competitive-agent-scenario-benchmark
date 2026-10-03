@@ -172,7 +172,9 @@ function renderRuns() {
     ${b.pairs.map(p => `
       <div class="paircard">
         <div class="t"><b>${p.pairId}</b><span class="chip c-dim">${p.scene} · ${p.knowledge} · ${p.rep}${p.pilot ? ' · pilot' : ''}</span>
-          ${p.paired?.incomplete ? '<span class="chip c-warn">数据不全</span>' : `<span class="chip ${Math.abs(p.paired.rawDeltaAirMinusThree) <= 3 ? 'c-dim' : (p.paired.rawDeltaAirMinusThree > 0 ? 'c-air' : 'c-three')}">Δ(AIR−3)=${p.paired.rawDeltaAirMinusThree} · ${p.paired.outcome}</span>`}
+          ${(d => d == null
+            ? '<span class="chip c-warn">数据不全</span>'
+            : `<span class="chip ${Math.abs(d) <= 3 ? 'c-dim' : (d > 0 ? 'c-air' : 'c-three')}">Δobj(AIR−3)=${d} · ${Math.abs(d) <= 3 ? 'TIE' : (d > 0 ? 'AIR_WIN' : 'THREE_WIN')}</span>`)(p.paired?.rawDeltaAirMinusThree ?? p.objective?.pairedDelta ?? null)}
         </div>
         ${['three', 'cocosair'].map(e => {
           const a = p.arms[e]; const arm = armLetterOf(p, e); const base = `/run-art/${b.batchId}/${p.pairId}/${arm}`;
