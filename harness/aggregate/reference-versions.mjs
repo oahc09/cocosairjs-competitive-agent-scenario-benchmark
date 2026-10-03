@@ -19,6 +19,8 @@ const CHECK = process.argv.includes('--check');
 const engineSha = shaFile(path.join(ROOT, 'vendor', 'cocosair.js-1.0.0-k0.tgz')); // AIR 引擎指纹(three 版本由 registry 另记)
 const threePkg = j(path.join(ROOT, 'node_modules', 'three', 'package.json')).version;
 const briefIdx = j(path.join(ROOT, 'briefs', 'index.json'));                       // briefSha per scene
+const chromeV = process.env.CHROME_V || 'unknown';
+const toolchain = `node${process.version}+esbuild${JSON.parse(fs.readFileSync(path.join(ROOT, 'node_modules', 'esbuild', 'package.json'))).version}+chrome${chromeV}`;
 const docsSha = {};                                                                // 文档/知识指纹(K1 manifest 为正典文档代理)
 for (const e of ['three', 'cocosair']) {
   docsSha[e] = shaFile(path.join(ROOT, 'knowledge', 'K1', e, 'manifest.json'));
@@ -40,10 +42,11 @@ for (let i = 1; i <= 10; i++) {
       engine: engine === 'three' ? `three@${threePkg}` : engineSha,
       briefSha: briefIdx[scene] ? briefIdx[scene].sha256 : null,
       docsSha: docsSha[engine],
+      toolchain,
     };
     const key = `${scene}:${engine}`;
     const old = prev.epochs[key];
-    const changed = old ? ['engine', 'briefSha', 'docsSha'].filter(k => old.inputs[k] !== inputs[k]) : [];
+    const changed = old ? ['engine', 'briefSha', 'docsSha', 'toolchain'].filter(k => old.inputs[k] !== undefined && old.inputs[k] !== inputs[k]) : []; // toolchain 首次回填不升版
     const refVersion = old ? (changed.length ? old.refVersion + 1 : old.refVersion) : 1;
     epochs[key] = {
       refVersion,
