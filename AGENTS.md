@@ -5,10 +5,10 @@
 
 ## 这个项目是什么(30 秒)
 
-**CocosAirJS Competitive Agent Scenario Benchmark**:在同一 Agent 配置(同模型/同提示词/同预算/同 Brief)下,对 **Three.js r186** 与 **Cocos AIR 1.0.0** 做**成对(Paired)**复杂 3D 场景对照实验。核心不是排名,而是把差距拆成三层并归因:
+**CocosAirJS Competitive Agent Scenario Benchmark**:**引擎对比实验**:同一个 AI Agent 模型(同提示词/同预算/同规格/同资产)是恒定不变的测量仪器,唯一变量是引擎——对比 **Three.js r186** 与 **Cocos AIR 1.0.0** 在复杂 3D 场景上的能力差异。**不是衡量 Agent**:所有得分差异都归因于引擎侧,多轮重复只是控制仪器噪声。三层指标均为引擎对比口径:
 
 - **Engine Ceiling**(Track A):20 个可信 Reference 实现证明引擎上限(10 场景 × 2 引擎,全 FEASIBLE);
-- **Agent Attainment**(Track B):Agent 实际得分 / 引擎上限;
+- **达成率 Attainment**(Track B):引擎满分线被这台标准仪器发挥出的比例(引擎易用性对比);
 - **Knowledge Gain**(Track C):K0 冷启动 → K1 文档 → K2 完整知识的增益。
 
 进度(2026-10-03):基础设施全部就绪,G0-G5/G8 PASS;已完成批次 `results/B-20261002-R1`(Pilot:4 pairs × K0);**K1/K2 与核心矩阵未运行**(G6 声明),补跑只需一条命令。
