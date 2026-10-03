@@ -1,0 +1,72 @@
+{
+  "schema": "v12-license-decisions-v1",
+  "updated": "2026-10-01",
+  "note": "accepted 表示已核验许可文本和适用条件；pending-license-grant 表示缺少可核验再分发授权，默认产物发布必须阻断。历史 owner 风险接受记录不是第三方权利授予。",
+  "decisions": {
+    "spine runtime (spine-core.js)": {
+      "disposition": "accepted",
+      "recorded": "2026-09-25",
+      "blocking": false,
+      "obligation": "集成须满足随包 Runtimes 协议引用的 Spine Editor License Agreement §2；不适用该授权路径时按替代条款要求产品用户各自取得 Editor 许可。再分发须携带许可及版权声明。",
+      "currentState": "已随包发布许可原文（licenses/LICENSE_spine.txt，与上游逐字节一致）并已列入发布面；默认 bundle 仍内嵌 spine-core.js 字节。",
+      "optionsForOwner": [
+        "保留 spine 于默认产物：README/THIRD_PARTY 显式声明 Spine Editor 许可条件（当前做法，需你确认）",
+        "把 spine 移到常量/变体构建（如 AIR_FEATURES=spine），默认产物不含其字节",
+        "移除 spine 组（与计划书「16 组全部回归，不再裁剪」冲突，需你显式改口径）"
+      ],
+      "evidence": [
+        "licenses/LICENSE_spine.txt",
+        "src/cocos/spine/lib/spine-core.js（docs/upstream-file-map.json 登记为上游原文）",
+        "docs/audits/ 台账（C1 组登记行）"
+      ],
+      "resolution": "批复选项 1：保留 spine 于默认产物；Spine Editor 许可条件已在 README 与 THIRD_PARTY_LICENSES.md 显式声明（r48），许可原文随包发布（licenses/LICENSE_spine.txt 与上游逐字节一致）。"
+    },
+    "@cocos/engine-pal (src/pal/** 原始字节)": {
+      "disposition": "retired",
+      "recorded": "2026-09-30",
+      "blocking": false,
+      "obligation": "@cocos/engine-pal@1.0.4 的 package.json 标注 license=UNLICENSED，README 第 16 行写「UNLICENSED — Cocos 内部使用」。本仓库 src/pal/** 是该包 dist 的原始字节（smoke-30 逐字节断言），因此默认产物内嵌了这段无明示授予的代码。",
+      "currentState": "UNLICENSED npm bytes and their dependency are replaced by code generated from the public MIT PAL snapshot. No new authorization for the npm package is asserted.",
+      "optionsForOwner": [
+        "以上游 cocos4（MIT, Copyright 2025 SUD）作为 pal 源码的许可依据并在此登记依据链",
+        "向 Cocos 取得书面澄清/授权后再发布",
+        "改由 cocos4 仓库内的 pal 源码路径抽取（若上游仍含 pal 源），避免引用 UNLICENSED 发包"
+      ],
+      "evidence": [
+        "node_modules/@cocos/engine-pal/package.json（license 字段）",
+        "node_modules/@cocos/engine-pal/README.md:16",
+        "test/smoke/smoke-30-v12-regression.test.ts（src/pal 逐字节断言）"
+      ],
+      "resolution": "2026-10-01: retired from runtime, types and the dependency manifest. New PAL origin is cocos4 public commit 9f0e30acb31f6d670f2c0bf818d61039846a2860; generated outputs and notices are checked independently.",
+      "historicalRiskAccepted": true
+    },
+    "DragonBonesJS (@cocos/dragonbones-js)": {
+      "disposition": "accepted",
+      "recorded": "2026-09-22",
+      "note": "npm 包不含许可文本，许可原文取自上游 cocos4 licenses/LICENSE_DragonBones.txt（MIT）。已随包发布。",
+      "evidence": [
+        "licenses/LICENSE_DragonBones.txt",
+        "node_modules/@cocos/dragonbones-js/package.json（description 标注为 DragonBonesJS 5.7.0 的 Cocos fork）"
+      ]
+    },
+    "Cocos PAL (public MIT source)": {
+      "disposition": "accepted",
+      "recorded": "2026-10-01",
+      "blocking": false,
+      "obligation": "Retain the public snapshot MIT license and all source copyright/permission notices in distributions.",
+      "source": {
+        "repository": "https://github.com/cocos/cocos4",
+        "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
+        "retirementCommit": "db5462603e20d5fa56814380274ad475bf388fb2"
+      },
+      "evidence": [
+        "vendor/pal-source/manifest.json",
+        "vendor/pal-source/LICENSE",
+        "licenses/LICENSE_pal.txt",
+        "licenses/NOTICE_pal.txt",
+        "tools/build/pal-source.cjs"
+      ],
+      "resolution": "Use exclusively the frozen public MIT TS sources plus explicit AIR canvas/DPR adaptations. Verify source SHA-256 and Git blob identities, reproduce all JS/d.ts outputs, preserve notices, and reject old binary fingerprints. Core cocos4 baseline is unchanged."
+    }
+  }
+}

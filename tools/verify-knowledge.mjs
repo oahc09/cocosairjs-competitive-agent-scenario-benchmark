@@ -13,6 +13,8 @@
  *   V6 K1/three 总量 ≤ 15MB
  *   V7 域矩阵证据文件真实存在
  *   V8 K2 ⊇ K1(同路径文件 sha256 一致, K2 是 K1 的超集)
+ *   V9 vendor 双引擎注册表: activeVersion 条目齐全; sdkDir = tarball 解包(逐字节, 双引擎同律);
+ *      moduleSha256 三方一致(vendor SDK = node_modules = 注册表)
  */
 
 import fs from 'node:fs';
@@ -186,6 +188,43 @@ console.log('== V8: K2 ⊇ K1(超集且同文件同哈希) ==');
     const k2map = new Map(k2.files.map((f) => [f.path, f.sha256]));
     const bad = k1.files.filter((f) => k2map.get(f.path) !== f.sha256);
     check(`K2/${engine} ⊇ K1/${engine}`, bad.length === 0, bad.slice(0, 3).map((f) => f.path).join(','));
+  }
+}
+
+console.log('== V9: vendor 双引擎版本注册表 + SDK 目录一致性 ==');
+{
+  const regPath = path.join(ROOT, 'vendor', 'engine-versions.json');
+  const reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
+  check('注册表 schema 2(engines.cocosair/three 映射)', reg.schema === 2 && !!reg.engines?.cocosair && !!reg.engines?.three);
+  for (const engine of ['cocosair', 'three']) {
+    const e = reg.engines[engine] || {};
+    const v = (e.versions || {})[e.activeVersion];
+    check(`${engine} activeVersion=${e.activeVersion} 条目存在`, !!v);
+    if (!v) continue;
+    const sdk = path.join(ROOT, v.sdkDir);
+    check(`${engine} sdkDir 存在(${v.sdkDir})`, fs.existsSync(sdk));
+    // 主模块指纹三方一致:vendor SDK = 共享 node_modules(实际安装源)= 注册表登记
+    const modRel = engine === 'cocosair' ? 'build/npm/cocosair.module.js' : 'build/three.module.js';
+    const nmPkg = engine === 'cocosair' ? 'cocosair.js' : 'three';
+    const sdkSha = sha256(fs.readFileSync(path.join(sdk, modRel)));
+    const nmSha = sha256(fs.readFileSync(path.join(ROOT, 'node_modules', nmPkg, modRel)));
+    check(`${engine} moduleSha256 三方一致(SDK = node_modules = 注册表)`, sdkSha === v.moduleSha256 && nmSha === v.moduleSha256);
+    if (engine === 'cocosair') {
+      check('cocosair k0Tarball sha256 与注册表一致', sha256(fs.readFileSync(path.join(ROOT, v.k0Tarball))) === v.k0TarballSha256);
+    }
+    if (v.tarball) {
+      // 两引擎同律:sdkDir(浏览正典)↔ tarball(安装工件)逐字节一致,双源并存不可漂移
+      const tarEntries = tarRead(zlib.gunzipSync(fs.readFileSync(path.join(ROOT, v.tarball))));
+      const dirFiles = new Map(walk(sdk).map((p) => [p, sha256(fs.readFileSync(path.join(sdk, p)))]));
+      const tarMap = new Map(tarEntries.filter((x) => !x.name.endsWith('/')).map((x) => [x.name.replace(/^package\//, ''), sha256(x.data)]));
+      const onlyDir = [...dirFiles.keys()].filter((p) => !tarMap.has(p));
+      const onlyTar = [...tarMap.keys()].filter((p) => !dirFiles.has(p));
+      const drift = [...tarMap.keys()].filter((p) => dirFiles.has(p) && dirFiles.get(p) !== tarMap.get(p));
+      check(`${engine} sdkDir = tarball 解包(无缺失/多余/内容漂移)`,
+        onlyDir.length === 0 && onlyTar.length === 0 && drift.length === 0,
+        `仅目录:${onlyDir.slice(0, 2).join(',')} 仅tarball:${onlyTar.slice(0, 2).join(',')} 漂移:${drift.slice(0, 2).join(',')}`);
+      check(`${engine} tarball sha256 与注册表一致`, sha256(fs.readFileSync(path.join(ROOT, v.tarball))) === v.tarballSha256);
+    }
   }
 }
 

@@ -30,6 +30,20 @@ const srv = http.createServer((req, res) => {
   res.end(readFileSync(p));
 });
 
+// ---- 注册表读取:schema 2(engines.<engine>.versions.<版本>);v1 {versions:[...]} 原地迁移 ----
+function loadRegistry() {
+  let raw = null;
+  if (existsSync(VENDOR_REG)) { try { raw = JSON.parse(readFileSync(VENDOR_REG, 'utf8')); } catch { /* 重建 */ } }
+  if (raw && raw.schema === 2 && raw.engines) return raw;
+  const airVersions = {};
+  for (const v of (raw && raw.versions) || []) {
+    const e = (airVersions[v.version] ||= {});
+    if (v.tarballSha256) e.k0TarballSha256 = v.tarballSha256;
+    if (v.report) e.regression = { report: v.report, summary: v.summary, ranAt: v.ranAt };
+  }
+  return { schema: 2, engines: { cocosair: { activeVersion: Object.keys(airVersions)[0] || null, versions: airVersions } } };
+}
+
 async function main() {
   await new Promise(r => srv.listen(0, '127.0.0.1', r));
   const port = srv.address().port;
@@ -56,12 +70,20 @@ async function main() {
   }
   await browser.close(); srv.close();
 
-  // 引擎版本注册表
+  // 引擎版本注册表(schema 2:engines.<engine>.versions.<版本> 映射;v1 数组格式读入时迁移)
   const enginePkg = JSON.parse(readFileSync(path.join(BENCH, 'node_modules', 'cocosair.js', 'package.json')));
-  const tarball = path.join(BENCH, 'vendor', 'cocosair.js-1.0.0-k0.tgz');
+  const moduleSha = createHash('sha256').update(readFileSync(path.join(BENCH, 'node_modules', 'cocosair.js', 'build', 'npm', 'cocosair.module.js'))).digest('hex');
+  const reg = loadRegistry();
+  const airReg = (reg.engines.cocosair ||= { activeVersion: enginePkg.version, versions: {} });
+  const entry = (airReg.versions[enginePkg.version] ||= { sdkDir: `vendor/cocosair/${enginePkg.version}`, moduleSha256: moduleSha });
+  entry.moduleSha256 ||= moduleSha;
+  // K0 tarball 路径优先取注册表登记(更换引擎时只改注册表),兜底历史文件名
+  const k0Rel = entry.k0Tarball || 'vendor/cocosair.js-1.0.0-k0.tgz';
+  const tarball = path.join(BENCH, k0Rel);
   const sha = createHash('sha256').update(readFileSync(tarball)).digest('hex');
-  let reg = { versions: [] };
-  if (existsSync(VENDOR_REG)) { try { reg = JSON.parse(readFileSync(VENDOR_REG, 'utf8')); } catch { /* 重建 */ } }
+  entry.k0Tarball = k0Rel;
+  entry.k0TarballSha256 = sha;
+  airReg.activeVersion = enginePkg.version;
   const report = {
     ranAt: new Date().toISOString(), engineVersion: enginePkg.version, tarballSha256: sha,
     summary: { total: results.length, fixed: results.filter(r => r.status === 'FIXED').length, bug: results.filter(r => r.status === 'BUG').length, error: results.filter(r => r.status === 'ERROR').length },
@@ -69,9 +91,7 @@ async function main() {
   };
   const out = path.join(HERE, `report-v${enginePkg.version}-${sha.slice(0, 8)}.json`);
   writeFileSync(out, JSON.stringify(report, null, 2) + '\n');
-  const entry = { version: enginePkg.version, tarballSha256: sha, report: path.relative(BENCH, out), summary: report.summary, ranAt: report.ranAt };
-  reg.versions = reg.versions.filter(v => !(v.tarballSha256 === sha && v.report === entry.report));
-  reg.versions.push(entry);
+  entry.regression = { report: path.relative(BENCH, out), summary: report.summary, ranAt: report.ranAt };
   reg.updatedAt = new Date().toISOString();
   writeFileSync(VENDOR_REG, JSON.stringify(reg, null, 2) + '\n');
   console.log(`\nregression: FIXED=${report.summary.fixed} BUG=${report.summary.bug} ERROR=${report.summary.error} → ${path.relative(BENCH, out)}`);

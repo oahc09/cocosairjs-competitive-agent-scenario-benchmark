@@ -23,5 +23,10 @@ Thumbs.db
 !results/B-*/PAIR-*/arm-*/validation/screenshots/mid.png
 !results/B-*/PAIR-*/arm-*/validation/screenshots/final.png
 
+# 例外③:引擎 SDK —— vendor/<engine>/<版本>/ 必须逐字节完整入库(verify-knowledge V9 依赖目录↔tarball 一致)
+!vendor/**/*.png
+!vendor/**/*.webm
+!vendor/**/*.glb
+
 # 可再生的自测产物(harness/runner/selftest.mjs)
 harness/selftest-out/

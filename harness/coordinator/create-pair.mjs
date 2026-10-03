@@ -113,6 +113,19 @@ function dependencyFingerprint(pkgDir) {
   return pkgJsonSha && mainSha ? sha256Buffer(Buffer.from(`${pkgJsonSha}:${mainSha}`, 'utf8')) : null;
 }
 
+// AIR tarball 路径:优先取 vendor/engine-versions.json 登记值(activeVersion 条目),历史文件名兜底
+function airTarballPaths() {
+  let k0Rel = 'vendor/cocosair.js-1.0.0-k0.tgz', fullRel = 'vendor/cocosair.js-1.0.0.tgz';
+  try {
+    const reg = JSON.parse(fs.readFileSync(path.join(BENCH_ROOT, 'vendor', 'engine-versions.json'), 'utf8'));
+    const e = reg.engines && reg.engines.cocosair;
+    const v = e && e.versions && e.versions[e.activeVersion];
+    if (v && v.k0Tarball) k0Rel = v.k0Tarball;
+    if (v && v.tarball) fullRel = v.tarball;
+  } catch { /* 注册表缺失/损坏时沿用历史文件名 */ }
+  return { k0: path.join(BENCH_ROOT, ...k0Rel.split('/')), full: path.join(BENCH_ROOT, ...fullRel.split('/')) };
+}
+
 function computeDependencyHashes() {
   const nm = path.join(BENCH_ROOT, 'node_modules');
   return {
@@ -468,9 +481,8 @@ async function main() {
 
   // ---- 5. 引擎包哈希 + 共享依赖哈希(FIX-C dependencyHashes) ---------------
   const dependencyHashes = computeDependencyHashes();
-  const k0Tarball = path.join(BENCH_ROOT, 'vendor', 'cocosair.js-1.0.0-k0.tgz');
-  const fullTarball = path.join(BENCH_ROOT, 'vendor', 'cocosair.js-1.0.0.tgz');
-  const airTarball = knowledge === 'K0' && fs.existsSync(k0Tarball) ? k0Tarball : fullTarball;
+  const airPaths = airTarballPaths();
+  const airTarball = knowledge === 'K0' && fs.existsSync(airPaths.k0) ? airPaths.k0 : airPaths.full;
   const airPackageHash = fs.existsSync(airTarball) ? sha256File(airTarball) : null;
   let threePackageHash = null;
   const threePkgJson = path.join(BENCH_ROOT, 'templates', 'three', 'node_modules', 'three', 'package.json');

@@ -1,17 +1,45 @@
 {
-  "versions": [
-    {
-      "version": "1.0.0",
-      "tarballSha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-      "report": "regression\\report-v1.0.0-ddd5072a.json",
-      "summary": {
-        "total": 8,
-        "fixed": 5,
-        "bug": 2,
-        "error": 1
-      },
-      "ranAt": "2026-10-03T02:24:44.999Z"
+  "schema": 2,
+  "comment": "双引擎版本注册表。activeVersion = 当前量尺/批次使用的引擎版本。更换引擎流程:① 新版本 SDK 放入 vendor/<engine>/<版本>/;② cocosair 另按 tools/verify-knowledge V4 口径打 K0 tarball(剔除 docs/,K0 冷启动隔离);③ 在 versions 下新增条目并改 activeVersion;④ node run.mjs regression(BUG 归零才可开新一轮);⑤ 按量尺原则重实现受影响 Reference 并 ceiling-freeze 换新量尺。",
+  "engines": {
+    "cocosair": {
+      "activeVersion": "1.0.0",
+      "versions": {
+        "1.0.0": {
+          "sdkDir": "vendor/cocosair/1.0.0",
+          "moduleSha256": "3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6",
+          "tarball": "vendor/cocosair.js-1.0.0.tgz",
+          "tarballSha256": "467299c2b972f9dfa432314d84c09b72e2783b5965adce1f3eb0ce66d8fd804c",
+          "k0Tarball": "vendor/cocosair.js-1.0.0-k0.tgz",
+          "k0TarballSha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+          "k0Note": "K0 tarball = 完整包剔除 docs/(冷启动隔离,Agent 读不到官方文档);root package.json 的 file: 安装源即此 tarball",
+          "source": "上游源码仓库 E:\\AIProMax\\github\\cocosair.js @ ea2b507,经 npm pack",
+          "regression": {
+            "report": "regression\\report-v1.0.0-ddd5072a.json",
+            "summary": {
+              "total": 8,
+              "fixed": 5,
+              "bug": 2,
+              "error": 1
+            },
+            "ranAt": "2026-10-03T11:09:49.018Z"
+          }
+        }
+      }
+    },
+    "three": {
+      "activeVersion": "0.186.1",
+      "versions": {
+        "0.186.1": {
+          "sdkDir": "vendor/three/0.186.1",
+          "moduleSha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
+          "tarball": "vendor/three-0.186.1.tgz",
+          "tarballSha256": "174704440516508e920a47f3f6c5672d26fd6db756d86a28db4b3cb793dcab38",
+          "tarballNote": "npm pack sdkDir 所得,root 与模板的 file: 离线安装源(exFAT 不支持 file: 目录的 symlink 安装)",
+          "source": "npm registry three@0.186.1(即 r186);本仓库内 sdkDir 为离线正典(含 src/ 源码与 examples/jsm addons)"
+        }
+      }
     }
-  ],
-  "updatedAt": "2026-10-03T02:24:45.001Z"
+  },
+  "updatedAt": "2026-10-03T11:09:49.020Z"
 }

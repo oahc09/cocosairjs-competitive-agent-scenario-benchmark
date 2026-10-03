@@ -45,6 +45,17 @@ const HARN = path.resolve(__dirname, '..');              // bench/harness
 const BENCH = path.resolve(HARN, '..');                  // bench
 const RESULTS = path.join(BENCH, 'results');
 const sha = (p) => crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+// AIR 引擎指纹:K0 tarball 路径优先取 vendor/engine-versions.json 登记值(换引擎只改注册表),历史文件名兜底
+function airTarballFingerprint() {
+  let rel = 'vendor/cocosair.js-1.0.0-k0.tgz';
+  try {
+    const reg = JSON.parse(fs.readFileSync(path.join(BENCH, 'vendor', 'engine-versions.json'), 'utf8'));
+    const e = reg.engines && reg.engines.cocosair;
+    const v = e && e.versions && e.versions[e.activeVersion];
+    if (v && v.k0Tarball) rel = v.k0Tarball;
+  } catch { /* 注册表缺失/损坏时沿用历史文件名 */ }
+  return { tarball: rel, sha256: sha(path.join(BENCH, ...rel.split('/'))) };
+}
 const iso = () => new Date().toISOString();
 const die = (m) => { console.error('[run-round] ERROR: ' + m); process.exit(1); };
 const arg = (k) => { const i = process.argv.indexOf('--' + k); return i >= 0 ? process.argv[i + 1] : undefined; };
@@ -78,7 +89,7 @@ function armStateFile(batch, pairId, armDir) { return path.join(RESULTS, batch, 
 function stageCreate() {
   const plan = parsePlan();
   if (!plan) die('create 需要 --plan <file|--matrix>');
-  const batchArg = arg('batch') || 'auto';
+  let batchArg = arg('batch') || 'auto';
   for (const p of plan.pairs) {
     const args = ['--scene', p.scene, '--knowledge', p.knowledge, '--rep', p.rep, '--batch', batchArg];
     if (p.pilot) args.push('--pilot');
@@ -98,7 +109,7 @@ function stageCreate() {
     plan: { source: arg("plan") || ("--matrix " + arg("matrix")), pairs: global.__pairs },
     engine: {
       three: { version: JSON.parse(fs.readFileSync(path.join(BENCH, 'node_modules/three/package.json'))).version },
-      cocosair: { tarball: 'vendor/cocosair.js-1.0.0-k0.tgz', sha256: sha(path.join(BENCH, 'vendor', 'cocosair.js-1.0.0-k0.tgz')) },
+      cocosair: airTarballFingerprint(),
     },
     pairs: global.__pairs.map(p => ({
       pairId: p.pairId,
@@ -408,7 +419,7 @@ if (!fs.existsSync(roundPath(batch))) {
     plan: { pairs: pairs.map(p => { const pj = JSON.parse(fs.readFileSync(path.join(RESULTS, batch, p.pairId, 'pair.json'), 'utf8')); return { pairId: p.pairId, scene: pj.sceneId, knowledge: pj.knowledge, rep: pj.repetition, pilot: pj.pilot ?? false }; }) },
     engine: {
       three: { version: JSON.parse(fs.readFileSync(path.join(BENCH, 'node_modules/three/package.json'))).version },
-      cocosair: { tarball: 'vendor/cocosair.js-1.0.0-k0.tgz', sha256: sha(path.join(BENCH, 'vendor', 'cocosair.js-1.0.0-k0.tgz')) },
+      cocosair: airTarballFingerprint(),
     },
     pairs, stages: {}, notes: ['adopted:ROUND.json 由既有批次合成(迁移批次或手工 create-pair 产物)'],
   };
