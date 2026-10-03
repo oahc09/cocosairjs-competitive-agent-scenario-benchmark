@@ -327,6 +327,7 @@ function parseArgs(argv) {
     else if (a === '--knowledge') out.knowledge = argv[++i];
     else if (a === '--rep') out.rep = argv[++i];
     else if (a === '--pilot') out.pilot = true;
+    else if (a === '--track') out.track = argv[++i];
     else if (a === '--arm-swap') out.armSwap = true;
     else if (a === '--batch') out.batch = argv[++i] || 'auto';
     else if (a === '--vendored-deps') out.vendoredDeps = true;
@@ -584,6 +585,7 @@ async function main() {
       'RUN-META.template.json:Runner 派发前复制为各 Arm 的 RUN-META.json 并填写全部身份字段;run-round preflight stage 校验非空+两臂一致,缺失/BLOCKED 的 Pair 不得 validate。',
       'dependencyHashes 配方(与 validate.mjs dependencyFingerprints 同式同键):SHA256( sha256(package.json) ":" sha256(package.json main 入口) ),包目录=根 node_modules;键 {three,cocosair,esbuild}(cocosair→node_modules/cocosair.js);main 入口解析 three=build/three.cjs、cocosair.js=build/npm/cocosair.module.js、esbuild=lib/main.js。',
       ...(pilot ? ['pilot:true — M6 前置验证 pair,不计入 Track B 统计。'] : []),
+      `track=${track} — 聚合分层:pilot/targeted-pilot 仅入 diagnostic 区,core 才进正式统计(需 qualification+量尺匹配)。`,
     ],
   };
   fs.writeFileSync(pairJsonPath, JSON.stringify(pairJson, null, 2) + '\n', 'utf8');

@@ -47,8 +47,8 @@
   "agentBinaryHash": "unavailable(cloud runtime; identity frozen by model+prompt in DISPATCH/RUN-CONTRACT)",
   "modelId": "GLM-5.3(account:bigmodel-individual-coding-plan)",
   "modelRevisionId": "glm-5.3-flash@2026-10(session-pinned)",
-  "systemPromptHash": "6e23d10a6636828786c63b10c9cbb184c14c870d859077747ba767884341415b",
-  "toolPolicyHash": "e0c8dc96332f129c3138b31609d124e2e7aeba5d2047665b234e4dce257f894d",
+  "systemPromptHash": "0c6f68c2e014a2c5d12cc50bb32e7d1dda154b084eec68010debedd33b2a779e",
+  "toolPolicyHash": "03c649801a6d83eebe0637f9a2d91949cf564915a3a59bcf58382f255eb1e6d3",
   "budgetConfigHash": "0c384f7d9bd249d0468cdd9d37b6a79e9f3e0a85aa7d3092dcbb316980ea368e",
   "dependencyHashes": {
     "three": "ee97b0378768230c0ca11d554c8166f64d67d7f5ffe37cdfc13c5c6f09a32712",
@@ -65,17 +65,17 @@
   "environment": {
     "nodeVersion": "v24.14.0",
     "packageManagerVersion": null,
-    "os": "win32 10.0.28120",
-    "gpu": null,
-    "graphicsBackend": null,
-    "browserVersion": null
+    "os": "Windows(宿主同机)",
+    "gpu": "NVIDIA GeForce RTX 4060 Laptop(同机单 worker)",
+    "graphicsBackend": "WebGL2 via ANGLE D3D11",
+    "browserVersion": "Chrome 154.0.8037.58 headless 1280x720"
   },
   "execution": {
-    "startTimestampA": null,
-    "startTimestampB": null,
-    "startTimeDeltaActualSec": null,
-    "workerA": null,
-    "workerB": null
+    "startTimestampA": "2026-10-03T17:21:11+08:00",
+    "startTimestampB": "2026-10-03T17:08:00+08:00",
+    "startTimeDeltaActualSec": 791,
+    "workerA": "local-worker-1",
+    "workerB": "local-worker-1"
   },
   "ports": {
     "armA": 7118,
@@ -131,5 +131,7 @@
     "workspace 为空且 templateMissing:true 表示模板尚未建成(并行 Wave2),重跑本脚本可补拷,不影响 pairId/端口/时间戳。",
     "RUN-META.template.json:Runner 派发前复制为各 Arm 的 RUN-META.json 并填写全部身份字段;run-round preflight stage 校验非空+两臂一致,缺失/BLOCKED 的 Pair 不得 validate。",
     "dependencyHashes 配方(与 validate.mjs dependencyFingerprints 同式同键):SHA256( sha256(package.json) \":\" sha256(package.json main 入口) ),包目录=根 node_modules;键 {three,cocosair,esbuild}(cocosair→node_modules/cocosair.js);main 入口解析 three=build/three.cjs、cocosair.js=build/npm/cocosair.module.js、esbuild=lib/main.js。"
-  ]
+  ],
+  "track": "targeted-pilot",
+  "timingDrift": "PAIR_TIMING_DRIFT(delta=791s:研究期长度不同,启动不同时)"
 }

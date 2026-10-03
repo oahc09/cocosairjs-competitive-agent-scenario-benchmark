@@ -1,0 +1,885 @@
+{
+  "runId": "REF-E07-three-r3",
+  "generatedAt": "2026-10-03T14:02:44.261Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:05.036Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2000
+            },
+            "raw": "wait:2000",
+            "performed": "waited 2000ms"
+          }
+        ],
+        "durationMs": 2015
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "minCoverage": 0.35
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.35,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.5373,
+              "background": [
+                5,
+                8,
+                12
+              ]
+            }
+          ],
+          "worstLitRatio": 0.5373
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 53,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 46.8,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 294,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5478
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:10.514Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1511
+      },
+      "stateAssertion": {
+        "expr": "$.carCount >= 60",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0.62,
+            "w": 1,
+            "h": 0.38
+          },
+          "frameGapMs": 600
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 600,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 446,
+                "w": 1280,
+                "h": 274
+              },
+              "diffRatio": 0.8137
+            }
+          ],
+          "bestDiffRatio": 0.8137,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 383,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 565,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-region-a.png",
+          "P2-region-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5482
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:15.996Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:800",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 800
+            },
+            "raw": "wait:800",
+            "performed": "waited 800ms"
+          }
+        ],
+        "durationMs": 802
+      },
+      "stateAssertion": {
+        "expr": "$.rainParticleCount >= 1500",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "frameGapMs": 100,
+          "minChangedRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "mode": "post-gap",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.6034
+            }
+          ],
+          "bestDiffRatio": 0.6034
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 709,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 806,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-delta-a.png",
+          "P3-delta-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3385
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:19.381Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:3000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 3000
+            },
+            "raw": "wait:3000",
+            "performed": "waited 3000ms"
+          }
+        ],
+        "durationMs": 3003
+      },
+      "stateAssertion": {
+        "expr": "$.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "spanMs": 1000
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 1000,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.5469
+            }
+          ],
+          "worstDiffRatio": 0.5469
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 914,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1275,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-motion-a.png",
+          "P4-motion-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 8805
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:28.186Z",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=toggle-fog",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "toggle-fog"
+            },
+            "raw": "click:ui=toggle-fog",
+            "performed": "click @ (1131,693) ui=toggle-fog"
+          }
+        ],
+        "durationMs": 150
+      },
+      "stateAssertion": {
+        "expr": "$.fogEnabled == false && $.buildingCount >= 200",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 0.45
+          },
+          "frameGapMs": 400
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 400,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 324
+              },
+              "diffRatio": 0.3018
+            }
+          ],
+          "bestDiffRatio": 0.3018,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1444,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1494,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": false,
+          "fps": 53.7,
+          "resetCount": 0
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-region-a.png",
+          "P5-region-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3313
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:31.500Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=toggle-fog",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "toggle-fog"
+            },
+            "raw": "click:ui=toggle-fog",
+            "performed": "click @ (1127,693) ui=toggle-fog"
+          }
+        ],
+        "durationMs": 73
+      },
+      "stateAssertion": {
+        "expr": "$.fogEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 0.45
+          },
+          "frameGapMs": 400
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 400,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 324
+              },
+              "diffRatio": 0.261
+            }
+          ],
+          "bestDiffRatio": 0.261,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1638,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": false,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1691,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-region-a.png",
+          "P6-region-b.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3227
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:34.727Z",
+      "precondition": {
+        "expr": "P6",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1226,693) ui=reset"
+          }
+        ],
+        "durationMs": 87
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "minCoverage": 0.35
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.35,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.4191,
+              "background": [
+                1,
+                1,
+                6
+              ]
+            }
+          ],
+          "worstLitRatio": 0.4191
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1827,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 1952,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 1
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-vis.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3452
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T14:02:38.179Z",
+      "precondition": {
+        "expr": "P7",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P7",
+            "met": true,
+            "source": "probe P7",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1512
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0.62,
+            "w": 1,
+            "h": 0.38
+          },
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 446,
+                "w": 1280,
+                "h": 274
+              },
+              "diffRatio": 0.8911
+            }
+          ],
+          "worstDiffRatio": 0.8911
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "ready": true,
+          "frame": 2035,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 1
+        },
+        "stateAfter": {
+          "engine": "three",
+          "ready": true,
+          "frame": 2217,
+          "buildingCount": 220,
+          "carCount": 86,
+          "rainParticleCount": 2200,
+          "windowCount": 4340,
+          "neonCount": 150,
+          "fogEnabled": true,
+          "fps": 60,
+          "resetCount": 1
+        },
+        "shots": [
+          "P8-before.png",
+          "P8-motion-a.png",
+          "P8-motion-b.png",
+          "P8-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5772
+      }
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-03T08:12:25.143Z",
-  "mode": "single",
+  "generatedAt": "2026-10-03T13:53:53.964Z",
+  "mode": "briefs",
   "executor": "harness/runner/probe-executor.mjs",
   "legalRegionFormsNote": "see LEGAL_REGION_FORMS in probe-executor.mjs (full / center|lower|upper:N% / upper|lower|center-third / outer-corners / center-bottom / outer-frame / ui#id / ui=id / state.path / {x,y,w,h} / pickTarget objects / arrays / \"A + B\")",
   "visualAssertionTypes": [
@@ -22,14 +22,1294 @@
   ],
   "specs": [
     {
-      "briefId": "NC08",
+      "briefId": "E01",
       "briefVersion": "1.0.0",
-      "specPath": "harness/isolation/fixtures/NC08/spec.json",
-      "sha256": "5a405f00b2a9778ff29472343738eb148ec4022d49f73a87975eff2568d8fb5a",
-      "probeCount": 1,
+      "specPath": "briefs/E01/spec.json",
+      "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+      "probeCount": 7,
       "probes": [
         {
           "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.starCount >= 50000"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.after.rotationPhase - $.before.rotationPhase > 0.001"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "center:80%",
+              "dynamic": false,
+              "forms": [
+                "pct:center"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady && P1 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "pointermove"
+            ],
+            "raw": "pointermove:(0.50,0.50)->(0.68,0.50)"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.after.parallaxOffset.x != $.before.parallaxOffset.x || $.after.parallaxOffset.y != $.before.parallaxOffset.y"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wheel"
+            ],
+            "raw": "wheel:deltaY=-600"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.after.cameraDistance < $.before.cameraDistance - 5"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.hudVisible == true && $.fps > 0"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "hud",
+              "dynamic": true,
+              "forms": [
+                "hud(dom)"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady && P1 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:3000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fps >= 30"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady && P1 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.epoch >= 1 && $.cameraDistance >= 115 && $.cameraDistance <= 125 && $.parallaxOffset.x > -0.01 && $.parallaxOffset.x < 0.01 && $.parallaxOffset.y > -0.01 && $.parallaxOffset.y < 0.01 && $.rotationPhase < 0.1"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4 passed && P3 passed"
+          },
+          "findings": []
+        }
+      ]
+    },
+    {
+      "briefId": "E02",
+      "briefVersion": "1.0.0",
+      "specPath": "briefs/E02/spec.json",
+      "sha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+      "probeCount": 7,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.assetLoaded == true && $.assetRequests >= 1"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.after.wavePhase != $.before.wavePhase"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "lower:60%",
+              "dynamic": false,
+              "forms": [
+                "pct:lower"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:300"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.after.boatPosition.y != $.before.boatPosition.y"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "center:40%",
+              "dynamic": false,
+              "forms": [
+                "pct:center"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "drag"
+            ],
+            "raw": "drag:(0.50,0.50)->(0.78,0.50)"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "($.after.cameraAzimuth - $.before.cameraAzimuth > 20) || ($.before.cameraAzimuth - $.after.cameraAzimuth > 20)"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#tone-toggle"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.toneMix > 0.7"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.epoch >= 1 && $.assetLoaded == true && $.toneMix < 0.05 && $.cameraAzimuth >= 32 && $.cameraAzimuth <= 38"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.epoch >= 2 && $.assetLoaded == true && $.assetRequests >= 2 && $.toneMix < 0.05"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6 passed"
+          },
+          "findings": []
+        }
+      ]
+    },
+    {
+      "briefId": "E03",
+      "briefVersion": "1.0.0",
+      "specPath": "briefs/E03/spec.json",
+      "sha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
+      "probeCount": 9,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.before.planetCount == 8 && $.before.moonCount >= 2 && $.before.asteroidCount >= 500 && $.before.ringedPlanetCount >= 1 && $.before.timeScale == 1 && $.before.selectedPlanet == null && (($.after.planets[0].orbitAngle - $.before.planets[0].orbitAngle) > 4 * ($.after.planets[7].orbitAngle - $.before.planets[7].orbitAngle))"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:state.pickTargets[2]"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.selectedPlanet == \"earth\""
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "state.pickTargets[2]",
+              "dynamic": true,
+              "forms": [
+                "state"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"selection-highlight\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1 passed"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"selection-highlight\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:800"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.infoCard.visible == true && $.infoCard.name == \"earth\" && $.infoCard.fieldCount >= 3"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "ui#info-card",
+              "dynamic": true,
+              "forms": [
+                "ui"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#speed-8x"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.timeScale == 8"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:300"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "($.after.simulationTime - $.before.simulationTime) >= 6 && ($.after.planets[0].orbitAngle - $.before.planets[0].orbitAngle) >= 0.05"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4 passed && $.timeScale == 8"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.epoch >= 1 && $.timeScale == 1"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:300"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.simulationTime < 1.5 && $.selectedPlanet == null && $.infoCard.visible == false && $.planets[0].orbitAngle >= -0.06 && $.planets[0].orbitAngle <= 0.06 && $.planets[7].orbitAngle >= 5.43 && $.planets[7].orbitAngle <= 5.56"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P8",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui#speed-0.5x"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.timeScale == 0.5"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P7 passed"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P9",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:(0.08,0.08)"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.selectedPlanet == null"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "ui#info-card",
+              "dynamic": true,
+              "forms": [
+                "ui"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P8 passed"
+          },
+          "findings": []
+        }
+      ]
+    },
+    {
+      "briefId": "E04",
+      "briefVersion": "1.0.2",
+      "specPath": "briefs/E04/spec.json",
+      "sha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
+      "probeCount": 8,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "bottom-third",
+              "dynamic": false,
+              "forms": [
+                "bottom-third"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:{x:0.5,y:0.30}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fireworkCount == 1 && $.particlesAlive >= 1"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "mid-vertical-band(点击列 x∈[0.4,0.6])",
+              "dynamic": false,
+              "forms": [
+                "mid-vertical-band"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1200"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.particlesAlive >= 40"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "upper-half",
+              "dynamic": false,
+              "forms": [
+                "upper-half"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2600"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.particlesAlive >= 1 && $.particlesAlive < 40"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "center-bottom",
+              "dynamic": false,
+              "forms": [
+                "center-bottom"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=auto-show"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.autoShow == true && $.fireworkCount >= 4"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "upper-half",
+              "dynamic": false,
+              "forms": [
+                "upper-half"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=auto-show"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.autoShow == false"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "upper-half",
+              "dynamic": false,
+              "forms": [
+                "upper-half"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"无新爆炸脉冲(既有粒子仅自然衰减)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"无新爆炸脉冲(既有粒子仅自然衰减)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=pause"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.enabled == false"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P8",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fireworkCount == 0 && $.particlesAlive == 0 && $.autoShow == false && $.enabled == true && $.buildingCount >= 24"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P7"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "briefId": "E05",
+      "briefVersion": "1.0.2",
+      "specPath": "briefs/E05/spec.json",
+      "sha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+      "probeCount": 6,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.backgroundStarCount >= 300 && $.starStreamCount >= 200 && $.cameraDistance >= 13 && $.cameraDistance <= 15 && $.diskRotation > 0"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": [
+                "center-third",
+                "outer-corners"
+              ],
+              "dynamic": false,
+              "forms": [
+                "center-third",
+                "outer-corners"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P2",
           "required": true,
           "overall": "PARTIAL",
           "action": {
@@ -47,19 +1327,268 @@
             "type": "motion",
             "status": "PARTIAL",
             "region": {
-              "status": "PARTIAL",
-              "value": "accretion-torus(inner)",
-              "unknown": [
-                "accretion-torus(inner)"
-              ],
-              "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID"
+              "status": "SUPPORTED",
+              "value": "disk(盘面覆盖的环形屏幕区域)",
+              "dynamic": false,
+              "forms": [
+                "disk"
+              ]
             },
             "unknownParamKeys": [],
             "findings": [
               {
                 "severity": "PARTIAL",
-                "field": "visualAssertion.region",
-                "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID"
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.accretionPhase >= 0 && $.accretionPhase < 1"
+          },
+          "visualAssertion": {
+            "type": "colorRelation",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": [
+                "disk-inner-azimuth",
+                "disk-outer-azimuth"
+              ],
+              "dynamic": false,
+              "forms": [
+                "disk-inner-azimuth",
+                "disk-outer-azimuth"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"多普勒亮侧扇区:外环带(橙红,R-B 高)与内环带(白/蓝白,R-B 低)的有向\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"多普勒亮侧扇区:外环带(橙红,R-B 高)与内环带(白/蓝白,R-B 低)的有向\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wheel"
+            ],
+            "raw": "wheel:{dy:-600}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.cameraDistance < 10 && $.cameraDistance >= 5"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": null,
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"较缩放前构图变化:暗核与盘占屏比增大(暗核半径像素 >= 1.25x 或盘外缘半\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"较缩放前构图变化:暗核与盘占屏比增大(暗核半径像素 >= 1.25x 或盘外缘半\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.starStreamCount >= 200"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "mid-ring(内缘与外缘之间的盘周区域)",
+              "dynamic": false,
+              "forms": [
+                "mid-ring"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.cameraDistance >= 13.5 && $.cameraDistance <= 14.5 && $.diskRotation < 0.3 && $.accretionPhase < 0.1 && $.starStreamCount >= 200"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "briefId": "E06",
+      "briefVersion": "1.0.0",
+      "specPath": "briefs/E06/spec.json",
+      "sha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+      "probeCount": 6,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.timeOfDay <= 0.25 && $.treeCount >= 12 && $.fireflyCount >= 16 && $.orbitEnabled == true && $.cameraOrbitAngle > 0"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full + center-bottom",
+              "dynamic": false,
+              "forms": [
+                "full",
+                "center-bottom"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
               }
             ]
           },
@@ -70,26 +1599,1714 @@
           "findings": [
             {
               "severity": "PARTIAL",
-              "field": "visualAssertion.region",
-              "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID"
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
             }
           ]
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:600"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fireLightIntensity >= 0 && $.fireLightIntensity <= 1"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "center-bottom(篝火、被照地面与近处树干)",
+              "dynamic": false,
+              "forms": [
+                "center-bottom"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=day-night"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.timeOfDay >= 0.9"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "upper-third(天空)+ full",
+              "dynamic": false,
+              "forms": [
+                "upper-third",
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:3000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.cameraOrbitAngle >= 0.15 && $.orbitEnabled == true"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "full",
+              "dynamic": false,
+              "forms": [
+                "full"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=orbit-toggle"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.orbitEnabled == false"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "outer-frame(画面边缘的树/地平线区域)",
+              "dynamic": false,
+              "forms": [
+                "outer-frame"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "PARTIAL",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.timeOfDay <= 0.05 && $.orbitEnabled == true && $.cameraOrbitAngle < 0.6 && $.fireflyCount >= 16 && $.treeCount >= 12"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "PARTIAL",
+            "region": {
+              "status": "SUPPORTED",
+              "value": "upper-third(天空)",
+              "dynamic": false,
+              "forms": [
+                "upper-third"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": [
+              {
+                "severity": "PARTIAL",
+                "field": "visualAssertion.params.expect",
+                "reason": "expect=\"回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+              }
+            ]
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": [
+            {
+              "severity": "PARTIAL",
+              "field": "visualAssertion.params.expect",
+              "reason": "expect=\"回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "briefId": "E07",
+      "briefVersion": "1.0.0",
+      "specPath": "briefs/E07/spec.json",
+      "sha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+      "probeCount": 8,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.carCount >= 60"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0.62,
+                "w": 1,
+                "h": 0.38
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:800"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.rainParticleCount >= 1500"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:3000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fps >= 30"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=toggle-fog"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fogEnabled == false && $.buildingCount >= 200"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 0.45
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=toggle-fog"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fogEnabled == true"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 0.45
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P8",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fps >= 30"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0.62,
+                "w": 1,
+                "h": 0.38
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P7"
+          },
+          "findings": []
+        }
+      ]
+    },
+    {
+      "briefId": "E08",
+      "briefVersion": "1.0.0",
+      "specPath": "briefs/E08/spec.json",
+      "sha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
+      "probeCount": 8,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fishCount >= 80 && $.planktonCount >= 300 && $.boidMode == \"normal\" && $.foodActive == false"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.boidMode == \"normal\" && $.avgCohesion >= 0.45"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.3,
+                "y": 0.25,
+                "w": 0.4,
+                "h": 0.5
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "drag"
+            ],
+            "raw": "drag:{from:{x:320,y:360},to:{x:960,y:360}}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.boidMode == \"scatter\" && $.avgCohesion < 0.35"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.2,
+                "y": 0.2,
+                "w": 0.6,
+                "h": 0.6
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "pointermove"
+            ],
+            "raw": "pointermove:{x:20,y:20}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.boidMode == \"normal\" && $.avgCohesion >= 0.45"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.3,
+                "y": 0.25,
+                "w": 0.4,
+                "h": 0.5
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:{x:640,y:360}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.foodActive == true && $.foodPosition != null"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.42,
+                "y": 0.32,
+                "w": 0.16,
+                "h": 0.26
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:4000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.avgDistanceToFood != null && $.avgDistanceToFood < 6"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.35,
+                "y": 0.28,
+                "w": 0.3,
+                "h": 0.4
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fishCount >= 80 && $.boidMode == \"normal\" && $.foodActive == false && $.avgDistanceToFood == null"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P8",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.fishCount >= 80 && $.planktonCount >= 300"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0,
+                "y": 0,
+                "w": 1,
+                "h": 1
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P7"
+          },
+          "findings": []
+        }
+      ]
+    },
+    {
+      "briefId": "E09",
+      "briefVersion": "1.0.0",
+      "specPath": "briefs/E09/spec.json",
+      "sha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
+      "probeCount": 8,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.selectedColor == \"diamond\" && $.cameraDistance >= 9 && $.exportCount == 0 && $.rotationAngle >= 0"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.36,
+                "y": 0.26,
+                "w": 0.28,
+                "h": 0.42
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:2000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.rotationAngle >= 50"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.36,
+                "y": 0.26,
+                "w": 0.28,
+                "h": 0.42
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=swatch-2"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.selectedColor == \"ruby\""
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.36,
+                "y": 0.26,
+                "w": 0.28,
+                "h": 0.42
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "dblclick"
+            ],
+            "raw": "dblclick:{x:640,y:360}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.cameraDistance <= 6"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.25,
+                "y": 0.15,
+                "w": 0.5,
+                "h": 0.7
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "dblclick"
+            ],
+            "raw": "dblclick:{x:640,y:360}"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.cameraDistance >= 9"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.25,
+                "y": 0.15,
+                "w": 0.5,
+                "h": 0.7
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=export-png"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.exportCount == 1"
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.36,
+                "y": 0.26,
+                "w": 0.28,
+                "h": 0.42
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=export-png"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.exportCount == 2"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.36,
+                "y": 0.26,
+                "w": 0.28,
+                "h": 0.42
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P8",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.selectedColor == \"diamond\" && $.cameraDistance >= 9 && $.exportCount == 0"
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.36,
+                "y": 0.26,
+                "w": 0.28,
+                "h": 0.42
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P7"
+          },
+          "findings": []
+        }
+      ]
+    },
+    {
+      "briefId": "E10",
+      "briefVersion": "1.0.1",
+      "specPath": "briefs/E10/spec.json",
+      "sha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+      "probeCount": 7,
+      "probes": [
+        {
+          "probeId": "P1",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.assetLoaded == true && $.instanceCount == 2 && $.instances.A.clip == \"idle\" && $.instances.B.clip == \"idle\""
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": [
+                {
+                  "x": 0.08,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                },
+                {
+                  "x": 0.58,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                }
+              ],
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}",
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "__appReady"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P2",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.instances.A.time > 0 && $.instances.B.time > 0 && $.instanceCount == 2"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": [
+                {
+                  "x": 0.08,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                },
+                {
+                  "x": 0.58,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                }
+              ],
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}",
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P1"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P3",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=anim-a-walk"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.instances.A.clip == \"walk\" && $.instances.B.clip == \"idle\""
+          },
+          "visualAssertion": {
+            "type": "regionChange",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.08,
+                "y": 0.15,
+                "w": 0.34,
+                "h": 0.8
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P2"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P4",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=destroy-a"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.instanceCount == 1 && $.destroyedInstance == \"A\" && $.instances.A == null"
+          },
+          "visualAssertion": {
+            "type": "pixelDelta",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.08,
+                "y": 0.15,
+                "w": 0.34,
+                "h": 0.8
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P3"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P5",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1500"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.instanceCount == 1 && $.instances.B.clip == \"idle\" && $.instances.B.time > 0"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": {
+                "x": 0.58,
+                "y": 0.15,
+                "w": 0.34,
+                "h": 0.8
+              },
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P4"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P6",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "click"
+            ],
+            "raw": "click:ui=reset"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.resetCount == 1 && $.instanceCount == 2 && $.destroyedInstance == null && $.instances.A.clip == \"idle\" && $.instances.B.clip == \"idle\""
+          },
+          "visualAssertion": {
+            "type": "nonBlank",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": [
+                {
+                  "x": 0.08,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                },
+                {
+                  "x": 0.58,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                }
+              ],
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}",
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P5"
+          },
+          "findings": []
+        },
+        {
+          "probeId": "P7",
+          "required": true,
+          "overall": "SUPPORTED",
+          "action": {
+            "status": "SUPPORTED",
+            "verbs": [
+              "wait"
+            ],
+            "raw": "wait:1000"
+          },
+          "stateAssertion": {
+            "status": "SUPPORTED",
+            "expr": "$.instances.A.time > 0 && $.instances.B.time > 0 && $.fps >= 30"
+          },
+          "visualAssertion": {
+            "type": "motion",
+            "status": "SUPPORTED",
+            "region": {
+              "status": "SUPPORTED",
+              "value": [
+                {
+                  "x": 0.08,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                },
+                {
+                  "x": 0.58,
+                  "y": 0.15,
+                  "w": 0.34,
+                  "h": 0.8
+                }
+              ],
+              "dynamic": false,
+              "forms": [
+                "{x,y,w,h}",
+                "{x,y,w,h}"
+              ]
+            },
+            "unknownParamKeys": [],
+            "findings": []
+          },
+          "precondition": {
+            "status": "SUPPORTED",
+            "expr": "P6"
+          },
+          "findings": []
         }
       ]
     }
   ],
   "summary": {
-    "specCount": 1,
-    "probeCount": 1,
+    "specCount": 10,
+    "probeCount": 74,
     "unsupportedCount": 0,
-    "partialCount": 1,
+    "partialCount": 21,
     "unsupported": [],
     "partial": [
       {
-        "briefId": "NC08",
+        "briefId": "E03",
+        "probeId": "P2",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"selection-highlight\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
         "probeId": "P1",
-        "field": "visualAssertion.region",
-        "reason": "outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P2",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P3",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P4",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P5",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P6",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"无新爆炸脉冲(既有粒子仅自然衰减)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P7",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E04",
+        "probeId": "P8",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E05",
+        "probeId": "P1",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E05",
+        "probeId": "P2",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E05",
+        "probeId": "P3",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"多普勒亮侧扇区:外环带(橙红,R-B 高)与内环带(白/蓝白,R-B 低)的有向\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E05",
+        "probeId": "P4",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"较缩放前构图变化:暗核与盘占屏比增大(暗核半径像素 >= 1.25x 或盘外缘半\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E05",
+        "probeId": "P5",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E05",
+        "probeId": "P6",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E06",
+        "probeId": "P1",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E06",
+        "probeId": "P2",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E06",
+        "probeId": "P3",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E06",
+        "probeId": "P4",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E06",
+        "probeId": "P5",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
+        "required": true
+      },
+      {
+        "briefId": "E06",
+        "probeId": "P6",
+        "field": "visualAssertion.params.expect",
+        "reason": "expect=\"回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点\" is descriptive only — executor does not machine-check this semantic (regionChange falls back to a pixel-diff proxy; other types ignore it)",
         "required": true
       }
     ],

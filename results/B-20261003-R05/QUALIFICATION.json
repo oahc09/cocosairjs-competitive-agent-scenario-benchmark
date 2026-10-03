@@ -1,24 +1,25 @@
 {
-  "generatedAt": "2026-10-03T12:36:11.522Z",
+  "generatedAt": "2026-10-03T14:12:29.480Z",
   "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
   "batch": "B-20261003-R05",
-  "status": "QUALIFIED_OBJECTIVE",
+  "status": "QUALIFIED_OBJECTIVE_PARTIAL",
   "statusDefinition": {
     "QUALIFIED": "全部鉴定项通过,指标按正式口径引用",
     "LEGACY_PROVISIONAL": "整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制",
-    "QUALIFIED_OBJECTIVE": "整改后数据:冻结输入/身份/预算/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起(G7 过后重跑 blind+judge 即可补齐)",
+    "QUALIFIED_OBJECTIVE": "整改后数据:冻结输入/身份/预算(FULL)/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起",
+    "QUALIFIED_OBJECTIVE_PARTIAL": "整改后数据:同上,但预算证据 PARTIAL(build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数,仅声明口径)——引用时必须带此限制",
     "DISQUALIFIED": "冻结输入断裂且无法溯源,全部指标作废"
   },
   "context": {
     "ruler": {
       "rulerId": "RULER-20261003-R02",
-      "updatedAt": "2026-10-03T08:09:06.156Z"
+      "updatedAt": "2026-10-03T14:08:45.906Z"
     },
     "g7": {
       "status": "BLOCKED",
       "source": "gates/G7.json"
     },
-    "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1"
+    "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09"
   },
   "pairs": [
     {
@@ -27,8 +28,9 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
       "failedChecks": [
+        "budgetToolCallEvidence",
         "visualGate"
       ],
       "reasons": [
@@ -67,9 +69,9 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "matchesCurrent": true,
           "note": null
         },
@@ -82,6 +84,16 @@
         "budgetMachineCounted": {
           "id": "budgetMachineCounted",
           "ok": true,
+          "completeness": "PARTIAL",
+          "countedKinds": [
+            "build",
+            "browser"
+          ],
+          "perArmOk": true,
+          "missingKinds": [
+            "toolcall"
+          ],
+          "toolCallEvidence": "unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)",
           "declared": true,
           "identicalAcrossEngines": true,
           "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
@@ -95,7 +107,13 @@
               "browser.count"
             ]
           },
-          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+          "note": "预算机器证据不完整:build,browser 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "completeness": "PARTIAL",
+          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
         "visualGate": {
           "id": "visualGate",
@@ -117,12 +135,12 @@
           "three": {
             "pairHash": "f9c474a2",
             "rulerEngine": "three@0.186.1",
-            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+            "match": "matched"
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:56:58.116Z",
-            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
-            "note": "量尺先于批次"
+            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
         }
@@ -134,8 +152,9 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
       "failedChecks": [
+        "budgetToolCallEvidence",
         "visualGate"
       ],
       "reasons": [
@@ -174,9 +193,9 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "matchesCurrent": true,
           "note": null
         },
@@ -189,6 +208,16 @@
         "budgetMachineCounted": {
           "id": "budgetMachineCounted",
           "ok": true,
+          "completeness": "PARTIAL",
+          "countedKinds": [
+            "build",
+            "browser"
+          ],
+          "perArmOk": true,
+          "missingKinds": [
+            "toolcall"
+          ],
+          "toolCallEvidence": "unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)",
           "declared": true,
           "identicalAcrossEngines": true,
           "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
@@ -202,7 +231,13 @@
               "browser.count"
             ]
           },
-          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+          "note": "预算机器证据不完整:build,browser 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "completeness": "PARTIAL",
+          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
         "visualGate": {
           "id": "visualGate",
@@ -224,12 +259,12 @@
           "three": {
             "pairHash": "f9c474a2",
             "rulerEngine": "three@0.186.1",
-            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+            "match": "matched"
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:57:02.652Z",
-            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
-            "note": "量尺先于批次"
+            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
         }
@@ -241,8 +276,9 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
       "failedChecks": [
+        "budgetToolCallEvidence",
         "visualGate"
       ],
       "reasons": [
@@ -281,9 +317,9 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "matchesCurrent": true,
           "note": null
         },
@@ -296,6 +332,16 @@
         "budgetMachineCounted": {
           "id": "budgetMachineCounted",
           "ok": true,
+          "completeness": "PARTIAL",
+          "countedKinds": [
+            "build",
+            "browser"
+          ],
+          "perArmOk": true,
+          "missingKinds": [
+            "toolcall"
+          ],
+          "toolCallEvidence": "unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)",
           "declared": true,
           "identicalAcrossEngines": true,
           "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
@@ -309,7 +355,13 @@
               "browser.count"
             ]
           },
-          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+          "note": "预算机器证据不完整:build,browser 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "completeness": "PARTIAL",
+          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
         "visualGate": {
           "id": "visualGate",
@@ -331,12 +383,12 @@
           "three": {
             "pairHash": "f9c474a2",
             "rulerEngine": "three@0.186.1",
-            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+            "match": "matched"
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:57:07.133Z",
-            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
-            "note": "量尺先于批次"
+            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
         }
@@ -348,8 +400,9 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
       "failedChecks": [
+        "budgetToolCallEvidence",
         "visualGate"
       ],
       "reasons": [
@@ -388,9 +441,9 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "matchesCurrent": true,
           "note": null
         },
@@ -403,6 +456,16 @@
         "budgetMachineCounted": {
           "id": "budgetMachineCounted",
           "ok": true,
+          "completeness": "PARTIAL",
+          "countedKinds": [
+            "build",
+            "browser"
+          ],
+          "perArmOk": true,
+          "missingKinds": [
+            "toolcall"
+          ],
+          "toolCallEvidence": "unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)",
           "declared": true,
           "identicalAcrossEngines": true,
           "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
@@ -416,7 +479,13 @@
               "browser.count"
             ]
           },
-          "note": "pair.json 声明了 G0 冻结预算且双臂一致;但工作区未归档 .budget 机器计数 → 预算遵守情况只能采信声明,无机器证据"
+          "note": "预算机器证据不完整:build,browser 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "completeness": "PARTIAL",
+          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
         "visualGate": {
           "id": "visualGate",
@@ -438,12 +507,12 @@
           "three": {
             "pairHash": "f9c474a2",
             "rulerEngine": "three@0.186.1",
-            "match": "FORMAT-MISMATCH: pair 存 sha256指纹,量尺存 semver 字符串,历史 three 版本无法从 pair 证据复核(仅环境声明)"
+            "match": "matched"
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:57:11.650Z",
-            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
-            "note": "量尺先于批次"
+            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
         }
@@ -482,9 +551,11 @@
     ],
     "invalidOrPendingMetrics": [
       "visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)",
-      "formal total/attainment/pairedDelta(G7 过后重跑 blind+judge 即可补齐)"
+      "formal total/attainment/pairedDelta(G7 过后重跑 blind+judge 即可补齐)",
+      "存在非 visual 项失败的对: PAIR-E01-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E02-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E05-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E10-K0-R01(budgetToolCallEvidence,visualGate)"
     ],
     "reasons": [
+      "预算证据 PARTIAL:build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数(永久 PARTIAL,接入带计数器的运行时后消除)",
       "G7=BLOCKED:visual 口径作废/挂起(不影响 objective 正式口径)"
     ]
   }

@@ -58,5 +58,15 @@
       "note": "dAir: E01 -5? 实为 air-three=-5? 以 aggregated.json 为准(E01 three45/air40?)——精确值见文件"
     },
     "evidenceFinding": "独立验证抓到 Agent 自检假阳性(E01-b P4 代码走查推演过、真实滚轮失效;E01-a P7 自检 7/7 但指针残留未归中)——新链路有效性的直接证明"
+  },
+  "rectificationRound2": {
+    "generatedAt": "2026-10-03T14:13:20.318Z",
+    "trackTaxonomy": "create-pair --track + 回填(R1=pilot, R05=targeted-pilot);aggregate core-only 分层",
+    "rulerCompatGate": "R05×4 RULER_COMPAT(五输入 matched);R1×4 briefMatch MISMATCH fail-closed",
+    "qualification": "R05×4 QUALIFIED_OBJECTIVE_PARTIAL(budgetToolCallEvidence+visualGate);R1 LEGACY_PROVISIONAL 不变",
+    "identityRealHashes": "DISPATCH sha 0c6f68c2/policy sha 03c64980,preflight 4/4 PASS",
+    "timingEnv": "execution.json ×8 臂;PAIR_TIMING_DRIFT×2 + UNMEASURABLE×2 如实",
+    "specAuditRouting": "NC08 写夹具目录;全量审计恢复(10/74/0 UNSUPPORTED)",
+    "referenceRevalidation": "RULER-R3 轮 20/20 PASS(validationRevision v5)"
   }
 }

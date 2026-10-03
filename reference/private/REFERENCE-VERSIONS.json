@@ -1,6 +1,6 @@
 {
   "rulerId": "RULER-20261003-R02",
-  "updatedAt": "2026-10-03T08:09:06.156Z",
+  "updatedAt": "2026-10-03T14:08:45.906Z",
   "principle": "Reference 天花板 = 每个场景的满分线(量尺)。语义输入(引擎/文档/Brief/spec)变化 → 重实现并 refVersion+1,换新量尺 RULER-<日期>-R<轮次>;测量协议(validator/judge/toolchain)变化 → 仅重验,validationRevision+1,量尺不变。同一版量尺下的所有批次共用同一满分线",
   "inputTaxonomy": {
     "semantic": [
@@ -17,10 +17,10 @@
     "note": "旧账本 briefSha=null 系 briefs/index.json 解析 bug 所致,首次以真实值回填不算漂移"
   },
   "protocol": {
-    "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+    "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
     "validatorProtocolComponents": {
-      "probeExecutorSha256": "c4be57666c33f56fb1c114122455e6b6b0712312bb1c76fc9fad16b78335d156",
-      "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+      "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+      "validateSha256": "ea0ab876b7197a78d4c13b444edee16edb4eca424f27e59baf481b4611d2cd4f"
     },
     "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
     "judgeProtocolSource": "docs/metric-spec.md §8 盲评统计(Track D)(= 计划书 §18 口径)"
@@ -64,14 +64,14 @@
   "epochs": {
     "E01:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "225bf8c171f568e58931145bb30ad69c02578c6c275b040c9bd43e2c8bc5d8d7",
         "specSha": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -88,36 +88,33 @@
       "visualScore40": 29,
       "totalScore": 84,
       "ceiling": 84,
-      "evidenceHash": "221918e6726ccb162af13f5e2c4612b344c1a3b73c365e23ed9271cf1f749e2a",
+      "evidenceHash": "19a56e3a0689d380df02933f0a4c5649f143de0c855471a2e267a1247faf9598",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.113Z",
+      "frozenAt": "2026-10-03T14:08:45.852Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E01:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "225bf8c171f568e58931145bb30ad69c02578c6c275b040c9bd43e2c8bc5d8d7",
         "specSha": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -134,36 +131,33 @@
       "visualScore40": 28,
       "totalScore": 83,
       "ceiling": 83,
-      "evidenceHash": "4b778397a3283168aa94812ecbad747f2cc5de158802e1ef4616c3cfe2bfc90c",
+      "evidenceHash": "0a32f51c0bc990793a0c624d531d7780825621d9657cf8598056195fdd6a49ea",
       "validated": {
         "passRate": 1,
-        "fps": 60.1,
+        "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.118Z",
+      "frozenAt": "2026-10-03T14:08:45.856Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E02:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "9e06f270f3858471695137d820d29e08d1392e4b925d19a58ecf3d3fb3a8c385",
         "specSha": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -180,36 +174,33 @@
       "visualScore40": 26,
       "totalScore": 81,
       "ceiling": 81,
-      "evidenceHash": "73bc9c609294cf5980f40ea19387b268be6356a53d2931596b842cc24b948040",
+      "evidenceHash": "aaf7e76df013028e3322c0ac27d4c15a4425ce945fde53d0cace20b31948afa6",
       "validated": {
         "passRate": 1,
         "fps": 60.1,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.120Z",
+      "frozenAt": "2026-10-03T14:08:45.859Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E02:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "9e06f270f3858471695137d820d29e08d1392e4b925d19a58ecf3d3fb3a8c385",
         "specSha": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -226,36 +217,33 @@
       "visualScore40": 27,
       "totalScore": 82,
       "ceiling": 82,
-      "evidenceHash": "8116babf07f41dea42f3aa68eb7ce301c97968aa2b7c7da9ab95e58ac7d61db4",
+      "evidenceHash": "bdd990cd29ef720d4784d5080ac1b5ba00706fd9b8d6ea981427e328b26cea5d",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.122Z",
+      "frozenAt": "2026-10-03T14:08:45.861Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E03:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
         "specSha": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -272,36 +260,33 @@
       "visualScore40": 26,
       "totalScore": 81,
       "ceiling": 81,
-      "evidenceHash": "a20b76a5b8a8a9a4e514a0be3ecc65c9d33d0da8e8d4492e2c13bf20af15a3cd",
+      "evidenceHash": "7c500a1295ad74dc17fac5153b180313c9d14859df58a667db41d34415e008c0",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.1,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.124Z",
+      "frozenAt": "2026-10-03T14:08:45.864Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E03:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
         "specSha": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -318,36 +303,33 @@
       "visualScore40": 26,
       "totalScore": 81,
       "ceiling": 81,
-      "evidenceHash": "3fd2940a45a87129b06dc231ca8a057f8e00778845ec9cac7e0f7c172302badd",
+      "evidenceHash": "cd7298d18e00009f4e784cf532d5cc0ca610d166aa23b47aac7efa46164575b2",
       "validated": {
         "passRate": 1,
         "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.127Z",
+      "frozenAt": "2026-10-03T14:08:45.868Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E04:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "353509725ac4779a0f2ea79afb9e64b2755f6945cc90421150670ebfd3f943ca",
         "specSha": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -364,38 +346,33 @@
       "visualScore40": 24,
       "totalScore": 79,
       "ceiling": 79,
-      "evidenceHash": "4e0d27feee6293bcfee34d10312b507725189df327e7f302cf637ebfecd6fcea",
+      "evidenceHash": "ec7a1f6f56a3115397351fac9f03a1688689818ee8267fcf4d5c79c7352b0fd7",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.130Z",
+      "frozenAt": "2026-10-03T14:08:45.870Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha",
-        "specSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
-        "specSha",
         "validatorProtocolHash"
       ]
     },
     "E04:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "353509725ac4779a0f2ea79afb9e64b2755f6945cc90421150670ebfd3f943ca",
         "specSha": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -412,38 +389,33 @@
       "visualScore40": 26,
       "totalScore": 81,
       "ceiling": 81,
-      "evidenceHash": "825444e814e78c567541cafe23c8bb6f5742d40f338d331f28be25eeff82fc40",
+      "evidenceHash": "d644202b474b23e2fd53d262de54307e02c102d06125106cfd313eb0c68d8b5c",
       "validated": {
         "passRate": 1,
         "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.132Z",
+      "frozenAt": "2026-10-03T14:08:45.872Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha",
-        "specSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
-        "specSha",
         "validatorProtocolHash"
       ]
     },
     "E05:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b",
         "specSha": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -460,38 +432,33 @@
       "visualScore40": 29,
       "totalScore": 84,
       "ceiling": 84,
-      "evidenceHash": "ca8af3c3aa3273b0eacbd19c4c643322f438965b384582582b45a951a2de90d5",
+      "evidenceHash": "41006fbb69a2585a9ed6cc44139681ffe54e650d497c995c618aad39b9d9cd3b",
       "validated": {
         "passRate": 1,
-        "fps": 60.1,
+        "fps": 60,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.134Z",
+      "frozenAt": "2026-10-03T14:08:45.875Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha",
-        "specSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
-        "specSha",
         "validatorProtocolHash"
       ]
     },
     "E05:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b",
         "specSha": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -508,38 +475,33 @@
       "visualScore40": 29,
       "totalScore": 84,
       "ceiling": 84,
-      "evidenceHash": "a09879fe9fbe770f52a5e33befb094bb942c58326572ae27a75d84997d7fe1f8",
+      "evidenceHash": "44f75463120db43a372850ae015c4bc1d92249e33c5506f9753b7e4279c86f8f",
       "validated": {
         "passRate": 1,
-        "fps": 60.1,
+        "fps": 60,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.136Z",
+      "frozenAt": "2026-10-03T14:08:45.878Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha",
-        "specSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
-        "specSha",
         "validatorProtocolHash"
       ]
     },
     "E06:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7",
         "specSha": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -556,36 +518,33 @@
       "visualScore40": 30,
       "totalScore": 85,
       "ceiling": 85,
-      "evidenceHash": "1c8b4e1a615b71c3348781f58cb559b1f6faad09f173ef707e0fce2dcf67e1b7",
+      "evidenceHash": "bdc1e6df729a8946ebc598c27f736032e8f7d1265a9ffb6cec337b7ce7ad9135",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.137Z",
+      "frozenAt": "2026-10-03T14:08:45.882Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E06:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7",
         "specSha": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -602,36 +561,33 @@
       "visualScore40": 30,
       "totalScore": 85,
       "ceiling": 85,
-      "evidenceHash": "1e4593e9a197430fd743f7f16b35ab194404bb56623bacb77d98a12d94d802c4",
+      "evidenceHash": "fbd3340ea52826c9bf4d440c7d35a23b91be46a69535a6b0550ad2af9a121e35",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.139Z",
+      "frozenAt": "2026-10-03T14:08:45.884Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E07:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "8b1fae76fbbabbac87dac1a2f718cbcc2cc641a06c3bbfc36038b750800fad6f",
         "specSha": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -648,36 +604,33 @@
       "visualScore40": 31,
       "totalScore": 86,
       "ceiling": 86,
-      "evidenceHash": "f60a9bd8c098218dd5bde3e0fbba43d63f6c0453a4d487047779044efb65bf9f",
+      "evidenceHash": "3fa8f50a38101293c02ce7cfad01599f02ec9142f4c13c95daa33eb4b46e7c8d",
       "validated": {
         "passRate": 1,
-        "fps": 60.3,
+        "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.141Z",
+      "frozenAt": "2026-10-03T14:08:45.886Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E07:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "8b1fae76fbbabbac87dac1a2f718cbcc2cc641a06c3bbfc36038b750800fad6f",
         "specSha": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -694,36 +647,33 @@
       "visualScore40": 29,
       "totalScore": 84,
       "ceiling": 84,
-      "evidenceHash": "f26ff93cc7c4824008069da0b0cbed6b4c857e24392c26121ed3cce777e34e2f",
+      "evidenceHash": "a1500c729f6f3577ca39f4a14ab75dbb200208c23e7dbe21347fc837fc1042d0",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.143Z",
+      "frozenAt": "2026-10-03T14:08:45.888Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E08:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "3deef8172bb311ea2ef59d2181d486c984fe871d4d88c79700a47707e9d1a8be",
         "specSha": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -740,36 +690,33 @@
       "visualScore40": 27,
       "totalScore": 82,
       "ceiling": 82,
-      "evidenceHash": "d7c1b0c8a6dafbf5af41813d65b934589fdc41e7fd334c101f47fef441c169a7",
+      "evidenceHash": "1badab210654ba7787e060f3638b33d2ce3e1d637221843fe549f1f53f1e5fbc",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.145Z",
+      "frozenAt": "2026-10-03T14:08:45.892Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E08:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "3deef8172bb311ea2ef59d2181d486c984fe871d4d88c79700a47707e9d1a8be",
         "specSha": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -786,36 +733,33 @@
       "visualScore40": 27,
       "totalScore": 82,
       "ceiling": 82,
-      "evidenceHash": "280628cdeef759588b2e9521cf3eca3704b91bea8cdaaa2cb613c44d8d59d21b",
+      "evidenceHash": "34efa339c5717de44ccf8e53755b2a3298602bf0cc027fb40df9f45e6236b1f7",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.1,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.147Z",
+      "frozenAt": "2026-10-03T14:08:45.894Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E09:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366",
         "specSha": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -832,36 +776,33 @@
       "visualScore40": 28,
       "totalScore": 83,
       "ceiling": 83,
-      "evidenceHash": "e9a09039875fe550f95b856644d5658b7deb9ed21cd4ab50db5d409d1ec01f1b",
+      "evidenceHash": "a1ccf49f0d7673e85631c6b2ba2274fcf5822490c5da471021e35e73d91cc651",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.1,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.149Z",
+      "frozenAt": "2026-10-03T14:08:45.898Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E09:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366",
         "specSha": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -878,36 +819,33 @@
       "visualScore40": 29,
       "totalScore": 84,
       "ceiling": 84,
-      "evidenceHash": "35ea49e712a091d7c199b3f9f2309885df04b9fa2cec656b694eaef7a359225c",
+      "evidenceHash": "0a715a9c5df6082459a7b80fa7fba0592778ed68edd534f7830f1652e1efa132",
       "validated": {
         "passRate": 1,
-        "fps": 60.1,
+        "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.151Z",
+      "frozenAt": "2026-10-03T14:08:45.900Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E10:three": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad",
         "specSha": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -924,36 +862,33 @@
       "visualScore40": 23,
       "totalScore": 78,
       "ceiling": 78,
-      "evidenceHash": "761cef3c5cb2dd906ba59b21a2dcf905e6add3a0ed326494c0ddcec4f7f029c6",
+      "evidenceHash": "91c75f8a4c94c98a82a149c1ec447ce1586379a938b9d586652197993ff5c648",
       "validated": {
         "passRate": 1,
-        "fps": 60.3,
+        "fps": 60.1,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.153Z",
+      "frozenAt": "2026-10-03T14:08:45.903Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     },
     "E10:cocosair": {
       "refVersion": 2,
-      "validationRevision": 5,
+      "validationRevision": 6,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad",
         "specSha": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58",
-        "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+        "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
         "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
       },
       "objectiveBreakdown": {
@@ -970,23 +905,20 @@
       "visualScore40": 23,
       "totalScore": 78,
       "ceiling": 78,
-      "evidenceHash": "74b7ffbfb78594c00e007f86e3376fb037135b56dd4a0994f0feda7882ce9558",
+      "evidenceHash": "ddadfed028597ce5eba06b29bfab7eee1520ec561406f14ca8ecfe6fa0dfe8e1",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-03T08:09:06.156Z",
+      "frozenAt": "2026-10-03T14:08:45.905Z",
       "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 1,
-      "changedSemantic": [
-        "briefSha"
-      ],
+      "changedFrom": 2,
+      "changedSemantic": [],
       "changedProtocol": [
         "validatorProtocolHash"
       ],
       "changedInputs": [
-        "briefSha",
         "validatorProtocolHash"
       ]
     }

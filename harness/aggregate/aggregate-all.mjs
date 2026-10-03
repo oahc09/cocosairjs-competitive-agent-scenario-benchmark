@@ -26,6 +26,8 @@ const RESULTS = path.join(BENCH, 'results');
 const rj = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 const wj = (p, o) => fs.writeFileSync(p, JSON.stringify(o, null, 2) + '\n');
 const r2 = (x) => Math.round(x * 100) / 100;
+const chromeCached = (() => { try { return fs.readFileSync(path.join(BENCH, 'harness', 'chrome-version.cache.txt'), 'utf8').trim(); } catch { return 'unknown'; } })();
+const toolchainNow = 'node' + process.version + '+esbuild' + JSON.parse(fs.readFileSync(path.join(BENCH, 'node_modules', 'esbuild', 'package.json'))).version + '+chrome' + (process.env.CHROME_V || chromeCached);
 const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 const iqr = (a) => { if (a.length < 2) return null; const s = [...a].sort((x, y) => x - y); const q = (p) => { const h = (s.length - 1) * p; const lo = Math.floor(h), hi = Math.ceil(h); return s[lo] + (s[hi] - s[lo]) * (h - lo); }; return r2(q(0.75) - q(0.25)); };
 function bootstrapMedianCiDelta(deltas, draws = 2000, seed = 42) {
@@ -125,6 +127,7 @@ const g7Pass = g7Status === 'PASS';
 
 const outBatches = [];
 const groupMap = new Map();
+const batchQual = {}; // batchId → QUALIFICATION.json 内容(track/qualification 门禁数据源)
 const needsRecalibration = [];
 // coordinator 自测批次(batches.json selftestNote:未运行任何 Agent Run)不进入聚合;
 // 该目录会被 run-round 自测临时重建,聚合若纳入会污染正式看板。
@@ -134,6 +137,7 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
   if (SELFTEST_BATCHES.has(b.batchId)) { excludedBatches.push({ batchId: b.batchId, reason: 'coordinator selftest 批次(batches.json selftestNote),未运行任何 Agent Run' }); continue; }
   const bDir = path.join(RESULTS, b.batchId);
   if (!fs.existsSync(bDir)) continue;
+  try { batchQual[b.batchId] = rj(path.join(bDir, 'QUALIFICATION.json')); } catch { /* 无鉴定文件 */ }
   let vis = {};
   try { vis = rj(path.join(bDir, 'blind', 'visual-scores.json')).pairs || {}; } catch { /* 无视觉分 */ }
   const pairs = [];
@@ -157,7 +161,24 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
       const formalTotal = (g7Pass && s4info.s4 != null && provisionalVisual != null)
         ? objectiveTotal + s4info.s4 + provisionalVisual : null;
       const ruler = ceiling[`${pj.sceneId}:${engine}`];
-      const objectiveAttainment = (ruler?.objective != null && ruler.objective > 0) ? r2(objectiveTotal / ruler.objective) : null;
+      // RULER 协议兼容门禁(整改 P0-2):objective 相关四输入 + validator 协议必须与量尺冻结时一致,
+      // 否则 objectiveAttainment=null + rulerStatus=RULER_PROTOCOL_MISMATCH(fail closed,不靠人工 ceiling-check)
+      const epochEntry = refEpochs ? refEpochs[`${pj.sceneId}:${engine}`] : null;
+      const compat = {};
+      // P0-2 引擎指纹:air=tarball sha(pair 冻结);three=版本串(与 RULER 账本同口径)
+      const actualEngine = engine === 'cocosair' ? (pj.airPackageHash ?? null) : ('three@' + JSON.parse(fs.readFileSync(path.join(BENCH, 'node_modules', 'three', 'package.json'))).version);
+      for (const [k, actual] of Object.entries({
+        engine: actualEngine,
+        brief: pj.briefSha256 ?? null,
+        spec: rep.specSha256 ?? null,
+        validator: rep.validatorProtocolHash ?? null,
+      })) {
+        const frozen = epochEntry ? epochEntry.inputs?.[{ engine: 'engine', brief: 'briefSha', spec: 'specSha', validator: 'validatorProtocolHash' }[k]] : undefined;
+        compat[k + 'Match'] = frozen == null || actual == null ? 'unknown' : (String(frozen) === String(actual) ? 'matched' : 'MISMATCH');
+      }
+      compat.toolchainMatch = epochEntry ? (epochEntry.inputs?.toolchain === toolchainNow ? 'matched' : 'MISMATCH') : 'unknown';
+      const objectiveRelevantMismatch = ['engineMatch', 'briefMatch', 'specMatch', 'validatorMatch', 'toolchainMatch'].some(k => compat[k] === 'MISMATCH');
+      const objectiveAttainment = (ruler?.objective != null && ruler.objective > 0 && !objectiveRelevantMismatch) ? r2(objectiveTotal / ruler.objective) : null;
       const formalAttainment = (formalTotal != null && ruler?.total != null && ruler.total > 0) ? r2(formalTotal / ruler.total) : null;
       // FIX-B 4:CEILING_BREACH(>1.03 如实标记上报,不 clamp)
       const breach = (x) => x != null && x > 1.03;
@@ -178,6 +199,7 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
         visualPending: v18 == null,
         formal: { total: formalTotal, attainment: formalAttainment },
         objective: { total: objectiveTotal, attainment: objectiveAttainment },
+        rulerStatus: objectiveRelevantMismatch ? 'RULER_PROTOCOL_MISMATCH(' + ['engineMatch','briefMatch','specMatch','validatorMatch','toolchainMatch'].filter(k=>compat[k]==='MISMATCH').join('+') + ')' : 'RULER_COMPAT(' + Object.entries(compat).map(([k,v])=>k+'='+v).join(',') + ')',
         ...(breach(objectiveAttainment) || breach(formalAttainment) ? { ceilingBreach: true } : {}),
         report: `${b.batchId}/${pd.name}/arm-${armLetter}/validation/report.json`,
       };
@@ -190,7 +212,7 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
     const epoch = refEpochs ? refEpochs[`${pj.sceneId}:cocosair`] : null;
     const airEpochMatch = !epoch ? 'unknown(账本未冻结)' : (pj.airPackageHash === epoch.inputs.engine ? 'matched' : 'engine-differs');
     pairs.push({
-      pairId: pd.name, batchId: b.batchId, scene: pj.sceneId, knowledge: pj.knowledge, rep: pj.repetition, pilot: pj.pilot ?? false,
+      pairId: pd.name, batchId: b.batchId, scene: pj.sceneId, knowledge: pj.knowledge, rep: pj.repetition, pilot: pj.pilot ?? false, track: pj.track || (pj.pilot ? 'pilot' : 'core'),
       arms,
       // FIX-B 2:formal 口径 —— G7 未过时全 null + visualStatus 标注,不得以任何替代值填充
       formal: g7Pass ? {
@@ -220,24 +242,38 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
       ceilingRuler: { air: airEpochMatch, refVersion: epoch ? epoch.refVersion : null, validationRevision: epoch ? epoch.validationRevision ?? 1 : null, rulerId: refRulerId, refFrozenUnderRuler: epoch ? (epoch.frozenUnderRuler || epoch.frozenInEpoch) : null, batchEngineSha: (pj.airPackageHash || '').slice(0, 8), ceilingEngineSha: epoch ? String(epoch.inputs.engine).slice(0, 8) : null },
     });
     const gk = `${pj.sceneId}|${pj.knowledge}`;
+    // P0-1 分层:core 统计只收 track==='core' 且 pair 级 qualification 通过且量尺兼容;
+    // pilot / targeted-pilot / 不合格对 → 只进 diagnosticGroups(观察口径,不进 median/CI)
+    const track = pj.track || (pj.pilot ? 'pilot' : 'core');
+    const qualEntry = (batchQual[b.batchId]?.pairs || []).find(q => q.pairId === pd.name);
+    const qualStatus = qualEntry ? qualEntry.status : (b.batchId === 'B-20261002-R1' ? 'LEGACY_PROVISIONAL' : null);
+    const coreEligible = track === 'core'
+      && (qualStatus === 'QUALIFIED' || qualStatus === 'QUALIFIED' + '_OBJECTIVE')
+      && compat.engineMatch === 'matched' && compat.specMatch === 'matched'
+      && compat.validatorMatch === 'matched' && !objectiveRelevantMismatch;
     if (!groupMap.has(gk)) groupMap.set(gk, { scene: pj.sceneId, knowledge: pj.knowledge, deltas: [], outcomes: [], attThree: [], attAir: [] });
     const g = groupMap.get(gk);
     // 分组统计:formal 可用时用 formal delta;G7 未过时退居 objective delta 并标注 basis
     const groupDelta = formalDelta != null ? formalDelta : objDelta;
-    if (groupDelta != null) { g.deltas.push(groupDelta); g.outcomes.push(Math.abs(groupDelta) <= 3 ? 'TIE' : (groupDelta > 0 ? 'AIR_WIN' : 'THREE_WIN')); }
+    if (groupDelta != null) {
+      if (coreEligible) { g.deltas.push(groupDelta); g.outcomes.push(Math.abs(groupDelta) <= 3 ? 'TIE' : (groupDelta > 0 ? 'AIR_WIN' : 'THREE_WIN')); }
+      // 诊断区:非 core 或不合格对的 delta 记入 pair 自身(diagnosticDeltas),不进 g.* 正式统计
+      (g.diagnosticDeltas = g.diagnosticDeltas || []).push({ pairId: pd.name, track, qualStatus, delta: groupDelta });
+    }
     const attT = arms.three?.objective?.attainment ?? null, attA = arms.cocosair?.objective?.attainment ?? null;
-    if (attT != null) g.attThree.push(attT);
-    if (attA != null) g.attAir.push(attA);
+    if (coreEligible) { if (attT != null) g.attThree.push(attT); if (attA != null) g.attAir.push(attA); }
   }
   outBatches.push({ batchId: b.batchId, createdAt: b.createdAt, note: b.note, pairs });
 }
 
 const groups = [...groupMap.values()].map((g) => ({
-  scene: g.scene, knowledge: g.knowledge, n: g.deltas.length,
-  basis: g7Pass ? 'formal' : 'objective(S1+S2+S3;G7 未过,formal 不可用)',
+  scene: g.scene, knowledge: g.knowledge,
+  n: g.deltas.length,
+  scope: 'core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic',
   rawDelta: { median: r2(median(g.deltas)), iqr: iqr(g.deltas), bootstrapCi95: bootstrapMedianCiDelta(g.deltas) },
   winTieLoss: { air: g.outcomes.filter(o => o === 'AIR_WIN').length, tie: g.outcomes.filter(o => o === 'TIE').length, three: g.outcomes.filter(o => o === 'THREE_WIN').length },
-  attainmentMedian: { three: r2(median(g.attThree)), air: r2(median(g.attAir)), basis: 'objective 对 RULER objectiveScore' },
+  attainmentMedian: { three: r2(median(g.attThree)), air: r2(median(g.attAir)), basis: 'objective 对 RULER objectiveScore(量尺兼容对)' },
+  diagnosticDeltas: g.diagnosticDeltas || [],
 }));
 
 // KnowledgeGain:同 scene 出现多知识级时,按 K 级中位 objective 分差(AIR 与 Three 分别计)
@@ -292,4 +328,4 @@ wj(path.join(RESULTS, 'aggregated.json'), {
 const n = outBatches.reduce((s, b) => s + b.pairs.length, 0);
 console.log(`aggregated.json: ${outBatches.length} batches / ${n} pairs / ${groups.length} groups / kgEntries=${knowledgeGain.length}`);
 console.log(`  ruler=${refRulerId} g7=${g7Status} formal=${g7Pass ? 'enabled' : 'ALL-NULL(objective 口径照常)'} needsRecalibration=${JSON.stringify(needsRecalibration)}`);
-for (const g of groups) console.log(`  ${g.scene} ${g.knowledge}: n=${g.n} [${g.basis}] medianΔ=${g.rawDelta.median} CI=${JSON.stringify(g.rawDelta.bootstrapCi95)} W/T/L=${g.winTieLoss.air}/${g.winTieLoss.tie}/${g.winTieLoss.three}`);
+for (const g of groups) console.log(`  ${g.scene} ${g.knowledge}: n=${g.n} [${g.scope}] medianΔ=${g.rawDelta.median} CI=${JSON.stringify(g.rawDelta.bootstrapCi95)} W/T/L=${g.winTieLoss.air}/${g.winTieLoss.tie}/${g.winTieLoss.three}`);

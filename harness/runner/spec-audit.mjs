@@ -257,7 +257,9 @@ async function runAudit(argv) {
     specs: specResults,
     summary,
   };
-  const out = path.resolve(argv.json || DEFAULT_JSON_OUT);
+  const singleSpecMode = Boolean(argv.spec);
+  // 一致性5:单 spec 审计(NC 夹具)不得覆写全量生产证据 results/spec-capability-audit.json
+  const out = path.resolve(argv.json || (singleSpecMode ? path.join(path.dirname(path.resolve(argv.spec)), 'spec-capability-audit.json') : DEFAULT_JSON_OUT));
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, JSON.stringify(report, null, 2) + '\n', 'utf8');
 

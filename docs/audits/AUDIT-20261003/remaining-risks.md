@@ -53,3 +53,19 @@ B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 s
 **页面层修复(已落地)**:门户 fillCompare 懒加载——compare 页签未激活时 iframe 不赋 src(记录 pending),激活时才加载;已验证逻辑。
 **引擎侧建议(cocosair.js)**:_updateAdaptResult 对非法尺寸不应 assert 抛异常,应跳过本次适配并保留上次有效尺寸,待下次有效 resize 再适配(良性瞬态 ≠ 致命错误)。建议补回归用例:display:none iframe 内启动引擎 + DPR 变化 → 无异常。
 **实验影响**:无——验证流水线从不隐藏页面;历史证据不受影响。属门户/浏览体验层缺陷 + 引擎健壮性缺陷。
+
+## 复查整改(P0-1/2/3 + P1-4 + 一致性5,2026-10-03 第二轮)
+
+| ID | 问题(用户复查提出) | 修复 | 复验 |
+|---|---|---|---|
+| F-24 | Aggregate 混合 Pilot/Legacy/正式数据(E02 median -11.5 无意义;groupMap 无 pilot 过滤;R05 pilot:false 被当正式 R01) | track 分类学(pilot/targeted-pilot/core/k2-ablation):create-pair --track + 两批回填;aggregate 分层——core 统计只收 track=core 且 qualification 合格且量尺兼容,其余进 groupsDiagnostic | aggregated.json groups n=0(core 空,诚实)、scope 注明、diagnosticDeltas 保留观察值 |
+| F-25 | RULER 协议漂移无门禁:R05 validator f568bdf4 ≠ RULER a5641c7a,attainment 照算 | aggregate 逐对 rulerCompatibility 五输入(engine/brief/spec/validator/toolchain);objective 相关 MISMATCH → objectiveAttainment=null + RULER_PROTOCOL_MISMATCH(fail closed) | R05 4 对 RULER_COMPAT 全 matched(重验后);R1 旧批 briefMatch MISMATCH 如实 fail-closed |
+| F-26 | budgetMachineCounted 过宽(任一 .budget 文件即过;toolCalls 无计数) | build+browser 计数齐备且每臂双文件才算机器证据;toolcall 缺失 → budgetCompleteness=PARTIAL(永久,直至接入带计数器运行时);状态 QUALIFIED_OBJECTIVE_PARTIAL | R05 ×4 = QUALIFIED_OBJECTIVE_PARTIAL(failed: budgetToolCallEvidence+visualGate) |
+| F-27 | Agent 身份"非空字符串"≠哈希(DISPATCH-v2/default-tools 不是 64 位 sha;pair.json 却存 sha) | 身份哈希真算:systemPromptSha256=sha256(DISPATCH.md),toolPolicySha256=sha256(agents.yaml+计数脚本执行面);RUN-META 新 schema(id+sha256);preflight 校验后回填 pair | R05 preflight 4/4 PASS,双臂哈希一致(dispatch 0c6f68c2/policy 03c64980) |
+| F-28 | Pair 同时运行/环境未冻结(execution/environment 全 null,preflight 不查) | execution.json 回填(WORKLOG 首末时间戳+worker+host);environment 回填(RTX4060/Chrome154/WebGL2);pair.timingDrift 如实判定 | E01 Δ791s/E02 Δ61600s = PAIR_TIMING_DRIFT;E05/E10 UNMEASURABLE(WORKLOG 无 ISO 时间戳)——targeted pilot 确实非同批启动,如实披露,正式矩阵须 Runner 双臂并行派发 |
+| F-29 | results/spec-capability-audit.json 被 NC08 夹具覆写(specCount=1) | spec-audit 输出路由:--spec 单文件模式写夹具旁,不再覆写全量生产证据;全量审计重跑恢复(10 场景/74 探针/0 UNSUPPORTED) | 已恢复并实测 NC08 不再覆写 |
+| F-30 | three 量尺指纹口径分裂(aggregate 版本串 vs qualify sha256) | 两处统一为版本串比对 | 双批 rulerMatch=true |
+
+**RULER-R3 状态**:20 Reference 以当前 validator(f568bdf4 世代)统一重验 20/20 PASS → 重冻结(仍记 RULER-20261003-R02,协议漂移走 validationRevision v1→v5,尺号不变=量尺语义未变,仅测量协议重校);ceiling-check 全 CURRENT;R05 4 对升级 RULER_COMPAT。
+
+**遗留**:① core 统计组当前为空(n=0)——诚实结果:尚无 track=core 数据,正式矩阵(round create --track core)启动后自动填充;② maxToolCalls 机器强制需接入暴露计数器的 Agent 运行时(永久 PARTIAL 直至解决);③ E01/E02 两对 PAIR_TIMING_DRIFT/UNMEASURABLE——正式矩阵必须 Runner 双臂并行派发并写 execution.json。

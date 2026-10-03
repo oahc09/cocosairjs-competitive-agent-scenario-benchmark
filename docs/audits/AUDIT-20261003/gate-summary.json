@@ -38,5 +38,9 @@
       "note": "G8 EVIDENCE_COMPLETENESS"
     }
   },
-  "updatedPostRemediation": "2026-10-03T08:12:45.503Z"
+  "updatedPostRemediation": "2026-10-03T08:12:45.503Z",
+  "rectificationRound2": {
+    "aggregatedSchema": "track 分层 + core-only 统计 + rulerCompatibility 门禁(详见 aggregated.json groups[].scope 与 arms[].rulerStatus)",
+    "coreStatsNow": "空(n=0,无 track=core 数据)——正式启动矩阵(--track core)后自动填充"
+  }
 }
