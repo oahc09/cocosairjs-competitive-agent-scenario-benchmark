@@ -83,3 +83,9 @@ B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 s
 | R2-7(P1) | formal 分子分母不一致:RULER totalScore 无 S4,Agent formal 有 → G7 解锁后 attainment 天然 >100% | 方案 A 落地:Reference code-review ×20(统一规则引擎,双引擎同分 4.3/5 如实)+ RULER 冻结 referenceS4/totalScore=objective+referenceS4+visual | E01:three total=88.3(55+4.3+29);后续再加 codeReviewProtocolHash 进 drift 分类 |
 | R2-8(P1) | gates G5/G6/G8 旧状态与 audit 双事实源 | gates/G*.json 刷新为唯一权威(G5 两轮/G6 含并行派发器前置/G8 覆盖两批+20 Ref);audit 仅引用 | run.mjs gates 实测 |
 | R2-9(新发现) | cocosair/E09 指纹重验 P7 边缘失败(第二次导出与首导像素 diff 0.0043 < 0.005:确定性重导 vs 运动阈值矛盾) | 不调阈值;如实记 E09-air 最新验证 FAIL(0.75),ceiling 待 Owner 校准决策 | RULER 已如实记录(75.3) |
+
+### R2-9 判别结论(同日追加)
+
+空闲单点复跑(E09-air):**PASS,P7 diffRatio=0.0376**(阈值 0.005,7.5 倍余量)。跨 7 次验证 P7 运动量 0.0043–0.0478(10 倍散布),两次 FAIL 均发生在后台循环连跑的高载时段 → **负载敏感抖动**(导出下载处理在高载下冻结渲染,600ms 采样窗落入停滞帧),非回归。
+
+**核心矩阵含义**:120 runs 背靠背单机执行时,边缘运动探针必然周期性抖动。缓解选项(Owner 决):(a) 验证严格串行且每项之间留冷却;(b) 对导出/下载类探针将 spanMs 或阈值按实测散布校准(spec 升版);(c) 验证机与负载隔离。机制层不做阈值迁就。
