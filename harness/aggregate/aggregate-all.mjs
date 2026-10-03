@@ -59,6 +59,9 @@ function refCeilingVisual() {
 }
 
 const batchesIdx = fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path.join(RESULTS, 'batches.json')) : { batches: [] };
+// Reference 纪元账本(引擎/文档/Brief 三输入指纹):批次引擎哈希与量尺纪元不匹配时标记,防跨引擎版本误算 Attainment
+let refEpochs = null;
+try { refEpochs = rj(path.join(BENCH, 'reference', 'private', 'REFERENCE-VERSIONS.json')).epochs; } catch { /* 账本未冻结时跳过纪元匹配 */ }
 const refVis = refCeilingVisual();
 const ceiling = {};
 for (let i = 1; i <= 10; i++) {
@@ -94,10 +97,14 @@ for (const b of [...batchesIdx.batches].sort((x, y) => (x.batchId < y.batchId ? 
     const rawDelta = both ? arms.cocosair.total - arms.three.total : null;
     const att = {};
     for (const e of ['three', 'cocosair']) att[e] = (arms[e]?.total != null && ceiling[`${pj.sceneId}:${e}`]?.total) ? r2(arms[e].total / ceiling[`${pj.sceneId}:${e}`].total) : null;
+    // 纪元匹配:该批次跑的 AIR 引擎是否与量尺冻结时同版(不匹配则 Attainment 跨版本,单列)
+    const epoch = refEpochs ? refEpochs[`${pj.sceneId}:cocosair`] : null;
+    const airEpochMatch = !epoch ? 'unknown(账本未冻结)' : (pj.airPackageHash === epoch.inputs.engine ? 'matched' : 'engine-differs');
     pairs.push({
       pairId: pd.name, batchId: b.batchId, scene: pj.sceneId, knowledge: pj.knowledge, rep: pj.repetition, pilot: pj.pilot ?? false,
       arms,
       attainment: att,
+      ceilingEpoch: { air: airEpochMatch, refVersion: epoch ? epoch.refVersion : null, batchEngineSha: (pj.airPackageHash || '').slice(0, 8), ceilingEngineSha: epoch ? String(epoch.inputs.engine).slice(0, 8) : null },
       paired: both ? {
         rawDeltaAirMinusThree: rawDelta,
         attainmentDeltaAirMinusThree: (att.cocosair != null && att.three != null) ? r2(att.cocosair - att.three) : null,

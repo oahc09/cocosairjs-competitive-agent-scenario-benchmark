@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T02:23:26.289Z",
+  "generatedAt": "2026-10-03T04:18:52.792Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(5)+visual(round(Σ18×40/18));visual 缺失时 total=null(objectiveOnly 报告)",
   "batches": [
     {
@@ -52,6 +52,12 @@
             "three": 0.97,
             "cocosair": 1.03
           },
+          "ceilingEpoch": {
+            "air": "matched",
+            "refVersion": 1,
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          },
           "paired": {
             "rawDeltaAirMinusThree": 5,
             "attainmentDeltaAirMinusThree": 0.06,
@@ -102,6 +108,12 @@
           "attainment": {
             "three": 1.05,
             "cocosair": 0.75
+          },
+          "ceilingEpoch": {
+            "air": "matched",
+            "refVersion": 1,
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
           },
           "paired": {
             "rawDeltaAirMinusThree": -25,
@@ -154,6 +166,12 @@
             "three": 0.62,
             "cocosair": 0.61
           },
+          "ceilingEpoch": {
+            "air": "matched",
+            "refVersion": 1,
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          },
           "paired": {
             "rawDeltaAirMinusThree": -1,
             "attainmentDeltaAirMinusThree": -0.01,
@@ -204,6 +222,12 @@
           "attainment": {
             "three": 0.99,
             "cocosair": 1
+          },
+          "ceilingEpoch": {
+            "air": "matched",
+            "refVersion": 1,
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
           },
           "paired": {
             "rawDeltaAirMinusThree": 1,
