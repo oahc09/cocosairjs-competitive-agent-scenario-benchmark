@@ -13,7 +13,7 @@ results/
     blind/                     ← 该批次盲评材料 + judge 结果 + visual-scores.json
   aggregated.json              ← 全量聚合(所有批次,harness/aggregate/aggregate-all.mjs 产出)
   reference-ceiling.json       ← Track A(与批次无关,Reference 固定)
-  _selftest/  nc/              ← 自测与负向对照(非正式批次)
+  nc/                ← 负向对照产物(非正式批次)
 ```
 
 ## 2. 一轮标准流程(顺序执行,零人工干预点在验证与评分)
