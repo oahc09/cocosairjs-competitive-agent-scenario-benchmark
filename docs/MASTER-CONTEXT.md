@@ -12,10 +12,11 @@
 | 资源 | 路径 |
 |---|---|
 | 实验根 | `E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark`(下称 `<ROOT>`) |
-| Cocos AIR 引擎源码(Reference 实现者可读) | `E:\AIProMax\github\cocosair.js`(build/npm/cocosair.module.js + build/cocosair.module.d.ts + docs/ + examples/) |
-| AIR 引擎本地 tarball(离线安装用) | `<ROOT>\vendor\cocosair.js-1.0.0.tgz` |
-| three.js r186 源码快照(Reference 实现者可读) | `E:\AIProMax\Y2026M09\cocosairjs-vs-threejs\three.js-r186`(0.186.1) |
-| npm three 版本 | `three@0.186.1`(registry 可用,即 r186) |
+| Cocos AIR 引擎 SDK(仓库内正典,Reference 实现者可读) | `<ROOT>\vendor\cocosair\1.0.0\`(build/npm/cocosair.module.js + build/cocosair.module.d.ts + docs/ + licenses/);上游源码仓库 `E:\AIProMax\github\cocosair.js`(仅打包新版本时需要) |
+| AIR 引擎 tarball(离线安装用) | `<ROOT>\vendor\cocosair.js-1.0.0.tgz`(完整)+ `cocosair.js-1.0.0-k0.tgz`(K0 剔除 docs/,root 与模板的 file: 安装源) |
+| three.js r186 SDK(仓库内正典,Reference 实现者可读) | `<ROOT>\vendor\three\0.186.1\`(build/ + examples/jsm + src/ 源码);上游快照 `E:\AIProMax\Y2026M09\cocosairjs-vs-threejs\three.js-r186`(仅打包新版本时需要) |
+| three 安装源 | `three@0.186.1` = `<ROOT>\vendor\three-0.186.1.tgz`(由 SDK 目录 npm pack 所得,root 与模板 file: 离线安装) |
+| 引擎版本注册表 | `<ROOT>\vendor\engine-versions.json`(schema 2:双引擎 activeVersion + versions;V9 机器校验 SDK↔tarball 一致) |
 | 能力差异审计(2026-09-26) | `<ROOT>\reports\inputs\COCOSAIRJS_VS_THREEJS_R186_能力差异与路线图.md` |
 | 旧 bench 方案设计 | `<ROOT>\reports\inputs\AGENT_ENGINE_BENCH_方案设计.md` |
 | 运行环境 | Windows + Git Bash;Node v24.14.0;npm 11.11.1;Chrome + Playwright chromium 已装 |

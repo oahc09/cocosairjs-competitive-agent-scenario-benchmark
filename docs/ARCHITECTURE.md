@@ -14,7 +14,7 @@
   briefs/E01..E10/            冻结场景规格(brief.md + spec.json,哈希在 index.json)
   templates/{three,cocosair}/ 双引擎冻结模板(canonical node_modules;coordinator 默认不拷依赖)
   knowledge/K0|K1|K2/         知识包(双引擎 × 三级,manifest+九域矩阵)
-  vendor/                     引擎 tarball + engine-versions.json(版本注册表)
+  vendor/                     引擎资产:<engine>/<版本>/ SDK 正典目录(含源码/docs)+ 安装用 tarball + engine-versions.json(双引擎版本注册表)
   assets/                     共享资产(GLB/纹理/音频 + MANIFEST)
   harness/
     round/run-round.mjs       ← ★ 轮次状态机(create→dispatch→collect→validate→blind→aggregate→status,幂等)

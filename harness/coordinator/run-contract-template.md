@@ -55,7 +55,7 @@
 2. `reference/`(Reference 实现、截图、视频、私有验证器)。
 3. `bench/results/` 下除本 Pair 本 Arm 之外的任何目录;一切既往 trial 结果。
 4. `harness/` 源码(coordinator / runner / isolation / probes 等)与本合同模板。
-5. 引擎源码仓库:`E:\AIProMax\github\cocosair.js`、three.js r186 源码树(`E:\AIProMax\Y2026M09\cocosairjs-vs-threejs\three.js-r186`)。
+5. 引擎资产:`bench/vendor/` 整目录(引擎 tarball 与版本化 SDK 目录,内含官方 docs/examples —— K0 冷启动隔离红线),以及引擎上游源码仓库:`E:\AIProMax\github\cocosair.js`、three.js r186 源码树(`E:\AIProMax\Y2026M09\cocosairjs-vs-threejs\three.js-r186`)。
 6. 实验计划书与本实验的合同文档目录(`bench/docs/`)。
 7. `secret/`(牺牲性串扰 marker)。
 8. 联网:任何网络请求(文档、搜索、包 registry)。
