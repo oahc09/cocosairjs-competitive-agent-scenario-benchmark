@@ -707,31 +707,44 @@ export async function resolveRegions(spec, ctx) {
       rects.push({ x: x0, y: 0, w: Math.max(1, x1 - x0), h: H });
       return;
     }
-    if (base === 'disk') {
-      // screen-centered circular region (accretion-disk class); bbox of the circle
-      const half = Math.round(Math.min(W, H) * 0.35);
-      rects.push({ x: Math.round(W / 2 - half), y: Math.round(H / 2 - half), w: half * 2, h: half * 2 });
-      return;
-    }
-    if (base === 'mid-ring') {
-      // annulus (inner..outer radii of min-dimension), approximated by 4 side bands
-      const o = Math.round(Math.min(W, H) * 0.72);
-      const i = Math.round(Math.min(W, H) * 0.38);
-      const cx = Math.round(W / 2), cy = Math.round(H / 2);
-      rects.push(
-        { x: cx - o, y: cy - o, w: o * 2, h: Math.max(1, o - i) },                    // top band
-        { x: cx - o, y: cy + i, w: o * 2, h: Math.max(1, o - i) },                    // bottom band
-        { x: cx - o, y: cy - i, w: Math.max(1, o - i), h: i * 2 },                    // left band
-        { x: cx + i, y: cy - i, w: Math.max(1, o - i), h: i * 2 }                     // right band
-      );
-      return;
-    }
-    if (base === 'disk-inner-azimuth' || base === 'disk-outer-azimuth') {
-      // 方位角扇区(水平主轴两侧,±6% 高度带;AUDIT F-15/E05 v1.0.2):
-      // inner r[0.04,0.11]×minD(白/蓝白);outer r∈[0.18,0.30]×minD(橙红降带)
+    if (base === 'disk' || base === 'mid-ring' || base === 'disk-inner-azimuth' || base === 'disk-outer-azimuth') {
+      // 吸积盘类区域:圆心 = 暗核中心(中心 30% 区域内最暗点,自适应构图偏移);
+      // 无 page(dry-run)时回退视口中心。引擎中立(不读 __bench 内部)。
+      const minD = Math.min(W, H);
+      let cx = Math.round(W / 2), cy = Math.round(H / 2);
+      if (page) {
+        try {
+          const frameC = shotBefore ?? (await shoot(page));
+          let bl = Infinity;
+          for (let y = Math.round(H * 0.3); y < H * 0.7; y += 3) for (let x = Math.round(W * 0.3); x < W * 0.7; x += 3) {
+            const i = (y * frameC.width + x) * 4;
+            const l = frameC.data[i] + frameC.data[i + 1] + frameC.data[i + 2];
+            if (l < bl) { bl = l; cx = x; cy = y; }
+          }
+        } catch { /* 回退视口中心 */ }
+      }
+      if (base === 'disk') {
+        const half = Math.round(minD * 0.35);
+        rects.push({ x: cx - half, y: cy - half, w: half * 2, h: half * 2 });
+        return;
+      }
+      if (base === 'mid-ring') {
+        const o = Math.min(Math.round(minD * 0.72), Math.round(H / 2));
+        const i = Math.round(minD * 0.38);
+        rects.annulusGroup = true; // 聚合语义:环带有运动即成立(motion/regionChange 读此标记)
+        rects.push(
+          { x: cx - o, y: Math.max(0, cy - o), w: o * 2, h: Math.max(1, o - i) },
+          { x: cx - o, y: cy + i, w: o * 2, h: Math.max(1, Math.min(o, H - cy - i)) },
+          { x: cx - o, y: Math.max(0, cy - i), w: Math.max(1, o - i), h: Math.max(1, Math.min(i * 2, H - Math.max(0, cy - i))) },
+          { x: cx + i, y: Math.max(0, cy - i), w: Math.max(1, Math.min(o - i, W - cx - i)), h: Math.max(1, Math.min(i * 2, H - Math.max(0, cy - i))) }
+        );
+        return;
+      }
+      // 方位角扇区(水平主轴两侧 ±6% 高度带;AUDIT F-15/E05 v1.0.2):
+      // inner r[0.04,0.11]×minD(白/蓝白);outer r[0.18,0.30]×minD(橙红降带)
       const [r0, r1] = base === 'disk-inner-azimuth' ? [0.04, 0.11] : [0.18, 0.30];
-      const i = Math.round(Math.min(W, H) * r0), o = Math.round(Math.min(W, H) * r1);
-      const cx = Math.round(W / 2), cy = Math.round(H / 2), hh = Math.max(2, Math.round(Math.min(W, H) * 0.06));
+      const i = Math.round(minD * r0), o = Math.round(minD * r1);
+      const hh = Math.max(2, Math.round(minD * 0.06));
       rects.push({ x: cx - o, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 }); // 左
       rects.push({ x: cx + i, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 }); // 右
       return;
@@ -1204,8 +1217,11 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
           const d = diffRatio(f1, f2, rect, pixThreshold);
           perRegion.push({ rect, diffRatio: Math.round(d.ratio * 10000) / 10000 });
         }
-        const min = Math.min(...perRegion.map((p) => p.diffRatio));
-        return { ok: min >= minRatio, ...meta, metrics: { minRatio, spanMs, perRegion, worstDiffRatio: min } };
+        const vals = perRegion.map((p) => p.diffRatio);
+        // annulus 组(rects.annulusGroup):环带被暗核中心/视口裁剪后,部分带可能落盘外;
+        // "星流沿环带运动"语义 = 任一带有运动即成立 → 聚合取 max(非 annulus 保持 worst=min)
+        const agg = rr.rects.annulusGroup ? Math.max(...vals) : Math.min(...vals);
+        return { ok: agg >= minRatio, ...meta, metrics: { minRatio, spanMs, perRegion, [rr.rects.annulusGroup ? 'bestDiffRatio(annulus)' : 'worstDiffRatio']: agg } };
       }
       case 'pixelDelta': {
         const metric = params.metric || 'diffRatio';
@@ -1281,7 +1297,8 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
           // 内环带 r∈[0.15,0.32](白/蓝白);外环带 r∈[0.42,0.58](橙红);切片高 0.12×min(W,H)
           const annulusBands = (r0, r1) => {
             const o = Math.round(Math.min(W_, H_) * r1), i = Math.round(Math.min(W_, H_) * r0);
-            const cx = Math.round(W_ / 2), cy = Math.round(H_ / 2);
+            const cc = darkCoreOf(frame);
+            const cx = cc[0], cy = cc[1];
             const hh = Math.max(2, Math.round(Math.min(W_, H_) * 0.06));
             return [
               { x: cx - o, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 },

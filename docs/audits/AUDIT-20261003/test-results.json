@@ -25,5 +25,38 @@
     "fail": 4,
     "failed": "E04×2(P4) E05×2(P3)"
   },
-  "leakScanAllPilotArms": "CLEAN×8"
+  "leakScanAllPilotArms": "CLEAN×8",
+  "targetedPilotB20261003R05": {
+    "generatedAt": "2026-10-03T12:45:41.298Z",
+    "purpose": "新证据链端到端首跑(身份冻结/preflight/机器计数/冻结 spec 验证/RULER-R2 分母/S4 证据化)",
+    "qualification": "QUALIFIED_OBJECTIVE ×4 pairs(整改后数据;visual 因 G7 挂起)",
+    "preflight": "4/4 PASS(身份一致性+arm spec sha)",
+    "machineBudget": "全部臂 budget=OK(E01-b browser 6/6 触限即停,如实披露)",
+    "results": {
+      "E01": "three FAIL(P7 LIFECYCLE_MISUSE:reset 未清视差目标,指针残留) | air FAIL(P4 INTERACTION:wheel 挂冒泡阶段被引擎吞+P7 同因)",
+      "E02": "双 PASS(7/7)",
+      "E05": "双 FAIL(P1 PERFORMANCE:角区星密度 <3%,与首轮同因,Agent 校准问题)",
+      "E10": "双 PASS(7/7)"
+    },
+    "objective": {
+      "E01": [
+        45,
+        45
+      ],
+      "E02": [
+        55,
+        50
+      ],
+      "E05": [
+        50,
+        50
+      ],
+      "E10": [
+        55,
+        55
+      ],
+      "note": "dAir: E01 -5? 实为 air-three=-5? 以 aggregated.json 为准(E01 three45/air40?)——精确值见文件"
+    },
+    "evidenceFinding": "独立验证抓到 Agent 自检假阳性(E01-b P4 代码走查推演过、真实滚轮失效;E01-a P7 自检 7/7 但指针残留未归中)——新链路有效性的直接证明"
+  }
 }

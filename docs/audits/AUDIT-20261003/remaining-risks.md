@@ -31,3 +31,13 @@
 ## 处置后记(2026-10-03 v1.0.2 轮)
 
 B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 spec.json amendments);双引擎 Reference 重验 PASS(20/20);RULER-R02 冻结;G3 恢复 PASS。B-3(code-review 证据)与 B-4(OS 级隔离)保持为正式矩阵前建议项。注:brief-freeze 触发的全员 briefSha 漂移(行尾/回填)经 20 项统一重验消化,进入 R02 新纪元。
+
+## Targeted Pilot(B-20261003-R05)新发现(2026-10-03)
+
+| ID | 发现 | 归因 | 处置 |
+|---|---|---|---|
+| F-18 | E01 双臂 P7 reset 后 parallaxOffset 残留(指针停在 reset 按钮上,目标未清零) | Agent 实现模式(参考实现已证明可解:reset 清零视差目标) | Agent 侧;spec 无需改(断言合理) |
+| F-19 | E01-b(AIR)P4 滚轮完全失效(wheel 挂 window 冒泡,引擎 canvas stopPropagation 吞事件)——**独立验证抓到自检假阳性**(Agent 代码走查推演通过) | AIR K0 已知坑 G5 + Agent 未按坑表用捕获监听 | Agent 侧;K1/K2 坑表已收录,验证 KnowledgeGain 的直接素材 |
+| F-20 | E05 双臂 P1 四角背景星密度 <3%(0.004-0.013/0.015-0.035),与首轮同因重复 | Agent 无验证器反馈下的视觉密度校准(双引擎对称) | Agent 侧;spec 偏严与否留 Owner 判(不改阈值迁就) |
+| F-21 | 执行器 mid-ring 几何以视口中心为圆心且带越界(y=-158) | Harness 缺陷(本轮发现并修复:暗核中心自适应+viewport clamp+annulus max 聚合) | 已修复并复验 |
+| F-22 | qualify/validate 集成三 bug(--revision 顶层 report 丢失、budget 路径、sidecar 双 schema) | Harness 缺陷 | 已修复并复验(新批 qualification=QUALIFIED_OBJECTIVE ×4) |

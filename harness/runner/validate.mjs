@@ -99,6 +99,13 @@ function resolveOutDir(base) {
   }
   const dir = path.join(revRoot, `${compactIso(isoNow())}-${revisionLabel}`);
   fs.mkdirSync(dir, { recursive: true });
+  // 顶层 report.json 永远指向最新一次验证(唯一判定事实源约定);旧版本在 revisions/ 全量留痕
+  process.on('exit', () => {
+    try {
+      const latest = path.join(dir, 'report.json');
+      if (fs.existsSync(latest)) fs.copyFileSync(latest, path.join(base, 'report.json'));
+    } catch { /* 退出钩子尽力而为 */ }
+  });
   return dir;
 }
 const outDir = resolveOutDir(outDirBase);
@@ -434,7 +441,10 @@ function classifyProbeFailures(failed) {
       : (f.status === 'ERROR' ? ['error'] : []);
     let domain = null;
     let unresolvedReason = null;
+    // 兼容两种 sidecar schema:FIX-B 嵌套式 probes[id].failureDomains[category] 与 FIX-D 扁平式 failureDomains[id]
+    const flatDomain = sidecar?.failureDomains?.[f.probeId] ?? null;
     if (!sidecar) unresolvedReason = 'no-sidecar';
+    else if (flatDomain && typeof flatDomain === 'string') { domain = flatDomain; }
     else if (!sidecar.probes || !sidecar.probes[f.probeId]) unresolvedReason = 'probe-not-in-sidecar';
     else if (!cats.length) unresolvedReason = 'uncategorized-failure';
     else {

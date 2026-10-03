@@ -1,0 +1,196 @@
+{
+  "runId": "RUN-final",
+  "generatedAt": "2026-10-03T12:31:44.460Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E10-K0-R01\\arm-a\\workspace",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E10-K0-R01\\arm-a\\spec.json",
+    "briefId": "E10",
+    "briefVersion": "1.0.1",
+    "sha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+  "validatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "validateSha256": "711b27b6810ec49e616d40c1eb53bbd3a930c7d4bc9d8b793949e0910543abb4"
+  },
+  "pairMeta": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E10-K0-R01\\pair.json",
+    "pairId": "PAIR-E10-K0-R01",
+    "batchId": "B-20261003-R05",
+    "sceneId": "E10",
+    "knowledge": "K0",
+    "loadError": null
+  },
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 4587,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/count.mjs build && node scripts/build.mjs\n\n[count] build #5 -> .budget/build.count\n\n  dist\\app.js  8.9kb\n\nDone in 17ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 4584ms\n"
+  },
+  "serve": {
+    "port": 7570,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E10-K0-R01\\arm-a\\workspace"
+  },
+  "ready": {
+    "appReady": true,
+    "benchReady": true,
+    "durationMs": 941
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 2,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [
+    {
+      "probeId": "P1",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P2",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P3",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P4",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "pixelDelta",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P5",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P6",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P7",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": []
+    }
+  ],
+  "probeResults": "probe-results.json",
+  "probePassRate": 1,
+  "fps": 60.3,
+  "perf": {
+    "fps": 60.3,
+    "frames": 181,
+    "sampleMs": 3003,
+    "sampledAt": "2026-10-03T12:32:19.615Z",
+    "minFpsSpec": 30,
+    "fpsMet": true
+  },
+  "downloads": [],
+  "networkEvents": {
+    "count": 9,
+    "totalBytes": 2462631
+  },
+  "screenshots": [
+    "initial.png",
+    "mid.png",
+    "final.png",
+    "extra-1.png",
+    "extra-2.png",
+    "P1-before.png",
+    "P1-vis.png",
+    "P1-after.png",
+    "P2-before.png",
+    "P2-motion-a.png",
+    "P2-motion-b.png",
+    "P2-after.png",
+    "P3-before.png",
+    "P3-region-a.png",
+    "P3-region-b.png",
+    "P3-after.png",
+    "P4-before.png",
+    "P4-delta.png",
+    "P4-after.png",
+    "P5-before.png",
+    "P5-motion-a.png",
+    "P5-motion-b.png",
+    "P5-after.png",
+    "P6-before.png",
+    "P6-vis.png",
+    "P6-after.png",
+    "P7-before.png",
+    "P7-motion-a.png",
+    "P7-motion-b.png",
+    "P7-after.png"
+  ],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "probe-results.json",
+    "console.json",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "PASS",
+  "failureCategory": null,
+  "verdict": "PASS",
+  "error": null,
+  "scoreInputs": {
+    "s1": {
+      "buildPass": true,
+      "readyNoError": true,
+      "firstShotNonBlank": true,
+      "firstShotLitRatio": 0.5638
+    },
+    "s2": {
+      "passedWeight": 7,
+      "totalWeight": 7,
+      "probePassRate": 1,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": true,
+      "lifecycleProbeId": "P6",
+      "fpsMet": true,
+      "minFps": 30
+    }
+  },
+  "inputGuard": {
+    "kind": "PASS",
+    "checked": [
+      "specSha256",
+      "dependencyHashes"
+    ],
+    "at": "2026-10-03T12:31:44.475Z"
+  },
+  "durationMs": 35743,
+  "finishedAt": "2026-10-03T12:32:20.176Z"
+}

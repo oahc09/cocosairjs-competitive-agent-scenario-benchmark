@@ -1,0 +1,256 @@
+{
+  "batchId": "B-20261003-R05",
+  "createdAt": "2026-10-03T08:57:15.688Z",
+  "updatedAt": "2026-10-03T12:24:58.214Z",
+  "plan": {
+    "source": "--matrix E01,E02,E05,E10|K0|R01",
+    "pairs": [
+      {
+        "scene": "E01",
+        "knowledge": "K0",
+        "rep": "R01",
+        "pairId": "PAIR-E01-K0-R01",
+        "batchId": "B-20261003-R05"
+      },
+      {
+        "scene": "E02",
+        "knowledge": "K0",
+        "rep": "R01",
+        "pairId": "PAIR-E02-K0-R01",
+        "batchId": "B-20261003-R05"
+      },
+      {
+        "scene": "E05",
+        "knowledge": "K0",
+        "rep": "R01",
+        "pairId": "PAIR-E05-K0-R01",
+        "batchId": "B-20261003-R05"
+      },
+      {
+        "scene": "E10",
+        "knowledge": "K0",
+        "rep": "R01",
+        "pairId": "PAIR-E10-K0-R01",
+        "batchId": "B-20261003-R05"
+      }
+    ]
+  },
+  "engine": {
+    "three": {
+      "version": "0.186.1"
+    },
+    "cocosair": {
+      "tarball": "vendor/cocosair.js-1.0.0-k0.tgz",
+      "sha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565"
+    }
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:30:40.702Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 3,
+              "toolcall": 0,
+              "walltime": 6
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:31:10.757Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 6,
+              "toolcall": 0,
+              "walltime": 10
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-03T11:30:05.566Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E02-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:31:49.149Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 4,
+              "toolcall": 0,
+              "walltime": 10
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:32:24.640Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 6,
+              "browser": 6,
+              "toolcall": 0,
+              "walltime": 38
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-03T11:30:05.576Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E05-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:32:56.087Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 5,
+              "toolcall": 0,
+              "walltime": 9
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:33:25.664Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 3,
+              "toolcall": 0,
+              "walltime": 13
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-03T11:30:05.581Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E10-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:34:02.442Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 5,
+              "toolcall": 0,
+              "walltime": 5
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-03T11:34:38.227Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 6,
+              "toolcall": 0,
+              "walltime": 8
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-03T11:30:05.589Z"
+      }
+    }
+  ],
+  "stages": {
+    "preflight": {
+      "lastRunAt": "2026-10-03T11:30:05.589Z",
+      "summary": "PASS",
+      "blocked": [],
+      "pairs": 4
+    },
+    "collect": {
+      "lastRunAt": "2026-10-03T11:30:05.205Z",
+      "completed": "8/8",
+      "pending": []
+    },
+    "validate": {
+      "lastRunAt": "2026-10-03T11:34:38.228Z",
+      "jobs": 8,
+      "ok": 4,
+      "fail": 4,
+      "forced": false,
+      "blockedPairs": [],
+      "budgetExhausted": 0,
+      "invalidEvidence": 0
+    },
+    "blind": {
+      "lastRunAt": "2026-10-03T12:24:58.211Z",
+      "material": "built",
+      "visualScores": "pending-judge"
+    }
+  },
+  "notes": [
+    "Agent Run 执行说明见同目录 DISPATCH.md;执行完毕后依次 --stage collect/validate/blind/aggregate"
+  ]
+}

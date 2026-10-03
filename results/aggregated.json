@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T08:12:27.379Z",
+  "generatedAt": "2026-10-03T12:44:20.679Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
   "rulerStatus": {
     "rulerId": "RULER-20261003-R02",
@@ -43,8 +43,9 @@
               "lifecycleIds": [
                 "P7"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E01-K0-R01/arm-a/validation/code-review.json",
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -71,8 +72,9 @@
               "lifecycleIds": [
                 "P7"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E01-K0-R01/arm-b/validation/code-review.json",
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -143,8 +145,9 @@
                 "P6",
                 "P7"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E02-K0-R01/arm-a/validation/code-review.json",
               "objectiveTotal": 32,
               "verdict": "FAIL",
               "classification": "STATE_MANAGEMENT",
@@ -172,8 +175,9 @@
                 "P6",
                 "P7"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E02-K0-R01/arm-b/validation/code-review.json",
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -243,8 +247,9 @@
               "lifecycleIds": [
                 "P6"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E05-K0-R01/arm-a/validation/code-review.json",
               "objectiveTotal": 19,
               "verdict": "FAIL",
               "classification": "STATE_MANAGEMENT",
@@ -271,8 +276,9 @@
               "lifecycleIds": [
                 "P6"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E05-K0-R01/arm-b/validation/code-review.json",
               "objectiveTotal": 19,
               "verdict": "FAIL",
               "classification": "STATE_MANAGEMENT",
@@ -345,8 +351,9 @@
                 "P6",
                 "P7"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E10-K0-R01/arm-a/validation/code-review.json",
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -376,8 +383,9 @@
                 "P6",
                 "P7"
               ],
-              "s4": null,
-              "s4Pending": true,
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261002-R1/PAIR-E10-K0-R01/arm-b/validation/code-review.json",
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -432,85 +440,655 @@
           }
         }
       ]
+    },
+    {
+      "batchId": "B-20261003-R05",
+      "createdAt": "2026-10-03T08:57:02.264Z",
+      "pairs": [
+        {
+          "pairId": "PAIR-E01-K0-R01",
+          "batchId": "B-20261003-R05",
+          "scene": "E01",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 26,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E01-K0-R01/arm-a/validation/code-review.json",
+              "objectiveTotal": 45,
+              "verdict": "FAIL",
+              "classification": "LIFECYCLE_MISUSE",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E01.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P7",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "state"
+                    ],
+                    "domain": "LIFECYCLE_MISUSE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:38:34.050Z"
+              },
+              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 0.8571,
+              "fps": 60,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 45,
+                "attainment": 0.82
+              },
+              "report": "B-20261003-R05/PAIR-E01-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 21,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E01-K0-R01/arm-b/validation/code-review.json",
+              "objectiveTotal": 40,
+              "verdict": "FAIL",
+              "classification": "INTERACTION",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E01.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P4",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "state"
+                    ],
+                    "domain": "INTERACTION",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:39:06.410Z"
+              },
+              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 0.7143,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 40,
+                "attainment": 0.73
+              },
+              "report": "B-20261003-R05/PAIR-E01-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 45,
+              "cocosair": 40
+            },
+            "attainment": {
+              "three": 0.82,
+              "cocosair": 0.73
+            },
+            "pairedDelta": -5,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 5,
+            "rulerId": "RULER-20261003-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E02-K0-R01",
+          "batchId": "B-20261003-R05",
+          "scene": "E02",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E02-K0-R01/arm-a/validation/code-review.json",
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:40:45.974Z"
+              },
+              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 1,
+              "fps": 60.3,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "report": "B-20261003-R05/PAIR-E02-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E02-K0-R01/arm-b/validation/code-review.json",
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:41:34.734Z"
+              },
+              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 1,
+              "fps": 60,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "report": "B-20261003-R05/PAIR-E02-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 1
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 5,
+            "rulerId": "RULER-20261003-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E05-K0-R01",
+          "batchId": "B-20261003-R05",
+          "scene": "E05",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 25,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6"
+              ],
+              "s4": 4.3,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E05-K0-R01/arm-a/validation/code-review.json",
+              "objectiveTotal": 50,
+              "verdict": "FAIL",
+              "classification": "PERFORMANCE",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P1",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "visual"
+                    ],
+                    "domain": "PERFORMANCE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:42:10.127Z"
+              },
+              "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 0.8333,
+              "fps": 60.3,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 50,
+                "attainment": 0.91
+              },
+              "report": "B-20261003-R05/PAIR-E05-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 25,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E05-K0-R01/arm-b/validation/code-review.json",
+              "objectiveTotal": 50,
+              "verdict": "FAIL",
+              "classification": "PERFORMANCE",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P1",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "visual"
+                    ],
+                    "domain": "PERFORMANCE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:42:40.413Z"
+              },
+              "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 0.8333,
+              "fps": 60.2,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 50,
+                "attainment": 0.91
+              },
+              "report": "B-20261003-R05/PAIR-E05-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 50,
+              "cocosair": 50
+            },
+            "attainment": {
+              "three": 0.91,
+              "cocosair": 0.91
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 5,
+            "rulerId": "RULER-20261003-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E10-K0-R01",
+          "batchId": "B-20261003-R05",
+          "scene": "E10",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P4",
+                "P5",
+                "P6",
+                "P7"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E10-K0-R01/arm-a/validation/code-review.json",
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:43:09.505Z"
+              },
+              "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 1,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "report": "B-20261003-R05/PAIR-E10-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P4",
+                "P5",
+                "P6",
+                "P7"
+              ],
+              "s4": 5,
+              "s4Pending": false,
+              "s4Source": "results/B-20261003-R05/PAIR-E10-K0-R01/arm-b/validation/code-review.json",
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-03T12:43:45.325Z"
+              },
+              "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "passRate": 1,
+              "fps": 60,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "report": "B-20261003-R05/PAIR-E10-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 1
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 5,
+            "rulerId": "RULER-20261003-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        }
+      ]
     }
   ],
   "groups": [
     {
       "scene": "E01",
       "knowledge": "K0",
-      "n": 1,
+      "n": 2,
       "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
-        "median": 0,
-        "iqr": null,
-        "bootstrapCi95": null
+        "median": -2.5,
+        "iqr": 2.5,
+        "bootstrapCi95": [
+          -5,
+          0
+        ]
       },
       "winTieLoss": {
         "air": 0,
         "tie": 1,
-        "three": 0
+        "three": 1
       },
       "attainmentMedian": {
-        "three": 1,
-        "air": 1,
+        "three": 0.91,
+        "air": 0.87,
         "basis": "objective 对 RULER objectiveScore"
       }
     },
     {
       "scene": "E02",
       "knowledge": "K0",
-      "n": 1,
+      "n": 2,
       "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
-        "median": -23,
-        "iqr": null,
-        "bootstrapCi95": null
+        "median": -11.5,
+        "iqr": 11.5,
+        "bootstrapCi95": [
+          -23,
+          0
+        ]
       },
       "winTieLoss": {
         "air": 0,
-        "tie": 0,
+        "tie": 1,
         "three": 1
       },
       "attainmentMedian": {
         "three": 1,
-        "air": 0.58,
+        "air": 0.79,
         "basis": "objective 对 RULER objectiveScore"
       }
     },
     {
       "scene": "E05",
       "knowledge": "K0",
-      "n": 1,
+      "n": 2,
       "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
         "median": 0,
-        "iqr": null,
-        "bootstrapCi95": null
+        "iqr": 0,
+        "bootstrapCi95": [
+          0,
+          0
+        ]
       },
       "winTieLoss": {
         "air": 0,
-        "tie": 1,
+        "tie": 2,
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0.35,
-        "air": 0.35,
+        "three": 0.63,
+        "air": 0.63,
         "basis": "objective 对 RULER objectiveScore"
       }
     },
     {
       "scene": "E10",
       "knowledge": "K0",
-      "n": 1,
+      "n": 2,
       "basis": "objective(S1+S2+S3;G7 未过,formal 不可用)",
       "rawDelta": {
         "median": 0,
-        "iqr": null,
-        "bootstrapCi95": null
+        "iqr": 0,
+        "bootstrapCi95": [
+          0,
+          0
+        ]
       },
       "winTieLoss": {
         "air": 0,
-        "tie": 1,
+        "tie": 2,
         "three": 0
       },
       "attainmentMedian": {
@@ -520,7 +1098,80 @@
       }
     }
   ],
-  "knowledgeGain": [],
+  "knowledgeGain": [
+    {
+      "scene": "E01",
+      "engine": "three",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 45
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E01",
+      "engine": "cocosair",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 40
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E02",
+      "engine": "three",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 55
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E02",
+      "engine": "cocosair",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 55
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E05",
+      "engine": "three",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 50
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E05",
+      "engine": "cocosair",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 50
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E10",
+      "engine": "three",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 55
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E10",
+      "engine": "cocosair",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 55
+      },
+      "knowledgeGainVsK0": {}
+    }
+  ],
   "referenceCeiling": {
     "E01/three": {
       "objective": 55,

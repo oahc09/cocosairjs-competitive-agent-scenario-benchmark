@@ -138,7 +138,8 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   const budget = pj.budget ?? null;
   const budgetCounters = {};
   for (const arm of ['arm-a', 'arm-b']) {
-    const bDir = path.join(pairDir, arm, '.budget');
+    // 计数器位置:arm/workspace/.budget(FIX-C 布局);兼容旧约定 arm/.budget
+    const bDir = ['workspace/.budget', '.budget'].map(r => path.join(pairDir, arm, r)).find(p => fs.existsSync(p)) || path.join(pairDir, arm, 'workspace', '.budget');
     budgetCounters[arm] = fs.existsSync(bDir) ? fs.readdirSync(bDir) : null;
   }
   const budgetDeclared = Boolean(budget) && [budget.maxToolCalls, budget.maxWallTimeMinutes, budget.maxBuildAttempts, budget.maxBrowserAttempts].every((x) => typeof x === 'number');
@@ -195,6 +196,9 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   if (!visualGate.ok) reasons.push(`G7=${g7Status},视觉口径作废`);
   if (!rulerMatch.ok) reasons.push('量尺匹配失败(见 rulerMatch)');
   if (runVsPair && pairVsCurrent && validatorKnown.ok && agentIdentityComplete.ok && budgetMachineCounted.ok && visualGate.ok && rulerMatch.ok) status = 'QUALIFIED';
+  // 整改后数据(身份/冻结/预算/协议全过)仅因 G7=BLOCKED 挂视觉:objective 口径完全可信,
+  // 不应错标 LEGACY(遗留)—— 单列 QUALIFIED_OBJECTIVE(正式 objective,visual 待 G7)
+  else if (runVsPair && pairVsCurrent && validatorKnown.ok && agentIdentityComplete.ok && budgetMachineCounted.ok && rulerMatch.ok && !visualGate.ok && failedIds.every(id => id === 'visualGate')) status = 'QUALIFIED_OBJECTIVE';
 
   const pairEntry = {
     pairId: pd.name, scene, knowledge: pj.knowledge, repetition: pj.repetition, pilot: pj.pilot ?? false,
@@ -220,30 +224,45 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   pairReports.push(pairEntry);
 }
 
-// ---- 批次级结论
+// ---- 批次级结论(数据驱动,不再对特定批次硬编码)
 const allPairs = pairReports;
 const anyRunDrift = allPairs.some((p) => !p.checks.specExact.runVsPair);
 const reusableMetrics = [];
 const invalidOrPendingMetrics = [];
 const batchReasons = [];
+const pairStatuses = allPairs.map((p) => p.status);
+const isLegacyBatch = batchArg === 'B-20261002-R1'; // 整改前遗留批次(身份/协议/预算证据缺失的历史口径)
+
 if (!allPairs.some((p) => !p.checks.frozenInputsComplete.ok)) reusableMetrics.push('冻结输入指纹组(brief/spec/assets/templates/knowledge/engine sha)—— pair.json 完整');
-reusableMetrics.push('objective S1/S2/S3 逐臂分(证据:validation/report.json;标记 provisional:验证协议哈希未记录)', 'objective 成对 delta(AIR−Three,S1+S2+S3 口径)', '效率/诊断口径(fps、console、探针明细、网络/截图证据)', '引擎哈希溯源(pair.airPackageHash 与 RULER 账本 matched)');
-invalidOrPendingMetrics.push('visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)', 'formal total/attainment/pairedDelta(依赖 visual 与 S4,当前不可定义)', 'S4 代码健康(无 validation/code-review.json → s4Pending)', 'Attainment 对 RULER 的绝对值(量尺晚于批次,只能回溯套用;E10 还叠加 spec 漂移)');
-if (allPairs.some((p) => ['E02', 'E05'].includes(p.scene))) {
+reusableMetrics.push('objective S1/S2/S3 逐臂分(证据:validation/report.json' + (isLegacyBatch ? ';标记 provisional:验证协议哈希未记录' : ';协议哈希已记录,正式口径') + ')', 'objective 成对 delta(AIR−Three,S1+S2+S3 口径)', '效率/诊断口径(fps、console、探针明细、网络/截图证据)', '引擎哈希溯源(pair.airPackageHash 与 RULER 账本 matched)');
+if (g7Status !== 'PASS') invalidOrPendingMetrics.push('visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)');
+if (allPairs.some((p) => p.s4Pending)) invalidOrPendingMetrics.push('S4 代码健康(部分臂无 validation/code-review.json → s4Pending)');
+if (!isLegacyBatch && g7Status !== 'PASS') invalidOrPendingMetrics.push('formal total/attainment/pairedDelta(G7 过后重跑 blind+judge 即可补齐)');
+
+const nonVisualFailed = allPairs.filter((p) => (p.failedChecks || []).some((id) => id !== 'visualGate'));
+if (nonVisualFailed.length) invalidOrPendingMetrics.push('存在非 visual 项失败的对: ' + nonVisualFailed.map((p) => `${p.pairId}(${p.failedChecks.join(',')})`).join('; '));
+if (allPairs.some((p) => ['E02', 'E05'].includes(p.scene)) && isLegacyBatch) {
   invalidOrPendingMetrics.push('历史失败分类 STATE_MANAGEMENT(E02/E05)系已废除的 probeId 正则兜底所判;新版判 UNRESOLVED,历史分类建议按 classificationEvidence 重新人工归类');
   batchReasons.push('E02/E05 的 STATE_MANAGEMENT 分类是旧启发式兜底产物,证据链上应视为未归类(UNRESOLVED)');
 }
 if (anyRunDrift) batchReasons.push('存在"验证时 spec ≠ pair 冻结 spec"的对(E10):回溯 INPUT_DRIFT');
-batchReasons.push('全部 pair 的 Agent 身份五元组与验证协议哈希未记录 → 整批只能按 LEGACY_PROVISIONAL 口径引用');
+if (isLegacyBatch) batchReasons.push('全部 pair 的 Agent 身份五元组与验证协议哈希未记录 → 整批只能按 LEGACY_PROVISIONAL 口径引用');
+if (g7Status !== 'PASS') batchReasons.push(`G7=${g7Status}:visual 口径作废/挂起(不影响 objective 正式口径)`);
+
+// 批级状态 = 最弱 pair 状态(DISQUALIFIED > LEGACY_PROVISIONAL > QUALIFIED_OBJECTIVE > QUALIFIED)
+const ORDER = ['QUALIFIED', 'QUALIFIED_OBJECTIVE', 'LEGACY_PROVISIONAL', 'DISQUALIFIED'];
+let status = 'QUALIFIED';
+for (const p of allPairs) if (ORDER.indexOf(p.status) > ORDER.indexOf(status)) status = p.status;
 
 const qualification = {
   generatedAt: new Date().toISOString(),
   qualifier: 'harness/aggregate/qualify-historical.mjs (FIX-B)',
   batch: batchArg,
-  status: 'LEGACY_PROVISIONAL',
+  status,
   statusDefinition: {
     QUALIFIED: '全部鉴定项通过,指标按正式口径引用',
     LEGACY_PROVISIONAL: '整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制',
+    QUALIFIED_OBJECTIVE: '整改后数据:冻结输入/身份/预算/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起(G7 过后重跑 blind+judge 即可补齐)',
     DISQUALIFIED: '冻结输入断裂且无法溯源,全部指标作废',
   },
   context: {

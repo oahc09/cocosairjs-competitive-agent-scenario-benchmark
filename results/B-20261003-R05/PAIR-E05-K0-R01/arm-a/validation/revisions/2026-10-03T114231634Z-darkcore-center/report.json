@@ -1,0 +1,105 @@
+{
+  "runId": "RUN-E05-three-v3",
+  "generatedAt": "2026-10-03T11:42:31.671Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\spec.json",
+    "briefId": "E05",
+    "briefVersion": "1.0.2",
+    "sha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+  "validatorProtocolHash": "520a92878855aa434552d4fa918067d038a082a63557d695efa3dd1d75f2bf92",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "5dace4c231ca07b6e45218ed5b243b2f9a42ac33d854e21177914698e176bde5",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\pair.json",
+    "pairId": "PAIR-E05-K0-R01",
+    "batchId": "B-20261003-R05",
+    "sceneId": "E05",
+    "knowledge": "K0",
+    "loadError": null
+  },
+  "build": {
+    "ok": false,
+    "exitCode": 1,
+    "durationMs": 567,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\nnpm error Missing script: \"build\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: C:\\Users\\caosh\\AppData\\Local\\npm-cache\\_logs\\2026-10-03T11_42_32_197Z-debug-0.log\n\n[exit code 1] duration 564ms\n"
+  },
+  "serve": {
+    "port": null,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a"
+  },
+  "ready": {
+    "appReady": false,
+    "benchReady": false,
+    "durationMs": null
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0,
+  "fps": null,
+  "perf": null,
+  "downloads": [],
+  "networkEvents": {
+    "count": 0,
+    "totalBytes": 0
+  },
+  "screenshots": [],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "network.json",
+    "perf.json"
+  ],
+  "classification": "BUILD",
+  "failureCategory": "BUILD",
+  "verdict": "FAIL",
+  "error": "build failed",
+  "scoreInputs": {
+    "s1": {
+      "buildPass": false,
+      "readyNoError": false,
+      "firstShotNonBlank": false,
+      "firstShotLitRatio": null
+    },
+    "s2": {
+      "passedWeight": 0,
+      "totalWeight": 0,
+      "probePassRate": 0,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": false,
+      "lifecycleProbeId": null,
+      "fpsMet": false,
+      "minFps": 30
+    }
+  },
+  "inputGuard": {
+    "kind": "PASS",
+    "checked": [
+      "specSha256",
+      "dependencyHashes"
+    ],
+    "at": "2026-10-03T11:42:31.690Z"
+  },
+  "durationMs": 732,
+  "finishedAt": "2026-10-03T11:42:32.377Z"
+}

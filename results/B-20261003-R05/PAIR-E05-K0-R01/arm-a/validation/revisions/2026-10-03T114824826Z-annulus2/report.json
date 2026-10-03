@@ -1,0 +1,96 @@
+{
+  "runId": "RUN-v7",
+  "generatedAt": "2026-10-03T11:48:24.861Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\workspace",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\spec.json",
+    "briefId": "E05",
+    "briefVersion": "1.0.2",
+    "sha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+  "validatorProtocolHash": "a19994e9bae4cb9edad36670d82f7ad55ac11698c3d3d05f05693f0026809ced",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\pair.json",
+    "pairId": null,
+    "batchId": null,
+    "sceneId": null,
+    "knowledge": null,
+    "loadError": "ENOENT: no such file or directory, open 'E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\pair.json'"
+  },
+  "build": {
+    "ok": false,
+    "exitCode": null,
+    "durationMs": null,
+    "attempts": 1,
+    "logFile": "build.log"
+  },
+  "serve": {
+    "port": null,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\workspace"
+  },
+  "ready": {
+    "appReady": false,
+    "benchReady": false,
+    "durationMs": null
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0,
+  "fps": null,
+  "perf": null,
+  "downloads": [],
+  "networkEvents": {
+    "count": 0,
+    "totalBytes": 0
+  },
+  "screenshots": [],
+  "video": null,
+  "artifacts": [],
+  "classification": "INPUT_DRIFT",
+  "failureCategory": "INPUT_DRIFT",
+  "verdict": "FAIL",
+  "error": "pair.json 不可读: ENOENT: no such file or directory, open 'E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\pair.json'",
+  "scoreInputs": {
+    "s1": {
+      "buildPass": false,
+      "readyNoError": false,
+      "firstShotNonBlank": false,
+      "firstShotLitRatio": null
+    },
+    "s2": {
+      "passedWeight": 0,
+      "totalWeight": 0,
+      "probePassRate": 0,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": false,
+      "lifecycleProbeId": null,
+      "fpsMet": false,
+      "minFps": 30
+    }
+  },
+  "inputGuard": {
+    "kind": "INPUT_DRIFT",
+    "checked": "pair-meta",
+    "reason": "pair.json 不可读: ENOENT: no such file or directory, open 'E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\pair.json'",
+    "pairMetaPath": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261003-R05\\PAIR-E05-K0-R01\\arm-a\\pair.json"
+  },
+  "durationMs": 24,
+  "finishedAt": "2026-10-03T11:48:24.862Z"
+}

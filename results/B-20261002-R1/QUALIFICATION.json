@@ -1,23 +1,24 @@
 {
-  "generatedAt": "2026-10-03T07:32:49.481Z",
+  "generatedAt": "2026-10-03T12:36:12.056Z",
   "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
   "batch": "B-20261002-R1",
   "status": "LEGACY_PROVISIONAL",
   "statusDefinition": {
     "QUALIFIED": "全部鉴定项通过,指标按正式口径引用",
     "LEGACY_PROVISIONAL": "整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制",
+    "QUALIFIED_OBJECTIVE": "整改后数据:冻结输入/身份/预算/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起(G7 过后重跑 blind+judge 即可补齐)",
     "DISQUALIFIED": "冻结输入断裂且无法溯源,全部指标作废"
   },
   "context": {
     "ruler": {
-      "rulerId": "RULER-20261003-R1",
-      "updatedAt": "2026-10-03T07:32:41.723Z"
+      "rulerId": "RULER-20261003-R02",
+      "updatedAt": "2026-10-03T08:09:06.156Z"
     },
     "g7": {
       "status": "BLOCKED",
       "source": "gates/G7.json"
     },
-    "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9"
+    "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1"
   },
   "pairs": [
     {
@@ -67,7 +68,7 @@
           "currentBriefs": {
             "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
             "version": "1.0.0",
-            "briefSha256": "0faeaf8397104f8b2fa84efdfb15494fa94f36bc4bb1c75f0eb637f4258789fb"
+            "briefSha256": "225bf8c171f568e58931145bb30ad69c02578c6c275b040c9bd43e2c8bc5d8d7"
           },
           "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据",
           "sameVersionDifferentContent": "pair 冻结版与现行版版本号同为 v1.0.0 但内容 sha 不同 —— spec 在运行后被改动且未升版本号(违反\"改动必须升版\"纪律的历史事实,如实记录)"
@@ -77,7 +78,7 @@
           "ok": false,
           "validatorProtocolHash": null,
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
           "matchesCurrent": false,
           "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
         },
@@ -133,10 +134,10 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-02T13:23:02.778Z",
-            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
-          "rulerId": "RULER-20261003-R1"
+          "rulerId": "RULER-20261003-R02"
         }
       }
     },
@@ -187,7 +188,7 @@
           "currentBriefs": {
             "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
             "version": "1.0.0",
-            "briefSha256": "a979a396b199c6b4575e09206778f67391beaca7e3502f1c33c946ec735cb6a6"
+            "briefSha256": "9e06f270f3858471695137d820d29e08d1392e4b925d19a58ecf3d3fb3a8c385"
           },
           "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据",
           "sameVersionDifferentContent": "pair 冻结版与现行版版本号同为 v1.0.0 但内容 sha 不同 —— spec 在运行后被改动且未升版本号(违反\"改动必须升版\"纪律的历史事实,如实记录)"
@@ -197,7 +198,7 @@
           "ok": false,
           "validatorProtocolHash": null,
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
           "matchesCurrent": false,
           "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
         },
@@ -253,10 +254,10 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-02T13:23:10.060Z",
-            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
-          "rulerId": "RULER-20261003-R1"
+          "rulerId": "RULER-20261003-R02"
         }
       }
     },
@@ -275,7 +276,7 @@
         "visualGate"
       ],
       "reasons": [
-        "pair 冻结 spec(b2dbb7ae)≠现行 briefs spec(5e53b273 v1.0.0)",
+        "pair 冻结 spec(b2dbb7ae)≠现行 briefs spec(81105244 v1.0.2)",
         "验证协议哈希未记录(整改前 report 格式)",
         "Agent 身份字段缺失: agentBinaryHash, modelId, modelRevisionId, systemPromptHash, toolPolicyHash",
         "预算机器计数证据未归档(仅声明口径)",
@@ -305,19 +306,18 @@
           },
           "pairSpecSha256": "b2dbb7aee0f61b17d3854e112358bdaa8318acbd184efa998408aaa9a775a61f",
           "currentBriefs": {
-            "specSha256": "5e53b2737f6f28f69732bf4eb764bf16e3111c41f7d5de70d3010228ec073493",
-            "version": "1.0.0",
-            "briefSha256": "6611fb092230242d9e048c477eb2b63825a31939bcdd4c5a803760fdd8aa803e"
+            "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+            "version": "1.0.2",
+            "briefSha256": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b"
           },
-          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据",
-          "sameVersionDifferentContent": "pair 冻结版与现行版版本号同为 v1.0.0 但内容 sha 不同 —— spec 在运行后被改动且未升版本号(违反\"改动必须升版\"纪律的历史事实,如实记录)"
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
         },
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": false,
           "validatorProtocolHash": null,
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
           "matchesCurrent": false,
           "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
         },
@@ -373,10 +373,10 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-02T13:23:16.319Z",
-            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
-          "rulerId": "RULER-20261003-R1"
+          "rulerId": "RULER-20261003-R02"
         }
       }
     },
@@ -428,7 +428,7 @@
           "currentBriefs": {
             "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
             "version": "1.0.1",
-            "briefSha256": "94c7f67f6b79b3cc78f324fa9402737d9e8d8b0fc153e3e84c1cd5e68fec0f94"
+            "briefSha256": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad"
           },
           "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
         },
@@ -437,7 +437,7 @@
           "ok": false,
           "validatorProtocolHash": null,
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+          "currentValidatorProtocolHash": "f568bdf4fc973216cf8e6aac8b54d999cd92bace1d6f645b0dc131b056b169f1",
           "matchesCurrent": false,
           "note": "历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任"
         },
@@ -493,10 +493,10 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-02T13:23:22.317Z",
-            "rulerFrozenAt": "2026-10-03T07:32:41.723Z",
+            "rulerFrozenAt": "2026-10-03T08:09:06.156Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
-          "rulerId": "RULER-20261003-R1"
+          "rulerId": "RULER-20261003-R02"
         }
       },
       "e10SpecialCheck": {
@@ -515,7 +515,7 @@
           "currentGlobalSpec": {
             "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
             "version": "1.0.1",
-            "briefSha256": "94c7f67f6b79b3cc78f324fa9402737d9e8d8b0fc153e3e84c1cd5e68fec0f94"
+            "briefSha256": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad"
           }
         },
         "conclusion": "历史验证实际运行于 1.0.1(sha=63b74e45,中间版,现行库中无此文件);现行全局 v1.0.1(sha=83c8d350)内容与之不同(sha 不等);arm 落盘 spec 为 v1.0.0(sha=70c862a9,与验证时所用亦不同)。四份指纹互不相等 → E10 两臂的验证结论只对其运行时那个中间版 spec 负责,对 v1.0.1 现行 spec 无证明力。",
@@ -533,15 +533,14 @@
     ],
     "invalidOrPendingMetrics": [
       "visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)",
-      "formal total/attainment/pairedDelta(依赖 visual 与 S4,当前不可定义)",
-      "S4 代码健康(无 validation/code-review.json → s4Pending)",
-      "Attainment 对 RULER 的绝对值(量尺晚于批次,只能回溯套用;E10 还叠加 spec 漂移)",
+      "存在非 visual 项失败的对: PAIR-E01-K0-R01(specExact,validatorKnown,agentIdentityComplete,budgetMachineCounted,visualGate); PAIR-E02-K0-R01(specExact,validatorKnown,agentIdentityComplete,budgetMachineCounted,visualGate); PAIR-E05-K0-R01(specExact,validatorKnown,agentIdentityComplete,budgetMachineCounted,visualGate); PAIR-E10-K0-R01(specExact,validatorKnown,agentIdentityComplete,budgetMachineCounted,visualGate)",
       "历史失败分类 STATE_MANAGEMENT(E02/E05)系已废除的 probeId 正则兜底所判;新版判 UNRESOLVED,历史分类建议按 classificationEvidence 重新人工归类"
     ],
     "reasons": [
       "E02/E05 的 STATE_MANAGEMENT 分类是旧启发式兜底产物,证据链上应视为未归类(UNRESOLVED)",
       "存在\"验证时 spec ≠ pair 冻结 spec\"的对(E10):回溯 INPUT_DRIFT",
-      "全部 pair 的 Agent 身份五元组与验证协议哈希未记录 → 整批只能按 LEGACY_PROVISIONAL 口径引用"
+      "全部 pair 的 Agent 身份五元组与验证协议哈希未记录 → 整批只能按 LEGACY_PROVISIONAL 口径引用",
+      "G7=BLOCKED:visual 口径作废/挂起(不影响 objective 正式口径)"
     ]
   }
 }
