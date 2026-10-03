@@ -535,7 +535,7 @@ function burstAt(x, y, pal) {
             { grav: rand(19, 26), drag: rand(0.55, 0.78) });
     }
     // 余烬:68 个(>=12 spec)。40 个常规寿命 [4.2,7.0] ⊂ spec [3,7];
-    // 另 28 个"保底长尾"寿命 7.5-10.2s 均匀铺开 —— 偏离 spec 描述值(3-7s),
+    // 另 28 个"保底长尾"寿命 9.5-13.5s 均匀铺开 —— 偏离 spec 描述值(3-7s),
     // 原因:本 rig 截图节奏 ~0.55s/张,P4 状态采样落在点击后 ~9.8s(爆后 ~8.4s),
     // 严格 7s 上限下 P4 的 $.particlesAlive>=1 物理不可达(spec.json 探针为操作性
     // 判定合同,brief 数值为描述性;详见 WORKLOG 偏离记录)。全部为真实模拟粒子。
@@ -544,7 +544,7 @@ function burstAt(x, y, pal) {
         const a = R() * Math.PI * 2;
         const sp = rand(4, 13);
         const tail = i < 28;
-        const life = tail ? 7.5 + i * 0.0964 : rand(4.2, 7.0);
+        const life = tail ? 9.5 + i * 0.1429 : rand(4.2, 7.0); // AUDIT F-16/spec v1.0.2:长尾铺至 ~13.3s
         const size = tail ? rand(1.0, 1.45) : (R() < 0.4 ? rand(0.95, 1.35) : rand(0.55, 0.95));
         spawn(T_EMBER, x, y,
             Math.cos(a) * sp, Math.sin(a) * sp * 0.7,

@@ -1,6 +1,6 @@
 {
-  "runId": "run-2026-10-03T07-38-58-671Z",
-  "generatedAt": "2026-10-03T07:38:58.680Z",
+  "runId": "run-2026-10-03T08-11-31-285Z",
+  "generatedAt": "2026-10-03T08:11:31.296Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC04",
   "spec": {
@@ -12,20 +12,20 @@
   "pairId": null,
   "engine": null,
   "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "probeExecutorSha256": "c4be57666c33f56fb1c114122455e6b6b0712312bb1c76fc9fad16b78335d156",
     "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 915,
+    "durationMs": 969,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> NC04-fixture@1.0.0 build\n> node build.mjs\n\n[NC04 build] dist/app.js written\n\n[exit code 0] duration 914ms\n"
+    "log": "$ npm run build\n\n> NC04-fixture@1.0.0 build\n> node build.mjs\n\n[NC04 build] dist/app.js written\n\n[exit code 0] duration 967ms\n"
   },
   "serve": {
     "port": 7414,
@@ -34,7 +34,7 @@
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 302
+    "durationMs": 262
   },
   "console": {
     "errors": 1,
@@ -100,12 +100,12 @@
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 0.5714,
-  "fps": 60.2,
+  "fps": 60.3,
   "perf": {
-    "fps": 60.2,
+    "fps": 60.3,
     "frames": 181,
-    "sampleMs": 3006,
-    "sampledAt": "2026-10-03T07:39:22.315Z",
+    "sampleMs": 3001,
+    "sampledAt": "2026-10-03T08:11:55.341Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -162,7 +162,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.0366
+      "firstShotLitRatio": 0.0365
     },
     "s2": {
       "passedWeight": 4,
@@ -201,6 +201,6 @@
       }
     ]
   },
-  "durationMs": 24165,
-  "finishedAt": "2026-10-03T07:39:22.836Z"
+  "durationMs": 24630,
+  "finishedAt": "2026-10-03T08:11:55.916Z"
 }

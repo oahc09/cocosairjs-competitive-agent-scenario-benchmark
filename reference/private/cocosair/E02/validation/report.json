@@ -1,33 +1,40 @@
 {
-  "runId": "REF-E02-cocosair",
-  "generatedAt": "2026-10-02T09:48:49.705Z",
+  "runId": "REF-E02-cocosair-final",
+  "generatedAt": "2026-10-03T07:20:08.992Z",
   "harnessVersion": "1.0.0",
-  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\cocosair\\E02",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E02",
   "spec": {
-    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E02\\spec.json",
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E02\\spec.json",
     "briefId": "E02",
     "briefVersion": "1.0.0",
-    "sha256": "4a25bda60dd7f2017e7de908eac762c61dc91f3b2db1dfc68ea504901785ad7f"
+    "sha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9"
   },
   "pairId": null,
   "engine": null,
+  "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 1330,
+    "durationMs": 1509,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  29.2kb\n\nDone in 16ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1329ms\n"
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  29.2kb\n\nDone in 22ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1507ms\n"
   },
   "serve": {
-    "port": 7404,
-    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\cocosair\\E02"
+    "port": 7540,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E02"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 1410
+    "durationMs": 1718
   },
   "console": {
     "errors": 0,
@@ -41,60 +48,67 @@
       "probeId": "P1",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P2",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P3",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P4",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P5",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P6",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P7",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     }
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 1,
-  "fps": 60.3,
+  "fps": 60.2,
   "perf": {
-    "fps": 60.3,
+    "fps": 60.2,
     "frames": 181,
-    "sampleMs": 3002,
-    "sampledAt": "2026-10-02T09:49:27.684Z",
+    "sampleMs": 3009,
+    "sampledAt": "2026-10-03T07:20:48.069Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [],
   "networkEvents": {
     "count": 7,
-    "totalBytes": 6543046
+    "totalBytes": 6543148
   },
   "screenshots": [
     "initial.png",
@@ -126,13 +140,12 @@
     "P7-vis.png",
     "P7-after.png"
   ],
-  "video": "video.webm",
+  "video": null,
   "artifacts": [
     "source-sha.json",
     "build.log",
     "probe-results.json",
     "console.json",
-    "video.webm",
     "network.json",
     "serve-log.json",
     "perf.json"
@@ -146,7 +159,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.771
+      "firstShotLitRatio": 0.7388
     },
     "s2": {
       "passedWeight": 7,
@@ -161,6 +174,6 @@
       "minFps": 30
     }
   },
-  "durationMs": 38844,
-  "finishedAt": "2026-10-02T09:49:28.542Z"
+  "durationMs": 39731,
+  "finishedAt": "2026-10-03T07:20:48.699Z"
 }

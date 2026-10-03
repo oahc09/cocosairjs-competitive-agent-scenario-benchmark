@@ -2,7 +2,8 @@
 
 ```yaml
 briefId: E05
-briefVersion: 1.0.0
+briefVersion: 1.0.2
+> v1.0.2 (2026-10-03): P3 内白外橙断言改为多普勒亮侧扇区有向 R-B 差(AUDIT F-15);详见 spec.json amendments。
 frozen: true
 frozenAt: 2026-10-02T16:30:00+08:00
 briefSha256: computed-by-harness

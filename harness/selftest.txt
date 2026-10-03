@@ -2,7 +2,7 @@
 ========================================================================
 == S0 environment
 ========================================================================
-startedAt: 2026-10-03T07:35:26.673Z
+startedAt: 2026-10-03T08:09:24.639Z
 node: v24.14.0  platform: win32 x64
 harness dir: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\harness
 
@@ -27,7 +27,7 @@ harness dir: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmar
       "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
     },
     "swiftshaderFallback": false,
-    "detectedAt": "2026-10-03T07:35:29.062Z",
+    "detectedAt": "2026-10-03T08:09:27.363Z",
     "notes": "Chrome with default ANGLE backend; WebGL2 OK"
   }
 }
@@ -41,21 +41,21 @@ webgl2: {"ok":true,"version":"WebGL 2.0 (OpenGL ES 3.0 Chromium)","renderer":"AN
 ========================================================================
 == S2 process census BEFORE
 ========================================================================
-{"node":24,"chrome":33,"headless_shell":0}
+{"node":29,"chrome":55,"headless_shell":0}
 
 ========================================================================
 == S3 validate.mjs over tiny-fake-app (with video recording)
 ========================================================================
 [1/14] snapshot workspace: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\harness\fixtures\tiny-fake-app
 [2/14] npm run build ...
-       build ok=true exit=0 923ms
-[3/14] serve on 127.0.0.1:57194
+       build ok=true exit=0 1138ms
+[3/14] serve on 127.0.0.1:59503
 [4/14] launch browser (headless, 1280x720, fresh profile)
 [5/14] navigate + wait __appReady (10s)
        appReady=true benchReady=true
 [7/14] execute probes
 [11/14] fps sampling (3s rAF)
-done: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.2
+done: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.1
 report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\harness\selftest-out\run1\report.json
 
 ========================================================================
@@ -64,7 +64,7 @@ report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\har
 [PASS] report.json generated
 [PASS] validate exits 0 or 1 (PASS→0 / assertion FAIL→1; infra errors exit>=2) — exit=1
 [PASS] build.ok
-[PASS] appReady within 10s — durationMs=473
+[PASS] appReady within 10s — durationMs=471
 [PASS] bench contract (__bench) present
 [PASS] no uncaught errors
 [PASS] P1 nonBlank PASS — PASS
@@ -84,7 +84,7 @@ report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\har
 [PASS] key screenshots >= 5 — count=23
 [PASS] video.webm recorded
 [PASS] network events recorded — count=4
-[PASS] fps sampled >= 30 — fps=60.2
+[PASS] fps sampled >= 30 — fps=60.1
 [PASS] classification = failed-probe domain (P5 故意 FAIL;无 sidecar→UNRESOLVED) — UNRESOLVED
 [PASS] scoreInputs.s1 complete
 [PASS] scoreInputs.s3 lifecycle+fps
@@ -92,10 +92,10 @@ report: E:\AIProMax\Y2026M10\cocosairjs-competitive-agent-scenario-benchmark\har
 ========================================================================
 == S5 process census AFTER (leak check)
 ========================================================================
-{"node":24,"chrome":33,"headless_shell":0}
-delta node=0 chrome(+)headless_shell=0
-[PASS] no node process leak — delta=0 (before=24 after=24)
-[PASS] no chrome process leak — delta=0 (before=33 after=33)
+{"node":28,"chrome":48,"headless_shell":0}
+delta node=-1 chrome(+)headless_shell=-7
+[PASS] no node process leak — delta=-1 (before=29 after=28)
+[PASS] no chrome process leak — delta=-7 (before=55 after=48)
 
 ========================================================================
 == S6 spec dry-run parse (E01 / E03 / E10, no browser)
@@ -134,7 +134,7 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
 == S7 brief-freeze --check (informational, writes nothing)
 ========================================================================
 {
-  "ok": false,
+  "ok": true,
   "checkOnly": true,
   "briefCount": 10,
   "assetBackfillBriefs": [
@@ -142,22 +142,16 @@ E10: 7 probes, verbs=["wait","click"], allOk=true
     "E09",
     "E10"
   ],
-  "changes": [
-    {
-      "file": "briefs\\index.json",
-      "what": "10 brief.md sha256 entries"
-    }
-  ],
-  "wouldChange": [
-    "briefs\\index.json"
-  ],
+  "changes": [],
+  "wouldChange": [],
   "notes": [
+    "briefs/index.json already up to date",
     "E02: spec.json already frozen (assets match MANIFEST)",
     "E09: spec.json already frozen (assets match MANIFEST)",
     "E10: spec.json already frozen (assets match MANIFEST)"
   ]
 }
-(exit=1; drift before the real freeze run is expected and handled separately)
+(exit=0; drift before the real freeze run is expected and handled separately)
 
 ========================================================================
 == S8 score.mjs smoke (runs.json + pair metrics + bootstrap)
@@ -212,4 +206,4 @@ pair: {"pairId":"SELFTEST-PAIR","air":{"runId":"selftest-run1","total":89},"thre
 checks: 51/51 passed
 result: SELFTEST PASS
 
-generatedAt: 2026-10-03T07:35:54.609Z
+generatedAt: 2026-10-03T08:09:53.837Z

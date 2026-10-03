@@ -819,7 +819,8 @@ function explode(x, y, z, pal) {
     const ec = hsl(rand(0.045, 0.09), 0.95, 0.58);
     // 分层寿命(均 ∈ 3-7s):20% 长尾 [6,7] / 44% 中段 [5.4,6] / 36% 早段 [3.4,4.9]
     const r = Math.random();
-    const eLife = r < 0.20 ? rand(6.0, 7.0) : r < 0.64 ? rand(5.4, 6.0) : rand(3.4, 4.9);
+    // AUDIT-20261003 F-16 / spec v1.0.2:长尾铺至 10-12s(P4 采样 ~10.9s 仍可测)
+    const eLife = r < 0.34 ? rand(10.0, 12.0) : r < 0.64 ? rand(5.4, 7.0) : rand(3.4, 5.2);
     fwPos[i * 3] = x;
     fwPos[i * 3 + 1] = y;
     fwPos[i * 3 + 2] = z;

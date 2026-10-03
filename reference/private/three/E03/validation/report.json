@@ -1,33 +1,40 @@
 {
-  "runId": "REF-E03-three",
-  "generatedAt": "2026-10-02T11:22:20.449Z",
+  "runId": "REF-E03-three-final",
+  "generatedAt": "2026-10-03T07:20:50.016Z",
   "harnessVersion": "1.0.0",
-  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\three\\E03",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E03",
   "spec": {
-    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E03\\spec.json",
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E03\\spec.json",
     "briefId": "E03",
     "briefVersion": "1.0.0",
-    "sha256": "cfccd910033049e702ce4cd146d9dc1732594d2466a73f68bbc2fac0e35a310c"
+    "sha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2"
   },
   "pairId": null,
   "engine": null,
+  "specSha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
+  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 4330,
+    "durationMs": 4232,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  27.9kb\n\nDone in 21ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 4329ms\n"
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  27.9kb\n\nDone in 21ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 4229ms\n"
   },
   "serve": {
-    "port": 7411,
-    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\three\\E03"
+    "port": 7540,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E03"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 1016
+    "durationMs": 894
   },
   "console": {
     "errors": 0,
@@ -41,55 +48,64 @@
       "probeId": "P1",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P2",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "regionChange",
+      "failedAssertions": []
     },
     {
       "probeId": "P3",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "regionChange",
+      "failedAssertions": []
     },
     {
       "probeId": "P4",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P5",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P6",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P7",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P8",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P9",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "regionChange",
+      "failedAssertions": []
     }
   ],
   "probeResults": "probe-results.json",
@@ -98,15 +114,15 @@
   "perf": {
     "fps": 60.2,
     "frames": 181,
-    "sampleMs": 3008,
-    "sampledAt": "2026-10-02T11:22:50.870Z",
+    "sampleMs": 3009,
+    "sampledAt": "2026-10-03T07:21:20.652Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [],
   "networkEvents": {
     "count": 6,
-    "totalBytes": 2193069
+    "totalBytes": 2193165
   },
   "screenshots": [
     "initial.png",
@@ -118,9 +134,9 @@
     "P1-vis.png",
     "P1-after.png",
     "P2-before.png",
-    "P2-after.png",
     "P2-region-a.png",
     "P2-region-b.png",
+    "P2-after.png",
     "P3-before.png",
     "P3-after.png",
     "P4-before.png",
@@ -143,13 +159,12 @@
     "P9-before.png",
     "P9-after.png"
   ],
-  "video": "video.webm",
+  "video": null,
   "artifacts": [
     "source-sha.json",
     "build.log",
     "probe-results.json",
     "console.json",
-    "video.webm",
     "network.json",
     "serve-log.json",
     "perf.json"
@@ -163,7 +178,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.0868
+      "firstShotLitRatio": 0.0872
     },
     "s2": {
       "passedWeight": 9,
@@ -178,6 +193,6 @@
       "minFps": 30
     }
   },
-  "durationMs": 31294,
-  "finishedAt": "2026-10-02T11:22:51.732Z"
+  "durationMs": 31295,
+  "finishedAt": "2026-10-03T07:21:21.284Z"
 }

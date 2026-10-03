@@ -1,0 +1,90 @@
+{
+  "runId": "REF-E04-cocosair-v102",
+  "generatedAt": "2026-10-03T07:56:58.185Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E04",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E04\\spec.json",
+    "briefId": "E04",
+    "briefVersion": "1.0.2",
+    "sha256": "b4ecfad7b1ea625b4eed624436ceace9cb63a036bd2cac2df5af10df38125dd8"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "b4ecfad7b1ea625b4eed624436ceace9cb63a036bd2cac2df5af10df38125dd8",
+  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 3038,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  30.1kb\n\nDone in 61ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 3024ms\n"
+  },
+  "serve": {
+    "port": null,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E04"
+  },
+  "ready": {
+    "appReady": false,
+    "benchReady": false,
+    "durationMs": null
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0,
+  "fps": null,
+  "perf": null,
+  "downloads": [],
+  "networkEvents": {
+    "count": 0,
+    "totalBytes": 0
+  },
+  "screenshots": [],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "network.json",
+    "perf.json"
+  ],
+  "classification": "RUNTIME",
+  "failureCategory": "RUNTIME",
+  "verdict": "FAIL",
+  "error": "serve startup line: timeout after 8000ms",
+  "scoreInputs": {
+    "s1": {
+      "buildPass": false,
+      "readyNoError": false,
+      "firstShotNonBlank": false,
+      "firstShotLitRatio": null
+    },
+    "s2": {
+      "passedWeight": 0,
+      "totalWeight": 0,
+      "probePassRate": 0,
+      "behaviorItemsCount": 12
+    },
+    "s3": {
+      "lifecycleProbePassed": false,
+      "lifecycleProbeId": null,
+      "fpsMet": false,
+      "minFps": 30
+    }
+  },
+  "durationMs": 11916,
+  "finishedAt": "2026-10-03T07:57:10.058Z"
+}

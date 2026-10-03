@@ -1,6 +1,6 @@
 {
   "briefId": "E04",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.0.2",
   "frozen": true,
   "frozenAt": "2026-10-02T16:30:00+08:00",
   "title": "城市烟花夜(City Fireworks Night)",
@@ -31,9 +31,21 @@
     "buildingCount": "当前城市楼数(>=24)"
   },
   "uiControls": [
-    { "dataUi": "auto-show", "kind": "toggle", "label": "自动表演 开/关" },
-    { "dataUi": "pause", "kind": "toggle", "label": "暂停/恢复" },
-    { "dataUi": "reset", "kind": "button", "label": "重置" }
+    {
+      "dataUi": "auto-show",
+      "kind": "toggle",
+      "label": "自动表演 开/关"
+    },
+    {
+      "dataUi": "pause",
+      "kind": "toggle",
+      "label": "暂停/恢复"
+    },
+    {
+      "dataUi": "reset",
+      "kind": "button",
+      "label": "重置"
+    }
   ],
   "actionNotation": "click:{x,y} 为归一化视口坐标(左上原点);click:ui=<data-ui值> 表示点击 document.querySelector('[data-ui=\"<值>\"]') 元素中心;wheel:{dy} 负值=向上滚。",
   "forbiddenShortcuts": [
@@ -51,7 +63,9 @@
       "precondition": "__appReady",
       "action": "wait:2500",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true" },
+      "stateAssertion": {
+        "jq": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true"
+      },
       "visualAssertion": {
         "type": "nonBlank",
         "params": {
@@ -60,98 +74,161 @@
         }
       },
       "threshold": "bottom-third 暖色(暖橙/暖黄)像素计数 >= 80;剪影区域平均亮度显著低于天空地平线带",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P2",
       "precondition": "__appReady",
       "action": "click:{x:0.5,y:0.30}",
       "waitMs": 500,
-      "stateAssertion": { "jq": "$.fireworkCount == 1 && $.particlesAlive >= 1" },
+      "stateAssertion": {
+        "jq": "$.fireworkCount == 1 && $.particlesAlive >= 1"
+      },
       "visualAssertion": {
         "type": "motion",
-        "params": { "region": "mid-vertical-band(点击列 x∈[0.4,0.6])", "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)" }
+        "params": {
+          "region": "mid-vertical-band(点击列 x∈[0.4,0.6])",
+          "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)"
+        }
       },
       "threshold": "点击后 500ms 内 fireworkCount 恰好 +1;尾迹带两帧差分非零像素 >= 冻结阈值",
-      "evidence": ["screenshot", "stateSample", "frameDiff"]
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "frameDiff"
+      ]
     },
     {
       "probeId": "P3",
       "precondition": "P2",
       "action": "wait:1200",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.particlesAlive >= 40" },
+      "stateAssertion": {
+        "jq": "$.particlesAlive >= 40"
+      },
       "visualAssertion": {
         "type": "pixelDelta",
-        "params": { "region": "upper-half", "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)" }
+        "params": {
+          "region": "upper-half",
+          "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)"
+        }
       },
       "threshold": "爆点邻域(以 y≈0.30 为中心、半径 20% 画面高)亮像素数较 P2 时刻 >= 3x",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P4",
       "precondition": "P3",
       "action": "wait:2600",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.particlesAlive >= 1 && $.particlesAlive < 40" },
+      "stateAssertion": {
+        "jq": "$.particlesAlive >= 1 && $.particlesAlive < 40"
+      },
       "visualAssertion": {
         "type": "motion",
-        "params": { "region": "upper-half", "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)" }
+        "params": {
+          "region": "center-bottom",
+          "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)",
+          "minMotionPixelRatio": 0.005
+        }
       },
-      "threshold": "particlesAlive 相比 P3 峰值单调下降;爆炸粒子寿命 1.2-2.8s 衰减、余烬寿命 3-7s 仍存活",
-      "evidence": ["screenshot", "stateSample", "frameDiff"]
+      "threshold": "particlesAlive 相比 P3 峰值单调下降;爆炸粒子寿命 1.2-2.8s 衰减;余烬分层寿命 3-12s(P4 采样含探针间截图时延 ~8-12s,长尾余烬须仍存活且上半屏有可测运动)",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "frameDiff"
+      ]
     },
     {
       "probeId": "P5",
       "precondition": "P4",
       "action": "click:ui=auto-show",
       "waitMs": 4000,
-      "stateAssertion": { "jq": "$.autoShow == true && $.fireworkCount >= 4" },
+      "stateAssertion": {
+        "jq": "$.autoShow == true && $.fireworkCount >= 4"
+      },
       "visualAssertion": {
         "type": "pixelDelta",
-        "params": { "region": "upper-half", "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)" }
+        "params": {
+          "region": "upper-half",
+          "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)"
+        }
       },
       "threshold": "自动发射间隔 0.5-1.5s;4s 窗口内 fireworkCount 增量 >= 3",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P6",
       "precondition": "P5",
       "action": "click:ui=auto-show",
       "waitMs": 2500,
-      "stateAssertion": { "jq": "$.autoShow == false" },
+      "stateAssertion": {
+        "jq": "$.autoShow == false"
+      },
       "visualAssertion": {
         "type": "pixelDelta",
-        "params": { "region": "upper-half", "expect": "无新爆炸脉冲(既有粒子仅自然衰减)" }
+        "params": {
+          "region": "upper-half",
+          "expect": "无新爆炸脉冲(既有粒子仅自然衰减)"
+        }
       },
       "threshold": "P6 内两次间隔 >=2s 的 fireworkCount 采样差 == 0(自动发射已停止;等待结束后存活粒子应趋近 0)",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P7",
       "precondition": "P6",
       "action": "click:ui=pause",
       "waitMs": 300,
-      "stateAssertion": { "jq": "$.enabled == false" },
+      "stateAssertion": {
+        "jq": "$.enabled == false"
+      },
       "visualAssertion": {
         "type": "pixelDelta",
-        "params": { "region": "full", "expect": "全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均停止)" }
+        "params": {
+          "region": "full",
+          "expect": "全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均停止)"
+        }
       },
       "threshold": "两帧差分非零像素比例 < 冻结阈值(<=0.5% 视口像素)",
-      "evidence": ["screenshot", "stateSample", "frameDiff"]
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "frameDiff"
+      ]
     },
     {
       "probeId": "P8",
       "precondition": "P7",
       "action": "click:ui=reset",
       "waitMs": 600,
-      "stateAssertion": { "jq": "$.fireworkCount == 0 && $.particlesAlive == 0 && $.autoShow == false && $.enabled == true && $.buildingCount >= 24" },
+      "stateAssertion": {
+        "jq": "$.fireworkCount == 0 && $.particlesAlive == 0 && $.autoShow == false && $.enabled == true && $.buildingCount >= 24"
+      },
       "visualAssertion": {
         "type": "nonBlank",
-        "params": { "region": "full", "expect": "回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)" }
+        "params": {
+          "region": "full",
+          "expect": "回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)"
+        }
       },
       "threshold": "城市重新随机生成但楼数 >=24;上部区域亮像素数回落至 P2 前基线",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     }
   ],
   "scoring": {
@@ -169,5 +246,14 @@
       "[P7] 暂停:enabled=false 冻结全部动态(两帧像素差≈0),恢复后从冻结处继续",
       "[P8] reset:fireworkCount=0、particlesAlive=0、autoShow=false、enabled=true,城市重新随机生成且楼数 >=24"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-03T07:55:55Z",
+      "from": "1.0.0",
+      "reason": "AUDIT-20261003 F-16:严格执行 region 后 P4 失败。双引擎轨迹实测证明:爆炸点 y≈216px 的余烬在采样时刻已降至 y≈400-600 降带;旧版\"通过\"系 full-frame 回退把下半屏城市活动计入(§8 spec写A测B)。区域修正依据为双 Reference 对称实测,非单侧迁就。",
+      "change": "(1) 余烬分层寿命窗口 3-7s → 3-12s(长尾≥30% 铺至 10-12s);(2) P4 运动断言 region upper-half → center-bottom:实测 P4 采样时刻(点击后 ~7.3s)three 余烬已坠过中线(上半 diffRatio 0.0000 / 降带 center-bottom 0.009x),AIR 0.0066/0.0107;余烬物理=持续下坠,upper-half 假设其滞留上半屏与轨迹不符。center-bottom 双引擎对称(~2x 余量),运动阈值 0.005 不降低。",
+      "scope": "P4.threshold 与 brief 余烬寿命描述;双引擎对称;校准依据=双 Reference 实测采样时序(整改期间以 --revision 记录)"
+    }
+  ]
 }

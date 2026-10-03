@@ -1,6 +1,6 @@
 {
-  "runId": "run-2026-10-03T07-39-23-590Z",
-  "generatedAt": "2026-10-03T07:39:23.601Z",
+  "runId": "run-2026-10-03T08-11-56-769Z",
+  "generatedAt": "2026-10-03T08:11:56.781Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC05",
   "spec": {
@@ -12,20 +12,20 @@
   "pairId": null,
   "engine": null,
   "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "probeExecutorSha256": "c4be57666c33f56fb1c114122455e6b6b0712312bb1c76fc9fad16b78335d156",
     "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 865,
+    "durationMs": 1050,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> NC05-fixture@1.0.0 build\n> node build.mjs\n\n[NC05 build] dist/app.js written\n\n[exit code 0] duration 864ms\n"
+    "log": "$ npm run build\n\n> NC05-fixture@1.0.0 build\n> node build.mjs\n\n[NC05 build] dist/app.js written\n\n[exit code 0] duration 1048ms\n"
   },
   "serve": {
     "port": 7415,
@@ -34,7 +34,7 @@
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 249
+    "durationMs": 254
   },
   "console": {
     "errors": 1,
@@ -98,12 +98,12 @@
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 0.8571,
-  "fps": 60.2,
+  "fps": 60.1,
   "perf": {
-    "fps": 60.2,
+    "fps": 60.1,
     "frames": 181,
-    "sampleMs": 3008,
-    "sampledAt": "2026-10-03T07:39:49.464Z",
+    "sampleMs": 3011,
+    "sampledAt": "2026-10-03T08:12:23.540Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -190,6 +190,6 @@
       }
     ]
   },
-  "durationMs": 26410,
-  "finishedAt": "2026-10-03T07:39:50.001Z"
+  "durationMs": 27342,
+  "finishedAt": "2026-10-03T08:12:24.112Z"
 }

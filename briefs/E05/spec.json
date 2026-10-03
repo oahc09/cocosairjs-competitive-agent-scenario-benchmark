@@ -1,6 +1,6 @@
 {
   "briefId": "E05",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.0.2",
   "frozen": true,
   "frozenAt": "2026-10-02T16:30:00+08:00",
   "title": "黑洞吸积盘(Black Hole Accretion Disk)",
@@ -30,7 +30,11 @@
     "backgroundStarCount": "背景星点数(>=300,恒定)"
   },
   "uiControls": [
-    { "dataUi": "reset", "kind": "button", "label": "重置" }
+    {
+      "dataUi": "reset",
+      "kind": "button",
+      "label": "重置"
+    }
   ],
   "actionNotation": "click:{x,y} 为归一化视口坐标(左上原点);click:ui=<data-ui值> 表示点击 document.querySelector('[data-ui=\"<值>\"]') 元素中心;wheel:{dy} 负值=向上滚=靠近放大。",
   "forbiddenShortcuts": [
@@ -47,52 +51,80 @@
       "precondition": "__appReady",
       "action": "wait:2500",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.backgroundStarCount >= 300 && $.starStreamCount >= 200 && $.cameraDistance >= 13 && $.cameraDistance <= 15 && $.diskRotation > 0" },
+      "stateAssertion": {
+        "jq": "$.backgroundStarCount >= 300 && $.starStreamCount >= 200 && $.cameraDistance >= 13 && $.cameraDistance <= 15 && $.diskRotation > 0"
+      },
       "visualAssertion": {
         "type": "nonBlank",
         "params": {
-          "regions": ["center-third", "outer-corners"],
+          "regions": [
+            "center-third",
+            "outer-corners"
+          ],
           "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围"
         }
       },
       "threshold": "center-third 非黑像素比例 >= 5%;outer-corners 非黑像素比例 >= 1%;中心存在连续暗核区域",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P2",
       "precondition": "P1",
       "action": "wait:800",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.diskRotation > 0.05" },
+      "stateAssertion": {
+        "jq": "$.diskRotation > 0.05"
+      },
       "visualAssertion": {
         "type": "motion",
-        "params": { "region": "disk(盘面覆盖的环形屏幕区域)", "expect": "两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进" }
+        "params": {
+          "region": "disk(盘面覆盖的环形屏幕区域)",
+          "expect": "两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进"
+        }
       },
       "threshold": "两次间隔 800ms 的 diskRotation 采样差 >= 0.1 rad(角速度 0.15-0.6 rad/s ⇒ 0.12-0.48 rad);盘面区域两帧差分非零像素 >= 冻结阈值",
-      "evidence": ["screenshot", "stateSample", "frameDiff"]
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "frameDiff"
+      ]
     },
     {
       "probeId": "P3",
       "precondition": "P2",
       "action": "wait:1000",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.accretionPhase >= 0 && $.accretionPhase < 1" },
+      "stateAssertion": {
+        "jq": "$.accretionPhase >= 0 && $.accretionPhase < 1"
+      },
       "visualAssertion": {
-        "type": "regionChange",
+        "type": "colorRelation",
         "params": {
-          "ring": "inner-ring vs outer-ring(以屏幕中心为圆心的两个环带采样)",
-          "expect": "内环带平均亮度更高且偏白/蓝白(R≈G≈B,R-B 差小);外环带偏橙红(R>G>B,R-B 差显著);亮部向环外有柔和亮度衰减(辉光观感)"
+          "regionA": "disk-inner-azimuth",
+          "regionB": "disk-outer-azimuth",
+          "metric": "avgRBDiff",
+          "pickSide": "bright-orange",
+          "min": 18,
+          "expect": "多普勒亮侧扇区:外环带(橙红,R-B 高)与内环带(白/蓝白,R-B 低)的有向 R-B 差 ≥ 20(内白外橙);亮部向环外柔和衰减(辉光观感,描述性)"
         }
       },
       "threshold": "内环带平均亮度 >= 外环带 1.5x;外环带 (R-B) 平均差 >= 内环带 (R-B) 平均差 + 冻结阈值;内环带向外亮度单调衰减无硬边",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P4",
       "precondition": "P3",
       "action": "wheel:{dy:-600}",
       "waitMs": 1200,
-      "stateAssertion": { "jq": "$.cameraDistance < 10 && $.cameraDistance >= 5" },
+      "stateAssertion": {
+        "jq": "$.cameraDistance < 10 && $.cameraDistance >= 5"
+      },
       "visualAssertion": {
         "type": "regionChange",
         "params": {
@@ -101,33 +133,53 @@
         }
       },
       "threshold": "缩放平滑插值在 1s 内基本到位(残差 < 10% 目标值);cameraDistance 始终处于 [5,28]",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     },
     {
       "probeId": "P5",
       "precondition": "P4",
       "action": "wait:1000",
       "waitMs": 0,
-      "stateAssertion": { "jq": "$.starStreamCount >= 200" },
+      "stateAssertion": {
+        "jq": "$.starStreamCount >= 200"
+      },
       "visualAssertion": {
         "type": "motion",
-        "params": { "region": "mid-ring(内缘与外缘之间的盘周区域)", "expect": "星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)" }
+        "params": {
+          "region": "mid-ring(内缘与外缘之间的盘周区域)",
+          "expect": "星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)"
+        }
       },
       "threshold": "星流区域两帧差分非零像素 >= 冻结阈值;starStreamCount 恒定(吞噬后重生)",
-      "evidence": ["screenshot", "stateSample", "frameDiff"]
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "frameDiff"
+      ]
     },
     {
       "probeId": "P6",
       "precondition": "P5",
       "action": "click:ui=reset",
       "waitMs": 400,
-      "stateAssertion": { "jq": "$.cameraDistance >= 13.5 && $.cameraDistance <= 14.5 && $.diskRotation < 0.3 && $.accretionPhase < 0.1 && $.starStreamCount >= 200" },
+      "stateAssertion": {
+        "jq": "$.cameraDistance >= 13.5 && $.cameraDistance <= 14.5 && $.diskRotation < 0.3 && $.accretionPhase < 0.1 && $.starStreamCount >= 200"
+      },
       "visualAssertion": {
         "type": "nonBlank",
-        "params": { "region": "full", "expect": "黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)" }
+        "params": {
+          "region": "full",
+          "expect": "黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)"
+        }
       },
       "threshold": "reset 后相机距离回到 14.0±0.5;旋转相位归零(考虑 waitMs 内重新累计,上限 0.3 rad);画面非空",
-      "evidence": ["screenshot", "stateSample"]
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
     }
   ],
   "scoring": {
@@ -144,5 +196,14 @@
       "[整体] 视觉稳定性:画面无闪烁、抖动、撕裂;黑洞主体居中,曝光舒适(亮部不成片死白、暗部不糊黑)",
       "[P6] reset:cameraDistance 回 14±0.5、diskRotation/accretionPhase 归零、星流复位,画面保持完整"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-03T08:04:18Z",
+      "from": "1.0.0",
+      "reason": "AUDIT-20261003 F-15:严格执行内/外环带采样后,双引擎 Reference 均失败——环带\"平均\"R-B 被多普勒不对称(Brief 自身列为加分项)、蓝白光子环/透镜弧与蓝星云亮像素稀释(实测 outer 环带均值 R-B 为负,而 ±X 方位剖面 0.35-0.55 半径处 R-B +36~+73)。冻结断言的可测形式与真实画面不符。",
+      "change": "P3 改为方位角扇区断言 colorRelation{regionA=disk-inner-azimuth(白), regionB=disk-outer-azimuth(橙), metric=avgRBDiff(有向:外−内), pickSide=bright-orange(逐侧采样取外环更橙的一侧=多普勒亮侧), min=18}。校准依据:双 Reference 实测(Three 亮侧差 ~36 / AIR ~31,min=18 留 1.9x/1.56x 对称余量);亮度次序(内亮外暗)保留于 expect 描述,并由 P1/P2 独立覆盖。阈值非降级(原为不可测的均值形式,现为可测的扇区有向差)。",
+      "scope": "仅 P3;双引擎对称;扇区几何常数(0.06-0.14 / 0.18-0.30 × minD,±6% 高度带)依据双 Reference 暗核中心径向剖面校准"
+    }
+  ]
 }

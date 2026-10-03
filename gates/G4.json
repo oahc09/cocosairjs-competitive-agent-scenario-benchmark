@@ -2,7 +2,7 @@
   "gate": "G4 HARNESS_TRUST",
   "status": "PASS",
   "statusBase": "PASS",
-  "generatedAt": "2026-10-03T07:39:53.034Z",
+  "generatedAt": "2026-10-03T08:12:27.425Z",
   "runnerAvailable": true,
   "runner": "harness/runner/validate.mjs",
   "cases": [
@@ -31,7 +31,7 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 350
+            "durationMs": 273
           },
           "report": "results\\nc\\NC01-E01\\report.json",
           "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.1429 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC01-E01\\report.json\n",
@@ -62,10 +62,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 38
+            "durationMs": 13
           },
           "report": "results\\nc\\NC02-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.4286 fps=60.6\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC02-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.4286 fps=60.3\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC02-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -89,10 +89,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 248
+            "durationMs": 281
           },
           "report": "results\\nc\\NC03-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
           "stderrTail": ""
         },
         {
@@ -110,10 +110,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 266
+            "durationMs": 307
           },
           "report": "results\\nc\\NC03-E02\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E02\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0 fps=60\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E02\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -140,10 +140,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 302
+            "durationMs": 262
           },
           "report": "results\\nc\\NC04-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.5714 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC04-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.5714 fps=60.3\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC04-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -169,10 +169,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 249
+            "durationMs": 254
           },
           "report": "results\\nc\\NC05-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -360,7 +360,7 @@
           "tool": "aggregate/reference-versions.mjs --check(只读现状观测,非判定)",
           "exitCode": 0,
           "staleCount": 0,
-          "summaryTail": "  CURRENT              E10:cocosair   v1.val4 | 全部 CURRENT(量尺与全部输入一致)"
+          "summaryTail": "  CURRENT              E10:cocosair   v2.val5 | 全部 CURRENT(量尺与全部输入一致)"
         },
         "readinessProbe": {
           "ready": true
@@ -476,12 +476,12 @@
             "args": [],
             "exitCode": 0,
             "timedOut": false,
-            "stdoutTail": "  ruler=RULER-20261003-R1 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]\n  E01 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E02 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=-23 CI=null W/T/L=0/0/1\n  E05 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E10 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n",
+            "stdoutTail": "  ruler=RULER-20261003-R02 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]\n  E01 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E02 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=-23 CI=null W/T/L=0/0/1\n  E05 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E10 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n",
             "stderrTail": ""
           }
         ],
         "before": {
-          "generatedAt": "2026-10-03T07:35:26.326Z",
+          "generatedAt": "2026-10-03T08:09:06.968Z",
           "batches": 1,
           "pairs": 4,
           "pilotPairs": 4,
@@ -500,7 +500,7 @@
           "note": "G7(BLIND_JUDGE_VALIDITY)未过 → formal.total/attainment 全 null;objective(S1+S2+S3)照常非空 —— 门禁状态如实传播,不以 provisional 视觉分冒充正式总分"
         },
         "after": {
-          "generatedAt": "2026-10-03T07:39:53.002Z",
+          "generatedAt": "2026-10-03T08:12:27.379Z",
           "batches": 1,
           "pairs": 4,
           "pilotPairs": 4,

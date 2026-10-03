@@ -1,12 +1,12 @@
 {
-  "runId": "run-2026-10-03T07-38-09-353Z",
-  "generatedAt": "2026-10-03T07:38:31.785Z",
+  "runId": "run-2026-10-03T08-10-39-455Z",
+  "generatedAt": "2026-10-03T08:11:02.609Z",
   "results": [
     {
       "probeId": "P1",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:12.957Z",
+      "startedTs": "2026-10-03T08:10:43.416Z",
       "precondition": {
         "expr": "__appReady",
         "met": true,
@@ -31,7 +31,7 @@
             "performed": "waited 2500ms"
           }
         ],
-        "durationMs": 2503
+        "durationMs": 2514
       },
       "stateAssertion": {
         "expr": "$.starCount >= 50000",
@@ -72,13 +72,13 @@
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.04557999999940396,
+          "rotationPhase": 0.05110500000059605,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 7.817080320682406,
+          "fps": 8.49329030049049,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -86,13 +86,13 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.17140499999940395,
+          "rotationPhase": 0.17693000000059608,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 59.988002399520106,
+          "fps": 60.007742934572164,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -106,14 +106,14 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 3222
+        "totalMs": 3303
       }
     },
     {
       "probeId": "P2",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:16.179Z",
+      "startedTs": "2026-10-03T08:10:46.719Z",
       "precondition": {
         "expr": "__appReady && P1 passed",
         "met": true,
@@ -144,7 +144,7 @@
             "performed": "waited 500ms"
           }
         ],
-        "durationMs": 511
+        "durationMs": 507
       },
       "stateAssertion": {
         "expr": "$.after.rotationPhase - $.before.rotationPhase > 0.001",
@@ -172,22 +172,22 @@
                 "w": 1024,
                 "h": 576
               },
-              "diffRatio": 0.0284
+              "diffRatio": 0.029
             }
           ],
-          "worstDiffRatio": 0.0284
+          "worstDiffRatio": 0.029
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.20557499999940398,
+          "rotationPhase": 0.21359500000059609,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 60.01936108422066,
+          "fps": 59.99612928198183,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -195,13 +195,13 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.332234999999404,
+          "rotationPhase": 0.34026000000059603,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 59.98800239952005,
+          "fps": 60,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -217,14 +217,14 @@
         "sampleWindowMs": 2000
       },
       "timings": {
-        "totalMs": 3934
+        "totalMs": 4125
       }
     },
     {
       "probeId": "P3",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:20.113Z",
+      "startedTs": "2026-10-03T08:10:50.844Z",
       "precondition": {
         "expr": "P2 passed",
         "met": true,
@@ -257,7 +257,7 @@
             "performed": "pointermove -> (870,360)"
           }
         ],
-        "durationMs": 276
+        "durationMs": 289
       },
       "stateAssertion": {
         "expr": "$.after.parallaxOffset.x != $.before.parallaxOffset.x || $.after.parallaxOffset.y != $.before.parallaxOffset.y",
@@ -285,22 +285,22 @@
                 "w": 1280,
                 "h": 720
               },
-              "diffRatio": 0.0408
+              "diffRatio": 0.041
             }
           ],
-          "bestDiffRatio": 0.0408
+          "bestDiffRatio": 0.041
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.40223999999940396,
+          "rotationPhase": 0.4177650000005961,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 60,
+          "fps": 60.01936108422072,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -308,13 +308,13 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.46723499999940393,
+          "rotationPhase": 0.48359500000059613,
           "cameraDistance": 120,
           "parallaxOffset": {
-            "x": 0.3574861317424086,
+            "x": 0.35750330569817784,
             "y": 0
           },
-          "fps": 60.01936108422072,
+          "fps": 60.007742934572164,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -329,14 +329,14 @@
         "sampleWindowMs": 600
       },
       "timings": {
-        "totalMs": 1943
+        "totalMs": 1961
       }
     },
     {
       "probeId": "P4",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:22.056Z",
+      "startedTs": "2026-10-03T08:10:52.805Z",
       "precondition": {
         "expr": "P3 passed",
         "met": true,
@@ -362,7 +362,7 @@
             "performed": "wheel dy=-600"
           }
         ],
-        "durationMs": 42
+        "durationMs": 38
       },
       "stateAssertion": {
         "expr": "$.after.cameraDistance < $.before.cameraDistance - 5",
@@ -390,22 +390,22 @@
                 "w": 1280,
                 "h": 720
               },
-              "diffRatio": 0.0936
+              "diffRatio": 0.095
             }
           ],
-          "bestDiffRatio": 0.0936
+          "bestDiffRatio": 0.095
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.49890499999940396,
+          "rotationPhase": 0.517755000000596,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 59.98800239952005,
+          "fps": 60.00774293457237,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -413,13 +413,13 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.541394999999404,
-          "cameraDistance": 79.60568790862307,
+          "rotationPhase": 0.5610900000005961,
+          "cameraDistance": 78.93558092068827,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 60,
+          "fps": 59.98800239952005,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -434,14 +434,14 @@
         "sampleWindowMs": 300
       },
       "timings": {
-        "totalMs": 1618
+        "totalMs": 1642
       }
     },
     {
       "probeId": "P5",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:23.674Z",
+      "startedTs": "2026-10-03T08:10:54.447Z",
       "precondition": {
         "expr": "__appReady && P1 passed",
         "met": true,
@@ -472,7 +472,7 @@
             "performed": "waited 1000ms"
           }
         ],
-        "durationMs": 1010
+        "durationMs": 1001
       },
       "stateAssertion": {
         "expr": "$.hudVisible == true && $.fps > 0",
@@ -499,7 +499,7 @@
                 "w": 228,
                 "h": 56
               },
-              "litRatio": 0.2822,
+              "litRatio": 0.2874,
               "background": [
                 4,
                 5,
@@ -507,19 +507,19 @@
               ]
             }
           ],
-          "worstLitRatio": 0.2822
+          "worstLitRatio": 0.2874
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.583904999999404,
-          "cameraDistance": 51.86516652616169,
+          "rotationPhase": 0.6035850000005961,
+          "cameraDistance": 51.434931314395136,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 60,
+          "fps": 59.98800239952005,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -527,7 +527,7 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.634739999999404,
+          "rotationPhase": 0.653585000000596,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
@@ -547,14 +547,14 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 2063
+        "totalMs": 2150
       }
     },
     {
       "probeId": "P6",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:25.737Z",
+      "startedTs": "2026-10-03T08:10:56.597Z",
       "precondition": {
         "expr": "__appReady && P1 passed",
         "met": true,
@@ -585,7 +585,7 @@
             "performed": "waited 3000ms"
           }
         ],
-        "durationMs": 3015
+        "durationMs": 3009
       },
       "stateAssertion": {
         "expr": "$.fps >= 30",
@@ -612,7 +612,7 @@
                 "w": 1280,
                 "h": 720
               },
-              "litRatio": 0.2509,
+              "litRatio": 0.2501,
               "background": [
                 5,
                 6,
@@ -620,13 +620,13 @@
               ]
             }
           ],
-          "worstLitRatio": 0.2509
+          "worstLitRatio": 0.2501
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.692239999999404,
+          "rotationPhase": 0.714420000000596,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
@@ -640,7 +640,7 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.8430649999994039,
+          "rotationPhase": 0.8652500000005962,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
@@ -660,14 +660,14 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 4154
+        "totalMs": 4103
       }
     },
     {
       "probeId": "P7",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:38:29.891Z",
+      "startedTs": "2026-10-03T08:11:00.700Z",
       "precondition": {
         "expr": "P4 passed && P3 passed",
         "met": true,
@@ -700,7 +700,7 @@
             "performed": "click @ (1236,694) ui=reset"
           }
         ],
-        "durationMs": 139
+        "durationMs": 152
       },
       "stateAssertion": {
         "expr": "$.epoch >= 1 && $.cameraDistance >= 115 && $.cameraDistance <= 125 && $.parallaxOffset.x > -0.01 && $.parallaxOffset.x < 0.01 && $.parallaxOffset.y > -0.01 && $.parallaxOffset.y < 0.01 && $.rotationPhase < 0.1",
@@ -741,13 +741,13 @@
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.897239999999404,
+          "rotationPhase": 0.9185850000005962,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 60,
+          "fps": 59.988002399519836,
           "hudVisible": true,
           "epoch": 0,
           "assetLoaded": true,
@@ -755,13 +755,13 @@
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.040975000000000004,
+          "rotationPhase": 0.04089499999940399,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 61.63021868787276,
+          "fps": 61.86389942274473,
           "hudVisible": true,
           "epoch": 1,
           "assetLoaded": true,
@@ -775,7 +775,7 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 1798
+        "totalMs": 1808
       }
     }
   ]

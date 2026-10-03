@@ -1,33 +1,40 @@
 {
-  "runId": "REF-E06-three",
-  "generatedAt": "2026-10-02T10:25:39.771Z",
+  "runId": "REF-E06-three-final",
+  "generatedAt": "2026-10-03T07:24:43.667Z",
   "harnessVersion": "1.0.0",
-  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\three\\E06",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E06",
   "spec": {
-    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E06\\spec.json",
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E06\\spec.json",
     "briefId": "E06",
     "briefVersion": "1.0.0",
-    "sha256": "acf236e8dbc39bfa5006e7d48e396e9087600436e594130534d133d2701114c7"
+    "sha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051"
   },
   "pairId": null,
   "engine": null,
+  "specSha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+  "validatorProtocolHash": "d6dcdea7cbaab1c62a3da533092eb88cfce4256ce4f840fb2ed83b31d8c25ca9",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "b7af94d7341386e59eef0d6b56d1e8677a7e583c2dacbac45a047abbbe2e99d6",
+    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+  },
+  "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 4046,
+    "durationMs": 3996,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  35.0kb\n\nDone in 22ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 4043ms\n"
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  35.0kb\n\nDone in 42ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3994ms\n"
   },
   "serve": {
-    "port": 7415,
-    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\three\\E06"
+    "port": 7540,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E06"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 902
+    "durationMs": 906
   },
   "console": {
     "errors": 0,
@@ -41,54 +48,60 @@
       "probeId": "P1",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "nonBlank",
+      "failedAssertions": []
     },
     {
       "probeId": "P2",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P3",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "regionChange",
+      "failedAssertions": []
     },
     {
       "probeId": "P4",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "motion",
+      "failedAssertions": []
     },
     {
       "probeId": "P5",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "pixelDelta",
+      "failedAssertions": []
     },
     {
       "probeId": "P6",
       "status": "PASS",
       "weight": 1,
-      "visualType": null
+      "visualType": "regionChange",
+      "failedAssertions": []
     }
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 1,
-  "fps": 60.1,
+  "fps": 60.2,
   "perf": {
-    "fps": 60.1,
+    "fps": 60.2,
     "frames": 181,
-    "sampleMs": 3009,
-    "sampledAt": "2026-10-02T10:26:12.564Z",
+    "sampleMs": 3008,
+    "sampledAt": "2026-10-03T07:25:16.898Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [],
   "networkEvents": {
     "count": 15,
-    "totalBytes": 2207961
+    "totalBytes": 2208057
   },
   "screenshots": [
     "initial.png",
@@ -118,13 +131,12 @@
     "P6-region-b.png",
     "P6-after.png"
   ],
-  "video": "video.webm",
+  "video": null,
   "artifacts": [
     "source-sha.json",
     "build.log",
     "probe-results.json",
     "console.json",
-    "video.webm",
     "network.json",
     "serve-log.json",
     "perf.json"
@@ -138,7 +150,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.3774
+      "firstShotLitRatio": 0.3926
     },
     "s2": {
       "passedWeight": 6,
@@ -153,6 +165,6 @@
       "minFps": 30
     }
   },
-  "durationMs": 33523,
-  "finishedAt": "2026-10-02T10:26:13.288Z"
+  "durationMs": 33839,
+  "finishedAt": "2026-10-03T07:25:17.480Z"
 }

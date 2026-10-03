@@ -1,12 +1,12 @@
 {
-  "runId": "run-2026-10-03T07-39-23-590Z",
-  "generatedAt": "2026-10-03T07:39:45.665Z",
+  "runId": "run-2026-10-03T08-11-56-769Z",
+  "generatedAt": "2026-10-03T08:12:19.748Z",
   "results": [
     {
       "probeId": "P1",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:39:27.147Z",
+      "startedTs": "2026-10-03T08:12:00.664Z",
       "precondition": {
         "expr": "__appReady",
         "met": true,
@@ -31,7 +31,7 @@
             "performed": "waited 2500ms"
           }
         ],
-        "durationMs": 2507
+        "durationMs": 2509
       },
       "stateAssertion": {
         "expr": "$.starCount >= 50000",
@@ -72,26 +72,26 @@
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.038666666666666655,
+          "rotationPhase": 0.04266666666666665,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 11.003117549611678,
+          "fps": 11.131725417439704,
           "hudVisible": true,
           "epoch": 0,
           "leakedTicks": 3
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.23999999999999955,
+          "rotationPhase": 0.24399999999999952,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 59.97600959616156,
+          "fps": 60,
           "hudVisible": true,
           "epoch": 0,
           "leakedTicks": 13
@@ -104,14 +104,14 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 2985
+        "totalMs": 3316
       }
     },
     {
       "probeId": "P2",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:39:30.132Z",
+      "startedTs": "2026-10-03T08:12:03.980Z",
       "precondition": {
         "expr": "__appReady && P1 passed",
         "met": true,
@@ -142,7 +142,7 @@
             "performed": "waited 500ms"
           }
         ],
-        "durationMs": 507
+        "durationMs": 503
       },
       "stateAssertion": {
         "expr": "$.after.rotationPhase - $.before.rotationPhase > 0.001",
@@ -170,16 +170,29 @@
                 "w": 1024,
                 "h": 576
               },
-              "diffRatio": 0.0337
+              "diffRatio": 0.0336
             }
           ],
-          "worstDiffRatio": 0.0337
+          "worstDiffRatio": 0.0336
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.2666666666666664,
+          "rotationPhase": 0.30400000000000027,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 60,
+          "hudVisible": true,
+          "epoch": 0,
+          "leakedTicks": 16
+        },
+        "stateAfter": {
+          "starCount": 50000,
+          "rotationPhase": 0.5053333333333363,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
@@ -188,20 +201,7 @@
           "fps": 60.01936108422072,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 15
-        },
-        "stateAfter": {
-          "starCount": 50000,
-          "rotationPhase": 0.46933333333333604,
-          "cameraDistance": 120,
-          "parallaxOffset": {
-            "x": 0,
-            "y": 0
-          },
-          "fps": 60.007742934572164,
-          "hudVisible": true,
-          "epoch": 0,
-          "leakedTicks": 25
+          "leakedTicks": 27
         },
         "shots": [
           "P2-before.png",
@@ -213,14 +213,14 @@
         "sampleWindowMs": 2000
       },
       "timings": {
-        "totalMs": 3874
+        "totalMs": 3984
       }
     },
     {
       "probeId": "P3",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:39:34.006Z",
+      "startedTs": "2026-10-03T08:12:07.964Z",
       "precondition": {
         "expr": "P2 passed",
         "met": true,
@@ -253,7 +253,7 @@
             "performed": "pointermove -> (870,360)"
           }
         ],
-        "durationMs": 288
+        "durationMs": 278
       },
       "stateAssertion": {
         "expr": "$.after.parallaxOffset.x != $.before.parallaxOffset.x || $.after.parallaxOffset.y != $.before.parallaxOffset.y",
@@ -290,29 +290,29 @@
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.5853333333333341,
+          "rotationPhase": 0.6239999999999998,
           "cameraDistance": 120,
           "parallaxOffset": {
             "x": 0,
             "y": 0
           },
-          "fps": 58,
+          "fps": 60,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 31
+          "leakedTicks": 32
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.6906666666666647,
+          "rotationPhase": 0.727999999999997,
           "cameraDistance": 120,
           "parallaxOffset": {
-            "x": 0.35748582276644236,
+            "x": 0.3574858959550621,
             "y": 0
           },
-          "fps": 60.007742934572164,
+          "fps": 60,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 36
+          "leakedTicks": 38
         },
         "shots": [
           "P3-before.png",
@@ -323,14 +323,14 @@
         "sampleWindowMs": 600
       },
       "timings": {
-        "totalMs": 2004
+        "totalMs": 2017
       }
     },
     {
       "probeId": "P4",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:39:36.010Z",
+      "startedTs": "2026-10-03T08:12:09.981Z",
       "precondition": {
         "expr": "P3 passed",
         "met": true,
@@ -356,7 +356,7 @@
             "performed": "wheel dy=-600"
           }
         ],
-        "durationMs": 39
+        "durationMs": 51
       },
       "stateAssertion": {
         "expr": "$.after.cameraDistance < $.before.cameraDistance - 5",
@@ -384,30 +384,17 @@
                 "w": 1280,
                 "h": 720
               },
-              "diffRatio": 0.0912
+              "diffRatio": 0.0915
             }
           ],
-          "bestDiffRatio": 0.0912
+          "bestDiffRatio": 0.0915
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.7453333333333299,
+          "rotationPhase": 0.7839999999999955,
           "cameraDistance": 120,
-          "parallaxOffset": {
-            "x": 0.359375,
-            "y": 0
-          },
-          "fps": 60,
-          "hudVisible": true,
-          "epoch": 0,
-          "leakedTicks": 39
-        },
-        "stateAfter": {
-          "starCount": 50000,
-          "rotationPhase": 0.8146666666666613,
-          "cameraDistance": 78.93958847180276,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
@@ -415,7 +402,20 @@
           "fps": 60.007742934572164,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 42
+          "leakedTicks": 40
+        },
+        "stateAfter": {
+          "starCount": 50000,
+          "rotationPhase": 0.8546666666666602,
+          "cameraDistance": 78.93559176629662,
+          "parallaxOffset": {
+            "x": 0.359375,
+            "y": 0
+          },
+          "fps": 59.99612928198172,
+          "hudVisible": true,
+          "epoch": 0,
+          "leakedTicks": 44
         },
         "shots": [
           "P4-before.png",
@@ -426,14 +426,14 @@
         "sampleWindowMs": 300
       },
       "timings": {
-        "totalMs": 1634
+        "totalMs": 1671
       }
     },
     {
       "probeId": "P5",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:39:37.645Z",
+      "startedTs": "2026-10-03T08:12:11.652Z",
       "precondition": {
         "expr": "__appReady && P1 passed",
         "met": true,
@@ -464,7 +464,7 @@
             "performed": "waited 1000ms"
           }
         ],
-        "durationMs": 1001
+        "durationMs": 1010
       },
       "stateAssertion": {
         "expr": "$.hudVisible == true && $.fps > 0",
@@ -491,7 +491,7 @@
                 "w": 288,
                 "h": 56
               },
-              "litRatio": 0.2363,
+              "litRatio": 0.2343,
               "background": [
                 4,
                 5,
@@ -499,35 +499,35 @@
               ]
             }
           ],
-          "worstLitRatio": 0.2363
+          "worstLitRatio": 0.2343
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 0.8813333333333262,
-          "cameraDistance": 51.87044234195806,
+          "rotationPhase": 0.9213333333333251,
+          "cameraDistance": 51.8625375481732,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 59.98800239952027,
+          "fps": 60,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 45
+          "leakedTicks": 47
         },
         "stateAfter": {
           "starCount": 50000,
-          "rotationPhase": 0.961333333333324,
+          "rotationPhase": 1.0026666666666564,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 60.01936108422072,
+          "fps": 60,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 49
+          "leakedTicks": 51
         },
         "shots": [
           "P5-before.png",
@@ -537,14 +537,14 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 1997
+        "totalMs": 2008
       }
     },
     {
       "probeId": "P6",
       "weight": 1,
       "status": "PASS",
-      "startedTs": "2026-10-03T07:39:39.642Z",
+      "startedTs": "2026-10-03T08:12:13.661Z",
       "precondition": {
         "expr": "__appReady && P1 passed",
         "met": true,
@@ -575,7 +575,7 @@
             "performed": "waited 3000ms"
           }
         ],
-        "durationMs": 3004
+        "durationMs": 3011
       },
       "stateAssertion": {
         "expr": "$.fps >= 30",
@@ -602,7 +602,7 @@
                 "w": 1280,
                 "h": 720
               },
-              "litRatio": 0.2312,
+              "litRatio": 0.2297,
               "background": [
                 5,
                 6,
@@ -610,13 +610,26 @@
               ]
             }
           ],
-          "worstLitRatio": 0.2312
+          "worstLitRatio": 0.2297
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 1.0479999999999923,
+          "rotationPhase": 1.0879999999999945,
+          "cameraDistance": 40,
+          "parallaxOffset": {
+            "x": 0.359375,
+            "y": 0
+          },
+          "fps": 60.007742934572164,
+          "hudVisible": true,
+          "epoch": 0,
+          "leakedTicks": 56
+        },
+        "stateAfter": {
+          "starCount": 50000,
+          "rotationPhase": 1.3293333333333415,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
@@ -625,20 +638,7 @@
           "fps": 60,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 54
-        },
-        "stateAfter": {
-          "starCount": 50000,
-          "rotationPhase": 1.2880000000000058,
-          "cameraDistance": 40,
-          "parallaxOffset": {
-            "x": 0.359375,
-            "y": 0
-          },
-          "fps": 60.00774293457195,
-          "hudVisible": true,
-          "epoch": 0,
-          "leakedTicks": 66
+          "leakedTicks": 68
         },
         "shots": [
           "P6-before.png",
@@ -648,14 +648,14 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 4153
+        "totalMs": 4128
       }
     },
     {
       "probeId": "P7",
       "weight": 1,
       "status": "FAIL",
-      "startedTs": "2026-10-03T07:39:43.795Z",
+      "startedTs": "2026-10-03T08:12:17.790Z",
       "precondition": {
         "expr": "P4 passed && P3 passed",
         "met": true,
@@ -688,7 +688,7 @@
             "performed": "click @ (1236,694) ui=reset"
           }
         ],
-        "durationMs": 137
+        "durationMs": 193
       },
       "stateAssertion": {
         "expr": "$.epoch >= 1 && $.cameraDistance >= 115 && $.cameraDistance <= 125 && $.parallaxOffset.x > -0.01 && $.parallaxOffset.x < 0.01 && $.parallaxOffset.y > -0.01 && $.parallaxOffset.y < 0.01 && $.rotationPhase < 0.1",
@@ -715,7 +715,7 @@
                 "w": 1280,
                 "h": 720
               },
-              "litRatio": 0.0368,
+              "litRatio": 0.0369,
               "background": [
                 5,
                 6,
@@ -723,22 +723,22 @@
               ]
             }
           ],
-          "worstLitRatio": 0.0368
+          "worstLitRatio": 0.0369
         }
       },
       "evidence": {
         "stateBefore": {
           "starCount": 50000,
-          "rotationPhase": 1.3773333333333442,
+          "rotationPhase": 1.4186666666666798,
           "cameraDistance": 40,
           "parallaxOffset": {
             "x": 0.359375,
             "y": 0
           },
-          "fps": 60,
+          "fps": 60.05424254165044,
           "hudVisible": true,
           "epoch": 0,
-          "leakedTicks": 70
+          "leakedTicks": 72
         },
         "stateAfter": {
           "starCount": 50000,
@@ -748,7 +748,7 @@
             "x": 0,
             "y": 0
           },
-          "fps": 121.32060461272215,
+          "fps": 121.51394422022182,
           "hudVisible": true,
           "epoch": 1,
           "leakedTicks": 3
@@ -761,7 +761,7 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 1761
+        "totalMs": 1848
       }
     }
   ]

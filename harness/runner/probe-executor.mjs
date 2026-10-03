@@ -577,6 +577,7 @@ export const NAMED_REGIONS = new Set([
   'full', 'upper-third', 'lower-third', 'center-third', 'bottom-third', 'upper-half',
   'outer-corners', 'center-bottom', 'outer-frame',
   'mid-vertical-band', 'disk', 'mid-ring', 'hud',
+  'disk-inner-azimuth', 'disk-outer-azimuth',
 ]);
 export const PCT_REGION_RE = /^(center|lower|upper):(\d+(?:\.\d+)?)%$/;
 export const UI_REGION_RE = /^ui[#=](.+)$/;
@@ -723,6 +724,16 @@ export async function resolveRegions(spec, ctx) {
         { x: cx - o, y: cy - i, w: Math.max(1, o - i), h: i * 2 },                    // left band
         { x: cx + i, y: cy - i, w: Math.max(1, o - i), h: i * 2 }                     // right band
       );
+      return;
+    }
+    if (base === 'disk-inner-azimuth' || base === 'disk-outer-azimuth') {
+      // 方位角扇区(水平主轴两侧,±6% 高度带;AUDIT F-15/E05 v1.0.2):
+      // inner r[0.04,0.11]×minD(白/蓝白);outer r∈[0.18,0.30]×minD(橙红降带)
+      const [r0, r1] = base === 'disk-inner-azimuth' ? [0.04, 0.11] : [0.18, 0.30];
+      const i = Math.round(Math.min(W, H) * r0), o = Math.round(Math.min(W, H) * r1);
+      const cx = Math.round(W / 2), cy = Math.round(H / 2), hh = Math.max(2, Math.round(Math.min(W, H) * 0.06));
+      rects.push({ x: cx - o, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 }); // 左
+      rects.push({ x: cx + i, y: cy - hh, w: Math.max(1, o - i), h: hh * 2 }); // 右
       return;
     }
     if (base === 'hud') {
@@ -1038,7 +1049,7 @@ export const VISUAL_PARAM_KEYS = {
   noNavigation: ['sinceMs'],
   resourceRequestCount: ['path', 'exactly', 'min', 'max'],
   consoleClean: ['level'],
-  colorRelation: ['regionA', 'regionB', 'metric', 'min', 'max'],
+  colorRelation: ['regionA', 'regionB', 'metric', 'min', 'max', 'pickSide', 'expect'],
   luminanceRelation: ['regionA', 'regionB', 'metric', 'min', 'max'],
   regionCoverage: ['region', 'minRatio', 'litDistance'],
   memoryDelta: ['maxGrowthMB', 'sampleMs'],
@@ -1491,6 +1502,28 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
         if (badB) return badB;
         const frame = await shoot(page);
         await ctx.saveShot(frame, 'color');
+        // pickSide:'bright-orange' — 方位角扇区断言(AUDIT F-15/E05 spec v1.0.2):
+        // A/B 均须解析为恰好 2 个扇区 rect([0]=左,[1]=右);逐侧采样,取 B 侧
+        // avgRB 较大的一侧(多普勒亮侧)参与度量;两侧指标都入 metrics(不静默)。
+        if (params.pickSide === 'bright-orange') {
+          if (!shorthand && rrA.rects.length === 2 && rrB.rects.length === 2) {
+            const side = (i) => ({ sA: regionColorStats(frame, [rrA.rects[i]]), sB: regionColorStats(frame, [rrB.rects[i]]) });
+            const L = side(0), R = side(1);
+            const chosen = (R.sB.avgRB >= L.sB.avgRB) ? R : L;
+            const which = (R.sB.avgRB >= L.sB.avgRB) ? 'right' : 'left';
+            const value = metric === 'luminanceRatio'
+              ? (chosen.sB.luminance >= 1 ? chosen.sA.luminance / chosen.sB.luminance : chosen.sA.luminance >= 1 ? Infinity : 1)
+              : chosen.sB.avgRB - chosen.sA.avgRB; // 有向差:外橙 − 内白(内白外橙语义)
+            const ok = (params.min == null || value >= Number(params.min)) && (params.max == null || value <= Number(params.max));
+            return {
+              ok, ...meta,
+              metrics: { metric, pickSide: which, value: Number.isFinite(value) ? Math.round(value * 1000) / 1000 : String(value), min: params.min ?? null, max: params.max ?? null,
+                left: { A: { lum: L.sA.luminance, rb: L.sA.avgRB }, B: { lum: L.sB.luminance, rb: L.sB.avgRB } },
+                right: { A: { lum: R.sA.luminance, rb: R.sA.avgRB }, B: { lum: R.sB.luminance, rb: R.sB.avgRB } } },
+            };
+          }
+          return { ok: false, ...meta, error: "SPEC_INVALID: pickSide='bright-orange' 要求 regionA/regionB 均解析为恰 2 个方位角扇区 rect(左,右)", metrics: {} };
+        }
         const sA = regionColorStats(frame, rrA.rects);
         const sB = regionColorStats(frame, rrB.rects);
         let value;

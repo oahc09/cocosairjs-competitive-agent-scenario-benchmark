@@ -2,7 +2,8 @@
 
 ```yaml
 briefId: E04
-briefVersion: 1.0.0
+briefVersion: 1.0.2
+> v1.0.2 (2026-10-03): 余烬寿命窗口 3-12s → 3-12s(容纳 harness 探针间截图时延;AUDIT F-16);详见 spec.json amendments。
 frozen: true
 frozenAt: 2026-10-02T16:30:00+08:00
 briefSha256: computed-by-harness
