@@ -25,9 +25,11 @@ const BENCH = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '
 const RESULTS = path.join(BENCH, 'results');
 const rj = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
 const wj = (p, o) => fs.writeFileSync(p, JSON.stringify(o, null, 2) + '\n');
-const r2 = (x) => Math.round(x * 100) / 100;
+const r2 = (x) => (x == null || !Number.isFinite(x) ? null : Math.round(x * 100) / 100);
 const chromeCached = (() => { try { return fs.readFileSync(path.join(BENCH, 'harness', 'chrome-version.cache.txt'), 'utf8').trim(); } catch { return 'unknown'; } })();
-const toolchainNow = 'node' + process.version + '+esbuild' + JSON.parse(fs.readFileSync(path.join(BENCH, 'node_modules', 'esbuild', 'package.json'))).version + '+chrome' + (process.env.CHROME_V || chromeCached);
+// P0(用户裁决待定):maxToolCalls 机器强制模式。hard=冻结合同(缺 toolcall 计数 → PARTIAL 不能进 core);
+// diagnostic=宿主运行时确实无法暴露计数时的显式让步,必须先在 config/agents.yaml 增 'toolCallsMode: diagnostic' 并重冻结 G0。
+const toolCallsMode = (() => { try { const y = fs.readFileSync(path.join(BENCH, 'config', 'agents.yaml'), 'utf8'); return /toolCallsMode:s*diagnostic/.test(y) ? 'diagnostic' : 'hard'; } catch { return 'hard'; } })();
 const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 const iqr = (a) => { if (a.length < 2) return null; const s = [...a].sort((x, y) => x - y); const q = (p) => { const h = (s.length - 1) * p; const lo = Math.floor(h), hi = Math.ceil(h); return s[lo] + (s[hi] - s[lo]) * (h - lo); }; return r2(q(0.75) - q(0.25)); };
 function bootstrapMedianCiDelta(deltas, draws = 2000, seed = 42) {
@@ -173,10 +175,11 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
         spec: rep.specSha256 ?? null,
         validator: rep.validatorProtocolHash ?? null,
       })) {
-        const frozen = epochEntry ? epochEntry.inputs?.[{ engine: 'engine', brief: 'briefSha', spec: 'specSha', validator: 'validatorProtocolHash' }[k]] : undefined;
+        const frozen = epochEntry ? epochEntry.inputs?.[{ engine: 'engine', brief: 'briefSha', spec: 'specSha', validator: 'validatorProtocolHash', toolchain: 'toolchain' }[k]] : undefined;
         compat[k + 'Match'] = frozen == null || actual == null ? 'unknown' : (String(frozen) === String(actual) ? 'matched' : 'MISMATCH');
       }
-      compat.toolchainMatch = epochEntry ? (epochEntry.inputs?.toolchain === toolchainNow ? 'matched' : 'MISMATCH') : 'unknown';
+      // P1-5:比报告冻结指纹,不比 aggregate 宿主当前环境
+      compat.toolchainMatch = compat.toolchainMatch ?? 'unknown';
       const objectiveRelevantMismatch = ['engineMatch', 'briefMatch', 'specMatch', 'validatorMatch', 'toolchainMatch'].some(k => compat[k] === 'MISMATCH');
       const objectiveAttainment = (ruler?.objective != null && ruler.objective > 0 && !objectiveRelevantMismatch) ? r2(objectiveTotal / ruler.objective) : null;
       const formalAttainment = (formalTotal != null && ruler?.total != null && ruler.total > 0) ? r2(formalTotal / ruler.total) : null;
@@ -213,6 +216,7 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
     const airEpochMatch = !epoch ? 'unknown(账本未冻结)' : (pj.airPackageHash === epoch.inputs.engine ? 'matched' : 'engine-differs');
     pairs.push({
       pairId: pd.name, batchId: b.batchId, scene: pj.sceneId, knowledge: pj.knowledge, rep: pj.repetition, pilot: pj.pilot ?? false, track: pj.track || (pj.pilot ? 'pilot' : 'core'),
+      qualificationStatus: (batchQual[b.batchId]?.pairs || []).find(q => q.pairId === pd.name)?.status ?? null,
       arms,
       // FIX-B 2:formal 口径 —— G7 未过时全 null + visualStatus 标注,不得以任何替代值填充
       formal: g7Pass ? {
@@ -278,8 +282,18 @@ const groups = [...groupMap.values()].map((g) => ({
 
 // KnowledgeGain:同 scene 出现多知识级时,按 K 级中位 objective 分差(AIR 与 Three 分别计)
 const kgByScene = new Map();
+// P0-1 修正:KnowledgeGain 弃 if(pilot) 过滤,改三重门禁:
+//   量尺兼容(RULER_COMPAT)+ qualification ∈ {QUALIFIED, QUALIFIED_OBJECTIVE} +
+//   track:K0/K1 → core;K2 → k2-ablation。其余(pilot/targeted-pilot/不合格)一律不进。
+const kgTrackAllow = (p) => {
+  if (p.rulerStatus && !String(p.rulerStatus).startsWith('RULER_COMPAT')) return false;
+  const qual = p.qualificationStatus ?? null;
+  if (qual != null && !['QUALIFIED', 'QUALIFIED_OBJECTIVE'].includes(qual)) return false;
+  if (p.knowledge === 'K2') return p.track === 'k2-ablation';
+  return p.track === 'core';
+};
 for (const b of outBatches) for (const p of b.pairs) {
-  if (p.pilot) continue;
+  if (!kgTrackAllow(p)) continue;
   for (const e of ['three', 'cocosair']) {
     const t = p.arms[e]?.objective?.total ?? null;
     if (t == null) continue;

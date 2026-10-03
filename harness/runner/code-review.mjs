@@ -15,7 +15,8 @@ const PROTOCOL = 'code-review-v1(规则:结构=入口存在/模块聚焦/注释�
 const arg = (k) => { const i = process.argv.indexOf('--' + k); return i >= 0 ? process.argv[i + 1] : undefined; };
 
 const arm = path.resolve(arg('arm') || process.exit((console.error('--arm 必填'), 2)));
-const ws = path.join(arm, 'workspace');
+// 双布局:Pair 臂(workspace/ 子目录)与 Reference(目录即 workspace)
+const ws = fs.existsSync(path.join(arm, 'workspace')) ? path.join(arm, 'workspace') : arm;
 const outPath = arg('out') || path.join(arm, 'validation', 'code-review.json');
 
 const checks = { structure: [], antiPatterns: [] };

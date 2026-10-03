@@ -177,6 +177,24 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     conclusion: g7Status === 'PASS' ? 'visual 可用' : `blind 材料存在,但 G7=${g7Status} → 视觉口径(六维/Preference)一律不得引用`,
   };
 
+  // ---- 6b. 同时启动/时序(整改 P1-4)
+  const execTimingRaw = (() => {
+    const d = pj.timingDrift || '';
+    if (/PAIR_TIMING_DRIFT/.test(d)) return 'PAIR_TIMING_DRIFT';
+    if (/^OK/.test(d) || /delta=d+s≤30s/.test(d)) return 'PASS';
+    if (/UNMEASURABLE/.test(d)) return 'UNMEASURABLE';
+    return d ? 'UNKNOWN' : 'UNMEASURABLE(无 execution.json/时序记录)';
+  })();
+  const startDelta = pj.execution?.startTimeDeltaActualSec ?? null;
+  const executionTiming = {
+    id: 'executionTiming',
+    ok: execTimingRaw === 'PASS' && startDelta != null && startDelta <= 30,
+    status: execTimingRaw,
+    startDeltaSec: startDelta,
+    maxSec: 30,
+    note: 'track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区',
+  };
+
   // ---- 7. 量尺匹配
   const epochAir = ruler?.epochs?.[`${scene}:cocosair`] ?? null;
   const epochThree = ruler?.epochs?.[`${scene}:three`] ?? null;
@@ -198,7 +216,7 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
 
   // ---- E10 特别核:历史验证实际 spec 版本从证据推断
   const budgetToolCallEvidence = { id: 'budgetToolCallEvidence', ok: budgetMachineCounted.completeness === 'FULL', completeness: budgetMachineCounted.completeness, note: 'maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时' };
-  const checks = { frozenInputsComplete, specExact, validatorKnown, agentIdentityComplete, budgetMachineCounted, budgetToolCallEvidence, visualGate, rulerMatch };
+  const checks = { frozenInputsComplete, specExact, validatorKnown, agentIdentityComplete, budgetMachineCounted, budgetToolCallEvidence, executionTiming, visualGate, rulerMatch };
   const failedIds = Object.values(checks).filter((c) => !c.ok).map((c) => c.id);
   // toolcall 计数不可得 → 单列证据缺口(不算 check 失败,但阻断 FULL 预算结论)
   let status = 'LEGACY_PROVISIONAL';
@@ -218,6 +236,7 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     const nonVisualFails = failedIds.filter((id) => id !== 'visualGate');
     if (nonVisualFails.length === 0 && budgetCompleteness === 'FULL') status = 'QUALIFIED_OBJECTIVE';
     else if (nonVisualFails.length > 0 && nonVisualFails.every((id) => id === 'budgetToolCallEvidence')) status = 'QUALIFIED_OBJECTIVE_PARTIAL';
+    else if (nonVisualFails.length > 0 && nonVisualFails.every((id) => id === 'budgetToolCallEvidence' || id === 'executionTiming')) status = 'QUALIFIED_OBJECTIVE_PARTIAL_TIMING';
   }
 
   const pairEntry = {
@@ -272,7 +291,7 @@ if (!isLegacyBatch && budgetIncomplete) batchReasons.push('预算证据 PARTIAL:
 if (g7Status !== 'PASS') batchReasons.push(`G7=${g7Status}:visual 口径作废/挂起(不影响 objective 正式口径)`);
 
 // 批级状态 = 最弱 pair 状态(DISQUALIFIED > LEGACY_PROVISIONAL > QUALIFIED_OBJECTIVE > QUALIFIED)
-const ORDER = ['QUALIFIED', 'QUALIFIED_OBJECTIVE', 'QUALIFIED_OBJECTIVE_PARTIAL', 'LEGACY_PROVISIONAL', 'DISQUALIFIED'];
+const ORDER = ['QUALIFIED', 'QUALIFIED_OBJECTIVE', 'QUALIFIED_OBJECTIVE_PARTIAL', 'QUALIFIED_OBJECTIVE_PARTIAL_TIMING', 'LEGACY_PROVISIONAL', 'DISQUALIFIED'];
 let status = 'QUALIFIED';
 for (const p of allPairs) if (ORDER.indexOf(p.status) > ORDER.indexOf(status)) status = p.status;
 
@@ -286,6 +305,7 @@ const qualification = {
     LEGACY_PROVISIONAL: '整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制',
     QUALIFIED_OBJECTIVE: '整改后数据:冻结输入/身份/预算(FULL)/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起',
     QUALIFIED_OBJECTIVE_PARTIAL: '整改后数据:同上,但预算证据 PARTIAL(build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数,仅声明口径)——引用时必须带此限制',
+    QUALIFIED_OBJECTIVE_PARTIAL_TIMING: '整改后数据:预算 PARTIAL + 双臂启动时差超 30s 或不可测(PAIR_TIMING_DRIFT/UNMEASURABLE)——objective 有条件引用,正式 paired 设计主张不成立,引用必须带此时序限制',
     DISQUALIFIED: '冻结输入断裂且无法溯源,全部指标作废',
   },
   context: {

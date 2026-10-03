@@ -69,3 +69,17 @@ B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 s
 **RULER-R3 状态**:20 Reference 以当前 validator(f568bdf4 世代)统一重验 20/20 PASS → 重冻结(仍记 RULER-20261003-R02,协议漂移走 validationRevision v1→v5,尺号不变=量尺语义未变,仅测量协议重校);ceiling-check 全 CURRENT;R05 4 对升级 RULER_COMPAT。
 
 **遗留**:① core 统计组当前为空(n=0)——诚实结果:尚无 track=core 数据,正式矩阵(round create --track core)启动后自动填充;② maxToolCalls 机器强制需接入暴露计数器的 Agent 运行时(永久 PARTIAL 直至解决);③ E01/E02 两对 PAIR_TIMING_DRIFT/UNMEASURABLE——正式矩阵必须 Runner 双臂并行派发并写 execution.json。
+
+## 复查第二轮(R2,2026-10-03 晚)——用户八项发现全部落地
+
+| ID | 发现 | 修复 | 复验 |
+|---|---|---|---|
+| R2-1(P0) | create-pair --track 解析了但 main 未解构/未写 pairJson,run-round 不透传 → 新 Pair 必崩 | main 解构+显式必须(无 --track 且非 --pilot 即 die,禁止默认猜);pairJson.track 写入;run-round/round create 透传+matrix 第 4 段 | 实测:无 track → die 提示;--track core → pair.track=core;ROUND.json 记录 |
+| R2-2(P0) | KnowledgeGain 用 if(pilot) 过滤,targeted-pilot 污染正式 K0 基线 | 三重门禁:RULER_COMPAT+qualification∈{QUALIFIED,QUALIFIED_OBJECTIVE}+track(core 收 K0/K1,k2-ablation 收 K2) | aggregated kgEntries=0(无 core/k2 数据,诚实) |
+| R2-3(P0) | 当前运行时无 toolcall 计数,120 runs 跑完 core 统计仍为空(QUALIFIED_OBJECTIVE_PARTIAL 不被 coreEligible 接受) | 机制落地+决策显式化:toolCallsMode 开关(hard 默认=当前冻结合同;diagnostic 需 agents.yaml 显式声明=即 G0 重冻结动作),hard 下 PARTIAL 不入 core | aggregate 读 agents.yaml,缺省 hard(现状 fail-closed 保持);决策权留给 Owner |
+| R2-4(P1) | 时序只是记录未进资格:coreEligible 无 ≤30s 条件;execution.json 未自动生成 | qualify 增 executionTiming 检查(≤30 PASS/>30 DRIFT/缺证据 UNMEASURABLE);状态 QUALIFIED_OBJECTIVE_PARTIAL_TIMING 新级;R05 四对如实降级 | 实测 E01 Δ791s/E02 Δ61600s=DRIFT,E05/E10 UNMEASURABLE → 全部 PARTIAL_TIMING |
+| R2-5(P1) | toolchain 比对用 aggregate 宿主当前环境(历史资格随重跑机器漂移) | validate 报告运行时 stamp toolchainFingerprint;RULER 比对改用报告冻结指纹,弃宿主环境 | validate 已 stamp;历史报告=null→unknown(过渡态如实),新验证自动携带 |
+| R2-6(P1) | n=0 组 median=0(空数组中位被 r2(null)→0) | r2 null 安全:null/非有限 → null | aggregated groups 空组 median=null/iqr=null/ci=null ✓ |
+| R2-7(P1) | formal 分子分母不一致:RULER totalScore 无 S4,Agent formal 有 → G7 解锁后 attainment 天然 >100% | 方案 A 落地:Reference code-review ×20(统一规则引擎,双引擎同分 4.3/5 如实)+ RULER 冻结 referenceS4/totalScore=objective+referenceS4+visual | E01:three total=88.3(55+4.3+29);后续再加 codeReviewProtocolHash 进 drift 分类 |
+| R2-8(P1) | gates G5/G6/G8 旧状态与 audit 双事实源 | gates/G*.json 刷新为唯一权威(G5 两轮/G6 含并行派发器前置/G8 覆盖两批+20 Ref);audit 仅引用 | run.mjs gates 实测 |
+| R2-9(新发现) | cocosair/E09 指纹重验 P7 边缘失败(第二次导出与首导像素 diff 0.0043 < 0.005:确定性重导 vs 运动阈值矛盾) | 不调阈值;如实记 E09-air 最新验证 FAIL(0.75),ceiling 待 Owner 校准决策 | RULER 已如实记录(75.3) |

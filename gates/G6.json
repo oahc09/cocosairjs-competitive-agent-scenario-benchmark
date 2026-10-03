@@ -1,11 +1,13 @@
 {
   "gate": "G6 CORE_MATRIX_COMPLETENESS",
-  "status": "NOT-RUN",
-  "declaredAt": "2026-10-02T16:30:00Z",
-  "contract": "Track B 主实验:10 scenes × K0/K1 × N=3 = 60 pairs = 120 runs(计划书 §7/§25 M7)",
-  "executed": "M6 Pilot 子集:E01/E02/E05/E10 × K0 × N=1 = 4 pairs = 8 runs(全部完成、独立验证、成对统计)",
-  "reason": "单会话资源约束(模型用量窗口限制,单臂一次 K0 Run 消耗 2.4M-18M tokens / 15-40 分钟;120 runs 需数十小时模型时间与多窗口执行)。实验系统已具备执行能力:coordinator 一条命令建 Pair,harness 一条命令验证,评分聚合脚本就绪。",
-  "notCovered": ["K1 知识等级全部", "N=3 重复与 IQR/CI 统计", "E03/E04/E06/E07/E08/E09 的 Agent 运行", "M8 K2 消融(计划书本身允许'完成或明确列为未运行'——本处置为明确未运行)", "R1 标准化修复轨道(RecoveryRate 为 N/A)", "D 轨全量 9-comparison 盲评(受 G7 BLOCKED 制约)"],
-  "resumeProcedure": "后续会话按序执行:for scene in E01..E10, for K in K0 K1, for rep in R01..R03 → node harness/coordinator/create-pair.mjs --scene $S --knowledge $K --rep $R → 双臂同批派发(同本 Pilot 协议)→ 验证/评分 → node harness/aggregate/pilot-aggregate.mjs 扩展为全矩阵聚合。E10 spec 已是 v1.0.1,其余场景 spec 沿用 Pilot 发现复核(双采样时序张力已在 E03/E04 Reference 记录,建议 M7 前统一复审)。",
-  "integrityNote": "本 Gate 不以 Pilot 结果冒充全矩阵;Pilot 结论按'方向发现'口径表述(§19.1 N=3 表述纪律更适用于 N=1:仅观察,不下确定性结论)。"
+  "status": "NOT_RUN",
+  "declaredAt": "2026-10-03T15:12:06.596Z",
+  "contract": "10 scenes × K0/K1 × N=3 = 60 pairs = 120 runs(track=core)",
+  "executed": "Pilot 两轮:B-20261002-R1(LEGACY)+ B-20261003-R05(QUALIFIED_OBJECTIVE_PARTIAL_TIMING),共 8 pairs/16 臂次",
+  "startPrerequisites": [
+    "并行派发器:双臂同批启动 ≤30s 并写 execution.json(当前 targeted pilot 为顺序派发,PAIR_TIMING_DRIFT×2 如实)",
+    "toolCalls 证据决策(方案 A 换带计数器 Runner / 方案 B G0 重冻结降级 diagnostic)——未决",
+    "E09 P7 导出重渲染 diff 阈值校准决策(本轮指纹重验 0.0043 vs 0.005,确定性重导 vs 运动阈值矛盾)"
+  ],
+  "resumeProcedure": "round create --track core --matrix \"E01..E10|K0,K1|R01..R03\"(并行派发器就绪后)"
 }

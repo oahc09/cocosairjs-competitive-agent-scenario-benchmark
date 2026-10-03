@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-03T14:11:40.521Z",
+  "generatedAt": "2026-10-03T15:11:32.227Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
   "rulerStatus": {
     "rulerId": "RULER-20261003-R02",
     "source": "reference/private/REFERENCE-VERSIONS.json(只读冻结账本;不动态扫描批次 judge 数据)",
     "protocol": {
-      "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+      "validatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
       "validatorProtocolComponents": {
         "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
-        "validateSha256": "ea0ab876b7197a78d4c13b444edee16edb4eca424f27e59baf481b4611d2cd4f"
+        "validateSha256": "e084ebee9318d929378cf842e87a5dd4881f91d424794e0f05fe8166f8a6cd57"
       },
       "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
       "judgeProtocolSource": "docs/metric-spec.md §8 盲评统计(Track D)(= 计划书 §18 口径)"
@@ -35,6 +35,7 @@
           "rep": "R01",
           "pilot": true,
           "track": "pilot",
+          "qualificationStatus": "LEGACY_PROVISIONAL",
           "arms": {
             "three": {
               "s1": 15,
@@ -124,7 +125,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -139,6 +140,7 @@
           "rep": "R01",
           "pilot": true,
           "track": "pilot",
+          "qualificationStatus": "LEGACY_PROVISIONAL",
           "arms": {
             "cocosair": {
               "s1": 15,
@@ -230,7 +232,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -245,6 +247,7 @@
           "rep": "R01",
           "pilot": true,
           "track": "pilot",
+          "qualificationStatus": "LEGACY_PROVISIONAL",
           "arms": {
             "three": {
               "s1": 15,
@@ -334,7 +337,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -349,6 +352,7 @@
           "rep": "R01",
           "pilot": true,
           "track": "pilot",
+          "qualificationStatus": "LEGACY_PROVISIONAL",
           "arms": {
             "cocosair": {
               "s1": 15,
@@ -444,7 +448,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -465,6 +469,7 @@
           "rep": "R01",
           "pilot": false,
           "track": "targeted-pilot",
+          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "arms": {
             "three": {
               "s1": 15,
@@ -516,9 +521,9 @@
               },
               "objective": {
                 "total": 45,
-                "attainment": 0.82
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E01-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -571,9 +576,9 @@
               },
               "objective": {
                 "total": 40,
-                "attainment": 0.73
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E01-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -590,8 +595,8 @@
               "cocosair": 40
             },
             "attainment": {
-              "three": 0.82,
-              "cocosair": 0.73
+              "three": null,
+              "cocosair": null
             },
             "pairedDelta": -5,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -604,7 +609,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -619,6 +624,7 @@
           "rep": "R01",
           "pilot": false,
           "track": "targeted-pilot",
+          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "arms": {
             "three": {
               "s1": 15,
@@ -656,9 +662,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": 1
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E02-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -697,9 +703,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": 1
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E02-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -716,8 +722,8 @@
               "cocosair": 55
             },
             "attainment": {
-              "three": 1,
-              "cocosair": 1
+              "three": null,
+              "cocosair": null
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -730,7 +736,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -745,6 +751,7 @@
           "rep": "R01",
           "pilot": false,
           "track": "targeted-pilot",
+          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "arms": {
             "three": {
               "s1": 15,
@@ -796,9 +803,9 @@
               },
               "objective": {
                 "total": 50,
-                "attainment": 0.91
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E05-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -851,9 +858,9 @@
               },
               "objective": {
                 "total": 50,
-                "attainment": 0.91
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E05-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -870,8 +877,8 @@
               "cocosair": 50
             },
             "attainment": {
-              "three": 0.91,
-              "cocosair": 0.91
+              "three": null,
+              "cocosair": null
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -884,7 +891,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -899,6 +906,7 @@
           "rep": "R01",
           "pilot": false,
           "track": "targeted-pilot",
+          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "arms": {
             "three": {
               "s1": 15,
@@ -938,9 +946,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": 1
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E10-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -981,9 +989,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": 1
+                "attainment": null
               },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
               "report": "B-20261003-R05/PAIR-E10-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -1000,8 +1008,8 @@
               "cocosair": 55
             },
             "attainment": {
-              "three": 1,
-              "cocosair": 1
+              "three": null,
+              "cocosair": null
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -1014,7 +1022,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 6,
+            "validationRevision": 7,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -1031,7 +1039,7 @@
       "n": 0,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
-        "median": 0,
+        "median": null,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -1041,8 +1049,8 @@
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0,
-        "air": 0,
+        "three": null,
+        "air": null,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
       "diagnosticDeltas": [
@@ -1055,7 +1063,7 @@
         {
           "pairId": "PAIR-E01-K0-R01",
           "track": "targeted-pilot",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "delta": -5
         }
       ]
@@ -1066,7 +1074,7 @@
       "n": 0,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
-        "median": 0,
+        "median": null,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -1076,8 +1084,8 @@
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0,
-        "air": 0,
+        "three": null,
+        "air": null,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
       "diagnosticDeltas": [
@@ -1090,7 +1098,7 @@
         {
           "pairId": "PAIR-E02-K0-R01",
           "track": "targeted-pilot",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "delta": 0
         }
       ]
@@ -1101,7 +1109,7 @@
       "n": 0,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
-        "median": 0,
+        "median": null,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -1111,8 +1119,8 @@
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0,
-        "air": 0,
+        "three": null,
+        "air": null,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
       "diagnosticDeltas": [
@@ -1125,7 +1133,7 @@
         {
           "pairId": "PAIR-E05-K0-R01",
           "track": "targeted-pilot",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "delta": 0
         }
       ]
@@ -1136,7 +1144,7 @@
       "n": 0,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
-        "median": 0,
+        "median": null,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -1146,8 +1154,8 @@
         "three": 0
       },
       "attainmentMedian": {
-        "three": 0,
-        "air": 0,
+        "three": null,
+        "air": null,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
       "diagnosticDeltas": [
@@ -1160,86 +1168,13 @@
         {
           "pairId": "PAIR-E10-K0-R01",
           "track": "targeted-pilot",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "delta": 0
         }
       ]
     }
   ],
-  "knowledgeGain": [
-    {
-      "scene": "E01",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 45
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E01",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 40
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E02",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E02",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E05",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 50
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E05",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 50
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E10",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E10",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    }
-  ],
+  "knowledgeGain": [],
   "referenceCeiling": {
     "E01/three": {
       "objective": 55,
@@ -1250,12 +1185,12 @@
       },
       "visual18": 13,
       "visual40": 29,
-      "total": 84,
+      "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "19a56e3a0689d380df02933f0a4c5649f143de0c855471a2e267a1247faf9598"
+      "evidenceHash": "0c4b3f98e61d2a68de0e115fb87df9ff060e82cbbe276faa45c8fc30901b58c6"
     },
     "E01/cocosair": {
       "objective": 55,
@@ -1266,12 +1201,12 @@
       },
       "visual18": 12.5,
       "visual40": 28,
-      "total": 83,
+      "total": 87.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "0a32f51c0bc990793a0c624d531d7780825621d9657cf8598056195fdd6a49ea"
+      "evidenceHash": "12335f66c037339b968aa5710f93860dc8fa0ee7c9136234584506ebce646ca0"
     },
     "E02/three": {
       "objective": 55,
@@ -1282,12 +1217,12 @@
       },
       "visual18": 11.5,
       "visual40": 26,
-      "total": 81,
+      "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "aaf7e76df013028e3322c0ac27d4c15a4425ce945fde53d0cace20b31948afa6"
+      "evidenceHash": "859668d4bb2cb24cc3387406285af91f46a3f33d748e0e0e2cce9b7838803860"
     },
     "E02/cocosair": {
       "objective": 55,
@@ -1298,12 +1233,12 @@
       },
       "visual18": 12,
       "visual40": 27,
-      "total": 82,
+      "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "bdd990cd29ef720d4784d5080ac1b5ba00706fd9b8d6ea981427e328b26cea5d"
+      "evidenceHash": "5017959e44b794f29e719bd6fa3a986faaf242cfadffb29008a8a01f19e1c74a"
     },
     "E03/three": {
       "objective": 55,
@@ -1314,12 +1249,12 @@
       },
       "visual18": 11.5,
       "visual40": 26,
-      "total": 81,
+      "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "7c500a1295ad74dc17fac5153b180313c9d14859df58a667db41d34415e008c0"
+      "evidenceHash": "159dac1bc6e775e7d2b543fb7e0000bccbdcf352adb05234b57df2b49aa56fd1"
     },
     "E03/cocosair": {
       "objective": 55,
@@ -1330,12 +1265,12 @@
       },
       "visual18": 11.5,
       "visual40": 26,
-      "total": 81,
+      "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "cd7298d18e00009f4e784cf532d5cc0ca610d166aa23b47aac7efa46164575b2"
+      "evidenceHash": "57d835752dc7d59e545762a2df158c4cf962c6da5e8f925ce08af8fb230caa92"
     },
     "E04/three": {
       "objective": 55,
@@ -1346,12 +1281,12 @@
       },
       "visual18": 11,
       "visual40": 24,
-      "total": 79,
+      "total": 83.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "ec7a1f6f56a3115397351fac9f03a1688689818ee8267fcf4d5c79c7352b0fd7"
+      "evidenceHash": "1859b951c9f35712bbce342c9036adaf7c11e63c48b3c440b24829252e9b2582"
     },
     "E04/cocosair": {
       "objective": 55,
@@ -1362,12 +1297,12 @@
       },
       "visual18": 11.5,
       "visual40": 26,
-      "total": 81,
+      "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "d644202b474b23e2fd53d262de54307e02c102d06125106cfd313eb0c68d8b5c"
+      "evidenceHash": "27313820d6b844a7e8b05abe5496764668136b544af2b5959f5692bbbc781355"
     },
     "E05/three": {
       "objective": 55,
@@ -1378,12 +1313,12 @@
       },
       "visual18": 13,
       "visual40": 29,
-      "total": 84,
+      "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "41006fbb69a2585a9ed6cc44139681ffe54e650d497c995c618aad39b9d9cd3b"
+      "evidenceHash": "529b708a04547d4ba99939463896f646a3356f253cdb6f08405639c482e46577"
     },
     "E05/cocosair": {
       "objective": 55,
@@ -1394,12 +1329,12 @@
       },
       "visual18": 13,
       "visual40": 29,
-      "total": 84,
+      "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "44f75463120db43a372850ae015c4bc1d92249e33c5506f9753b7e4279c86f8f"
+      "evidenceHash": "840275cfada679f3e696198741e079358e3b0d069918f517dc9f83e85baf4c86"
     },
     "E06/three": {
       "objective": 55,
@@ -1410,12 +1345,12 @@
       },
       "visual18": 13.5,
       "visual40": 30,
-      "total": 85,
+      "total": 89.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "bdc1e6df729a8946ebc598c27f736032e8f7d1265a9ffb6cec337b7ce7ad9135"
+      "evidenceHash": "7260a3d3f8d6deeabdbdabbd6e1f13e9eab17176b8ed7e5d2c066171072e267e"
     },
     "E06/cocosair": {
       "objective": 55,
@@ -1426,12 +1361,12 @@
       },
       "visual18": 13.5,
       "visual40": 30,
-      "total": 85,
+      "total": 89.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "fbd3340ea52826c9bf4d440c7d35a23b91be46a69535a6b0550ad2af9a121e35"
+      "evidenceHash": "5030fc9cbc889d62588cf6d275ec33966bdf64d60ce98208e94c07fdfa56fc64"
     },
     "E07/three": {
       "objective": 55,
@@ -1442,12 +1377,12 @@
       },
       "visual18": 14,
       "visual40": 31,
-      "total": 86,
+      "total": 90.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "3fa8f50a38101293c02ce7cfad01599f02ec9142f4c13c95daa33eb4b46e7c8d"
+      "evidenceHash": "2031535a2c7420e4cc918124431857b2c24e638384109ce2ba4fbde3730309f5"
     },
     "E07/cocosair": {
       "objective": 55,
@@ -1458,12 +1393,12 @@
       },
       "visual18": 13,
       "visual40": 29,
-      "total": 84,
+      "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "a1500c729f6f3577ca39f4a14ab75dbb200208c23e7dbe21347fc837fc1042d0"
+      "evidenceHash": "07aff5c4a167903321892dc791073105556ce51bf9963e4943dcfe4b9b007ff3"
     },
     "E08/three": {
       "objective": 55,
@@ -1474,12 +1409,12 @@
       },
       "visual18": 12,
       "visual40": 27,
-      "total": 82,
+      "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "1badab210654ba7787e060f3638b33d2ce3e1d637221843fe549f1f53f1e5fbc"
+      "evidenceHash": "34d91012699d7a31da508f47bd76afa8754c3bc214881e4d2648f44a17f4f745"
     },
     "E08/cocosair": {
       "objective": 55,
@@ -1490,12 +1425,12 @@
       },
       "visual18": 12,
       "visual40": 27,
-      "total": 82,
+      "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "34efa339c5717de44ccf8e53755b2a3298602bf0cc027fb40df9f45e6236b1f7"
+      "evidenceHash": "3be8ee6ba00be6fad026bc743da0b20a3e88cf5f5fe0588d1edd872464b41914"
     },
     "E09/three": {
       "objective": 55,
@@ -1506,28 +1441,28 @@
       },
       "visual18": 12.5,
       "visual40": 28,
-      "total": 83,
+      "total": 87.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "a1ccf49f0d7673e85631c6b2ba2274fcf5822490c5da471021e35e73d91cc651"
+      "evidenceHash": "b9d5aba39dee88d69c3596f23422a1ba6b19b55570d59df615e335d761c5445b"
     },
     "E09/cocosair": {
-      "objective": 55,
+      "objective": 42,
       "objectiveBreakdown": {
         "s1": 15,
-        "s2": 30,
-        "s3": 10
+        "s2": 23,
+        "s3": 4
       },
       "visual18": 13,
       "visual40": 29,
-      "total": 84,
+      "total": 75.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "0a715a9c5df6082459a7b80fa7fba0592778ed68edd534f7830f1652e1efa132"
+      "evidenceHash": "774af7290651648d0c7f3683031a9690ac570006755d8ad19a00bc6b4f927170"
     },
     "E10/three": {
       "objective": 55,
@@ -1538,12 +1473,12 @@
       },
       "visual18": 10.5,
       "visual40": 23,
-      "total": 78,
+      "total": 82.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "91c75f8a4c94c98a82a149c1ec447ce1586379a938b9d586652197993ff5c648"
+      "evidenceHash": "c3f62d1daecb56d9fdb9942a1eea40acaafcdc10a39e396c578f22d981eb59ec"
     },
     "E10/cocosair": {
       "objective": 55,
@@ -1554,12 +1489,12 @@
       },
       "visual18": 10.5,
       "visual40": 23,
-      "total": 78,
+      "total": 82.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 6,
+      "validationRevision": 7,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "ddadfed028597ce5eba06b29bfab7eee1520ec561406f14ca8ecfe6fa0dfe8e1"
+      "evidenceHash": "151f515d18ea014cde53e226ec056608c6aa3095dde9c8a4851696ce0034cc7f"
     }
   },
   "notes": [

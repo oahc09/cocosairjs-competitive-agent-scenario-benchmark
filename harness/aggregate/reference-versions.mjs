@@ -186,7 +186,15 @@ for (let i = 1; i <= 10; i++) {
     const obj = refObjective(rep);
     const vis = ok ? firstRefVisual18(scene, engine) : { visualRaw18: null, evidence: null };
     const visualScore40 = vis.visualRaw18 != null ? Math.round(vis.visualRaw18 * 40 / 18) : null;
-    const totalScore = obj && visualScore40 != null ? obj.objectiveScore + visualScore40 : null;
+    // R2-7(方案 A):Reference 同样采 code-review S4,分子分母口径一致(formalAttainment 不再天然 >100%)
+    let referenceS4 = null;
+    try {
+      const cr = JSON.parse(fs.readFileSync(path.join(ROOT, 'reference', 'private', engine, scene, 'validation', 'code-review.json'), 'utf8'));
+      referenceS4 = cr.total ?? null;
+    } catch { /* 无 code-review → S4 缺失 */ }
+    const totalScore = (obj && visualScore40 != null && referenceS4 != null)
+      ? obj.objectiveScore + referenceS4 + visualScore40
+      : (obj && visualScore40 != null ? obj.objectiveScore + visualScore40 : null);
     epochs[key] = {
       refVersion,
       validationRevision,
@@ -198,7 +206,8 @@ for (let i = 1; i <= 10; i++) {
       visualRaw18: vis.visualRaw18,
       visualEvidence: vis.evidence,
       visualScore40,
-      totalScore,                                       // = objectiveScore + visualScore40(无视觉证据时 null)
+      referenceS4,
+      totalScore,                                       // = objectiveScore + referenceS4 + visualScore40(referenceS4 缺失时退旧口径并如实缺 S4)
       ceiling: totalScore,                              // 兼容旧字段名;口径变更:S4 不再默认满分,见 notes
       evidenceHash: ok ? shaFile(repP) : null,          // validation/report.json 内容 sha
       validated: ok ? { passRate: rep.probePassRate, fps: rep.fps, verdict: rep.verdict } : null,

@@ -1,13 +1,14 @@
 {
-  "generatedAt": "2026-10-03T14:12:29.480Z",
+  "generatedAt": "2026-10-03T14:51:45.163Z",
   "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
   "batch": "B-20261003-R05",
-  "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+  "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
   "statusDefinition": {
     "QUALIFIED": "全部鉴定项通过,指标按正式口径引用",
     "LEGACY_PROVISIONAL": "整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制",
     "QUALIFIED_OBJECTIVE": "整改后数据:冻结输入/身份/预算(FULL)/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起",
     "QUALIFIED_OBJECTIVE_PARTIAL": "整改后数据:同上,但预算证据 PARTIAL(build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数,仅声明口径)——引用时必须带此限制",
+    "QUALIFIED_OBJECTIVE_PARTIAL_TIMING": "整改后数据:预算 PARTIAL + 双臂启动时差超 30s 或不可测(PAIR_TIMING_DRIFT/UNMEASURABLE)——objective 有条件引用,正式 paired 设计主张不成立,引用必须带此时序限制",
     "DISQUALIFIED": "冻结输入断裂且无法溯源,全部指标作废"
   },
   "context": {
@@ -19,7 +20,7 @@
       "status": "BLOCKED",
       "source": "gates/G7.json"
     },
-    "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09"
+    "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005"
   },
   "pairs": [
     {
@@ -28,9 +29,10 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
       "failedChecks": [
         "budgetToolCallEvidence",
+        "executionTiming",
         "visualGate"
       ],
       "reasons": [
@@ -71,8 +73,8 @@
           "ok": true,
           "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
-          "matchesCurrent": true,
+          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
+          "matchesCurrent": false,
           "note": null
         },
         "agentIdentityComplete": {
@@ -115,6 +117,14 @@
           "completeness": "PARTIAL",
           "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": false,
+          "status": "PAIR_TIMING_DRIFT",
+          "startDeltaSec": 791,
+          "maxSec": 30,
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区"
+        },
         "visualGate": {
           "id": "visualGate",
           "ok": false,
@@ -152,9 +162,10 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
       "failedChecks": [
         "budgetToolCallEvidence",
+        "executionTiming",
         "visualGate"
       ],
       "reasons": [
@@ -195,8 +206,8 @@
           "ok": true,
           "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
-          "matchesCurrent": true,
+          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
+          "matchesCurrent": false,
           "note": null
         },
         "agentIdentityComplete": {
@@ -239,6 +250,14 @@
           "completeness": "PARTIAL",
           "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": false,
+          "status": "PAIR_TIMING_DRIFT",
+          "startDeltaSec": 61600,
+          "maxSec": 30,
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区"
+        },
         "visualGate": {
           "id": "visualGate",
           "ok": false,
@@ -276,9 +295,10 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
       "failedChecks": [
         "budgetToolCallEvidence",
+        "executionTiming",
         "visualGate"
       ],
       "reasons": [
@@ -319,8 +339,8 @@
           "ok": true,
           "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
-          "matchesCurrent": true,
+          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
+          "matchesCurrent": false,
           "note": null
         },
         "agentIdentityComplete": {
@@ -363,6 +383,14 @@
           "completeness": "PARTIAL",
           "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
         },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": false,
+          "status": "UNMEASURABLE",
+          "startDeltaSec": null,
+          "maxSec": 30,
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区"
+        },
         "visualGate": {
           "id": "visualGate",
           "ok": false,
@@ -400,9 +428,10 @@
       "knowledge": "K0",
       "repetition": "R01",
       "pilot": false,
-      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
       "failedChecks": [
         "budgetToolCallEvidence",
+        "executionTiming",
         "visualGate"
       ],
       "reasons": [
@@ -443,8 +472,8 @@
           "ok": true,
           "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
-          "matchesCurrent": true,
+          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
+          "matchesCurrent": false,
           "note": null
         },
         "agentIdentityComplete": {
@@ -486,6 +515,14 @@
           "ok": false,
           "completeness": "PARTIAL",
           "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": false,
+          "status": "UNMEASURABLE",
+          "startDeltaSec": null,
+          "maxSec": 30,
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区"
         },
         "visualGate": {
           "id": "visualGate",
@@ -552,7 +589,7 @@
     "invalidOrPendingMetrics": [
       "visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)",
       "formal total/attainment/pairedDelta(G7 过后重跑 blind+judge 即可补齐)",
-      "存在非 visual 项失败的对: PAIR-E01-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E02-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E05-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E10-K0-R01(budgetToolCallEvidence,visualGate)"
+      "存在非 visual 项失败的对: PAIR-E01-K0-R01(budgetToolCallEvidence,executionTiming,visualGate); PAIR-E02-K0-R01(budgetToolCallEvidence,executionTiming,visualGate); PAIR-E05-K0-R01(budgetToolCallEvidence,executionTiming,visualGate); PAIR-E10-K0-R01(budgetToolCallEvidence,executionTiming,visualGate)"
     ],
     "reasons": [
       "预算证据 PARTIAL:build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数(永久 PARTIAL,接入带计数器的运行时后消除)",

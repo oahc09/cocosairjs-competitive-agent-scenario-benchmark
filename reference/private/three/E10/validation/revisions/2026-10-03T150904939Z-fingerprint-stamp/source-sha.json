@@ -1,0 +1,2456 @@
+{
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E10",
+  "generatedAt": "2026-10-03T15:09:05.246Z",
+  "fileCount": 248,
+  "totalBytes": 74015142,
+  "skippedDirs": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".cache"
+  ],
+  "files": [
+    {
+      "path": "assets/character.glb",
+      "bytes": 162852,
+      "sha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7"
+    },
+    {
+      "path": "template-smoke.png",
+      "bytes": 7736,
+      "sha256": "8dd14874402adcf2fb5bb2edad15a6c51fb5c511621f1b45250442c35c7313d2"
+    },
+    {
+      "path": "validation/build.log",
+      "bytes": 572,
+      "sha256": "69e46eddbb24fa83c90170a2cd9551c046745616acdf356d61d6f4e5fd7543b7"
+    },
+    {
+      "path": "validation/screenshots/P4-before.png",
+      "bytes": 363857,
+      "sha256": "e9296b543a11e89bd264522c138b337939620c365c353e41ed3a35cc3abd8618"
+    },
+    {
+      "path": "validation/screenshots/P4-region-b.png",
+      "bytes": 349822,
+      "sha256": "e8841559675d11b8988c51d9991f5f8b3b1ecca1175c93ecd136a3a27a11ab5e"
+    },
+    {
+      "path": "validation/screenshots/P7-motion-a.png",
+      "bytes": 372564,
+      "sha256": "d4ac5dfb59660b401ef8346d09ecddab18006a4b17a47f3f8925ea4d6e507c00"
+    },
+    {
+      "path": "validation/screenshots/P5-before.png",
+      "bytes": 352152,
+      "sha256": "1f1a9e34a2bcf0f7bdf3bf70cdf5f2023837c169d818ce2374ba24b87a27dadd"
+    },
+    {
+      "path": "validation/screenshots/P6-before.png",
+      "bytes": 355628,
+      "sha256": "6f8d62013e69517bed15d6402c81e67a17c8100918da1dbcf5c973800e4f2773"
+    },
+    {
+      "path": "validation/screenshots/mid.png",
+      "bytes": 316035,
+      "sha256": "75a8680f25e00c42f5f7c290c1f3308e87a3da70b75155a483737a3324452baa"
+    },
+    {
+      "path": "validation/screenshots/P6-after.png",
+      "bytes": 366764,
+      "sha256": "359b6b5fca924c8dddd68bfab170684e2b1fe4462b1c8408c0172f835c84aed0"
+    },
+    {
+      "path": "validation/screenshots/extra-2.png",
+      "bytes": 323451,
+      "sha256": "ca6324961e3a737df5508960ec91b1fda2af98ea722a975cc7c1b805f4154f19"
+    },
+    {
+      "path": "validation/screenshots/P7-before.png",
+      "bytes": 367570,
+      "sha256": "9499ef6fa4251ce558dd69339f8627c19862c5bcc4b921ee80d8ffaf89564108"
+    },
+    {
+      "path": "validation/screenshots/P4-after.png",
+      "bytes": 349553,
+      "sha256": "ddbee1ff2998f2cf0d4eb0b61cc784f122778d06febf69f6b516bfef13dae3d5"
+    },
+    {
+      "path": "validation/screenshots/P6-vis.png",
+      "bytes": 367982,
+      "sha256": "ca5c3fa65aa0b4f3a1d48a947c84af22d90d83ac10d3e8f691b11354f5173049"
+    },
+    {
+      "path": "validation/screenshots/P2-after.png",
+      "bytes": 378983,
+      "sha256": "dea528872cfcd69608f965e20cd04dfdc29fe21adcf078066f3a88edf0b65225"
+    },
+    {
+      "path": "validation/screenshots/P5-motion-b.png",
+      "bytes": 354526,
+      "sha256": "6fa1bd44c74dc94b06fe8d812a44d0232d380dd9e4008247f2473e7badbde114"
+    },
+    {
+      "path": "validation/screenshots/P3-region-b.png",
+      "bytes": 368828,
+      "sha256": "a7b9c0a142063dd21bccfa553fe287d248435b27a9584ef9ff9a3df2231a75d4"
+    },
+    {
+      "path": "validation/screenshots/P4-region-a.png",
+      "bytes": 349191,
+      "sha256": "b4a3673d4a7e4ffda5ae40976a474e7ec3048a5ef5d8fe4bd78d58a216bc8b63"
+    },
+    {
+      "path": "validation/screenshots/initial.png",
+      "bytes": 273229,
+      "sha256": "7ea697a5e6aff59d862b3b05a7508769454847402ef8edacced6e0f42fa96712"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-b.png",
+      "bytes": 381225,
+      "sha256": "d2925f8be7e89eda5cb5fce4de2adbc04b88ab488afed3dd80d71e8648b3aa4b"
+    },
+    {
+      "path": "validation/screenshots/final.png",
+      "bytes": 318326,
+      "sha256": "52afb466404db35b75a7a595bec15b553ca750619362d16e212d371de9e019a3"
+    },
+    {
+      "path": "validation/screenshots/P1-vis.png",
+      "bytes": 381910,
+      "sha256": "59e0e9f8721ebef1292e697420516a13d63c9625a5c25ea034375efa01ab3023"
+    },
+    {
+      "path": "validation/screenshots/extra-1.png",
+      "bytes": 322886,
+      "sha256": "b5dc854d4075007439687e8c2100e56c10801341b2de99feea3911cfe8ac33e7"
+    },
+    {
+      "path": "validation/screenshots/P7-after.png",
+      "bytes": 380726,
+      "sha256": "4076291c67e1f1b6ae08a6a464669ea0513478e814f2fe5d0822c3d4243af691"
+    },
+    {
+      "path": "validation/screenshots/P7-motion-b.png",
+      "bytes": 376055,
+      "sha256": "02421863c6d8800823afc18233263c52ea3885d195a723917a70d2a7c0113e53"
+    },
+    {
+      "path": "validation/screenshots/P5-after.png",
+      "bytes": 355848,
+      "sha256": "002b0e1bad77c393dfc40c7c08d7084790ef4d2040d080f1eaaf726888792588"
+    },
+    {
+      "path": "validation/screenshots/P3-after.png",
+      "bytes": 366159,
+      "sha256": "c226ebda81f8bb30bb9e61e1b5e841ad2dcb25c716799dc6015ac017d154339a"
+    },
+    {
+      "path": "validation/screenshots/P5-motion-a.png",
+      "bytes": 358328,
+      "sha256": "1dbd09995f19f1e7140cbdc076dce6439a49421217d58c95f6f0a805d54ad205"
+    },
+    {
+      "path": "validation/screenshots/P3-region-a.png",
+      "bytes": 372940,
+      "sha256": "97264136ef7dc08e9c2f925ac0985151e93a97c266d8e9809205fe55449e5cc1"
+    },
+    {
+      "path": "validation/screenshots/P1-after.png",
+      "bytes": 383267,
+      "sha256": "e19eaaf0f4b45fdfc05ef1840dd500ccff43d705d8635e29cc7b384638f7d3ac"
+    },
+    {
+      "path": "validation/screenshots/P1-before.png",
+      "bytes": 364100,
+      "sha256": "0f81d284ef936531b6f55035f1ee2092749105b52cc944db748cad70cb897ec8"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-a.png",
+      "bytes": 383348,
+      "sha256": "81e0747d7f568d41802535aad75b4ec744b70f5d93d90dba7201d3f3944f86a9"
+    },
+    {
+      "path": "validation/screenshots/P2-before.png",
+      "bytes": 383261,
+      "sha256": "8349a5c65933b660aa9bf79f90d51af4f0b6324bb362b463d7844c7242eeec6a"
+    },
+    {
+      "path": "validation/screenshots/P3-before.png",
+      "bytes": 378484,
+      "sha256": "b1f59d1bc489ed7d35928dba2ad66b953b8063f357dda0782802d52a9cd11991"
+    },
+    {
+      "path": "validation/video.webm",
+      "bytes": 4218935,
+      "sha256": "14f3728c8a0366c227181656aed5f0e69caf028ebbe5745e09334c2db560c067"
+    },
+    {
+      "path": "validation/console.json",
+      "bytes": 260,
+      "sha256": "45d547f24da210cdff9be84b8873520eecdea355b1a3456a4ba3e4f84a522029"
+    },
+    {
+      "path": "validation/network.json",
+      "bytes": 1569,
+      "sha256": "6a14ebc8677a7d29e266d744f18a17394fdf23c1288c78d41ee79fb51dd4d333"
+    },
+    {
+      "path": "validation/perf.json",
+      "bytes": 144,
+      "sha256": "eace492d9af495ffe7bff069b1b917e843b0ef9485dcffdd5e74b66962b23a9e"
+    },
+    {
+      "path": "validation/probe-results.json",
+      "bytes": 25743,
+      "sha256": "7ac2a21dcf7acb024afbfd7f213145f3d7150b6a62b1df34942add3b70a31b22"
+    },
+    {
+      "path": "validation/serve-log.json",
+      "bytes": 1716,
+      "sha256": "f0f95282a13409ae6227a7a21861a31cda42555140bd173f1c50bace3a733071"
+    },
+    {
+      "path": "validation/source-sha.json",
+      "bytes": 39666,
+      "sha256": "2ad2fd33283c2ab193c58c71874f1c3f5ce550b050387860d25e8ff9cf523d8f"
+    },
+    {
+      "path": "validation/revisions/2026-10-02T093100449Z-original/report.json",
+      "bytes": 4345,
+      "sha256": "2f8b41fb02bebad858e8c0588a7dfe2106380bbd2d4b59e77f974e8fae07c97a"
+    },
+    {
+      "path": "validation/revisions/.original-archived",
+      "bytes": 25,
+      "sha256": "598412bbad1b459192b6ef3ab75ae5805486a8d2f378dd5f73a7a32dbfab9233"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/initial.png",
+      "bytes": 216069,
+      "sha256": "8f3f117f6f1b298c7cb24f1358de87830150a9a15ce3cd0adcf2c14acf0c88ed"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P1-before.png",
+      "bytes": 356816,
+      "sha256": "db7506d604cf638b9392f24c055a3bf8c76999b76f2fe552bab6d8f478a6884b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P1-vis.png",
+      "bytes": 378237,
+      "sha256": "8ab53eb9101534126e68933cd80e98cf0ac41e69be8c004f6dbc1009c7b78251"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P1-after.png",
+      "bytes": 382007,
+      "sha256": "46568e2279a80bb72d0ad3ba64cc307c828c1e3e181b443523761c4c75efe007"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P2-before.png",
+      "bytes": 383109,
+      "sha256": "fe449db6c5e0fcaaf08f7c6622831fff3eb9e495736620d2f6d15b940e909381"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P2-motion-a.png",
+      "bytes": 382925,
+      "sha256": "a33bc960563196f7b547eba2068fc6ab3062c19d1a04db70aa0995ab4e8ae676"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P2-motion-b.png",
+      "bytes": 383973,
+      "sha256": "47cb1e6c776715ab01da7416b91af727fd4c65d126a7b19431197114f0e5cc67"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P2-after.png",
+      "bytes": 385164,
+      "sha256": "87ffd2deca1dfeb33c821d97ccd8c9384adfca7ec913e1dd1072435352009d9f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P3-before.png",
+      "bytes": 385841,
+      "sha256": "52deb74aae11b440f2cb1fd38509f96baa26669613552a151884d2c87c283d89"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P3-region-a.png",
+      "bytes": 380684,
+      "sha256": "ef0c9b5d8b51102f203a3cd7dc5ce0cca63f04843fc5754e8a354c7119f6dd24"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P3-region-b.png",
+      "bytes": 378077,
+      "sha256": "460d4c2b38fe598bf6280cd9b07db6d07efe19f8d434fd3c90b12bcafd389433"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P3-after.png",
+      "bytes": 377420,
+      "sha256": "3bc1f6eec3b32078f5eaba38ad5cfb1b018d189a6bdadcb5e7c2d8b3187497f9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P4-before.png",
+      "bytes": 373463,
+      "sha256": "cd801ddb9ea117a1bea195565ea5cbba88ac77eb8f477a113aa3c469e72476af"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P4-delta.png",
+      "bytes": 358153,
+      "sha256": "7d279eba6838adc8f9ce4b4d268392fa4a7c37abb33ee61a905c4bb739afeb89"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P4-after.png",
+      "bytes": 356490,
+      "sha256": "0003c5de0b99f3843b8706c8dca3fd18af11dfcbe9d972c0b27a31af4a677a67"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P5-before.png",
+      "bytes": 352960,
+      "sha256": "26437af84fdb2e33a71a361a0542d0ecd3def5307928df5ec1f7fb581edac60b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P5-motion-a.png",
+      "bytes": 350502,
+      "sha256": "cb48e4df649cbef6ffe021c8407bb6b2bb163889d8d0f993b62975ede7dd54fd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P5-motion-b.png",
+      "bytes": 354569,
+      "sha256": "270fa853f84afb18e82c748decfc917a94735ddae828d64789fa2e34f5a23814"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P5-after.png",
+      "bytes": 355448,
+      "sha256": "85d6522feb04dec8ab36701ac8e130ef0e5b569cd38230a834ded37fdbcf01d3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P6-before.png",
+      "bytes": 357185,
+      "sha256": "2965532a3a04a6f58e498e10b1a949695fd42aea472b76666c97e6e7400ef0e2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P6-vis.png",
+      "bytes": 377448,
+      "sha256": "c67b9ed7a3eec0b8d09aeb5c04b68a5fbb618e2c2d411709e0bd77caa7f495b5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P6-after.png",
+      "bytes": 377686,
+      "sha256": "8a536323f10afe48d28064f24eaad9afacfc058dc62d3f8d5d2e562d881ed0cc"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P7-before.png",
+      "bytes": 380711,
+      "sha256": "8b88fe7b65f70c0c4acf1caa0b63023ffb0a747155bf57eb6296b6083e1ddf03"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P7-motion-a.png",
+      "bytes": 372034,
+      "sha256": "bfd7a5bdf177a5caece8e19e6030707bcfb9a8be15f34ef3037eb3103df23b09"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P7-motion-b.png",
+      "bytes": 372389,
+      "sha256": "8a596461ae5b6b488899e89d753c9cbe3d70534d0cb6b5d0d30ccf963313defe"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/P7-after.png",
+      "bytes": 370499,
+      "sha256": "23c9c4344919a315709a54ab57c6ba52da76459a8c043508ba9fc106b67a83ce"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/mid.png",
+      "bytes": 305506,
+      "sha256": "6ed502e30ee49b70dc2a7c73f8ce3f599852b071a66ecbe24c47cfbd60f1f15b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/final.png",
+      "bytes": 303575,
+      "sha256": "fb66ce1fd1bd08d9428ee4a4edcda1795789a6c8bf2d084c1c3b564d9ddd5999"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/extra-1.png",
+      "bytes": 306344,
+      "sha256": "c285fcd3f603e9115a5ca9f2f389bd88b0ef02fc0a5f78fb02d7455ad125b0da"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/screenshots/extra-2.png",
+      "bytes": 310851,
+      "sha256": "7c31a4cd02f4023e0cc56086e709f4e1b3e4507d4cdcc5dba05a487e037a18d9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/source-sha.json",
+      "bytes": 46087,
+      "sha256": "01674a58400b2a251194283867dce1529ec1a2b4c4ea581fb9e265256174fdfc"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/build.log",
+      "bytes": 572,
+      "sha256": "c701d549081ac08def0512503e660f829bf72936825fa7ca8540ec68d6ce8a67"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/serve-log.json",
+      "bytes": 1639,
+      "sha256": "dccbf9f530fe37e0da7b9c909252be4d683c1b0b368f9c0cbbaa0dfdfee396cd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/probe-results.json",
+      "bytes": 25376,
+      "sha256": "2e67a0ca867500fe8dca47124c4f499968be629da1c7f1fc4b249cbafdcffbac"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/console.json",
+      "bytes": 248,
+      "sha256": "30d3949fc2d49c295911aba5b0242f18ab7ea2749f4c005e73d9563f7b08f2fc"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/network.json",
+      "bytes": 1500,
+      "sha256": "954b5135ec16bc3225cf9c814368c1c6ba7bb4231de1b5c1e592c4bf40eff763"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/perf.json",
+      "bytes": 136,
+      "sha256": "8840cf4a0ee2b37c7d453fafebd3dd39d0b2a90b6e40cb9d6ef10a549fb4939e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065835865Z-validator-rectification/report.json",
+      "bytes": 4784,
+      "sha256": "af50f5227afd4f1de5579daea490d17dc5339f34a9ea095ff1b11a5c9f1f1a57"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/initial.png",
+      "bytes": 281309,
+      "sha256": "9f8235b2a1121a69787dd3bd93ac1071e6e7af5002e4c2971fac568496ed2f93"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P1-before.png",
+      "bytes": 365532,
+      "sha256": "9479bfba9001775fc27280a58428b8afca23258bdcee03c122a13d31aa7bfb9c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P1-vis.png",
+      "bytes": 381816,
+      "sha256": "f96ee2501446d8793a3f9a3f64debb607973913481dc93ead4b52f23f92fd85f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P1-after.png",
+      "bytes": 384037,
+      "sha256": "931f5ff2fd077b2c3db9eabaac4b77309d763626904cf7f2a215a39a578b3175"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P2-before.png",
+      "bytes": 383240,
+      "sha256": "b26d2dada0c00bb5f4a6f2b2ce95b98b51651bf1bd0315665bd85cbe9b5f6d4a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P2-motion-a.png",
+      "bytes": 384765,
+      "sha256": "6ed081eaaea8bf52b56e56c6c2c705430ff94403c8c702cdae695d0d90136d20"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P2-motion-b.png",
+      "bytes": 381224,
+      "sha256": "57cc96a805a78f8d7ded7aa2e6bd91eb3e3edbb8a2ed1eeb21880de1c0b2c47e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P2-after.png",
+      "bytes": 379737,
+      "sha256": "a756de3573b0b0ecfb617b758f242df7d3196a20997f3693ded2943077304c90"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P3-before.png",
+      "bytes": 378110,
+      "sha256": "0afa1d439c5ca2de192a34b7ffb9db60bac2d7f4674ab23ea41c35552496707b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P3-region-a.png",
+      "bytes": 374104,
+      "sha256": "621372f3a76aa8d0a8a475ddbe63d99d69c720c97251e0676c80e13d8e451a04"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P3-region-b.png",
+      "bytes": 371013,
+      "sha256": "28340dad412e1b449b0e3fd06fc8d16386937e616cd6aea4f19bafec16bd021c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P3-after.png",
+      "bytes": 367041,
+      "sha256": "0da7a99839f01d080eb81871736239214d21a2d64f9c44f2389bbf1dcb28e076"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P4-before.png",
+      "bytes": 364902,
+      "sha256": "26aef3a5a52e8275ec8f7d93e453dd95142150fda5c785346eb67abc54153a36"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P4-delta.png",
+      "bytes": 350300,
+      "sha256": "e27e294c4b6cad0ee8efe3b5eab84cdde9066c2aa7735348c76f41b9f45464fa"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P4-after.png",
+      "bytes": 350685,
+      "sha256": "5e0177abf471c534bc10fb3b090f13584dfae15465405457bcf847a30b3c1e20"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P5-before.png",
+      "bytes": 348300,
+      "sha256": "913eaf21e6e6161dd4655f0b5043ca495687e6c3d1c3aa8f248fd64d6e83a22d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P5-motion-a.png",
+      "bytes": 358766,
+      "sha256": "69e71f60c3f4c3dc78329259f21bf4bc366d91c11275e9f6e39872801a410163"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P5-motion-b.png",
+      "bytes": 359632,
+      "sha256": "66023fcb32e1953e35d51b3996e6d38c03d041ea3998e22d22b11301e822d50a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P5-after.png",
+      "bytes": 356761,
+      "sha256": "586782d348cb171decd767e410db1964cb201f74de6f17a059c94c563cef1e7b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P6-before.png",
+      "bytes": 356855,
+      "sha256": "08b9116e79c729cd0ad86210f8973a54ba4c2448a8f1bd6b50a62e35e748a8dd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P6-vis.png",
+      "bytes": 372191,
+      "sha256": "2effd9310502d31bfb49c8318fa643a1e6b0c47aafb25195f22ad53b9b1415d0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P6-after.png",
+      "bytes": 371611,
+      "sha256": "57718c715ed28e65c2f2410cda8a7b11e29ffa1e990dca1d1d11e6d69e856846"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P7-before.png",
+      "bytes": 371598,
+      "sha256": "dc7413a02e30ac2396991216278d5334a246f6c9b9dba59f4ca07e437d738512"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P7-motion-a.png",
+      "bytes": 364171,
+      "sha256": "f90476fde64c1ba7441de8a2a77edbd73fba6a9a4f2586c33722bfbf0566023b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P7-motion-b.png",
+      "bytes": 372770,
+      "sha256": "c2f1fc21006c9b7f814e00648034dbcff676b2b0c4355ae6130cc02356ec32aa"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/P7-after.png",
+      "bytes": 371465,
+      "sha256": "2c3007acbdacd719d0a5f997d4d1d33f858224e2135e59e104e665df6d8c7d67"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/mid.png",
+      "bytes": 314147,
+      "sha256": "1d2ce2ac5389d194b4da4cf3c4118bb363b6dbe245bf7dffb4d9e49a9e027fd1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/final.png",
+      "bytes": 316780,
+      "sha256": "eda225194c578822de16d891ebcfe26fb2bb38b069ac48504930993a2da60419"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/extra-1.png",
+      "bytes": 320763,
+      "sha256": "7084bcfbc6858728d9f489b0000d1a78f466768e5bc5a4d6730feb0d4a55cf83"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/screenshots/extra-2.png",
+      "bytes": 321090,
+      "sha256": "6a2894ce68b2b3d668dcac75991aa80cf9a7311ac8dc4613c2757e296e04a8dd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/source-sha.json",
+      "bytes": 54659,
+      "sha256": "d575b1a1ce83c69193ed62823b4ac1badc1924513dacfac6297c19ea9615b3ee"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/build.log",
+      "bytes": 572,
+      "sha256": "d8ec22d472c2a610ce11f172da5299d33d77a13863eec9404e755249fc7d2498"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/serve-log.json",
+      "bytes": 1639,
+      "sha256": "82c94365815751672e0d2abb12d4f174efe584ea96d580a6c8a37f7e44e8c4e7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/probe-results.json",
+      "bytes": 25365,
+      "sha256": "a55e497a205d8ab3690c683edeecc694f74d06f873b3b70601ef3d69ac32b808"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/console.json",
+      "bytes": 248,
+      "sha256": "3e1d2dc7946f981b4a8977e74ae0d8b10d42f3c4edb872e5a585c1c9df033b21"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/network.json",
+      "bytes": 1500,
+      "sha256": "ec1f8859912757499c00af5d59f5529f0dceaa2381d89084c71b50483adb7f07"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/perf.json",
+      "bytes": 136,
+      "sha256": "711de5d949d0a44ddb0bdbaec9d98491ef35d975717e388c97b0dbf7390b0955"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T073112590Z-rectification-final/report.json",
+      "bytes": 4784,
+      "sha256": "761cef3c5cb2dd906ba59b21a2dcf905e6add3a0ed326494c0ddcec4f7f029c6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/initial.png",
+      "bytes": 280615,
+      "sha256": "e5c181e033cd06c4cd7ed6b186b66772560cc988ec36502916aa5ba753519167"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P1-before.png",
+      "bytes": 364606,
+      "sha256": "0d27e54e48832a1b97a7f0bba9b68a0a80f6d76c85b16352a6f3fb0a07819979"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P1-vis.png",
+      "bytes": 381954,
+      "sha256": "e7f08c2368d7376e655e408fb065573140867ae2ab1976596e947c8f6f1ad5b3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P1-after.png",
+      "bytes": 385367,
+      "sha256": "95feae6713e7a7030eda8527f33e2e626e19297c16a21e44e65f7ce24bdf1eb1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P2-before.png",
+      "bytes": 383280,
+      "sha256": "542d849a4ae03a9ac6192fdf405a35cfa7a8b94ad7275498069c88bfc02b1f33"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P2-motion-a.png",
+      "bytes": 384600,
+      "sha256": "296ca8427e5f51eeb35c6d37ea2f798671dd96b34bf5dba46e33b806ff615b63"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P2-motion-b.png",
+      "bytes": 381580,
+      "sha256": "f4ce97ffcb2d819f0ebb36c8f8be11b6b26e04493d6c4476b45b3eb7ad4d6aa4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P2-after.png",
+      "bytes": 379488,
+      "sha256": "957592fb804b2bad31244e012e48be5aee8d60f6b03835f0770e54879cb0e2b2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P3-before.png",
+      "bytes": 379084,
+      "sha256": "80fcaefc198752927e2cbd085e697ab87db9a92f123efdf757b02639409b78b6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P3-region-a.png",
+      "bytes": 373727,
+      "sha256": "f231117eccaba7890d90c03f04c6cb4bbea0c3ef89c12e5dbca8f081045f6174"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P3-region-b.png",
+      "bytes": 370374,
+      "sha256": "c69348d96291c12e9f188c55062460c8a09d385e02840038a6e2d788f82ce281"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P3-after.png",
+      "bytes": 366788,
+      "sha256": "5c086e06bb41087d7a28d697445688dd20309e48460cd526d422226ff963356f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P4-before.png",
+      "bytes": 366047,
+      "sha256": "227000c88a9d5dde96674879d5918476e2f7d1bfa48297e4eff36c1b053a38b5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P4-delta.png",
+      "bytes": 348819,
+      "sha256": "24d6c8045899c51536b84a52ac2e8fb7ac3f6cd526af9eb51a86ab9398002440"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P4-after.png",
+      "bytes": 349884,
+      "sha256": "41bbdcdfddcdd9e37d19975d559f045aacfd66e6b10040c0b418fb2a8176b11d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P5-before.png",
+      "bytes": 349239,
+      "sha256": "f42430db70ba4f87f600663b1ac13708f81d77a0d463f66ee462c0d73810b956"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P5-motion-a.png",
+      "bytes": 359270,
+      "sha256": "b06071436e32bd3ab463b4371824e23e300f187c449cbc89c4216ac56e6a2b56"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P5-motion-b.png",
+      "bytes": 359170,
+      "sha256": "5e3de2360291db13747a5e9ab442cddc9372292b0f8329a1426ea5b7805942a3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P5-after.png",
+      "bytes": 357260,
+      "sha256": "cc6952771853e533f69640270d1ed017825126408f84cf9f0c017c5265011e2e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P6-before.png",
+      "bytes": 355935,
+      "sha256": "869bb42bbd17750b67074b26c76a1548db49a7e6859fcee1abe4a28a89cc9aa5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P6-vis.png",
+      "bytes": 371550,
+      "sha256": "e6182074dee2f1c3570ec2570ea629f555f72c0979cbf5589a005e9852d0de84"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P6-after.png",
+      "bytes": 371885,
+      "sha256": "f65cef966b1c596804526e82d44fa494b0ff431ec9a8163f776b546642d04449"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P7-before.png",
+      "bytes": 372397,
+      "sha256": "79d67c2fbd4edc43b7d9bbea449fe92de5d621e14e846f4d3e1eb047ee24e4b0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P7-motion-a.png",
+      "bytes": 363338,
+      "sha256": "017ad368180bd773b74beabe39a75b421a201bb9734d430e86464c0289292f69"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P7-motion-b.png",
+      "bytes": 371723,
+      "sha256": "ce07a95bc53575d6e1468d39109d2fa11fb0baad7453f45f113d7414c5736317"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/P7-after.png",
+      "bytes": 371669,
+      "sha256": "a999b38cecc81be97b0b38ec84bd1582e2224f3536b15a059876cb1d89664b55"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/mid.png",
+      "bytes": 314030,
+      "sha256": "ea19426208c064fb2e44fa196f3c964ab25333c3bc8f712e0046101077b357d4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/final.png",
+      "bytes": 316370,
+      "sha256": "3e7ddf74bd0136265e1a915b80c36a68856a0ecfe1b2873a85b7086a72568d37"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/extra-1.png",
+      "bytes": 320957,
+      "sha256": "26ac35228fa520a5715ae1d4e3c9a02ff8038f468f00ccd651163f1b41da51b3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/screenshots/extra-2.png",
+      "bytes": 320765,
+      "sha256": "d2f6fb29390ac95b174b5cee5855f9b5785b108fd0d516466959c67e27f80227"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/source-sha.json",
+      "bytes": 63078,
+      "sha256": "de926bd2eb17983191aa188478665543f1083edde0685e041b8a09436f36e9b7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/build.log",
+      "bytes": 572,
+      "sha256": "3f2d5b5ee0a5768e5963d6048e0ffbb6acf4092ba09b91de8edcc887da8c2e72"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/serve-log.json",
+      "bytes": 1639,
+      "sha256": "53fb966cefac169d4f8ca5862105795f764eb8f9546dfa651b2cc41a3146e191"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/probe-results.json",
+      "bytes": 25375,
+      "sha256": "104f369fa34dce16a7a43fc07e07c093944eb0fcc1660b55c45c79b657d4d84c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/console.json",
+      "bytes": 248,
+      "sha256": "19202d83e4126e03f8a5e17688074af7855bd7507c548dfb5a5f9a1629a083ba"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/network.json",
+      "bytes": 1500,
+      "sha256": "eef8d1460f78f9b003add0d67f55f464ad9cb85d23566ad05583b05eab810040"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/perf.json",
+      "bytes": 136,
+      "sha256": "52a36c0191fc3e42651f9571ab783d833e77a166c1da80b4de4cf2d9fa241dcf"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T140712165Z-ruler-r3/report.json",
+      "bytes": 4781,
+      "sha256": "91c75f8a4c94c98a82a149c1ec447ce1586379a938b9d586652197993ff5c648"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/initial.png",
+      "bytes": 286647,
+      "sha256": "257af90f59a4f7aaffe5e7caf9ad4ee291f41241a4b27bea85581561fca35c75"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P1-before.png",
+      "bytes": 365150,
+      "sha256": "7024a8c4d88451c7e953cdacdbf33d9cfbfb5be51328ce88bf3fbf3a3cb44018"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P1-vis.png",
+      "bytes": 381904,
+      "sha256": "b7cf895e4251fed962e7b221d44f95b4ce2da55c5b74d42f1be71b42e4ad8c08"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P1-after.png",
+      "bytes": 382680,
+      "sha256": "183a972f61b158073d315f3188faf9a0a1cc0b1c257bc0ce8221fb69258840d3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P2-before.png",
+      "bytes": 383129,
+      "sha256": "fbf90a7433d2177ed42a02a3241a656ab1ff529449017ebee3d0a3bcd106c105"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P2-motion-a.png",
+      "bytes": 384947,
+      "sha256": "66c41d9a03f981e6d4cd24c6f4a738fa243fca5eb7f225a20697c6fa2a1fcd73"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P2-motion-b.png",
+      "bytes": 381731,
+      "sha256": "71884861876117e269f4eb2493b5b3f8bb8ae8e1f98542a0adc6192f0c197650"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P2-after.png",
+      "bytes": 379230,
+      "sha256": "aceeb59b607273f8d126d445c456c390b87b582ec8e011a12ba5d8557eb66316"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P3-before.png",
+      "bytes": 378633,
+      "sha256": "bf5cf231d13e9a176048678ed0a58b44aae6935f51cc0b1b14e9b84aa3bccf12"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P3-region-a.png",
+      "bytes": 372885,
+      "sha256": "7c98e263fae2c4b7bce4b4a15ed8a50910ed0865509d42a7f78d61737031f330"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P3-region-b.png",
+      "bytes": 369954,
+      "sha256": "c8e508251ab020151b0aaecfb08ea7b3dd069821fbf7321e46343c12dc1580cb"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P3-after.png",
+      "bytes": 365839,
+      "sha256": "f6bd3642f55b6d3b1f2844393cac1b08c4d25d730586df028cb73bdb30ad93a1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P4-before.png",
+      "bytes": 364613,
+      "sha256": "104f674eca287c1a49d445914bdfedb28ad094d204ae172e1c267556ad0c2e30"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P4-delta.png",
+      "bytes": 349083,
+      "sha256": "99dba854e8fb2c5a05b1ff4bfd1fe5e1dc3762658185f7642305b9c52b30dbef"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P4-after.png",
+      "bytes": 350571,
+      "sha256": "bd8295533c918ab8795e3ab026d300e8133efa6e0ce7a57e81a7b6d763e57374"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P5-before.png",
+      "bytes": 349727,
+      "sha256": "1d7620bc3d02017ab4981b4cb68ed84281f3efa3027e033e03d09c6bb2ed6076"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P5-motion-a.png",
+      "bytes": 358983,
+      "sha256": "318273616b1b7a4a9fdb39703a5a44f859162837d73c1751c3afaad16c485213"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P5-motion-b.png",
+      "bytes": 359408,
+      "sha256": "649416784297e84e45b5292cde375f6d7b0b55f3f0315240cb664f5359c0cece"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P5-after.png",
+      "bytes": 356953,
+      "sha256": "45d17c77d3b231318b7fd916ccdf354253d1f9f9975060f9ac358770784a3857"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P6-before.png",
+      "bytes": 356176,
+      "sha256": "611d8929623fdfafd7b98a736d8674a7e4da2cd32969deaca35c7c6256ae0e60"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P6-vis.png",
+      "bytes": 373176,
+      "sha256": "786a760226e586846e6eb19ec59ffb4c2b77f7bfb5e3a775ac686e574512f169"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P6-after.png",
+      "bytes": 372384,
+      "sha256": "74afac3adc3b49d0f121387f81b54b3f12a0f469d9efa8f99c3290f1d2ac9971"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P7-before.png",
+      "bytes": 371876,
+      "sha256": "52b7b5132452f3a4556e68439418e02e3c936d1ab613051855d2fbb980dc73d3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P7-motion-a.png",
+      "bytes": 364200,
+      "sha256": "35cccdc314c9464bf532167698828fb976ec50828616786303fd83c686825310"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P7-motion-b.png",
+      "bytes": 371665,
+      "sha256": "19807a2a5a3bf57363aa83918b04643d350e5fa851fb08c35c4937d9d5f115b1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/P7-after.png",
+      "bytes": 371504,
+      "sha256": "cb4507a3d33c9803bab02a2f673e828ef30616454ad65c138ce01eb86fd7056f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/mid.png",
+      "bytes": 313515,
+      "sha256": "4cfd34b2d983d86b6e3296579f22b4e18651f554c08f2f32d56dc91c263cded4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/final.png",
+      "bytes": 315839,
+      "sha256": "9a989b12ecfc7913c59bfaf7ce888c285304b132823f2341b1f2ae696ae4fe05"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/extra-1.png",
+      "bytes": 319891,
+      "sha256": "c9ba2b1d76f54698d940d20aeceba27b9acef5d85452ec5f1e9c15b73a80b6a3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/screenshots/extra-2.png",
+      "bytes": 319480,
+      "sha256": "cf08017e0feb64bca472803b507c6bb5a4cc05e3bba5f50008aa3f922845add8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/source-sha.json",
+      "bytes": 70761,
+      "sha256": "c994295d8e65dd4d8e16dc79bd9e71e61d77a7b54bd6ccb50dbde9253032f460"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/build.log",
+      "bytes": 572,
+      "sha256": "263d853c1c1777cb2b56836201981f056bf04fe7172a1bf6855fa7b6ae452adf"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/serve-log.json",
+      "bytes": 1639,
+      "sha256": "41e097dd203442e440a4cbdd506fe19ca7ac80a84caf94028dd1414e45c07dc5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/probe-results.json",
+      "bytes": 25361,
+      "sha256": "2bc6d08534a42c8c2b86bf3aa5b62eddb7cfdecf0adf4ccc6a8a97125d8a3e4e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/console.json",
+      "bytes": 248,
+      "sha256": "d139b4eac78ec440de9a804de2c2c725aa0840418d640a03f36b54fa91e184b0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/network.json",
+      "bytes": 1500,
+      "sha256": "78075e487e87fbbca678642b9aca31cd52acc29f5fbf5d5def08dd4a511b9015"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/perf.json",
+      "bytes": 136,
+      "sha256": "ede171f2fbb620c1b96d822511aea77f0a0f1f4c2b713fd9d17bffce9723d682"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T150807786Z-fingerprint-stamp/report.json",
+      "bytes": 4782,
+      "sha256": "e89ee4055e389b62d406ea1bfd4a386ebb486b4e0091baf08735ea9daceaced5"
+    },
+    {
+      "path": "validation/report.json",
+      "bytes": 4782,
+      "sha256": "e89ee4055e389b62d406ea1bfd4a386ebb486b4e0091baf08735ea9daceaced5"
+    },
+    {
+      "path": "validation/code-review.json",
+      "bytes": 855,
+      "sha256": "f65118dc2e1406f246c8a75fa2f382c847d3a2114c1d54110494fb429e1f69bc"
+    },
+    {
+      "path": "validation-amended/video.webm",
+      "bytes": 4107209,
+      "sha256": "64be797ddb64962a6f3e5b84642ae60934c4ab180284a95c062122db8dfc5b75"
+    },
+    {
+      "path": "validation-amended/screenshots/P5-after.png",
+      "bytes": 354951,
+      "sha256": "7c7f324ea23e9f0d947c503cb0f6e0d80661abd149313410c1067fe46155c149"
+    },
+    {
+      "path": "validation-amended/screenshots/P2-motion-b.png",
+      "bytes": 379783,
+      "sha256": "cc510378ae50250645d00bcbd5ad9237b4652e8919c041f0bed69af34113c8d5"
+    },
+    {
+      "path": "validation-amended/screenshots/P3-after.png",
+      "bytes": 365556,
+      "sha256": "660db70af48b39384687c657bd6dea64b22602b6b50b60c691c511818ab7f69c"
+    },
+    {
+      "path": "validation-amended/screenshots/P1-vis.png",
+      "bytes": 381329,
+      "sha256": "bc80b9827618b8c112a350332d0a593d7e2b2eac94e1e916a20d603ed90b971c"
+    },
+    {
+      "path": "validation-amended/screenshots/P1-after.png",
+      "bytes": 381882,
+      "sha256": "fe7c87d7e4af249dc33795042e76160a2eb7e0c136ffc0cad6f86ca0d6d18eda"
+    },
+    {
+      "path": "validation-amended/screenshots/P7-motion-b.png",
+      "bytes": 370201,
+      "sha256": "cf929820bf99a5f2cf9c90cabc2136bba3dc75e431097c145b589a1f79af6da2"
+    },
+    {
+      "path": "validation-amended/screenshots/extra-2.png",
+      "bytes": 320262,
+      "sha256": "88248105c3aa4573aa9bcf37e6d88e340dc4a2295d44aea7f6aab98ea4ebb555"
+    },
+    {
+      "path": "validation-amended/screenshots/final.png",
+      "bytes": 318073,
+      "sha256": "1d27c81a4b50a3d39379042da69ba80cf9e2a63b988b27aa037448c7656b381a"
+    },
+    {
+      "path": "validation-amended/screenshots/P5-motion-a.png",
+      "bytes": 357922,
+      "sha256": "531f9ab2dae9248d1110dd57712a2be91ee892c34b25de01ac76e90cc5eaea84"
+    },
+    {
+      "path": "validation-amended/screenshots/P3-region-a.png",
+      "bytes": 371884,
+      "sha256": "7c063074b2c0ef4e7a0871e5c708fbc53c2a1b23f50876844bb9d76da74795fe"
+    },
+    {
+      "path": "validation-amended/screenshots/P1-before.png",
+      "bytes": 364705,
+      "sha256": "d0403bd11af2cf713710aed6831f33dc05e99ea3edc5945fca67e15db9ad5453"
+    },
+    {
+      "path": "validation-amended/screenshots/P2-before.png",
+      "bytes": 382174,
+      "sha256": "e17ae0bcc692efd53634f6198ac8d86b34eb44d0b7deb65d7dc024a504824f79"
+    },
+    {
+      "path": "validation-amended/screenshots/P2-motion-a.png",
+      "bytes": 383086,
+      "sha256": "7d7edaf27e8ec58b4a2f5bd584f34ee05c338a1688909517087071f9d38f2ae9"
+    },
+    {
+      "path": "validation-amended/screenshots/P6-after.png",
+      "bytes": 369608,
+      "sha256": "5d3baf04e7d04afb4c89eee32c6de6f8494ae1afc855a604da6a40ec5f76122a"
+    },
+    {
+      "path": "validation-amended/screenshots/P3-before.png",
+      "bytes": 378796,
+      "sha256": "3f9fd341391b86ceb30a126966dc34ddaa0b2c2b216fa5408762d739b04d5065"
+    },
+    {
+      "path": "validation-amended/screenshots/P4-after.png",
+      "bytes": 350475,
+      "sha256": "aeb1d33abde49aac49a5735e83bfaae10a5ede8223283cc81cecdd1b9747eda9"
+    },
+    {
+      "path": "validation-amended/screenshots/P4-before.png",
+      "bytes": 367508,
+      "sha256": "d55377a217b7b4c57a9dd2400359efe67de5bd17ad769d2b9f7d98466bb7dfc4"
+    },
+    {
+      "path": "validation-amended/screenshots/P7-motion-a.png",
+      "bytes": 366966,
+      "sha256": "8373d54bb51ab7c97b321bff936fc4f9f793206a03e3df437479d96fa951a7f7"
+    },
+    {
+      "path": "validation-amended/screenshots/mid.png",
+      "bytes": 316464,
+      "sha256": "17caed1e91b1165c187230908ef702e4dcfa75fcf8134da2fed63d7349932602"
+    },
+    {
+      "path": "validation-amended/screenshots/initial.png",
+      "bytes": 273186,
+      "sha256": "69f0d253cf83e094c34361430de63faf3f2d8e14eba5bcba195a28bc4292985a"
+    },
+    {
+      "path": "validation-amended/screenshots/P5-before.png",
+      "bytes": 349652,
+      "sha256": "6b98c0f024aafbb60da70c26731a1dfafdb3df9ecefe315d236a424d00b1bcc5"
+    },
+    {
+      "path": "validation-amended/screenshots/P2-after.png",
+      "bytes": 379246,
+      "sha256": "c77a3ba24637a2a77819a020cec6baf0530eb719e37bf9bcfc95d5fc47d6aae0"
+    },
+    {
+      "path": "validation-amended/screenshots/P6-before.png",
+      "bytes": 353971,
+      "sha256": "245193b7c8acfccb0caf58db0281d1563147e36273fce5cc7a9000be53046872"
+    },
+    {
+      "path": "validation-amended/screenshots/P7-before.png",
+      "bytes": 370420,
+      "sha256": "ec777ed99183bb72d24d692071c5cd6d3ed3585a684b5d92f1361b5510b1bcf7"
+    },
+    {
+      "path": "validation-amended/screenshots/extra-1.png",
+      "bytes": 320646,
+      "sha256": "e715304c44bb99b6598880f04a996be4defd0f3f2b66f15aa422f7096d5d0872"
+    },
+    {
+      "path": "validation-amended/screenshots/P6-vis.png",
+      "bytes": 370986,
+      "sha256": "7340af489c429c111a935b4455045da85ed12cd4ff9d5edef3836a5e8b20840d"
+    },
+    {
+      "path": "validation-amended/screenshots/P7-after.png",
+      "bytes": 373009,
+      "sha256": "5e1ab1cf8a0864c073e66843e4a2a3651b01f39957462e13ea3efd2f86bfc700"
+    },
+    {
+      "path": "validation-amended/screenshots/P5-motion-b.png",
+      "bytes": 356791,
+      "sha256": "27d7b7ea700b240647f17cc483a2475ac60edade955e77a883cb2a204cda2450"
+    },
+    {
+      "path": "validation-amended/screenshots/P3-region-b.png",
+      "bytes": 368137,
+      "sha256": "fcfacd35fa2d81b5fb716a7cee26656c665392857ecc19258ed4722c574d092f"
+    },
+    {
+      "path": "validation-amended/screenshots/P4-delta.png",
+      "bytes": 349931,
+      "sha256": "fd85a45beae299e5c6772aae2b1022fd1b62e5aea38623a1856aedd9950e9950"
+    },
+    {
+      "path": "validation-amended/build.log",
+      "bytes": 572,
+      "sha256": "f6b31d31d1e2818464846499ca1875a22c97fa1363c088f4d3501a68c3da1d78"
+    },
+    {
+      "path": "validation-amended/console.json",
+      "bytes": 261,
+      "sha256": "934d82a0aaa50720f05fd04531d6aa63677079b4aae9acab5203abaf5cb2d8f4"
+    },
+    {
+      "path": "validation-amended/network.json",
+      "bytes": 1569,
+      "sha256": "ba143f65888bb6cfeafcc2baf70d2b919a1cab1af0127c6802cc4a797a0857a2"
+    },
+    {
+      "path": "validation-amended/perf.json",
+      "bytes": 144,
+      "sha256": "a47afe01fe6fe60f4a845c4ab201e95e4f6fac34b05c56e7d20072f45436f398"
+    },
+    {
+      "path": "validation-amended/probe-results.json",
+      "bytes": 25701,
+      "sha256": "b806f614aa351bc18de2d756b48bf933caaad8bcb70b1091ee154894ea1d3dac"
+    },
+    {
+      "path": "validation-amended/report.json",
+      "bytes": 4324,
+      "sha256": "4c36198a2c88d798fa650ae99095ce39c2371cd7e52506796c3ff7dbde81dacb"
+    },
+    {
+      "path": "validation-amended/serve-log.json",
+      "bytes": 1717,
+      "sha256": "481bc47575e60c67f00bb25021803cc6777ed37502269f6ad7204a116de7b1e4"
+    },
+    {
+      "path": "validation-amended/source-sha.json",
+      "bytes": 40296,
+      "sha256": "a87e6da33354db581b62fef213bc7f51dc7732bd8d0c542b186b01815ed5f78c"
+    },
+    {
+      "path": "REFERENCE-VERDICT.md",
+      "bytes": 3781,
+      "sha256": "1774fff0db1ee411fa353b856e677552d6c6f1d1bad8de6a158b6a42043583f8"
+    },
+    {
+      "path": "WORKLOG.md",
+      "bytes": 4842,
+      "sha256": "0b26234a968a1327a99cb3a76005d0808088a73623456b1bc484a3706100c1d4"
+    },
+    {
+      "path": "ceiling-notes.md",
+      "bytes": 4741,
+      "sha256": "06cd6500eb5cd2928c8824f682810382234a1cb7988a13d4bfcdeed5226c8b5b"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1477,
+      "sha256": "f3989a8ef1c36e01526f600c55adc68adbc5fef5d333f0e46020511fd96f87b5"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 15385,
+      "sha256": "c84154722c645c75d97fdde2bb5d978d27875715ccca4db35e99c2705f20d5de"
+    },
+    {
+      "path": "package.json",
+      "bytes": 515,
+      "sha256": "5d9be789000cb41ac3f8cf99a4795e9190261c4bf573922d406930cbcc526d17"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "bytes": 6914,
+      "sha256": "4e484c51120fbd515817d1ce452f0a6bea5d464e9185af6294ae2c1f6aedce14"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 3227,
+      "sha256": "17024f6182c6f788934cef0677e7e556de21c425ed667b87c60b0fe75199f700"
+    },
+    {
+      "path": "scripts/smoke-verify.mjs",
+      "bytes": 9787,
+      "sha256": "268fee736296f0524f3b2778554fc760777752f8635928f8eb98f2fcecb5191e"
+    },
+    {
+      "path": "src/main.js",
+      "bytes": 27312,
+      "sha256": "e63de3f3820efc033210d5a59f62519dd7292cc8abb8145b01c04b2dd05ac968"
+    },
+    {
+      "path": "template-manifest.json",
+      "bytes": 683,
+      "sha256": "b4f4ffbdbd4bd463238a6e915a90497ce3a1be666cb9ff78dace368a7cd78bde"
+    },
+    {
+      "path": "template-verify.txt",
+      "bytes": 4920,
+      "sha256": "fabd32c43581aac5589935ca84f06d83066411a398cdb542c8252c27d450c943"
+    }
+  ],
+  "dist": [
+    {
+      "path": "dist/vendor/three.module.js",
+      "bytes": 662772
+    },
+    {
+      "path": "dist/vendor/three.core.js",
+      "bytes": 1458113
+    },
+    {
+      "path": "dist/vendor/addons/loaders/3DMLoader.js",
+      "bytes": 43945
+    },
+    {
+      "path": "dist/vendor/addons/loaders/3MFLoader.js",
+      "bytes": 44293
+    },
+    {
+      "path": "dist/vendor/addons/loaders/AMFLoader.js",
+      "bytes": 11435
+    },
+    {
+      "path": "dist/vendor/addons/loaders/BVHLoader.js",
+      "bytes": 10649
+    },
+    {
+      "path": "dist/vendor/addons/loaders/collada/ColladaComposer.js",
+      "bytes": 66711
+    },
+    {
+      "path": "dist/vendor/addons/loaders/collada/ColladaParser.js",
+      "bytes": 36839
+    },
+    {
+      "path": "dist/vendor/addons/loaders/ColladaLoader.js",
+      "bytes": 3988
+    },
+    {
+      "path": "dist/vendor/addons/loaders/DDSLoader.js",
+      "bytes": 9088
+    },
+    {
+      "path": "dist/vendor/addons/loaders/DRACOLoader.js",
+      "bytes": 19030
+    },
+    {
+      "path": "dist/vendor/addons/loaders/EXRLoader.js",
+      "bytes": 86154
+    },
+    {
+      "path": "dist/vendor/addons/loaders/FBXLoader.js",
+      "bytes": 113372
+    },
+    {
+      "path": "dist/vendor/addons/loaders/FontLoader.js",
+      "bytes": 5292
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GaussianSplatPLYLoader.js",
+      "bytes": 11197
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GCodeLoader.js",
+      "bytes": 7199
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GLTFGaussianSplatLoaderExtension.js",
+      "bytes": 9063
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GLTFLoader.js",
+      "bytes": 117570
+    },
+    {
+      "path": "dist/vendor/addons/loaders/HDRCubeTextureLoader.js",
+      "bytes": 3731
+    },
+    {
+      "path": "dist/vendor/addons/loaders/HDRLoader.js",
+      "bytes": 12079
+    },
+    {
+      "path": "dist/vendor/addons/loaders/IESLoader.js",
+      "bytes": 8373
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/IFFParser.js",
+      "bytes": 26740
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/LWO2Parser.js",
+      "bytes": 10137
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/LWO3Parser.js",
+      "bytes": 9269
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KMZLoader.js",
+      "bytes": 3298
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KSPLATLoader.js",
+      "bytes": 14309
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KTX2Loader.js",
+      "bytes": 36567
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KTXLoader.js",
+      "bytes": 7187
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LDrawLoader.js",
+      "bytes": 61141
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUT3dlLoader.js",
+      "bytes": 5077
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUTCubeLoader.js",
+      "bytes": 4635
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUTImageLoader.js",
+      "bytes": 4184
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LWOLoader.js",
+      "bytes": 24156
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXArchive.js",
+      "bytes": 2219
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/compile/MaterialXCompileRegistry.js",
+      "bytes": 33733
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXDocument.js",
+      "bytes": 18477
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXHextile.js",
+      "bytes": 6250
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXInterfaceValidation.js",
+      "bytes": 7755
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXLog.js",
+      "bytes": 1199
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXNodeInterfaceRegistry.js",
+      "bytes": 277548
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXNodeLibrary.js",
+      "bytes": 36255
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/parse/MaterialXParser.js",
+      "bytes": 707
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXSurfaceMappings.js",
+      "bytes": 19238
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXUtils.js",
+      "bytes": 1313
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MaterialXLoader.js",
+      "bytes": 6571
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MD2Loader.js",
+      "bytes": 13625
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MDDLoader.js",
+      "bytes": 3936
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MTLLoader.js",
+      "bytes": 11356
+    },
+    {
+      "path": "dist/vendor/addons/loaders/NRRDLoader.js",
+      "bytes": 14603
+    },
+    {
+      "path": "dist/vendor/addons/loaders/OBJLoader.js",
+      "bytes": 22916
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PCDLoader.js",
+      "bytes": 16583
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PDBLoader.js",
+      "bytes": 8255
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PLYLoader.js",
+      "bytes": 21869
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PVRLoader.js",
+      "bytes": 5411
+    },
+    {
+      "path": "dist/vendor/addons/loaders/RGBELoader.js",
+      "bytes": 268
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SPLATLoader.js",
+      "bytes": 3687
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SPZLoader.js",
+      "bytes": 14902
+    },
+    {
+      "path": "dist/vendor/addons/loaders/STLLoader.js",
+      "bytes": 10715
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SVGLoader.js",
+      "bytes": 76850
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TDSLoader.js",
+      "bytes": 25168
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TGALoader.js",
+      "bytes": 11792
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TIFFLoader.js",
+      "bytes": 1221
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TTFLoader.js",
+      "bytes": 5578
+    },
+    {
+      "path": "dist/vendor/addons/loaders/UltraHDRLoader.js",
+      "bytes": 19696
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDAParser.js",
+      "bytes": 19382
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDComposer.js",
+      "bytes": 112351
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDCParser.js",
+      "bytes": 43367
+    },
+    {
+      "path": "dist/vendor/addons/loaders/USDLoader.js",
+      "bytes": 7358
+    },
+    {
+      "path": "dist/vendor/addons/loaders/USDZLoader.js",
+      "bytes": 266
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VOXLoader.js",
+      "bytes": 21829
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VRMLLoader.js",
+      "bytes": 76363
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VTKLoader.js",
+      "bytes": 30565
+    },
+    {
+      "path": "dist/vendor/addons/loaders/XYZLoader.js",
+      "bytes": 3280
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ACESFilmicToneMappingShader.js",
+      "bytes": 2141
+    },
+    {
+      "path": "dist/vendor/addons/shaders/AfterimageShader.js",
+      "bytes": 1048
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BasicShader.js",
+      "bytes": 523
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BleachBypassShader.js",
+      "bytes": 1356
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BlendShader.js",
+      "bytes": 920
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BokehShader.js",
+      "bytes": 5934
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BokehShader2.js",
+      "bytes": 9865
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BrightnessContrastShader.js",
+      "bytes": 1275
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ColorCorrectionShader.js",
+      "bytes": 1024
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ColorifyShader.js",
+      "bytes": 834
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ConvolutionShader.js",
+      "bytes": 1281
+    },
+    {
+      "path": "dist/vendor/addons/shaders/CopyShader.js",
+      "bytes": 729
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DepthLimitedBlurShader.js",
+      "bytes": 4187
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DigitalGlitch.js",
+      "bytes": 2525
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DOFMipMapShader.js",
+      "bytes": 1092
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DotScreenShader.js",
+      "bytes": 1378
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ExposureShader.js",
+      "bytes": 791
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FilmShader.js",
+      "bytes": 1227
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FocusShader.js",
+      "bytes": 2467
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FreiChenShader.js",
+      "bytes": 3153
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FXAAShader.js",
+      "bytes": 6815
+    },
+    {
+      "path": "dist/vendor/addons/shaders/GammaCorrectionShader.js",
+      "bytes": 818
+    },
+    {
+      "path": "dist/vendor/addons/shaders/GTAOShader.js",
+      "bytes": 12166
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HalftoneShader.js",
+      "bytes": 9187
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HorizontalBlurShader.js",
+      "bytes": 1667
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HorizontalTiltShiftShader.js",
+      "bytes": 1792
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HueSaturationShader.js",
+      "bytes": 1678
+    },
+    {
+      "path": "dist/vendor/addons/shaders/KaleidoShader.js",
+      "bytes": 1194
+    },
+    {
+      "path": "dist/vendor/addons/shaders/LuminosityHighPassShader.js",
+      "bytes": 1291
+    },
+    {
+      "path": "dist/vendor/addons/shaders/LuminosityShader.js",
+      "bytes": 768
+    },
+    {
+      "path": "dist/vendor/addons/shaders/MirrorShader.js",
+      "bytes": 1066
+    },
+    {
+      "path": "dist/vendor/addons/shaders/NormalMapShader.js",
+      "bytes": 1165
+    },
+    {
+      "path": "dist/vendor/addons/shaders/OutputShader.js",
+      "bytes": 1876
+    },
+    {
+      "path": "dist/vendor/addons/shaders/PoissonDenoiseShader.js",
+      "bytes": 7080
+    },
+    {
+      "path": "dist/vendor/addons/shaders/RGBShiftShader.js",
+      "bytes": 1288
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SAOShader.js",
+      "bytes": 5313
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SepiaShader.js",
+      "bytes": 1098
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SMAAShader.js",
+      "bytes": 15002
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SobelOperatorShader.js",
+      "bytes": 2546
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SSAOShader.js",
+      "bytes": 6968
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SSRShader.js",
+      "bytes": 9891
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SubsurfaceScatteringShader.js",
+      "bytes": 3264
+    },
+    {
+      "path": "dist/vendor/addons/shaders/TechnicolorShader.js",
+      "bytes": 1043
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ToonShader.js",
+      "bytes": 7147
+    },
+    {
+      "path": "dist/vendor/addons/shaders/TriangleBlurShader.js",
+      "bytes": 1461
+    },
+    {
+      "path": "dist/vendor/addons/shaders/UnpackDepthRGBAShader.js",
+      "bytes": 972
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VelocityShader.js",
+      "bytes": 3173
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VerticalBlurShader.js",
+      "bytes": 1639
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VerticalTiltShiftShader.js",
+      "bytes": 1779
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VignetteShader.js",
+      "bytes": 1049
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VolumeShader.js",
+      "bytes": 9284
+    },
+    {
+      "path": "dist/vendor/addons/shaders/WaterRefractionShader.js",
+      "bytes": 2046
+    },
+    {
+      "path": "dist/vendor/addons/Addons.js",
+      "bytes": 12559
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/AfterImageNode.js",
+      "bytes": 6286
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/AnaglyphPassNode.js",
+      "bytes": 16390
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/BilateralBlurNode.js",
+      "bytes": 10406
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/BleachBypass.js",
+      "bytes": 987
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/BloomNode.js",
+      "bytes": 17242
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/boxBlur.js",
+      "bytes": 2748
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/ChromaticAberrationNode.js",
+      "bytes": 4964
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/CRT.js",
+      "bytes": 5291
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/DenoiseNode.js",
+      "bytes": 10089
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/depthAwareBlend.js",
+      "bytes": 3352
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/depthAwareBlur.js",
+      "bytes": 2545
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/DepthOfFieldNode.js",
+      "bytes": 15341
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/DotScreenNode.js",
+      "bytes": 2542
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/FilmNode.js",
+      "bytes": 2330
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/FSR1Node.js",
+      "bytes": 15371
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/FXAANode.js",
+      "bytes": 9450
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/GaussianBlurNode.js",
+      "bytes": 11013
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/GodraysNode.js",
+      "bytes": 16457
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/GTAONode.js",
+      "bytes": 21152
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/hashBlur.js",
+      "bytes": 2299
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/ImportanceSampledEnvironment.js",
+      "bytes": 16477
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/LensflareNode.js",
+      "bytes": 8237
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/Lut3DNode.js",
+      "bytes": 2708
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/MotionBlur.js",
+      "bytes": 1099
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/OITPassNode.js",
+      "bytes": 10037
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/OutlineNode.js",
+      "bytes": 22221
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/ParallaxBarrierPassNode.js",
+      "bytes": 2089
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/PixelationPassNode.js",
+      "bytes": 9381
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/radialBlur.js",
+      "bytes": 2950
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/RecurrentDenoiseNode.js",
+      "bytes": 30219
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/RetroPassNode.js",
+      "bytes": 6698
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/RGBShiftNode.js",
+      "bytes": 2476
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/Sepia.js",
+      "bytes": 572
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/Shape.js",
+      "bytes": 1069
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SharpenNode.js",
+      "bytes": 7773
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SMAANode.js",
+      "bytes": 66466
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SobelOperatorNode.js",
+      "bytes": 4525
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSAAPassNode.js",
+      "bytes": 8686
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSAONode.js",
+      "bytes": 12395
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSGINode.js",
+      "bytes": 22532
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSRNode.js",
+      "bytes": 42095
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSSNode.js",
+      "bytes": 13675
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/StereoCompositePassNode.js",
+      "bytes": 4367
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/StereoPassNode.js",
+      "bytes": 2881
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TAAUNode.js",
+      "bytes": 23461
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TemporalReprojectNode.js",
+      "bytes": 33213
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TRAANode.js",
+      "bytes": 17909
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TransitionNode.js",
+      "bytes": 4312
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/AmbientLightDataNode.js",
+      "bytes": 1003
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/DirectionalLightDataNode.js",
+      "bytes": 2666
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/HemisphereLightDataNode.js",
+      "bytes": 2378
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/PointLightDataNode.js",
+      "bytes": 3437
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/SpotLightDataNode.js",
+      "bytes": 4707
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/ClusteredLightsNode.js",
+      "bytes": 17738
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/DynamicLightsNode.js",
+      "bytes": 6729
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/LightProbeGridNode.js",
+      "bytes": 3966
+    },
+    {
+      "path": "dist/vendor/addons/tsl/math/Bayer.js",
+      "bytes": 5342
+    },
+    {
+      "path": "dist/vendor/addons/tsl/math/curlNoise.js",
+      "bytes": 3944
+    },
+    {
+      "path": "dist/vendor/addons/tsl/math/voronoiNoise.js",
+      "bytes": 3573
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/GroundedSkybox.js",
+      "bytes": 2109
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/Raymarching.js",
+      "bytes": 2008
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/RNoise.js",
+      "bytes": 1499
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/SoftParticles.js",
+      "bytes": 2607
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/SpecularHelpers.js",
+      "bytes": 12043
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/TAAUtils.js",
+      "bytes": 6826
+    },
+    {
+      "path": "dist/vendor/addons/tsl/shadows/TileShadowNode.js",
+      "bytes": 12276
+    },
+    {
+      "path": "dist/vendor/addons/tsl/shadows/TileShadowNodeHelper.js",
+      "bytes": 5330
+    },
+    {
+      "path": "dist/vendor/addons/tsl/WebGLNodesHandler.js",
+      "bytes": 13188
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/AfterimagePass.js",
+      "bytes": 4388
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/BloomPass.js",
+      "bytes": 6445
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/BokehPass.js",
+      "bytes": 5531
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/ClearPass.js",
+      "bytes": 2167
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/CubeTexturePass.js",
+      "bytes": 3519
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/DotScreenPass.js",
+      "bytes": 2941
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/EffectComposer.js",
+      "bytes": 8501
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/FilmPass.js",
+      "bytes": 2684
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/FXAAPass.js",
+      "bytes": 738
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/GlitchPass.js",
+      "bytes": 4305
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/GTAOPass.js",
+      "bytes": 19910
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/HalftonePass.js",
+      "bytes": 2882
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/LUTPass.js",
+      "bytes": 2230
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/MaskPass.js",
+      "bytes": 4694
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/OutlinePass.js",
+      "bytes": 23272
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/OutputPass.js",
+      "bytes": 4184
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/Pass.js",
+      "bytes": 4218
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderPass.js",
+      "bytes": 4280
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderPixelatedPass.js",
+      "bytes": 8151
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderTransitionPass.js",
+      "bytes": 5847
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SAOPass.js",
+      "bytes": 13105
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SavePass.js",
+      "bytes": 2998
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/ShaderPass.js",
+      "bytes": 3228
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SMAAPass.js",
+      "bytes": 50379
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSAARenderPass.js",
+      "bytes": 8150
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSAOPass.js",
+      "bytes": 13463
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSRPass.js",
+      "bytes": 23300
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/TAARenderPass.js",
+      "bytes": 6487
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/TexturePass.js",
+      "bytes": 2920
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/UnrealBloomPass.js",
+      "bytes": 15397
+    },
+    {
+      "path": "dist/vendor/addons/physics/AmmoPhysics.js",
+      "bytes": 9214
+    },
+    {
+      "path": "dist/vendor/addons/physics/JoltPhysics.js",
+      "bytes": 8583
+    },
+    {
+      "path": "dist/vendor/addons/physics/RapierPhysics.js",
+      "bytes": 11339
+    },
+    {
+      "path": "dist/vendor/addons/effects/AnaglyphEffect.js",
+      "bytes": 8154
+    },
+    {
+      "path": "dist/vendor/addons/effects/AsciiEffect.js",
+      "bytes": 7835
+    },
+    {
+      "path": "dist/vendor/addons/effects/OutlineEffect.js",
+      "bytes": 12661
+    },
+    {
+      "path": "dist/vendor/addons/effects/ParallaxBarrierEffect.js",
+      "bytes": 3502
+    },
+    {
+      "path": "dist/vendor/addons/effects/StereoEffect.js",
+      "bytes": 2180
+    },
+    {
+      "path": "dist/vendor/addons/animation/AnimationClipCreator.js",
+      "bytes": 4543
+    },
+    {
+      "path": "dist/vendor/addons/animation/CCDIKSolver.js",
+      "bytes": 13640
+    },
+    {
+      "path": "dist/vendor/addons/helpers/AnimationPathHelper.js",
+      "bytes": 6400
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeGridHelper.js",
+      "bytes": 4150
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeGridHelperWebGL.js",
+      "bytes": 5588
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeHelper.js",
+      "bytes": 3663
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeHelperGPU.js",
+      "bytes": 2223
+    },
+    {
+      "path": "dist/vendor/addons/helpers/OctreeHelper.js",
+      "bytes": 2804
+    },
+    {
+      "path": "dist/vendor/addons/helpers/PositionalAudioHelper.js",
+      "bytes": 4384
+    },
+    {
+      "path": "dist/vendor/addons/helpers/RapierHelper.js",
+      "bytes": 1298
+    },
+    {
+      "path": "dist/vendor/addons/helpers/RectAreaLightHelper.js",
+      "bytes": 2971
+    },
+    {
+      "path": "dist/vendor/addons/helpers/TextureHelper.js",
+      "bytes": 5355
+    },
+    {
+      "path": "dist/vendor/addons/helpers/TextureHelperGPU.js",
+      "bytes": 4760
+    },
+    {
+      "path": "dist/vendor/addons/helpers/VertexNormalsHelper.js",
+      "bytes": 3458
+    },
+    {
+      "path": "dist/vendor/addons/helpers/VertexTangentsHelper.js",
+      "bytes": 2955
+    },
+    {
+      "path": "dist/vendor/addons/helpers/ViewHelper.js",
+      "bytes": 12826
+    },
+    {
+      "path": "dist/vendor/addons/webxr/ARButton.js",
+      "bytes": 5485
+    },
+    {
+      "path": "dist/vendor/addons/webxr/OculusHandModel.js",
+      "bytes": 3795
+    },
+    {
+      "path": "dist/vendor/addons/webxr/OculusHandPointerModel.js",
+      "bytes": 13518
+    },
+    {
+      "path": "dist/vendor/addons/webxr/Text2D.js",
+      "bytes": 1482
+    },
+    {
+      "path": "dist/vendor/addons/webxr/VRButton.js",
+      "bytes": 5866
+    },
+    {
+      "path": "dist/vendor/addons/webxr/WebGLXRFallback.js",
+      "bytes": 2162
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRButton.js",
+      "bytes": 4959
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRControllerModelFactory.js",
+      "bytes": 10185
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XREstimatedLight.js",
+      "bytes": 6112
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandMeshModel.js",
+      "bytes": 4112
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandModelFactory.js",
+      "bytes": 4207
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandPrimitiveModel.js",
+      "bytes": 3494
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRPlanes.js",
+      "bytes": 2455
+    },
+    {
+      "path": "dist/vendor/addons/controls/ArcballControls.js",
+      "bytes": 87221
+    },
+    {
+      "path": "dist/vendor/addons/controls/DragControls.js",
+      "bytes": 9510
+    },
+    {
+      "path": "dist/vendor/addons/controls/FirstPersonControls.js",
+      "bytes": 11889
+    },
+    {
+      "path": "dist/vendor/addons/controls/FlyControls.js",
+      "bytes": 9025
+    },
+    {
+      "path": "dist/vendor/addons/controls/MapControls.js",
+      "bytes": 3070
+    },
+    {
+      "path": "dist/vendor/addons/controls/OrbitControls.js",
+      "bytes": 40755
+    },
+    {
+      "path": "dist/vendor/addons/controls/PointerLockControls.js",
+      "bytes": 5890
+    },
+    {
+      "path": "dist/vendor/addons/controls/TrackballControls.js",
+      "bytes": 24048
+    },
+    {
+      "path": "dist/vendor/addons/controls/TransformControls.js",
+      "bytes": 51706
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/AST.js",
+      "bytes": 8174
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/GLSLDecoder.js",
+      "bytes": 33925
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/Linker.js",
+      "bytes": 5079
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/ShaderToyDecoder.js",
+      "bytes": 1033
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/Transpiler.js",
+      "bytes": 1560
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/TranspilerUtils.js",
+      "bytes": 653
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/TSLEncoder.js",
+      "bytes": 19843
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/WGSLEncoder.js",
+      "bytes": 19452
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/basis_transcoder.js",
+      "bytes": 57529
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/README.md",
+      "bytes": 1388
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/basis_transcoder.wasm",
+      "bytes": 527333
+    },
+    {
+      "path": "dist/vendor/addons/libs/chevrotain.module.min.js",
+      "bytes": 157440
+    },
+    {
+      "path": "dist/vendor/addons/libs/demuxer_mp4.js",
+      "bytes": 3526
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_decoder.js",
+      "bytes": 719410
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_decoder.js",
+      "bytes": 512465
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_wasm_wrapper.js",
+      "bytes": 58456
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_decoder.wasm",
+      "bytes": 192420
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_wasm_wrapper.js",
+      "bytes": 58763
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/README.md",
+      "bytes": 1395
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_decoder.wasm",
+      "bytes": 285747
+    },
+    {
+      "path": "dist/vendor/addons/libs/fflate.module.js",
+      "bytes": 89384
+    },
+    {
+      "path": "dist/vendor/addons/libs/ktx-parse.module.js",
+      "bytes": 19932
+    },
+    {
+      "path": "dist/vendor/addons/libs/lil-gui.module.min.js",
+      "bytes": 29526
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_clusterizer.module.js",
+      "bytes": 35425
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_decoder.module.js",
+      "bytes": 29256
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_simplifier.module.js",
+      "bytes": 55177
+    },
+    {
+      "path": "dist/vendor/addons/libs/mikktspace.module.js",
+      "bytes": 48841
+    },
+    {
+      "path": "dist/vendor/addons/libs/motion-controllers.module.js",
+      "bytes": 13492
+    },
+    {
+      "path": "dist/vendor/addons/libs/potpack.module.js",
+      "bytes": 3951
+    },
+    {
+      "path": "dist/vendor/addons/libs/stats.module.js",
+      "bytes": 3514
+    }
+  ]
+}

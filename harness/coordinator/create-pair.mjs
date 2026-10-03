@@ -355,6 +355,12 @@ async function main() {
     process.exit(args.help ? 0 : 2);
   }
   const { scene, knowledge, rep, pilot = false, armSwap = false, batch: batchArg = 'auto', vendoredDeps = false } = args;
+  // P0-1:track 必须显式提供(--track);--pilot 隐含 pilot。禁止默认猜测。
+  const TRACKS = ['pilot', 'targeted-pilot', 'core', 'k2-ablation'];
+  const trackArg = args.track;
+  if (trackArg && !TRACKS.includes(trackArg)) die(`--track 取值须为: ${TRACKS.join('|')}(收到 "${trackArg}")`);
+  const track = trackArg ?? (pilot ? 'pilot' : null);
+  if (!track) die('--track 必须显式提供(pilot|targeted-pilot|core|k2-ablation);正式矩阵须 --track core');
 
   // ---- 1. 读输入 ---------------------------------------------------------
   const briefDir = path.join(BENCH_ROOT, 'briefs', scene);
@@ -520,6 +526,7 @@ async function main() {
 
     // 扩展字段(任务规格)
     pilot,
+    track,
     armSwapApplied: armSwap,
     status: existing?.status && existing.status !== 'created' ? existing.status : 'created',
     createdAt,

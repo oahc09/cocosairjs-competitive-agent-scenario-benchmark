@@ -42,6 +42,13 @@ import {
   poll, sleep, parseArgv, round2,
 } from './util.mjs';
 import { HarnessBrowser } from './browser.mjs';
+
+// P1-5:运行时冻结工具链指纹(谁验证、何时环境)——报告证据的一部分,供 RULER 兼容比对
+const toolchainFingerprint = (() => {
+  const esb = (() => { try { return JSON.parse(fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..', 'node_modules', 'esbuild', 'package.json'))).version; } catch { return 'unknown'; } })();
+  const chrome = (() => { try { return fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'chrome-version.cache.txt'), 'utf8').trim(); } catch { return process.env.CHROME_V || 'unknown'; } })();
+  return `node${process.version}+esbuild${esb}+chrome${chrome}`;
+})();
 import { runProbes, dryRunSpec, litRatio, decodePng } from './probe-executor.mjs';
 
 // probe-meta sidecar(整改 §10/§11/§12):lifecycle/fullPassDeps/failureDomains,
@@ -223,6 +230,7 @@ function exitGuarded(code, classification, guardInfo) {
   report.error = guardInfo.reason;
   report.durationMs = Date.now() - tRunStart;
   report.finishedAt = isoNow();
+  report.toolchainFingerprint = toolchainFingerprint;
   fs.mkdirSync(outDir, { recursive: true });
   writeJson(path.join(outDir, 'report.json'), report);
   process.stdout.write(`guarded: ${classification} -> ${path.join(outDir, 'report.json')}\n`);

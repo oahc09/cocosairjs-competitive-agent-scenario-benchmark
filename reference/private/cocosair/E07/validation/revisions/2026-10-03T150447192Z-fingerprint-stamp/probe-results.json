@@ -1,0 +1,869 @@
+{
+  "runId": "REF-E07-cocosair-fpr",
+  "generatedAt": "2026-10-03T15:05:32.584Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:04:53.434Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2000
+            },
+            "raw": "wait:2000",
+            "performed": "waited 2000ms"
+          }
+        ],
+        "durationMs": 2013
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "minCoverage": 0.35
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.35,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.6986,
+              "background": [
+                69,
+                84,
+                124
+              ]
+            }
+          ],
+          "worstLitRatio": 0.6986
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 50,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60.7,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 291,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5409
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:04:58.844Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1513
+      },
+      "stateAssertion": {
+        "expr": "$.carCount >= 60",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0.62,
+            "w": 1,
+            "h": 0.38
+          },
+          "frameGapMs": 600
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 600,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 446,
+                "w": 1280,
+                "h": 274
+              },
+              "diffRatio": 0.1451
+            }
+          ],
+          "bestDiffRatio": 0.1451,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 376,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 558,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-region-a.png",
+          "P2-region-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5460
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:05:04.304Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:800",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 800
+            },
+            "raw": "wait:800",
+            "performed": "waited 800ms"
+          }
+        ],
+        "durationMs": 811
+      },
+      "stateAssertion": {
+        "expr": "$.rainParticleCount >= 1500",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "frameGapMs": 100,
+          "minChangedRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "mode": "post-gap",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.088
+            }
+          ],
+          "bestDiffRatio": 0.088
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 704,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 802,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-delta-a.png",
+          "P3-delta-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3547
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:05:07.852Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:3000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 3000
+            },
+            "raw": "wait:3000",
+            "performed": "waited 3000ms"
+          }
+        ],
+        "durationMs": 3005
+      },
+      "stateAssertion": {
+        "expr": "$.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "spanMs": 1000
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 1000,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.1645
+            }
+          ],
+          "worstDiffRatio": 0.1645
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 915,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1276,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-motion-a.png",
+          "P4-motion-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 8839
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:05:16.691Z",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=toggle-fog",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "toggle-fog"
+            },
+            "raw": "click:ui=toggle-fog",
+            "performed": "click @ (1220,25) ui=toggle-fog"
+          }
+        ],
+        "durationMs": 205
+      },
+      "stateAssertion": {
+        "expr": "$.fogEnabled == false && $.buildingCount >= 200",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 0.45
+          },
+          "frameGapMs": 400
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 400,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 324
+              },
+              "diffRatio": 0.0205
+            }
+          ],
+          "bestDiffRatio": 0.0205,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1445,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1502,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": false,
+          "fps": 56.3,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-region-a.png",
+          "P5-region-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3225
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:05:19.916Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=toggle-fog",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "toggle-fog"
+            },
+            "raw": "click:ui=toggle-fog",
+            "performed": "click @ (1220,25) ui=toggle-fog"
+          }
+        ],
+        "durationMs": 74
+      },
+      "stateAssertion": {
+        "expr": "$.fogEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 0.45
+          },
+          "frameGapMs": 400
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 400,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 324
+              },
+              "diffRatio": 0.0919
+            }
+          ],
+          "bestDiffRatio": 0.0919,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1635,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": false,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1688,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-region-a.png",
+          "P6-region-b.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3078
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:05:22.994Z",
+      "precondition": {
+        "expr": "P6",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1220,63) ui=reset"
+          }
+        ],
+        "durationMs": 199
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "minCoverage": 0.35
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.35,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.6984,
+              "background": [
+                69,
+                84,
+                124
+              ]
+            }
+          ],
+          "worstLitRatio": 0.6984
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1819,
+          "ready": true,
+          "resetCount": 0,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1945,
+          "ready": true,
+          "resetCount": 1,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-vis.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3614
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-03T15:05:26.608Z",
+      "precondition": {
+        "expr": "P7",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P7",
+            "met": true,
+            "source": "probe P7",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1506
+      },
+      "stateAssertion": {
+        "expr": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0.62,
+            "w": 1,
+            "h": 0.38
+          },
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 446,
+                "w": 1280,
+                "h": 274
+              },
+              "diffRatio": 0.1973
+            }
+          ],
+          "worstDiffRatio": 0.1973
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 2031,
+          "ready": true,
+          "resetCount": 1,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 2212,
+          "ready": true,
+          "resetCount": 1,
+          "buildingCount": 240,
+          "carCount": 80,
+          "rainParticleCount": 2200,
+          "fogEnabled": true,
+          "fps": 60,
+          "windowCount": 13621
+        },
+        "shots": [
+          "P8-before.png",
+          "P8-motion-a.png",
+          "P8-motion-b.png",
+          "P8-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5678
+      }
+    }
+  ]
+}

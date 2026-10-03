@@ -87,11 +87,13 @@ function armStateFile(batch, pairId, armDir) { return path.join(RESULTS, batch, 
 
 // ---------- stage: create ----------
 function stageCreate() {
+  const roundTrack = arg('track') || null;
   const plan = parsePlan();
   if (!plan) die('create 需要 --plan <file|--matrix>');
   let batchArg = arg('batch') || 'auto';
   for (const p of plan.pairs) {
     const args = ['--scene', p.scene, '--knowledge', p.knowledge, '--rep', p.rep, '--batch', batchArg];
+    if (p.track || roundTrack) args.push('--track', p.track || roundTrack); // P0-1:track 链透传(显式必须,core 才进正式统计)
     if (p.pilot) args.push('--pilot');
     if (p.armSwap) args.push('--arm-swap');
     const res = spawnSync('node', [path.join(HARN, 'coordinator', 'create-pair.mjs'), ...args], { encoding: 'utf8' });
@@ -101,7 +103,7 @@ function stageCreate() {
     if (batchArg === 'auto') batchArg = batchId; // auto:首个 pair 定批次,后续同批
     if (!global.__batch) global.__batch = batchId;
     else if (global.__batch !== batchId) die('多批次混入(不应发生)');
-    global.__pairs = (global.__pairs || []).concat([{ ...p, pairId, batchId }]);
+    global.__pairs = (global.__pairs || []).concat([{ ...p, track: p.track || roundTrack, pairId, batchId }]);
   }
   const batch = global.__batch;
   const round = {
