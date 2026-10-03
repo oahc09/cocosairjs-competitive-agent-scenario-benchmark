@@ -1,6 +1,8 @@
 // reference/REFERENCE-VERSIONS.json 账本 + 漂移检测
-// 原则:Reference 的天花板 = "当前引擎 + 当前文档正典用法 + 当前 Brief" 下的最优实现。
-// 三输入任一变化 → 受影响 Reference 视为 STALE,需重实现(非仅重验)并冻结为新 refVersion。
+// 原则:Reference 的天花板 = "当前引擎 + 当前文档正典用法 + 当前 Brief" 下的最优实现,
+//      即每个场景的"满分线/量尺"。量尺版本号 RULER-<日期>-R<轮次>(小白语义:第几把尺子)。
+// 四输入(引擎/文档/Brief/工具链)任一变化 → 受影响 Reference 视为 STALE,
+//      需重实现(非仅重验)并冻结为新 refVersion,同时换新量尺(新 RULER 号)。
 // 用法:
 //   node harness/aggregate/reference-versions.mjs            # 冻结/更新账本(输入变化时 refVersion+1)
 //   node harness/aggregate/reference-versions.mjs --check    # 漂移检测:逐 scene×engine 报 CURRENT/STALE+原因
@@ -28,7 +30,15 @@ for (const e of ['three', 'cocosair']) {
 let ceiling = null;
 try { ceiling = j(path.join(ROOT, 'results', 'aggregated.json')).referenceCeiling || null; } catch { /* 可选 */ }
 
-const prev = fs.existsSync(REG) ? j(REG) : { epochs: {} };
+// 旧账本(纪元/EP- 术语)兼容读取:字段与 ID 前缀就地迁移为 量尺/RULER-
+const prevRaw = fs.existsSync(REG) ? j(REG) : { epochs: {} };
+const migrateId = (id) => (id ? String(id).replace(/^EP-/, 'RULER-') : null);
+const prev = {
+  ...prevRaw,
+  rulerId: prevRaw.rulerId || migrateId(prevRaw.epochId),
+  rulerHistory: prevRaw.rulerHistory || (prevRaw.epochHistory || []).map((h) => ({ ...h, rulerId: migrateId(h.epochId || h.rulerId) })),
+  epochs: Object.fromEntries(Object.entries(prevRaw.epochs || {}).map(([k, v]) => [k, { ...v, frozenUnderRuler: v.frozenUnderRuler || migrateId(v.frozenInEpoch) }])),
+};
 const epochs = {};
 const report = [];
 for (let i = 1; i <= 10; i++) {
@@ -54,31 +64,31 @@ for (let i = 1; i <= 10; i++) {
       validated: ok ? { passRate: rep.probePassRate, fps: rep.fps, verdict: rep.verdict } : null,
       ceiling: ceiling && ceiling[`${scene}/${engine}`] ? ceiling[`${scene}/${engine}`].total : null,
       frozenAt: new Date().toISOString(),
-      frozenInEpoch: null, // 由下方统一填充
+      frozenUnderRuler: null, // 由下方统一填充(该 Reference 冻结时用的量尺版本号)
       ...(changed.length ? { changedFrom: old.refVersion, changedInputs: changed } : {}),
     };
     report.push({ key, status: !ok ? 'NO_VALIDATION' : changed.length ? 'STALE' : 'CURRENT', changedInputs: changed, refVersion });
   }
 }
 
-// ---- 纪元编号 EP-YYYYMMDD-Rnn:任一 scene 升版即开新纪元;无变化则沿用(幂等) ----
+// ---- 量尺版本号 RULER-YYYYMMDD-Rnn:任一 scene 升版即换新尺;无变化则沿用(幂等) ----
 const today = new Date();
 const ymd = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
 const changedKeys = report.filter(r => r.status === 'STALE').map(r => r.key);
-let epochId = prev.epochId || null;
-let epochHistory = Array.isArray(prev.epochHistory) ? prev.epochHistory : [];
-if (!epochId) {
-  epochId = `EP-${ymd}-R1`; // 首次冻结(兼容旧账本回填)
-  epochHistory.push({ epochId, frozenAt: new Date().toISOString(), changed: ['initial-backfill'] });
+let rulerId = prev.rulerId || null;
+let rulerHistory = Array.isArray(prev.rulerHistory) ? prev.rulerHistory : [];
+if (!rulerId) {
+  rulerId = `RULER-${ymd}-R1`; // 首次冻结(兼容旧账本回填)
+  rulerHistory.push({ rulerId, frozenAt: new Date().toISOString(), changed: ['initial-backfill'] });
 } else if (changedKeys.length) {
-  const seq = epochId.startsWith(`EP-${ymd}-R`) ? parseInt(epochId.split('-R')[1], 10) + 1 : 1;
-  epochId = `EP-${ymd}-R${String(seq).padStart(2, '0')}`;
-  epochHistory.push({ epochId, frozenAt: new Date().toISOString(), changed: changedKeys });
+  const seq = rulerId.startsWith(`RULER-${ymd}-R`) ? parseInt(rulerId.split('-R')[1], 10) + 1 : 1;
+  rulerId = `RULER-${ymd}-R${String(seq).padStart(2, '0')}`;
+  rulerHistory.push({ rulerId, frozenAt: new Date().toISOString(), changed: changedKeys });
 }
 for (const k of Object.keys(epochs)) {
   const wasChanged = changedKeys.includes(k);
-  const prevFrozen = prev.epochs[k] && prev.epochs[k].frozenInEpoch;
-  epochs[k].frozenInEpoch = wasChanged || !prevFrozen ? epochId : prevFrozen;
+  const prevFrozen = prev.epochs[k] && prev.epochs[k].frozenUnderRuler;
+  epochs[k].frozenUnderRuler = wasChanged || !prevFrozen ? rulerId : prevFrozen;
 }
 
 if (CHECK) {
@@ -90,8 +100,8 @@ if (CHECK) {
 }
 
 fs.writeFileSync(REG, JSON.stringify({
-  epochId, updatedAt: new Date().toISOString(),
-  principle: 'Reference 天花板 = 当前引擎+当前文档正典+当前 Brief 的最优实现;三输入任一变化 → 重实现并 refVersion+1,同时开启新纪元 EP-<日期>-R<轮次>(与批次 B-* 同构,单日多轮安全);同纪元内所有批次共用同一量尺',
-  epochHistory, epochs,
+  rulerId, updatedAt: new Date().toISOString(),
+  principle: 'Reference 天花板 = 每个场景的满分线(量尺)。四输入(引擎/文档/Brief/工具链)任一变化 → 重实现并 refVersion+1,同时换新量尺 RULER-<日期>-R<轮次>(与批次 B-* 同构,单日多轮安全);同一版量尺下的所有批次共用同一满分线',
+  rulerHistory, epochs,
 }, null, 2) + '\n');
-console.log(`REFERENCE-VERSIONS.json 已冻结:纪元 ${epochId}(历史 ${epochHistory.length} 个);本轮升版项: ${changedKeys.join(', ') || '无'}`);
+console.log(`REFERENCE-VERSIONS.json 已冻结:量尺 ${rulerId}(历史 ${rulerHistory.length} 版);本轮升版项: ${changedKeys.join(', ') || '无'}`);

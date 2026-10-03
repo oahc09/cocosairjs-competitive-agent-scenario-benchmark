@@ -78,7 +78,7 @@ node run.mjs round status      ───▶ 仪表盘(各臂状态+各阶段时�
         └──────────────────────────────────────────────────────────────┘
 ```
 
-- **Reference 纪元账本**(`reference/private/REFERENCE-VERSIONS.json`):引擎/文档/Brief 三输入指纹;`ceiling-check` 报 STALE 清单(需重实现的 Reference),`ceiling-freeze` 升版冻结并开新纪元 EP-<日期>-R<轮次>;"批次↔量尺"经 epochId 对应;aggregate 按批次引擎哈希匹配纪元,跨版本 Attainment 单列。
+- **Reference 量尺版本账本**(`reference/private/REFERENCE-VERSIONS.json`):引擎/文档/Brief 三输入指纹;`ceiling-check` 报 STALE 清单(需重实现的 Reference),`ceiling-freeze` 升版冻结并换新量尺 RULER-<日期>-R<轮次>;"批次↔量尺"经 epochId 对应;aggregate 按批次引擎哈希匹配量尺版本,跨版本 Attainment 单列。
 - **回归套件**:7 个用例对应实验实测 P0 缺陷(基线:2 BUG + 5 FIXED + 1 用例待调,见 regression/README.md);新引擎版本先过回归再进实验。
 - **版本可比性**:pair.json 的 airPackageHash + ROUND.json 的 engine 字段 + engine-versions.json 三处留痕,历史批次按引擎版本分组对比即"引擎改进收益曲线"。
 - **知识迭代**:K1/K2 包按 manifest 哈希进 pair.json(knowledgeHash),知识升级 → KnowledgeGain 变化可归因到知识版本。

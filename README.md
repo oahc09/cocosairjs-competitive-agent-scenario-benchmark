@@ -65,7 +65,7 @@ node run.mjs portal --port 7800    # 门户:批次与 Runs / 场景实时对比 
 ```bash
 node run.mjs regression            # 引擎缺陷回归:BUG≠0 先修引擎
 node run.mjs ceiling-check         # 量尺漂移:STALE 清单=需按新正典 API 重实现的 Reference
-                                   # (重实现+验证后 node run.mjs ceiling-freeze 开新纪元)
+                                   # (重实现+验证后 node run.mjs ceiling-freeze 换新量尺)
 ```
 
 ---
@@ -79,14 +79,14 @@ docs/                BENCHMARK-PLAN(计划书)/ 合同三件套 / ARCHITECTURE /
 config/ briefs/ templates/ knowledge/ vendor/ assets/   冻结配置与输入(规格/模板/知识包/tarball/资产)
 harness/             round 状态机 / coordinator / validate / isolation / judge / aggregate
 regression/          引擎缺陷回归套件(7 用例 + 版本注册表)
-reference/private/   20 个 Reference(⚠️ Agent Run 禁读的答案区)+ 纪元账本 REFERENCE-VERSIONS.json + 对照画廊
+reference/private/   20 个 Reference(⚠️ Agent Run 禁读的答案区)+ 量尺版本账本 REFERENCE-VERSIONS.json + 对照画廊
 results/             B-<日期>-R<轮次>/ 批次产物 + batches.json + aggregated.json + reports/(门户与报告)
 secret/  tools/  node_modules/   串扰 marker / 构建工具 / 全局共享依赖仓(exFAT 无链接,向上解析)
 ```
 
 ## 关键概念(三句话)
 
-- **批次 B-日期-轮次**:第几次测 Agent;**纪元 EP-日期-轮次**:第几版量尺(引擎/文档/Brief/工具链四输入任一变化即升纪元,同纪元所有批次共用同一 Reference 分母)。
+- **批次 B-日期-轮次**:第几次测 Agent;**量尺版本 EP-日期-轮次**:第几版量尺(引擎/文档/Brief/工具链四输入任一变化即升量尺版本,同一版量尺下所有批次共用同一 Reference 分母)。
 - **判定唯一事实源** = `validate.mjs` 的 report.json;Agent 自检不作数;失败 trial 永不删除。
 - **git 只跟踪最小必要集**(~56MB:系统 + 不可再生的 Pilot 证据 + 资产 + tarball);~580MB 可再生媒体磁盘保留(gitignore 分层)。
 

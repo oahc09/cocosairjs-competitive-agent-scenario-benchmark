@@ -38,9 +38,9 @@
 
 canvas 鼠标事件被 pal 层吞(须走引擎 `input.on`,wheel 用 capture 监听)· `setProperty` FLOAT4 必须传 Vec4/Color 实例(普通数组→NaN 黑屏)· `Light.color` 传普通对象→NaN 白屏 · `Camera.visibility` 必须显式设 `Layers.Enum.DEFAULT` · POINT_LIST 需 mesh+pass 双补丁 · 无后处理/Bloom(shader 内衰减近似)· 无 InstancedMesh/Points(动态网格 `utils.MeshUtils.createDynamicMesh+updateSubMesh` 替代)· `primitives.plane` 在 XZ 平面 · 自定义材质:`new Material()` + `initialize({effectAsset})`(effectName/effectAsset 属性只读)· gltf 加载:`GLTFLoader.loadAsync → asset.instantiate()`。完整清单:各 `reference/private/cocosair/E*/ceiling-notes.md` 与 `results/reports/latest/cocosair-gap-map.md`。
 
-## Reference 纪元原则(多轮引擎迭代时必读)
+## Reference 量尺版本原则(多轮引擎迭代时必读)
 
-Reference 天花板 = **当前引擎 + 当前文档正典用法 + 当前 Brief** 的最优实现。三输入任一变化(引擎 tarball、K1 文档包、spec 升版)→ 受影响 Reference 需**重实现**(不是仅重跑:API 优化后旧绕行写法会低估上限),然后 `node run.mjs ceiling-freeze` 升版冻结并开启新纪元 EP-<日期>-R<轮次>(与批次 B-* 同构;同纪元内所有批次共用同一量尺,不随批次轮数变动);每轮 aggregate 自动校验批次引擎哈希与量尺纪元,不匹配标 `engine-differs`(Attainment 跨版本,单列)。漂移检测:`node run.mjs ceiling-check`(STALE 列表=下轮前必须重做的清单)。
+Reference 天花板 = **当前引擎 + 当前文档正典用法 + 当前 Brief** 的最优实现。三输入任一变化(引擎 tarball、K1 文档包、spec 升版)→ 受影响 Reference 需**重实现**(不是仅重跑:API 优化后旧绕行写法会低估上限),然后 `node run.mjs ceiling-freeze` 升版冻结并换新量尺 RULER-<日期>-R<轮次>(与批次 B-* 同构;同一版量尺下所有批次共用同一量尺,不随批次轮数变动);每轮 aggregate 自动校验批次引擎哈希与量尺量尺版本,不匹配标 `engine-differs`(Attainment 跨版本,单列)。漂移检测:`node run.mjs ceiling-check`(STALE 列表=下轮前必须重做的清单)。
 
 ## 约定速记
 
