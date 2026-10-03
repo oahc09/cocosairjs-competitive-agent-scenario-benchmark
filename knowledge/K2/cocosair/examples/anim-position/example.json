@@ -1,0 +1,664 @@
+{
+  "id": "anim-position",
+  "version": "1.0.0",
+  "title": "Position Animation",
+  "category": "animation",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握程序化动画的最小骨架：Component.update(dt) 中推进时间并改写位置",
+    "points": ["update 的 dt 增量语义（与帧率无关的推进）", "Math.sin 生成往复轨迹", "setPosition 每帧覆盖位置"]
+  },
+  "effect": {
+    "functional": "Mover 的 X 坐标按 sin(t*2)*2.2 持续变化；动画相位由 dt 累加驱动；position(t1) != position(t0)。",
+    "visual": "蓝色方块在画面中左右匀速往复滑动，路径为水平直线"
+  },
+  "api": {
+    "primary": ["Component", "Node.setPosition", "Animation"],
+    "supporting": [
+      "MeshRenderer",
+      "primitives.box",
+      "Animation.defaultClip",
+      "Animation.clips",
+      "Animation.playOnLoad",
+      "Animation.play",
+      "Animation.crossFade",
+      "Animation.pause",
+      "Animation.resume",
+      "Animation.stop",
+      "Animation.getState",
+      "Animation.createState",
+      "Animation.removeState",
+      "Animation.addClip",
+      "Animation.removeClip",
+      "Animation.on",
+      "Animation.once",
+      "Animation.off",
+      "AnimationClip",
+      "AnimationClip.constructor",
+      "AnimationClip.duration",
+      "AnimationClip.wrapMode",
+      "AnimationClip.tracksCount",
+      "AnimationClip.addTrack",
+      "AnimationClip.getTrack",
+      "AnimationClip.removeTrack",
+      "AnimationClip.clearTracks",
+      "AnimationClip.hasEvents",
+      "AnimationClip.tracks",
+      "AnimationClip.range",
+      "AnimationClip.hash",
+      "AnimationClip.events",
+      "AnimationClip.destroy",
+      "Animation.EventType",
+      "Animation.onLoad",
+      "Animation.start",
+      "Animation.onEnable",
+      "Animation.onDisable",
+      "Animation.onDestroy",
+      "AnimationClip.WrapMode",
+      "AnimationClip.createWithSpriteFrames",
+      "AnimationClip.sample",
+      "AnimationClip.speed",
+      "AnimationClip.isAdditive_experimental",
+      "AnimationClip.onLoaded",
+      "AnimationClip.auxiliaryCurveCount_experimental",
+      "AnimationClip.getAuxiliaryCurveNames_experimental",
+      "AnimationClip.hasAuxiliaryCurve_experimental",
+      "AnimationClip.addAuxiliaryCurve_experimental",
+      "AnimationClip.getAuxiliaryCurve_experimental",
+      "AnimationClip.renameAuxiliaryCurve_experimental",
+      "AnimationClip.removeAuxiliaryCurve_experimental"
+    ],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Component",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.setPosition",
+      "Animation",
+      "Animation.defaultClip",
+      "Animation.clips",
+      "Animation.playOnLoad",
+      "Animation.play",
+      "Animation.crossFade",
+      "Animation.pause",
+      "Animation.resume",
+      "Animation.stop",
+      "Animation.getState",
+      "Animation.createState",
+      "Animation.removeState",
+      "Animation.addClip",
+      "Animation.removeClip",
+      "Animation.on",
+      "Animation.once",
+      "Animation.off",
+      "AnimationClip",
+      "AnimationClip.constructor",
+      "AnimationClip.duration",
+      "AnimationClip.wrapMode",
+      "AnimationClip.tracksCount",
+      "AnimationClip.addTrack",
+      "AnimationClip.getTrack",
+      "AnimationClip.removeTrack",
+      "AnimationClip.clearTracks",
+      "AnimationClip.hasEvents",
+      "AnimationClip.tracks",
+      "AnimationClip.range",
+      "AnimationClip.hash",
+      "AnimationClip.events",
+      "AnimationClip.destroy",
+      "Animation.EventType",
+      "Animation.onLoad",
+      "Animation.start",
+      "Animation.onEnable",
+      "Animation.onDisable",
+      "Animation.onDestroy",
+      "AnimationClip.WrapMode",
+      "AnimationClip.createWithSpriteFrames",
+      "AnimationClip.sample",
+      "AnimationClip.speed",
+      "AnimationClip.isAdditive_experimental",
+      "AnimationClip.onLoaded",
+      "AnimationClip.auxiliaryCurveCount_experimental",
+      "AnimationClip.getAuxiliaryCurveNames_experimental",
+      "AnimationClip.hasAuxiliaryCurve_experimental",
+      "AnimationClip.addAuxiliaryCurve_experimental",
+      "AnimationClip.getAuxiliaryCurve_experimental",
+      "AnimationClip.renameAuxiliaryCurve_experimental",
+      "AnimationClip.removeAuxiliaryCurve_experimental"
+    ],
+    "forbiddenShortcut": ["用 CSS/ DOM 动画移动 canvas 冒充场景动画"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L53"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L64"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L47"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L46"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Animation",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "Animation.defaultClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L145"
+      },
+      {
+        "api": "Animation.clips",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Animation.playOnLoad",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L146"
+      },
+      {
+        "api": "Animation.play",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L168"
+      },
+      {
+        "api": "Animation.crossFade",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L187"
+      },
+      {
+        "api": "Animation.pause",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L180"
+      },
+      {
+        "api": "Animation.resume",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L184"
+      },
+      {
+        "api": "Animation.stop",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L190"
+      },
+      {
+        "api": "Animation.getState",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L153"
+      },
+      {
+        "api": "Animation.createState",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L154"
+      },
+      {
+        "api": "Animation.removeState",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L156"
+      },
+      {
+        "api": "Animation.addClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L152"
+      },
+      {
+        "api": "Animation.removeClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L192"
+      },
+      {
+        "api": "Animation.on",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "Animation.once",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L165"
+      },
+      {
+        "api": "Animation.off",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L189"
+      },
+      {
+        "api": "AnimationClip",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "AnimationClip.constructor",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L84"
+      },
+      {
+        "api": "AnimationClip.duration",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L51"
+      },
+      {
+        "api": "AnimationClip.wrapMode",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L52"
+      },
+      {
+        "api": "AnimationClip.tracksCount",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L99"
+      },
+      {
+        "api": "AnimationClip.addTrack",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L75"
+      },
+      {
+        "api": "AnimationClip.getTrack",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L121"
+      },
+      {
+        "api": "AnimationClip.removeTrack",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L135"
+      },
+      {
+        "api": "AnimationClip.clearTracks",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L138"
+      },
+      {
+        "api": "AnimationClip.hasEvents",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L131"
+      },
+      {
+        "api": "AnimationClip.tracks",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L122"
+      },
+      {
+        "api": "AnimationClip.range",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L126"
+      },
+      {
+        "api": "AnimationClip.hash",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L129"
+      },
+      {
+        "api": "AnimationClip.events",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L130"
+      },
+      {
+        "api": "AnimationClip.destroy",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L140"
+      },
+      {
+        "api": "Animation.EventType",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L164"
+      },
+      {
+        "api": "Animation.onLoad",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L14"
+      },
+      {
+        "api": "Animation.start",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L18"
+      },
+      {
+        "api": "Animation.onEnable",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L22"
+      },
+      {
+        "api": "Animation.onDisable",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Animation.onDestroy",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "AnimationClip.WrapMode",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L52"
+      },
+      {
+        "api": "AnimationClip.createWithSpriteFrames",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L96"
+      },
+      {
+        "api": "AnimationClip.sample",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "AnimationClip.speed",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L89"
+      },
+      {
+        "api": "AnimationClip.isAdditive_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L92"
+      },
+      {
+        "api": "AnimationClip.onLoaded",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L90"
+      },
+      {
+        "api": "AnimationClip.auxiliaryCurveCount_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L112"
+      },
+      {
+        "api": "AnimationClip.getAuxiliaryCurveNames_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L113"
+      },
+      {
+        "api": "AnimationClip.hasAuxiliaryCurve_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L114"
+      },
+      {
+        "api": "AnimationClip.addAuxiliaryCurve_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L105"
+      },
+      {
+        "api": "AnimationClip.getAuxiliaryCurve_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L115"
+      },
+      {
+        "api": "AnimationClip.renameAuxiliaryCurve_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L117"
+      },
+      {
+        "api": "AnimationClip.removeAuxiliaryCurve_experimental",
+        "source": "src/animation-contract.ts",
+        "validator": "no-runtime-error",
+        "sourceLocation": "L119"
+      }
+    ]
+  },
+  "capabilities": ["animation"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Main Light", "Mover"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": [],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产；程序化生成 AnimationClip、VectorTrack 与场景节点"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [0, 1.4, 4.8],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 73,
+            "text": "cameraNode.setPosition(new Vec3(0, 1.4, 4.8));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 51,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 52,
+            "text": "lightNode.setRotationFromEuler(-45, -30, 0);"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      },
+      "Mover": {
+        "position": {
+          "vary": true,
+          "range": [
+            [-0.8, 0.8],
+            [0.6, 0.6],
+            [0, 0]
+          ],
+          "minDelta": 0.0001
+        },
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 68,
+            "text": "正弦包络 Math.sin(this.t * 2) * 0.8,0.6,0：三角项取 [-1,1]，其余为字面量算术"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Mover": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [65, 155, 235, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 62,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "113419aed33a",
+    "source": "9630b2703491c62c",
+    "candidate": "0b9588dc80fd7afd",
+    "verified": 68,
+    "attested": 0,
+    "units": 68
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.lookAt(new Vec3(0, 0.6, 0));）",
+        "line": "L74"
+      }
+    }
+  }
+}

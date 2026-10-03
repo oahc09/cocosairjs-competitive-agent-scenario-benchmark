@@ -1,0 +1,14 @@
+{
+  "name": "cocosairjs-bench-harness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Automated validation pipeline (build -> serve -> browser -> probes -> evidence -> score) for the CocosAirJS competitive agent scenario benchmark. Independent npm project; never requires code from the workspace under test.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "pngjs": "^7.0.0",
+    "playwright-core": "^1.50.0"
+  }
+}

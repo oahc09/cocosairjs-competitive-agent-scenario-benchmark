@@ -1,0 +1,27 @@
+# 依赖与构建产物(可恢复:根目录 npm install + 各工作区 npm run build)
+node_modules/
+dist/
+
+# 系统与日志
+.DS_Store
+Thumbs.db
+*.log
+
+# ===== 证据媒体 · B 极简方案:磁盘全保留,git 不跟踪(再生命令见 README/docs) =====
+# 默认:截图/录屏/模型副本一律不跟踪,例外见下方否定规则
+*.png
+*.webm
+*.glb
+
+# 例外①:共享资产(场景运行依赖,原始唯一来源)
+!assets/**/*.png
+!assets/**/*.glb
+
+# 例外②:Pilot 不可再生证据 —— 每 Run 录屏 + initial/mid/final 三帧
+!results/B-*/PAIR-*/arm-*/validation/video.webm
+!results/B-*/PAIR-*/arm-*/validation/screenshots/initial.png
+!results/B-*/PAIR-*/arm-*/validation/screenshots/mid.png
+!results/B-*/PAIR-*/arm-*/validation/screenshots/final.png
+
+# 可再生的自测产物(harness/runner/selftest.mjs)
+harness/selftest-out/

@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+// G-POINT-LIST:primitiveMode POINT_LIST(=0)被 falsy 判空静默换成三角形(E01 Reference 实测)
+// unlit 材质红点:60 个离散点被连成大三角形 → 大面积红 ⇒ BUG;稀疏点 ⇒ FIXED
+const R = await boot();
+R.addCamera();
+const N = 60;
+const positions = new Float32Array(N * 3);
+const colors = new Float32Array(N * 4);
+for (let i = 0; i < N; i++) {
+  const gx = i % 8, gy = (i / 8) | 0;
+  positions[i * 3] = (gx / 7 - 0.5) * 2.6; positions[i * 3 + 1] = (gy / 7 - 0.5) * 2.0; positions[i * 3 + 2] = 0;
+  colors[i * 4] = 255; colors[i * 4 + 1] = 60; colors[i * 4 + 2] = 60; colors[i * 4 + 3] = 255;
+}
+let made = true, errMsg = '';
+try {
+  const geo = R.utils.createMesh({
+    positions, colors, primitiveMode: 0 /* POINT_LIST */,
+    minPos: { x: -1.4, y: -1.1, z: -0.1 }, maxPos: { x: 1.4, y: 1.1, z: 0.1 },
+  });
+  R.mesh(geo, R.builtinResMgr.get('builtin-unlit-material'));
+} catch (e) { made = false; errMsg = String(e && e.message || e).slice(0, 110); }
+R.app.run(R.scene);
+const img = await R.sample(12);
+const redRatio = R.litRatio(img, 26);
+R.finish({
+  outcome: !made ? 'ERROR' : (redRatio > 0.05 ? 'BUG' : (redRatio > 0.00005 ? 'FIXED' : 'ERROR')),
+  detail: `redPixelRatio=${redRatio.toFixed(4)} meshMade=${made} ${errMsg}`,
+});
+</script></body></html>

@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>bench-template-cocosair — E03 orrery</title>
+    <link rel="icon" href="data:," />
+    <!-- 空 data favicon:避免浏览器自动请求 /favicon.ico 产生 404 噪声(console 无错误契约) -->
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: #fff;
+        }
+        #GameDiv {
+            width: 100%;
+            height: 100%;
+        }
+        #Cocos3dGameContainer {
+            width: 100%;
+            height: 100%;
+        }
+        #GameCanvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+    </style>
+    <script>
+        // 页面契约(MASTER-CONTEXT §12.1):首帧渲染前 false,首帧后由 src/main.js 置 true
+        window.__appReady = false;
+    </script>
+    <script type="importmap">
+        { "imports": { "cocosair.js": "/dist/vendor/cocosair.module.js" } }
+    </script>
+</head>
+<body>
+    <!-- 官方模板 DOM 结构(同 examples/hello-cube):pal/screen-adapter 依赖这些 id 做全屏适配 -->
+    <div id="GameDiv">
+        <div id="Cocos3dGameContainer">
+            <!-- #GameCanvas 必须在引擎 import 前存在(pal/screen-adapter 为模块顶层单例)。
+                 module script 在 DOM 解析完成后执行,满足该次序约束。 -->
+            <canvas id="GameCanvas"></canvas>
+        </div>
+    </div>
+    <script type="module" src="/dist/app.js"></script>
+</body>
+</html>

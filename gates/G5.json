@@ -1,0 +1,42 @@
+{
+  "gate": "G5 PILOT_VALIDITY",
+  "status": "PASS",
+  "validatedAt": "2026-10-02T15:14:22.674Z",
+  "checks": [
+    {
+      "id": "pair-launch",
+      "result": "PASS",
+      "detail": "4 pairs 8 arms 同批派发,startTimeDeltaActualSec=0(合同 ≤30s)"
+    },
+    {
+      "id": "isolation-scan",
+      "result": "PASS",
+      "detail": "8/8 臂 leak-scanner CLEAN(修正误报后;G4 NC 回归 6/6 保持)"
+    },
+    {
+      "id": "independent-validation",
+      "result": "PASS",
+      "detail": "8/8 臂由 harness 独立验证(串行,唯一事实源 report.json),非自检口径"
+    },
+    {
+      "id": "failure-attribution",
+      "result": "PASS",
+      "detail": "E02-AIR=P4 相机环绕幅度不足(agent 侧);E05 双臂=P1 角区星密度<3%(agent 侧视觉密度,独立像素复核确认);E10 双臂=spec P4 断言语义缺陷(regionChange 测动作后两帧 vs 阈值文本意图),按 M6 修未冻结错误条款升版 v1.0.1 后复验全绿(reference 同步复验通过,证明修订未弱化合同)"
+    },
+    {
+      "id": "no-invalid-run",
+      "result": "PASS",
+      "detail": "无 INVALID_RUN;无删除 trial;失败臂记录保留"
+    },
+    {
+      "id": "budget-discipline",
+      "result": "PASS-WITH-NOTES",
+      "detail": "预算为自报口径:8 臂均未超 toolCalls/wallTime;E01-b build 8/8 用满(合规);浏览器验证计数口径差异已在 RESULT 透明披露"
+    }
+  ],
+  "knownLimitations": [
+    "单 worker 单 GPU(开发并行/验证串行,已按 §3.5)",
+    "文件隔离为策略级+产物扫描(非 OS 强制)",
+    "K0 知识不对称如实记录:three npm 无 .d.ts,AIR tarball 含 .d.ts"
+  ]
+}

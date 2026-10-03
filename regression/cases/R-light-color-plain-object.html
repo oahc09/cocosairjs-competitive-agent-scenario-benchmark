@@ -1,0 +1,20 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+// G-NAN-FAMILY:Light.color 传普通对象/Vec3 → NaN 整屏白(E09 实测)
+// 灯色以普通对象传入后画面若整体过曝接近全白 ⇒ BUG;正常照明的红盒 ⇒ FIXED
+const R = await boot();
+R.addCamera();
+let plainOk = true;
+const lightNode = R.addLight(new R.Color(255, 255, 255, 255));
+try { lightNode.getComponent(R.DirectionalLight).color = { x: 1, y: 0.95, z: 0.9 }; } catch (e) { plainOk = false; }
+R.mesh(R.primitives.box({ width: 1.6, height: 1.6, length: 1.6 }), R.builtinMat());
+R.app.run(R.scene);
+R.scene.globals.ambient.skyColorHDR.set(0.18, 0.18, 0.2, 1);
+R.scene.globals.ambient.skyIllum = 6000;
+const img = await R.sample(12);
+const c = R.colorAt(img, (img.w / 2) | 0, (img.h / 2) | 0);
+const [mr, mg, mb] = R.colorAt(img, (img.w / 2) | 0, (img.h * 0.2) | 0);
+const whiteWash = mr > 250 && mg > 250 && mb > 250;
+const normalShaded = c[0] > 40 && c[0] < 245;
+R.finish({ outcome: whiteWash ? 'BUG' : (normalShaded || plainOk === false && normalShaded ? 'FIXED' : 'ERROR'), detail: `box=rgb(${c}) bg=rgb(${mr},${mg},${mb}) plainOk=${plainOk}` });
+</script></body></html>

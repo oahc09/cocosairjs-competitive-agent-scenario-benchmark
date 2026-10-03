@@ -1,0 +1,151 @@
+{
+  "gate": "G2 ISOLATION",
+  "status": "PASS",
+  "generatedAt": "2026-10-02T09:15:08.966Z",
+  "declaredLimitation": "策略级隔离+产物扫描,非OS强制",
+  "declaration": [
+    "本环境文件隔离为策略级(prompt 约束 + 事后产物扫描),非 OS/沙箱/ACL 强制隔离(benchmark-contract §2.5,agents.yaml isolation.level=policy)。",
+    "T1/T4/T5 验证的是\"扫描机制\"的检出能力与零误报;T2/T3 验证运行时资源(userDataDir/端口)隔离。",
+    "G2 PASS 不等于隔离不可突破;只证明:按协议运行的 Run,其违规访问痕迹会被产物扫描检出。"
+  ],
+  "tests": [
+    {
+      "id": "T1",
+      "desc": "workspace 泄漏:双 Arm 各放随机 marker,扫描双方全部产物文件内容不得含对方 token;阳性对照(故意污染目录)必须被检出",
+      "status": "PASS",
+      "evidence": {
+        "method": "两临时 arm 目录 + 随机 token marker;grepToken 全产物内容扫描(与 run 后产物扫描同机制)",
+        "armA_sees_tokenB": [],
+        "armB_sees_tokenA": [],
+        "positiveControl_armC_sees_tokenB": [
+          {
+            "file": "workspace/leaked.js"
+          }
+        ],
+        "tokensSha256": {
+          "a": "fe12f7c31082724182dd143865ab4bd4648289828acd01e2599d7a425469ddec",
+          "b": "ef3ac70e5e4f1f9150e62514e098c33b50a214f77ac9706d69cabcd1df1ab60d"
+        }
+      }
+    },
+    {
+      "id": "T2",
+      "desc": "浏览器隔离:双 userDataDir 各写 localStorage 再互读,断言不可见",
+      "status": "PASS",
+      "evidence": {
+        "method": "playwright-core chromium × 2 launchPersistentContext(独立 userDataDir)访问同一 URL http://127.0.0.1:7250/t2.html",
+        "B读取A写入": null,
+        "A读回自身": true,
+        "B读回自身": true,
+        "tokensSha256": {
+          "a": "5dd72019b157001a6ae596b3c0a24777ae157f0b5192c7d1c3ad858aef9cb4c3",
+          "b": "76e64224aeb34b8203f211e359f74e720694683a85f0ed75818b9ffaf7379726"
+        }
+      }
+    },
+    {
+      "id": "T3",
+      "desc": "dev server 隔离:双 serve 独立端口,A 的文件在 B 端口 404、B 的文件在 A 端口 404;A 停止后 A 端口连接拒绝且 B 不受影响",
+      "status": "PASS",
+      "evidence": {
+        "ports": {
+          "A": 7200,
+          "B": 7201
+        },
+        "server": "isolation/mini-serve.mjs",
+        "steps": [
+          {
+            "step": "A 端口取 A 文件",
+            "expect": "200",
+            "got": 200,
+            "pass": true
+          },
+          {
+            "step": "B 端口取 A 独有文件",
+            "expect": "404",
+            "got": 404,
+            "pass": true
+          },
+          {
+            "step": "A 端口取 B 独有文件",
+            "expect": "404",
+            "got": 404,
+            "pass": true
+          },
+          {
+            "step": "B 端口取 B 文件",
+            "expect": "200",
+            "got": 200,
+            "pass": true
+          },
+          {
+            "step": "A 停止后访问 A 端口",
+            "expect": "ECONNREFUSED",
+            "got": "ECONNREFUSED",
+            "pass": true
+          },
+          {
+            "step": "A 停止后 B 端口取 B 文件",
+            "expect": "200",
+            "got": 200,
+            "pass": true
+          }
+        ]
+      }
+    },
+    {
+      "id": "T4",
+      "desc": "答案泄漏扫描:干净 workspace 报 CLEAN;注入 reference 假内容 + validator.mjs + 对方 arm 路径 + secret 路径后,leak-scanner 必须报 VIOLATIONS 且四条规则全部命中",
+      "status": "PASS",
+      "evidence": {
+        "scanner": "isolation/leak-scanner.mjs",
+        "clean": {
+          "status": "CLEAN",
+          "files": 3,
+          "scanned": 3
+        },
+        "dirty": {
+          "status": "VIOLATIONS",
+          "hitRules": [
+            "R3-PEER-ARM",
+            "R4-SECRET-PATH",
+            "R1-REFERENCE-PATH",
+            "R2-HARNESS-SOURCE"
+          ],
+          "violations": [
+            "R3-PEER-ARM @ NOTES.md:2",
+            "R4-SECRET-PATH @ NOTES.md:3",
+            "R4-SECRET-PATH @ NOTES.md:3",
+            "R1-REFERENCE-PATH @ src/reference-answer.js:1",
+            "R1-REFERENCE-PATH @ src/reference-answer.js:1",
+            "R2-HARNESS-SOURCE @ validator.mjs:1",
+            "R2-HARNESS-SOURCE @ validator.mjs:1",
+            "R2-HARNESS-SOURCE @ validator.mjs:2"
+          ]
+        }
+      }
+    },
+    {
+      "id": "T5",
+      "desc": "牺牲性 marker:bench/secret/reference-marker.txt 存在(每次 G2 轮换随机 token);产物扫描能检出含 token 的违规产物,干净产物零误报",
+      "status": "PASS",
+      "evidence": {
+        "markerPath": "bench/secret/reference-marker.txt",
+        "markerExists": true,
+        "tokenSha256": "8d29663561faad5d55719eb7403003488f72d3eeaccf1d297ecbb779776f8ae9",
+        "cleanArtifactsHits": [],
+        "dirtyArtifactsHits": [
+          {
+            "file": "build.log"
+          }
+        ],
+        "note": "Agent Run 结束后的正式产物扫描应 grep 本 token;命中即 INVALID_RUN"
+      }
+    }
+  ],
+  "environment": {
+    "nodeVersion": "v24.14.0",
+    "platform": "win32 10.0.28120",
+    "playwrightCoreAvailable": true
+  }
+}

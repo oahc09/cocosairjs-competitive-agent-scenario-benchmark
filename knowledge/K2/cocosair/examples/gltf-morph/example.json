@@ -1,0 +1,243 @@
+{
+  "id": "gltf-morph",
+  "version": "1.0.0",
+  "title": "glTF Morph Target",
+  "category": "gltf",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握 glTF morph target 模型的加载与动画剪辑播放（E009 animation-basic 的 GLTF 形态）",
+    "points": [
+      "GLTFLoader.parseAsync 从 ArrayBuffer 加载 GLB",
+      "GLTFAsset.instantiate 实例化挂场景",
+      "Animation.play + WrapMode.Loop 循环播放变形动画"
+    ]
+  },
+  "effect": {
+    "functional": "AnimatedMorphCube.glb 经 parseAsync → instantiate 挂载；根节点 Animation 组件持有 ≥1 个剪辑并进入 playing 状态；frameObject 取景。",
+    "visual": "立方体持续做收缩/膨胀的变形动画，顶点位置随时间明显改变（帧间差异可测）"
+  },
+  "api": {
+    "primary": ["GLTFLoader.parseAsync", "Animation.play", "AnimationClip"],
+    "supporting": ["GLTFAsset.instantiate", "frameObject"],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "Camera",
+      "DirectionalLight",
+      "Animation",
+      "Animation.play",
+      "AnimationClip",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "frameObject",
+      "GLTFLoader",
+      "GLTFLoader.parseAsync",
+      "GLTFAsset.instantiate",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler",
+      "GLTFAsset.destroy",
+      "isValid"
+    ],
+    "forbiddenShortcut": ["用 Component 手写顶点抖动冒充 morph 动画", "用缩放脉冲冒充 morph target 变形"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L24"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "Animation",
+        "source": "src/main.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L63"
+      },
+      {
+        "api": "Animation.play",
+        "source": "src/main.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L67"
+      },
+      {
+        "api": "AnimationClip",
+        "source": "src/main.ts",
+        "validator": "animation-playing",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "frameObject",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L60"
+      },
+      {
+        "api": "GLTFLoader",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "GLTFLoader.parseAsync",
+        "source": "src/main.ts",
+        "validator": "asset-loaded",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "GLTFAsset.instantiate",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L58"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "GLTFAsset.destroy",
+        "source": "src/main.ts",
+        "validator": "resource-released",
+        "sourceLocation": "L91"
+      },
+      {
+        "api": "isValid",
+        "source": "shared/asset-lifecycle.js",
+        "validator": "resource-released",
+        "sourceLocation": "L27"
+      }
+    ]
+  },
+  "capabilities": ["gltf", "animation"],
+  "assets": ["assets/AnimatedMorphCube.glb"],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Main Light"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "asset-loaded", "animation-playing", "no-runtime-error", "transform-equals"],
+    "interaction": [],
+    "visual": ["visible-frame", "frame-diff"],
+    "lifecycle": ["resource-released"],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "assets/AnimatedMorphCube.glb — Khronos glTF Sample Models（CC BY 4.0），许可见 assets/AnimatedMorphCube.LICENSE.md"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 43,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      }
+    },
+    "asset-loaded": {
+      "paths": [
+        {
+          "path": "assets/AnimatedMorphCube.glb",
+          "provenance": [
+            {
+              "source": "src/main.ts",
+              "line": 51,
+              "text": "var bytes = await (await fetch('./assets/AnimatedMorphCube.glb')).arrayBuffer();"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：frameObject 依包围盒运行期改写机位（frameObject(camera, instance.root);）",
+        "line": "L60"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "893b7107261d",
+    "source": "21bd135b88e06777",
+    "candidate": "0b9588dc80fd7afd",
+    "verified": 20,
+    "attested": 0,
+    "units": 20
+  }
+}

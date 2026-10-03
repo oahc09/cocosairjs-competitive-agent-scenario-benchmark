@@ -1,0 +1,173 @@
+{
+  "briefId": "E04",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T16:30:00+08:00",
+  "title": "城市烟花夜(City Fireworks Night)",
+  "goal": "程序化城市楼群剪影构成的夜景中,点击夜空发射烟花:尾迹升空、球状爆炸、重力下坠、亮度衰减、余烬缓慢飘落闪烁;支持自动表演模式与全局暂停冻结,覆盖程序化几何/粒子/时间线/输入/状态。",
+  "domains": [
+    "ProceduralGeometry",
+    "Particles",
+    "Timeline",
+    "Input",
+    "State"
+  ],
+  "assets": [],
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "notes": "背景星>=120、楼>=24、亮窗>=80;每发爆炸粒子100-240、余烬>=12;同屏粒子峰值能力>=1000;自动表演开启常态下 >=30fps;粒子按真实时间步进,暂停时时间增量置0。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "stateChannel": {
+    "fireworkCount": "自上次 reset 起累计发射发数(含自动发射)",
+    "particlesAlive": "当前存活粒子总数(尾迹+爆炸+余烬)",
+    "autoShow": "自动表演开关(boolean)",
+    "enabled": "全局时间线开关,true=运行,false=暂停冻结",
+    "buildingCount": "当前城市楼数(>=24)"
+  },
+  "uiControls": [
+    { "dataUi": "auto-show", "kind": "toggle", "label": "自动表演 开/关" },
+    { "dataUi": "pause", "kind": "toggle", "label": "暂停/恢复" },
+    { "dataUi": "reset", "kind": "button", "label": "重置" }
+  ],
+  "actionNotation": "click:{x,y} 为归一化视口坐标(左上原点);click:ui=<data-ui值> 表示点击 document.querySelector('[data-ui=\"<值>\"]') 元素中心;wheel:{dy} 负值=向上滚。",
+  "forbiddenShortcuts": [
+    "不得用预渲染视频、帧序列、GIF 或任何逐帧回放素材冒充动态烟花",
+    "烟花粒子必须经 WebGL 渲染管线绘制,不得用 DOM 元素/CSS 动画冒充粒子系统",
+    "不得只播放固定脚本动画而不响应点击位置(点击必须真实决定爆点)",
+    "不得在 __bench.getState() 中伪造计数(报数而不真正生成/更新粒子视为作弊)",
+    "不得以静态截图、纯色画面或空场景通过任何探针",
+    "不得引入外部图片/视频/音频资产(assets 契约为空)",
+    "不得对 harness/validator 做针对性特判(如检测自动化环境时改变行为)"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:2500",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true" },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": "bottom-third",
+          "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)"
+        }
+      },
+      "threshold": "bottom-third 暖色(暖橙/暖黄)像素计数 >= 80;剪影区域平均亮度显著低于天空地平线带",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "__appReady",
+      "action": "click:{x:0.5,y:0.30}",
+      "waitMs": 500,
+      "stateAssertion": { "jq": "$.fireworkCount == 1 && $.particlesAlive >= 1" },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "mid-vertical-band(点击列 x∈[0.4,0.6])", "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)" }
+      },
+      "threshold": "点击后 500ms 内 fireworkCount 恰好 +1;尾迹带两帧差分非零像素 >= 冻结阈值",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2",
+      "action": "wait:1200",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.particlesAlive >= 40" },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "upper-half", "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)" }
+      },
+      "threshold": "爆点邻域(以 y≈0.30 为中心、半径 20% 画面高)亮像素数较 P2 时刻 >= 3x",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3",
+      "action": "wait:2600",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.particlesAlive >= 1 && $.particlesAlive < 40" },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "upper-half", "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)" }
+      },
+      "threshold": "particlesAlive 相比 P3 峰值单调下降;爆炸粒子寿命 1.2-2.8s 衰减、余烬寿命 3-7s 仍存活",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4",
+      "action": "click:ui=auto-show",
+      "waitMs": 4000,
+      "stateAssertion": { "jq": "$.autoShow == true && $.fireworkCount >= 4" },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "upper-half", "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)" }
+      },
+      "threshold": "自动发射间隔 0.5-1.5s;4s 窗口内 fireworkCount 增量 >= 3",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5",
+      "action": "click:ui=auto-show",
+      "waitMs": 2500,
+      "stateAssertion": { "jq": "$.autoShow == false" },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "upper-half", "expect": "无新爆炸脉冲(既有粒子仅自然衰减)" }
+      },
+      "threshold": "P6 内两次间隔 >=2s 的 fireworkCount 采样差 == 0(自动发射已停止;等待结束后存活粒子应趋近 0)",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P7",
+      "precondition": "P6",
+      "action": "click:ui=pause",
+      "waitMs": 300,
+      "stateAssertion": { "jq": "$.enabled == false" },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "full", "expect": "全画面冻结:间隔 1000ms 的两帧像素差近似为 0(窗灯/障碍灯等一切动态均停止)" }
+      },
+      "threshold": "两帧差分非零像素比例 < 冻结阈值(<=0.5% 视口像素)",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P8",
+      "precondition": "P7",
+      "action": "click:ui=reset",
+      "waitMs": 600,
+      "stateAssertion": { "jq": "$.fireworkCount == 0 && $.particlesAlive == 0 && $.autoShow == false && $.enabled == true && $.buildingCount >= 24" },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "full", "expect": "回到无烟花的初始夜景(城市剪影仍在,夜空无爆发亮团)" }
+      },
+      "threshold": "城市重新随机生成但楼数 >=24;上部区域亮像素数回落至 P2 前基线",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "[统一契约] npm run build 退出码 0;10s 内 window.__appReady===true;window.__bench={getState,reset} 可用;全程无未捕获异常",
+      "[P1] 夜空+城市剪影可见:>=24 栋程序化楼、>=80 暖色亮窗,地平线位于画面下方 25-38%",
+      "[P1] >=120 颗背景星点与夜空垂直渐变(初始画面完整,不依赖前置交互)",
+      "[P2] 点击夜空发射一发烟花:fireworkCount 恰好 +1,爆点高度对应点击位置(±5% 画面高)",
+      "[P2] 上升尾迹可见:0.6-1.6 s 升空段持续产生尾迹粒子(运动/像素证据)",
+      "[P3] 爆炸:每发 100-240 粒子球状扩散,峰值 particlesAlive >= 40",
+      "[P3/P4] 粒子受重力下坠且速度/亮度/尺寸衰减:爆发后 particlesAlive 单调下降",
+      "[P4] 余烬:每发 >=12 个寿命 3-7 s 的长寿命粒子,缓慢下坠并闪烁,爆发后 ~2.6 s 仍存活",
+      "[P5] 自动表演:开启后以 0.5-1.5 s 随机间隔自动发射,fireworkCount 持续增长",
+      "[P6] 关闭自动表演后 fireworkCount 冻结(手动点击发射仍可用)",
+      "[P7] 暂停:enabled=false 冻结全部动态(两帧像素差≈0),恢复后从冻结处继续",
+      "[P8] reset:fireworkCount=0、particlesAlive=0、autoShow=false、enabled=true,城市重新随机生成且楼数 >=24"
+    ]
+  }
+}

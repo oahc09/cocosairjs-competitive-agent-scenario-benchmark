@@ -1,0 +1,179 @@
+{
+  "briefId": "E07",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T00:00:00Z",
+  "briefSha256": "computed-by-harness",
+  "title": "霓虹夜城 (Neon Night City)",
+  "goal": "实例化楼群 + 发光窗阵 + 车流 + 雨 + 距离雾的霓虹夜景,规模与氛围并重,帧率不低于 30fps。",
+  "domains": [
+    "Instancing",
+    "Emission",
+    "Animation",
+    "Atmosphere",
+    "Scale"
+  ],
+  "assets": [],
+  "stateContract": {
+    "buildingCount": "integer,楼群数量,恒 >= 200",
+    "carCount": "integer,车辆数量,恒 >= 60",
+    "rainParticleCount": "integer,雨粒子数量,恒 >= 1500",
+    "fogEnabled": "boolean,雾开关,初始 true",
+    "fps": "number,最近 60 帧平均帧率,必须来自真实测量"
+  },
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "notes": "楼 >=200(建议 220-260),车 >=60(建议 64-96),雨粒子 >=1500(建议 1800-2500),窗点总数 >=2000;楼/窗/车/雨必须批量提交绘制;评测即满规模,禁止缩规模跑分。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "forbiddenShortcuts": [
+    "禁止预渲染视频/序列帧/GIF/外部大图充当场景",
+    "禁止 DOM/CSS 2D 伪 3D 充当场景主体",
+    "禁止无窗格结构的大面积自发光色块冒充窗阵(窗格矩阵形状必须可辨识)",
+    "禁止 fps 字段返回常数或与实际帧率无关的值",
+    "禁止 getState 与画面脱钩",
+    "禁止探针期间临时提升规模",
+    "禁止 reset 通过页面刷新实现"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:2000",
+      "waitMs": 2000,
+      "stateAssertion": {
+        "jq": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "minCoverage": 0.35 }
+      },
+      "threshold": "画面非空且天际线轮廓可辨识",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1",
+      "action": "wait:1500",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.carCount >= 60"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": { "region": { "x": 0, "y": 0.62, "w": 1, "h": 0.38 }, "frameGapMs": 600 }
+      },
+      "threshold": "街道层在 600ms 间出现明显像素变化(车流移动)",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2",
+      "action": "wait:800",
+      "waitMs": 800,
+      "stateAssertion": {
+        "jq": "$.rainParticleCount >= 1500"
+      },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "frameGapMs": 100, "minChangedRatio": 0.02 }
+      },
+      "threshold": "相隔 100ms 两帧全屏出现细密像素差(雨下落),雨粒子计数稳定",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3",
+      "action": "wait:3000",
+      "waitMs": 3000,
+      "stateAssertion": {
+        "jq": "$.fps >= 30"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "spanMs": 1000 }
+      },
+      "threshold": "运行 8s 后 fps >= 30 且画面持续运动",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4",
+      "action": "click:ui=toggle-fog",
+      "waitMs": 800,
+      "stateAssertion": {
+        "jq": "$.fogEnabled == false && $.buildingCount >= 200"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 0.45 }, "frameGapMs": 400 }
+      },
+      "threshold": "关雾后上部天际线区域对比度/亮度发生变化",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5",
+      "action": "click:ui=toggle-fog",
+      "waitMs": 800,
+      "stateAssertion": {
+        "jq": "$.fogEnabled == true"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 0.45 }, "frameGapMs": 400 }
+      },
+      "threshold": "开雾后上部天际线区域再次变化(雾衰减恢复)",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P7",
+      "precondition": "P6",
+      "action": "click:ui=reset",
+      "waitMs": 2000,
+      "stateAssertion": {
+        "jq": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fogEnabled == true"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "minCoverage": 0.35 }
+      },
+      "threshold": "reset 后城市完整重建,状态恢复初始",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P8",
+      "precondition": "P7",
+      "action": "wait:1500",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.buildingCount >= 200 && $.carCount >= 60 && $.rainParticleCount >= 1500 && $.fps >= 30"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": { "x": 0, "y": 0.62, "w": 1, "h": 0.38 }, "spanMs": 800 }
+      },
+      "threshold": "reset 后车流/雨动画仍在运行,帧率达标,无未捕获异常",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "楼群数量 >=200 且以实例化/批量方式呈现,与 buildingCount 一致",
+      "每栋楼有发光窗阵,窗点全场景 >=2000,窗格矩阵结构可辨识",
+      "车流 >=60 辆沿街道持续移动,形成发光点流,与 carCount 一致",
+      "雨粒子 >=1500 持续下落,有速度感,与 rainParticleCount 一致",
+      "距离雾使远处楼群明显衰减、近处清晰,纵深可辨",
+      "霓虹氛围成立:至少 3 种高饱和色相的霓虹元素(招牌/灯带)",
+      "雾开关点击后 fogEnabled 翻转且画面上部区域立即变化",
+      "fps 来自真实测量,满规模运行 >=30",
+      "reset 后计数与开关恢复初始,城市完整重建",
+      "低角度天际线构图,画面层次分明,无明显渲染破损"
+    ]
+  }
+}

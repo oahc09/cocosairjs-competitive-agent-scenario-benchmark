@@ -1,0 +1,170 @@
+{
+  "runId": "RUN-E10-K0-R01-a",
+  "generatedAt": "2026-10-02T14:12:57.746Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\PAIR-E10-K0-R01\\arm-a\\workspace",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E10\\spec.json",
+    "briefId": "E10",
+    "briefVersion": "1.0.1",
+    "sha256": "63b74e45865e1ae76295dd0331a9c1858e90816dbb4dd6a45a4c1db4f7592496"
+  },
+  "pairId": null,
+  "engine": null,
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 583,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  15.5kb\n\nDone in 10ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 582ms\n"
+  },
+  "serve": {
+    "port": 64297,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\PAIR-E10-K0-R01\\arm-a\\workspace"
+  },
+  "ready": {
+    "appReady": true,
+    "benchReady": true,
+    "durationMs": 1123
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [
+    {
+      "probeId": "P1",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P2",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P3",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P4",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P5",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P6",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P7",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    }
+  ],
+  "probeResults": "probe-results.json",
+  "probePassRate": 1,
+  "fps": 60.2,
+  "perf": {
+    "fps": 60.2,
+    "frames": 181,
+    "sampleMs": 3005,
+    "sampledAt": "2026-10-02T14:13:28.498Z",
+    "minFpsSpec": 30,
+    "fpsMet": true
+  },
+  "downloads": [],
+  "networkEvents": {
+    "count": 5,
+    "totalBytes": 6604476
+  },
+  "screenshots": [
+    "initial.png",
+    "mid.png",
+    "final.png",
+    "extra-1.png",
+    "extra-2.png",
+    "P1-before.png",
+    "P1-vis.png",
+    "P1-after.png",
+    "P2-before.png",
+    "P2-motion-a.png",
+    "P2-motion-b.png",
+    "P2-after.png",
+    "P3-before.png",
+    "P3-region-a.png",
+    "P3-region-b.png",
+    "P3-after.png",
+    "P4-before.png",
+    "P4-region-a.png",
+    "P4-region-b.png",
+    "P4-after.png",
+    "P4-delta.png",
+    "P5-before.png",
+    "P5-motion-a.png",
+    "P5-motion-b.png",
+    "P5-after.png",
+    "P6-before.png",
+    "P6-vis.png",
+    "P6-after.png",
+    "P7-before.png",
+    "P7-motion-a.png",
+    "P7-motion-b.png",
+    "P7-after.png"
+  ],
+  "video": "video.webm",
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "probe-results.json",
+    "console.json",
+    "video.webm",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "PASS",
+  "failureCategory": null,
+  "verdict": "PASS",
+  "error": null,
+  "scoreInputs": {
+    "s1": {
+      "buildPass": true,
+      "readyNoError": true,
+      "firstShotNonBlank": true,
+      "firstShotLitRatio": 0.5758
+    },
+    "s2": {
+      "passedWeight": 7,
+      "totalWeight": 7,
+      "probePassRate": 1,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": true,
+      "lifecycleProbeId": "P6",
+      "fpsMet": true,
+      "minFps": 30
+    }
+  },
+  "durationMs": 31770,
+  "finishedAt": "2026-10-02T14:13:29.515Z"
+}

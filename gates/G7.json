@@ -1,0 +1,20 @@
+{
+  "gate": "G7 BLIND_JUDGE_VALIDITY",
+  "status": "BLOCKED",
+  "validatedAt": "2026-10-02T15:14:22.676Z",
+  "rounds": [
+    {
+      "round": 1,
+      "verdict": "INVALIDATED",
+      "cause": "视觉后端幻觉(如 E10 狐狸被描述为星系/像素岛、E09 宝石被描述为水母);两 Judge 独立上报"
+    },
+    {
+      "round": 2,
+      "verdict": "CALIBRATED-EXECUTED",
+      "protocol": "场景主题锚定 + 一致性验证重试(0 unreliable)",
+      "preferenceAgreement": "0/4",
+      "scoreDeltas": "六维总分两 Judge 差 ≤5/18"
+    }
+  ],
+  "consequence": "偏好口径(Preference Win Rate / BT)不进入实验结论;六维分数口径(双 Judge 平均)仅作 visual 分参考并披露。全量 D 轨需重建可靠视觉评判基建后按 §18 重跑。"
+}

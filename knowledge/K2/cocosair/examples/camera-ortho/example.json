@@ -1,0 +1,318 @@
+{
+  "id": "camera-ortho",
+  "version": "1.0.0",
+  "title": "Ortho Camera",
+  "category": "camera",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握 PERSPECTIVE/ORTHO 投影切换与 orthoHeight 正交取景高度",
+    "points": [
+      "Camera.ProjectionType 两种投影",
+      "orthoHeight 与 fov 的对应关系（正交无近大远小）",
+      "同一场景在两种投影下的观感差异"
+    ]
+  },
+  "effect": {
+    "functional": "camera.projection 初始 PERSPECTIVE，点击后在 ORTHO（orthoHeight=2.2）间切换；__projection 记录当前模式；场景含三个深度排列的方块。",
+    "visual": "透视模式下三个方块近大远小；切到正交后三者等大、仅被相互遮挡，画面顶部状态文字同步"
+  },
+  "api": {
+    "primary": ["Camera"],
+    "supporting": ["input", "Input"],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "input",
+      "Input",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": ["用拉远相机模拟正交（透视不会因此变成等大）"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L64"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L55"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L80"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L65"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L54"
+      }
+    ]
+  },
+  "capabilities": ["camera"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Main Light", "DepthCube-0", "DepthCube-1", "DepthCube-2"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）一次",
+        "expected": "projection 切为 ORTHO：三个方块变为等大呈现，__projection === \"ORTHO\"，画面像素分布变化（frame-diff 可测）"
+      },
+      {
+        "action": "再点击一次",
+        "expected": "切回 PERSPECTIVE，恢复近大远小"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [0, 2.2, 6.5],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 39,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.2, 6.5));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 53,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      },
+      "DepthCube-0": {
+        "position": [0, 0.5, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 63,
+            "text": "cube.setPosition(new Vec3(0, 0.5, 0));"
+          }
+        ]
+      },
+      "DepthCube-1": {
+        "position": [0, 0.5, -2],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 63,
+            "text": "cube.setPosition(new Vec3(0, 0.5, -2));"
+          }
+        ]
+      },
+      "DepthCube-2": {
+        "position": [0, 0.5, -4],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 63,
+            "text": "cube.setPosition(new Vec3(0, 0.5, -4));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "DepthCube-0": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [95, 205, 120, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 66,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      },
+      "DepthCube-1": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [95, 205, 120, 215],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 66,
+              "text": "new Color(95, 205, 120, 215)"
+            }
+          }
+        }
+      },
+      "DepthCube-2": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [95, 205, 120, 175],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 66,
+              "text": "new Color(95, 205, 120, 175)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lo）",
+        "line": "L39"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "91aa75cbfdff",
+    "source": "376aa633d7649377",
+    "candidate": "0b9588dc80fd7afd",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
+}

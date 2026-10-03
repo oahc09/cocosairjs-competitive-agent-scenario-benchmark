@@ -1,0 +1,33 @@
+{
+  "gate": "G1 TEMPLATE_EQUIVALENCE",
+  "status": "PASS",
+  "validatedAt": "2026-10-02T09:05:00Z",
+  "criteria": [
+    "两模板 npm run build 退出码 0 且产物结构一致(app.js+dist/vendor 引擎)",
+    "相同页面契约:__appReady / __bench={getState,reset} / data-ui=reset 控件 / resetCount 状态",
+    "同一 smoke-spec 4 探针全部 PASS",
+    "fresh install 离线可用(k0 tarball / registry lockfile),整目录拷贝后独立 build+serve 通过",
+    "无网络资源依赖;引擎未打进 bundle"
+  ],
+  "evidence": {
+    "three": {
+      "report": "gates/artifacts/G1-three/report.json",
+      "verdict": "PASS",
+      "probes": "4/4",
+      "fps": 60.1,
+      "engineFile": "dist/vendor/three.module.js (662,772 B) + three.core.js + addons/",
+      "verifyLog": "templates/three/template-verify.txt"
+    },
+    "cocosair": {
+      "report": "gates/artifacts/G1-cocosair/report.json",
+      "verdict": "PASS",
+      "probes": "4/4",
+      "fps": 60.3,
+      "engineFile": "dist/vendor/cocosair.module.js (6,422,525 B) + gltf-decoders/",
+      "verifyLog": "templates/cocosair/template-verify.txt",
+      "k0Purity": "node_modules/cocosair.js 无 docs 目录(K0 冷启动成立)"
+    }
+  },
+  "equivalenceNotes": "双模板以相同 DOM/UI/data-ui 约定、相同 __bench 语义、相同 smoke 行为(旋转立方体+帧计数+reset)通过同一验证合同;两引擎浏览器启动参数一致(system Chrome, headless, 1280x720, 无需 swiftshader)。",
+  "fixesApplied": "模板补齐 data-ui=reset 控件与 resetCount 状态后复验通过(修复前后证据均在 gates/artifacts/G1-*)。"
+}

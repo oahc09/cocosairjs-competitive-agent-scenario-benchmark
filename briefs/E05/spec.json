@@ -1,0 +1,148 @@
+{
+  "briefId": "E05",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T16:30:00+08:00",
+  "title": "黑洞吸积盘(Black Hole Accretion Disk)",
+  "goal": "居中构图的黑洞场景:黑色事件视界圆盘、内白外橙红的发光吸积盘、连续旋转条纹、>=200 星流粒子螺旋汇入、辉光观感(实现路径不限)、>=300 背景星;相机滚轮平滑缩放。专门探测 Shader 自由度/混合/后处理与辉光替代手段/视觉上限。",
+  "domains": [
+    "Shader",
+    "Blend",
+    "Postprocess",
+    "VisualCeiling"
+  ],
+  "assets": [],
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "notes": "背景星>=300、星流粒子>=200(恒定循环重生);盘面曲率平滑无肉眼可见折边;默认视角+星流运行常态 >=30fps;动画按真实时间步进。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "stateChannel": {
+    "diskRotation": "吸积盘累计旋转弧度(自上次 reset 起,单调递增,角速度 0.15-0.6 rad/s)",
+    "accretionPhase": "条纹图案归一化相位 [0,1),每周 +1 回绕",
+    "cameraDistance": "相机与黑洞中心距离(场景单位,初始 14.0,范围 [5,28])",
+    "starStreamCount": "星流粒子数(>=200,恒定)",
+    "backgroundStarCount": "背景星点数(>=300,恒定)"
+  },
+  "uiControls": [
+    { "dataUi": "reset", "kind": "button", "label": "重置" }
+  ],
+  "actionNotation": "click:{x,y} 为归一化视口坐标(左上原点);click:ui=<data-ui值> 表示点击 document.querySelector('[data-ui=\"<值>\"]') 元素中心;wheel:{dy} 负值=向上滚=靠近放大。",
+  "forbiddenShortcuts": [
+    "不得用预渲染视频、帧序列、GIF、贴图序列或任何逐帧回放素材冒充动态效果(头号禁项)",
+    "不得用一张静态图片叠加无关动画冒充盘旋转;盘面旋转必须是时间参数驱动的连续动态",
+    "不得在 __bench.getState() 中伪造状态(如 diskRotation 只累加计数而画面静止,视为作弊)",
+    "不得引入外部图片/视频资产(assets 契约为空)",
+    "不得以静态截图、纯黑画面或空场景通过任何探针",
+    "不得对 harness/validator 做针对性特判(如检测自动化环境时改变行为)"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:2500",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.backgroundStarCount >= 300 && $.starStreamCount >= 200 && $.cameraDistance >= 13 && $.cameraDistance <= 15 && $.diskRotation > 0" },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "regions": ["center-third", "outer-corners"],
+          "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围"
+        }
+      },
+      "threshold": "center-third 非黑像素比例 >= 5%;outer-corners 非黑像素比例 >= 1%;中心存在连续暗核区域",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1",
+      "action": "wait:800",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.diskRotation > 0.05" },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "disk(盘面覆盖的环形屏幕区域)", "expect": "两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进" }
+      },
+      "threshold": "两次间隔 800ms 的 diskRotation 采样差 >= 0.1 rad(角速度 0.15-0.6 rad/s ⇒ 0.12-0.48 rad);盘面区域两帧差分非零像素 >= 冻结阈值",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2",
+      "action": "wait:1000",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.accretionPhase >= 0 && $.accretionPhase < 1" },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "ring": "inner-ring vs outer-ring(以屏幕中心为圆心的两个环带采样)",
+          "expect": "内环带平均亮度更高且偏白/蓝白(R≈G≈B,R-B 差小);外环带偏橙红(R>G>B,R-B 差显著);亮部向环外有柔和亮度衰减(辉光观感)"
+        }
+      },
+      "threshold": "内环带平均亮度 >= 外环带 1.5x;外环带 (R-B) 平均差 >= 内环带 (R-B) 平均差 + 冻结阈值;内环带向外亮度单调衰减无硬边",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3",
+      "action": "wheel:{dy:-600}",
+      "waitMs": 1200,
+      "stateAssertion": { "jq": "$.cameraDistance < 10 && $.cameraDistance >= 5" },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "metric": "黑洞暗核半径与盘外缘的屏幕像素半径",
+          "expect": "较缩放前构图变化:暗核与盘占屏比增大(暗核半径像素 >= 1.25x 或盘外缘半径像素 >= 1.2x)"
+        }
+      },
+      "threshold": "缩放平滑插值在 1s 内基本到位(残差 < 10% 目标值);cameraDistance 始终处于 [5,28]",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4",
+      "action": "wait:1000",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.starStreamCount >= 200" },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "mid-ring(内缘与外缘之间的盘周区域)", "expect": "星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)" }
+      },
+      "threshold": "星流区域两帧差分非零像素 >= 冻结阈值;starStreamCount 恒定(吞噬后重生)",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5",
+      "action": "click:ui=reset",
+      "waitMs": 400,
+      "stateAssertion": { "jq": "$.cameraDistance >= 13.5 && $.cameraDistance <= 14.5 && $.diskRotation < 0.3 && $.accretionPhase < 0.1 && $.starStreamCount >= 200" },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": "full", "expect": "黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)" }
+      },
+      "threshold": "reset 后相机距离回到 14.0±0.5;旋转相位归零(考虑 waitMs 内重新累计,上限 0.3 rad);画面非空",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "[统一契约] npm run build 退出码 0;10s 内 window.__appReady===true;window.__bench={getState,reset} 可用;全程无未捕获异常",
+      "[P1] 初始画面非空:中心 1/3 区域与四角外围均存在非黑像素(盘内缘亮环/星流与背景星同时可见)",
+      "[P1/P5] 背景星空 >=300 静态星点;星流 >=200 粒子沿螺旋轨迹流向黑洞,视界处吞噬并在外圈重生(总数恒定)",
+      "[P1] 黑洞核心:画面中心存在纯黑(近黑)暗核,被亮环包围,径向亮度呈中心暗-内环亮-外缘暗分布",
+      "[P3] 吸积盘径向颜色梯度:内缘白/蓝白 → 中带黄橙 → 外缘暗红(环形采样色相证据)",
+      "[P2] 旋转条纹:盘面明暗相间条纹以 0.15-0.6 rad/s 连续旋转;diskRotation 单调递增、accretionPhase 循环推进,且与画面运动一致",
+      "[P2/整体] 辉光观感:亮部(盘内缘/热点)向周围柔光扩散、过渡平滑无硬边;实现路径不限,不作为扣分依据",
+      "[P4] 滚轮缩放:cameraDistance 在 [5,28] 平滑变化,构图(暗核/盘占屏比)随距离单调变化",
+      "[加分] 多普勒不对称(盘一侧亮于另一侧)和/或引力透镜观感(盘后缘上弯包绕核心)",
+      "[整体] 视觉稳定性:画面无闪烁、抖动、撕裂;黑洞主体居中,曝光舒适(亮部不成片死白、暗部不糊黑)",
+      "[P6] reset:cameraDistance 回 14±0.5、diskRotation/accretionPhase 归零、星流复位,画面保持完整"
+    ]
+  }
+}

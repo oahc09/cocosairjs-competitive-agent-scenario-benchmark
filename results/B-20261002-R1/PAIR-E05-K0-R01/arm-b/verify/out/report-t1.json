@@ -1,0 +1,112 @@
+{
+  "tag": "t1",
+  "url": "http://127.0.0.1:7105/",
+  "probes": {
+    "P1": {
+      "st": {
+        "engine": "cocosair",
+        "diskRotation": 1.081024000000954,
+        "accretionPhase": 0.17205031320112493,
+        "cameraDistance": 14,
+        "starStreamCount": 240,
+        "backgroundStarCount": 520,
+        "ready": true,
+        "frame": 198,
+        "resetCount": 0
+      },
+      "center": {
+        "nonBlack": 0.8889,
+        "avg": [
+          146.2,
+          97.7,
+          71.9
+        ],
+        "maxL": 255,
+        "n": 206991
+      },
+      "corners": {
+        "nonBlack": 0.1094,
+        "minNonBlack": 0
+      },
+      "coreBox": {
+        "nonBlack": 0,
+        "avg": [
+          0,
+          0,
+          0
+        ],
+        "maxL": 0,
+        "n": 1600
+      }
+    },
+    "P2": {
+      "rotDelta": 0.2601,
+      "frameDiff": {
+        "nonzero": 0.3309,
+        "meanDiff": 9.21
+      },
+      "pxPerUnit": 84.7
+    },
+    "P3": {
+      "phase": 0.22617827272751326,
+      "inner": {
+        "nonBlack": 1,
+        "R": 155.1,
+        "G": 94,
+        "B": 65.1
+      },
+      "outer": {
+        "nonBlack": 0.8851,
+        "R": 24.9,
+        "G": 10.4,
+        "B": 9
+      },
+      "lumRatio": 7.48,
+      "rbOuterMinusInner": -74.1,
+      "pxPerUnit": 84.7
+    },
+    "P4": {
+      "pre": {
+        "coreR": 99
+      },
+      "post": {
+        "st": {
+          "cameraDistance": 6.800071549647833,
+          "diskRotation": 1.954
+        },
+        "coreR": 204,
+        "diskOuterPx": 1133
+      },
+      "coreRatio": 2.06
+    },
+    "P5": {
+      "starStreamCount": 240,
+      "frameDiff": {
+        "nonzero": 0.6662,
+        "meanDiff": 19.75
+      }
+    },
+    "P6": {
+      "st": {
+        "engine": "cocosair",
+        "diskRotation": 0.18662399999618534,
+        "accretionPhase": 0.029702132098974755,
+        "cameraDistance": 14,
+        "starStreamCount": 240,
+        "backgroundStarCount": 520,
+        "ready": true,
+        "frame": 461,
+        "resetCount": 1
+      },
+      "fullNonBlack": 0.6172
+    }
+  },
+  "consoleErrors": [],
+  "readyInMs": 1515,
+  "ready": true,
+  "canvasSize": [
+    1898,
+    982
+  ],
+  "pageUncaught": []
+}

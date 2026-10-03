@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CocosAirJS Benchmark — 报告门户</title>
+<style>
+:root{--bg:#0b0e14;--bg2:#10141d;--panel:#151b26;--panel2:#1a2230;--line:#232d3f;--txt:#e6ebf2;--dim:#8b96a8;--faint:#5a6474;--three:#4f8cff;--air:#ff9d4f;--good:#3ecf8e;--bad:#ff6b6b;--gold:#ffd166}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{font:14px/1.55 "Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--txt);display:flex;flex-direction:column;overflow:hidden}
+header{display:flex;align-items:center;gap:14px;padding:10px 18px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#121722,#0b0e14)}
+header h1{font-size:16.5px;font-weight:650}header h1 em{font-style:normal;color:var(--three)}header h1 b{color:var(--air)}
+header .sub{color:var(--dim);font-size:12px}
+nav{display:flex;gap:4px;margin-left:auto}
+nav button{background:none;border:1px solid transparent;border-radius:8px;color:var(--dim);font:600 12.5px inherit;padding:6px 14px;cursor:pointer}
+nav button.active{background:var(--panel2);color:var(--txt);border-color:#33415c}
+nav button:hover{color:var(--txt)}
+main{flex:1;overflow-y:auto;padding:16px 20px 30px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+h2{font-size:16px;margin:4px 0 12px;color:#fff}
+.grid{display:grid;gap:12px}
+.g4{grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
+.kpi{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 15px}
+.kpi .v{font-size:22px;font-weight:800;margin:2px 0}.kpi .l{color:var(--faint);font-size:11.5px}.kpi .n{color:var(--dim);font-size:11.5px}
+.chip{display:inline-block;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;margin:2px 3px 2px 0;cursor:pointer;text-decoration:none}
+.c-good{background:rgba(62,207,142,.13);color:var(--good)}.c-bad{background:rgba(255,107,107,.13);color:var(--bad)}
+.c-warn{background:rgba(255,209,102,.13);color:var(--gold)}.c-dim{background:rgba(139,150,168,.12);color:var(--dim)}
+.c-three{background:rgba(79,140,255,.14);color:var(--three)}.c-air{background:rgba(255,157,79,.14);color:var(--air)}
+.btn{background:#0d1420;color:var(--dim);border:1px solid var(--line);border-radius:7px;font:600 11.5px inherit;padding:4px 11px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{color:var(--txt);border-color:#3a4a66}
+select{background:#0d1420;color:var(--txt);border:1px solid var(--line);border-radius:7px;font:inherit;padding:5px 9px}
+table{border-collapse:collapse;width:100%;margin:8px 0}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;font-size:12.5px}th{background:var(--panel2)}
+.dual{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.side{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.side .hd{display:flex;align-items:center;gap:9px;padding:8px 12px;border-bottom:1px solid var(--line);background:var(--panel2);font-size:13px;font-weight:700}
+.side .fr{height:430px;background:#000}.side .fr iframe{width:100%;height:100%;border:0;display:block}
+.side .ft{padding:8px 12px;font-size:12px;color:var(--dim);border-top:1px solid var(--line)}
+.paircard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 15px;margin-bottom:12px}
+.paircard .t{display:flex;align-items:center;gap:10px;margin-bottom:8px}.paircard .t b{font-size:14.5px}
+.armrow{display:grid;grid-template-columns:110px 90px 1fr;gap:10px;align-items:center;padding:7px 10px;background:var(--bg2);border-radius:9px;margin:5px 0;font-size:12.5px}
+.muted{color:var(--faint);font-size:11.5px}
+.tab{display:none}.tab.active{display:block}
+.reportlist a{display:block;padding:9px 13px;background:var(--panel);border:1px solid var(--line);border-radius:9px;margin-bottom:7px;color:var(--txt);text-decoration:none;font-size:13px}
+.reportlist a:hover{border-color:#3a4a66}.reportlist a small{color:var(--faint);margin-left:8px}
+.gategrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px}
+.gcard{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:12px 14px;cursor:pointer}
+.gcard:hover{border-color:#3a4a66}.gcard .g{font-weight:700;font-size:13px}.gcard .s{font-weight:800;font-size:12px;margin-top:3px}
+</style>
+</head>
+<body>
+<header>
+  <h1><em>three.js r186</em> × <b>Cocos AIR</b> — Benchmark 报告门户</h1>
+  <span class="sub" id="meta">加载中…</span>
+  <nav>
+    <button data-tab="overview" class="active">总览</button>
+    <button data-tab="compare">场景对比(运行)</button>
+    <button data-tab="runs">批次与 Runs</button>
+    <button data-tab="reports">报告中心</button>
+    <button data-tab="gates">门禁</button>
+  </nav>
+</header>
+<main>
+<div class="tab" id="tab-overview">
+  <div class="grid g4" id="kpis"></div>
+  <h2 style="margin-top:18px">硬 Gate(§28)</h2>
+  <div id="gatechips"></div>
+  <h2 style="margin-top:18px">分组统计(scene × knowledge)</h2>
+  <div class="card" id="grouptable"></div>
+</div>
+
+<div class="tab" id="tab-compare">
+  <div class="card" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+    <b>来源:</b>
+    <select id="src-mode"><option value="ref">Reference(引擎上限)</option></select>
+    <select id="src-item"></select>
+    <button class="btn" id="cmp-reload">重载两侧</button>
+    <span class="muted">iframe 内可直接交互(拖拽/滚轮/按钮);Reference 为可信上限实现,Run 为 Agent 实际产物</span>
+  </div>
+  <div class="dual">
+    <div class="side"><div class="hd"><span style="color:var(--three)">three.js r186</span><span class="chip c-dim" id="c-t-score">–</span><span style="margin-left:auto"><a class="btn" id="c-t-open" target="_blank">独立窗口 ↗</a></span></div><div class="fr"><iframe id="c-t-frame"></iframe></div><div class="ft" id="c-t-info"></div></div>
+    <div class="side"><div class="hd"><span style="color:var(--air)">Cocos AIR</span><span class="chip c-dim" id="c-a-score">–</span><span style="margin-left:auto"><a class="btn" id="c-a-open" target="_blank">独立窗口 ↗</a></span></div><div class="fr"><iframe id="c-a-frame"></iframe></div><div class="ft" id="c-a-info"></div></div>
+  </div>
+</div>
+
+<div class="tab" id="tab-runs"><div id="runs-list"></div></div>
+
+<div class="tab" id="tab-reports"><div class="reportlist" id="report-list"></div></div>
+
+<div class="tab" id="tab-gates"><div class="gategrid" id="gate-grid"></div></div>
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let OV = null;
+const fmtArm = (a) => a ? `${a.total ?? '–'}/100${a.visualPending ? '(视觉待评,客观' + a.objectiveOnly + ')' : ''} · 探针${a.passRate ?? '–'} · ${a.fps ?? '–'}fps · 视觉${a.visual18 ?? '–'}/18` : '–';
+
+// ---- tabs ----
+document.querySelectorAll('nav button').forEach(b => b.addEventListener('click', () => {
+  document.querySelectorAll('nav button').forEach(x => x.classList.toggle('active', x === b));
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.id === 'tab-' + b.dataset.tab));
+}));
+
+function statusClass(s) { return s === 'PASS' ? 'c-good' : (s === 'NOT-RUN' || s === 'BLOCKED' ? 'c-bad' : 'c-warn'); }
+
+function renderOverview() {
+  const h = OV.headline;
+  $('kpis').innerHTML = `
+    <div class="kpi"><div class="l">Capability Availability(Track A)</div><div class="v">Three ${h.capabilityAvailability?.three ?? '–'} · AIR ${h.capabilityAvailability?.air ?? '–'}</div><div class="n">Reference 全 FEASIBLE(探针全绿/60fps)</div></div>
+    <div class="kpi"><div class="l">已完成 Batches / Pairs</div><div class="v">${h.batches} / ${h.pairs}</div><div class="n">批次 = 触发日期+当日轮次,支持单日多轮</div></div>
+    <div class="kpi"><div class="l">K0 成本比(AIR/Three)</div><div class="v">${h.costRatios ? h.costRatios.toolRatio + '× / ' + h.costRatios.tokenRatio + '×' : '–'}</div><div class="n">工具 / token(派发侧客观口径)</div></div>
+    <div class="kpi"><div class="l">知识增益(KnowledgeGain)</div><div class="v">${OV.knowledgeGain.length ? OV.knowledgeGain.length + ' 组' : '待 K1/K2'}</div><div class="n">出现 K1/K2 批次后自动计算</div></div>`;
+  $('gatechips').innerHTML = OV.gates.map(g => `<a class="chip ${statusClass(g.status)}" href="${g.file}" target="_blank">${g.id} ${g.status}</a>`).join('');
+  const rows = (h.groups || []).map(g => `<tr><td>${g.scene} · ${g.knowledge}</td><td>${g.n}</td><td>${g.rawDelta.median ?? '–'}</td><td>${g.rawDelta.iqr ?? '–'}</td><td>${JSON.stringify(g.rawDelta.bootstrapCi95) ?? '–'}</td><td>${g.winTieLoss.air}/${g.winTieLoss.tie}/${g.winTieLoss.three}</td><td>${g.attainmentMedian.three ?? '–'} / ${g.attainmentMedian.air ?? '–'}</td></tr>`).join('');
+  $('grouptable').innerHTML = `<table><thead><tr><th>组</th><th>N</th><th>Δ中位(AIR−3)</th><th>IQR</th><th>bootstrap CI95</th><th>W/T/L</th><th>Attainment 中位(3/AIR)</th></tr></thead><tbody>${rows || '<tr><td colspan=7 class=muted>暂无</td></tr>'}</tbody></table>`;
+}
+
+// ---- 场景对比 ----
+function armLetterOf(pair, engine) { const a = pair.arms[engine]; if (!a?.report) return null; const m = /arm-([ab])\//.exec(a.report); return m && 'arm-' + m[1]; }
+function fillCompare() {
+  const mode = $('src-mode').value, key = $('src-item').value;
+  let tUrl, aUrl, tScore, aScore, tInfo, aInfo;
+  if (mode === 'ref') {
+    const scene = key;
+    tUrl = `/ref/three/${scene}/index.html`; aUrl = `/ref/cocosair/${scene}/index.html`;
+    const ct = OV.referenceCeiling?.[scene + '/three'], ca = OV.referenceCeiling?.[scene + '/cocosair'];
+    tScore = ct?.total ?? '–'; aScore = ca?.total ?? '–';
+    tInfo = `Engine Ceiling:客观 60 + Judge 视觉 ${ct?.visual18 ?? '–'}/18`; aInfo = `Engine Ceiling:客观 60 + Judge 视觉 ${ca?.visual18 ?? '–'}/18`;
+  } else {
+    const [batchId, pairId] = key.split('::');
+    const pair = OV.batches.find(b => b.batchId === batchId)?.pairs.find(p => p.pairId === pairId);
+    if (!pair) return;
+    const ta = armLetterOf(pair, 'three'), aa = armLetterOf(pair, 'cocosair');
+    tUrl = `/run/${batchId}/${pairId}/${ta}/index.html`; aUrl = `/run/${batchId}/${pairId}/${aa}/index.html`;
+    tScore = pair.arms.three?.total ?? '–'; aScore = pair.arms.cocosair?.total ?? '–';
+    tInfo = `Agent Run:${fmtArm(pair.arms.three)}`; aInfo = `Agent Run:${fmtArm(pair.arms.cocosair)}`;
+  }
+  $('c-t-frame').src = tUrl; $('c-a-frame').src = aUrl;
+  $('c-t-score').textContent = (tScore ?? '–') + '/100'; $('c-a-score').textContent = (aScore ?? '–') + '/100';
+  $('c-t-info').textContent = tInfo; $('c-a-info').textContent = aInfo;
+  $('c-t-open').href = tUrl; $('c-a-open').href = aUrl;
+}
+function rebuildSrcItems() {
+  const mode = $('src-mode').value, sel = $('src-item');
+  if (mode === 'ref') {
+    sel.innerHTML = Array.from({ length: 10 }, (_, i) => 'E' + String(i + 1).padStart(2, '0')).map(s => `<option>${s}</option>`).join('');
+  } else {
+    const batchId = mode.startsWith('run:') ? mode.slice(4) : null;
+    const batches = batchId ? OV.batches.filter(b => b.batchId === batchId) : OV.batches;
+    sel.innerHTML = batches.flatMap(b => b.pairs.map(p => `<option value="${b.batchId}::${p.pairId}">${b.batchId} · ${p.pairId}</option>`)).join('');
+  }
+  fillCompare();
+}
+
+// ---- 批次与 Runs ----
+function renderRuns() {
+  $('runs-list').innerHTML = OV.batches.map(b => `
+    <h2>${b.batchId} <span class="muted">${b.pairs.length} pairs${b.note ? ' · ' + b.note : ''}</span></h2>
+    ${b.pairs.map(p => `
+      <div class="paircard">
+        <div class="t"><b>${p.pairId}</b><span class="chip c-dim">${p.scene} · ${p.knowledge} · ${p.rep}${p.pilot ? ' · pilot' : ''}</span>
+          ${p.paired?.incomplete ? '<span class="chip c-warn">数据不全</span>' : `<span class="chip ${Math.abs(p.paired.rawDeltaAirMinusThree) <= 3 ? 'c-dim' : (p.paired.rawDeltaAirMinusThree > 0 ? 'c-air' : 'c-three')}">Δ(AIR−3)=${p.paired.rawDeltaAirMinusThree} · ${p.paired.outcome}</span>`}
+        </div>
+        ${['three', 'cocosair'].map(e => {
+          const a = p.arms[e]; const arm = armLetterOf(p, e); const base = `/run-art/${b.batchId}/${p.pairId}/${arm}`;
+          return `<div class="armrow"><b style="color:var(--${e === 'three' ? 'three' : 'air'})">${e === 'three' ? 'three.js' : 'Cocos AIR'}</b>
+            <span class="chip ${a?.verdict === 'PASS' ? 'c-good' : 'c-bad'}">${a?.verdict ?? '–'}</span>
+            <span>${a?.reportMissing ? 'reportMissing' : fmtArm(a) + ` <a class="btn" href="/run/${b.batchId}/${p.pairId}/${arm}/index.html" target="_blank">▶ 运行</a> <a class="btn" href="${base}/screenshots/initial.png" target="_blank">截图</a> <a class="btn" href="${base}/video.webm" target="_blank">视频</a> <a class="btn" href="${base}/report.json" target="_blank">report</a>`}</span></div>`;
+        }).join('')}
+      </div>`).join('')}
+  `).join('') || '<p class="muted">暂无批次数据</p>';
+}
+
+function renderReports() {
+  $('report-list').innerHTML =
+    OV.reports.map(f => `<a href="/reports/${f}" target="_blank">📄 ${f}<small>${f.endsWith('.md') ? 'Markdown 报告' : 'JSON'}</small></a>`).join('')
+    + OV.dataFiles.map(f => `<a href="/data/${f}" target="_blank">🧮 results/${f}<small>聚合数据</small></a>`).join('');
+}
+function renderGates() {
+  $('gate-grid').innerHTML = OV.gates.map(g => `<div class="gcard" onclick="location='${g.file}'"><div class="g">${g.id} ${g.gate}</div><div class="s" style="color:${g.status === 'PASS' ? 'var(--good)' : 'var(--bad)'}">${g.status}</div></div>`).join('');
+}
+
+fetch('/api/overview.json').then(r => r.json()).then(d => {
+  OV = d;
+  $('meta').textContent = `聚合于 ${new Date(d.generatedAt).toLocaleString()} · 批次按 触发日期+当日轮次 唯一化`;
+  $('src-mode').innerHTML = '<option value="ref">Reference(引擎上限)</option>'
+    + OV.batches.map(b => `<option value="run:${b.batchId}">批次 ${b.batchId}(Agent Runs)</option>`).join('');
+  renderOverview(); rebuildSrcItems(); renderRuns(); renderReports(); renderGates();
+}).catch(e => { $('meta').textContent = '加载失败:' + e; });
+$('src-mode').addEventListener('change', rebuildSrcItems);
+$('src-item').addEventListener('change', fillCompare);
+$('cmp-reload').addEventListener('click', fillCompare);
+</script>
+</body>
+</html>

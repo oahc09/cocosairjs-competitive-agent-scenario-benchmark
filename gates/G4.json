@@ -1,0 +1,233 @@
+{
+  "gate": "G4 HARNESS_TRUST",
+  "status": "PASS",
+  "generatedAt": "2026-10-02T14:19:28.819Z",
+  "runnerAvailable": true,
+  "runner": "harness/runner/validate.mjs",
+  "cases": [
+    {
+      "id": "NC01",
+      "name": "empty-renderer",
+      "method": "runner/validate.mjs (specs: E01; primary=E01)",
+      "expected": "FAIL",
+      "detected": true,
+      "caughtBy": "P1 visualAssertion(nonBlank,亮像素<2%)——状态全对但 canvas 全黑",
+      "caughtByActual": "P1",
+      "status": "DETECTED",
+      "runs": [
+        {
+          "spec": "E01",
+          "exitCode": 1,
+          "verdict": "FAIL",
+          "failish": true,
+          "failedProbes": [
+            "P1"
+          ],
+          "ready": {
+            "appReady": true,
+            "benchReady": true,
+            "durationMs": 310
+          },
+          "report": "results\\nc\\NC01-E01\\report.json",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC01-E01\\report.json\n",
+          "stderrTail": ""
+        }
+      ]
+    },
+    {
+      "id": "NC02",
+      "name": "frozen-animation",
+      "method": "runner/validate.mjs (specs: E01; primary=E01)",
+      "expected": "FAIL",
+      "detected": true,
+      "caughtBy": "P2 visualAssertion(motion,2s 采样窗零运动像素)+ 独立 perfSample 佐证",
+      "caughtByActual": "P2",
+      "status": "DETECTED",
+      "runs": [
+        {
+          "spec": "E01",
+          "exitCode": 1,
+          "verdict": "FAIL",
+          "failish": true,
+          "failedProbes": [
+            "P2"
+          ],
+          "ready": {
+            "appReady": true,
+            "benchReady": true,
+            "durationMs": 33
+          },
+          "report": "results\\nc\\NC02-E01\\report.json",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.4286 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC02-E01\\report.json\n",
+          "stderrTail": ""
+        }
+      ]
+    },
+    {
+      "id": "NC03",
+      "name": "fake-asset-loaded",
+      "method": "runner/validate.mjs (specs: E01+E02; primary=E02)",
+      "expected": "FAIL",
+      "detected": true,
+      "caughtBy": "E01: network-evidence 不足(P1 无 asset request 独立观测,如实标注缺口,不改 spec);E02: P1 stateAssertion($.assetRequests >= 1)+ networkRequest 证据缺失",
+      "caughtByActual": "P1",
+      "status": "DETECTED",
+      "runs": [
+        {
+          "spec": "E01",
+          "exitCode": 0,
+          "verdict": "PASS",
+          "failish": false,
+          "failedProbes": [],
+          "ready": {
+            "appReady": true,
+            "benchReady": true,
+            "durationMs": 73
+          },
+          "report": "results\\nc\\NC03-E01\\report.json",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC03-E01\\report.json\n",
+          "stderrTail": ""
+        },
+        {
+          "spec": "E02",
+          "exitCode": 1,
+          "verdict": "FAIL",
+          "failish": true,
+          "failedProbes": [
+            "P1"
+          ],
+          "ready": {
+            "appReady": true,
+            "benchReady": true,
+            "durationMs": 247
+          },
+          "report": "results\\nc\\NC03-E02\\report.json",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC03-E02\\report.json\n",
+          "stderrTail": ""
+        }
+      ]
+    },
+    {
+      "id": "NC04",
+      "name": "broken-interaction",
+      "method": "runner/validate.mjs (specs: E01; primary=E01)",
+      "expected": "FAIL",
+      "detected": true,
+      "caughtBy": "P3/P4 stateAssertion(指针/滚轮交互零状态变化;pixelDelta 因背景旋转可能通过,state 双采样是必要独立观测)",
+      "caughtByActual": "P3",
+      "status": "DETECTED",
+      "runs": [
+        {
+          "spec": "E01",
+          "exitCode": 1,
+          "verdict": "FAIL",
+          "failish": true,
+          "failedProbes": [
+            "P3"
+          ],
+          "ready": {
+            "appReady": true,
+            "benchReady": true,
+            "durationMs": 252
+          },
+          "report": "results\\nc\\NC04-E01\\report.json",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.5714 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC04-E01\\report.json\n",
+          "stderrTail": ""
+        }
+      ]
+    },
+    {
+      "id": "NC05",
+      "name": "lifecycle-leak",
+      "method": "runner/validate.mjs (specs: E01; primary=E01)",
+      "expected": "FAIL",
+      "detected": true,
+      "caughtBy": "P7 stateAssertion(reset 后 rotationPhase=0.128>0.1,泄漏双循环)+ console 持续 [leak] 输出佐证",
+      "caughtByActual": "P7",
+      "status": "DETECTED",
+      "runs": [
+        {
+          "spec": "E01",
+          "exitCode": 1,
+          "verdict": "FAIL",
+          "failish": true,
+          "failedProbes": [
+            "P7"
+          ],
+          "ready": {
+            "appReady": true,
+            "benchReady": true,
+            "durationMs": 79
+          },
+          "report": "results\\nc\\NC05-E01\\report.json",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=STATE_MANAGEMENT probes=7 passRate=0.8571 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\results\\nc\\NC05-E01\\report.json\n",
+          "stderrTail": ""
+        }
+      ]
+    },
+    {
+      "id": "NC06",
+      "name": "validator-tampering",
+      "method": "isolation/leak-scanner.mjs --peer-arm arm-b",
+      "expected": "INVALID_RUN",
+      "detected": true,
+      "detectedAs": "INVALID_RUN",
+      "caughtBy": "leak-scanner R1/R2/R3/R4 → INVALID_RUN(D1 协议违规扫描,不经 validate.mjs)",
+      "caughtByActual": "leak-scanner R2-HARNESS-SOURCE,R1-REFERENCE-PATH,R4-SECRET-PATH,R3-PEER-ARM",
+      "status": "DETECTED",
+      "evidence": {
+        "hitRules": [
+          "R2-HARNESS-SOURCE",
+          "R1-REFERENCE-PATH",
+          "R4-SECRET-PATH",
+          "R3-PEER-ARM"
+        ],
+        "violations": [
+          "R2-HARNESS-SOURCE @ expected-fail.md:9",
+          "R2-HARNESS-SOURCE @ expected-fail.md:10",
+          "R2-HARNESS-SOURCE @ expected-fail.md:10",
+          "R1-REFERENCE-PATH @ expected-fail.md:11",
+          "R1-REFERENCE-PATH @ expected-fail.md:11",
+          "R4-SECRET-PATH @ expected-fail.md:12",
+          "R4-SECRET-PATH @ expected-fail.md:12",
+          "R3-PEER-ARM @ expected-fail.md:12",
+          "R2-HARNESS-SOURCE @ expected-fail.md:16",
+          "R2-HARNESS-SOURCE @ expected-fail.md:22",
+          "R2-HARNESS-SOURCE @ expected-fail.md:22",
+          "R3-PEER-ARM @ notes.txt:2",
+          "R1-REFERENCE-PATH @ notes.txt:3",
+          "R1-REFERENCE-PATH @ notes.txt:3",
+          "R4-SECRET-PATH @ notes.txt:4",
+          "R4-SECRET-PATH @ notes.txt:4",
+          "R1-REFERENCE-PATH @ reference-answer.js:1",
+          "R1-REFERENCE-PATH @ reference-answer.js:1",
+          "R2-HARNESS-SOURCE @ src/app.js:4",
+          "R2-HARNESS-SOURCE @ src/app.js:5",
+          "R2-HARNESS-SOURCE @ src/app.js:5",
+          "R1-REFERENCE-PATH @ src/app.js:6",
+          "R1-REFERENCE-PATH @ src/app.js:6",
+          "R2-HARNESS-SOURCE @ src/app.js:8",
+          "R2-HARNESS-SOURCE @ validator.mjs:1",
+          "R2-HARNESS-SOURCE @ validator.mjs:1",
+          "R2-HARNESS-SOURCE @ validator.mjs:10"
+        ],
+        "stats": {
+          "files": 9,
+          "scannedFiles": 9,
+          "skippedBinary": 0,
+          "skippedLarge": 0,
+          "readErrors": 0,
+          "scannedBytes": 6773
+        }
+      }
+    }
+  ],
+  "specCoverageNotes": [
+    "NC03 双口径如实记录:E01 spec 的 P1 只有 starCount+nonBlank,无 asset 网络独立观测,检不出 fake-asset-loaded;",
+    "NC03 以 E02 spec(P1: $.assetRequests >= 1 + networkRequest:assets/boat.glb 证据)作为抓捕口径 —— 不篡改任何 spec。",
+    "NC01-NC05 的\"detected\"= validate.mjs 判 FAIL;NC06 的\"detected\"= leak-scanner 判 INVALID_RUN。"
+  ],
+  "environment": {
+    "nodeVersion": "v24.14.0"
+  }
+}

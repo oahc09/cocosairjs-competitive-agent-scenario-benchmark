@@ -1,0 +1,303 @@
+{
+  "runId": "run-2026-10-02T14-18-28-517Z",
+  "generatedAt": "2026-10-02T14:18:34.386Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "FAIL",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1508
+      },
+      "stateAssertion": {
+        "expr": "$.assetLoaded == true && $.assetRequests >= 1",
+        "ok": false,
+        "value": false,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.05,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.0366,
+              "background": [
+                5,
+                6,
+                10
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0366
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "starCount": 50000,
+          "rotationPhase": 0.046500000000298025,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 9.742790335038833,
+          "hudVisible": true,
+          "epoch": 0,
+          "assetLoaded": true,
+          "assetRequests": 0
+        },
+        "stateAfter": {
+          "starCount": 50000,
+          "rotationPhase": 0.12233000000029802,
+          "cameraDistance": 120,
+          "parallaxOffset": {
+            "x": 0,
+            "y": 0
+          },
+          "fps": 60.01936108422072,
+          "hudVisible": true,
+          "epoch": 0,
+          "assetLoaded": true,
+          "assetRequests": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2262
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P1 passed",
+        "met": false,
+        "details": [
+          {
+            "part": "P1 passed",
+            "met": false,
+            "source": "probe P1"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:500",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P2 passed",
+        "met": false,
+        "details": [
+          {
+            "part": "P2 passed",
+            "met": false,
+            "source": "probe P2"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:300",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P3 passed",
+        "met": false,
+        "details": [
+          {
+            "part": "P3 passed",
+            "met": false,
+            "source": "probe P3"
+          }
+        ]
+      },
+      "action": {
+        "raw": "drag:(0.50,0.50)->(0.78,0.50)",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P4 passed",
+        "met": false,
+        "details": [
+          {
+            "part": "P4 passed",
+            "met": false,
+            "source": "probe P4"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#tone-toggle",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P5 passed",
+        "met": false,
+        "details": [
+          {
+            "part": "P5 passed",
+            "met": false,
+            "source": "probe P5"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P6 passed",
+        "met": false,
+        "details": [
+          {
+            "part": "P6 passed",
+            "met": false,
+            "source": "probe P6"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    }
+  ]
+}

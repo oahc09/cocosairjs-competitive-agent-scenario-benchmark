@@ -1,0 +1,18 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+// G-WHEEL:引擎 canvas 目标阶段 wheel stopPropagation,window 冒泡监听收不到(E01/E05 实测)
+// 页面自身在 canvas 上派发合成 wheel 事件:window 冒泡监听仍能收到 ⇒ FIXED
+const R = await boot();
+R.addCamera();
+R.app.run(R.scene);
+let gotBubble = false, gotCapture = false;
+window.addEventListener('wheel', () => { gotBubble = true; }, { passive: true });
+window.addEventListener('wheel', () => { gotCapture = true; }, { capture: true, passive: true });
+await new Promise(r => setTimeout(r, 300));
+try {
+  const ev = new WheelEvent('wheel', { deltaY: -120, bubbles: true, cancelable: true });
+  R.canvas.dispatchEvent(ev);
+} catch (e) { /* 派发失败视为环境问题 */ }
+await new Promise(r => setTimeout(r, 300));
+R.finish({ outcome: gotBubble ? 'FIXED' : (gotCapture ? 'BUG' : 'ERROR'), detail: `bubble=${gotBubble} capture=${gotCapture}(capture 收到而 bubble 收不到 = 事件被吞)` });
+</script></body></html>

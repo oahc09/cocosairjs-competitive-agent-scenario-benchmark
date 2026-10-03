@@ -1,0 +1,383 @@
+{
+  "generatedAt": "2026-10-03T02:23:26.289Z",
+  "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(5)+visual(round(Σ18×40/18));visual 缺失时 total=null(objectiveOnly 报告)",
+  "batches": [
+    {
+      "batchId": "B-20261002-R1",
+      "createdAt": "2026-10-02T08:55:00Z",
+      "note": "M6 Pilot(迁移自扁平布局)",
+      "pairs": [
+        {
+          "pairId": "PAIR-E01-K0-R01",
+          "batchId": "B-20261002-R1",
+          "scene": "E01",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": true,
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "s4": 5,
+              "visual": 26,
+              "total": 86,
+              "objectiveOnly": 60,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "passRate": 1,
+              "fps": 60.3,
+              "visual18": 11.5,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E01-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "s4": 5,
+              "visual": 31,
+              "total": 91,
+              "objectiveOnly": 60,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "passRate": 1,
+              "fps": 60.3,
+              "visual18": 14,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E01-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "attainment": {
+            "three": 0.97,
+            "cocosair": 1.03
+          },
+          "paired": {
+            "rawDeltaAirMinusThree": 5,
+            "attainmentDeltaAirMinusThree": 0.06,
+            "outcome": "AIR_WIN"
+          }
+        },
+        {
+          "pairId": "PAIR-E02-K0-R01",
+          "batchId": "B-20261002-R1",
+          "scene": "E02",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": true,
+          "arms": {
+            "cocosair": {
+              "s1": 15,
+              "s2": 13,
+              "s3": 4,
+              "s4": 5,
+              "visual": 28,
+              "total": 65,
+              "objectiveOnly": 37,
+              "verdict": "FAIL",
+              "classification": "STATE_MANAGEMENT",
+              "passRate": 0.4286,
+              "fps": 60.2,
+              "visual18": 12.8,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E02-K0-R01/arm-a/validation/report.json"
+            },
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "s4": 5,
+              "visual": 30,
+              "total": 90,
+              "objectiveOnly": 60,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "passRate": 1,
+              "fps": 60.3,
+              "visual18": 13.3,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E02-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "attainment": {
+            "three": 1.05,
+            "cocosair": 0.75
+          },
+          "paired": {
+            "rawDeltaAirMinusThree": -25,
+            "attainmentDeltaAirMinusThree": -0.3,
+            "outcome": "THREE_WIN"
+          }
+        },
+        {
+          "pairId": "PAIR-E05-K0-R01",
+          "batchId": "B-20261002-R1",
+          "scene": "E05",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": true,
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 0,
+              "s3": 4,
+              "s4": 5,
+              "visual": 31,
+              "total": 55,
+              "objectiveOnly": 24,
+              "verdict": "FAIL",
+              "classification": "STATE_MANAGEMENT",
+              "passRate": 0,
+              "fps": 60.1,
+              "visual18": 14,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E05-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 0,
+              "s3": 4,
+              "s4": 5,
+              "visual": 30,
+              "total": 54,
+              "objectiveOnly": 24,
+              "verdict": "FAIL",
+              "classification": "STATE_MANAGEMENT",
+              "passRate": 0,
+              "fps": 60,
+              "visual18": 13.5,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E05-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "attainment": {
+            "three": 0.62,
+            "cocosair": 0.61
+          },
+          "paired": {
+            "rawDeltaAirMinusThree": -1,
+            "attainmentDeltaAirMinusThree": -0.01,
+            "outcome": "TIE"
+          }
+        },
+        {
+          "pairId": "PAIR-E10-K0-R01",
+          "batchId": "B-20261002-R1",
+          "scene": "E10",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": true,
+          "arms": {
+            "cocosair": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "s4": 5,
+              "visual": 23,
+              "total": 83,
+              "objectiveOnly": 60,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "passRate": 1,
+              "fps": 60.2,
+              "visual18": 10.5,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E10-K0-R01/arm-a/validation/report.json"
+            },
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "s4": 5,
+              "visual": 22,
+              "total": 82,
+              "objectiveOnly": 60,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "passRate": 1,
+              "fps": 60.1,
+              "visual18": 10,
+              "visualPending": false,
+              "report": "B-20261002-R1/PAIR-E10-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "attainment": {
+            "three": 0.99,
+            "cocosair": 1
+          },
+          "paired": {
+            "rawDeltaAirMinusThree": 1,
+            "attainmentDeltaAirMinusThree": 0.01,
+            "outcome": "TIE"
+          }
+        }
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "scene": "E01",
+      "knowledge": "K0",
+      "n": 1,
+      "rawDelta": {
+        "median": 5,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 1,
+        "tie": 0,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": 0.97,
+        "air": 1.03
+      }
+    },
+    {
+      "scene": "E02",
+      "knowledge": "K0",
+      "n": 1,
+      "rawDelta": {
+        "median": -25,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 0,
+        "three": 1
+      },
+      "attainmentMedian": {
+        "three": 1.05,
+        "air": 0.75
+      }
+    },
+    {
+      "scene": "E05",
+      "knowledge": "K0",
+      "n": 1,
+      "rawDelta": {
+        "median": -1,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 1,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": 0.62,
+        "air": 0.61
+      }
+    },
+    {
+      "scene": "E10",
+      "knowledge": "K0",
+      "n": 1,
+      "rawDelta": {
+        "median": 1,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 1,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": 0.99,
+        "air": 1
+      }
+    }
+  ],
+  "knowledgeGain": [],
+  "referenceCeiling": {
+    "E01/three": {
+      "visual18": 13,
+      "total": 89
+    },
+    "E01/cocosair": {
+      "visual18": 12.5,
+      "total": 88
+    },
+    "E02/three": {
+      "visual18": 11.5,
+      "total": 86
+    },
+    "E02/cocosair": {
+      "visual18": 12,
+      "total": 87
+    },
+    "E03/three": {
+      "visual18": 11.5,
+      "total": 86
+    },
+    "E03/cocosair": {
+      "visual18": 11.5,
+      "total": 86
+    },
+    "E04/three": {
+      "visual18": 11,
+      "total": 84
+    },
+    "E04/cocosair": {
+      "visual18": 11.5,
+      "total": 86
+    },
+    "E05/three": {
+      "visual18": 13,
+      "total": 89
+    },
+    "E05/cocosair": {
+      "visual18": 13,
+      "total": 89
+    },
+    "E06/three": {
+      "visual18": 13.5,
+      "total": 90
+    },
+    "E06/cocosair": {
+      "visual18": 13.5,
+      "total": 90
+    },
+    "E07/three": {
+      "visual18": 14,
+      "total": 91
+    },
+    "E07/cocosair": {
+      "visual18": 13,
+      "total": 89
+    },
+    "E08/three": {
+      "visual18": 12,
+      "total": 87
+    },
+    "E08/cocosair": {
+      "visual18": 12,
+      "total": 87
+    },
+    "E09/three": {
+      "visual18": 12.5,
+      "total": 88
+    },
+    "E09/cocosair": {
+      "visual18": 13,
+      "total": 89
+    },
+    "E10/three": {
+      "visual18": 10.5,
+      "total": 83
+    },
+    "E10/cocosair": {
+      "visual18": 10.5,
+      "total": 83
+    }
+  },
+  "notes": [
+    "批次布局 results/<B-YYYYMMDD-Rnn>/;coordinator auto-batch 支持单日多轮。",
+    "新批次无盲评时 visual=null(visualPending),补跑 build-blind + judge 后重跑本脚本回填。",
+    "KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效。"
+  ]
+}

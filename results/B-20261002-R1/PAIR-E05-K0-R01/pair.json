@@ -1,0 +1,123 @@
+{
+  "batchId": "B-20261002-R1",
+  "sceneId": "E05",
+  "knowledge": "K0",
+  "knowledgeProfile": "K0",
+  "repetition": "R01",
+  "agentRevision": null,
+  "modelRevision": null,
+  "briefHash": "6611fb092230242d9e048c477eb2b63825a31939bcdd4c5a803760fdd8aa803e",
+  "arms": {
+    "A": {
+      "engine": "three",
+      "status": "FAIL",
+      "rawScore": 55,
+      "attainment": 0.62
+    },
+    "B": {
+      "engine": "cocosair",
+      "status": "FAIL",
+      "rawScore": 54,
+      "attainment": 0.61
+    }
+  },
+  "paired": {
+    "rawDeltaAirMinusThree": -1,
+    "attainmentDeltaAirMinusThree": -0.01
+  },
+  "pilot": true,
+  "armSwapApplied": false,
+  "status": "completed",
+  "createdAt": "2026-10-02T13:23:16.319Z",
+  "updatedAt": "2026-10-02T13:23:22.171Z",
+  "startTimeDeltaBudgetSec": 30,
+  "budget": {
+    "maxToolCalls": 120,
+    "maxWallTimeMinutes": 90,
+    "maxBuildAttempts": 8,
+    "maxBrowserAttempts": 6,
+    "identicalAcrossEngines": true,
+    "source": "config/agents.yaml (agentRun.budget, FROZEN G0)"
+  },
+  "briefSha256": "6611fb092230242d9e048c477eb2b63825a31939bcdd4c5a803760fdd8aa803e",
+  "specSha256": "b2dbb7aee0f61b17d3854e112358bdaa8318acbd184efa998408aaa9a775a61f",
+  "assetSetSha256": "68cb1f70fb9f1c7d8ce14d2bd094df9988d94ec4eaaba48d7a3082a5d52b76f4",
+  "templatePathA": "templates/three",
+  "templatePathB": "templates/cocosair",
+  "knowledgePathA": "knowledge/K0/three",
+  "knowledgePathB": "knowledge/K0/cocosair",
+  "agentBinaryHash": null,
+  "modelId": null,
+  "modelRevisionId": null,
+  "systemPromptHash": null,
+  "toolPolicyHash": null,
+  "budgetConfigHash": "c219f6f6f5c56682d1b67358537e00bdeaa98e8166bc669df7b90ebf6428ab22",
+  "threePackageHash": "f9c474a27c920b9435353a6235968f4453436bee0444fac7e5fd289c8fa463de",
+  "airPackageHash": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+  "airTarballUsed": "vendor/cocosair.js-1.0.0-k0.tgz",
+  "threeKnowledgeHash": "b6d3a0f33ad0625c00f8be8eb7242929fbf8272df06092f17fdf6e9f763927bf",
+  "airKnowledgeHash": "436cdd0de8e31fa6f953d7cd5742ba733dc09f0366df026d3f9dbf60ac48bfe6",
+  "threeTemplateHash": "54c4596172a0bf7548e50b3d49da7374799c4e7f14876c8dcbc4000296d48725",
+  "airTemplateHash": "02f874ad5b246f06e75c04ebb4309f6089c9bbceab5d7ba987e228476cd71105",
+  "environment": {
+    "nodeVersion": "v24.14.0",
+    "packageManagerVersion": null,
+    "os": "win32 10.0.28120",
+    "gpu": "NVIDIA RTX 4060 Laptop (headless Chrome ANGLE/D3D11)",
+    "graphicsBackend": "WebGL2 via ANGLE D3D11",
+    "browserVersion": "Chrome stable (system), headless 1280x720"
+  },
+  "execution": {
+    "startTimestampA": "2026-10-02T13:24:53.686Z",
+    "startTimestampB": "2026-10-02T13:24:53.686Z",
+    "startTimeDeltaActualSec": 0,
+    "workerA": "local-worker-1",
+    "workerB": "local-worker-1"
+  },
+  "ports": {
+    "armA": 7104,
+    "armB": 7105
+  },
+  "enginesDetail": {
+    "A": {
+      "engine": "three",
+      "armDir": "PAIR-E05-K0-R01/arm-a",
+      "templatePath": "templates/three",
+      "templateHash": "54c4596172a0bf7548e50b3d49da7374799c4e7f14876c8dcbc4000296d48725",
+      "templateMissing": false,
+      "templateManifestMissing": false,
+      "workspaceAction": "copied-from templates/three",
+      "knowledgePath": "knowledge/K0/three",
+      "knowledgeHash": "b6d3a0f33ad0625c00f8be8eb7242929fbf8272df06092f17fdf6e9f763927bf",
+      "port": 7100,
+      "runContract": "PAIR-E05-K0-R01/arm-a/RUN-CONTRACT.md"
+    },
+    "B": {
+      "engine": "cocosair",
+      "armDir": "PAIR-E05-K0-R01/arm-b",
+      "templatePath": "templates/cocosair",
+      "templateHash": "02f874ad5b246f06e75c04ebb4309f6089c9bbceab5d7ba987e228476cd71105",
+      "templateMissing": false,
+      "templateManifestMissing": false,
+      "workspaceAction": "copied-from templates/cocosair",
+      "knowledgePath": "knowledge/K0/cocosair",
+      "knowledgeHash": "436cdd0de8e31fa6f953d7cd5742ba733dc09f0366df026d3f9dbf60ac48bfe6",
+      "port": 7101,
+      "runContract": "PAIR-E05-K0-R01/arm-b/RUN-CONTRACT.md"
+    }
+  },
+  "pendingFields": [
+    "environment.gpu",
+    "environment.graphicsBackend",
+    "environment.browserVersion",
+    "execution.startTimestampA",
+    "execution.startTimestampB",
+    "execution.workerA",
+    "execution.workerB"
+  ],
+  "notes": [
+    "Arm 引擎分配规则:rep 序号 mod 2(R01/R03… A=three/B=cocosair;R02… 反转);--arm-swap 时反转并记录。",
+    "workspace 为空且 templateMissing:true 表示模板尚未建成(并行 Wave2),重跑本脚本可补拷,不影响 pairId/端口/时间戳。",
+    "pilot:true — M6 前置验证 pair,不计入 Track B 统计。"
+  ]
+}

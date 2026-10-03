@@ -1,0 +1,97 @@
+# agents.yaml — Agent Run 预算与执行协议(M0 Contract Freeze 交付物 5/6)
+# 版本 1.0.0 | 冻结于 2026-10-02 | 状态 FROZEN(G0)
+# 修改本文件必须重新执行 G0 CONTRACT_FREEZE。
+
+agentRun:
+  # -------------------------------------------------------------------------
+  # 预算冻结(两引擎一致;任一引擎工具链较慢时记录真实 wall time,不临时加预算)
+  budget:
+    maxToolCalls: 120
+    maxWallTimeMinutes: 90
+    maxBuildAttempts: 8
+    maxBrowserAttempts: 6
+    identicalAcrossEngines: true
+    # maxTokens: 不设硬截断。token 消耗按 metric-spec.md §5 全程记录并独立报告;
+    # 绑定性上限为上述 toolCalls / wallTime / buildAttempts / browserAttempts 四项。
+    exhaustionHandling: 触及任一上限即终止 Run,判定 BUDGET_EXHAUSTED;计数器进 evidence
+    driftPolicy: 预算配置的任何改动 = 配置漂移,Pair 失效或单列
+
+  # -------------------------------------------------------------------------
+  # 通用执行规则(每个 Arm)
+  rules:
+    - fresh conversation(禁止复用会话;禁止一个 Conversation 承载两个引擎工程)
+    - fresh workspace
+    - fresh browser profile
+    - frozen template + frozen lockfile
+    - 禁联网
+    - 禁安装新依赖
+    - 禁访问另一 Arm(workspace / dev server / browser / 日志 / 结果)
+    - 禁修改 benchmark harness
+    - 禁修改 Brief
+    - 禁读 Reference(reference/private/)
+    - 禁读私有 validator 源码
+
+  # -------------------------------------------------------------------------
+  # R0 — Autonomous(主实验模式)
+  protocolR0:
+    description: Agent 自主完成"编辑 → 构建 → 运行 → 浏览器检查 → console 检查 → 截图 → 修复"闭环
+    allowed:
+      - edit(编辑工程源码)
+      - build(运行构建)
+      - run(启动页面)
+      - browser inspect(检查渲染结果)
+      - console inspect(读取控制台)
+      - screenshot(截图自查)
+      - fix(自行修复)
+    forbidden:
+      - 不接收 private validator oracle(harness 私有判定逻辑与期望值)
+      - 不接收任何 engine-specific 提示或答案
+    notes: R0 内的自我修复不计入 repairCount(另记 selfFixCount,诊断用)
+
+  # -------------------------------------------------------------------------
+  # R1 — Standardized Repair(R0 终态失败后的扩展/抽样轨道)
+  protocolR1:
+    trigger: R0 终态未通过验证的 trials
+    maxRepairRounds: 3
+    feedbackPolicy: >-
+      Harness 每轮只返回标准化"类别反馈",两引擎措辞对称:
+    allowedFeedbackCategories:
+      - build failure
+      - runtime error
+      - behavior assertion failure
+      - visual contract failure category
+    forbiddenFeedback:
+      - Reference 代码
+      - 具体答案
+      - engine-specific 修复提示
+    metricsRecorded: [RecoveryRate, RepairCount, TimeToRecovery]
+
+  # -------------------------------------------------------------------------
+  # Agent Runner 角色
+  runner:
+    role:
+      - 启动 Agent(按 Pair Coordinator 分配的 Arm 与引擎)
+      - 收集 artifact(logs / commands / source snapshot / hashes)
+    forbidden:
+      - 调整评分
+      - 向 Agent 提供任何提示、澄清或答案
+      - 延长预算
+      - 代替 Agent 修改产物
+      - 删除或美化失败记录
+    escalation: 异常情况上报 Benchmark Owner,不得现场自行处置评分相关事宜
+
+  # -------------------------------------------------------------------------
+  # 隔离(本环境如实声明:策略级,非 OS 强制)
+  isolation:
+    level: policy                      # prompt 约束 + 产物扫描,非 OS/沙箱强制
+    declaredNotOsEnforced: true        # 隔离报告必须如实按此降级声明
+    promptConstraints: 禁读清单写入 Agent 系统提示
+    artifactScan: Run 结束后扫描日志与产物,检索违规访问痕迹
+    forbiddenReads:
+      - reference/private/(Reference 实现、截图、视频)
+      - 另一 Arm 的 workspace / dev server / browser profile / logs
+      - harness 私有 validator 源码与期望答案
+      - results/(既往 trial 结果)
+      - 引擎源码仓库(E:\AIProMax\github\cocosair.js;three.js-r186 源码树)
+      - 计划书与本合同文档目录的答案性内容
+    note: 只读挂载同样禁止 — "只读"仍然可读取答案

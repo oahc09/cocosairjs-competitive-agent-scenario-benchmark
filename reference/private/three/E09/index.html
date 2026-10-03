@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <!-- 空 data-URI favicon:阻止浏览器请求 /favicon.ico 产生 404 噪音(无网络资源依赖) -->
+  <link rel="icon" href="data:,">
+  <title>E09 珠宝展示台 — Three.js Reference</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    #app-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      cursor: grab;
+    }
+    #app-canvas:active { cursor: grabbing; }
+
+    /* ---------------- HUD:精致克制的暗色玻璃面板,不抢宝石主体 ---------------- */
+    #hud {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;           /* 容器透点:画布中央的双击/拖拽不受影响 */
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: #d7dbe2;
+      user-select: none;
+      z-index: 100;
+    }
+    #hud .panel {
+      pointer-events: auto;
+      background: rgba(10, 12, 16, 0.55);
+      border: 1px solid rgba(201, 168, 106, 0.22);
+      border-radius: 10px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    #title {
+      position: absolute;
+      top: 18px;
+      left: 22px;
+      padding: 10px 16px;
+      letter-spacing: 0.22em;
+      font-size: 13px;
+      color: #c9a86a;
+    }
+    #title .sub {
+      display: block;
+      margin-top: 4px;
+      font-size: 10px;
+      letter-spacing: 0.34em;
+      color: #7c828c;
+    }
+
+    #actions {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      display: flex;
+      gap: 10px;
+      padding: 8px 10px;
+    }
+    #actions button {
+      pointer-events: auto;
+      appearance: none;
+      border: 1px solid rgba(201, 168, 106, 0.4);
+      background: linear-gradient(180deg, rgba(48, 44, 36, 0.7), rgba(26, 25, 22, 0.7));
+      color: #e6d9bd;
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      padding: 8px 16px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: border-color 0.18s, transform 0.12s, box-shadow 0.18s;
+    }
+    #actions button:hover {
+      border-color: rgba(201, 168, 106, 0.9);
+      box-shadow: 0 0 14px rgba(201, 168, 106, 0.25);
+    }
+    #actions button:active { transform: translateY(1px); }
+
+    #swatches {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 26px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 20px;
+    }
+    #swatches .label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      color: #8a8f99;
+      margin-right: 2px;
+    }
+    #swatch-row { display: flex; gap: 12px; }
+    .swatch {
+      pointer-events: auto;
+      appearance: none;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.18);
+      background: var(--c);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5), inset 0 0 6px rgba(255, 255, 255, 0.25);
+      transition: transform 0.16s ease, border-color 0.16s, box-shadow 0.16s;
+    }
+    .swatch:hover { transform: scale(1.18); }
+    .swatch.active {
+      transform: scale(1.22);
+      border-color: #c9a86a;
+      box-shadow: 0 0 0 3px rgba(201, 168, 106, 0.28), 0 2px 10px rgba(0, 0, 0, 0.55);
+    }
+    #swatch-name {
+      min-width: 74px;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      color: #cfd4dc;
+      text-align: left;
+    }
+
+    #hint {
+      position: absolute;
+      left: 22px;
+      bottom: 24px;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: #6b707a;
+    }
+
+    #toast {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      bottom: 92px;
+      padding: 8px 18px;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: #e8dcc0;
+      background: rgba(16, 18, 24, 0.82);
+      border: 1px solid rgba(201, 168, 106, 0.35);
+      border-radius: 8px;
+      opacity: 0;
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+  <script>
+    // 页面契约(MASTER-CONTEXT §12.1):
+    //   window.__appReady — 初始 false,应用首帧渲染完成后由 /dist/app.js 置 true
+    //   window.__bench    — { getState(): object, reset(): void },由 /dist/app.js 提供
+    window.__appReady = false;
+    window.__bench = null;
+  </script>
+  <!-- 引擎 import map:裸名 three / three/addons/ 指向本地 vendored 引擎,无任何网络依赖 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/dist/vendor/three.module.js",
+      "three/addons/": "/dist/vendor/addons/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="app-canvas"></canvas>
+
+  <div id="hud">
+    <div class="panel" id="title">GEM ATELIER<span class="sub">E09 · JEWELRY STAGE · MATERIAL CEILING</span></div>
+
+    <div class="panel" id="actions">
+      <button id="btn-export" data-bench="export-png" data-ui="export-png">导出 PNG</button>
+      <button id="btn-reset" data-bench="reset" data-ui="reset">重 置</button>
+    </div>
+
+    <div class="panel" id="swatches">
+      <span class="label">COLOR</span>
+      <div id="swatch-row"></div>
+      <span id="swatch-name">diamond</span>
+    </div>
+
+    <div id="hint">双击画布 — 推近 / 拉远 &nbsp;·&nbsp; 拖拽 — 环绕 &nbsp;·&nbsp; 滚轮 — 缩放</div>
+    <div id="toast"></div>
+  </div>
+
+  <script type="module" src="/dist/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+const R = await boot();
+try {
+// G-NAN-FAMILY:setProperty FLOAT4 传普通数组 → 上传链 NaN(E01/E02 实测;复现路径 = E02 Reference 的自定义 effect 正典)
+// 左四边形:Vec4 实例(应为红);右四边形:普通数组。右侧出同色 ⇒ FIXED;黑/异常 ⇒ BUG
+const { EffectAsset, Material, Vec4 } = R.mod;
+R.addCamera();
+
+const UBO_G = `layout(set = 0, binding = 0) uniform CCGlobal { highp vec4 cc_time; mediump vec4 cc_screenSize; mediump vec4 cc_nativeSize; mediump vec4 cc_debug_view_mode; };`;
+const UBO_C = `layout(set = 0, binding = 1) uniform CCCamera { highp mat4 cc_matView; highp mat4 cc_matViewInv; highp mat4 cc_matProj; highp mat4 cc_matProjInv; highp mat4 cc_matViewProj; highp mat4 cc_matViewProjInv; highp vec4 cc_cameraPos; mediump vec4 cc_surfaceTransform; mediump vec4 cc_screenScale; mediump vec4 cc_exposure; mediump vec4 cc_mainLitDir; mediump vec4 cc_mainLitColor; mediump vec4 cc_ambientSky; mediump vec4 cc_ambientGround; mediump vec4 cc_fogColor; mediump vec4 cc_fogBase; mediump vec4 cc_fogAdd; mediump vec4 cc_nearFar; mediump vec4 cc_viewPort; };`;
+const UBO_L = `layout(set = 2, binding = 0) uniform CCLocal { highp mat4 cc_matWorld; highp mat4 cc_matWorldIT; highp vec4 cc_lightingMapUVParam; highp vec4 cc_localShadowBias; };`;
+const VERT = `precision highp float;
+${UBO_G}${UBO_C}${UBO_L}
+layout(set = 1, binding = 0) uniform Constants { vec4 u_c; };
+in vec3 a_position;
+in vec2 a_texCoord;
+void main () { gl_Position = cc_matViewProj * (cc_matWorld * vec4(a_position, 1.0)); }`;
+const FRAG = `precision mediump float;
+layout(set = 1, binding = 0) uniform Constants { vec4 u_c; };
+layout(location = 0) out vec4 cc_FragColor;
+void main () { cc_FragColor = vec4(u_c.rgb, 1.0); }`;
+
+const effect = Object.assign(new EffectAsset(), {
+  name: 'reg-nan-probe',
+  techniques: [{ passes: [{ program: 'reg-nan-probe/pg', rasterizerState: { cullMode: 0 }, depthStencilState: { depthTest: true, depthWrite: true }, blendState: { targets: [{ blend: false }] }, properties: { u_c: { value: [1, 1, 1, 1], type: 16 } } }] }],
+  shaders: [{
+    name: 'reg-nan-probe/pg', hash: 2187654321,
+    builtins: { statistics: { CC_EFFECT_USED_VERTEX_UNIFORM_VECTORS: 47, CC_EFFECT_USED_FRAGMENT_UNIFORM_VECTORS: 5 }, globals: { blocks: [{ name: 'CCGlobal', defines: [], set: 0, binding: 0 }, { name: 'CCCamera', defines: [], set: 0, binding: 1 }], samplerTextures: [], buffers: [], images: [] }, locals: { blocks: [{ name: 'CCLocal', defines: [], set: 2, binding: 0 }], samplerTextures: [], buffers: [], images: [] } },
+    defines: [],
+    attributes: [{ name: 'a_position', defines: [], format: 32, location: 0 }, { name: 'a_texCoord', defines: [], format: 21, location: 2 }],
+    blocks: [{ name: 'Constants', defines: [], binding: 0, stageFlags: 17, members: [{ name: 'u_c', type: 16 }] }],
+    samplerTextures: [], buffers: [], images: [], textures: [], samplers: [], subpassInputs: [],
+  }],
+  combinations: [], hideInEditor: false,
+});
+effect.shaders[0].glsl4 = { vert: VERT, frag: FRAG };
+effect.shaders[0].glsl3 = { vert: VERT.replace(/layout\(set = \d+, binding = \d+\) /g, ''), frag: FRAG.replace(/layout\(set = \d+, binding = \d+\) /g, '') };
+effect.onLoaded();
+EffectAsset.register(effect);
+
+const mA = new Material(); mA.initialize({ effectAsset: effect });
+const mB = new Material(); mB.initialize({ effectAsset: effect });
+mA.setProperty('u_c', new Vec4(0.85, 0.12, 0.12, 1));
+let arrayOk = true;
+try { mB.setProperty('u_c', [0.12, 0.12, 0.85, 1]); } catch (e) { arrayOk = false; }
+R.mesh(R.primitives.quad({ width: 1.4, height: 1.4 }), mA, new R.Vec3(-0.8, 0, 0));
+R.mesh(R.primitives.quad({ width: 1.4, height: 1.4 }), mB, new R.Vec3(0.8, 0, 0));
+R.app.run(R.scene);
+const img = await R.sample(12);
+const [ar, , ab] = R.colorAt(img, (img.w * 0.25) | 0, (img.h / 2) | 0);
+const [br, , bb] = R.colorAt(img, (img.w * 0.75) | 0, (img.h / 2) | 0);
+const aRed = ar > 120 && ar > ab + 40;
+const bBlue = bb > 120 && bb > br + 40;
+R.finish({ outcome: bBlue ? 'FIXED' : (aRed ? 'BUG' : 'ERROR'), detail: `customEffect L=r${ar}/b${ab} R=r${br}/b${bb} arrayOk=${arrayOk}` });
+} catch (e) { R.finish({ outcome: 'ERROR', detail: 'SETUP: ' + String(e && e.message || e).slice(0, 140) }); }
+</script></body></html>

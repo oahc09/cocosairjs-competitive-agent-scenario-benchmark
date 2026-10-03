@@ -1,0 +1,9 @@
+{
+  "name": "tiny-fake-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Harness self-test fixture: pretends to be a built workspace (index.html + dist/app.js) with a canvas, __appReady and __bench contract.",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

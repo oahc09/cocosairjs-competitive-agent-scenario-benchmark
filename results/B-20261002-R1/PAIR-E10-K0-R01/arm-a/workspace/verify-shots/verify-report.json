@@ -1,0 +1,125 @@
+{
+  "results": [
+    {
+      "probe": "P0",
+      "item": "appReady within 10s",
+      "pass": true,
+      "detail": "elapsed=971ms"
+    },
+    {
+      "probe": "P1",
+      "item": "state",
+      "pass": true,
+      "detail": "{\"A\":{\"clip\":\"idle\",\"time\":1.8917},\"B\":{\"clip\":\"idle\",\"time\":1.8917}} count=2"
+    },
+    {
+      "probe": "P1",
+      "item": "visual nonBlank A/B",
+      "pass": true,
+      "detail": "varA=1682.0 varB=1476.2"
+    },
+    {
+      "probe": "P1",
+      "item": "network: character.glb requested",
+      "pass": true,
+      "detail": "count=1"
+    },
+    {
+      "probe": "P2",
+      "item": "state time advancing",
+      "pass": true,
+      "detail": "A.time=3.0084 B.time=3.0084"
+    },
+    {
+      "probe": "P2",
+      "item": "visual motion A/B",
+      "pass": true,
+      "detail": "diffA=4.56 diffB=6.76"
+    },
+    {
+      "probe": "P3",
+      "item": "state isolation",
+      "pass": true,
+      "detail": "{\"A\":\"walk\",\"B\":\"idle\"}"
+    },
+    {
+      "probe": "P3",
+      "item": "visual regionChange A",
+      "pass": true,
+      "detail": "diffA=6.66"
+    },
+    {
+      "probe": "P4",
+      "item": "state destroyed",
+      "pass": true,
+      "detail": "{\"count\":1,\"destroyed\":\"A\",\"A\":null}"
+    },
+    {
+      "probe": "P4",
+      "item": "visual regionChange A (A removed)",
+      "pass": true,
+      "detail": "lumBefore=449.0 lumAfter=449.0"
+    },
+    {
+      "probe": "P5",
+      "item": "state B alive animating",
+      "pass": true,
+      "detail": "B.clip=idle time 20.8417→21.4588"
+    },
+    {
+      "probe": "P5",
+      "item": "visual motion B",
+      "pass": true,
+      "detail": "diffB=6.95"
+    },
+    {
+      "probe": "P6",
+      "item": "state reset",
+      "pass": true,
+      "detail": "{\"resetCount\":1,\"count\":2,\"destroyed\":null,\"A\":\"idle\",\"B\":\"idle\"}"
+    },
+    {
+      "probe": "P6",
+      "item": "network: no new glb request",
+      "pass": true,
+      "detail": "count=1"
+    },
+    {
+      "probe": "P6",
+      "item": "visual nonBlank A/B",
+      "pass": true,
+      "detail": "varA=1726.9 varB=1540.8"
+    },
+    {
+      "probe": "P7",
+      "item": "state time+fps",
+      "pass": true,
+      "detail": "A.time=2.5667 B.time=2.5667 fps=60"
+    },
+    {
+      "probe": "P7",
+      "item": "visual motion A/B",
+      "pass": true,
+      "detail": "diffA=3.25 diffB=5.46"
+    },
+    {
+      "probe": "ALL",
+      "item": "no console errors",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
+      "probe": "ALL",
+      "item": "glb requested exactly once (whole session)",
+      "pass": true,
+      "detail": "count=1"
+    }
+  ],
+  "glbRequests": [
+    {
+      "t": 1790949691648,
+      "url": "http://127.0.0.1:7106/assets/character.glb"
+    }
+  ],
+  "consoleErrors": []
+}

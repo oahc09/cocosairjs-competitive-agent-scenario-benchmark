@@ -1,0 +1,546 @@
+{
+  "schema": "cocosairjs-roadmap-input/1.0",
+  "generatedAt": "2026-10-02",
+  "source": "M11 gap attribution — evidence: static audit 2026-09-26 + 20 reference verdicts + pilot 4 pairs/8 arms + gates/G5",
+  "summary": {
+    "engineCeiling": "10/10 scenes FEASIBLE on AIR (79/79 probes, fps 60.0-60.3, 0 console errors). Only two hard engine ceilings found: no usable postprocess pipeline (Code First) and KHR transmission built-in path is dead code. Everything else is reachable but with heavy engineering paths and silent-failure traps.",
+    "agentAttainment": "Pilot K0: AIR 2/4 PASS (E01 win +0.08, E10 tie +0.01, E02 loss -0.25, E05 both-engine fail -0.02). Agent gap is real but narrow; the dominant signal is cost, not feasibility.",
+    "costDelta": {
+      "toolCalls": "2.4x (brief aggregate; per-pair self-reported: E01 70v45, E02 74v25, E05 60v25)",
+      "tokens": "3.7x (brief aggregate; token counts not independently observable per pilot-aggregate costMetricsNote)",
+      "wallTime": "1.6x (brief aggregate; per-pair WORKLOG timestamps give 1.2x-3.2x, mean ~1.9x)"
+    },
+    "biggestChangeVsStaticAudit": [
+      "Static audit said 'shadow delivery incomplete, lighting unclear' — experiment proves dynamic point-light pipeline FULL (per-frame UBO animation, E06) while point-light SHADOW is the actual hard gap.",
+      "Static audit listed transmission as 'partial (WebGL2, needs explicit mount)' — experiment proves the built-in KHR transmission path is dead code since first commit; only custom EffectAsset route works.",
+      "Static audit treated docs/examples as adequate baseline — experiment shows 8/8 K0 arms hit engine behavioral traps (silent NaN, event swallowing, reflection-style effect JSON); .d.ts advantage did not convert to lower cost."
+    ]
+  },
+  "gaps": [
+    {
+      "id": "G-POSTPROC",
+      "domain": "Postprocess",
+      "type": "engine",
+      "severity": "P0",
+      "evidence": [
+        "reference/private/cocosair/E05/ceiling-notes.md §3 (three-gate proof: no screen-space postprocess in Code First; engine bundle code 'round-trips but never applies')",
+        "reference/private/cocosair/E01/ceiling-notes.md G4",
+        "reference/private/cocosair/E04/ceiling-notes.md §2.2",
+        "reference/private/cocosair/E10/ceiling-notes.md §3.2 (fx dimension 1.5/3 main cause)",
+        "reference/private/three/E05/ceiling-notes.md §1 (EffectComposer+UnrealBloom+OutputPass+FXAA, 5 stock passes, zero patches, 60fps — 'decisive advantage')",
+        "results/reference-ceiling.json note (AIR FEASIBLE_LIMITED scenes E01/E02/E04/E08/E10 mostly postprocess/transmission)"
+      ],
+      "recommendation": "Ship default-pipeline postprocess mount point + first passes (tone mapping, FXAA/SMAA, bloom) = roadmap W1.5/AIR-004. Until then, register 'bloom impostor' recipe (additive billboard layers + in-shader falloff + dither) as official Pattern; measured ceiling of the substitute is 80-85% of a bloom pipeline in close-up compositions (E05 §4)."
+    },
+    {
+      "id": "G-TRANSMISSION",
+      "domain": "Material",
+      "type": "engine",
+      "severity": "P0",
+      "evidence": [
+        "reference/private/cocosair/E09/ceiling-notes.md §1.1 (physical-effect.ts L170 declare / L348 consume, trF constant 0; missing since first commit 09b624c, not a regression)",
+        "reference/private/cocosair/E09/REFERENCE-VERDICT.md §材料路径结论 1 ('v1.0.0 不可用')"
+      ],
+      "recommendation": "One-line-level fix: inject `airTrFactorTex = TRANSMISSION_CONSTANT.x;` + thickness assignment into modulate block. Until fixed, mark capability BLOCKED in capabilities.json — current 'official transmission support' claim does not match rendering. AirTransmissionCapture itself works; custom EffectAsset route (USE_AIR_TRANSMISSION + cc_sceneColorTex + airSceneColorInfo slots) is the documented workaround and a K2 example."
+    },
+    {
+      "id": "G-NAN-FAMILY",
+      "domain": "Material",
+      "type": "engine",
+      "severity": "P0",
+      "evidence": [
+        "results/PAIR-E02-K0-R01/arm-a/WORKLOG.md 根因#1 (setProperty plain array for FLOAT4 -> setUniformArray -> NaN -> full black)",
+        "results/PAIR-E01-K0-R01/arm-b/WORKLOG.md 22:08 (pass._rootBlock reads NaN; u_spin poisoned all vertices)",
+        "reference/private/cocosair/E09/ceiling-notes.md §3.1-2 (Light.color fed Vec3 -> NaN white screen, no type check)",
+        "reference/private/cocosair/E09/ceiling-notes.md §3.1-3 (runtime setProperty(Vec4) loses .w)"
+      ],
+      "recommendation": "Type assertions + structured error codes for the NaN family (Material.setProperty FLOAT4 writer, Light.color setter); NaN diagnostics that trace to the offending property name. Highest-frequency K0 black-screen root cause: hit in 3 independent arms/scenes."
+    },
+    {
+      "id": "G-INPUT-POISON",
+      "domain": "Interaction",
+      "type": "engine",
+      "severity": "P0",
+      "evidence": [
+        "reference/private/cocosair/E08/ceiling-notes.md 坑位3 (getLocation(out) with plain object -> 'out.set is not a function' -> input._emitEvent catch -> _clearEvents -> whole-page input permanently dead)"
+      ],
+      "recommendation": "Isolate dispatcher (one callback exception must not clear the queue); type-defend getLocation; document that input callbacks must self try/catch. Symptom (all later interactions dead) is far from root cause — a top Agent trap."
+    },
+    {
+      "id": "G-GLTF-STANDARD-BLACK",
+      "domain": "Asset",
+      "type": "engine",
+      "severity": "P0",
+      "evidence": [
+        "results/PAIR-E10-K0-R01/arm-a/WORKLOG.md 22:15-22:45 (Fox renders as black silhouette under air-gltf-standard in K0 tarball; GPU texture FBO readback normal orange; not shadow-related; diag3-diag8)",
+        "results/PAIR-E10-K0-R01/arm-a/RESULT.md 关键工程决策#2 (workaround: builtin-standard + USE_DIFFUSEMAP slot replacement)",
+        "reference/private/cocosair/E10/ceiling-notes.md §2.5 (same asset renders correctly in Reference workspace -> suspected tarball/build-path defect; pilot used vendor/cocosair.js-1.0.0-k0.tgz per pair.json)"
+      ],
+      "recommendation": "Root-cause diff between K0 tarball and Reference workspace artifacts; add air-gltf-standard x textured-GLB regression case; until fixed, note the workaround in K0/K1 knowledge."
+    },
+    {
+      "id": "G-POINT-LIST",
+      "domain": "Procedural",
+      "type": "engine",
+      "severity": "P0",
+      "evidence": [
+        "reference/private/cocosair/E01/ceiling-notes.md G1 (createMesh `primitiveMode || TRIANGLE_LIST` falsy-zero: POINT_LIST=0 silently becomes 7)",
+        "reference/private/cocosair/E01/ceiling-notes.md G2 (actual draw primitive from Pass._primitive / effect JSON pass field, not mesh)",
+        "reference/private/cocosair/E01/REFERENCE-VERDICT.md engineLimitations CREATE_MESH_POINT_LIST_FALSY_BUG + DRAW_PRIMITIVE_FROM_PASS_NOT_MESH",
+        "reference/private/cocosair/E03/ceiling-notes.md §3-2"
+      ],
+      "recommendation": "Fix falsy-zero (`??`); unify or document the two primitive sources; ship a canonical POINT/LINE example. Silent correctness-level error: point-cloud intent renders garbage triangles (E01 reference first run P2 symptom)."
+    },
+    {
+      "id": "G-EVENT-SWALLOW",
+      "domain": "Interaction",
+      "type": "docs",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E01/ceiling-notes.md G5 (canvas wheel preventDefault+stopPropagation; capture-phase workaround)",
+        "reference/private/cocosair/E02/ceiling-notes.md §2 (pal layer swallows canvas mousemove; DOM listeners unusable)",
+        "results/PAIR-E01-K0-R01/arm-b/WORKLOG.md 22:14-22:16 (3 rounds to locate wheel swallow)"
+      ],
+      "recommendation": "Document event-layer contract; official Recipe with both canonical channels (capture-phase DOM / input.on(TOUCH_*)); mid-term evaluate dropping stopPropagation."
+    },
+    {
+      "id": "G-VERTEX-UBO-DRIFT",
+      "domain": "Shader",
+      "type": "engine",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E01/ceiling-notes.md G3 (custom Constants block & CCGlobal read per-vertex-varying 'uniform' values in vertex stage; v_dbg imaging shows 27-232 discrete clusters; root cause not located)",
+        "reference/private/cocosair/E01/REFERENCE-VERDICT.md VERTEX_STAGE_UBO_READ_DRIFT"
+      ],
+      "recommendation": "Engine-side investigation (WebGL2/ANGLE uniform path); document 'vertex-stage custom UBO current status'; workaround (bake to attribute, use gl_Position.w) into K2."
+    },
+    {
+      "id": "G-EFFECT-DX",
+      "domain": "Shader",
+      "type": "pattern",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E05/ceiling-notes.md §1 (channel FULL but: hand-written compiled-form JSON — hash/statistics/attributes all manual; no chunk include; defines frozen at init; mediump fp16 freezes phase)",
+        "reference/private/cocosair/E04/ceiling-notes.md §2.3 ('no EffectCompiler/DSL — K0/K1 failure probability high, API_HALLUCINATION hotspot')",
+        "reference/private/cocosair/E04/ceiling-notes.md §2.3 GAP-B1 (registration before createAirApp silently ineffective)",
+        "results/PAIR-E01-K0-R01/arm-b/WORKLOG.md (8 builds to first shader pass)"
+      ],
+      "recommendation": "Ship effect-JSON template + generator script and glsl4->glsl3 derivation rule as Pattern/Recipe; make early registration a structured error; consider a minimal runtime EffectCompiler long-term."
+    },
+    {
+      "id": "G-BATCHING",
+      "domain": "Procedural",
+      "type": "recipe",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E07/ceiling-notes.md §1-§3 (scale ceiling table: 1,536 buildings/84k windows/1,024 cars/70k rain @54.7fps; 100k quad/frame CPU write budget anchor; merged static mesh = 1 draw call free)",
+        "reference/private/cocosair/E04/ceiling-notes.md §2.1 (no 3D particle system; CPU full integration only; ~120 lines infra per app; recommend engine-side DynamicQuadBatch component)",
+        "reference/private/cocosair/E03/ceiling-notes.md §2-6 (600 shared-mesh nodes still 60fps but draw-call linear)",
+        "reference/private/cocosair/E01/ceiling-notes.md G6 (no Points/InstancedMesh first-class; 74.5k points needed full custom stack)"
+      ],
+      "recommendation": "Official three-route batching recipe (shared mesh x N nodes / merged static mesh / dynamic mesh updateSubMesh) with scale budget table; engine: evaluate exposing InstancedBuffer/Points (P2) and ship DynamicQuadBatch component (P1). Usability gap, not capability gap."
+    },
+    {
+      "id": "G-NO-ORBIT",
+      "domain": "Interaction",
+      "type": "pattern",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E03/ceiling-notes.md §3-6 (no OrbitControls: hand-written, no damping/inertia/touch)",
+        "reference/private/cocosair/E05/ceiling-notes.md §5 (hand-written spherical ~40 lines)",
+        "reference/private/cocosair/E06/ceiling-notes.md §6 (same ~30 lines)"
+      ],
+      "recommendation": "Ship OrbitControls-equivalent Pattern/Recipe now (three references already contain three variants to consolidate) = roadmap W1.3; add 'assertion-friendly smoothing' guidance (post-action residual motion)."
+    },
+    {
+      "id": "G-SHADOW-POINTLIGHT",
+      "domain": "Material",
+      "type": "engine",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E06/ceiling-notes.md §2 (point-light.ts comment 'It doesn't support shadow generation currently.'; blob-shadow / scorched-earth workarounds)",
+        "results/PAIR-E10-K0-R01/arm-a/WORKLOG.md 22:36 (ShadowMap blackens materials in K0 build; agent fell back to ShadowType.Planar)"
+      ],
+      "recommendation": "Publish support matrix (light type x shadow x backend) per roadmap W1.4; fix or explicitly NOT-PLANNED point-light shadow; investigate ShadowMap blackening report; register capability IDs."
+    },
+    {
+      "id": "G-FOG-RECOMPILE",
+      "domain": "Simulation",
+      "type": "engine",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E07/ceiling-notes.md §4-3 (fog toggle = pipeline-macro level; runtime switch recompiles all material variants ~100ms single-frame jank)",
+        "reference/private/cocosair/E07/REFERENCE-VERDICT.md §6-3"
+      ],
+      "recommendation": "Uniform-level fog parameter switching; per-pixel fog variant for unlit; document 'configure before app.run to avoid recompile'."
+    },
+    {
+      "id": "G-SRGB",
+      "domain": "Material",
+      "type": "engine",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E10/ceiling-notes.md §3-1 (no sRGB texture format; procedural canvas textures darken in linear domain, manual brightening ~#98 for mid-grey)",
+        "reference/private/cocosair/E07/ceiling-notes.md §4-4 (display value = stored value squared, no output gamma)",
+        "reference/private/cocosair/E08/ceiling-notes.md 坑位4 (quad uv v=1 at top -> image last row = visual top)"
+      ],
+      "recommendation": "sRGB texture support; until then a documented brightness-compensation recipe (hidden root cause of 'cannot match reference look')."
+    },
+    {
+      "id": "G-WRAPMODE",
+      "domain": "Animation",
+      "type": "docs",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E10/ceiling-notes.md §2-2 (wrapMode default non-Loop -> clip freezes at last frame, motion assertions silently fail; clip-level props shared across instances via sceneClips cache)",
+        "results/PAIR-E10-K0-R01/arm-a/WORKLOG.md 22:07 (first verify 15/19 due to freeze; fixed by setting Loop before first instantiate)"
+      ],
+      "recommendation": "GLB import default Loop (or configurable); document shared-clip boundary; diagnostics: frozen-after-one-play detectable."
+    },
+    {
+      "id": "G-VERTEX-WRITE",
+      "domain": "Animation",
+      "type": "docs",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E02/ceiling-notes.md §2 (no in-place vertex buffer write API — docs/manual/custom-buffergeometry.md §2; CPU vertex animation must rebuild whole mesh or move to shader displacement; biggest channel difference vs BufferAttribute.needsUpdate)"
+      ],
+      "recommendation": "Evaluate in-place write API; near-term: dynamic-geometry decision-tree recipe (shader displacement / dynamic mesh / rebuild)."
+    },
+    {
+      "id": "G-VISIBILITY-DEFAULT",
+      "domain": "Lifecycle",
+      "type": "engine",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E04/ceiling-notes.md §2.4 + REFERENCE-VERDICT §6-1 (camera.visibility default undefined -> silent black screen)",
+        "reference/private/cocosair/E03/ceiling-notes.md §4 (RUNTIME trap list)"
+      ],
+      "recommendation": "Fix default (sane default = all visible) or startup warn; add to black-screen differential table."
+    },
+    {
+      "id": "G-LIGHT-UNITS",
+      "domain": "Material",
+      "type": "docs",
+      "severity": "P1",
+      "evidence": [
+        "reference/private/cocosair/E09/ceiling-notes.md §3.1-5 (illuminance split: material-table 8-14 LDR vs examples 50,000 lux HDR+exposure vs SpotLight x10000)",
+        "reference/private/cocosair/E06/ceiling-notes.md §6 (night near-black initial version; working values ambient ~3800 + moon ~1900 lux)"
+      ],
+      "recommendation": "One unified conversion table + night-scene baseline recipe; most common 'cannot tune reference look' hidden cause."
+    },
+    {
+      "id": "G-API-TAIL",
+      "domain": "Interaction",
+      "type": "docs",
+      "severity": "P2",
+      "evidence": [
+        "reference/private/cocosair/E08/ceiling-notes.md 坑位1/2/6 (primitives.quad ignores width/height hardcoded ±0.5; plane is XZ; screenPointToRay param order differs; getComponent string lookup fails)",
+        "reference/private/cocosair/E06/ceiling-notes.md §6 (no Quaternion export, must Quat.fromAxisAngle; clearColor/light.color assign-not-mutate)",
+        "reference/private/cocosair/E05/ceiling-notes.md §5 (getScrollY = -DOM deltaY x5; Node.addChild returns void; primitives.plane XZ billboard trap)",
+        "reference/private/cocosair/E08/ceiling-notes.md 坑位9 (fog.enabled must precede fog.type)",
+        "reference/private/cocosair/E07/ceiling-notes.md §4-5 (custom geometry without minPos/maxPos silently culled)",
+        "reference/private/cocosair/E05/ceiling-notes.md §5 (createDynamicMesh at utils vs utils.MeshUtils repo/tarball mismatch)"
+      ],
+      "recommendation": "Batch API-consistency fixes + full trap table into K1/K2 knowledge; tarball export-path consistency is P1 (packaging)."
+    },
+    {
+      "id": "G-GLB-LIFECYCLE",
+      "domain": "Lifecycle",
+      "type": "docs",
+      "severity": "P2",
+      "evidence": [
+        "reference/private/cocosair/E10/ceiling-notes.md §2-1/§2-4 (refcount semantics: addRef to pin across resets, destroy deferred until instances==0)",
+        "reference/private/cocosair/E02/REFERENCE-VERDICT.md (20 consecutive resets, post-GC heap flat)"
+      ],
+      "recommendation": "Document refcount pinning pattern; keep as AIR strength story (experiment-proven); no engine work needed."
+    },
+    {
+      "id": "G-PROBE-SEMANTICS",
+      "domain": "Interaction",
+      "type": "skill",
+      "severity": "P1",
+      "evidence": [
+        "harness/runner/probe-executor.mjs L1100-1107 ($.before sampled AFTER action, $.after after sampleWindowMs=200)",
+        "results/PAIR-E02-K0-R01/arm-a/validation/probe-results.json P4 (stateBefore az 35 -> stateAfter 124.488 = 89.5 deg actual orbit, yet stateAssertion ok=false; visual pixelDelta 0.7438 passed)",
+        "gates/G5.json failure-attribution (E02-AIR = agent-side camera orbit amplitude; E05 both arms = corner star density <3%, independent pixel recheck)",
+        "results/PAIR-E05-K0-R01/arm-a/validation/probe-results.json P1 (corner litRatios 0.0003/0.0922/0.014/0.0496 vs frozen >=0.03 while agent self-check 'corners non-black' passed)"
+      ],
+      "recommendation": "K1/K2 must include probe-assertion semantics (post-action sampling window, per-region litRatio thresholds, regionChange needs continuous motion source) + visual-density budget recipe; provide __bench-assisted per-region litRatio readout so agent self-check aligns with harness (self-check vs harness divergence: E02-a 24/24 vs 3/7; E05 both arms all-pass vs 0/6)."
+    },
+    {
+      "id": "G-K0-COST",
+      "domain": "Simulation",
+      "type": "diagnostics",
+      "severity": "P1",
+      "evidence": [
+        "results/PAIR-*/arm-*/WORKLOG.md budget self-reports (three tools 45/25/25/30, wall 40/25/45/35 min; AIR tools 70/74/60/n.a., wall 55/80/55/96 min)",
+        "results/pilot-aggregate.json costMetricsNote + recovery (FirstCompile 6/8, both retries AIR arms)",
+        "gates/G5.json knownLimitations (K0 asymmetry: three no .d.ts, AIR tarball has .d.ts)"
+      ],
+      "recommendation": "Cost delta is spent on behavioral-contract debugging, not feature building; invest in structured error diagnostics + behavior-contract docs (not more .d.ts). Set explicit target: K1 AIR/three tool-call ratio <=1.5x on E01/E02/E10."
+    }
+  ],
+  "engineBugs": [
+    {
+      "id": "EB-01",
+      "title": "air-gltf-standard renders textured GLB pure black (K0 tarball)",
+      "repro": "vendor/cocosair.js-1.0.0-k0.tgz + assets/character.glb (Khronos Fox): glTF material path -> black silhouette; builtin-standard + USE_DIFFUSEMAP -> correct; Reference workspace same asset renders correctly (suspected tarball/build-path defect)",
+      "impact": "3 diagnosis rounds + full material replacement in pilot E10 arm-a; if general, all textured-GLB scenes untrustworthy on K0 deliverable",
+      "source": "results/PAIR-E10-K0-R01/arm-a/WORKLOG.md; results/PAIR-E10-K0-R01/arm-a/RESULT.md 决策#2; reference/private/cocosair/E10/ceiling-notes.md §2.5"
+    },
+    {
+      "id": "EB-02",
+      "title": "KHR transmission built-in path is dead code",
+      "repro": "src/air/assets/gltf/material/physical-effect.ts L170/L348: airTrFactorTex/airThickTex declared but never assigned from uniforms -> trF constant 0 -> transmission/volume/dispersion GLB renders opaque PBR; identical in repo and tarball; missing since first commit 09b624c",
+      "impact": "'Official transmission support' claim does not match rendering; any agent taking the glTF-extension route fails",
+      "source": "reference/private/cocosair/E09/ceiling-notes.md §1.1; E09/REFERENCE-VERDICT.md"
+    },
+    {
+      "id": "EB-03",
+      "title": "Material.setProperty FLOAT4 accepts plain array -> silent NaN black screen",
+      "repro": "setProperty(name, [x,y,z,w]) on FLOAT4 -> setUniformArray per-element write, FLOAT4 writer reads .x -> undefined -> NaN; shader compiles, 0 console errors, screen black",
+      "impact": "Highest-frequency K0 black-screen root cause (E02-a 4 builds; E01-b 6 rounds)",
+      "source": "results/PAIR-E02-K0-R01/arm-a/WORKLOG.md 根因#1; results/PAIR-E01-K0-R01/arm-b/WORKLOG.md 22:08"
+    },
+    {
+      "id": "EB-04",
+      "title": "Light.color fed Vec3 -> NaN white screen",
+      "repro": "light.color = vec3-like object; setter reads .r/.g/.b without type check; NaN spreads to all lit pixels",
+      "impact": "One misuse kills the whole screen; same NaN family as EB-03",
+      "source": "reference/private/cocosair/E09/ceiling-notes.md §3.1-2"
+    },
+    {
+      "id": "EB-05",
+      "title": "Runtime Material.setProperty(Vec4) loses .w",
+      "repro": "Initial upload OK; after update shader reads 0 in .w; staged pass.getUniform reads back correct; suspected staged->GPU upload path",
+      "impact": "All runtime material animation depending on .w breaks; workaround = pre-multiply in JS, use xyz only",
+      "source": "reference/private/cocosair/E09/ceiling-notes.md §3.1-3"
+    },
+    {
+      "id": "EB-06",
+      "title": "getLocation(out) with plain object poisons event dispatcher",
+      "repro": "out not a real Vec2 -> 'out.set is not a function' -> input._emitEvent catch -> _clearEvents + onThrowException + rethrow -> whole-page input permanently dead",
+      "impact": "One throwing callback kills the input system; symptom far from root cause",
+      "source": "reference/private/cocosair/E08/ceiling-notes.md 坑位3"
+    },
+    {
+      "id": "EB-07",
+      "title": "POINT_LIST double patch: createMesh falsy-zero + pass-level primitive",
+      "repro": "utils.createMesh({primitiveMode: gfx.PrimitiveMode.POINT_LIST}) -> struct primitiveMode === 7 (TRIANGLE_LIST); after fixing mesh.struct, still draws triangles until effect JSON pass adds \"primitive\": 0 (Pass._primitive, pipeline-state-manager.ts:55)",
+      "impact": "Point-cloud intent silently renders garbage triangles (additive -> full-screen overexposure); E01 reference first-run P2 symptom",
+      "source": "reference/private/cocosair/E01/ceiling-notes.md G1/G2; E01/REFERENCE-VERDICT.md engineLimitations"
+    },
+    {
+      "id": "EB-08",
+      "title": "Canvas/pal layer swallows wheel and DOM mouse events",
+      "repro": "window bubble wheel listener never fires (canvas target-phase preventDefault+stopPropagation); pal layer stopPropagation on canvas mousemove",
+      "impact": "Scroll/drag interactions dead; misattributed to 'wrong event vocabulary'; E01-b cost 3 rounds",
+      "source": "reference/private/cocosair/E01/ceiling-notes.md G5; E02/ceiling-notes.md §2; PAIR-E01 arm-b WORKLOG 22:14-22:16"
+    },
+    {
+      "id": "EB-09",
+      "title": "Vertex-stage UBO read drift (root cause not located)",
+      "repro": "Vertex shader v_dbg = vec2(pxScale/1000, cc_screenSize.y/1000) imaging: different stars show 27-232 discrete value clusters (constant uniform should be uniform); CCCamera/CCLocal vertex stage normal",
+      "impact": "Vertex-stage uniforms unreliable; forces architecture change (bake to attributes, rebuild on resize); adds agent trial rounds but does not cap capability",
+      "source": "reference/private/cocosair/E01/ceiling-notes.md G3; E01/REFERENCE-VERDICT.md VERTEX_STAGE_UBO_READ_DRIFT"
+    },
+    {
+      "id": "EB-10",
+      "title": "No usable postprocess in Code First pipeline",
+      "repro": "Three gates: aggregate entry does not import postprocess, cclegacy.rendering cleared, CUSTOM_PIPELINE_NAME unset -> no Bloom/Tonemap/FXAA; engine bundle postprocess code round-trips but never applies",
+      "impact": "FX quality dimension capped in 7/10 scenes (E05 2/3, E10 1.5/3, E04 -0.5 x2); substitute reaches 80-85% of bloom in close-up compositions only",
+      "source": "reference/private/cocosair/E05/ceiling-notes.md §3; docs/notes/post-process-notes.md (cited); results/reference-ceiling.json note"
+    },
+    {
+      "id": "EB-11",
+      "title": "Point light shadow unsupported; ShadowMap blackens materials in K0 build",
+      "repro": "src/cocos/render-scene/scene/point-light.ts class comment 'It doesn't support shadow generation currently.'; pilot E10 arm-a: enabling ShadowMap blackened fox materials, fell back to ShadowType.Planar",
+      "impact": "Dynamic point-light scenes lose shadow layering (blob-shadow workaround); ShadowMap quality/blackening needs investigation",
+      "source": "reference/private/cocosair/E06/ceiling-notes.md §2; results/PAIR-E10-K0-R01/arm-a/WORKLOG.md 22:36/22:56"
+    },
+    {
+      "id": "EB-12",
+      "title": "Fog toggle recompiles all material variants (~100ms jank)",
+      "repro": "scene.globals.fog runtime toggle is a pipeline-macro switch -> all variants recompile, single-frame ~100ms hitch; unlit fog factor is per-vertex (interpolation error on huge triangles)",
+      "impact": "'Immediate toggle' contracts either hitch or need pre-run configuration",
+      "source": "reference/private/cocosair/E07/ceiling-notes.md §4-3, §6-3/4"
+    },
+    {
+      "id": "EB-13",
+      "title": "camera.visibility default undefined -> silent black screen",
+      "repro": "Do not set camera.visibility -> nothing renders, zero errors",
+      "impact": "Shortest path to 'all black but no error'; high-frequency agent trap",
+      "source": "reference/private/cocosair/E04/ceiling-notes.md §2.4; E04/REFERENCE-VERDICT.md §6-1; E03/ceiling-notes.md §4"
+    },
+    {
+      "id": "EB-14",
+      "title": "EffectAsset registration timing constraint errors silently",
+      "repro": "EffectAsset.onLoaded() before createAirApp() -> registration silently ineffective (internal deps missing)",
+      "impact": "Custom shader does nothing with zero error output",
+      "source": "reference/private/cocosair/E04/ceiling-notes.md §2.3 (GAP-B1); E05/ceiling-notes.md §1"
+    },
+    {
+      "id": "EB-15",
+      "title": "No sRGB texture format; procedural textures darken",
+      "repro": "Texture2D.reset()+uploadData(canvas): linear-domain darkening; non-POT only CLAMP_TO_EDGE; no y-flip; display value = stored value squared (no output gamma)",
+      "impact": "Hidden root cause of 'cannot match reference look'; ground base color needed ~#98 for mid-grey",
+      "source": "reference/private/cocosair/E10/ceiling-notes.md §2.5/§3-1; E07/ceiling-notes.md §4-4"
+    },
+    {
+      "id": "EB-16",
+      "title": "AnimationClip.wrapMode defaults non-Loop; clip-level props shared across instances",
+      "repro": "GLB clip plays once then freezes at last frame (no crash, motion assertions silently fail); wrapMode/duration shared per sceneIndex via sceneClips cache; per-instance variants need manual clip copy",
+      "impact": "Pilot E10 arm-a first verify 15/19; isolation boundary at clip-data layer unclear",
+      "source": "reference/private/cocosair/E10/ceiling-notes.md §2-2/§3-5; PAIR-E10 arm-a WORKLOG 22:07"
+    },
+    {
+      "id": "EB-17",
+      "title": "No in-place vertex buffer write API",
+      "repro": "docs/manual/custom-buffergeometry.md §2; CPU vertex animation must rebuild whole mesh (per-frame infeasible) -> shader displacement or dynamic mesh only",
+      "impact": "Largest channel difference vs three BufferAttribute.needsUpdate; all vertex animation pushed to shader/dynamic-mesh paths",
+      "source": "reference/private/cocosair/E02/ceiling-notes.md §2"
+    },
+    {
+      "id": "EB-18",
+      "title": "No InstancedMesh/Points/3D-particle first-class API",
+      "repro": "500+ instances: merged static mesh (static) or CPU dynamic mesh (dynamic); no GPU lifecycle/emitter semantics; no point sprites (4 verts + 6 indices per particle, 4x bandwidth)",
+      "impact": "Scale ceiling is fine (E07: 1,536 buildings/70k rain @54.7fps; E01: 74.5k points 60fps) but per-instance animation = CPU vertex rewrite, no GPU culling; usability/documentation gap more than capability gap",
+      "source": "reference/private/cocosair/E01/ceiling-notes.md G6; E03 §3-3; E04 §2.1; E07 §6-1"
+    },
+    {
+      "id": "EB-19",
+      "title": "API consistency long tail (12 items)",
+      "repro": "quad ignores size (±0.5 hardcoded); plane is XZ; no Quaternion export; clearColor/light.color assign-not-mutate; getScrollY=-deltaY*5; screenPointToRay param order differs component vs render-scene; getComponent(string) fails; Node.addChild returns void; fog.enabled before fog.type; missing minPos/maxPos silently culls; createDynamicMesh location differs repo vs tarball; dual-side needs USE_TWOSIDE + cullMode",
+      "impact": "Each small, together the main K0 trial-and-error tax (E06 reference itself crashed 2 rounds on Quat)",
+      "source": "E08/ceiling-notes.md 坑位1/2/6/9; E06 §6; E05 §5; E07 §4-5; E09 §3.1-4"
+    }
+  ],
+  "agentDx": [
+    {
+      "id": "DX-COST",
+      "title": "AIR arms cost ~2.4x tools / 3.7x tokens / 1.6x wall time at K0",
+      "detail": "Self-reported per-arm: tools three 45/25/25/30 vs AIR 70/74/60/n.a.; wall three 40/25/45/35 min vs AIR 55/80/55/96 min; build budget exhausted once on AIR (E01-b 8/8, final fix via dist hot-patch, disclosed). First build+validate pass 6/8 overall, both retries AIR arms (E02-a NaN black, E10-a wrapMode freeze). Token counts self-reported best-effort per pilot-aggregate costMetricsNote.",
+      "evidence": [
+        "results/PAIR-E01..E10-K0-R01/arm-*/WORKLOG.md budget sections",
+        "results/pilot-aggregate.json recovery + costMetricsNote"
+      ]
+    },
+    {
+      "id": "DX-E02-P4",
+      "title": "E02 drag-orbit failure root cause: assertion sampling window vs smoothing convergence",
+      "detail": "Harness samples $.before AFTER the action and $.after 200ms later (probe-executor.mjs L1100-1107); agent k=10/s exponential smoothing converged during the 409ms drag, leaving delta ~0 in the window -> FAIL despite actual 89.5 deg orbit (stateBefore 35 -> stateAfter 124.488) and passing visual pixelDelta 0.7438. Reference passed with speed-limited camera still catching up post-drag. G5 attribution: agent-side. Self-check said 24/24.",
+      "evidence": [
+        "results/PAIR-E02-K0-R01/arm-a/validation/probe-results.json P4",
+        "harness/runner/probe-executor.mjs L1100-1107",
+        "gates/G5.json failure-attribution",
+        "results/PAIR-E02-K0-R01/arm-a/RESULT.md P4 section"
+      ]
+    },
+    {
+      "id": "DX-E05-DENSITY",
+      "title": "E05 both-engine failure: self-check visual-density criteria vs frozen per-region threshold",
+      "detail": "Frozen P1 requires litRatio >= 0.03 in each of 5 regions; both arms self-checked 'corners non-black' (any-lit) and passed themselves; harness measured corners 0.0003/0.0922/0.014/0.0496 (arm-a) -> FAIL with cascade SKIP of P2-P6. G5: agent-side visual density, confirmed by independent pixel recheck. Engine-independent Pattern gap.",
+      "evidence": [
+        "results/PAIR-E05-K0-R01/arm-a/validation/probe-results.json P1",
+        "results/PAIR-E05-K0-R01/arm-b/RESULT.md P1 section",
+        "gates/G5.json failure-attribution"
+      ]
+    },
+    {
+      "id": "DX-K0-ASYMMETRY",
+      "title": "K0 knowledge asymmetry favors AIR (.d.ts) yet AIR costs more",
+      "detail": "G5 knownLimitations: three npm has no .d.ts, AIR tarball includes .d.ts. AIR still 2.4x cost: K0 failures live where .d.ts cannot express — runtime behavior (NaN coercions), event-layer contract, timing constraints, reflection-style effect JSON, unit conventions. Three's advantage is training-prior knowledge inside model weights, not package files. Implication: closing the gap needs behavior-contract docs + structured errors, not more typing.",
+      "evidence": [
+        "gates/G5.json knownLimitations",
+        "results/PAIR-E01/E02 arm WORKLOGs (NaN/event/registration traps)"
+      ]
+    },
+    {
+      "id": "DX-SELFCHECK-DIVERGENCE",
+      "title": "Systematic self-check vs harness divergence",
+      "detail": "E02-AIR self 24/24 vs harness 3/7; E05 three & AIR self all-pass vs harness 0/6; E10 both arms initially failed a spec P4 semantics defect (regionChange measures two post-action frames vs threshold text intent) fixed by spec v1.0.1 amendment, after which both PASS — divergence can be harness/spec-side too. Agent self-checks replicate the agent's understanding of assertions, not harness sampling semantics.",
+      "evidence": [
+        "results/PAIR-E02-K0-R01/arm-a/RESULT.md §2 vs validation/report.json",
+        "results/pilot-aggregate.json pairs[2].arms",
+        "gates/G5.json failure-attribution (E10 spec amendment)"
+      ]
+    },
+    {
+      "id": "DX-BLIND-G7",
+      "title": "Visual preference pipeline instability (G7 BLOCKED)",
+      "detail": "Blind round1 invalidated (visual backend hallucination, judge double-report); round2 0 unreliable but preference double-judge inconsistent 4/4 (conservative tie vs side1) -> G7 BLOCKED per >20% rule; six-dim scores use two-judge average. Visual claims in this gap map rely on objective probes + reference self-scores, not preference.",
+      "evidence": [
+        "results/pilot-aggregate.json blindNotes",
+        "gates/G7.json"
+      ]
+    }
+  ],
+  "knowledgeBackfill": [
+    {
+      "target": "K1",
+      "domain": "Interaction",
+      "items": "Event-layer contract (canvas wheel stopPropagation, pal mousemove swallow); capture-phase + input.on(TOUCH_*) dual canonical channels; mouse/touch double-fire dedup; getLocation needs real Vec2 + try/catch; getScrollY=-deltaY*5"
+    },
+    {
+      "target": "K1",
+      "domain": "Material",
+      "items": "setProperty type contract (FLOAT4 must be Vec4/Color; arrays -> NaN); runtime Vec4 use xyz only; direction attributes must not set linear:true; NaN symptom->root-cause quick table (black/white/drift)"
+    },
+    {
+      "target": "K1",
+      "domain": "Shader",
+      "items": "Compiled-form effect JSON template + generator; glsl4/glsl3 variants (glsl1 unused on WebGL2); register after createAirApp; defines frozen at init; blendState+priority ordering; pass primitive field; mediump->highp"
+    },
+    {
+      "target": "K2",
+      "domain": "Procedural",
+      "items": "Batching three-route decision tree + scale budget table (merged static mesh / dynamic mesh <=50k quads@60fps conservative, 100k anchor); createMesh primitiveMode patch; primitives size semantics (quad 1x1, plane XZ); minPos/maxPos mandatory; createDynamicMesh non-empty init + capacity asserts + tarball path"
+    },
+    {
+      "target": "K2",
+      "domain": "Material",
+      "items": "HDR unit conversion table; night baseline values (ambient ~3800 + moon ~1900 lux); assign-not-mutate semantics; camera.visibility; brightness=stored^2 compensation; no-sRGB procedural texture recipe"
+    },
+    {
+      "target": "K2",
+      "domain": "Asset",
+      "items": "GLTFAsset addRef pinning across resets; wrapMode=Loop before first instantiate; clip-level sharing boundary; dispose/destroy pairing list; K0-tarball air-gltf-standard black-render workaround (builtin-standard + USE_DIFFUSEMAP)"
+    },
+    {
+      "target": "K2",
+      "domain": "Postprocess",
+      "items": "Bloom-impostor recipe (multi-layer additive billboards + in-shader falloff + dither); blob shadow; contact-shadow baking — each Reference (E01/E04/E05/E06/E07/E10) is a directly reusable example"
+    },
+    {
+      "target": "K2",
+      "domain": "Interaction",
+      "items": "OrbitControls-equivalent recipe (spherical + exponential smoothing, consolidated from E03/E05/E06) + assertion-friendly smoothing guidance (keep post-action residual motion within sample windows)"
+    },
+    {
+      "target": "K2",
+      "domain": "Cross",
+      "items": "Probe/assertion semantics for this benchmark: state assertions sampled after action within sampleWindowMs; nonBlank per-region litRatio thresholds; regionChange needs continuous motion source; visual-density budget formula (star count x diameter -> per-corner litRatio); __bench-assisted per-region readout to align self-check with harness"
+    }
+  ],
+  "severityCounts": {
+    "P0": 6,
+    "P1": 14,
+    "P2": 2,
+    "P3": 0
+  },
+  "typeCounts": {
+    "engine": 11,
+    "docs": 6,
+    "pattern": 2,
+    "recipe": 1,
+    "example": 0,
+    "skill": 1,
+    "diagnostics": 1
+  },
+  "notes": [
+    "typeCounts counts the primary type of each gap entry (multi-type gaps like NaN-family (engine+diagnostics) counted once under engine); §6 of cocosair-gap-map.md carries the full multi-type mapping.",
+    "Simulation domain has no new engine evidence in the pilot (E08 not sampled for agent runs; physics not covered by any of the 10 scenes) — static-audit conclusions stand, deferred to M7.",
+    "Visual six-dim figures quoted are reference self-scores / two-judge averages; preference verdicts are BLOCKED (G7)."
+  ]
+}

@@ -1,0 +1,654 @@
+{
+  "runId": "REF-E05-three",
+  "generatedAt": "2026-10-02T09:53:27.486Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2507
+      },
+      "stateAssertion": {
+        "expr": "$.backgroundStarCount >= 300 && $.starStreamCount >= 200 && $.cameraDistance >= 13 && $.cameraDistance <= 15 && $.diskRotation > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "regions": [
+            "center-third",
+            "outer-corners"
+          ],
+          "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围"
+        },
+        "notes": [],
+        "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 427,
+                "y": 180,
+                "w": 427,
+                "h": 360
+              },
+              "litRatio": 0.8361,
+              "background": [
+                88,
+                69,
+                106
+              ]
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.1898,
+              "background": [
+                4,
+                5,
+                10
+              ]
+            },
+            {
+              "rect": {
+                "x": 922,
+                "y": 0,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.0853,
+              "background": [
+                5,
+                5,
+                11
+              ]
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 518,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.0961,
+              "background": [
+                5,
+                5,
+                10
+              ]
+            },
+            {
+              "rect": {
+                "x": 922,
+                "y": 518,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.1429,
+              "background": [
+                5,
+                5,
+                11
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0853
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 59,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 0.424308,
+          "accretionPhase": 0.06753071559343593,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 210,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 1.3806160000000003,
+          "accretionPhase": 0.21973186091176022,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4065
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:800",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 800
+            },
+            "raw": "wait:800",
+            "performed": "waited 800ms"
+          }
+        ],
+        "durationMs": 804
+      },
+      "stateAssertion": {
+        "expr": "$.diskRotation > 0.05",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "disk(盘面覆盖的环形屏幕区域)",
+          "expect": "两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进"
+        },
+        "notes": [
+          "named region \"disk(盘面覆盖的环形屏幕区域)\" not geometric; fell back to full frame"
+        ],
+        "expect": "两帧(间隔 800ms)像素差 > 冻结阈值:条纹/亮带位置移动,星流粒子推进",
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.0752
+            }
+          ],
+          "worstDiffRatio": 0.0752
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 301,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 1.9571140000000034,
+          "accretionPhase": 0.3114843672943522,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 349,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 2.261000000000005,
+          "accretionPhase": 0.35984932633077615,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3289
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1011
+      },
+      "stateAssertion": {
+        "expr": "$.accretionPhase >= 0 && $.accretionPhase < 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "ring": "inner-ring vs outer-ring(以屏幕中心为圆心的两个环带采样)",
+          "expect": "内环带平均亮度更高且偏白/蓝白(R≈G≈B,R-B 差小);外环带偏橙红(R>G>B,R-B 差显著);亮部向环外有柔和亮度衰减(辉光观感)"
+        },
+        "notes": [],
+        "expect": "内环带平均亮度更高且偏白/蓝白(R≈G≈B,R-B 差小);外环带偏橙红(R>G>B,R-B 差显著);亮部向环外有柔和亮度衰减(辉光观感)",
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.0675
+            }
+          ],
+          "bestDiffRatio": 0.0675,
+          "missing": []
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 498,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 3.2045400000000086,
+          "accretionPhase": 0.5100183813357037,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 559,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 3.5908860000000016,
+          "accretionPhase": 0.5715072569794839,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3513
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wheel:{dy:-600}",
+        "steps": [
+          {
+            "verb": "wheel",
+            "arg": {
+              "dy": -600
+            },
+            "raw": "wheel:{dy:-600}",
+            "performed": "wheel dy=-600"
+          }
+        ],
+        "durationMs": 39
+      },
+      "stateAssertion": {
+        "expr": "$.cameraDistance < 10 && $.cameraDistance >= 5",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "metric": "黑洞暗核半径与盘外缘的屏幕像素半径",
+          "expect": "较缩放前构图变化:暗核与盘占屏比增大(暗核半径像素 >= 1.25x 或盘外缘半径像素 >= 1.2x)"
+        },
+        "notes": [],
+        "expect": "较缩放前构图变化:暗核与盘占屏比增大(暗核半径像素 >= 1.25x 或盘外缘半径像素 >= 1.2x)",
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.3891
+            }
+          ],
+          "bestDiffRatio": 0.3891,
+          "missing": []
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 709,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 4.540999999999995,
+          "accretionPhase": 0.7227225965802959,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 785,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 5.022231999999989,
+          "accretionPhase": 0.799313048154294,
+          "cameraDistance": 6.800247668605393,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-region-a.png",
+          "P4-region-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4160
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1003
+      },
+      "stateAssertion": {
+        "expr": "$.starStreamCount >= 200",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "mid-ring(内缘与外缘之间的盘周区域)",
+          "expect": "星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)"
+        },
+        "notes": [
+          "named region \"mid-ring(内缘与外缘之间的盘周区域)\" not geometric; fell back to full frame"
+        ],
+        "expect": "星点沿螺旋轨迹流向中心的运动证据(两帧差 + 接近中心处拖尾拉长)",
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.3892
+            }
+          ],
+          "worstDiffRatio": 0.3892
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 965,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 6.162193999999983,
+          "accretionPhase": 0.9807436353912161,
+          "cameraDistance": 6.8000000000000025,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 1025,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 6.542193999999976,
+          "accretionPhase": 0.04122251376613528,
+          "cameraDistance": 6.8000000000000025,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-motion-a.png",
+          "P5-motion-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3923
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1232,30) ui=reset"
+          }
+        ],
+        "durationMs": 144
+      },
+      "stateAssertion": {
+        "expr": "$.cameraDistance >= 13.5 && $.cameraDistance <= 14.5 && $.diskRotation < 0.3 && $.accretionPhase < 0.1 && $.starStreamCount >= 200",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "expect": "黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)"
+        },
+        "notes": [],
+        "expect": "黑洞+盘+星空完整可见,构图回到初始距离(暗核回到初始占屏比量级)",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.4005,
+              "background": [
+                6,
+                6,
+                11
+              ]
+            }
+          ],
+          "worstLitRatio": 0.4005
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 1201,
+          "ready": true,
+          "resetCount": 0,
+          "diskRotation": 7.656923999999949,
+          "accretionPhase": 0.2186373034789597,
+          "cameraDistance": 6.8000000000000025,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 1234,
+          "ready": true,
+          "resetCount": 1,
+          "diskRotation": 0.1583079999999995,
+          "accretionPhase": 0.02519550073099169,
+          "cameraDistance": 14,
+          "starStreamCount": 320,
+          "backgroundStarCount": 1900
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2143
+      }
+    }
+  ]
+}

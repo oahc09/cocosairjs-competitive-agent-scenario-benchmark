@@ -1,0 +1,22 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+// G-GLTF-STANDARD-BLACK:air-gltf-standard 渲染带贴图 GLB 纯黑(E10 Pilot 实测,console 零报错)
+// 加载 character.glb(Fox)实例化:狐身区域亮度正常 ⇒ FIXED;接近背景黑 ⇒ BUG
+const R = await boot();
+R.addCamera(new R.Vec3(0, 1.2, 4.2), new R.Vec3(0, 0.5, 0), new R.Color(24, 28, 36));
+R.addLight(new R.Color(255, 255, 255, 255));
+R.app.run(R.scene);
+R.scene.globals.ambient.skyColorHDR.set(0.22, 0.22, 0.25, 1);
+R.scene.globals.ambient.skyIllum = 7000;
+let detail = '';
+try {
+  const loader = new R.GLTFLoader();
+  const asset = await loader.loadAsync('/assets/character.glb');
+  const raw = asset.instantiate(); const inst = Array.isArray(raw) ? raw[0] : (raw && raw.root) || (raw && raw.node) || raw;
+  R.scene.addChild(inst);
+  detail = 'loaded+instantiated';
+} catch (e) { detail = 'SETUP-FAIL: ' + String(e).slice(0, 90); }
+const img = await R.sample(30);
+const lit = R.litRatio(img, 34);
+R.finish({ outcome: detail.startsWith('SETUP-FAIL') ? 'ERROR' : (lit > 0.02 ? 'FIXED' : 'BUG'), detail: `foxLitRatio=${lit.toFixed(4)} ${detail}` });
+</script></body></html>

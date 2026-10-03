@@ -1,0 +1,33 @@
+{
+  "gate": "G3 REFERENCE_FEASIBILITY",
+  "status": "PASS",
+  "validatedAt": "2026-10-03T02:18:40.983Z",
+  "criteria": "20 个 Reference 全部存在、validate verdict=PASS、0 未捕获异常;每个含 REFERENCE-VERDICT/WORKLOG/ceiling-notes/validation 证据",
+  "capabilityAvailability": {
+    "three": "10/10",
+    "air": "10/10"
+  },
+  "evidence": "results/reference-ceiling.json",
+  "details": [
+    "E01/three: FEASIBLE probes=7/7 fps=60",
+    "E01/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.2",
+    "E02/three: FEASIBLE probes=7/7 fps=60.1",
+    "E02/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.3",
+    "E03/three: FEASIBLE probes=9/9 fps=60.2",
+    "E03/cocosair: FEASIBLE probes=9/9 fps=60.1",
+    "E04/three: FEASIBLE probes=8/8 fps=60",
+    "E04/cocosair: FEASIBLE_LIMITED probes=8/8 fps=60.3",
+    "E05/three: FEASIBLE_LIMITED probes=6/6 fps=60.2",
+    "E05/cocosair: FEASIBLE probes=6/6 fps=60.2",
+    "E06/three: FEASIBLE_LIMITED probes=6/6 fps=60.1",
+    "E06/cocosair: FEASIBLE probes=6/6 fps=60.1",
+    "E07/three: FEASIBLE_LIMITED probes=8/8 fps=60.1",
+    "E07/cocosair: FEASIBLE probes=8/8 fps=60.2",
+    "E08/three: FEASIBLE probes=8/8 fps=60.1",
+    "E08/cocosair: FEASIBLE_LIMITED probes=8/8 fps=60.3",
+    "E09/three: FEASIBLE_LIMITED probes=8/8 fps=60.2",
+    "E09/cocosair: FEASIBLE probes=8/8 fps=60.2",
+    "E10/three: FEASIBLE probes=7/7 fps=60.2",
+    "E10/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.2"
+  ]
+}

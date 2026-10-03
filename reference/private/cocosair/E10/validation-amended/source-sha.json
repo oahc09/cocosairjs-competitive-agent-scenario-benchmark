@@ -1,0 +1,352 @@
+{
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\cocosair\\E10",
+  "generatedAt": "2026-10-02T14:14:52.083Z",
+  "fileCount": 52,
+  "totalBytes": 12672606,
+  "skippedDirs": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".cache"
+  ],
+  "files": [
+    {
+      "path": "package.json",
+      "bytes": 337,
+      "sha256": "dc89799131b21082ae7cd6b56c2b9a1654c418ce9dd390e7dda84804a3f4e8b5"
+    },
+    {
+      "path": "template-verify.txt",
+      "bytes": 10097,
+      "sha256": "977ffa4fd867bbc800532997df342a0831ced6a63063f7249e177e040838a30c"
+    },
+    {
+      "path": "template-manifest.json",
+      "bytes": 1530,
+      "sha256": "02f874ad5b246f06e75c04ebb4309f6089c9bbceab5d7ba987e228476cd71105"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 14919,
+      "sha256": "f7519a96e634bb27c7d41dcea0eb8827e13927ab2ef39dc1ea5267579c3ba1ee"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 3450,
+      "sha256": "00895c549220efbf57e4719178afd8ef7169f691836650137a67a545f71424eb"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "bytes": 4110,
+      "sha256": "6232e599c03499ce1b96791fbd2037ab2f796a6d0614186fe6a0c76209b34e0f"
+    },
+    {
+      "path": "src/main.js",
+      "bytes": 22762,
+      "sha256": "b9a82da10c3c37087f9937739b6fc4c12eafe2e945101a3c4d92f0fc5f1b9715"
+    },
+    {
+      "path": "assets/character.glb",
+      "bytes": 162852,
+      "sha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1605,
+      "sha256": "3862bf19a293fd2bb2ec8926f35419d854e4f29034c6a443fd4734cc5c253629"
+    },
+    {
+      "path": "validation/screenshots/initial.png",
+      "bytes": 241273,
+      "sha256": "5ee680d17b8a79610eb70a08252546114bc9df68339ff87cf155652134232c75"
+    },
+    {
+      "path": "validation/screenshots/P1-before.png",
+      "bytes": 275635,
+      "sha256": "dda9f7c068dbf8a53dfd760cf1fbb2c363a94cacc7e92eb6ebd96029cebfc3ae"
+    },
+    {
+      "path": "validation/screenshots/P1-vis.png",
+      "bytes": 279417,
+      "sha256": "99294d6efd3ddbfda13d89edcadaaabff0c96e850eea86569a5fc6772fc1a282"
+    },
+    {
+      "path": "validation/screenshots/P1-after.png",
+      "bytes": 277467,
+      "sha256": "3afa04a0645403e23b64c556f9e9c9394763ce2800226b0a192fa4e5f05d6f7d"
+    },
+    {
+      "path": "validation/screenshots/mid.png",
+      "bytes": 241041,
+      "sha256": "e1be4d42eb15753df46bcd46b6c66ee71b075c44aa9e5e09539ec9ef04187206"
+    },
+    {
+      "path": "validation/screenshots/final.png",
+      "bytes": 242141,
+      "sha256": "de3bfcef2be3af94c992ff303c3448754c6776176a3a9c18330b18b1a73d3c84"
+    },
+    {
+      "path": "validation/screenshots/extra-1.png",
+      "bytes": 241489,
+      "sha256": "574d79399424417dd645bb03eccf1d097b2115176f2a4eb5eedc4674d91daceb"
+    },
+    {
+      "path": "validation/screenshots/extra-2.png",
+      "bytes": 242899,
+      "sha256": "257e3233e14726a7e32f0338a888487fe035f509c330630d23d90e148e0882da"
+    },
+    {
+      "path": "validation/screenshots/P2-before.png",
+      "bytes": 276742,
+      "sha256": "91515394a6814dddb0259a8445e3b499dbb35c772b0f166d9c0fc59ed8eaf0b2"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-a.png",
+      "bytes": 272457,
+      "sha256": "00b2726899ea65e088857bb1c8689f5fff99239f5bc40bcdaae615f042286c60"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-b.png",
+      "bytes": 272428,
+      "sha256": "2775a26100d86a215e56eebfba89b6539e9ac3b72b50f9c72129a6719891bd17"
+    },
+    {
+      "path": "validation/screenshots/P2-after.png",
+      "bytes": 273437,
+      "sha256": "52ae2e298dade0b909a849b81a3ebde998f88fcfca6f3e99e9a60a8048eca9a8"
+    },
+    {
+      "path": "validation/screenshots/P3-before.png",
+      "bytes": 273526,
+      "sha256": "737737de5ed15e723fd98d5aae29cb731c03a80722a3fce337e465daea2d47ef"
+    },
+    {
+      "path": "validation/screenshots/P3-region-a.png",
+      "bytes": 271504,
+      "sha256": "de10c8687e7b733f674a65f370d9b1f92fbeb18bcd78caf32bb7193556d51b10"
+    },
+    {
+      "path": "validation/screenshots/P3-region-b.png",
+      "bytes": 273260,
+      "sha256": "d3236ee0b0545689b32f6f62a5ab1b3d1b1089057b0b76297acf6042a522e988"
+    },
+    {
+      "path": "validation/screenshots/P3-after.png",
+      "bytes": 274516,
+      "sha256": "639ced70c6664a87e28b683edb26429fdbed71360db1c64b18db3096a9f1e3f3"
+    },
+    {
+      "path": "validation/screenshots/P4-before.png",
+      "bytes": 275283,
+      "sha256": "1a83f339774b7691517fb972967985e52a772af552946f71f1ec19a6d143f342"
+    },
+    {
+      "path": "validation/screenshots/P4-region-a.png",
+      "bytes": 256436,
+      "sha256": "db6aad178d15cf43415fa7d2b319568c4d3136ca8f48da05c111fe3c23b188ee"
+    },
+    {
+      "path": "validation/screenshots/P4-region-b.png",
+      "bytes": 258298,
+      "sha256": "e3c4c178662e36c8f1ac79e41cb3fb2182246ae7460f532ff25dc1e2aa8985da"
+    },
+    {
+      "path": "validation/screenshots/P4-after.png",
+      "bytes": 259065,
+      "sha256": "2c7c68bd4560b969e28dd716f6aedeef2f5230a81e6590a54c1914acfb8af72a"
+    },
+    {
+      "path": "validation/screenshots/P5-before.png",
+      "bytes": 260783,
+      "sha256": "9cd3eac0273ac848f29aadcd43c21d318d4a31d2956ac2975b99443c9388eac5"
+    },
+    {
+      "path": "validation/screenshots/P5-motion-a.png",
+      "bytes": 260121,
+      "sha256": "e69c84d1bdaff6b671d8f5c6895f7d7000dc30507e603685b9a8116774e210be"
+    },
+    {
+      "path": "validation/screenshots/P5-motion-b.png",
+      "bytes": 259268,
+      "sha256": "8fdca17308a7f5c319af12925fff71546a3db654cfe955c1008b3b739f96752b"
+    },
+    {
+      "path": "validation/screenshots/P5-after.png",
+      "bytes": 256468,
+      "sha256": "6bbf0b7dc1bed72f18bbb629183ae77fae2aa8809745da12908cebec61505e72"
+    },
+    {
+      "path": "validation/screenshots/P6-before.png",
+      "bytes": 255036,
+      "sha256": "cd6ae846c180f4ad09cd0d5c3888cd48a96ab519f840ed08ba110f556ce77a7d"
+    },
+    {
+      "path": "validation/screenshots/P6-vis.png",
+      "bytes": 272300,
+      "sha256": "21e310f34bd039b93b165615f2768b2f92843aee5c4e20b11ab2bbcc191b440a"
+    },
+    {
+      "path": "validation/screenshots/P6-after.png",
+      "bytes": 272185,
+      "sha256": "e3af3bbe1344d5adb76c87eff463adf76926bbccb4658bf83306b71d8389c695"
+    },
+    {
+      "path": "validation/screenshots/P7-before.png",
+      "bytes": 272835,
+      "sha256": "e145b447ecf87ea51a3ce42f418f679350a32530c4e7550b0bbcac73acf81928"
+    },
+    {
+      "path": "validation/screenshots/P7-motion-a.png",
+      "bytes": 271841,
+      "sha256": "fa53d8d1218a3938a775ecee5c3981136514da6ea46bb5123cf7a91328d164e5"
+    },
+    {
+      "path": "validation/screenshots/P7-motion-b.png",
+      "bytes": 272691,
+      "sha256": "82c9c533f66f91b96169fa7ea5a26c03eb249c6df0435e9d451f4539a8622edc"
+    },
+    {
+      "path": "validation/screenshots/P7-after.png",
+      "bytes": 273926,
+      "sha256": "cb064b15b1476e1c1d96fd5d81e07db2f6d519576a6bf70df9aae460a8786972"
+    },
+    {
+      "path": "validation/source-sha.json",
+      "bytes": 10158,
+      "sha256": "1b4f3f61bbf3651854b628e3a28b15f44f1c42047e3a8e0635493b392a29c975"
+    },
+    {
+      "path": "validation/build.log",
+      "bytes": 338,
+      "sha256": "1f6b688d78a8a7f02817619f730069ff81b627924b52a63cceec83be50c5078d"
+    },
+    {
+      "path": "validation/serve-log.json",
+      "bytes": 953,
+      "sha256": "79d3a6cddf4236ff4162cc39da7e1e5399933746257820817959901631514d68"
+    },
+    {
+      "path": "validation/probe-results.json",
+      "bytes": 20239,
+      "sha256": "0ba5412b4ad8324ef6c1b3e034f8c57a70548368892dcdef0bc7f268d2b9f073"
+    },
+    {
+      "path": "validation/console.json",
+      "bytes": 2214,
+      "sha256": "b4aed64af9ce51d091d6ccfdf40498420e8d5b65daf17cdd1f135743256fdd18"
+    },
+    {
+      "path": "validation/network.json",
+      "bytes": 804,
+      "sha256": "508e03f179454a389b8af7ecbd687d5cb039d5b6a6b2bb466d0b639fd0a561aa"
+    },
+    {
+      "path": "validation/perf.json",
+      "bytes": 136,
+      "sha256": "9db6d4419a2b3374ca7e243d090912b5dde73bbcbd5560a71e5a6e9a073e556d"
+    },
+    {
+      "path": "validation/report.json",
+      "bytes": 3947,
+      "sha256": "f50e966d04fdae3488ef7cf77f7dd911a3a6bbe8e45ea481999fe6dc467074b8"
+    },
+    {
+      "path": "validation/video.webm",
+      "bytes": 4187462,
+      "sha256": "4c311df26725caa793231d10b4e01c0fd050fbf595060771e8a890132f32b5e2"
+    },
+    {
+      "path": "WORKLOG.md",
+      "bytes": 6364,
+      "sha256": "48bac8a0bb327f881ffc20dd2bc715611f477ffa874b5637bc7857ac01b69a61"
+    },
+    {
+      "path": "REFERENCE-VERDICT.md",
+      "bytes": 3549,
+      "sha256": "38c58d8a4afb49760ee680c44f553273a0e7efe72c0ac9e31766276952ea9e11"
+    },
+    {
+      "path": "ceiling-notes.md",
+      "bytes": 9012,
+      "sha256": "836871602841d1ea1a8fc1f80a56bb3067233f2357aea5122429f5c61986aee3"
+    }
+  ],
+  "dist": [
+    {
+      "path": "dist/vendor/cocosair.module.js",
+      "bytes": 6422525
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco3d.js",
+      "bytes": 246
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/LICENSE.md",
+      "bytes": 12203
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_decoder.wasm",
+      "bytes": 285948
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_encoder.wasm",
+      "bytes": 370188
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_decoder_nodejs.js",
+      "bytes": 58763
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_encoder_nodejs.js",
+      "bytes": 49007
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/package.json",
+      "bytes": 25
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_decoder.cjs",
+      "bytes": 29400
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_decoder.mjs",
+      "bytes": 29059
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_encoder.mjs",
+      "bytes": 24348
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/LICENSE.md",
+      "bytes": 1079
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_encoder.js",
+      "bytes": 24348
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/index.js",
+      "bytes": 199
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/basis/LICENSE.md",
+      "bytes": 12400
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/basis/basis_transcoder.js",
+      "bytes": 62337
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/basis/basis_transcoder.wasm",
+      "bytes": 499935
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/MANIFEST.md",
+      "bytes": 4612
+    },
+    {
+      "path": "dist/app.js",
+      "bytes": 16436
+    }
+  ]
+}

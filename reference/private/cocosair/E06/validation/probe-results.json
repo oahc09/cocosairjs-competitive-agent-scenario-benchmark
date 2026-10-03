@@ -1,0 +1,646 @@
+{
+  "runId": "REF-E06-cocosair",
+  "generatedAt": "2026-10-02T10:28:52.334Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2515
+      },
+      "stateAssertion": {
+        "expr": "$.timeOfDay <= 0.25 && $.treeCount >= 12 && $.fireflyCount >= 16 && $.orbitEnabled == true && $.cameraOrbitAngle > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full + center-bottom",
+          "expect": "夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上部为深蓝夜空与星点"
+        },
+        "notes": [],
+        "expect": "夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上部为深蓝夜空与星点",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.1668,
+              "background": [
+                3,
+                5,
+                9
+              ]
+            },
+            {
+              "rect": {
+                "x": 256,
+                "y": 396,
+                "w": 768,
+                "h": 324
+              },
+              "litRatio": 0.0561,
+              "background": [
+                3,
+                5,
+                9
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0561
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 78,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.4420992440503541,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 0.3109999999999999,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 229,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.5104770179863063,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 0.9149599999999963,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4642
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:600",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 600
+            },
+            "raw": "wait:600",
+            "performed": "waited 600ms"
+          }
+        ],
+        "durationMs": 602
+      },
+      "stateAssertion": {
+        "expr": "$.fireLightIntensity >= 0 && $.fireLightIntensity <= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "center-bottom(篝火、被照地面与近处树干)",
+          "expect": "火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散到环境,而非仅火苗自身)"
+        },
+        "notes": [
+          "named region \"center-bottom(篝火、被照地面与近处树干)\" not geometric; fell back to full frame"
+        ],
+        "expect": "火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散到环境,而非仅火苗自身)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.3672
+            }
+          ],
+          "bestDiffRatio": 0.3672
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 358,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.5005579128319345,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 1.4309839999985667,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 394,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.4393968832562551,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 1.574983999998567,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-delta.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2711
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=day-night",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "day-night"
+            },
+            "raw": "click:ui=day-night",
+            "performed": "click @ (1224,25) ui=day-night"
+          }
+        ],
+        "durationMs": 149
+      },
+      "stateAssertion": {
+        "expr": "$.timeOfDay >= 0.9",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": "upper-third(天空)+ full",
+          "expect": "天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天"
+        },
+        "notes": [
+          "named region \"upper-third(天空)+ full\" not geometric; fell back to full frame"
+        ],
+        "expect": "天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天",
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.4079
+            }
+          ],
+          "bestDiffRatio": 0.4079,
+          "missing": []
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 521,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.4275981924933801,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 2.0829680000007156,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 800,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.48226108390511785,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 3.1989680000007197,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 8139
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:3000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 3000
+            },
+            "raw": "wait:3000",
+            "performed": "waited 3000ms"
+          }
+        ],
+        "durationMs": 3004
+      },
+      "stateAssertion": {
+        "expr": "$.cameraOrbitAngle >= 0.15 && $.orbitEnabled == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "full",
+          "expect": "环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变"
+        },
+        "notes": [],
+        "expect": "环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变",
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.5699
+            }
+          ],
+          "worstDiffRatio": 0.5699
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1014,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.6558293445000754,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 4.054903999998576,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1194,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.5297858189298579,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 4.77490399999859,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-motion-a.png",
+          "P4-motion-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 6360
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=orbit-toggle",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "orbit-toggle"
+            },
+            "raw": "click:ui=orbit-toggle",
+            "performed": "click @ (1224,61) ui=orbit-toggle"
+          }
+        ],
+        "durationMs": 109
+      },
+      "stateAssertion": {
+        "expr": "$.orbitEnabled == false",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "outer-frame(画面边缘的树/地平线区域)",
+          "expect": "相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)"
+        },
+        "notes": [
+          "named region \"outer-frame(画面边缘的树/地平线区域)\" not geometric; fell back to full frame"
+        ],
+        "expect": "相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)",
+        "metrics": {
+          "minRatio": 0.01,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.4294
+            }
+          ],
+          "bestDiffRatio": 0.4294
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1391,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.6334352353222253,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 5.562991999999321,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1422,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.6443937488513798,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 5.586991999999323,
+          "orbitEnabled": false,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-delta.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2661
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1224,97) ui=reset"
+          }
+        ],
+        "durationMs": 90
+      },
+      "stateAssertion": {
+        "expr": "$.timeOfDay <= 0.05 && $.orbitEnabled == true && $.cameraOrbitAngle < 0.6 && $.fireflyCount >= 16 && $.treeCount >= 12",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": "upper-third(天空)",
+          "expect": "回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点"
+        },
+        "notes": [
+          "named region \"upper-third(天空)\" not geometric; fell back to full frame"
+        ],
+        "expect": "回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点",
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.2507
+            }
+          ],
+          "bestDiffRatio": 0.2507,
+          "missing": []
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1551,
+          "ready": true,
+          "resetCount": 0,
+          "timeOfDay": 1,
+          "fireLightIntensity": 0.6433104470964092,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 5.586991999999323,
+          "orbitEnabled": false,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1617,
+          "ready": true,
+          "resetCount": 1,
+          "timeOfDay": 0,
+          "fireLightIntensity": 0.6065409625650378,
+          "fireflyCount": 20,
+          "cameraOrbitAngle": 0.24398400000214576,
+          "orbitEnabled": true,
+          "treeCount": 16,
+          "emberAlive": 60,
+          "flameParticleCount": 32
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-region-a.png",
+          "P6-region-b.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4428
+      }
+    }
+  ]
+}

@@ -1,0 +1,190 @@
+{
+  "runId": "REF-E09-three",
+  "generatedAt": "2026-10-02T12:12:22.738Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\three\\E09",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\briefs\\E09\\spec.json",
+    "briefId": "E09",
+    "briefVersion": "1.0.0",
+    "sha256": "32c1d152dbab1ade1017d00aaf464d6cc8feb9ccdbb188c73d5dd42b153b6668"
+  },
+  "pairId": null,
+  "engine": null,
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 4098,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  18.9kb\n\nDone in 15ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 4097ms\n"
+  },
+  "serve": {
+    "port": 7421,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\three\\E09"
+  },
+  "ready": {
+    "appReady": true,
+    "benchReady": true,
+    "durationMs": 4261
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 1,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [
+    {
+      "probeId": "P1",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P2",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P3",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P4",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P5",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P6",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P7",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    },
+    {
+      "probeId": "P8",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": null
+    }
+  ],
+  "probeResults": "probe-results.json",
+  "probePassRate": 1,
+  "fps": 60.2,
+  "perf": {
+    "fps": 60.2,
+    "frames": 181,
+    "sampleMs": 3005,
+    "sampledAt": "2026-10-02T12:13:13.684Z",
+    "minFpsSpec": 30,
+    "fpsMet": true
+  },
+  "downloads": [
+    {
+      "filename": "gem-stage-1790943178063-1.png",
+      "bytes": 596157,
+      "error": null
+    },
+    {
+      "filename": "gem-stage-1790943181189-2.png",
+      "bytes": 596865,
+      "error": null
+    }
+  ],
+  "networkEvents": {
+    "count": 20,
+    "totalBytes": 2414801
+  },
+  "screenshots": [
+    "initial.png",
+    "mid.png",
+    "final.png",
+    "extra-1.png",
+    "extra-2.png",
+    "P1-before.png",
+    "P1-vis.png",
+    "P1-after.png",
+    "P2-before.png",
+    "P2-region-a.png",
+    "P2-region-b.png",
+    "P2-after.png",
+    "P3-before.png",
+    "P3-region-a.png",
+    "P3-region-b.png",
+    "P3-after.png",
+    "P4-before.png",
+    "P4-region-a.png",
+    "P4-region-b.png",
+    "P4-after.png",
+    "P5-before.png",
+    "P5-region-a.png",
+    "P5-region-b.png",
+    "P5-after.png",
+    "P6-before.png",
+    "P6-vis.png",
+    "P6-after.png",
+    "P7-before.png",
+    "P7-motion-a.png",
+    "P7-motion-b.png",
+    "P7-after.png",
+    "P8-before.png",
+    "P8-region-a.png",
+    "P8-region-b.png",
+    "P8-after.png"
+  ],
+  "video": "video.webm",
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "probe-results.json",
+    "console.json",
+    "video.webm",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "PASS",
+  "failureCategory": null,
+  "verdict": "PASS",
+  "error": null,
+  "scoreInputs": {
+    "s1": {
+      "buildPass": true,
+      "readyNoError": true,
+      "firstShotNonBlank": true,
+      "firstShotLitRatio": 0.8379
+    },
+    "s2": {
+      "passedWeight": 8,
+      "totalWeight": 8,
+      "probePassRate": 1,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": true,
+      "lifecycleProbeId": "P8",
+      "fpsMet": true,
+      "minFps": 30
+    }
+  },
+  "durationMs": 51803,
+  "finishedAt": "2026-10-02T12:13:14.535Z"
+}

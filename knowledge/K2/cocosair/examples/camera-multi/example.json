@@ -1,0 +1,311 @@
+{
+  "id": "camera-multi",
+  "version": "1.0.0",
+  "title": "Multi Camera",
+  "category": "camera",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握多相机：viewport 矩形切分屏幕、priority 控制渲染顺序",
+    "points": [
+      "用 camera.visibility + Layers 控制每台相机的可见层级",
+      "用 priority 决定相机渲染次序",
+      "用 ClearFlag.DEPTH_ONLY 保留颜色缓冲叠加渲染"
+    ]
+  },
+  "effect": {
+    "functional": "BaseCamera（priority 0）只渲染 DEFAULT 层（Floor+BlueSphere，SOLID_COLOR 清屏）；OverlayCamera（priority 1）只渲染 UI_2D 层的 OrangeSphere，clearFlags=DEPTH_ONLY 保留底层颜色实现叠加。",
+    "visual": "地面与蓝球由基础相机呈现，橙球由叠加相机画在同一画面上（两层内容同屏可见，且橙球位置正确遮挡/被遮挡于空间中）"
+  },
+  "api": {
+    "primary": ["Camera", "Layers"],
+    "supporting": ["Layers.Enum", "Node.setPosition"],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Layers",
+      "Layers.Enum",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.sphere",
+      "primitives.plane",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": ["用两份 canvas 冒充分屏", "把另一台相机 viewport 设为全屏互相覆盖"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L25"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L36"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L74"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "Layers.Enum",
+        "validator": "node-exists",
+        "source": "src/main.ts",
+        "sourceLocation": "L45"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L50"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L30"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L57"
+      },
+      {
+        "api": "primitives.plane",
+        "validator": "node-exists",
+        "source": "src/main.ts",
+        "sourceLocation": "L49"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L39"
+      }
+    ]
+  },
+  "capabilities": ["camera"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Light", "Floor", "BlueSphere", "OrangeSphere", "BaseCamera", "OverlayCamera"]
+    }
+  },
+  "interaction": {
+    "steps": []
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "node-count", "no-runtime-error", "material-property", "transform-equals"],
+    "interaction": [],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 38,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      },
+      "Floor": {
+        "position": [0, 0, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 47,
+            "text": "floor.setPosition(new Vec3(0, 0, 0));"
+          }
+        ]
+      },
+      "BlueSphere": {
+        "position": [-1.2, 0.6, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 55,
+            "text": "blueSphere.setPosition(new Vec3(-1.2, 0.6, 0));"
+          }
+        ]
+      },
+      "OrangeSphere": {
+        "position": [1.4, 0.6, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 64,
+            "text": "orangeSphere.setPosition(new Vec3(1.4, 0.6, 0));"
+          }
+        ]
+      },
+      "BaseCamera": {
+        "position": [0, 2.2, 6.5],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 72,
+            "text": "baseCamNode.setPosition(new Vec3(0, 2.2, 6.5));"
+          }
+        ]
+      },
+      "OverlayCamera": {
+        "position": [0, 2.2, 6.5],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 87,
+            "text": "overlayCamNode.setPosition(new Vec3(0, 2.2, 6.5)); overlayCamNode.lookAt(new Vec3(0.1, 0.6"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "Floor": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [80, 90, 110, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 50,
+              "text": "new Color(80, 90, 110, 255)"
+            }
+          }
+        }
+      },
+      "BlueSphere": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [65, 155, 235, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 58,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      },
+      "OrangeSphere": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [235, 125, 65, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 67,
+              "text": "new Color(235, 125, 65, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "e428c783e31d",
+    "source": "7fec7450acdbcb31",
+    "candidate": "0b9588dc80fd7afd",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
+}

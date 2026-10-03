@@ -1,0 +1,281 @@
+{
+  "id": "camera-lookat",
+  "version": "1.0.0",
+  "title": "Camera LookAt",
+  "category": "camera",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "理解相机瞄准目标的数学：由方向向量求 pitch/yaw 欧拉角并施加 setRotationFromEuler",
+    "points": [
+      "相机默认朝向 -Z 的欧拉角语义",
+      "pitch = atan2(dy, len(dxz))，yaw = atan2(-dx, -dz)",
+      "点击切换目标后相机朝向即时变化"
+    ]
+  },
+  "effect": {
+    "functional": "相机初始瞄准 TargetLeft；点击后用 aimAt 重算欧拉角瞄准 TargetRight；cameraNode.eulerAngles 随目标切换改变。",
+    "visual": "初始画面以蓝色球为中心，点击后取景中心跳到橙色球，相机角度切换干脆无插值"
+  },
+  "api": {
+    "primary": ["Camera", "Node.setRotationFromEuler"],
+    "supporting": ["input", "Input"],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "input",
+      "Input",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.sphere",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": ["移动相机位置冒充朝向变化", "调用不存在的 Camera.lookAt（当前 Inventory 无此 API）"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L27"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L29"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L38"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L54"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L94"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L47"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L34"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L62"
+      },
+      {
+        "api": "primitives.sphere",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L62"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L40"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L80"
+      }
+    ]
+  },
+  "capabilities": ["camera"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Main Light", "TargetLeft", "TargetRight"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）一次",
+        "expected": "瞄准目标切换到 TargetRight：cameraNode 的 yaw 从约 -37° 变为约 +37°，画面中心从蓝球变为橙球（frame-diff 可测）"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产（程序化图元）"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [0, 2.5, 7],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 40,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.5, 7));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 52,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      },
+      "TargetLeft": {
+        "position": [-3, 0.6, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 60,
+            "text": "leftSphere.setPosition(new Vec3(-3, 0.6, 0));"
+          }
+        ]
+      },
+      "TargetRight": {
+        "position": [3, 0.6, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 68,
+            "text": "rightSphere.setPosition(new Vec3(3, 0.6, 0));"
+          }
+        ]
+      }
+    },
+    "material-property": {
+      "TargetLeft": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [65, 155, 235, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 63,
+              "text": "new Color(65, 155, 235, 255)"
+            }
+          }
+        }
+      },
+      "TargetRight": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [235, 125, 65, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 71,
+              "text": "new Color(235, 125, 65, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "promotion": {
+    "spec": "466cfd2b2403",
+    "source": "ef1843dfdc0ab7c7",
+    "candidate": "0b9588dc80fd7afd",
+    "verified": 19,
+    "attested": 0,
+    "units": 19
+  }
+}

@@ -1,0 +1,230 @@
+# benchmark.yaml — CocosAirJS Competitive Agent Scenario Benchmark
+# 实验主配置(M0 Contract Freeze 交付物 4/6)
+# 版本 1.0.0 | 冻结于 2026-10-02 | 状态 FROZEN(G0)
+# 所有路径相对 bench/ 根目录。修改本文件必须重新执行 G0 CONTRACT_FREEZE。
+
+benchmark:
+  name: CocosAirJS Competitive Agent Scenario Benchmark
+  subtitle: Paired Three.js vs Cocos AIR Complex-Scene Evaluation
+  version: 1.0.0
+  frozen: true
+  frozenAt: "2026-10-02"
+  positioning: >-
+    分离 Engine Ceiling 与 Agent Attainment,产出 CocosAirJS 可执行路线图输入;
+    不是排行榜。不替代 Engine Gate / Agent Gate / 100+ Benchmark / Recipe Gate /
+    Example Gate / API Coverage Gate。
+  forbiddenReplacements:
+    - 不得用本实验 10 个复杂场景替代现有 100+ Agent Benchmark
+    - 不得用综合平均分替代 Engine Gate / Agent Gate 的硬门禁
+    - 不得将 Benchmark Reference 直接计为 stable Example
+    - 不得因 AIR 某场景不可实现而从产品能力比较中删除
+    - 不得让两侧 Agent 看到对方代码、日志、思路、浏览器状态或结果
+    - 不得用同一个 Conversation 同时修改两个引擎工程
+
+engines:
+  three:
+    package: three@0.186.1
+    source: npm-registry
+    install: npm ci(锁定 lockfile)
+  cocosair:
+    package: cocosair.js@1.0.0
+    source: local-tgz
+    tarball: vendor/cocosair.js-1.0.0.tgz
+    note: K0 知识包使用剔除 docs/ 后的重打包版本,见 knowledge/*/manifest.json
+
+# ---------------------------------------------------------------------------
+# 场景表(E01–E10;domains 取自计划书 §8 各场景"覆盖/子系统"清单)
+scenes:
+  E01:
+    title: 深空星系巡航
+    domains: [Procedural, Particles, Animation, Camera, UI]
+    assetDriven: false
+    assets: []
+    performanceFloor: { minFps: 30, particleScale: ">=50000 星点" }
+  E02:
+    title: 落日海面与孤舟
+    domains: [AssetLoading, SceneGraph, Material, Animation, Shader, Lifecycle, Camera]
+    assetDriven: true
+    assets: [{ path: assets/boat.glb, required: true }]
+  E03:
+    title: 太阳系仪
+    domains: [Hierarchy, Animation, Picking, UI, State]
+    assetDriven: false
+    assets: []
+  E04:
+    title: 城市烟花夜
+    domains: [Procedural, Particles, Timeline, Input, State]
+    assetDriven: false
+    assets: []
+  E05:
+    title: 黑洞吸积盘
+    domains: [Shader, Postprocess, Particles, Material, Camera]
+    assetDriven: false
+    assets: []
+    note: 探测 Shader freedom / Blend / Postprocess / Bloom substitute / Visual ceiling;
+          不得因 AIR Reference 不可达同等观感而删除该场景
+  E06:
+    title: 荒野篝火营地
+    domains: [Procedural, Particles, DynamicLight, State, Camera]
+    assetDriven: false
+    assets: []
+  E07:
+    title: 霓虹夜城
+    domains: [Instancing, Emission, Animation, Atmosphere, Scale]
+    assetDriven: false
+    assets: []
+    performanceFloor: { minFps: 30 }
+  E08:
+    title: 深海鱼群
+    domains: [Simulation, Interaction, Procedural, Particles, State]
+    assetDriven: false
+    assets: []
+    performanceFloor: { fishCount: ">=80" }
+  E09:
+    title: 珠宝展示台
+    domains: [Material, Lighting, Camera, Interaction, ScreenshotExport]
+    assetDriven: optional            # gem.glb 为可选共享资产
+    assets: [{ path: assets/gem.glb, required: false }]
+    note: 测 Material ceiling / Reflection-Refraction / Lighting / Camera transition /
+          PNG 导出;AIR Ceiling 低则计入 Product Capability Gap
+  E10:
+    title: 动画角色展示空间
+    domains: [AssetLoading, Skeleton, Animation, InstanceIsolation, Material, SceneGraph, Lifecycle]
+    assetDriven: true
+    assets: [{ path: assets/character.glb, required: true }]
+    note: 与 CocosAirJS Code First / Runtime Asset 路线高度相关的核心场景
+
+# ---------------------------------------------------------------------------
+# Track 矩阵
+tracks:
+  trackA_engineCeiling:
+    description: 每 scene×engine 由 Human/trusted Reference 实现并给出 verdict
+    matrix: 10 scenes × 2 engines = 20 references
+    verdicts: [FEASIBLE, ENGINE_LIMITED, ENGINE_UNAVAILABLE, SPEC_INVALID]
+    output: reference/private/{three,cocosair}/E*/    # 永不挂载进 Agent 可读 workspace
+
+  trackB_pairedAgent:
+    description: 主实验
+    scenes: [E01, E02, E03, E04, E05, E06, E07, E08, E09, E10]
+    knowledgeLevels: [K0, K1]
+    repetitions: 3                    # N=3
+    pairs: 60
+    runs: 120
+    order: interleaved-randomized-balanced   # 禁止先全部 Three 再全部 AIR
+
+  trackC_knowledgeAblation:
+    description: K2 消融,验证 Patterns/Recipes/Examples/Skill 价值
+    scenes: [E02, E05, E08, E10]
+    knowledgeLevels: [K2]
+    repetitions: 3
+    pairs: 12
+    runs: 24
+
+  trackD_blindPreference:
+    description: 同 scene×knowledge 的 Three/AIR 输出盲评
+    uniqueComparisonsPerSlice: 9      # 3 Three 输出 × 3 AIR 输出
+    judgePassesPerComparison: 2       # 最少 2 次独立 judge pass;不一致追加第 3 次决定性 pass
+    tieAllowed: true
+    abOrderRandomized: true
+    humanSamplingRate: 0.10           # 至少 10% 人工抽检
+    disagreementBlockThreshold: 0.20  # judge vs 人工 disagreement > 20% → G7 BLOCKED
+    statistics: [PreferenceWinRate, TieRate, BradleyTerry, BootstrapCI]
+    anonymization:
+      labels: [engine-A, engine-B]
+      forbiddenInMaterial: [engine name, package name, path, source code, console, logo]
+
+  pilot:
+    description: M6 前置验证,不计入 Track B 统计
+    scenes: [E01, E02, E05, E10]
+    knowledgeLevels: [K0]
+    repetitions: 1
+    pairs: 4
+    runs: 8
+
+# ---------------------------------------------------------------------------
+# Pair 规则
+pairing:
+  startDeltaMaxSeconds: 30            # 超出必须记录实际时间戳并标记,不得隐瞒
+  armRandomization: balanced-abba     # R1 A=Three B=AIR;R2 A=AIR B=Three;交替
+  developmentPhase: 两 Arm 可并行,但隔离 workspace/process/browser profile/port/temp/storage/logs/artifact
+  formalValidation:
+    workerMode: single-machine
+    rule: serial-only                 # 正式性能采样/录屏验证禁止同时测(§3.5)
+    order: per-pair random            # Pair1 Three→AIR;Pair2 AIR→Three;随机
+  immutableConfigFields:              # 全量清单见 docs/benchmark-contract.md §3
+    [pairId, sceneId, knowledgeProfile, repetition,
+     agentBinaryHash, modelId, modelRevision, systemPromptHash, toolPolicyHash,
+     briefHash, assetSetHash, budgetConfigHash,
+     threePackageHash, airPackageHash, threeKnowledgeHash, airKnowledgeHash,
+     threeTemplateHash, airTemplateHash,
+     nodeVersion, packageManagerVersion, browserVersion, os, gpu, graphicsBackend,
+     startTimestampA, startTimestampB, workerA, workerB]
+  driftPolicy: 配置漂移使 Pair 失效或单列
+
+# ---------------------------------------------------------------------------
+# 统计方法(口径见 docs/metric-spec.md)
+statistics:
+  tieThreshold:
+    metric: PairedRawDelta
+    rule: abs(rawDelta) <= 3
+    unit: points                      # 冻结:|rawDelta| ≤ 3 分记 TIE
+    winRule: rawDelta > 3 → AIR_win;rawDelta < -3 → Three_win
+  methods:
+    - median
+    - iqr
+    - pairedDelta                     # AIR − Three,按 Pair
+    - bootstrapCI                     # 95%,2000 次重抽,percentile 法,对 Pair 重抽
+    - winTieLoss
+    - failureDistribution             # scene × engine × failure
+  optionalMethods: [pairedPermutation, wilcoxonSignedRank]
+  n3Discipline:
+    forbiddenStatement: "0/3 vs 3/3 = 确定性差距"
+    allowedStatement: observed strong separation
+  escalationN5:                       # 头条场景加密,触发条件在看结果前冻结
+    from: 3
+    to: 5
+    trigger:
+      condition: (abs(medianPairedRawDelta) > 30 or iqr > 15) and productDecisionDepends
+      frozenBefore: results-viewing
+    fairnessRule: 不得只选择对 AIR 有利的场景加密;Three 侧同等触发必须一并加密
+    addRepetitionsOnly: true          # 只增补 R04/R05,不改动 R01–R03
+
+# ---------------------------------------------------------------------------
+# Gate 清单(判据与证据要求见 docs/benchmark-contract.md §5)
+gates:
+  G0: { name: CONTRACT_FREEZE,          evidence: gates/G0.json }
+  G1: { name: TEMPLATE_EQUIVALENCE,     evidence: gates/G1.json }
+  G2: { name: ISOLATION,                evidence: gates/G2.json }
+  G3: { name: REFERENCE_FEASIBILITY,    evidence: gates/G3.json }
+  G4: { name: HARNESS_TRUST,            evidence: gates/G4.json }
+  G5: { name: PILOT_VALIDITY,           evidence: gates/G5.json }
+  G6: { name: CORE_MATRIX_COMPLETENESS, evidence: gates/G6.json }
+  G7: { name: BLIND_JUDGE_VALIDITY,     evidence: gates/G7.json }
+  G8: { name: EVIDENCE_COMPLETENESS,    evidence: gates/G8.json }
+  policy: 任何关键 Gate FAIL/BLOCKED 不得通过平均分掩盖
+
+# ---------------------------------------------------------------------------
+# 里程碑与推荐顺序(计划书 §25/§32)
+milestones:
+  order: [M0, M1, M2, M3, M4, M5, M6, M7, M8, M9, M10, M11]
+  parallelAfterM7: { M8: k2Ablation, M9: blindPreference }   # M7 后可并行
+  notes:
+    - M6 Pilot 后允许修 harness/协议/未冻结错误,然后 freeze benchmark contract
+    - Reference(M4)完成后不得边跑 Agent 边修改 Brief;修改必须回 M1 重冻结
+    - 禁止删除失败 trial;Invalid Run 保留记录
+
+# ---------------------------------------------------------------------------
+# 路径映射(全部相对 bench/)
+paths:
+  briefs: briefs/                      # briefs/E*/{brief.md, spec.json}
+  templates: templates/                # templates/{three, cocosair}
+  assets: assets/                      # 共享资产(Agent 只读)
+  knowledge: knowledge/                # knowledge/{K0,K1,K2}/{three,cocosair}
+  referencePrivate: reference/private/ # 永不挂载进 Agent 可读 workspace
+  harness: harness/
+  results: results/                    # results/<pair-id>/{pair.json, arm-a/, arm-b/, validation/, blind/}
+  reports: reports/                    # reports/latest/
+  gates: gates/
+  vendor: vendor/                      # vendor/cocosair.js-1.0.0.tgz
+  config: config/
+  docs: docs/

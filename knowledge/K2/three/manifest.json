@@ -1,0 +1,4738 @@
+{
+  "engine": "three",
+  "level": "K2",
+  "version": "three@0.186.1",
+  "curatedAt": "2026-10-02",
+  "sources": [
+    "K1 包(README + manual + docs markdown) + 源码快照 E:\\AIProMax\\Y2026M09\\cocosairjs-vs-threejs\\three.js-r186/examples: 19 个通用模式示例(代码内联于 html module script)"
+  ],
+  "domainCoverage": {
+    "Scene setup": {
+      "status": "yes",
+      "evidence": [
+        "docs/pages/Scene.html.md",
+        "examples/webgl_shadowmap.html"
+      ]
+    },
+    "Camera": {
+      "status": "yes",
+      "evidence": [
+        "docs/pages/OrbitControls.html.md",
+        "examples/misc_controls_orbit.html",
+        "examples/webgl_camera_array.html"
+      ]
+    },
+    "Material": {
+      "status": "yes",
+      "evidence": [
+        "manual/pages/materials.html",
+        "examples/webgl_materials_blending.html",
+        "examples/webgl_materials_normalmap.html",
+        "examples/webgl_lights_spotlight.html"
+      ]
+    },
+    "Animation": {
+      "status": "yes",
+      "evidence": [
+        "manual/pages/animation-system.html",
+        "examples/webgl_animation_keyframes.html",
+        "examples/webgl_animation_skinning_morph.html"
+      ]
+    },
+    "Asset load": {
+      "status": "yes",
+      "evidence": [
+        "docs/pages/GLTFLoader.html.md",
+        "examples/webgl_loader_gltf.html"
+      ]
+    },
+    "Input": {
+      "status": "yes",
+      "evidence": [
+        "examples/webgl_interactive_buffergeometry.html",
+        "examples/misc_controls_transform.html",
+        "examples/misc_controls_orbit.html"
+      ]
+    },
+    "Shader": {
+      "status": "yes",
+      "evidence": [
+        "docs/pages/ShaderMaterial.html.md",
+        "examples/webgl_buffergeometry_custom_attributes_particles.html"
+      ]
+    },
+    "Postprocess": {
+      "status": "yes",
+      "evidence": [
+        "examples/webgl_postprocessing.html",
+        "examples/webgl_postprocessing_unreal_bloom.html",
+        "examples/webgl_points_dynamic.html"
+      ]
+    },
+    "Particles": {
+      "status": "yes",
+      "evidence": [
+        "docs/pages/Points.html.md",
+        "examples/webgl_points_dynamic.html",
+        "examples/webgl_sprites.html"
+      ]
+    }
+  },
+  "curationRule": "不含当前 benchmark 场景答案型内容",
+  "excludedForLeakage": [
+    {
+      "name": "webgpu_tsl_galaxy",
+      "reason": "E01 深空星系:同名星系示例即答案级实现"
+    },
+    {
+      "name": "webgl_shaders_ocean",
+      "reason": "E02 落日海面:海面着色器为答案级实现"
+    },
+    {
+      "name": "webgpu_ocean",
+      "reason": "E02 落日海面:海洋示例"
+    },
+    {
+      "name": "webgpu_water",
+      "reason": "E02 落日海面:水面示例"
+    },
+    {
+      "name": "webgl_gpgpu_water",
+      "reason": "E02 落日海面:GPGPU 水面模拟"
+    },
+    {
+      "name": "webgpu_compute_water",
+      "reason": "E02 落日海面:compute 水面"
+    },
+    {
+      "name": "webgpu_backdrop_water",
+      "reason": "E02 落日海面:水面背景"
+    },
+    {
+      "name": "webgpu_tsl_earth",
+      "reason": "E03 太阳系仪:行星体同类主题"
+    },
+    {
+      "name": "webgpu_generator_city",
+      "reason": "E07 霓虹夜城:程序化城市生成即答案级实现"
+    },
+    {
+      "name": "webgpu_volume_fire",
+      "reason": "E06 荒野篝火:体积火焰为答案级实现"
+    },
+    {
+      "name": "webgl_gpgpu_birds",
+      "reason": "E08 深海鱼群:群体行为模拟同构(boids)"
+    },
+    {
+      "name": "webgl_gpgpu_birds_gltf",
+      "reason": "E08 深海鱼群:GPGPU 群体 + glTF"
+    },
+    {
+      "name": "webgpu_compute_birds",
+      "reason": "E08 深海鱼群:compute 群体行为"
+    },
+    {
+      "name": "webgl_materials_envmaps",
+      "reason": "E09 珠宝展示:环境反射材质为该场景核心视觉手段"
+    },
+    {
+      "name": "webgl_loader_gltf_transmission",
+      "reason": "E09 珠宝展示:透射材质同主题"
+    },
+    {
+      "name": "webgl_loader_gltf_iridescence",
+      "reason": "E09 珠宝展示:虹彩材质同主题"
+    },
+    {
+      "name": "webgl_loader_gltf_dispersion",
+      "reason": "E09 珠宝展示:色散材质同主题"
+    },
+    {
+      "name": "webgl_loader_gltf_sheen",
+      "reason": "E09 珠宝展示:光泽材质同主题"
+    }
+  ],
+  "excludedForScope": [
+    {
+      "name": "manual/resources/, manual/examples/",
+      "reason": "manual 配套纹理/模型与可运行 demo(56MB+152MB), 非文档正文, 超出知识包体积边界"
+    },
+    {
+      "name": "docs/pages/*.html",
+      "reason": "与 .html.md 内容重复, 仅保留机器可读 markdown"
+    },
+    {
+      "name": "docs/llms-full.txt",
+      "reason": "docs/pages markdown 的拼接重复"
+    },
+    {
+      "name": "docs/search.json",
+      "reason": "文档站搜索索引, 非知识内容"
+    },
+    {
+      "name": "webgpu_*/tsl 系示例",
+      "reason": "实验只跑 WebGL2 路径, WebGPU/TSL 不在对照面内(其中主题同名者另入泄漏清单)"
+    }
+  ],
+  "notes": "示例为官方通用模式(instancing/points/gltf/controls/postprocessing 等), 全部经主题筛查: 与 E01-E10 同名或同构的主题示例(星系/海面/水面/行星/城市/火焰/鸟群/珠宝反射材质系)已排除, 见 excludedForLeakage。示例引用的模型/纹理资产不在包内, Agent 以模式阅读为主。",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "d553d824625a07d7690de93af6f8daf13d6aaed42700929d7ce4e725fa5ef10d",
+      "bytes": 2969
+    },
+    {
+      "path": "docs/llms.txt",
+      "sha256": "a6d40bb78862c8891b0c619c36bd22c827f5ef716e98091cc80dae0d29a82913",
+      "bytes": 5404
+    },
+    {
+      "path": "docs/pages/AMFLoader.html.md",
+      "sha256": "ceb299b50c7eeedd490b8ad7f0b08432afe4551a7dd06e8bc041e6be554982f8",
+      "bytes": 1553
+    },
+    {
+      "path": "docs/pages/AONode.html.md",
+      "sha256": "abcce4403a50d40d90a8964946832f8af4ac73157800decbe361bca8465af670",
+      "bytes": 635
+    },
+    {
+      "path": "docs/pages/ARButton.html.md",
+      "sha256": "5e956405b22bc473c2f417fb204ae80e1feecf66c7c4711db76c53847a61099c",
+      "bytes": 957
+    },
+    {
+      "path": "docs/pages/AfterImageNode.html.md",
+      "sha256": "e3ec8aff15b9624541f41e2eebe335fe22eb0ced9bc5109ba7e183bfbdb1c6f5",
+      "bytes": 2282
+    },
+    {
+      "path": "docs/pages/AfterimagePass.html.md",
+      "sha256": "74cb0aea8616250241e45cc1d83de330a52c4601d338e87a47741ebf42d588af",
+      "bytes": 2145
+    },
+    {
+      "path": "docs/pages/AmbientLight.html.md",
+      "sha256": "f0aba2b0668142b30cfb2b91db1d62a7ace0cd7d6db846849f29e153f1de4a0c",
+      "bytes": 806
+    },
+    {
+      "path": "docs/pages/AmbientLightDataNode.html.md",
+      "sha256": "021b9349caa4f7949e55160f4c3210e89c6044cbc1099bee64fb8012e841ba0f",
+      "bytes": 351
+    },
+    {
+      "path": "docs/pages/AmbientLightNode.html.md",
+      "sha256": "f5c9199422987acc2a043dff502c5743bd0abf17ef115793f8e81ad883e35d63",
+      "bytes": 454
+    },
+    {
+      "path": "docs/pages/AmmoPhysics.html.md",
+      "sha256": "b7d2106726410ef015947796130e135ff7730af3e70384962257b0c71bfc1b81",
+      "bytes": 1794
+    },
+    {
+      "path": "docs/pages/AnaglyphEffect.html.md",
+      "sha256": "2c62451f122973047243368f0a3abe03965cfc512e18316586e3839b8cea8861",
+      "bytes": 2371
+    },
+    {
+      "path": "docs/pages/AnaglyphPassNode.html.md",
+      "sha256": "c1facddfcc7c615f18635441367f1bb5d9ddd4af1e5304668f1920bdaf5ad2ee",
+      "bytes": 2588
+    },
+    {
+      "path": "docs/pages/AnalyticLightNode.html.md",
+      "sha256": "4dc3bcbe3030f2c03a36b11fec073eefae091b40c334a5e1a485a5bf785eab62",
+      "bytes": 3518
+    },
+    {
+      "path": "docs/pages/AnimationAction.html.md",
+      "sha256": "e99311d0c2bc5fd96faf048c89e957dc80361579bfd8b4a038501a0b9bfaa20c",
+      "bytes": 8106
+    },
+    {
+      "path": "docs/pages/AnimationClip.html.md",
+      "sha256": "f9d06e78dbe70487769fcec5b2a31f104c36cb45e109bb8b50313d4c07fea383",
+      "bytes": 4689
+    },
+    {
+      "path": "docs/pages/AnimationClipCreator.html.md",
+      "sha256": "a14f8765711a817b1f3046e801cdd457c54e3b244455cae065f35d18cb10ab7c",
+      "bytes": 2418
+    },
+    {
+      "path": "docs/pages/AnimationLoader.html.md",
+      "sha256": "93a2b3a81f9d8f14ab87399e783a10d5c9236aa4120704fda54c1ca3669ebcc0",
+      "bytes": 1408
+    },
+    {
+      "path": "docs/pages/AnimationMixer.html.md",
+      "sha256": "599e28c12a98e65501d5f3b23039aacd61a1f284a477387777588570aff6b8d9",
+      "bytes": 3879
+    },
+    {
+      "path": "docs/pages/AnimationObjectGroup.html.md",
+      "sha256": "4a02203d8cdffbfd615d76eeadaea7916d30b740ed2fd6ee7dc9186f35cd7dd4",
+      "bytes": 1635
+    },
+    {
+      "path": "docs/pages/AnimationPathHelper.html.md",
+      "sha256": "62dfba4c5990909b59675022dffb5c023599660e29931c86671409e5ff99cf20",
+      "bytes": 2621
+    },
+    {
+      "path": "docs/pages/AnimationUtils.html.md",
+      "sha256": "93cddd40818ac8d53e70e0f8e6612d4f60df10f001d52d19ec9052efa21c0dce",
+      "bytes": 2696
+    },
+    {
+      "path": "docs/pages/ArcCurve.html.md",
+      "sha256": "1cca348241530e73520319402be5cc10bd3cb4cc4a7682e4edad0a77693a5ebd",
+      "bytes": 988
+    },
+    {
+      "path": "docs/pages/ArcballControls.html.md",
+      "sha256": "8358ae4da09cde32fbbe588b5e55638118927fe79076cf5bf7ec683b92ae2c96",
+      "bytes": 7388
+    },
+    {
+      "path": "docs/pages/ArrayCamera.html.md",
+      "sha256": "a923791af74b829c85ce39030cb7526096414036785033fe465d4c396268a5ef",
+      "bytes": 1092
+    },
+    {
+      "path": "docs/pages/ArrayElementNode.html.md",
+      "sha256": "3d71430b98b6103ad4bbc78e31691ea41e41f44da20aac0600df3e3ea5abf8db",
+      "bytes": 1330
+    },
+    {
+      "path": "docs/pages/ArrayNode.html.md",
+      "sha256": "6f894e1e8e5dfe128e317f4fe925a6d3a721916b400ee938acfa97b57e1d9ae9",
+      "bytes": 2240
+    },
+    {
+      "path": "docs/pages/ArrowHelper.html.md",
+      "sha256": "f5f68cbdb4e0d754c201f7c2aa99cfe782e5183d0d0962c1c185e3e702bf8deb",
+      "bytes": 2065
+    },
+    {
+      "path": "docs/pages/AsciiEffect.html.md",
+      "sha256": "ec72bd1f8955f6c38e8e06fab071e994be10c77eb79dc5945868891f3bd831c8",
+      "bytes": 2124
+    },
+    {
+      "path": "docs/pages/AssignNode.html.md",
+      "sha256": "19cb3dc44fd18bab26d58d72fbcd172a8a6eddd020d28108547de051c749a728",
+      "bytes": 1352
+    },
+    {
+      "path": "docs/pages/AtomicFunctionNode.html.md",
+      "sha256": "834aa753209f002d773c69ebf924c3b443fedf9eb23e76307d4834f88f17e01d",
+      "bytes": 1882
+    },
+    {
+      "path": "docs/pages/AttributeNode.html.md",
+      "sha256": "174a55f9c48924383f9d67777b3397ae5c15db217b7322896432984132fed7db",
+      "bytes": 1200
+    },
+    {
+      "path": "docs/pages/Audio.html.md",
+      "sha256": "6ace360a57d48712c27de044d37e83a190fbe2251a80b8bc3aff02b4d073bc77",
+      "bytes": 8524
+    },
+    {
+      "path": "docs/pages/AudioAnalyser.html.md",
+      "sha256": "fcb652dea0c5399e7c59e3dc0a2571c8f90cf90395c3237386ee9dcb360778f3",
+      "bytes": 1868
+    },
+    {
+      "path": "docs/pages/AudioContext.html.md",
+      "sha256": "085d11afaede8c14ebcbc81727a8f0a9c4dc5b4dd309af83d6aa11c771f0d7b0",
+      "bytes": 467
+    },
+    {
+      "path": "docs/pages/AudioListener.html.md",
+      "sha256": "8c37df8376a35514b23f1bcb5ced034ee2d676fc73fd22f640c8e97786d0cfb1",
+      "bytes": 2031
+    },
+    {
+      "path": "docs/pages/AudioLoader.html.md",
+      "sha256": "efd9d5a9ba867b797b751a9a160e3303edea25727381b69d5b59f08b527455e3",
+      "bytes": 1201
+    },
+    {
+      "path": "docs/pages/AxesHelper.html.md",
+      "sha256": "2efb1e1b0d866f255dc4651bbc71f39de60abde4102af3efe849614d8451e268",
+      "bytes": 1157
+    },
+    {
+      "path": "docs/pages/BVHLoader.html.md",
+      "sha256": "53c164dae51c123bbf4739a6c06dd5203c6f4977e91525509f53155d5d0e2da8",
+      "bytes": 2114
+    },
+    {
+      "path": "docs/pages/Backend.html.md",
+      "sha256": "d872a59d336d74cccdc3d346f7e0488eedb988624ee56ad65a65be4190015e76",
+      "bytes": 15089
+    },
+    {
+      "path": "docs/pages/BarrierNode.html.md",
+      "sha256": "10b67fbf1e18bb359b0c735be07c6770bab6da9142521ec6fa2aad432bab89d5",
+      "bytes": 469
+    },
+    {
+      "path": "docs/pages/BasicEnvironmentNode.html.md",
+      "sha256": "522f76737ff3c802079b91e61cc6a1fbf18c5d5f3036c50f209c2ed4d1193596",
+      "bytes": 822
+    },
+    {
+      "path": "docs/pages/BasicLightMapNode.html.md",
+      "sha256": "5c43deecd56cacbfa4437cc2da53ebfe21ac7e5acf8b4b1ec1467f55ac8b3cc4",
+      "bytes": 689
+    },
+    {
+      "path": "docs/pages/BasicLightingModel.html.md",
+      "sha256": "684b4e11b7d520f3ac1c60ecdb2b2e6285623bc80e72495ec3b3e8fb9f35d40f",
+      "bytes": 959
+    },
+    {
+      "path": "docs/pages/BatchedMesh.html.md",
+      "sha256": "5950304da39c5b8d7914f0171dcf88e8a48c34811cdf0fdb9ff8d23fc8d957d3",
+      "bytes": 11887
+    },
+    {
+      "path": "docs/pages/BenchGenerator.html.md",
+      "sha256": "ef71cd2e56cd89d34fec92fefde956e40593da6c6755a04ac9ece5985b6458ad",
+      "bytes": 812
+    },
+    {
+      "path": "docs/pages/BezierInterpolant.html.md",
+      "sha256": "57f6fd6c1719c693c8805924258e0aae2d6dec15ef0d2b761eaaeb091c71a45e",
+      "bytes": 864
+    },
+    {
+      "path": "docs/pages/BilateralBlurNode.html.md",
+      "sha256": "f10ae5f5e6406ccc9e3a0e42a7bae6b43a870e756b810b78e57fdf88ab78b678",
+      "bytes": 3263
+    },
+    {
+      "path": "docs/pages/BitcastNode.html.md",
+      "sha256": "597d5ec2e98ee7a0f5dea63b00e0096bf71b838db579f34836188f6ad69c4610",
+      "bytes": 977
+    },
+    {
+      "path": "docs/pages/BitcountNode.html.md",
+      "sha256": "845645d291eba2b78e6bcf4c14fedcb4a8d6c71e7d48d381cb3b5f538b4b7558",
+      "bytes": 622
+    },
+    {
+      "path": "docs/pages/BitonicSort_BitonicSort.html.md",
+      "sha256": "c71837bc79d18f73e583e71a84e135e960fd18f020c2a5c723448bf76c82297d",
+      "bytes": 432
+    },
+    {
+      "path": "docs/pages/BlendMode.html.md",
+      "sha256": "840080dfb760d271e85da2a153e419ab877d646258e1b08f29e8541e4a085c54",
+      "bytes": 4694
+    },
+    {
+      "path": "docs/pages/BloomNode.html.md",
+      "sha256": "f84b22a8be1e5791518f55db3219a4438c486ab8ba1049385b9f6167237840d4",
+      "bytes": 4262
+    },
+    {
+      "path": "docs/pages/BloomPass.html.md",
+      "sha256": "7eda5349041987f3ff9b182b94cc5b15429931b396cc2e29b0653a0970f98633",
+      "bytes": 2276
+    },
+    {
+      "path": "docs/pages/BokehPass.html.md",
+      "sha256": "553c869554de8eec1c6571c884e19d8301d60e4903c98862bcf8588f52262893",
+      "bytes": 2575
+    },
+    {
+      "path": "docs/pages/Bone.html.md",
+      "sha256": "76644ee5674e742c299da9c5142d0513afb04cdae6f87391d8cb612dcae9350f",
+      "bytes": 578
+    },
+    {
+      "path": "docs/pages/BooleanKeyframeTrack.html.md",
+      "sha256": "d3a42366e1aafafbfaf27c487c695dd72513227b8306464395e96d1edaa463b0",
+      "bytes": 1271
+    },
+    {
+      "path": "docs/pages/Box2.html.md",
+      "sha256": "ebce06e55a2e4b0e17db0e7cb45ec94fa8621bd4a3ca5b208c94e229eae012b8",
+      "bytes": 6436
+    },
+    {
+      "path": "docs/pages/Box3.html.md",
+      "sha256": "ac9e5917467e3a886f15b6819a7ccab780b41484f6baefe6696baeef2eadc0d0",
+      "bytes": 10007
+    },
+    {
+      "path": "docs/pages/Box3Helper.html.md",
+      "sha256": "1cc061eea78b31a121043cd41489cefed4344f5d0c1237663fd72ae1716f9e9b",
+      "bytes": 969
+    },
+    {
+      "path": "docs/pages/BoxGeometry.html.md",
+      "sha256": "93fd2ef23fde90b4ce773c85ca145419795f2e239d6ddda01edc1329af77de51",
+      "bytes": 1816
+    },
+    {
+      "path": "docs/pages/BoxHelper.html.md",
+      "sha256": "1598697bce2effcbf961ea0faf660e6f44822d0c0d3aa9a58410ac83d54e43e7",
+      "bytes": 1685
+    },
+    {
+      "path": "docs/pages/BoxLineGeometry.html.md",
+      "sha256": "f31bcc98c0e5a4be5ae963713cd808423b865d17127b3f583b582e0a8e0d4065",
+      "bytes": 1577
+    },
+    {
+      "path": "docs/pages/BufferAttribute.html.md",
+      "sha256": "30d2bb63d562608392ca26e298e723c8916eb4a187ffdad10f12f31ba57adcfc",
+      "bytes": 10316
+    },
+    {
+      "path": "docs/pages/BufferAttributeNode.html.md",
+      "sha256": "d8e96b9e2f2fa515bed487cfd0f739ad2f7da8f7d7a934663d4e92b15ff939f7",
+      "bytes": 4021
+    },
+    {
+      "path": "docs/pages/BufferGeometry.html.md",
+      "sha256": "64a19aee3e274530389a2861b8d7bb8cff7c14cd0281d04b6ef4e3be22332062",
+      "bytes": 12232
+    },
+    {
+      "path": "docs/pages/BufferGeometryLoader.html.md",
+      "sha256": "cced5edbaba91b77913f6bbef34bee17c4cc6df56a2807336a437179c6deeee3",
+      "bytes": 1442
+    },
+    {
+      "path": "docs/pages/BufferNode.html.md",
+      "sha256": "2d52b1c161524a97685fabc0a5e62059f24b16e75590990eda3814ca33b66f30",
+      "bytes": 2216
+    },
+    {
+      "path": "docs/pages/BuiltinNode.html.md",
+      "sha256": "253ca9cd669ce37130d7ed9bc79b2716ea7443810a19329928f77c90e200efdd",
+      "bytes": 932
+    },
+    {
+      "path": "docs/pages/BumpMapNode.html.md",
+      "sha256": "c7ce2a40413267f80adabf53aeeb8d82897a0f25c89bd30eb56939de76a006d9",
+      "bytes": 768
+    },
+    {
+      "path": "docs/pages/BundleGroup.html.md",
+      "sha256": "5c02a35e565ea9837064eb4fbcbaaf24deb438e1f951b7f0be2b192486824b8e",
+      "bytes": 1719
+    },
+    {
+      "path": "docs/pages/BypassNode.html.md",
+      "sha256": "42514e63e79c032ca9071badbb19c63cea16de8e2dd1926ea721aa8da8b50b4b",
+      "bytes": 854
+    },
+    {
+      "path": "docs/pages/CCDIKHelper.html.md",
+      "sha256": "718361291d59fc2ac22917c21d4f3725573fe516cd9fb4b342efb6d52d6161a4",
+      "bytes": 1435
+    },
+    {
+      "path": "docs/pages/CCDIKSolver.html.md",
+      "sha256": "ad925db3288e1b3a287296cd64d02474f2826b712055e902abd54558f7f5f544",
+      "bytes": 2709
+    },
+    {
+      "path": "docs/pages/CSM.html.md",
+      "sha256": "9b9ae55edbf51e5aedde2f2bf2b100defdd8851a1403b1cd662f4812a2e9f641",
+      "bytes": 3848
+    },
+    {
+      "path": "docs/pages/CSMFrustum.html.md",
+      "sha256": "b3ac579aa7037efea86bb61fb214cb06c10e30a2ecd7649df3e856a5c105cd33",
+      "bytes": 2200
+    },
+    {
+      "path": "docs/pages/CSMHelper.html.md",
+      "sha256": "373b2da73ccf6c2c075468cec3cc11d2e1560d4e2dad5c0bc62d44450be7e048",
+      "bytes": 1390
+    },
+    {
+      "path": "docs/pages/CSMShadowNode.html.md",
+      "sha256": "977e4a2833a42f5b165c46b56b9fa6aa8c4b4c41dea5656819c41276bdf0e2e1",
+      "bytes": 2660
+    },
+    {
+      "path": "docs/pages/CSS2DObject.html.md",
+      "sha256": "e16ee55f2d2c29dd34e74208c9f25d6e93b68a752dc52ef977eadbb98207646f",
+      "bytes": 1252
+    },
+    {
+      "path": "docs/pages/CSS2DRenderer.html.md",
+      "sha256": "9424f6a425bebe7d89ecb37136c8900983c8ecbae5dec73177ef705935744c5c",
+      "bytes": 2197
+    },
+    {
+      "path": "docs/pages/CSS3DObject.html.md",
+      "sha256": "194d913c2cefde87fd21e25b234552f2ba0f76b3bc0c6b103cff4988a404c11f",
+      "bytes": 876
+    },
+    {
+      "path": "docs/pages/CSS3DRenderer.html.md",
+      "sha256": "d76a2f840617c24fc58c7e1f2900f38079170912367191a110d72367998367fe",
+      "bytes": 2178
+    },
+    {
+      "path": "docs/pages/CSS3DSprite.html.md",
+      "sha256": "75ea6fa2e8b0447b81e70d9fa2429f48a46932b3de18d69db24736771c4498b0",
+      "bytes": 874
+    },
+    {
+      "path": "docs/pages/Cache.html.md",
+      "sha256": "b3a5680475e40fadd4f7cb3a807d085c8fda316101d5fe8d67110bdd4fc319b6",
+      "bytes": 1139
+    },
+    {
+      "path": "docs/pages/Camera.html.md",
+      "sha256": "63bb957c0500cda0ed6c4442e8361f6332e28ec067b336958159a5f6f5c554c8",
+      "bytes": 1434
+    },
+    {
+      "path": "docs/pages/CameraHelper.html.md",
+      "sha256": "498098ab24b9732eb47ce1859c0f5cb5d9e636895679fee5479a2da9f5e9624f",
+      "bytes": 1816
+    },
+    {
+      "path": "docs/pages/CanvasTarget.html.md",
+      "sha256": "6746f9b61871819da6929363e2778afa9e8702af744d2ba49c9f366aaef21957",
+      "bytes": 4316
+    },
+    {
+      "path": "docs/pages/CanvasTexture.html.md",
+      "sha256": "20a779280e79334e886df6c7544b07f8428280b7a306f9d3d22c6cd27cb71737",
+      "bytes": 1363
+    },
+    {
+      "path": "docs/pages/Capsule.html.md",
+      "sha256": "94563a03955dd95d5e7e8dfb5e3c5f1e2e399b6faa353cc32758a55739324575",
+      "bytes": 2248
+    },
+    {
+      "path": "docs/pages/CapsuleGeometry.html.md",
+      "sha256": "8cc1008f23f60cb793df57081ad50a1b21fa8d04546bffb96498780565951645",
+      "bytes": 1554
+    },
+    {
+      "path": "docs/pages/CarGenerator.html.md",
+      "sha256": "bd7fba76594f470a6b67043c95f9827958d9df5a1972db55a51941c1e0dea1fe",
+      "bytes": 1126
+    },
+    {
+      "path": "docs/pages/CatmullRomCurve3.html.md",
+      "sha256": "9e635efde04620a49dee3a54ab2ae77f7fa101bbaa3f79adfb7f1eefe12116e1",
+      "bytes": 2035
+    },
+    {
+      "path": "docs/pages/ChromaticAberrationNode.html.md",
+      "sha256": "152cd2abb6f5d0928588cf8c6e5d1628926474ff37df02bb17dfeb98e0edba81",
+      "bytes": 1724
+    },
+    {
+      "path": "docs/pages/CinquefoilKnot.html.md",
+      "sha256": "d8ea0e308859852dd6adef4a51e19d7d0ed2a4c3fa4f732ff322a2ff04e5e1c6",
+      "bytes": 1062
+    },
+    {
+      "path": "docs/pages/CircleGeometry.html.md",
+      "sha256": "3a28812c08dacae01a6c889232088db8c79adb6347219227fb2384cd3f218c7a",
+      "bytes": 1743
+    },
+    {
+      "path": "docs/pages/CityGenerator.html.md",
+      "sha256": "974276daebf5d54277a839d60f3042f07e2e491297090f7e249b286ce933a1f8",
+      "bytes": 1469
+    },
+    {
+      "path": "docs/pages/ClearMaskPass.html.md",
+      "sha256": "8aef94e3918ac489138421020e094fb5abc97fc98bdea31793f0947b2f1b6565",
+      "bytes": 1187
+    },
+    {
+      "path": "docs/pages/ClearPass.html.md",
+      "sha256": "56328e2e3844b78ddca06e3d2e331bd1f942cee2ccd69edc39fe7b7c1d8ed0ef",
+      "bytes": 1782
+    },
+    {
+      "path": "docs/pages/ClippingGroup.html.md",
+      "sha256": "7628423f51aa3d73a6669f2d01f66f067432aec924e1dd63c8f57c55b36ffc71",
+      "bytes": 1175
+    },
+    {
+      "path": "docs/pages/ClippingNode.html.md",
+      "sha256": "9770e9f1b186aa2f40faa9a719bdebb8e0db0c824c6b75802a0651d6cb3743f1",
+      "bytes": 1836
+    },
+    {
+      "path": "docs/pages/Clock.html.md",
+      "sha256": "395ac68837d3410eddb71ec983c735d4755ba06d8d022a767a4c9ddaff7b1da6",
+      "bytes": 1337
+    },
+    {
+      "path": "docs/pages/ClusteredLighting.html.md",
+      "sha256": "2fd9e9ec216ab89477d9964e38e8a249bb588d176899460431b9f480a7a8a77f",
+      "bytes": 1830
+    },
+    {
+      "path": "docs/pages/ClusteredLightsNode.html.md",
+      "sha256": "70b4141099c3bb65df4cbb41e395dc7870c9cb5a8a919e6c5078c07590a7766e",
+      "bytes": 1636
+    },
+    {
+      "path": "docs/pages/CodeNode.html.md",
+      "sha256": "80ec72b27127664dee8f06281c938f258f0abe0258f58c4c90068780446b4ef1",
+      "bytes": 1442
+    },
+    {
+      "path": "docs/pages/ColladaComposer.html.md",
+      "sha256": "c0a8627053a101efab01288b4a6bbbc3aacc1d898057696ce22f312f72d343bd",
+      "bytes": 287
+    },
+    {
+      "path": "docs/pages/ColladaLoader.html.md",
+      "sha256": "abbb212a734949fc693280b5cbeaae80dbc2e7cf5db3da43f626e4c7e62574b9",
+      "bytes": 1821
+    },
+    {
+      "path": "docs/pages/ColladaParser.html.md",
+      "sha256": "2997b8dfda0f0c3e5262254c599b4cd3f2e81d4dab832fd9f27e708ef7c7bc3a",
+      "bytes": 303
+    },
+    {
+      "path": "docs/pages/Color.html.md",
+      "sha256": "9d79680c1557560dc4bd6dc4c9467dc6ef689bb445ebf0dda574a123587e3b33",
+      "bytes": 12224
+    },
+    {
+      "path": "docs/pages/ColorConverter.html.md",
+      "sha256": "30066c54dc07027c64342d6cf88def1f7e6cd3918e9bd31cc7443f8127ff3b1a",
+      "bytes": 988
+    },
+    {
+      "path": "docs/pages/ColorEnvironment.html.md",
+      "sha256": "2bd61474bcf1af112e34e5fb3e3d63e76c6764c101203208590c45b38971a224",
+      "bytes": 1363
+    },
+    {
+      "path": "docs/pages/ColorKeyframeTrack.html.md",
+      "sha256": "40d597f8fd4e4e6230d6dfc5136962f0ee8e8b69ea28c50a7c41a5517b9299e2",
+      "bytes": 794
+    },
+    {
+      "path": "docs/pages/ColorSpaceNode.html.md",
+      "sha256": "601b8a787a17e4163612f211cdbc11381e946198c278db46dd9ddbc356f4825e",
+      "bytes": 1120
+    },
+    {
+      "path": "docs/pages/ColorWheel.html.md",
+      "sha256": "61eb5059ab3712193c988d109f6a5fc1a7bf62534c64f93eb27a14be66f47ee7",
+      "bytes": 357
+    },
+    {
+      "path": "docs/pages/CompressedArrayTexture.html.md",
+      "sha256": "e2ebf6177b85d977b2dfe5c3d1cf1772631ad5cd587b9f2c51b22bd3e0524c67",
+      "bytes": 2333
+    },
+    {
+      "path": "docs/pages/CompressedCubeTexture.html.md",
+      "sha256": "546c07924331fc4cd4932c385f52a2a2db7d259df5e261526eeffaa18b000bd3",
+      "bytes": 935
+    },
+    {
+      "path": "docs/pages/CompressedTexture.html.md",
+      "sha256": "c3e10d548bdd16f011635e506844f232a9f445eb752002c3e81f1fd312be8f3c",
+      "bytes": 2533
+    },
+    {
+      "path": "docs/pages/CompressedTextureLoader.html.md",
+      "sha256": "ea49affe7ece7018214093749f17cc6bd600eb2e7a948c43eea03474ac0ebbd4",
+      "bytes": 1902
+    },
+    {
+      "path": "docs/pages/ComputeBuiltinNode.html.md",
+      "sha256": "3a6af60c5427ed96226899845b955c0fb6c92c5baea51edc1c205fcc1a43d575",
+      "bytes": 1663
+    },
+    {
+      "path": "docs/pages/ComputeNode.html.md",
+      "sha256": "a4fc8ef69264660cdbc204ea79addaf5e93f37e7875d3dead0407b79f789f44b",
+      "bytes": 2926
+    },
+    {
+      "path": "docs/pages/ConditionalNode.html.md",
+      "sha256": "fc10eb8b1fbefc776d1beb1339ed9ea6afadea45b558e78dac795430f54ada38",
+      "bytes": 1464
+    },
+    {
+      "path": "docs/pages/ConeGeometry.html.md",
+      "sha256": "a651fd47003865af559e2f760b845872ce95a0aa91a4be717cbaed2d5b91122d",
+      "bytes": 1834
+    },
+    {
+      "path": "docs/pages/ConstNode.html.md",
+      "sha256": "c28f6cca2783ae63bedadcefbc82b6ba93c67816d76b6a6e14f8096851198c88",
+      "bytes": 926
+    },
+    {
+      "path": "docs/pages/ContextNode.html.md",
+      "sha256": "c9f9cde466e4d8774cef6290c081fa02b00c45c84e84facf733b7aded1a9311a",
+      "bytes": 2247
+    },
+    {
+      "path": "docs/pages/Controls.html.md",
+      "sha256": "88b0988ea581f988e38ec6249e862d43ec6fc305d32ec4e66f6ae5623fa0e9d3",
+      "bytes": 1908
+    },
+    {
+      "path": "docs/pages/ConvertNode.html.md",
+      "sha256": "202f05a6bbfe43f927e170bc301c239e0b056464d6639954f8119bdcfbad45a1",
+      "bytes": 1214
+    },
+    {
+      "path": "docs/pages/ConvexGeometry.html.md",
+      "sha256": "6dcadccdc11a96f22646f11050789afad04faf734eaae98908e8651c8076fc79",
+      "bytes": 1015
+    },
+    {
+      "path": "docs/pages/ConvexHull.html.md",
+      "sha256": "e2e7a7a88bb7f7b91186455a18253f9bc4b06b840fedc8b6757c39a7ff2edc55",
+      "bytes": 2088
+    },
+    {
+      "path": "docs/pages/ConvexObjectBreaker.html.md",
+      "sha256": "b5d80572243059c59537de681613146b401205193c4322f28908eb4ec53056c3",
+      "bytes": 3003
+    },
+    {
+      "path": "docs/pages/CountingSort.html.md",
+      "sha256": "b930a1e4446fe9c7c5506dd41f34f9cd77647a8782468ab74d02605bed84f71f",
+      "bytes": 4596
+    },
+    {
+      "path": "docs/pages/CubeCamera.html.md",
+      "sha256": "ff0024e29f3f7744f4e99ba4d3635a1a72d44432f69f5ce092fc7420f3ca0254",
+      "bytes": 2037
+    },
+    {
+      "path": "docs/pages/CubeDepthTexture.html.md",
+      "sha256": "a43135a13193f657704549e4496659c63c5a56b8e315b04021b6e98f241c10ef",
+      "bytes": 1535
+    },
+    {
+      "path": "docs/pages/CubeMapNode.html.md",
+      "sha256": "0221b6e2b5916afc3e7048023c2b4605bc210d498bd63003ec00e76940486299",
+      "bytes": 855
+    },
+    {
+      "path": "docs/pages/CubeRenderTarget.html.md",
+      "sha256": "664b663f62529ff9f243111472f34afdedb6e1914c62c3fb68f412c897264a31",
+      "bytes": 1541
+    },
+    {
+      "path": "docs/pages/CubeTexture.html.md",
+      "sha256": "85568d88d6dbc05d34292e67eba4b655147553f554c110198c1470a2fa24e7cc",
+      "bytes": 1917
+    },
+    {
+      "path": "docs/pages/CubeTextureLoader.html.md",
+      "sha256": "7ac75fa96cc156449cc10435bd3e18d55f18fbf20e51ce2c1029b417b6669000",
+      "bytes": 2310
+    },
+    {
+      "path": "docs/pages/CubeTextureNode.html.md",
+      "sha256": "a2cb00e1cc36aa036cb1413dadf971224b7c9a7f7f816ce929e21772ef13d0dd",
+      "bytes": 2274
+    },
+    {
+      "path": "docs/pages/CubeTexturePass.html.md",
+      "sha256": "da8ca3e61f7e40221ceaf6ac78e63ea4d2e7ef34b0f2556c4025dd95c8da3548",
+      "bytes": 2029
+    },
+    {
+      "path": "docs/pages/CubicBezierCurve.html.md",
+      "sha256": "18e8f488a351a2d5c8b2b4b0806b1c603ff01955778013b761ee517d7a896d72",
+      "bytes": 1620
+    },
+    {
+      "path": "docs/pages/CubicBezierCurve3.html.md",
+      "sha256": "e6b012d219e2ab330d4003e43857cbafbd9e56046502e9a85fd1037f12e1ead1",
+      "bytes": 1152
+    },
+    {
+      "path": "docs/pages/CubicInterpolant.html.md",
+      "sha256": "1b1842e9d1950df276ffeb6e6d502446303acafa48cdeaee3d3b442ed158be59",
+      "bytes": 798
+    },
+    {
+      "path": "docs/pages/Curve.html.md",
+      "sha256": "cea24f752fd39b520a1e5326ff2d69333429d1af64e5336159981c40096586f5",
+      "bytes": 5788
+    },
+    {
+      "path": "docs/pages/CurvePath.html.md",
+      "sha256": "f94d82104033fa87f03c8f3ed9b5d91b0f03de7376bb617dc9850fa34c31e12c",
+      "bytes": 1442
+    },
+    {
+      "path": "docs/pages/CylinderGeometry.html.md",
+      "sha256": "bd0914533b77bd1fbe08a521f2997f1f640b02df043932ebd593c1bd2be5217f",
+      "bytes": 1910
+    },
+    {
+      "path": "docs/pages/Cylindrical.html.md",
+      "sha256": "ae7038ac750c9a31357f4abcb82db45258e480396a04197821e2dc82d8376b02",
+      "bytes": 2043
+    },
+    {
+      "path": "docs/pages/DDSLoader.html.md",
+      "sha256": "9918c8d27d6aca2811b45e2e840bd12fd027b4755a969f9ed392212811c2664d",
+      "bytes": 1165
+    },
+    {
+      "path": "docs/pages/DRACOExporter.html.md",
+      "sha256": "3688df04bde76bcb7ea377ff66205ab820466e0e8da37942833c90933fa92efb",
+      "bytes": 3114
+    },
+    {
+      "path": "docs/pages/DRACOLoader.html.md",
+      "sha256": "285acc898357ac8eb83204a26a78e7a430a5e8eb279661b2b8e19330ca0c1c3f",
+      "bytes": 3442
+    },
+    {
+      "path": "docs/pages/Data3DTexture.html.md",
+      "sha256": "ae8b0fbed81d351bddf4f134cddcb9b98c2ecb92733c2cdb291700475c8c57b5",
+      "bytes": 2785
+    },
+    {
+      "path": "docs/pages/DataArrayTexture.html.md",
+      "sha256": "a16261d6d2c9164bc0278d2499eba75590fe4ab934f8332f8a2997639de14fb8",
+      "bytes": 3362
+    },
+    {
+      "path": "docs/pages/DataTexture.html.md",
+      "sha256": "9bd76bf4534f14f9c988a9cc1b408895058c13a14127882ec96cf2d45203c2a8",
+      "bytes": 2483
+    },
+    {
+      "path": "docs/pages/DataTextureLoader.html.md",
+      "sha256": "56b53f33c5c17b97412da9d1bb8d3d546f0438de4a8d8bf5ec00162e908d9a81",
+      "bytes": 2674
+    },
+    {
+      "path": "docs/pages/DataUtils.html.md",
+      "sha256": "7cdfb9a4ec833c9b7ca51edd2b15c6c9e346a74b42a2b0770fcc497d054f2faf",
+      "bytes": 666
+    },
+    {
+      "path": "docs/pages/DebugEnvironment.html.md",
+      "sha256": "4736364e21a03bed6064a86c94282b83e5a34b2a132af25beba077e6acd081c7",
+      "bytes": 1488
+    },
+    {
+      "path": "docs/pages/DecalGeometry.html.md",
+      "sha256": "e79b3a4a9cc1eacb87365e99f8051c320a322a6c4aeaf991853d24126e23593b",
+      "bytes": 1537
+    },
+    {
+      "path": "docs/pages/DecoratedTorusKnot4a.html.md",
+      "sha256": "5104b1470f03ca2340e90e908b9cceb6692aeb38cfa26c9d06b67dddd8f02545",
+      "bytes": 1101
+    },
+    {
+      "path": "docs/pages/DecoratedTorusKnot4b.html.md",
+      "sha256": "307cbc7b6d2dd25e214c9262eedaad4ff7bd74184eb51e7001332aab12070c49",
+      "bytes": 1101
+    },
+    {
+      "path": "docs/pages/DecoratedTorusKnot5a.html.md",
+      "sha256": "5f3e7dcbc1df513065e91a89c4657aa085be98fa80710d2f3d7130ce3b4cb300",
+      "bytes": 1101
+    },
+    {
+      "path": "docs/pages/DecoratedTorusKnot5c.html.md",
+      "sha256": "895feca8c35783b299005c4b575a58e3369d1eda79061d5ca0b8762aba500fc2",
+      "bytes": 1101
+    },
+    {
+      "path": "docs/pages/DenoiseNode.html.md",
+      "sha256": "1c42a828afac2f521f96888d0e6ba9b5e306e647e546f085317f64b51b27a71c",
+      "bytes": 3051
+    },
+    {
+      "path": "docs/pages/DepthOfFieldNode.html.md",
+      "sha256": "e1ed29478d42d31c522f84d1b9c1c5b99c62b3f389a37ea540c3a64b8dc7877b",
+      "bytes": 3310
+    },
+    {
+      "path": "docs/pages/DepthTexture.html.md",
+      "sha256": "4bcb7a91492c618cae3107fbecdd73a063b4dd647b8ebbcf5af2f6bb53b06a23",
+      "bytes": 2019
+    },
+    {
+      "path": "docs/pages/DirectRenderPipeline.html.md",
+      "sha256": "e51350e41164d6c16173870ecfe06e283087c6a009f62b86424479c4ff98b547",
+      "bytes": 1324
+    },
+    {
+      "path": "docs/pages/DirectionalLight.html.md",
+      "sha256": "7083befb1e3301ce2f6dce731192f3afaaf6dda1a76f021cd6b44f2cc90a19ec",
+      "bytes": 2132
+    },
+    {
+      "path": "docs/pages/DirectionalLightDataNode.html.md",
+      "sha256": "a63d9b8ded18fbf837c38865ff03fc19cc3ff291eaeb468097b7c2c76ac2eed3",
+      "bytes": 371
+    },
+    {
+      "path": "docs/pages/DirectionalLightHelper.html.md",
+      "sha256": "b15f8d26b376486ba4c3c59dfa5d72884789103ab7642aec6c58cdc1b0ec2889",
+      "bytes": 1811
+    },
+    {
+      "path": "docs/pages/DirectionalLightNode.html.md",
+      "sha256": "9376921b2f935ac9f1f3a9d55e83058bb4ddd4fda859f4bfb8435d8b85096777",
+      "bytes": 486
+    },
+    {
+      "path": "docs/pages/DirectionalLightShadow.html.md",
+      "sha256": "a693e3f172feea80382634f4a7cea372bc9942b3d884e626fb6a7a2b4f4a4f01",
+      "bytes": 474
+    },
+    {
+      "path": "docs/pages/DiscreteInterpolant.html.md",
+      "sha256": "c8b4e7f6b7946a9751e0e1aedea02faf1616b7007f48352a16cb5ef3d1bacd4a",
+      "bytes": 679
+    },
+    {
+      "path": "docs/pages/DodecahedronGeometry.html.md",
+      "sha256": "de7553d13c832299cd98b03cb6b93639eaf83e3a7bc60562297d7f44a0dea960",
+      "bytes": 1349
+    },
+    {
+      "path": "docs/pages/DotScreenNode.html.md",
+      "sha256": "2406421d497e06341f91416a51c0e7ca53d52374cabf8b810e0be081bd39c68c",
+      "bytes": 1350
+    },
+    {
+      "path": "docs/pages/DotScreenPass.html.md",
+      "sha256": "5acf111a6118065a4a65d29af4d905d7a43dc3409439c08fceebb8451f7a83e4",
+      "bytes": 1957
+    },
+    {
+      "path": "docs/pages/DragControls.html.md",
+      "sha256": "756c75b3f562606b142df235778a032d68cc4379749e4458580ea94b5ad7b999",
+      "bytes": 2281
+    },
+    {
+      "path": "docs/pages/DynamicLighting.html.md",
+      "sha256": "a24efa8b0642ce56cb08cd4744885bec1b3a4e95e6f77f0890d8fa8d45ff5273",
+      "bytes": 1737
+    },
+    {
+      "path": "docs/pages/DynamicLightsNode.html.md",
+      "sha256": "46601a12c78eac19b823d2347a7746c185aeae59d53d8ded8d52a8167b11c4eb",
+      "bytes": 1202
+    },
+    {
+      "path": "docs/pages/EXRExporter.html.md",
+      "sha256": "cfa3b6932354fea950e5af81f85d6bb63d0db8d7700a08822ed52089b0efcbff",
+      "bytes": 2054
+    },
+    {
+      "path": "docs/pages/EXRLoader.html.md",
+      "sha256": "e735959dc48245815878d1a35fc23854d0fd72efce360bffd5e289ff12bcbd44",
+      "bytes": 2009
+    },
+    {
+      "path": "docs/pages/Earcut.html.md",
+      "sha256": "2bd85288678ec76fa58fda183ea8b7068d7fd0130b4db3bb150c01f70858aaab",
+      "bytes": 880
+    },
+    {
+      "path": "docs/pages/EdgeSplitModifier.html.md",
+      "sha256": "a9409c294bf225b30ebd6b38e3fdeadc8a99a2594c4b32127599b97253be4c1f",
+      "bytes": 1221
+    },
+    {
+      "path": "docs/pages/EdgesGeometry.html.md",
+      "sha256": "e392eb50cb9ed807dcb5a87546743b1721c98fa0861de00cd3d5d3d430788070",
+      "bytes": 1048
+    },
+    {
+      "path": "docs/pages/EffectComposer.html.md",
+      "sha256": "5f95bff792bcb0fd3bad623c7b91965d27cfbd6908aec572f5050bf539f6362e",
+      "bytes": 3919
+    },
+    {
+      "path": "docs/pages/EllipseCurve.html.md",
+      "sha256": "e8d40dfc09feaadb97ffaa9e904c3634e580936c938fd1d33b0498d9f18bdb0c",
+      "bytes": 3000
+    },
+    {
+      "path": "docs/pages/EnvMapCDFGenerator.html.md",
+      "sha256": "957baea9ed6aec4c2ae3b9697763baa12df9df27cf1dda94969770624ec7a560",
+      "bytes": 372
+    },
+    {
+      "path": "docs/pages/EnvironmentNode.html.md",
+      "sha256": "71f618a7d64a4c8d3dd244b426fc3ba162f96e2d85ef45cdb80c570ccaf08160",
+      "bytes": 757
+    },
+    {
+      "path": "docs/pages/Euler.html.md",
+      "sha256": "8678e52792df086a7d3088e7d6eca5fef66b96a1568aa14181c637675ed8dc9f",
+      "bytes": 4736
+    },
+    {
+      "path": "docs/pages/EventDispatcher.html.md",
+      "sha256": "4daa4c2c47d25e607da9b987fbc6e8053084a4520a80255e81a052ec4836b421",
+      "bytes": 1514
+    },
+    {
+      "path": "docs/pages/EventNode.html.md",
+      "sha256": "0cbef6979e8f2b1b5cf6ec837532bb99bffb2851c8e010957a143fbd7852899e",
+      "bytes": 438
+    },
+    {
+      "path": "docs/pages/ExpressionNode.html.md",
+      "sha256": "d34b2b8534d0a3d090afefe378269f61db1fd35355ec19b0eefbdd335c4ff233",
+      "bytes": 639
+    },
+    {
+      "path": "docs/pages/ExternalTexture.html.md",
+      "sha256": "745ac9b7775d3370545f9eee8b3c9781f67bbd75bb8ab18dd006eb9186d02234",
+      "bytes": 774
+    },
+    {
+      "path": "docs/pages/ExtrudeGeometry.html.md",
+      "sha256": "812730a12432e324e93162ecbdd5b603be2a87c7bc3ede405e271829bb2665da",
+      "bytes": 2474
+    },
+    {
+      "path": "docs/pages/FBXLoader.html.md",
+      "sha256": "b098f34a3a04cd7c290c8d6df55010dca42188b0f09e7fb73a799fcf71a28dbb",
+      "bytes": 2232
+    },
+    {
+      "path": "docs/pages/FSR1Node.html.md",
+      "sha256": "6ad9422d95d96fa320c45bbc043f7cdd40870e73a91251580b112a8c29ce6d7d",
+      "bytes": 3159
+    },
+    {
+      "path": "docs/pages/FXAANode.html.md",
+      "sha256": "fb16d9fedf96b9cc6b6282ef8cbf5fc3f73a3fa4b45eb6baa5db05631416b8c7",
+      "bytes": 1548
+    },
+    {
+      "path": "docs/pages/FXAAPass.html.md",
+      "sha256": "edf06c2d3666b6fd89a14c1bd1cd3c083dce7c2acc27f0b38e07caaed92d4964",
+      "bytes": 810
+    },
+    {
+      "path": "docs/pages/FaceFrame.html.md",
+      "sha256": "46f91bef01a5100119f121508b3f23060907edc222b4071f58397ccd0b8f17c6",
+      "bytes": 488
+    },
+    {
+      "path": "docs/pages/FigureEightPolynomialKnot.html.md",
+      "sha256": "fdbcc3f186ba95e549316faf456de26f976a271b6dde36c4796f2a61e32a68fe",
+      "bytes": 1130
+    },
+    {
+      "path": "docs/pages/FileLoader.html.md",
+      "sha256": "833b66dc56898ce2b126015c101051dd0f7129214dd45437c2ae91aadac0564c",
+      "bytes": 2029
+    },
+    {
+      "path": "docs/pages/FilmNode.html.md",
+      "sha256": "b0cb0f4151de7a959d79182da9f940ef08a2f5ce7bf65ea9ff0616c561491ba4",
+      "bytes": 1375
+    },
+    {
+      "path": "docs/pages/FilmPass.html.md",
+      "sha256": "5367bd131ad667030b0ce1c6bbbd4e8d21c2045b0d6c1767895475bfe754d0ce",
+      "bytes": 1882
+    },
+    {
+      "path": "docs/pages/FirstPersonControls.html.md",
+      "sha256": "775321a34e247326872e498e5010fab4456819a259a72f3e03c6116668382f7b",
+      "bytes": 2856
+    },
+    {
+      "path": "docs/pages/FlakesTexture.html.md",
+      "sha256": "a7e4b5e33816d719a40ffff129b5b0cf987c425b72c81c3ade8dba5269f5cd69",
+      "bytes": 890
+    },
+    {
+      "path": "docs/pages/FlipNode.html.md",
+      "sha256": "78ff16a677340bfc3f8fa6631bcb57ab7a0e1ef9ab36a7c8fd32e4149f303727",
+      "bytes": 1309
+    },
+    {
+      "path": "docs/pages/Float16BufferAttribute.html.md",
+      "sha256": "08587d20c4a299fa9ecbf0daebbaede23976bbcb87bdf4cda2ea616d28a0cd3a",
+      "bytes": 739
+    },
+    {
+      "path": "docs/pages/Float32BufferAttribute.html.md",
+      "sha256": "e8a152cae0931274536922952c220fee2154a0196bb65ef9987c189c09b613e9",
+      "bytes": 611
+    },
+    {
+      "path": "docs/pages/Flow.html.md",
+      "sha256": "b05dd0df9f75c50617b0fb22526d811a3dd0ec7d1d1894999d15c7bd9bf37267",
+      "bytes": 1181
+    },
+    {
+      "path": "docs/pages/FlyControls.html.md",
+      "sha256": "9bb767db5b554ac4d961f78ee660d1f7f105ec75b3d064e6d5d447543c3889b5",
+      "bytes": 1413
+    },
+    {
+      "path": "docs/pages/Fog.html.md",
+      "sha256": "1f5cd3854ac63ec0be40c14a66a57b3e8fdb5282691e19a60febb4811ffbe4e4",
+      "bytes": 1523
+    },
+    {
+      "path": "docs/pages/FogExp2.html.md",
+      "sha256": "e2ba4d84cb372a73dc42d241031c02570037475a7db10ebc3073fae8adbcaa58",
+      "bytes": 1242
+    },
+    {
+      "path": "docs/pages/Font.html.md",
+      "sha256": "a0165beb1cdb47a1576cea385191c8d9c07c1d08890d52aa02ee2eb30703c7a7",
+      "bytes": 935
+    },
+    {
+      "path": "docs/pages/FontLoader.html.md",
+      "sha256": "f73ef19b837ca493a3dfac2304ffd0a3c42023c9686397cbc537a4eb564ab30e",
+      "bytes": 1501
+    },
+    {
+      "path": "docs/pages/ForestGenerator.html.md",
+      "sha256": "0f659a2616d64e5ebf3ebd691da1644d5d6cf3442597cbec60682f7ab980946f",
+      "bytes": 689
+    },
+    {
+      "path": "docs/pages/FramebufferTexture.html.md",
+      "sha256": "0588d902ab9dbf69db8d9c6957074dee11e4de567d768e479061e395d8850497",
+      "bytes": 2313
+    },
+    {
+      "path": "docs/pages/FrontFacingNode.html.md",
+      "sha256": "37ab50dc5ef3826241c28e55a6fbbf19d18d425fedde2e69097ec4d30137f967",
+      "bytes": 479
+    },
+    {
+      "path": "docs/pages/Frustum.html.md",
+      "sha256": "343397a9b11b1001087c43bc9f901407733b20937cceb18879224ab0d35d44b9",
+      "bytes": 3919
+    },
+    {
+      "path": "docs/pages/FrustumArray.html.md",
+      "sha256": "e8bdf7bbd4ff32898da9bae373ca3f3c84a8e612a1f07c12aacdd009319ef384",
+      "bytes": 2863
+    },
+    {
+      "path": "docs/pages/FullScreenQuad.html.md",
+      "sha256": "8956e387c7cc7585d828c2dcbd19acdae8460eb12b8997f3a9382c97bd039585",
+      "bytes": 1365
+    },
+    {
+      "path": "docs/pages/FunctionCallNode.html.md",
+      "sha256": "1bcc8944923c537fd27e9589fb84c855ab8d358c7d9d0f4dac100b0c007d7976",
+      "bytes": 1813
+    },
+    {
+      "path": "docs/pages/FunctionNode.html.md",
+      "sha256": "d94c7bb8c8c8c41118910002efb92352d78c888a53dc779209277feaf86a2fc4",
+      "bytes": 2150
+    },
+    {
+      "path": "docs/pages/FunctionOverloadingNode.html.md",
+      "sha256": "65ca4ba62a4d1d3e0eb5e3adef04911e57a11ee790302185cc03c6df3d70784a",
+      "bytes": 1645
+    },
+    {
+      "path": "docs/pages/GCodeLoader.html.md",
+      "sha256": "27f7a1e06b0349797af190897ef051206641f6af389636cf6f149ae178865648",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/pages/GLBufferAttribute.html.md",
+      "sha256": "8da2effa5802b4cd1bdb74205b56bba2c7380c4ac0f02e35ad9746b191a38cdc",
+      "bytes": 3222
+    },
+    {
+      "path": "docs/pages/GLSLNodeBuilder.html.md",
+      "sha256": "db26580e1b65f1b3787ef8849f0575f8bb0dee08a69ba5674dfe1f5ad6f9e74b",
+      "bytes": 18002
+    },
+    {
+      "path": "docs/pages/GLSLNodeFunction.html.md",
+      "sha256": "7f6f5dba59f57494ecd379c41c08a74880efca647da03f348429f216d6722130",
+      "bytes": 626
+    },
+    {
+      "path": "docs/pages/GLSLNodeParser.html.md",
+      "sha256": "f694dd0a45262847730e59566e75c46b7e83c73d382f610bf6ca929c155e76e5",
+      "bytes": 514
+    },
+    {
+      "path": "docs/pages/GLTFExporter.html.md",
+      "sha256": "a8ba2d6eabf8189160fab0c87a9eb240261543b0d5fd72d52a9f65377d97a8d5",
+      "bytes": 5119
+    },
+    {
+      "path": "docs/pages/GLTFGaussianSplatLoaderExtension.html.md",
+      "sha256": "627cd241441e050c0d3be62a8bced1aa18b5023545cb367fa9daa31dad6d4667",
+      "bytes": 1271
+    },
+    {
+      "path": "docs/pages/GLTFLoader.html.md",
+      "sha256": "fd2503afec7202ce3015a66057c7ff0f1a859bf0f1f94784f76e39e80eed3dc5",
+      "bytes": 5400
+    },
+    {
+      "path": "docs/pages/GPUComputationRenderer.html.md",
+      "sha256": "761edd7ab5b6d9f7aebc35d41e5d260533eaf19dfa396be717533bffb195acff",
+      "bytes": 6721
+    },
+    {
+      "path": "docs/pages/GTAONode.html.md",
+      "sha256": "ba1d57c76c4524a7ac24215513490b5b2cb9e7c9ef8233f45b907d58652c3228",
+      "bytes": 4462
+    },
+    {
+      "path": "docs/pages/GTAOPass.html.md",
+      "sha256": "72b123672055d329d7e1599a831ab0564c04fdc13c6a31b1749c31389818ef6d",
+      "bytes": 3775
+    },
+    {
+      "path": "docs/pages/GaussianBlurNode.html.md",
+      "sha256": "d01fb74030bfa76ff06d3f38e66dc3608dff6e5a0f47081d33fdde88bec7e66e",
+      "bytes": 3233
+    },
+    {
+      "path": "docs/pages/GaussianSplat.html.md",
+      "sha256": "3b90ebe247bfc0f9e759efcc17cdef069de033ba186c79abfccdbd8121f5adcc",
+      "bytes": 3448
+    },
+    {
+      "path": "docs/pages/GaussianSplatPLYLoader.html.md",
+      "sha256": "83c1b9eebf9bbf2393fb79ba3b2c15801442e1bf4ed9df3aecfcab0745396e04",
+      "bytes": 2418
+    },
+    {
+      "path": "docs/pages/GlitchPass.html.md",
+      "sha256": "2b1c1fb3d3e269508454699548c48e0a727fba5aad77053ed3203998192fec87",
+      "bytes": 1705
+    },
+    {
+      "path": "docs/pages/GodraysNode.html.md",
+      "sha256": "5f753c3815246da1b78268ae25ff95f2e08062f98e79815cc6bf40b65a0154fc",
+      "bytes": 3628
+    },
+    {
+      "path": "docs/pages/GrannyKnot.html.md",
+      "sha256": "41f014cd33d46cccb21e3d23b8bee893abee1ff01aae1a3b70a17961e1341a99",
+      "bytes": 874
+    },
+    {
+      "path": "docs/pages/GridHelper.html.md",
+      "sha256": "cfbc84b076ee4bbff41ce2d15f8ddb2bf6e1437dcf5370d092869d8c853cf663",
+      "bytes": 1102
+    },
+    {
+      "path": "docs/pages/GroundedSkybox.html.md",
+      "sha256": "fcc7172b8864e95caf7931ed05f9023d7c20f92d84334159781490ad6c9d108e",
+      "bytes": 1307
+    },
+    {
+      "path": "docs/pages/Group.html.md",
+      "sha256": "be6fb569fe69034e2bc2f97f7411a82e8ebac21674d7087176c9e1b49e431b66",
+      "bytes": 661
+    },
+    {
+      "path": "docs/pages/Gyroscope.html.md",
+      "sha256": "f773b879e05d846a427eb106beb1bc75f6dabca4523feaf8f195db18737a1a6a",
+      "bytes": 731
+    },
+    {
+      "path": "docs/pages/HDRCubeTextureLoader.html.md",
+      "sha256": "95425ecd7f479b93d129def178ad485de033d4d132bd23cd2438cc112660c199",
+      "bytes": 1905
+    },
+    {
+      "path": "docs/pages/HDRLoader.html.md",
+      "sha256": "e6551c78228e913fd111cb0a9d046a2b568c4cb4830615ead88c9f24d1905f7a",
+      "bytes": 1378
+    },
+    {
+      "path": "docs/pages/HTMLMesh.html.md",
+      "sha256": "eab98607d8839a21e588c7ff7384498beeeeccf883b98bcc8781c0a862797ca5",
+      "bytes": 1175
+    },
+    {
+      "path": "docs/pages/HTMLTexture.html.md",
+      "sha256": "c738cc22ed1c0a0dee416a136df031f9d2bca5962b3c0949ffc6c4a58b591472",
+      "bytes": 1359
+    },
+    {
+      "path": "docs/pages/HalftonePass.html.md",
+      "sha256": "c67b0f28d400d03e4078a6a91169d7ce2e1a8c6a8570cd3ad922668dd1d41fc1",
+      "bytes": 1975
+    },
+    {
+      "path": "docs/pages/HeartCurve.html.md",
+      "sha256": "4831eb1c14e5b0d9cf35a2093198a2cc7e0fc5e3fdbb573fc0d9065533ddf20f",
+      "bytes": 1036
+    },
+    {
+      "path": "docs/pages/HelixCurve.html.md",
+      "sha256": "8a087b3216f31a9126e0f584c742a1b49149c0aea6ea9266d76e010b2b6191c6",
+      "bytes": 868
+    },
+    {
+      "path": "docs/pages/HemisphereLight.html.md",
+      "sha256": "0127e31e7eafd48d1a3f4a44b7a6a2ff2c404a3fe0dc81b7262505624ce1ae88",
+      "bytes": 1010
+    },
+    {
+      "path": "docs/pages/HemisphereLightDataNode.html.md",
+      "sha256": "ecbf883409bcd45bd622d7344d2823c9b0dd03c1afece48f40ea8643d70ce2dc",
+      "bytes": 366
+    },
+    {
+      "path": "docs/pages/HemisphereLightHelper.html.md",
+      "sha256": "8b1277957dfafb07f1e167e1aedd89707b18f063775c8c131bb7aa8b7d1e08d4",
+      "bytes": 1548
+    },
+    {
+      "path": "docs/pages/HemisphereLightNode.html.md",
+      "sha256": "b46afcc02daead2001a77779b40f0a70e726c0d54b7512e86e3d5d0c56f16da8",
+      "bytes": 997
+    },
+    {
+      "path": "docs/pages/HydrantGenerator.html.md",
+      "sha256": "7c696592c50233a420b66efbb8c4881f3d161cb4159af7ff1cb29ce659419abb",
+      "bytes": 869
+    },
+    {
+      "path": "docs/pages/IESLoader.html.md",
+      "sha256": "303c284ea949ae52f970b0e95e9a8df02f3fb11a36cffc24e6b582e640e3acfb",
+      "bytes": 1664
+    },
+    {
+      "path": "docs/pages/IESSpotLight.html.md",
+      "sha256": "5657a25b974699a3471381464d240ac652b1b47ea5d04b2f5b7171c609210e70",
+      "bytes": 1287
+    },
+    {
+      "path": "docs/pages/IESSpotLightNode.html.md",
+      "sha256": "940cde7eab0409e7b36bdac2bc4b693097a06393c1f697846b77f6ee09d09e33",
+      "bytes": 1197
+    },
+    {
+      "path": "docs/pages/IcosahedronGeometry.html.md",
+      "sha256": "bf8350e23ba5a26289695328a4265ddb0d499ed8b959a43fe872e67111e7784e",
+      "bytes": 1338
+    },
+    {
+      "path": "docs/pages/ImageBitmapLoader.html.md",
+      "sha256": "0db35ff03b7c69dd9c51d723952ee9b163dc34f39a23499060404ba29b54148a",
+      "bytes": 2890
+    },
+    {
+      "path": "docs/pages/ImageLoader.html.md",
+      "sha256": "d47e0012491fb86bdb826c62d408a45cf93f0448550e311cb89980abc9616889",
+      "bytes": 1438
+    },
+    {
+      "path": "docs/pages/ImageUtils.html.md",
+      "sha256": "1f19c3a65c943774c8e2f6af51c6bab6daceea9a09b1dd451a781d94071490fd",
+      "bytes": 717
+    },
+    {
+      "path": "docs/pages/ImportanceSampledEnvironment.html.md",
+      "sha256": "f3d89b33cf42866fecadbcf595943fa4d98fe7eb5e6d85b2f98d0e71163a626b",
+      "bytes": 2137
+    },
+    {
+      "path": "docs/pages/ImprovedNoise.html.md",
+      "sha256": "30b236d020bc918155a9303471540bb4ce47f412cc0b87d7567e008563feb3a8",
+      "bytes": 787
+    },
+    {
+      "path": "docs/pages/IndexNode.html.md",
+      "sha256": "06f0a9a7cf60e90dae76d07776c63f0749d89f5103ee789684a04754d08aedb7",
+      "bytes": 1141
+    },
+    {
+      "path": "docs/pages/IndirectStorageBufferAttribute.html.md",
+      "sha256": "cda57bd854033301a78e44be82b66229452b92747c996eba39038e699e72555a",
+      "bytes": 948
+    },
+    {
+      "path": "docs/pages/Info.html.md",
+      "sha256": "66c6b4a48c872efd2b5e32022ca8fe9fb2c530367ff1d3b1d5d544ec0faa13c3",
+      "bytes": 5565
+    },
+    {
+      "path": "docs/pages/InputNode.html.md",
+      "sha256": "38380e8d49c076c0960384ac9f45e1c986d5e4e79560fe4b8625dc95e52cbf9b",
+      "bytes": 1742
+    },
+    {
+      "path": "docs/pages/InspectorBase.html.md",
+      "sha256": "804852703951125f0cfa1ad4a977ef369028da456eb5f77373b78d2b6402cb3b",
+      "bytes": 2712
+    },
+    {
+      "path": "docs/pages/InspectorNode.html.md",
+      "sha256": "4d74d5b223135cee27131749dbd65d64ec30f1c9b8cb72f53e6fa35936987168",
+      "bytes": 1374
+    },
+    {
+      "path": "docs/pages/InstancedBufferAttribute.html.md",
+      "sha256": "aa0e1630d2d5864dfa0bb96b42c0d4e8b2267de80294ea70ac9a3b7c8a90d651",
+      "bytes": 1124
+    },
+    {
+      "path": "docs/pages/InstancedBufferGeometry.html.md",
+      "sha256": "0a34c0fbed387a22b1e6cddc1b7a18e1681910efea41262316034fe5a82f4476",
+      "bytes": 495
+    },
+    {
+      "path": "docs/pages/InstancedFlow.html.md",
+      "sha256": "563704490ceaa64b8d1476dcc7f6818a9cc6af3caf02487a3b304ca79bb9cf11",
+      "bytes": 1765
+    },
+    {
+      "path": "docs/pages/InstancedInterleavedBuffer.html.md",
+      "sha256": "33d9925aebf8ad87a15ea781ba608303035e2653db5c62cc86b511a87c9c5a99",
+      "bytes": 1014
+    },
+    {
+      "path": "docs/pages/InstancedMesh.html.md",
+      "sha256": "69434b4456870d2cafa8a1a51a8b890fe819e3130ca07f9acf25e683770de307",
+      "bytes": 5299
+    },
+    {
+      "path": "docs/pages/Int16BufferAttribute.html.md",
+      "sha256": "70ffd0e30f97b4e68ea1cd7377967f7a749b29851de5226afb89387ab017f436",
+      "bytes": 603
+    },
+    {
+      "path": "docs/pages/Int32BufferAttribute.html.md",
+      "sha256": "e10af703ef43ad6042607c7c6e5f30cb11dcdce697ff76ca0a0ff34bed580144",
+      "bytes": 603
+    },
+    {
+      "path": "docs/pages/Int8BufferAttribute.html.md",
+      "sha256": "c861892ffaef1d4ec609bbc55efae562c96a527968e71c19f015421adf5c6493",
+      "bytes": 599
+    },
+    {
+      "path": "docs/pages/InteractionManager.html.md",
+      "sha256": "7e269b32e15044a8ba11a88f2eabf7c7f774cb6a1f2398d9718fde0cfd820839",
+      "bytes": 2048
+    },
+    {
+      "path": "docs/pages/InteractiveGroup.html.md",
+      "sha256": "cbcff7a3d64137851d7d4c0f9b840fc9b4f3071dbb1aee7f855fa552b8e91360",
+      "bytes": 2263
+    },
+    {
+      "path": "docs/pages/InterleavedBuffer.html.md",
+      "sha256": "30750609d825e63ca58d7719c1221e59bfd15c1f95b06087fda5e0bc46a23811",
+      "bytes": 4690
+    },
+    {
+      "path": "docs/pages/InterleavedBufferAttribute.html.md",
+      "sha256": "7d9993e0b5e45264b6ddcd4ec37edd0b17da573affbeaeb7030a7e510d7d1dd6",
+      "bytes": 6637
+    },
+    {
+      "path": "docs/pages/Interpolant.html.md",
+      "sha256": "86be987b7fdd0467cf85c01bcd7f6d284bb9f90ae639aa219ced7eafef89b50a",
+      "bytes": 2591
+    },
+    {
+      "path": "docs/pages/IrradianceNode.html.md",
+      "sha256": "906015373fa8ed8b52ce2f2f340814daf5fd7b743f003d9c5beefca957a0a63b",
+      "bytes": 615
+    },
+    {
+      "path": "docs/pages/IsolateNode.html.md",
+      "sha256": "417c7914f3016ddce90e9ee53b378aa7e0d84fefe481a3d967eba751ae01e7b6",
+      "bytes": 912
+    },
+    {
+      "path": "docs/pages/JoinNode.html.md",
+      "sha256": "62d6e65da9b7ea7754b536bf322781ecdf91c6e25425341bb7aeba2c5cf6c471",
+      "bytes": 1029
+    },
+    {
+      "path": "docs/pages/JoltPhysics.html.md",
+      "sha256": "955e7966688ecb56d98ecd3d8ac183815181b73218efc08c16a16a62289dc63d",
+      "bytes": 1820
+    },
+    {
+      "path": "docs/pages/KMZLoader.html.md",
+      "sha256": "a008e0129c9b8f5d3041077d1d30bc486b052fd1fe2e70c87fafd8948999454c",
+      "bytes": 1442
+    },
+    {
+      "path": "docs/pages/KSPLATLoader.html.md",
+      "sha256": "69c4fe308d523fb850cf2884af3841a37133b9ee9c1b68157d3fea5dad628173",
+      "bytes": 1877
+    },
+    {
+      "path": "docs/pages/KTX2Exporter.html.md",
+      "sha256": "c8d2f97f521b102d047a0b91f7eb90e05fd331aa9783b0cc90c83189f862e518",
+      "bytes": 1116
+    },
+    {
+      "path": "docs/pages/KTX2Loader.html.md",
+      "sha256": "30358bf43e80b13211cd8c03d7a7e6123fda9f330563c524d0124531579a6b4b",
+      "bytes": 3786
+    },
+    {
+      "path": "docs/pages/KTXLoader.html.md",
+      "sha256": "19dbde149be98d441e782a62dafa2f11a393ed785a051ead8718b9146789fdc9",
+      "bytes": 1393
+    },
+    {
+      "path": "docs/pages/KeyframeTrack.html.md",
+      "sha256": "bc0c6c94d78b631b09a8dfe91208079c5082c13db20a5a36449c3b85230dc33c",
+      "bytes": 4861
+    },
+    {
+      "path": "docs/pages/KnotCurve.html.md",
+      "sha256": "2b590f49db097e110f4e389d9289fdaf6b1093dcd60c66322d7a08ae98b95a2d",
+      "bytes": 863
+    },
+    {
+      "path": "docs/pages/LDrawConditionalLineMaterial.html.md",
+      "sha256": "0d3e0981c55d4e264a038ee0cc4a6cabae2c7f2695ca198e00f597d018f16d7d",
+      "bytes": 1546
+    },
+    {
+      "path": "docs/pages/LDrawLoader.html.md",
+      "sha256": "03227263aed778de1d7724f7e9ae08b74cefb0d94140e1de84b1e95557316abb",
+      "bytes": 6717
+    },
+    {
+      "path": "docs/pages/LDrawUtils.html.md",
+      "sha256": "a797da0e204079642497386b088fab4760919e479a5c36551cfda568d0267d59",
+      "bytes": 805
+    },
+    {
+      "path": "docs/pages/LOD.html.md",
+      "sha256": "3c8844e28bf3fa99f0268507043d436f0cb91fea91bf7f395ad3f586315ef70d",
+      "bytes": 3086
+    },
+    {
+      "path": "docs/pages/LUT3DStyle.html.md",
+      "sha256": "f3cb522240a9d1d66ed6cd1cb1c35d823b063615e59f6e4f3efeaa1b8c86ee73",
+      "bytes": 314
+    },
+    {
+      "path": "docs/pages/LUT3dlLoader.html.md",
+      "sha256": "2a4569a301f86ac729b41f888c31abdb3c0717d1300a7b908d1887a7d76ad4b0",
+      "bytes": 2081
+    },
+    {
+      "path": "docs/pages/LUTCubeLoader.html.md",
+      "sha256": "77ff4de2d9a81748dfb6d90517de9236cf79b57e0252c8c118470093108fabb9",
+      "bytes": 1983
+    },
+    {
+      "path": "docs/pages/LUTImageLoader.html.md",
+      "sha256": "9af3f8b20993e6b403103b010a26452e385266491c0df342a934a84a31213e67",
+      "bytes": 1888
+    },
+    {
+      "path": "docs/pages/LUTPass.html.md",
+      "sha256": "d879c13a100abdc8e8ecd2314ebe33813dc7eade6cc0c3f4d4b673541b77e800",
+      "bytes": 835
+    },
+    {
+      "path": "docs/pages/LWOLoader.html.md",
+      "sha256": "e128bd5711d4c9fe9b8862f36cc790236a8afd51e919b52ee43f5c5e622a9a80",
+      "bytes": 1903
+    },
+    {
+      "path": "docs/pages/LatheGeometry.html.md",
+      "sha256": "9b096a91e089e331fd88fb160b101bacf566af6cfbb0063d73e601734d675476",
+      "bytes": 1630
+    },
+    {
+      "path": "docs/pages/Layers.html.md",
+      "sha256": "8811b93832fb969b0ee51bd8cfdabeee5b118aadcc679d58358fd6d71c1aa616",
+      "bytes": 1800
+    },
+    {
+      "path": "docs/pages/Lensflare.html.md",
+      "sha256": "ded4975d1b17dae51bbdea3aea0b7feccc5ca244b970cebfde23d79caf308031",
+      "bytes": 1859
+    },
+    {
+      "path": "docs/pages/LensflareElement.html.md",
+      "sha256": "d21ae83ef54ad1eac9ee8865b398f6507cec4248261c1a60eebe36572b0c95a2",
+      "bytes": 1218
+    },
+    {
+      "path": "docs/pages/LensflareMesh.html.md",
+      "sha256": "a84386acf4ac9102d28eb82bf56ce081dff2d5bbbfc15d32d499dd6955d7b723",
+      "bytes": 1892
+    },
+    {
+      "path": "docs/pages/LensflareNode.html.md",
+      "sha256": "9c3d53d0848276055c41929bbad3fd3f0ca686ba4d01b098b8b72fe2a0a65540",
+      "bytes": 3708
+    },
+    {
+      "path": "docs/pages/Light.html.md",
+      "sha256": "d81699ce07b5c41b86d64ba382496a5572cb024bbac5bcae1ae7a74c89579fff",
+      "bytes": 724
+    },
+    {
+      "path": "docs/pages/LightProbe.html.md",
+      "sha256": "8f02836a8bf0ffbfd786088e9878c5b27fe92e4410a9ff2c52580d71c0b3c959",
+      "bytes": 1558
+    },
+    {
+      "path": "docs/pages/LightProbeGenerator.html.md",
+      "sha256": "6057f1a1ba3806f2215670f278fcca1899f652b2a492dce9d2ec6a6ed52a7df2",
+      "bytes": 1378
+    },
+    {
+      "path": "docs/pages/LightProbeGrid.html.md",
+      "sha256": "17313d96e1e0bcda084ada72cbe7b63aad32f3541e777604ca2d60ea561bb0e4",
+      "bytes": 4946
+    },
+    {
+      "path": "docs/pages/LightProbeGridHelperWebGL.html.md",
+      "sha256": "647e1540426465c30b696cbd7de0d12b51feac187cfb286e4ee4ea38e5f23f35",
+      "bytes": 1567
+    },
+    {
+      "path": "docs/pages/LightProbeGridWebGL.html.md",
+      "sha256": "47fa45a18348decaa3854a8ecc6368f0b4581bc1af6d7da00cf457cba34e40c3",
+      "bytes": 5020
+    },
+    {
+      "path": "docs/pages/LightProbeHelper.html.md",
+      "sha256": "fb95a27feb779d66356c7b94c79042544393ac8105998e08e7b68ca751286ca9",
+      "bytes": 1347
+    },
+    {
+      "path": "docs/pages/LightProbeNode.html.md",
+      "sha256": "4c4a7de77e32183845fc612099e9284102b5cdd74a48120188e1f815987a3a9b",
+      "bytes": 770
+    },
+    {
+      "path": "docs/pages/LightShadow.html.md",
+      "sha256": "fcc7a7e7ffd1cc8644cf7149c1dc6656601249896087cc4cf99d4959aa4894e5",
+      "bytes": 4897
+    },
+    {
+      "path": "docs/pages/LightingContextNode.html.md",
+      "sha256": "bdd8d173fe601844acfd07dbcfb85ee84f16499b9dc9f505ff005546f6d4232b",
+      "bytes": 1378
+    },
+    {
+      "path": "docs/pages/LightingModel.html.md",
+      "sha256": "54c0357d2d329c11460424b6a00da7c02549d6c20edd51db87db873e95c3dfee",
+      "bytes": 1755
+    },
+    {
+      "path": "docs/pages/LightingNode.html.md",
+      "sha256": "18c1e29858da902e6d7de537fe382d49f8ebf07661c115ea7fe6a3bb72242150",
+      "bytes": 414
+    },
+    {
+      "path": "docs/pages/LightsNode.html.md",
+      "sha256": "0f8fd9f139fcda841ce7b35ca566a4475d3203939f2866c276f34d5834d7b95b",
+      "bytes": 3757
+    },
+    {
+      "path": "docs/pages/Line.html.md",
+      "sha256": "8db037349905a2e249e3c01545bc22aa580c4bb5d78735242dfd764d79185579",
+      "bytes": 2855
+    },
+    {
+      "path": "docs/pages/Line2.html.md",
+      "sha256": "d0d8bcc39b8261c7c7fd522144c8c1972dac89296665d0086c69cdb6841ce795",
+      "bytes": 1395
+    },
+    {
+      "path": "docs/pages/Line2NodeMaterial.html.md",
+      "sha256": "e5ce27a318f54e6b57697c6e2b5f64627bf04a23a9bd0379d1aeedf10c3797ae",
+      "bytes": 2594
+    },
+    {
+      "path": "docs/pages/Line3.html.md",
+      "sha256": "db4605568e25e8da91b87ca6228a6eb49e98a4ef49a79f4efc9f30844b79299e",
+      "bytes": 3643
+    },
+    {
+      "path": "docs/pages/LineBasicMaterial.html.md",
+      "sha256": "5622e926edb6770be0791404bc81b52e45cb7c223b2db0140eb85d466a6679a8",
+      "bytes": 1940
+    },
+    {
+      "path": "docs/pages/LineBasicNodeMaterial.html.md",
+      "sha256": "fe4ce7e6a4c2652d73bdccbaaf52d6180adb36dbd6c6663b111279eec832d0ac",
+      "bytes": 599
+    },
+    {
+      "path": "docs/pages/LineCurve.html.md",
+      "sha256": "30df0d7502467e5e7eea69a98bb4ddfd6fb69581af81dd88f867feead6bb9075",
+      "bytes": 907
+    },
+    {
+      "path": "docs/pages/LineCurve3.html.md",
+      "sha256": "10508875db48c04629bf46675f9f8ce4d33c8a3ce8da732f0b85c556801e1032",
+      "bytes": 912
+    },
+    {
+      "path": "docs/pages/LineDashedMaterial.html.md",
+      "sha256": "58d0b35abb560741c5d1ed74e2193a03f1897b345099c97ede940577784cd557",
+      "bytes": 1218
+    },
+    {
+      "path": "docs/pages/LineDashedNodeMaterial.html.md",
+      "sha256": "0ac36da9dd15f6810a03c2f52afcececa85572a8bd32825096eec4d8355cc16e",
+      "bytes": 2377
+    },
+    {
+      "path": "docs/pages/LineGeometry.html.md",
+      "sha256": "118db9484648d8fe36f44fd95124bb78df17b6cf23908ffcb4bd9bd8e85453d2",
+      "bytes": 2013
+    },
+    {
+      "path": "docs/pages/LineLoop.html.md",
+      "sha256": "5183b01d12ce8a91c0fe5c5bff1328b35377d7a7274508ea66e0d434bee76799",
+      "bytes": 679
+    },
+    {
+      "path": "docs/pages/LineMaterial.html.md",
+      "sha256": "cc0d1b2b5b644b15b993ea6e32d9ced0cae49d4806bbff2a655405eb914737f5",
+      "bytes": 2784
+    },
+    {
+      "path": "docs/pages/LineSegments.html.md",
+      "sha256": "6303f14a3124933926255153b4fd7a5c3efae57d88abb847cf1caa93774e661a",
+      "bytes": 568
+    },
+    {
+      "path": "docs/pages/LineSegments2.html.md",
+      "sha256": "6b8daafe289ca1753ff214e3e9ffd0f5355e57c523bf15290e6bd53ca292ae0a",
+      "bytes": 2119
+    },
+    {
+      "path": "docs/pages/LineSegmentsGeometry.html.md",
+      "sha256": "927c4478b47e8f27889860f6c235e374167e0faa2a1bd47f5041a5c0bf4e9e69",
+      "bytes": 2807
+    },
+    {
+      "path": "docs/pages/LinearInterpolant.html.md",
+      "sha256": "cd45379ac593affd7bea44cba1d1273b95530192ca9674d337cd51d815ee0565",
+      "bytes": 609
+    },
+    {
+      "path": "docs/pages/Loader.html.md",
+      "sha256": "c2f52cf100d2dfde8605c54b8c05c512f7ad575400ee068ba7c1a6a4ca8834fc",
+      "bytes": 3628
+    },
+    {
+      "path": "docs/pages/LoaderUtils.html.md",
+      "sha256": "70ac40ea082dc5044c9da4dac5219e151bfaf3929053dfb6287f9ae2aa13be28",
+      "bytes": 743
+    },
+    {
+      "path": "docs/pages/LoadingManager.html.md",
+      "sha256": "0da40a9c5f404f840dd51c8894b1a0f2a28d4afb8c4766aca35247663ab7a14f",
+      "bytes": 4522
+    },
+    {
+      "path": "docs/pages/LoftGeometry.html.md",
+      "sha256": "4dbdcb39e845f9ee191723f9b4ad66815f48d2e8f93fc67a70ca0436627fd9a5",
+      "bytes": 2640
+    },
+    {
+      "path": "docs/pages/LoopNode.html.md",
+      "sha256": "a9822820985389dd414b28033f18c045b202691465932b090138cfca06a7494c",
+      "bytes": 2621
+    },
+    {
+      "path": "docs/pages/Lut.html.md",
+      "sha256": "af072dd65565137bfb07d931b632196247c770b3a95351f963379d3cafbfdb3d",
+      "bytes": 3136
+    },
+    {
+      "path": "docs/pages/Lut3DNode.html.md",
+      "sha256": "f9e69df71b3bb242bd4cc9355a4f6115af3acb902b72030126e5a00ab4f64396",
+      "bytes": 1391
+    },
+    {
+      "path": "docs/pages/MD2Character.html.md",
+      "sha256": "2a582d994357536ce87a86c766bde6ff90148bb620f8e9fdc1c93251b7dbebc6",
+      "bytes": 2334
+    },
+    {
+      "path": "docs/pages/MD2CharacterComplex.html.md",
+      "sha256": "ca05bdb8d50168aad8f87da3630792b56b502d10ff7f33ef5471bcb7f9e3c4a0",
+      "bytes": 3565
+    },
+    {
+      "path": "docs/pages/MD2Loader.html.md",
+      "sha256": "830562a151e64f5fc453552c486256eb698ad4b1189d2e0bb3df38c1acb3a48c",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/pages/MDDLoader.html.md",
+      "sha256": "c6fd5799d968776737838f6431bdb8b604896e7d7b1b98c42c19bfbf442c3c8c",
+      "bytes": 2346
+    },
+    {
+      "path": "docs/pages/MRTNode.html.md",
+      "sha256": "154a7e785c9161a18625be08e614ca75e99be890de160f741ca0b4f37f046115",
+      "bytes": 2589
+    },
+    {
+      "path": "docs/pages/MTLLoader.html.md",
+      "sha256": "5653f8798de90201cd9df4f47eebc3163762995693bc33fe2c77d98b8dd2e22c",
+      "bytes": 2555
+    },
+    {
+      "path": "docs/pages/MapControls.html.md",
+      "sha256": "79ce3735663de4a6b6a10ea86553b8882c6f942e80bf0ef2b14db72a1b7c4984",
+      "bytes": 1782
+    },
+    {
+      "path": "docs/pages/MarchingCubes.html.md",
+      "sha256": "76e0bd1735e53b19e8852b22033794e6fae3795d2a77041f55909ae2fa074251",
+      "bytes": 2932
+    },
+    {
+      "path": "docs/pages/MaskPass.html.md",
+      "sha256": "74bcae0832195883df6e9dcdb2aeb6aff0104e6c082171ede5d4831f37d52598",
+      "bytes": 1987
+    },
+    {
+      "path": "docs/pages/Material.html.md",
+      "sha256": "aa33071516d50e501cb72105395cc32da94a5e1ea2b5a0b3219ee98c3833290c",
+      "bytes": 15193
+    },
+    {
+      "path": "docs/pages/MaterialLoader.html.md",
+      "sha256": "8c3feadf35bdba1e54b3d2d695510cfb89505e0fde1af8a030f5e01a2d58bb38",
+      "bytes": 2296
+    },
+    {
+      "path": "docs/pages/MaterialNode.html.md",
+      "sha256": "4f5b298ad62f9bcc823ee0dddb04b4a501a600ef70f38682849ff3905986fafc",
+      "bytes": 2174
+    },
+    {
+      "path": "docs/pages/MaterialReferenceNode.html.md",
+      "sha256": "25108d67a45730c7fff8b5f6292abc4e862d787a4e9166ad1a8dc3b44b155e86",
+      "bytes": 1700
+    },
+    {
+      "path": "docs/pages/MaterialXLoader.html.md",
+      "sha256": "ccf540f95757d67a8b1c786e4bd7793d7c52aa8d3a440527600712fc0061e6d9",
+      "bytes": 3937
+    },
+    {
+      "path": "docs/pages/MathNode.html.md",
+      "sha256": "fb9873977d2d7378b23516881ff575df16a366cc2cbe9343d4dcecab6111681c",
+      "bytes": 1567
+    },
+    {
+      "path": "docs/pages/MathUtils.html.md",
+      "sha256": "2922ffa0ff255d54b4e25f3beff7a471d19c30cdc947d8662afea71680f8b849",
+      "bytes": 6847
+    },
+    {
+      "path": "docs/pages/Matrix2.html.md",
+      "sha256": "c6d571b6bb0926d548f01dde7bc9c849787a6a9c55eb4e0ba3eb6676da19dbc2",
+      "bytes": 2365
+    },
+    {
+      "path": "docs/pages/Matrix3.html.md",
+      "sha256": "b645b9f037f716b386a53e83a6f96f18205ac65ec9967ea80c6fa3941255acc3",
+      "bytes": 7798
+    },
+    {
+      "path": "docs/pages/Matrix4.html.md",
+      "sha256": "084c552751e34f7d7537592b282c7f4c799329139b522604da46023cf0723527",
+      "bytes": 14572
+    },
+    {
+      "path": "docs/pages/MaxMipLevelNode.html.md",
+      "sha256": "132c20f64f9a63a379a3e96362d801897a64fdc764cbc3494ca260245e78ee1f",
+      "bytes": 1016
+    },
+    {
+      "path": "docs/pages/MemberNode.html.md",
+      "sha256": "0ca6a265cfc5ad9e81e7e019727c9bd625daa5ca82f1243b859b5735fda832a5",
+      "bytes": 633
+    },
+    {
+      "path": "docs/pages/Mesh.html.md",
+      "sha256": "e79faa8dc63ca712a41f8c7403d568282f7b44f87d4d29b059e5876cee22f65b",
+      "bytes": 2856
+    },
+    {
+      "path": "docs/pages/MeshBasicMaterial.html.md",
+      "sha256": "4d1ce00f1eb0820e7897182456ed9f260380893a9a5b822395fa2d634aeda502",
+      "bytes": 5188
+    },
+    {
+      "path": "docs/pages/MeshBasicNodeMaterial.html.md",
+      "sha256": "db081eaba9b6390802775c2a2883cf64c8b2540ca5d6b829cbe649602be95979",
+      "bytes": 2383
+    },
+    {
+      "path": "docs/pages/MeshDepthMaterial.html.md",
+      "sha256": "42cdcd02e906116b62d92af01c3921fab28a057117442773f08c3f609637274f",
+      "bytes": 3330
+    },
+    {
+      "path": "docs/pages/MeshDistanceMaterial.html.md",
+      "sha256": "d4e32abcbad40e5783d3a677902941295c8d9137eb3d885332b4a985892d5e87",
+      "bytes": 3197
+    },
+    {
+      "path": "docs/pages/MeshLambertMaterial.html.md",
+      "sha256": "0568960a0052abc8931247a4d7587d6a4fb58157430ad02ebba6f10488d9f306",
+      "bytes": 9257
+    },
+    {
+      "path": "docs/pages/MeshLambertNodeMaterial.html.md",
+      "sha256": "6d3e1601e63b9afd9de8a60c0608b35d8a9c3c66f0fdb4ea1ce1d88d29da7e04",
+      "bytes": 1370
+    },
+    {
+      "path": "docs/pages/MeshMatcapMaterial.html.md",
+      "sha256": "6f9c025010d58555d9269181a40894424abbd757eb468eb084a62f04a45e5a24",
+      "bytes": 5569
+    },
+    {
+      "path": "docs/pages/MeshMatcapNodeMaterial.html.md",
+      "sha256": "03588100c41f929e4fa55ed9e12521d7b47be1d5f5962c0c6724dc0efd485174",
+      "bytes": 826
+    },
+    {
+      "path": "docs/pages/MeshNormalMaterial.html.md",
+      "sha256": "74d2af98bca810dde5be4656b206e1fec81c7d9bb5c6a072bc4d16c1f4d043ce",
+      "bytes": 3526
+    },
+    {
+      "path": "docs/pages/MeshNormalNodeMaterial.html.md",
+      "sha256": "4422aeded59dc151cdcf182b1f00a047f2cf921565fd1037b1a98bd70c1c3a64",
+      "bytes": 827
+    },
+    {
+      "path": "docs/pages/MeshPhongMaterial.html.md",
+      "sha256": "277914b8642dae0d20694cd11920eff94eefbd50a65a6d615a9e50884d0e7610",
+      "bytes": 9565
+    },
+    {
+      "path": "docs/pages/MeshPhongNodeMaterial.html.md",
+      "sha256": "f222b582b704bab971fcc76f5a10d20a221144739e98b6c0fd2d8aa5df5c84d8",
+      "bytes": 2326
+    },
+    {
+      "path": "docs/pages/MeshPhysicalMaterial.html.md",
+      "sha256": "6235e5561712a7594e05cdff026ed2256b19ee434be4ce2a76eeed55fe374f6c",
+      "bytes": 10446
+    },
+    {
+      "path": "docs/pages/MeshPhysicalNodeMaterial.html.md",
+      "sha256": "bc878acb627574af89aff312603b427aeb46ee1097c281c778b2b702cc5e0eb6",
+      "bytes": 9809
+    },
+    {
+      "path": "docs/pages/MeshSSSNodeMaterial.html.md",
+      "sha256": "7f3985333943a6b237e95c5c1bda9f0171cb6577dda81151e8979db5a1871acc",
+      "bytes": 1439
+    },
+    {
+      "path": "docs/pages/MeshStandardMaterial.html.md",
+      "sha256": "059c0f014a949e0401b9fde9204e6b4f309d656dc74fde7b7685f22788ff0870",
+      "bytes": 10421
+    },
+    {
+      "path": "docs/pages/MeshStandardNodeMaterial.html.md",
+      "sha256": "6ff4627c962c335a56db5a3d556ae39252aa90a3d379686f29afe334ee649b1c",
+      "bytes": 2939
+    },
+    {
+      "path": "docs/pages/MeshSurfaceSampler.html.md",
+      "sha256": "3447fecb8ce9550c5e73942538ab550a5ff57bba5ad2a789f5690d0f4338fdc2",
+      "bytes": 3155
+    },
+    {
+      "path": "docs/pages/MeshToonMaterial.html.md",
+      "sha256": "ac77363cbb72670dee1827d6c59a37f29f839c43a17ec48230cf3ac5b819a8b7",
+      "bytes": 7140
+    },
+    {
+      "path": "docs/pages/MeshToonNodeMaterial.html.md",
+      "sha256": "ba65e6cfb5b4e4be798f06b4bc8dc74ef3101f90e28715af231868323e655790",
+      "bytes": 962
+    },
+    {
+      "path": "docs/pages/ModelNode.html.md",
+      "sha256": "ee5de77b4085224b052faa0a187546933fdcd93cc956373cc55e063ad486064d",
+      "bytes": 913
+    },
+    {
+      "path": "docs/pages/Module.html.md",
+      "sha256": "79668de3f42f97293cf7b2f37eaefe86fda41ea75e37d92743c325fed19fabce",
+      "bytes": 952
+    },
+    {
+      "path": "docs/pages/MorphAnimMesh.html.md",
+      "sha256": "7ce2fc8b4cf7cdef6e4027b76ca34aa8c7f9d7ab95506ef6454164c5a759a27c",
+      "bytes": 1631
+    },
+    {
+      "path": "docs/pages/MorphBlendMesh.html.md",
+      "sha256": "d4136b09a0fe8b1c3ce5b3dfe2ca671c55b64d58b2fed69b62426c4742ebf2a8",
+      "bytes": 3121
+    },
+    {
+      "path": "docs/pages/NRRDLoader.html.md",
+      "sha256": "e0edfe052eb99040910c4d18847c6e527c59a74dd355dc7399c19f52e1dbd2d6",
+      "bytes": 1567
+    },
+    {
+      "path": "docs/pages/NURBSCurve.html.md",
+      "sha256": "2e8f91a494c8a5e42cba02e1a48cf06fcb83fb3eace87e042fdd732dcb77cdb7",
+      "bytes": 2060
+    },
+    {
+      "path": "docs/pages/NURBSSurface.html.md",
+      "sha256": "2675578a4aeedee221e7d7c5061dd87953d1057b0e31fd3f08d1ce289d2cf757",
+      "bytes": 1815
+    },
+    {
+      "path": "docs/pages/NURBSVolume.html.md",
+      "sha256": "a8afee4728a390513362aaf3e4e1451b8fc129a0e8fb4767a87125ad02b9204c",
+      "bytes": 1723
+    },
+    {
+      "path": "docs/pages/Node.html.md",
+      "sha256": "7651300a09a09bf9b07057159e22b452fc8597ec1396040cd81a1c2870c58c0c",
+      "bytes": 11942
+    },
+    {
+      "path": "docs/pages/NodeAttribute.html.md",
+      "sha256": "07f651dc4217dd5e1aab47e1615d0f23d548fb96cbed24cc4ce1bd41e3fd21b0",
+      "bytes": 1076
+    },
+    {
+      "path": "docs/pages/NodeBuilder.html.md",
+      "sha256": "3336e90e4c6e158c05c73283f24567662e7227ea80421f27023757b97be8475e",
+      "bytes": 36112
+    },
+    {
+      "path": "docs/pages/NodeCache.html.md",
+      "sha256": "39ca526ae216d9e8e898bd5bbc166f4f28e462b945d7694a136db06f6d01aea2",
+      "bytes": 904
+    },
+    {
+      "path": "docs/pages/NodeCode.html.md",
+      "sha256": "306fe4a98453a6636eb73cc8e17cdf3a74b7a7ce0e7793a4476dc529a33e6190",
+      "bytes": 825
+    },
+    {
+      "path": "docs/pages/NodeError.html.md",
+      "sha256": "ff07b3fcfc57a582b97866f85a1f14dbb430fe7de25753070c4738b47fe46aaf",
+      "bytes": 379
+    },
+    {
+      "path": "docs/pages/NodeFrame.html.md",
+      "sha256": "88102d125e7cc714a889a610867db570d562c64fed0f638ae1a3bba3fd142892",
+      "bytes": 2766
+    },
+    {
+      "path": "docs/pages/NodeFunction.html.md",
+      "sha256": "dd57aa32ef00413c21684cfae9fcb53c153e6a4ce609dd975738d968e6450356",
+      "bytes": 1237
+    },
+    {
+      "path": "docs/pages/NodeFunctionInput.html.md",
+      "sha256": "02bf668f59824c498fbb0037c6ba127ea78a1dd6a1de8770fd1f456a5677279c",
+      "bytes": 1143
+    },
+    {
+      "path": "docs/pages/NodeLoader.html.md",
+      "sha256": "fbf5040e46d4b393e0be95911e4fa7b26f0446f3ac0eb0373bf531294ecfcde4",
+      "bytes": 2077
+    },
+    {
+      "path": "docs/pages/NodeMaterial.html.md",
+      "sha256": "35980099bafb108cbfe9a8463b7b0a403877f542f83b37641364f60dca437d3d",
+      "bytes": 14911
+    },
+    {
+      "path": "docs/pages/NodeMaterialLoader.html.md",
+      "sha256": "b147256c7a4ee102463c1cae341ac5ab767627ccfce80ccca48c27f14314aac5",
+      "bytes": 1632
+    },
+    {
+      "path": "docs/pages/NodeMaterialObserver.html.md",
+      "sha256": "de930507f72af904adf6ed70510d6e247e6ca3eafb3a6726d2d2f964eb0ca98e",
+      "bytes": 4500
+    },
+    {
+      "path": "docs/pages/NodeObjectLoader.html.md",
+      "sha256": "7726d4f263d27417b40eccd5db5e72cd7922cd6e007d4fa1c5f3a22da885d03f",
+      "bytes": 2255
+    },
+    {
+      "path": "docs/pages/NodeParser.html.md",
+      "sha256": "94e4ae0315a6d163834b7a8914c84bf21e740902b3807ef7aa3f92d27730ca04",
+      "bytes": 494
+    },
+    {
+      "path": "docs/pages/NodeUniform.html.md",
+      "sha256": "3fe6a5eef8bb705bdd611d758cf939baec5dffdcd31eb18835434b763ac08c24",
+      "bytes": 1099
+    },
+    {
+      "path": "docs/pages/NodeVar.html.md",
+      "sha256": "284c5517624ccc045a08e1cbfdd0e03af70801664e3f87b16245b6ea12ec6456",
+      "bytes": 1022
+    },
+    {
+      "path": "docs/pages/NodeVarying.html.md",
+      "sha256": "e11cdb15a089b42e371e5b76f0cbb6912f831c2a7ae5704dd98e24184d768730",
+      "bytes": 1399
+    },
+    {
+      "path": "docs/pages/NormalMapNode.html.md",
+      "sha256": "60a2c513d09ec4d49dc9543abb97d89f54be4d213d36f7ed1714347aece4fc26",
+      "bytes": 998
+    },
+    {
+      "path": "docs/pages/NumberKeyframeTrack.html.md",
+      "sha256": "b65dce6b59e752877823c5b5f43e43dad1362f0c70b0aace2b16d2f324400cd2",
+      "bytes": 802
+    },
+    {
+      "path": "docs/pages/OBB.html.md",
+      "sha256": "76af2c6fbbba0f4e3d00f8ea0f108d381e3e56982b207644e131178b187e5798",
+      "bytes": 4224
+    },
+    {
+      "path": "docs/pages/OBJExporter.html.md",
+      "sha256": "0af5a3561918c966b08e3db2542b66ee3199f32a28ce2f94e063e76f8ce5ac20",
+      "bytes": 938
+    },
+    {
+      "path": "docs/pages/OBJLoader.html.md",
+      "sha256": "a6a95747c3aa06af17852438cef97507190b56d9c13fcb7e34cfd3f972f033df",
+      "bytes": 2122
+    },
+    {
+      "path": "docs/pages/OITPassNode.html.md",
+      "sha256": "c6b7902a589a52af3832bc2cc48cabff43cc8067700cc21c939d0d57a4adaf30",
+      "bytes": 2375
+    },
+    {
+      "path": "docs/pages/Object3D.html.md",
+      "sha256": "d46f731faf4b6fdb5a7dbb9bf65e5ef5ad1f2f5d06b4ac685117e8be7ade125d",
+      "bytes": 21099
+    },
+    {
+      "path": "docs/pages/Object3DNode.html.md",
+      "sha256": "4ec79fd804c17cc85cf4b4ef71192afb18ecd4077043ffd48ff8e50cd5dc02d5",
+      "bytes": 2167
+    },
+    {
+      "path": "docs/pages/ObjectLoader.html.md",
+      "sha256": "8afbc5d350d73d09c57a8baf723aead8b76be0f6fb7e62ba5c47ca21564f8563",
+      "bytes": 2615
+    },
+    {
+      "path": "docs/pages/OctahedronGeometry.html.md",
+      "sha256": "dda3a29c27ba1c983f0524c91af2e7e65c959046edc5dd87b820e3bcfa611198",
+      "bytes": 1326
+    },
+    {
+      "path": "docs/pages/Octree.html.md",
+      "sha256": "b332cdac6fd2690ec516454589e6ce28755f02c49c1e1278409a2044af13ce3f",
+      "bytes": 5385
+    },
+    {
+      "path": "docs/pages/OctreeHelper.html.md",
+      "sha256": "71254568c045dd4a042cd637351d864e10401e1f3b51174c155d23510e5c90d0",
+      "bytes": 1253
+    },
+    {
+      "path": "docs/pages/OculusHandModel.html.md",
+      "sha256": "a967989964739c9814e1a956f205156ae67b528b59bfdf0314255876bd64e4af",
+      "bytes": 2385
+    },
+    {
+      "path": "docs/pages/OculusHandPointerModel.html.md",
+      "sha256": "3772ef4301705b641bc95dddeeb8972d8c0a85e38ec3e3653cc7219d5aecca7a",
+      "bytes": 3968
+    },
+    {
+      "path": "docs/pages/OperatorNode.html.md",
+      "sha256": "3193dd5f06f95e7aae67fae671ee07850e33e7ae8d25f006eeae88e5a4cabb74",
+      "bytes": 1407
+    },
+    {
+      "path": "docs/pages/OrbitControls.html.md",
+      "sha256": "2c0cbe2e5663180c5b48b7bf5832f71b29f76cdbafc879f63f1c2b2bc1b336eb",
+      "bytes": 8723
+    },
+    {
+      "path": "docs/pages/OrthographicCamera.html.md",
+      "sha256": "3b0d2ab8eb19f4ebbe3700b1737409250dfde9ef82cf1f4ab64bbae37fe3334a",
+      "bytes": 3322
+    },
+    {
+      "path": "docs/pages/OutlineEffect.html.md",
+      "sha256": "e85f105e3edacf8e56cdc32be59ecb7980712476f49368937b52176fac23bc3c",
+      "bytes": 2284
+    },
+    {
+      "path": "docs/pages/OutlineNode.html.md",
+      "sha256": "8068a7c522eae3011f88583806a94a031ae8bc157c17880b9c89f7f8dd82026f",
+      "bytes": 3577
+    },
+    {
+      "path": "docs/pages/OutlinePass.html.md",
+      "sha256": "f81551ad03fafbbc0c1a6679e01cdf92ca2d719d6f699d2635394ab0c7907516",
+      "bytes": 3171
+    },
+    {
+      "path": "docs/pages/OutputPass.html.md",
+      "sha256": "8eb652bef1d6efe22ecb277ba99096786bd847a49d8497a7e72edf26d9546fc0",
+      "bytes": 1915
+    },
+    {
+      "path": "docs/pages/OutputStructNode.html.md",
+      "sha256": "52dcf7f234c13910382f9e90547844ad80869944d3e906badf84be38120d8f2b",
+      "bytes": 696
+    },
+    {
+      "path": "docs/pages/OverrideContextNode.html.md",
+      "sha256": "3aec56da685b342cfab65de05110426110d858d61716608727ecd3896839639f",
+      "bytes": 1684
+    },
+    {
+      "path": "docs/pages/PCDLoader.html.md",
+      "sha256": "ef689bbe6689ed421416457bd194fc51b222987b9fa82d2720429475c417cd41",
+      "bytes": 1819
+    },
+    {
+      "path": "docs/pages/PDBLoader.html.md",
+      "sha256": "661b7e76f59d3516aae0cfc5ea540f11434c4c79632b2f85e3830919b448cd1b",
+      "bytes": 1745
+    },
+    {
+      "path": "docs/pages/PLYExporter.html.md",
+      "sha256": "d2692e370361a37493091733f57271ab725a4cc97512745050c2c0182ab2efb4",
+      "bytes": 2326
+    },
+    {
+      "path": "docs/pages/PLYLoader.html.md",
+      "sha256": "f23c7410c98869328cb34e4c07c134920868b7e2e4b4c51da0b4de88a2789694",
+      "bytes": 2626
+    },
+    {
+      "path": "docs/pages/PMREMGenerator.html.md",
+      "sha256": "1705ef016f9a7e995b6653fd6382c28504579ea51ddc48d4e344a2930b7443c9",
+      "bytes": 3738
+    },
+    {
+      "path": "docs/pages/PMREMNode.html.md",
+      "sha256": "7d70fd0525d9b573fcff59e9057599013dca84b73b4efe546ce8d56511038723",
+      "bytes": 1190
+    },
+    {
+      "path": "docs/pages/PVRLoader.html.md",
+      "sha256": "c716f4748a89a19df3233672d8426045f2e7880d6e9f6938048a7d0b6a378c80",
+      "bytes": 1213
+    },
+    {
+      "path": "docs/pages/PackFloatNode.html.md",
+      "sha256": "cc7cf2a3dbc0ee51131c887494f5c8400ad4f4f0640d0908c1940280fafb37ee",
+      "bytes": 877
+    },
+    {
+      "path": "docs/pages/Packed4x8IntegerNode.html.md",
+      "sha256": "47ed2ecb01ff4cd805c6ab65e54540783b0f10e6ec4d5d5102e71f0a460f6839",
+      "bytes": 984
+    },
+    {
+      "path": "docs/pages/ParallaxBarrierEffect.html.md",
+      "sha256": "a02c2f4de3e6e43e96e773c1b4acea57588c93f3b8eda684f55c95d059efa765",
+      "bytes": 1361
+    },
+    {
+      "path": "docs/pages/ParallaxBarrierPassNode.html.md",
+      "sha256": "61cc9eab67ca081f982cc6cea1d7d6df2e400cffc98efba6283b3cfe05f5bb77",
+      "bytes": 1195
+    },
+    {
+      "path": "docs/pages/ParameterNode.html.md",
+      "sha256": "cd111abb38cb62357cd1bc1e925eeb646a436d73a578b05baaf4db3db47f5a49",
+      "bytes": 918
+    },
+    {
+      "path": "docs/pages/ParametricGeometry.html.md",
+      "sha256": "65a27fadafad54a439d0a9fc14df1e6ecc46bdba24697a3ab2fa6b14f050286d",
+      "bytes": 1826
+    },
+    {
+      "path": "docs/pages/Pass.html.md",
+      "sha256": "7d722ca56d52b7feb322c8dddd1a975b4b55ff133f87765a683f62ae730e1ba4",
+      "bytes": 2153
+    },
+    {
+      "path": "docs/pages/PassMultipleTextureNode.html.md",
+      "sha256": "4eea29f1f460fbf25320dd8f22ead7343354c1bc2cdb12e0a28cd1ea04d5dda4",
+      "bytes": 1071
+    },
+    {
+      "path": "docs/pages/PassNode.html.md",
+      "sha256": "e6c833a7793df7aa8f9c644ab5c916a08d1ce61d01541c801f62e6e90f5f6b4a",
+      "bytes": 8058
+    },
+    {
+      "path": "docs/pages/PassTextureNode.html.md",
+      "sha256": "10e3aced83e4482c2e71c0ce9f02779623eec9b887d195d0077bb1787353440d",
+      "bytes": 632
+    },
+    {
+      "path": "docs/pages/Path.html.md",
+      "sha256": "bf72da195d6eea2acc119d3eecb676cc2d48ae90dcce137e4933355bcebb8057",
+      "bytes": 6413
+    },
+    {
+      "path": "docs/pages/PersonGenerator.html.md",
+      "sha256": "8bc9491b0c58de99ef89149c9113cd8ba80db954a6daf439b177d353c0a0fee9",
+      "bytes": 1025
+    },
+    {
+      "path": "docs/pages/PerspectiveCamera.html.md",
+      "sha256": "93ca325bc3910f3e80284fad3363d94e10ed3a000f4cd36cb55a5b75dd99da9a",
+      "bytes": 6592
+    },
+    {
+      "path": "docs/pages/PhongLightingModel.html.md",
+      "sha256": "e85d440061d5cf6891d83151334679249cb50dd7ccec19c286ed3fdbe9a4c280",
+      "bytes": 1271
+    },
+    {
+      "path": "docs/pages/PhysicalLightingModel.html.md",
+      "sha256": "90daafce864c1a29e5f12632702b82ed991467239ecbcc00825f64f201f47701",
+      "bytes": 4307
+    },
+    {
+      "path": "docs/pages/PixelationNode.html.md",
+      "sha256": "585093afcf500e18e45e9f7270f86910e5d77ecfd42429c58bab05a65be319ff",
+      "bytes": 1961
+    },
+    {
+      "path": "docs/pages/PixelationPassNode.html.md",
+      "sha256": "0a3b7aa23636260ad30dad8a784d9c6684f5d7eb2f78939eef20e5094f912698",
+      "bytes": 1840
+    },
+    {
+      "path": "docs/pages/Plane.html.md",
+      "sha256": "a7e3438c44a9d498949d3326d0d05df833ba3d4d52322991a26ceac870a3c3a7",
+      "bytes": 6148
+    },
+    {
+      "path": "docs/pages/PlaneGeometry.html.md",
+      "sha256": "ee29050c2155f4414d3d9cd8bb9dadfcb538c094055da4aab012f9f54819cc5b",
+      "bytes": 1343
+    },
+    {
+      "path": "docs/pages/PlaneHelper.html.md",
+      "sha256": "5bc9cd8e4db394ef0629443470e83dc57262ab8fb4b3c9c255d2c2ccf66316c3",
+      "bytes": 1017
+    },
+    {
+      "path": "docs/pages/PointLight.html.md",
+      "sha256": "d8db4cd9ceaf8f4c4134230441ed070e7adee96eccc41bdd0ab3323cfb478dab",
+      "bytes": 1942
+    },
+    {
+      "path": "docs/pages/PointLightDataNode.html.md",
+      "sha256": "9712fbd605d8668a67a9dc90e9a03803241f223c028a4241443576081b1bc6b8",
+      "bytes": 341
+    },
+    {
+      "path": "docs/pages/PointLightHelper.html.md",
+      "sha256": "9d110083fc9fdde3d259538fd9771f8ad70559f9127a7dad51fd26c83177eb0d",
+      "bytes": 1471
+    },
+    {
+      "path": "docs/pages/PointLightNode.html.md",
+      "sha256": "f272ede771d9b305a15a4628c830dcc621418239f2c7b93b459969b1f3de1296",
+      "bytes": 1052
+    },
+    {
+      "path": "docs/pages/PointLightShadow.html.md",
+      "sha256": "4e8d0c1e109dbc472af58daac39fbaabbd633947f76f092f699e4970805d984b",
+      "bytes": 432
+    },
+    {
+      "path": "docs/pages/PointShadowNode.html.md",
+      "sha256": "e65ad6a6e680fb09be929637aa1a577cfabf224ccce257d173f4a32eb2a6b97c",
+      "bytes": 2531
+    },
+    {
+      "path": "docs/pages/PointUVNode.html.md",
+      "sha256": "8e8ada65e656712d7ae2b53d091627d67986e2e6807625a446c01ee4db1f9b40",
+      "bytes": 609
+    },
+    {
+      "path": "docs/pages/PointerLockControls.html.md",
+      "sha256": "6cb0cd4822004cc6905b9df97efa673020988a0dab20107f6802f7e246d65892",
+      "bytes": 2886
+    },
+    {
+      "path": "docs/pages/Points.html.md",
+      "sha256": "5a6be4567a776ec34ee0d199d9611c83076600008af499202deacfaaf171da22",
+      "bytes": 2162
+    },
+    {
+      "path": "docs/pages/PointsMaterial.html.md",
+      "sha256": "5b76f1b0f273d14a9c924f4e057af277ec20fa8312f40b2fde68ed800792bc3f",
+      "bytes": 3028
+    },
+    {
+      "path": "docs/pages/PointsNodeMaterial.html.md",
+      "sha256": "28518c3a6b5abcfb80008b43bc48443bf9913b8aa674e4f1f6d9c680a94e9626",
+      "bytes": 1840
+    },
+    {
+      "path": "docs/pages/PolarGridHelper.html.md",
+      "sha256": "02c780ea984b1eef989eb13da2ac4417b9065184314f3a0e270015ab7214e5b5",
+      "bytes": 1530
+    },
+    {
+      "path": "docs/pages/PolyhedronGeometry.html.md",
+      "sha256": "b5bfa663cab2acb8ecfdbef4f8054843d7254acd261f59c883c37e38f8e5e3ee",
+      "bytes": 1309
+    },
+    {
+      "path": "docs/pages/PositionalAudio.html.md",
+      "sha256": "32a99a9082ecc7b6f7ecb8edfa72e6aaf33d6f55760723fd4b1381c334b81bb1",
+      "bytes": 3660
+    },
+    {
+      "path": "docs/pages/PositionalAudioHelper.html.md",
+      "sha256": "4873cd22583153d180dbfae8ae06629189554fc3f29cf50d4c18cebd64b7560b",
+      "bytes": 2134
+    },
+    {
+      "path": "docs/pages/PostProcessing.html.md",
+      "sha256": "90f8464bae65b27aa31edd8eaf00850b61143e4ddaf8f60f90d816256701160c",
+      "bytes": 591
+    },
+    {
+      "path": "docs/pages/ProgressiveLightMap.html.md",
+      "sha256": "8778575a2591aac1eb29a3f6195d4272ed3b5c822d22358404daad21776ffbc2",
+      "bytes": 2310
+    },
+    {
+      "path": "docs/pages/Projector.html.md",
+      "sha256": "bfb3763208be2c34c5d7e8e599eb679e9637099191657cf7c4e844586204bbac",
+      "bytes": 1159
+    },
+    {
+      "path": "docs/pages/ProjectorLight.html.md",
+      "sha256": "5cbe93921a071edc427b69882188950b035416e2c4216610889fa92217feda6f",
+      "bytes": 1234
+    },
+    {
+      "path": "docs/pages/ProjectorLightNode.html.md",
+      "sha256": "33d77042b28f38708a01c88c761b0340537de9f6b9aff8df6f603354a42f8972",
+      "bytes": 667
+    },
+    {
+      "path": "docs/pages/PropertyBinding.html.md",
+      "sha256": "188b6576e4168a36279a8701525e887edbf05421909a4a22c9744f5d36fc9bd5",
+      "bytes": 2416
+    },
+    {
+      "path": "docs/pages/PropertyMixer.html.md",
+      "sha256": "1fdfd2db200c8632d67fcaab6dd910e33f40202083763e2ecc92d327f225b6c6",
+      "bytes": 1755
+    },
+    {
+      "path": "docs/pages/PropertyNode.html.md",
+      "sha256": "02a465205c8b50a131f5fa454469af7305558bc8493afee9b4af0762eb7ee00f",
+      "bytes": 1536
+    },
+    {
+      "path": "docs/pages/QuadMesh.html.md",
+      "sha256": "62b56041def7268af84fc05972995c07b8294a94e5799dab84603cc7966ddbb8",
+      "bytes": 1176
+    },
+    {
+      "path": "docs/pages/QuadraticBezierCurve.html.md",
+      "sha256": "87096273302273a76b578cdf930c67c8016d2d0eae88d50cc760db0360b07034",
+      "bytes": 1514
+    },
+    {
+      "path": "docs/pages/QuadraticBezierCurve3.html.md",
+      "sha256": "f05cebd1a9c6ac4354e153d9e7b7f9767fe619ad6a9c3cbf1be6dc33cf7c9e96",
+      "bytes": 1073
+    },
+    {
+      "path": "docs/pages/Quaternion.html.md",
+      "sha256": "f4f6a5f3189b62de0816b1a3ac991e6671c16965289b42e8b4e18b22a3ff2256",
+      "bytes": 9669
+    },
+    {
+      "path": "docs/pages/QuaternionKeyframeTrack.html.md",
+      "sha256": "d252344e300eb8cba494340a20b3c9144e9ce9cc7862d8f46b09b7d5922f8bed",
+      "bytes": 1177
+    },
+    {
+      "path": "docs/pages/QuaternionLinearInterpolant.html.md",
+      "sha256": "93ef5ce60714b36be5796716138dc2aded892734647844c40913d1b0417cbc25",
+      "bytes": 666
+    },
+    {
+      "path": "docs/pages/RGBShiftNode.html.md",
+      "sha256": "21123a504a29747af9464ba37e6f882e3cabb89c06abeb412c44fd27d2a0629c",
+      "bytes": 1423
+    },
+    {
+      "path": "docs/pages/RTTNode.html.md",
+      "sha256": "4be425bcf3464e5e0bf784d6e053869de9f9e2deb62b2ebb4c27af411c6d8f7c",
+      "bytes": 3827
+    },
+    {
+      "path": "docs/pages/RangeNode.html.md",
+      "sha256": "d07d72521b732e93f38156cb2acfb49ed9528d54b43fc09e7aa02b77901c384c",
+      "bytes": 1715
+    },
+    {
+      "path": "docs/pages/RapierHelper.html.md",
+      "sha256": "3ab4a4bd9b9170d41391efc7188c7db250e3475d6fe49b47e06a489ebb3875f2",
+      "bytes": 1019
+    },
+    {
+      "path": "docs/pages/RapierPhysics.html.md",
+      "sha256": "86e02882a9e6a7908b7e2d0d79a388d5482b139b6875597f19b08ca7e2e26634",
+      "bytes": 3286
+    },
+    {
+      "path": "docs/pages/RawShaderMaterial.html.md",
+      "sha256": "46972a799a9da5a16dc7f48b976751da6f2899cce95cd70e7fbf14aa8e5f844c",
+      "bytes": 990
+    },
+    {
+      "path": "docs/pages/Ray.html.md",
+      "sha256": "73219285590613c36d8f76da230a22cb804ae183219b57a248c79450bb8476b1",
+      "bytes": 6074
+    },
+    {
+      "path": "docs/pages/Raycaster.html.md",
+      "sha256": "52f10ff7ccbf2662fd48b20db253f10e0694dc7378f235df0878aeab1f2667ae",
+      "bytes": 5815
+    },
+    {
+      "path": "docs/pages/ReadbackBuffer.html.md",
+      "sha256": "25d0ad306def089d2ddf18cfd5365fba65d95be6ec0ca10ef574b5c1f1158b14",
+      "bytes": 1095
+    },
+    {
+      "path": "docs/pages/RectAreaLight.html.md",
+      "sha256": "13fc34729e41feed772b0f8f23d17462ab40d7660344e2125d1b6ce952b131ba",
+      "bytes": 1840
+    },
+    {
+      "path": "docs/pages/RectAreaLightHelper.html.md",
+      "sha256": "00a24c8a17003435b5dd73c863bbd789ddaa5e90c47dd524c474db8e00f60221",
+      "bytes": 1435
+    },
+    {
+      "path": "docs/pages/RectAreaLightNode.html.md",
+      "sha256": "d749ac483fc436d92b63289aaf80013ebead8a061d76bc2113751d50836ec2c2",
+      "bytes": 1341
+    },
+    {
+      "path": "docs/pages/RectAreaLightTexturesLib.html.md",
+      "sha256": "abdebb5bae0b2a16f45a0f4c13141e3abe5765d27fe0197569017eff086d5f6f",
+      "bytes": 1606
+    },
+    {
+      "path": "docs/pages/RectAreaLightUniformsLib.html.md",
+      "sha256": "e1f213b1dc931612bd35cb6490b7553fc049368e6144f9b89b952d8754d409de",
+      "bytes": 847
+    },
+    {
+      "path": "docs/pages/RecurrentDenoiseNode.html.md",
+      "sha256": "391f5314993b3a3612aa107fe1362cf369bc58be3f7040b1c276557c88ba19c6",
+      "bytes": 1742
+    },
+    {
+      "path": "docs/pages/ReferenceBaseNode.html.md",
+      "sha256": "52792603a1da92e6ebfd16d9d6c8ca557fa959b883808410e77fdac82a8ebad3",
+      "bytes": 4011
+    },
+    {
+      "path": "docs/pages/ReferenceElementNode.html.md",
+      "sha256": "4c2a2ae1b2c9ab1ce3047f9a37c0ebe1ad92dd4cc931668cf625beb438285d6d",
+      "bytes": 1285
+    },
+    {
+      "path": "docs/pages/ReferenceNode.html.md",
+      "sha256": "656e406d5814abce19faed63e7a37b73b697292d7c883274ecfd903ea67b2c4d",
+      "bytes": 4499
+    },
+    {
+      "path": "docs/pages/Reflector.html.md",
+      "sha256": "c3cf4efb4bc6884b53e3ec300f1fc3f33fe7b644d0cc2d11fdedf2ba52a5c9cf",
+      "bytes": 2813
+    },
+    {
+      "path": "docs/pages/ReflectorForSSRPass.html.md",
+      "sha256": "264dd1f0c11cf25c4664b5b39836178f2f1d1a0b636f63f04a3865cbc80b2090",
+      "bytes": 1983
+    },
+    {
+      "path": "docs/pages/ReflectorNode.html.md",
+      "sha256": "d112a1e9c6ae24a13a650c8b406252e829914206747a806cf6132ec6ee439621",
+      "bytes": 1773
+    },
+    {
+      "path": "docs/pages/Refractor.html.md",
+      "sha256": "7e5f02ff52d61bc1090c392cd6b0f1a1d0f5e4fc0397f5ec837ad5c2551f8fdb",
+      "bytes": 2410
+    },
+    {
+      "path": "docs/pages/RenderOutputNode.html.md",
+      "sha256": "99653b5d05718e46814240231712ccd44f696a5c02c1993e880d7ebfb4ed989a",
+      "bytes": 1826
+    },
+    {
+      "path": "docs/pages/RenderPass.html.md",
+      "sha256": "f5533fe1e97c5efa162e07506dde0a14f275c7e350e25073c453769a176f3cf5",
+      "bytes": 2716
+    },
+    {
+      "path": "docs/pages/RenderPipeline.html.md",
+      "sha256": "3ed57270e87bc109e1ea0d21b74e98fad38008450d555b9bdc501bed1d1cfe05",
+      "bytes": 2322
+    },
+    {
+      "path": "docs/pages/RenderPixelatedPass.html.md",
+      "sha256": "b82dc6d1ec27581170844ea6007783db582fff51d7d3666848c424078f862f15",
+      "bytes": 2398
+    },
+    {
+      "path": "docs/pages/RenderTarget.html.md",
+      "sha256": "2810be88d120dc0173d821959739ad7d98f7b0836d0ab5e8120bde5e0bc4b08d",
+      "bytes": 8942
+    },
+    {
+      "path": "docs/pages/RenderTarget3D.html.md",
+      "sha256": "2ecef5ca10dd6f36f8c0567d32fa83e43ab67166eaa495e33041ebafe14d1630",
+      "bytes": 722
+    },
+    {
+      "path": "docs/pages/RenderTransitionPass.html.md",
+      "sha256": "887b3aa20edb97f82c2b198967015f761cbc32af9646de4a5f7df3c311a985e0",
+      "bytes": 3065
+    },
+    {
+      "path": "docs/pages/Renderer.html.md",
+      "sha256": "6bb5c3e0828faa7504064af79c564ff29c0a1b0c10ae81a030ced234a3b93fcc",
+      "bytes": 28468
+    },
+    {
+      "path": "docs/pages/RendererReferenceNode.html.md",
+      "sha256": "5377a76986785e879f97e46f6dd9ba1d5482f8c441a4d455acadd405eb10c117",
+      "bytes": 1606
+    },
+    {
+      "path": "docs/pages/RetroPassNode.html.md",
+      "sha256": "1e450673b313ba79443f395afb18ff181e4061f4e1a2f922f3f955058650a3c7",
+      "bytes": 1128
+    },
+    {
+      "path": "docs/pages/Rhino3dmLoader.html.md",
+      "sha256": "819b86ae42ccb7f2d979d3b079488ffbd09f9d8bded424eaeadca76c4ca24c3a",
+      "bytes": 3930
+    },
+    {
+      "path": "docs/pages/RingGeometry.html.md",
+      "sha256": "b346a5c25b25ba095b91e675d54a5c64990e1365c6b5a904ce80a0b74e6491e4",
+      "bytes": 1605
+    },
+    {
+      "path": "docs/pages/RollerCoasterGeometry.html.md",
+      "sha256": "b5c44c2b79f923fea4de472fb29e50282465bd46e511bd85bbc5a776ba54b7b1",
+      "bytes": 740
+    },
+    {
+      "path": "docs/pages/RollerCoasterLiftersGeometry.html.md",
+      "sha256": "0e8b75b6c5372b2c6701c50a4c42c1df19497a482aab82d341dfdfe30c014939",
+      "bytes": 776
+    },
+    {
+      "path": "docs/pages/RollerCoasterShadowGeometry.html.md",
+      "sha256": "07323fe4d7fd8b901c5301a99c7c73f0ee6b3553d2e1f38299cffe0b8e5b028a",
+      "bytes": 771
+    },
+    {
+      "path": "docs/pages/RoomEnvironment.html.md",
+      "sha256": "ef1492ec25dbe9187495af21a28b22d7ab85356330a28245e012249f5424103b",
+      "bytes": 1480
+    },
+    {
+      "path": "docs/pages/RotateNode.html.md",
+      "sha256": "0b950888eaeac4e60a04d2ccdc113c817e9be3ab1a1d2ab0a93bedc2deda1736",
+      "bytes": 1763
+    },
+    {
+      "path": "docs/pages/RoundedBoxGeometry.html.md",
+      "sha256": "598873dd1c46f9461afdecfafba1521776562ae7873cea27cd9d740db48892f7",
+      "bytes": 1889
+    },
+    {
+      "path": "docs/pages/SAOPass.html.md",
+      "sha256": "4d7287beff4cdbabcdb3fa34a2a46f5fb26ab52533ec118443169caaa17862b5",
+      "bytes": 2330
+    },
+    {
+      "path": "docs/pages/SMAANode.html.md",
+      "sha256": "982f0b108063a7574c01eaa8ca46efbdd8c10e8ef26a7a8f9a4400c582d1d525",
+      "bytes": 2226
+    },
+    {
+      "path": "docs/pages/SMAAPass.html.md",
+      "sha256": "3dd3ec6aaaea70d72445b459caf5a6c1fb942747cf9532e1010c46a1b7073d4d",
+      "bytes": 1668
+    },
+    {
+      "path": "docs/pages/SPLATLoader.html.md",
+      "sha256": "e55eec90fde4d99c1f9f36494437796e97b1bfaf9961e5ee87847689306fbdf8",
+      "bytes": 1693
+    },
+    {
+      "path": "docs/pages/SPZLoader.html.md",
+      "sha256": "ad88b93d90bd58d8fd34a599469ddc42345581c0baee16e18dbba1163c0dacaf",
+      "bytes": 2490
+    },
+    {
+      "path": "docs/pages/SSAAPassNode.html.md",
+      "sha256": "8a4b7b13eb9f0992244a7194083ed3d7aa53c38e31782d50a97055ed888d9b8a",
+      "bytes": 2215
+    },
+    {
+      "path": "docs/pages/SSAARenderPass.html.md",
+      "sha256": "eabfd63a9f2a2d6b03aa6422451d1942ffaa8f7cf76c7f2cd65a64c505d58016",
+      "bytes": 2888
+    },
+    {
+      "path": "docs/pages/SSAONode.html.md",
+      "sha256": "74b8384148d38adaa5b504c506b2c489b6aca8ec28e04afdc62b4db6b886ad5e",
+      "bytes": 3920
+    },
+    {
+      "path": "docs/pages/SSAOPass.html.md",
+      "sha256": "47071b192538d6bf5db8734727f845d8bc042e86c56652817a3714168e523967",
+      "bytes": 2882
+    },
+    {
+      "path": "docs/pages/SSGINode.html.md",
+      "sha256": "a5342739be2232ba0308f2ac20f94b52c51c817fded45926054821a647ece8bc",
+      "bytes": 5982
+    },
+    {
+      "path": "docs/pages/SSRNode.html.md",
+      "sha256": "b80f4f4b205bdc283b0e26dab94cacfb2857b579a5d447a37ee0d63b16a4dde7",
+      "bytes": 9774
+    },
+    {
+      "path": "docs/pages/SSRPass.html.md",
+      "sha256": "45b8716b07a3540c85956d85efe9aeb1bc73e5236b71830166dc5cba4e12f4c7",
+      "bytes": 4126
+    },
+    {
+      "path": "docs/pages/SSSLightingModel.html.md",
+      "sha256": "7940bd766c6b51c306211a34d89cb73053494f0c9b9db01b0153585a5d3bc339",
+      "bytes": 1687
+    },
+    {
+      "path": "docs/pages/SSSNode.html.md",
+      "sha256": "3bfda5c395e27d1d9f52943938da71abcaaefa090bd623caa398cd31d234e981",
+      "bytes": 4936
+    },
+    {
+      "path": "docs/pages/STLExporter.html.md",
+      "sha256": "c8e3f64e655e82e5095b96a2136c6b4553ba325209b504a83a71e277e3a913d0",
+      "bytes": 1459
+    },
+    {
+      "path": "docs/pages/STLLoader.html.md",
+      "sha256": "cc98410427b6161e033adbc56d6cc7b15738789d6a92fab8f2d613b17c87caa6",
+      "bytes": 2730
+    },
+    {
+      "path": "docs/pages/SVGLoader.html.md",
+      "sha256": "0ba0e4de7d1137ce4cf54ac088e8de40554146224d1216aa1902a688ffcb2496",
+      "bytes": 5266
+    },
+    {
+      "path": "docs/pages/SVGObject.html.md",
+      "sha256": "6676fd20f84c1208966bf7ed237e338f5ab5dd50cb9770899265c675398b1c89",
+      "bytes": 744
+    },
+    {
+      "path": "docs/pages/SVGRenderer.html.md",
+      "sha256": "a55a295f2ea331aec1492a88fbc8b28bba8bfe14ce0f063da742ef65351113e1",
+      "bytes": 2929
+    },
+    {
+      "path": "docs/pages/SampleNode.html.md",
+      "sha256": "52fe7a9fcbde3315c0b5264393dc2fc645484f8c7a7cda13895c31a7def1487e",
+      "bytes": 1256
+    },
+    {
+      "path": "docs/pages/SavePass.html.md",
+      "sha256": "1a4dcb8821569476d5964cf1bd644d8078cbf96153836e208352baaf0adf4a32",
+      "bytes": 2108
+    },
+    {
+      "path": "docs/pages/Scene.html.md",
+      "sha256": "20c007cb47e559d6d7aebd2d51068872cc24e611a246e80f7e5b467f8b5bd7f3",
+      "bytes": 2307
+    },
+    {
+      "path": "docs/pages/SceneOptimizer.html.md",
+      "sha256": "835a3c309b1d93fc363ad19cb6ff7f633ba3a2a90fb666a02cbcebb54938a577",
+      "bytes": 1950
+    },
+    {
+      "path": "docs/pages/ScreenNode.html.md",
+      "sha256": "1d8ecfe896303ffe3df9f27c92c974f08a4a7eb2ea6ed316ee979cf95d649822",
+      "bytes": 1596
+    },
+    {
+      "path": "docs/pages/Sculptor.html.md",
+      "sha256": "800e341ce3815936f0947cc2e108bee7fd388371ae36c4552f2c6aebc4bae74a",
+      "bytes": 6861
+    },
+    {
+      "path": "docs/pages/SelectionBox.html.md",
+      "sha256": "05d28222623715fa6d2b68230c4ea1efcfceda05ac520073266dd4dc9434d8c1",
+      "bytes": 1987
+    },
+    {
+      "path": "docs/pages/SelectionHelper.html.md",
+      "sha256": "5d31c875e5c1ab0c23737df4e713377771437841aea66442cac82640a45830cd",
+      "bytes": 1244
+    },
+    {
+      "path": "docs/pages/SetNode.html.md",
+      "sha256": "e7fce1be2395b0b9ab8b9645807d4151aec12f071feef49fb0f227839fb69d80",
+      "bytes": 1284
+    },
+    {
+      "path": "docs/pages/ShaderMaterial.html.md",
+      "sha256": "56c501fe1acae3f44f4fe2ecf9a19a84031bec515bcdb270691c84be7ab25b6d",
+      "bytes": 6571
+    },
+    {
+      "path": "docs/pages/ShaderPass.html.md",
+      "sha256": "972c5e6991222ffe513044e94e8d41652591d4c8b3efec297907b1b446dd3b34",
+      "bytes": 2016
+    },
+    {
+      "path": "docs/pages/ShadowBaseNode.html.md",
+      "sha256": "fcdd7e8b21443f9fc391b7ee087a94c624427c169900cbbaefee3af4694131aa",
+      "bytes": 2022
+    },
+    {
+      "path": "docs/pages/ShadowMapViewer.html.md",
+      "sha256": "40fedd94cf34877c6c52336538d9ab3021f8fecf9dcf793ede2bf32f377eed17",
+      "bytes": 1993
+    },
+    {
+      "path": "docs/pages/ShadowMaskModel.html.md",
+      "sha256": "2d83f6d3477503f86595353f03fb02af0b82e9de2a9370d78c998f0dc70311be",
+      "bytes": 805
+    },
+    {
+      "path": "docs/pages/ShadowMaterial.html.md",
+      "sha256": "9aa7932e6306cbd82ed593261c01ac89382a4ba38fbfe9f8ae7fc6062d950d9b",
+      "bytes": 1412
+    },
+    {
+      "path": "docs/pages/ShadowMesh.html.md",
+      "sha256": "cfadb656bb5ba0bcb36ea73196bea88c5946bb106b871ced2f5c97248fd291e4",
+      "bytes": 1815
+    },
+    {
+      "path": "docs/pages/ShadowNode.html.md",
+      "sha256": "0f634e241557460ef0a0e1bbfeecd6c5d425640e64ad9f353150af12734c224a",
+      "bytes": 4136
+    },
+    {
+      "path": "docs/pages/ShadowNodeMaterial.html.md",
+      "sha256": "024528d9da85fee7d4056e1cb53bcd3b93eed04932051e455254865af4511b00",
+      "bytes": 1151
+    },
+    {
+      "path": "docs/pages/Shape.html.md",
+      "sha256": "da7417d0ae6d834a52689bf50bacf394032983b7721afd7ab5082d55dafb44aa",
+      "bytes": 1916
+    },
+    {
+      "path": "docs/pages/ShapeGeometry.html.md",
+      "sha256": "350fc581291f7a2282f45b19bff6330849c7f82f914408fef0dae79ffc1d0354",
+      "bytes": 1340
+    },
+    {
+      "path": "docs/pages/ShapePath.html.md",
+      "sha256": "c519069990b228d377dc02a56cdb5e80f1b7da38ed158e10a42e3f14a66bd1e6",
+      "bytes": 2702
+    },
+    {
+      "path": "docs/pages/ShapeUtils.html.md",
+      "sha256": "7ff7a3f0c97b80956b349aedb12d1e772a69396e9cf5427d8363eae61e5a06cc",
+      "bytes": 971
+    },
+    {
+      "path": "docs/pages/SharpenNode.html.md",
+      "sha256": "0f02107018e73ed8e024643424590bf2c067047c1c397635e42039e8e48fb9a5",
+      "bytes": 2580
+    },
+    {
+      "path": "docs/pages/SidewalkGenerator.html.md",
+      "sha256": "cc8d460023881a0197fb299191de5d88c92b388342b5c29b52852149c82c7ebf",
+      "bytes": 969
+    },
+    {
+      "path": "docs/pages/SimplexNoise.html.md",
+      "sha256": "afdd736aa20897e2fe679bc43beec373080138eb750769de604cb5ac79ba357f",
+      "bytes": 1460
+    },
+    {
+      "path": "docs/pages/SimplifyModifier.html.md",
+      "sha256": "b3f10a0b70c1d92035429f0e06c57dd6a80e87be10c3f429d5ddadf9767be0ef",
+      "bytes": 1291
+    },
+    {
+      "path": "docs/pages/Skeleton.html.md",
+      "sha256": "d3127548e184d37e523da91c3e69bf0b124b60bc881cdecfc9075bb8ef584c83",
+      "bytes": 2905
+    },
+    {
+      "path": "docs/pages/SkeletonHelper.html.md",
+      "sha256": "a372b570cf372d7872f1020f2383072f32ec724ce24e7bf3adaee50303bb636f",
+      "bytes": 1369
+    },
+    {
+      "path": "docs/pages/SkinnedMesh.html.md",
+      "sha256": "f1d40c40a554ac62e8e783f32f6a67fc443f42c06219b52f8ac6068d0eb0ef2a",
+      "bytes": 3592
+    },
+    {
+      "path": "docs/pages/Sky.html.md",
+      "sha256": "61ce030cd8110da09e2fdf027f9bfc65fd57e52929d21449e977eef57f469bda",
+      "bytes": 1660
+    },
+    {
+      "path": "docs/pages/SkyGeometry.html.md",
+      "sha256": "d6eb5a41b7ab66f5b0469aa411395309df4408221c5fb34861046308049c6314",
+      "bytes": 518
+    },
+    {
+      "path": "docs/pages/SkyMesh.html.md",
+      "sha256": "450d5d5856893c566933242660cc6b009ce8ea65c3e3498ea98c4e9686222931",
+      "bytes": 2538
+    },
+    {
+      "path": "docs/pages/SkyscraperGenerator.html.md",
+      "sha256": "d0c9ebe6a55f11803fb1544d21671d8c872bb995b27afe23201bc4bc1099153f",
+      "bytes": 1197
+    },
+    {
+      "path": "docs/pages/SobelOperatorNode.html.md",
+      "sha256": "ed740e8acad7de66d801ea35b6c67d469340d4b6a1e317f2211876f16d2f768a",
+      "bytes": 1611
+    },
+    {
+      "path": "docs/pages/Source.html.md",
+      "sha256": "259c800a5c4a95d88e58d8ca30fc49a9d8fcdee1ad01d95f44b1eb8adebfed71",
+      "bytes": 609
+    },
+    {
+      "path": "docs/pages/Sphere.html.md",
+      "sha256": "72844b5c47694d1731ba9dbc3dda4825a52a74685865e8c0961bb56eb8524633",
+      "bytes": 5120
+    },
+    {
+      "path": "docs/pages/SphereGeometry.html.md",
+      "sha256": "e7d4d1a8178d489cbefb69fa8693a1ceaf35762b8b6bcccb01ffc290c110495f",
+      "bytes": 1659
+    },
+    {
+      "path": "docs/pages/Spherical.html.md",
+      "sha256": "3a456e11a78c661ae1480b065456ae7785b3e238e94ef865604944ad7febca80",
+      "bytes": 2229
+    },
+    {
+      "path": "docs/pages/SphericalHarmonics3.html.md",
+      "sha256": "e09713114fb117874fc290c944bded4a17196bdc857133ace66d68cbe6ff37cc",
+      "bytes": 4311
+    },
+    {
+      "path": "docs/pages/SplineCurve.html.md",
+      "sha256": "69230fd5bff9b9aab12014a9bdbedf3baa49bf8b133cfedb7577159621ebdbc6",
+      "bytes": 1455
+    },
+    {
+      "path": "docs/pages/SplitNode.html.md",
+      "sha256": "2c5b5c86270a4d19a1701603c189609db36001eb8e46fdfcc8a000b667da1e53",
+      "bytes": 1682
+    },
+    {
+      "path": "docs/pages/SpotLight.html.md",
+      "sha256": "f6129e4feda6a32e87bbd22b8599903cfb3334868b9681cedfa3061c03ff944a",
+      "bytes": 3242
+    },
+    {
+      "path": "docs/pages/SpotLightDataNode.html.md",
+      "sha256": "cc014a9c4f1c42d67972fd026561ea38d0cd1304441543f0c9da5921dec5c05e",
+      "bytes": 399
+    },
+    {
+      "path": "docs/pages/SpotLightHelper.html.md",
+      "sha256": "abdd66cd4bd58fbb6ca481fa1fd10f250d48c037854883eb5e71803816c0df46",
+      "bytes": 1456
+    },
+    {
+      "path": "docs/pages/SpotLightNode.html.md",
+      "sha256": "d5fe5dc389af9bc080eb4280e06c94c2b4bf2dd8be1464e079eee94c5dd36b2b",
+      "bytes": 1474
+    },
+    {
+      "path": "docs/pages/SpotLightShadow.html.md",
+      "sha256": "2114b46c6e641e5a03eb6cd1f9e1be85f5b0a0a5ab8ebb4560bd5561706440f4",
+      "bytes": 934
+    },
+    {
+      "path": "docs/pages/Sprite.html.md",
+      "sha256": "596dee613fa56f7f03a0282ffc3532a3270820791bc7deab4d7308ba27cf165b",
+      "bytes": 2017
+    },
+    {
+      "path": "docs/pages/SpriteMaterial.html.md",
+      "sha256": "7f24c9b7e649ad55f7a9cb4572b08b809255dbf16bbfa0d9c60ed535950bfaaa",
+      "bytes": 2693
+    },
+    {
+      "path": "docs/pages/SpriteNodeMaterial.html.md",
+      "sha256": "580dcf7ea9d170392efeb1d79c03b65a804499b6f28748ae0bd697d147bef178",
+      "bytes": 2556
+    },
+    {
+      "path": "docs/pages/StackNode.html.md",
+      "sha256": "811d441fa75d05e6cdba2f281d9211eded73e5acc413a6512f03b9c7eba9e4a3",
+      "bytes": 2688
+    },
+    {
+      "path": "docs/pages/StackTrace.html.md",
+      "sha256": "fd854e4fdebdeb77d1a50ffa0ef549fca39e1cc499e61f61b9a48fabe2851e36",
+      "bytes": 1006
+    },
+    {
+      "path": "docs/pages/StandardNodeLibrary.html.md",
+      "sha256": "b43eb89088fab8bd68aa192816bd706bf92b1f000ee2d74bb9aa6140d3e33bde",
+      "bytes": 499
+    },
+    {
+      "path": "docs/pages/StereoCamera.html.md",
+      "sha256": "557c71fce0670243842e9f060e4e1924bee358e139a3f1fcb320e6925aaeb6e8",
+      "bytes": 1315
+    },
+    {
+      "path": "docs/pages/StereoCompositePassNode.html.md",
+      "sha256": "ae4cbaa8dd1ed5c36289915cd828dbe9e7e45d6fbe6eb776c5487c632a705390",
+      "bytes": 1971
+    },
+    {
+      "path": "docs/pages/StereoEffect.html.md",
+      "sha256": "11f9780eb87046cecf7e6f51eff19ffb3af38ea0bdd9860a9cc28ce078e5f959",
+      "bytes": 1263
+    },
+    {
+      "path": "docs/pages/StereoPassNode.html.md",
+      "sha256": "11c8896a09bafe0449303f690e3ebf1284d2ed5a8a6db7d77172802652318259",
+      "bytes": 1168
+    },
+    {
+      "path": "docs/pages/Storage3DTexture.html.md",
+      "sha256": "cd3124ec15604cf455e93292471b949604a372b6cc69dfac96abe76f4220a8e4",
+      "bytes": 2024
+    },
+    {
+      "path": "docs/pages/StorageArrayElementNode.html.md",
+      "sha256": "e53a85057dec72968f8a66d681d89391dd3e336e9f1d391bcf412c11f9863565",
+      "bytes": 1021
+    },
+    {
+      "path": "docs/pages/StorageArrayTexture.html.md",
+      "sha256": "c95e4a7db0b1b2d6b1be77b0925f7f006e12a60dbaa64f5465ab86f091894973",
+      "bytes": 1593
+    },
+    {
+      "path": "docs/pages/StorageBufferAttribute.html.md",
+      "sha256": "64e1128ab62690fbde23a3d7f926988efde101980d68944db414779fee53f53a",
+      "bytes": 1312
+    },
+    {
+      "path": "docs/pages/StorageBufferNode.html.md",
+      "sha256": "7c7285ec25a50c8e374ed51c400e8c9809f1a1b89774215dffed03fdb5620ce2",
+      "bytes": 4805
+    },
+    {
+      "path": "docs/pages/StorageInstancedBufferAttribute.html.md",
+      "sha256": "583fb5ccff656641406b25e88cb43c804ccccd55ecdf4766d13b5f869ed235ab",
+      "bytes": 1406
+    },
+    {
+      "path": "docs/pages/StorageTexture.html.md",
+      "sha256": "b79d8f70cf198b5059aca24410d4aa40e88542beee863d6aae48fb28580af679",
+      "bytes": 1616
+    },
+    {
+      "path": "docs/pages/StorageTexture3DNode.html.md",
+      "sha256": "1e371c8d948b68203043792639fa9a61dedffd505cbbd8d1323d6056f7dfe040",
+      "bytes": 2072
+    },
+    {
+      "path": "docs/pages/StorageTextureNode.html.md",
+      "sha256": "c4ed48f2fd61c3daa9fc8985847b9b33fd2bd2435aaf48bc4b45c206d71a816b",
+      "bytes": 4669
+    },
+    {
+      "path": "docs/pages/StreetTreeGenerator.html.md",
+      "sha256": "7c741cb3a5883a1f4c8e58e4414bce6039a784204b2104f9efa32b8243124053",
+      "bytes": 1060
+    },
+    {
+      "path": "docs/pages/StreetlightGenerator.html.md",
+      "sha256": "96bac4ed3b1d2e55756395466f91d5d672e3abe47efe454b846dbd492a659ae5",
+      "bytes": 838
+    },
+    {
+      "path": "docs/pages/StringKeyframeTrack.html.md",
+      "sha256": "92976070fa5cc5be967cd9d6aae54e31b84abeb367fa147a533fac391b188ce0",
+      "bytes": 1266
+    },
+    {
+      "path": "docs/pages/StructNode.html.md",
+      "sha256": "80871f53477b91bcea7a14349a57aa1942874badbcb9de90a5a4da9cdf868f73",
+      "bytes": 758
+    },
+    {
+      "path": "docs/pages/StructTypeNode.html.md",
+      "sha256": "64a84bb4f58db37a9adf4857675a4278128235c310f420363158241152f1f6c5",
+      "bytes": 1421
+    },
+    {
+      "path": "docs/pages/SubBuildNode.html.md",
+      "sha256": "3abfbe9342333923ddf0c102d6a9c69b1255ece03289551657a4b8aad8e98b27",
+      "bytes": 753
+    },
+    {
+      "path": "docs/pages/SubgroupFunctionNode.html.md",
+      "sha256": "974184688598cb6dd375ed3901cda9129a1879e91be9aff3f8ad0714608b3de9",
+      "bytes": 1225
+    },
+    {
+      "path": "docs/pages/SunLight.html.md",
+      "sha256": "b5d7c1762a495ef755956622bba1338d793fb6d06d9f735f63aefb92d4f702dd",
+      "bytes": 1592
+    },
+    {
+      "path": "docs/pages/SunLightNode.html.md",
+      "sha256": "bcd71bb13d7961fb6ce2fb8defd8e49ddfb56a7f079757aca60362cdc2ff1552",
+      "bytes": 1073
+    },
+    {
+      "path": "docs/pages/SunLightShadow.html.md",
+      "sha256": "0665fe5fa284a5cb8690a0f6ccc6ed43b431299726e5aa1acc2ad0bbb1ea8a08",
+      "bytes": 2197
+    },
+    {
+      "path": "docs/pages/SunShadowNode.html.md",
+      "sha256": "40f9bb83c718e0540be2e74dad2ebdcec182d65d3a888a54433b7245e6c057ea",
+      "bytes": 2062
+    },
+    {
+      "path": "docs/pages/TAARenderPass.html.md",
+      "sha256": "2a749b6fd85c056a040fbcac9c14e36a21673ab89a40f639ec7db731a9840c67",
+      "bytes": 2399
+    },
+    {
+      "path": "docs/pages/TAAUNode.html.md",
+      "sha256": "85b47270ea4da922e3f2f9b8a78ed7bbb72bd064df97ccafecc0568e7f990e19",
+      "bytes": 5054
+    },
+    {
+      "path": "docs/pages/TDSLoader.html.md",
+      "sha256": "fec1f95ae8d5d02c1f4f036988d18530445de44f0e2932e8c9c8afa9723c4428",
+      "bytes": 1779
+    },
+    {
+      "path": "docs/pages/TGALoader.html.md",
+      "sha256": "c2d1a670153a90eee7bc744d24ca1a397ac8c6f3384a6b83b1766a672205710b",
+      "bytes": 1056
+    },
+    {
+      "path": "docs/pages/TIFFLoader.html.md",
+      "sha256": "332be69378450b7d2bed4036369bea869641184e9edd78cb6b2492dd951df5c3",
+      "bytes": 1042
+    },
+    {
+      "path": "docs/pages/TRAANode.html.md",
+      "sha256": "7e7f2dd6eac631715099c48ec607db94103d165b8bb2cdcc85295f3b908e74c8",
+      "bytes": 3743
+    },
+    {
+      "path": "docs/pages/TSL.html.md",
+      "sha256": "9270a7baad3dc825028173f63762e13f6664971fd036756233c7f33ea4b09770",
+      "bytes": 168369
+    },
+    {
+      "path": "docs/pages/TTFLoader.html.md",
+      "sha256": "2933119b67e8964dc6d8190aa0e8056f4a34c15864d5831b0236ce22e0d89748",
+      "bytes": 1684
+    },
+    {
+      "path": "docs/pages/Tab.html.md",
+      "sha256": "43031f417dc7e140fd4250b11af7bf5ef24b0bbf29b795b1b42c3eeabaf8df45",
+      "bytes": 541
+    },
+    {
+      "path": "docs/pages/TeapotGeometry.html.md",
+      "sha256": "7ed3a896b5d29735ac37bdf2f364728639f4a9dbf19a283b8f725c80981ade84",
+      "bytes": 1987
+    },
+    {
+      "path": "docs/pages/TempNode.html.md",
+      "sha256": "072539b95f9c1ca4d96b23725e080bc317d1de8b5453d405c7f6be4e2ee218e1",
+      "bytes": 869
+    },
+    {
+      "path": "docs/pages/TemporalReprojectNode.html.md",
+      "sha256": "3978f1b7c05888affb9fc97ae12508928307c23fe9ef7d63a94eb3ddefd4d00b",
+      "bytes": 2171
+    },
+    {
+      "path": "docs/pages/TerrainGenerator.html.md",
+      "sha256": "55f0d40a9f478cc823c7fb4e1436972a63c9e9184b304425f5e4d1fbe601bc37",
+      "bytes": 692
+    },
+    {
+      "path": "docs/pages/TessellateModifier.html.md",
+      "sha256": "90304c4441c794ed02e41dad1fe3effecb9a676092f2af103e1e0ebb9909d8d5",
+      "bytes": 1362
+    },
+    {
+      "path": "docs/pages/TetrahedronGeometry.html.md",
+      "sha256": "810360b0cb19a28da3594306157e54381fa29eeea3a6c7a1ddf8ad6a293b2ff8",
+      "bytes": 1338
+    },
+    {
+      "path": "docs/pages/TextGeometry.html.md",
+      "sha256": "d99e0c062ed7938e5ceac3776f75d1787ae98baa7110abd47e0eec6b4b435839",
+      "bytes": 2634
+    },
+    {
+      "path": "docs/pages/Texture.html.md",
+      "sha256": "238831ea010518802425344acea1cbd96add2212acb69ee01b763c99e8e77fb1",
+      "bytes": 10771
+    },
+    {
+      "path": "docs/pages/Texture3DNode.html.md",
+      "sha256": "1f7c1eb53ab634e67907e6571439d18141ddaa89e48a046c861f2a6f9e5dc142",
+      "bytes": 2552
+    },
+    {
+      "path": "docs/pages/TextureHelper.html.md",
+      "sha256": "ef6dcec3930aa229abbdf265a995f295750839d7044aa9ee9222574b36add3e0",
+      "bytes": 1378
+    },
+    {
+      "path": "docs/pages/TextureLoader.html.md",
+      "sha256": "453feacd0c71e489ca3389669b1dc104a9aac030e483b7ce2f32a767e75ad74e",
+      "bytes": 1575
+    },
+    {
+      "path": "docs/pages/TextureNode.html.md",
+      "sha256": "3d071a56fe292a09a269b3c1d8dca11fe6ee8bf650b9cf8fa76bb3b262b12836",
+      "bytes": 9566
+    },
+    {
+      "path": "docs/pages/TexturePass.html.md",
+      "sha256": "d893c455df1d35710e365a620a90ffb8c7d62eddba7d440a0439d6f898c522d1",
+      "bytes": 2012
+    },
+    {
+      "path": "docs/pages/TextureSizeNode.html.md",
+      "sha256": "f89fac57bd9bc05af69463aa29b353d8d27eecf1c33b16e877b7c1bf2a54e13a",
+      "bytes": 951
+    },
+    {
+      "path": "docs/pages/TextureSource.html.md",
+      "sha256": "da4ca74fba6138ddd67dd8a76148b511f129ec548226ecaf913b6b5cb2523c36",
+      "bytes": 2072
+    },
+    {
+      "path": "docs/pages/TextureUtils.html.md",
+      "sha256": "a9a6b7981a8ad64da74ee04e8e74291456202f066349b300fd3c3aafbbf37996",
+      "bytes": 1449
+    },
+    {
+      "path": "docs/pages/ThreeMFLoader.html.md",
+      "sha256": "0b86c38b5190a97f6f8ae2bf74ed761f70f7a24107957ac5bff0e2e0d96a62d0",
+      "bytes": 2158
+    },
+    {
+      "path": "docs/pages/TileCreasedNormalsPlugin.html.md",
+      "sha256": "18f76429063b64f5e055ee7ccc3d3a23e8446b132ccb7b30ef2e21d6d13a7df1",
+      "bytes": 1688
+    },
+    {
+      "path": "docs/pages/TileShadowNode.html.md",
+      "sha256": "0ed1a5789482166b098777f748992bc5d58f161c6fec7ab63581038fc9f67e13",
+      "bytes": 3141
+    },
+    {
+      "path": "docs/pages/TileShadowNodeHelper.html.md",
+      "sha256": "6d4bb1099cbbc39c862026a867745535d6f4c5787bc0543aa7fb83aec2a9f7bc",
+      "bytes": 1136
+    },
+    {
+      "path": "docs/pages/Timer.html.md",
+      "sha256": "6a86f5a58fc5d51dbcf7aac7dce7a07f533af0e611ad64d6357413e896e3468d",
+      "bytes": 2372
+    },
+    {
+      "path": "docs/pages/TimestampQueryPool.html.md",
+      "sha256": "0a38b6519de0180687596dedd8e3aa231d1f0fdd5533b53005e6618ebb582bca",
+      "bytes": 2403
+    },
+    {
+      "path": "docs/pages/ToneMappingNode.html.md",
+      "sha256": "a8380b4a7cb1cac6824b5b260d3ecb3aafbd6c39a25cf6a0b440ba5cbabc541a",
+      "bytes": 1228
+    },
+    {
+      "path": "docs/pages/ToonLightingModel.html.md",
+      "sha256": "2500d39113873a5751de2cd2ffcd39bdddb0e1ee014b5188e0c4c3cf6fcdae38",
+      "bytes": 928
+    },
+    {
+      "path": "docs/pages/ToonOutlinePassNode.html.md",
+      "sha256": "46ae92bc840c0323cd48c0260b8299d760da8c1ac7b18f6bb30c68243dad8c8d",
+      "bytes": 1309
+    },
+    {
+      "path": "docs/pages/TorusGeometry.html.md",
+      "sha256": "f1a360b47ca3e3b2ab0168299fced1f1d771771393693a198ee5e7e38eae5b8e",
+      "bytes": 1663
+    },
+    {
+      "path": "docs/pages/TorusKnot.html.md",
+      "sha256": "1da7a0e42334029245a9b49558cb456bedc3c51e6c3dd9f56e88b3af2b8cf9b8",
+      "bytes": 1032
+    },
+    {
+      "path": "docs/pages/TorusKnotGeometry.html.md",
+      "sha256": "25d8595d5f32e0c6dd66bf82a2e77a68fb6a8e2d83310907c99a11566ae95207",
+      "bytes": 1737
+    },
+    {
+      "path": "docs/pages/TrackballControls.html.md",
+      "sha256": "5af66d5c117bfbe3e74b999624ef828f07423d71c83d968f472ec102caa5625a",
+      "bytes": 3650
+    },
+    {
+      "path": "docs/pages/TrafficlightGenerator.html.md",
+      "sha256": "fc1a2737c14ff34466f29cbb6f4d409cc0c675b7465298db07f44ce89f851f6e",
+      "bytes": 939
+    },
+    {
+      "path": "docs/pages/TransformControls.html.md",
+      "sha256": "faacadf78a789c51adb0c62d17984dd4ee7277e7ad5cc5de64a663562b8b934c",
+      "bytes": 6414
+    },
+    {
+      "path": "docs/pages/TransitionNode.html.md",
+      "sha256": "1d9d474bdba9a57efb4ec1e7096874b8846a6141614795970f93245019a7d4b6",
+      "bytes": 2075
+    },
+    {
+      "path": "docs/pages/Transpiler.html.md",
+      "sha256": "bed7f689099a7a308d9ef9fbcfdb975bbaaeb2da36b6d8ca5e3b1843b06e8039",
+      "bytes": 1377
+    },
+    {
+      "path": "docs/pages/TrashcanGenerator.html.md",
+      "sha256": "8ab03c343383ea1e6714a3edd2304de70a5f79029212d8c501f67f9965df051a",
+      "bytes": 743
+    },
+    {
+      "path": "docs/pages/TreeGenerator.html.md",
+      "sha256": "a20c900c0c099588d08d6428fa19052d12b681dffe6d3485c905ac0cdca7992f",
+      "bytes": 1432
+    },
+    {
+      "path": "docs/pages/TreesGeometry.html.md",
+      "sha256": "49178991e511360b6854495ed827dc2a988042b63b770ebf41d1051b1141f767",
+      "bytes": 659
+    },
+    {
+      "path": "docs/pages/TrefoilKnot.html.md",
+      "sha256": "4bfe98891bdc36299103fe5f264535221bd668e894dda9614205ab379e66c142",
+      "bytes": 1044
+    },
+    {
+      "path": "docs/pages/TrefoilPolynomialKnot.html.md",
+      "sha256": "045c5827a615ee071a67697ebcfea451982cae510ed350e495856bf21eb7d1f8",
+      "bytes": 1106
+    },
+    {
+      "path": "docs/pages/Triangle.html.md",
+      "sha256": "020da62c9a37fdb4a2f3ceeb9a90511626b8492c7453d7a9175748137ddb8edc",
+      "bytes": 8250
+    },
+    {
+      "path": "docs/pages/TubeGeometry.html.md",
+      "sha256": "4c0102aeabeb01b39125cbf995487e391237a74c0b1ca0146aa7d07729d79793",
+      "bytes": 1738
+    },
+    {
+      "path": "docs/pages/TubePainter.html.md",
+      "sha256": "4000a9e8ed27a4c3641e14cb82ccf7b734243296d806e9404fa06326d7d9b11b",
+      "bytes": 1348
+    },
+    {
+      "path": "docs/pages/USDComposer.html.md",
+      "sha256": "1709081e1e81f637d7e41df7e4d8bff63526819fc668995291073aa91c08a448",
+      "bytes": 4040
+    },
+    {
+      "path": "docs/pages/USDLoader.html.md",
+      "sha256": "41a825ddc7e117b419878f6b883c119273aaf30da2836876281cf40f271c7215",
+      "bytes": 1974
+    },
+    {
+      "path": "docs/pages/USDZExporter.html.md",
+      "sha256": "7c209865a7f71a85ad1029ce20ab847e563dfed101cf22919355bcde1f8a5c62",
+      "bytes": 3243
+    },
+    {
+      "path": "docs/pages/Uint16BufferAttribute.html.md",
+      "sha256": "135b5b4e4e55676770b55ecce1f2e9e215dbd90703feb4bd864f9e75b9dc6991",
+      "bytes": 607
+    },
+    {
+      "path": "docs/pages/Uint32BufferAttribute.html.md",
+      "sha256": "4b55c860247f7ecf28ebbd38d638078c0baccff551cb612f0ef1daccc2862874",
+      "bytes": 607
+    },
+    {
+      "path": "docs/pages/Uint8BufferAttribute.html.md",
+      "sha256": "bf07be4103aea57dda89f9f3763d2c3987e9cfce0291fcbbf70a7a56f754eee5",
+      "bytes": 603
+    },
+    {
+      "path": "docs/pages/Uint8ClampedBufferAttribute.html.md",
+      "sha256": "8aed64be916bfa3a0453c055492592121e6ae65fe4740da76d95d0ddd8ab304b",
+      "bytes": 631
+    },
+    {
+      "path": "docs/pages/UltraHDRLoader.html.md",
+      "sha256": "30835fa72dff7da480e0ebaa2bd8407a14fd4c078d5c6d8712e28949c31b3acc",
+      "bytes": 2483
+    },
+    {
+      "path": "docs/pages/Uniform.html.md",
+      "sha256": "992a5253197aeff745b9d726aae038be3eb27146ecda44215954b0c3072f0b65",
+      "bytes": 1718
+    },
+    {
+      "path": "docs/pages/UniformArrayElementNode.html.md",
+      "sha256": "1a2b1e1c4913dfacb184fdce4f9d6d8b92cd545bb6c95109f3743d6a7027522a",
+      "bytes": 709
+    },
+    {
+      "path": "docs/pages/UniformArrayNode.html.md",
+      "sha256": "a49ac801f001b3e7392207b7d8af20e105ab0b4f489adad0cc54c0392b57d7eb",
+      "bytes": 3341
+    },
+    {
+      "path": "docs/pages/UniformGroupNode.html.md",
+      "sha256": "4714314ae9ce4925e37406fa231001f5d5ef692a329775d78452b4e2c16f5dc2",
+      "bytes": 2419
+    },
+    {
+      "path": "docs/pages/UniformNode.html.md",
+      "sha256": "8830d7109ab4774764abdfe60cbad8a4877bd87f71a0658a45fd6d05ef11f177",
+      "bytes": 2356
+    },
+    {
+      "path": "docs/pages/UniformsGroup.html.md",
+      "sha256": "1afd8d06393cd0ebfb3983cc017377887c46db87ebf0db7ad00c1ba1334446e0",
+      "bytes": 5840
+    },
+    {
+      "path": "docs/pages/UnpackFloatNode.html.md",
+      "sha256": "9ef5d9407e768205c07d17a30a6f39b1bb7e8cc517cb38e4ab0a7e3e8a078cea",
+      "bytes": 921
+    },
+    {
+      "path": "docs/pages/UnrealBloomPass.html.md",
+      "sha256": "27bdeacaee721b4ace5c8e5e9a2d277520b19092769df22b15760c828d5b81f6",
+      "bytes": 3012
+    },
+    {
+      "path": "docs/pages/UserDataNode.html.md",
+      "sha256": "69c049c9568896caa51e6e63782972cbb967f5b4eaca27fa1c4d6fb3bbf40a5c",
+      "bytes": 1687
+    },
+    {
+      "path": "docs/pages/VOXLoader.html.md",
+      "sha256": "fe0b9d94682ad4f471427d5139ae6960fdf470eb4f4355afe4a39cc89695d5a9",
+      "bytes": 1396
+    },
+    {
+      "path": "docs/pages/VRButton.html.md",
+      "sha256": "27973b1faea4e13ff72abe126bc8c028bacffa251e381284e53c0cb74d489293",
+      "bytes": 1357
+    },
+    {
+      "path": "docs/pages/VRMLLoader.html.md",
+      "sha256": "dd2fec29493435dbb293573c0f8abc231d175fe040d8483a1b3b3246ddedb97a",
+      "bytes": 1476
+    },
+    {
+      "path": "docs/pages/VTKLoader.html.md",
+      "sha256": "132c162e111a36e7b78c72fe29fc878d54dab635d1f78aaa12d080e56d1bfad0",
+      "bytes": 1761
+    },
+    {
+      "path": "docs/pages/VXGINode.html.md",
+      "sha256": "b81d7b4c888f899d6cfa58b1d63112b3ec55534ed557701aaa60fa02e5365bf5",
+      "bytes": 7249
+    },
+    {
+      "path": "docs/pages/VXGIVolume.html.md",
+      "sha256": "3fba8919b9d1f9841b793c21c4426c565317284589cc9e77c75266bc2074ccbe",
+      "bytes": 7509
+    },
+    {
+      "path": "docs/pages/VarNode.html.md",
+      "sha256": "937b0636244743f94265b5d125cbb2fd31e865c4dcda39fdec296cc72d30ce93",
+      "bytes": 2233
+    },
+    {
+      "path": "docs/pages/VaryingNode.html.md",
+      "sha256": "64534c87325f7d0249988cccaa339250ed54ee05356bab930f9e3d3274fb67da",
+      "bytes": 1824
+    },
+    {
+      "path": "docs/pages/Vector2.html.md",
+      "sha256": "eb05c3438411a5c67d030362042b49de7e253a2cb1a84f34a1092e64601c96b0",
+      "bytes": 12589
+    },
+    {
+      "path": "docs/pages/Vector3.html.md",
+      "sha256": "0e43dbf5ed2d31e8ff6702a0e735c57300c7388d29affbf6630b67c8beb150c0",
+      "bytes": 17524
+    },
+    {
+      "path": "docs/pages/Vector4.html.md",
+      "sha256": "591b48f3ff6019268bbe00cfdab5eb9f12ca9fa4f83a781dd81c13226b195e8c",
+      "bytes": 12535
+    },
+    {
+      "path": "docs/pages/VectorKeyframeTrack.html.md",
+      "sha256": "57753cac992977d700d26b6fb656a1bdd93ad15849af29e0632bb45b277d600c",
+      "bytes": 801
+    },
+    {
+      "path": "docs/pages/VelocityNode.html.md",
+      "sha256": "3a9ab8dba628b13601e256d92a5cc8f5999fd13fac5cf5b3c1481b116099b81d",
+      "bytes": 2267
+    },
+    {
+      "path": "docs/pages/VertexColorNode.html.md",
+      "sha256": "5060c2eeb1f56c2be29d0dd16c0b0bcf472753f73c401766dcc58ac8fd26ea4c",
+      "bytes": 928
+    },
+    {
+      "path": "docs/pages/VertexNormalsHelper.html.md",
+      "sha256": "3c0a685defe14b29f790344f861dbab1dc8d8313547b0772184b713295023127",
+      "bytes": 2166
+    },
+    {
+      "path": "docs/pages/VertexTangentsHelper.html.md",
+      "sha256": "432b11f573c60c397a0c65ad7e8eae206dd55eb8f8af69097adbf173d55b1c77",
+      "bytes": 1875
+    },
+    {
+      "path": "docs/pages/VideoFrameTexture.html.md",
+      "sha256": "0ac2c0325b7b071b6ae15a8cc3a76b930069cd29d0fd6e2fa1bb68b46cb53aa9",
+      "bytes": 1951
+    },
+    {
+      "path": "docs/pages/VideoTexture.html.md",
+      "sha256": "68746d163cb3818d61bf856decf821366b36c3f5ca8f3dc5eaa86a380ed1dc8d",
+      "bytes": 2215
+    },
+    {
+      "path": "docs/pages/ViewHelper.html.md",
+      "sha256": "f525c56a9c59c25577f0d5130675a5984e78ea6893b58e4848c8f608f89b4151",
+      "bytes": 3055
+    },
+    {
+      "path": "docs/pages/ViewportDepthNode.html.md",
+      "sha256": "e0f03c5e5c39fc108f6e1c592b96ef50d9890809a9d1b67533ffe42a4645136a",
+      "bytes": 1509
+    },
+    {
+      "path": "docs/pages/ViewportDepthTextureNode.html.md",
+      "sha256": "c098f53d7e1c3d4063d78d93d17afcfa45d9cc84e269aaafee8c1f8d482aeec5",
+      "bytes": 831
+    },
+    {
+      "path": "docs/pages/ViewportSharedTextureNode.html.md",
+      "sha256": "cc828f02c0c15d5cf6686d94852497b0195bd5d9dccd4a0899dad7ef496a9b16",
+      "bytes": 1097
+    },
+    {
+      "path": "docs/pages/ViewportTextureNode.html.md",
+      "sha256": "b5bc651289638c509db41d5fdf78564e73f83d7990b7f32676a387f19f2b4917",
+      "bytes": 2246
+    },
+    {
+      "path": "docs/pages/VivianiCurve.html.md",
+      "sha256": "22e142543c624d3f12ae538fa586b57bde527bb4f2c037d27caaab4d7ad0b530",
+      "bytes": 1050
+    },
+    {
+      "path": "docs/pages/Volume.html.md",
+      "sha256": "a0a34c1384588078068681a4b05479414be30b2b14aa08c705737f46d8608d6b",
+      "bytes": 4635
+    },
+    {
+      "path": "docs/pages/VolumeNodeMaterial.html.md",
+      "sha256": "e9d60f9da813bc34826720322d93579d9354c315bd55c13bbf8d8fc2b4781368",
+      "bytes": 894
+    },
+    {
+      "path": "docs/pages/VolumeSlice.html.md",
+      "sha256": "328171821255246ba356f0e2adcc7a0542690b8596ed99aec76496a2848d641e",
+      "bytes": 2247
+    },
+    {
+      "path": "docs/pages/VolumetricLightingModel.html.md",
+      "sha256": "aa74e51e59690b3a1900f9c969b4880f5afc60f68fc8671603b32a7292e3c0b4",
+      "bytes": 634
+    },
+    {
+      "path": "docs/pages/WGSLNodeBuilder.html.md",
+      "sha256": "946e4562804872d3e8308b7bf479686692e4dcb7a4d408ae996b2f10827fb4f5",
+      "bytes": 26138
+    },
+    {
+      "path": "docs/pages/WGSLNodeFunction.html.md",
+      "sha256": "cba94e0a3aa739b1143363132263752abf9319844d0c270dcf028aa9b29c474e",
+      "bytes": 643
+    },
+    {
+      "path": "docs/pages/WGSLNodeParser.html.md",
+      "sha256": "7c4191d7bad0f4b33529c453ef8b7d516a4ec5d1a3e6e7bf0a053ce57c89c2b0",
+      "bytes": 532
+    },
+    {
+      "path": "docs/pages/Water.html.md",
+      "sha256": "73b5da32bd47d1f9d2adad89dfa0bc6dc303bd0e8c3cccbdc5a8c3a0bd16550d",
+      "bytes": 2464
+    },
+    {
+      "path": "docs/pages/WaterMesh.html.md",
+      "sha256": "769ce8cd2ee6d4fa69736f82e34592ec143c0127d1c8fc618f6dcc28d15f04b5",
+      "bytes": 2511
+    },
+    {
+      "path": "docs/pages/WebGL.html.md",
+      "sha256": "c0c86042fca145ff7a154760b7c605e03e3111c2464c94fca3fba67728711281",
+      "bytes": 1099
+    },
+    {
+      "path": "docs/pages/WebGL3DRenderTarget.html.md",
+      "sha256": "4b812b00797914de3ce904d65c63b63eb67ae5d73ea61c53ff97abd0677a4845",
+      "bytes": 973
+    },
+    {
+      "path": "docs/pages/WebGLArrayRenderTarget.html.md",
+      "sha256": "30ce2985609bdfd28bcd73631055dc0dd9f790d1a774503c53baa40aabecb09c",
+      "bytes": 998
+    },
+    {
+      "path": "docs/pages/WebGLCubeRenderTarget.html.md",
+      "sha256": "e5f2dd5b7667f8ff44447011a7bdf11cbde6b61c947a603212ff8db0cbc50346",
+      "bytes": 1538
+    },
+    {
+      "path": "docs/pages/WebGLNodesHandler.html.md",
+      "sha256": "a88d8efb20b6d8e32f032e1c2503b0821239587dfc89c28533fda961441679f2",
+      "bytes": 372
+    },
+    {
+      "path": "docs/pages/WebGLRenderTarget.html.md",
+      "sha256": "5e4cda772baa9a315cc4ba0293c709651d07b986a16b2824c634b81b0c444481",
+      "bytes": 710
+    },
+    {
+      "path": "docs/pages/WebGLRenderer.html.md",
+      "sha256": "661a8bc44ddea70021e7fae200bdea9e3546923c57acecef937c062c955caaaf",
+      "bytes": 24293
+    },
+    {
+      "path": "docs/pages/WebGLTimestampQueryPool.html.md",
+      "sha256": "76cd01b9970928f69385f38aa457b289098d5466a0765f795c7cf41ef46a6424",
+      "bytes": 2208
+    },
+    {
+      "path": "docs/pages/WebGPU.html.md",
+      "sha256": "fe7e63dc20a9f4d2f0bbf7130d8b0d7bf19868ac02a500036a06c4abbcc37641",
+      "bytes": 811
+    },
+    {
+      "path": "docs/pages/WebGPURenderer.html.md",
+      "sha256": "26ce32e7c6d628d661097096114ead680bf18e6aaf5c53078a1480e809935dd2",
+      "bytes": 2554
+    },
+    {
+      "path": "docs/pages/WebGPUTimestampQueryPool.html.md",
+      "sha256": "28245ce56d6b16c0464b85da17877b87fbfafd02cedc8d4fc1b23c7228e90fc9",
+      "bytes": 1731
+    },
+    {
+      "path": "docs/pages/WebXRDepthSensing.html.md",
+      "sha256": "9f1fc528b29133333816e851050750ebf627513c79ec8e182c59b3e8b5a6dee1",
+      "bytes": 1125
+    },
+    {
+      "path": "docs/pages/WebXRManager.html.md",
+      "sha256": "d565419a90082c6db211dd825cb72391206666b982e5627d2cc52f51bd994496",
+      "bytes": 6413
+    },
+    {
+      "path": "docs/pages/Wireframe.html.md",
+      "sha256": "79d6b73bfecc1d3be0ee490823a69ba9c0311dbd26d59288e4129152c57b339c",
+      "bytes": 1486
+    },
+    {
+      "path": "docs/pages/WireframeGeometry.html.md",
+      "sha256": "9de0bb536ccb4cc5e6c7800cb586cbad26bd781c98339370c5c44f666a2faa3d",
+      "bytes": 1006
+    },
+    {
+      "path": "docs/pages/WireframeGeometry2.html.md",
+      "sha256": "a4c4564977789a357cd8bf060a646a3509a2498b30d1b3d918b5b8584712639a",
+      "bytes": 1047
+    },
+    {
+      "path": "docs/pages/WoodNodeMaterial.html.md",
+      "sha256": "707f19ce178f4209d4f9332b660743b670c559fc464752c0fcebb937f76f73b7",
+      "bytes": 966
+    },
+    {
+      "path": "docs/pages/WorkerPool.html.md",
+      "sha256": "8c26609b957c0df2cf7e9e8b1707afc7aaf154247661cd0178a615c62298b771",
+      "bytes": 1726
+    },
+    {
+      "path": "docs/pages/WorkgroupInfoElementNode.html.md",
+      "sha256": "ccb711b7a8f929adb128743b82512571e344fd1b9c4db4d7e74c20bb84ac44d1",
+      "bytes": 669
+    },
+    {
+      "path": "docs/pages/WorkgroupInfoNode.html.md",
+      "sha256": "68c406c398c8dad533f5f7f757d395cae61edd03a7fdcc3b1ffdfa2621f06c04",
+      "bytes": 3012
+    },
+    {
+      "path": "docs/pages/XRButton.html.md",
+      "sha256": "b1e224e4fd169f4e246c3d41424e8f7b39203e82d9c75c7746451772a647ae76",
+      "bytes": 1164
+    },
+    {
+      "path": "docs/pages/XRControllerModel.html.md",
+      "sha256": "00b6b884221859267a89bee9f39541ac0f05d0e8267606dfcd1ab60e01d9d096",
+      "bytes": 1210
+    },
+    {
+      "path": "docs/pages/XRControllerModelFactory.html.md",
+      "sha256": "6156c45a3433a0cd16683c91175e6ec283c8e1d38e3f8f77d7c6553a57f39fb3",
+      "bytes": 2267
+    },
+    {
+      "path": "docs/pages/XREstimatedLight.html.md",
+      "sha256": "16b18fbb05013022837b8551faf1b920f827f49693abe08a6e3a19f9f466ded9",
+      "bytes": 1448
+    },
+    {
+      "path": "docs/pages/XRHandMeshModel.html.md",
+      "sha256": "62dc0c97183f63ec70b22e3df53e965e77820f18777a35ea1671a5032c30312c",
+      "bytes": 1595
+    },
+    {
+      "path": "docs/pages/XRHandModel.html.md",
+      "sha256": "8a32053345a8ea78a188a4cfc49eecec79b1fc69529b3366eb79e20b3b1db113",
+      "bytes": 1069
+    },
+    {
+      "path": "docs/pages/XRHandModelFactory.html.md",
+      "sha256": "60cda45123e2bc4147287268ccebc05bcbc63490170f3340e45b193d429c6704",
+      "bytes": 1876
+    },
+    {
+      "path": "docs/pages/XRHandPrimitiveModel.html.md",
+      "sha256": "c2c81fd0515195a0400762c145ca756b7d3db495ddbac541c376431ed153888a",
+      "bytes": 1483
+    },
+    {
+      "path": "docs/pages/XRManager.html.md",
+      "sha256": "7630221af24518ec2b11bd438fb3d6611186744a42da09c1228deec0e6264a40",
+      "bytes": 8147
+    },
+    {
+      "path": "docs/pages/XRPlanes.html.md",
+      "sha256": "77c986ce76f33d1163801b313dfea09922234e8e122edba2ab52b2384833da91",
+      "bytes": 824
+    },
+    {
+      "path": "docs/pages/XYZLoader.html.md",
+      "sha256": "c1d8e72f8db21493c8ebcedb5903e93ec0af60499a36a13ff6e673d572a0ef64",
+      "bytes": 1727
+    },
+    {
+      "path": "docs/pages/global.html.md",
+      "sha256": "b4199b90221bca0f2c091663faff86841d5ae251782515fe0fb1724172e7044c",
+      "bytes": 79441
+    },
+    {
+      "path": "docs/pages/index.html.md",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "docs/pages/module-ACESFilmicToneMappingShader.html.md",
+      "sha256": "1969aeaed4eaad7f925f3006ba1aeb7ac41d1689f7bcc2f6a591dc738643278a",
+      "bytes": 871
+    },
+    {
+      "path": "docs/pages/module-AfterimageShader.html.md",
+      "sha256": "21394ce1f9644685ae0934f7b3900f9b9b9ce4161c6fdc8f7a9d785b4645bb67",
+      "bytes": 576
+    },
+    {
+      "path": "docs/pages/module-BasicShader.html.md",
+      "sha256": "54e904f59bc9e7e8863f19ad2a35f20c5347680c63d0abe716175a8c09c1e1f8",
+      "bytes": 474
+    },
+    {
+      "path": "docs/pages/module-Bayer.html.md",
+      "sha256": "1b1e5b8a803443c65dd5424ba3d9962dbad8a9dd45636c91ab78bec144ae3e89",
+      "bytes": 1369
+    },
+    {
+      "path": "docs/pages/module-BleachBypassShader.html.md",
+      "sha256": "80ad428628dc1efee390667608fc699438a3711188b222b47bb9636be4e107cc",
+      "bytes": 699
+    },
+    {
+      "path": "docs/pages/module-BlendShader.html.md",
+      "sha256": "bf895ee0fa9584b4cb21857556ccfc09c27a41c6ac7ff7a2b60814f02926d7c7",
+      "bytes": 468
+    },
+    {
+      "path": "docs/pages/module-BokehShader.html.md",
+      "sha256": "8d6766e1b48314232a50bac25f1d183e492667d17dfb8aba093721db7828e32b",
+      "bytes": 604
+    },
+    {
+      "path": "docs/pages/module-BokehShader2.html.md",
+      "sha256": "947d296a442f2778fadea052fd8b68d2566b565bed13bcdc3208c6a395ea01ca",
+      "bytes": 695
+    },
+    {
+      "path": "docs/pages/module-BrightnessContrastShader.html.md",
+      "sha256": "eff6abb88dda1fb2980c309160a48d1bc4b14bd4a55406b6f863690e2813f534",
+      "bytes": 801
+    },
+    {
+      "path": "docs/pages/module-BufferGeometryUtils.html.md",
+      "sha256": "44ec99276abe60c4390b694fdefad6b88249ad28f0fb6489bb5fbd003349d6b4",
+      "bytes": 5983
+    },
+    {
+      "path": "docs/pages/module-CSMShader.html.md",
+      "sha256": "5a5a2e837a5b8512c270992d93b800e153a22e73dcbca370d7c7835519efb636",
+      "bytes": 542
+    },
+    {
+      "path": "docs/pages/module-CameraUtils.html.md",
+      "sha256": "0c347abf03ed99fa11db3e06378d91ca43f5de3f201cadd203c3d727af1eea9f",
+      "bytes": 1069
+    },
+    {
+      "path": "docs/pages/module-ColorCorrectionShader.html.md",
+      "sha256": "861910ed62db3c2d071ac697e6da99707ca4d8cf786dab086ac9ca7ab3a73d9c",
+      "bytes": 542
+    },
+    {
+      "path": "docs/pages/module-ColorSpaces.html.md",
+      "sha256": "44aa33121ba5e59a93aac8b6701d10251c6ebf5914a9695338f2fdba97e179eb",
+      "bytes": 1627
+    },
+    {
+      "path": "docs/pages/module-ColorUtils.html.md",
+      "sha256": "97f6b68326c1238950c5133a2f22fffc70954f1d490a303709642ae78981ef0d",
+      "bytes": 1024
+    },
+    {
+      "path": "docs/pages/module-ColorifyShader.html.md",
+      "sha256": "d2e276f2b28a3005f3fc76c09e73ad92c8908395137ac6eb0c409df68d119648",
+      "bytes": 485
+    },
+    {
+      "path": "docs/pages/module-ConvolutionShader.html.md",
+      "sha256": "f33f86937865d560801b2f43afae0eb2443d09920fa8bd77c6115c75f69d29d5",
+      "bytes": 548
+    },
+    {
+      "path": "docs/pages/module-CopyShader.html.md",
+      "sha256": "361b2103036f853171fb11aa54259b9cee28e349e3e11a4b3799c90be066fc98",
+      "bytes": 470
+    },
+    {
+      "path": "docs/pages/module-DOFMipMapShader.html.md",
+      "sha256": "5ee49a5fa88ba2ee9f07e4d8b54ec23d3476b303a7680ebfc9e62c94d41181c8",
+      "bytes": 602
+    },
+    {
+      "path": "docs/pages/module-DepthLimitedBlurShader.html.md",
+      "sha256": "9840eba1166d983e3a58cfc0e2ebcd80a7da8cc5ba0b1879c42ee8878ef5d023",
+      "bytes": 806
+    },
+    {
+      "path": "docs/pages/module-DigitalGlitch.html.md",
+      "sha256": "3b441df564b88d141f14baf9e18d6070d09f24e030d9bd18fe671bf329381ff4",
+      "bytes": 484
+    },
+    {
+      "path": "docs/pages/module-DotScreenShader.html.md",
+      "sha256": "73f7cc25ecd7b0240148638c33a0198461c5cb4252a122d55301e48f9ea3fbbe",
+      "bytes": 560
+    },
+    {
+      "path": "docs/pages/module-ExposureShader.html.md",
+      "sha256": "8754360e793c066933f79c3a05981d737bce695ecabb2e78dc072024ef3764b4",
+      "bytes": 535
+    },
+    {
+      "path": "docs/pages/module-FXAAShader.html.md",
+      "sha256": "d754c8d0063305e953f6f5e1e691520487d51a2c4f93da484f1a65837d9bc602",
+      "bytes": 865
+    },
+    {
+      "path": "docs/pages/module-FilmShader.html.md",
+      "sha256": "1f4dcb2307629c3f5e3d24f9c94d359f327f0028b2c2b41a71fa7eefa036e13d",
+      "bytes": 572
+    },
+    {
+      "path": "docs/pages/module-FocusShader.html.md",
+      "sha256": "ea9e7b42b9526f8b1c1ae986659338072c5801b613b0d61fde467c078ffde6ca",
+      "bytes": 598
+    },
+    {
+      "path": "docs/pages/module-FreiChenShader.html.md",
+      "sha256": "c5ecb9f809f6b96928a1bf6c8bc49819da99fd961a68bd59f6b75bcf348cc2e5",
+      "bytes": 682
+    },
+    {
+      "path": "docs/pages/module-GTAOShader.html.md",
+      "sha256": "7728d63a791bfad626d1932bc76037686168753bca7cce612b5a64991adbf311",
+      "bytes": 1054
+    },
+    {
+      "path": "docs/pages/module-GammaCorrectionShader.html.md",
+      "sha256": "a15f072d7b26d875bc29daa71bf0ae6db2877ecfbf61b9c2c709107b262eb51d",
+      "bytes": 656
+    },
+    {
+      "path": "docs/pages/module-GeometryCompressionUtils.html.md",
+      "sha256": "01f6c71fc1d6ad568ad4d3ac9fd653a58d93ebce23478a8a71636aa3eb4e0498",
+      "bytes": 1136
+    },
+    {
+      "path": "docs/pages/module-GeometryUtils.html.md",
+      "sha256": "68e3b88cce822495f3bc46c890df52833364f8a04748336b94d18193cdbe2c8a",
+      "bytes": 2339
+    },
+    {
+      "path": "docs/pages/module-GroundedSkybox.html.md",
+      "sha256": "141f2c182e18018eb6d4bb8018ba24dbfd75b11b3e29ed99780c04af9fb31540",
+      "bytes": 1019
+    },
+    {
+      "path": "docs/pages/module-HalftoneShader.html.md",
+      "sha256": "92e429c860c6e6f07603b8b39f1ea0f7b74c00f89e827dc7be59dabfc1b93427",
+      "bytes": 673
+    },
+    {
+      "path": "docs/pages/module-HorizontalBlurShader.html.md",
+      "sha256": "2f0c1e82cc801b25e299246767ed0604bc9067166077583a68ea5ba9d27a0f81",
+      "bytes": 853
+    },
+    {
+      "path": "docs/pages/module-HorizontalTiltShiftShader.html.md",
+      "sha256": "6c6269792dbe529fc11d8ef87fdcd9d0d3645598b756fcc82b533403c3c2c85e",
+      "bytes": 831
+    },
+    {
+      "path": "docs/pages/module-HueSaturationShader.html.md",
+      "sha256": "75cfa06aaa447dd0d205deea7db68ff0feb369096c4d084d7c32361f2b68f439",
+      "bytes": 767
+    },
+    {
+      "path": "docs/pages/module-Interpolations.html.md",
+      "sha256": "8ee28e91f8af576b2471feeba13b88207dad2346f4a66f4a32756e852ebb0ffa",
+      "bytes": 1434
+    },
+    {
+      "path": "docs/pages/module-KaleidoShader.html.md",
+      "sha256": "281b9df9b1b8d0e85cbde5d6b1aa6775b993680721f71d179269d9a22a9f3eca",
+      "bytes": 709
+    },
+    {
+      "path": "docs/pages/module-LuminosityHighPassShader.html.md",
+      "sha256": "4ad08c33211333feab7b746e05e578e755065de096ceaff747f5195d17b5842e",
+      "bytes": 567
+    },
+    {
+      "path": "docs/pages/module-LuminosityShader.html.md",
+      "sha256": "85622740d160b979923200d739b344fbce29881dd4c0b565baad0a0d8a7730e0",
+      "bytes": 501
+    },
+    {
+      "path": "docs/pages/module-MirrorShader.html.md",
+      "sha256": "b9b6805dfb8c171c124aeb6d1b4d6fa53376283fa47a78d4559fabee73885c90",
+      "bytes": 570
+    },
+    {
+      "path": "docs/pages/module-NURBSUtils.html.md",
+      "sha256": "afc4c807c34661ba3dce5e13db51631f4472bdfcbe254cb4095ffe85332ae43c",
+      "bytes": 4309
+    },
+    {
+      "path": "docs/pages/module-NormalMapShader.html.md",
+      "sha256": "ef5dfe04217d1cbabfa187e43178e5ed894662e95c56e517c82358233350d01e",
+      "bytes": 526
+    },
+    {
+      "path": "docs/pages/module-OutputShader.html.md",
+      "sha256": "aa93730bb095e7c5f56968aebecfac6fc4649710aa316373108754ea26e5d79b",
+      "bytes": 561
+    },
+    {
+      "path": "docs/pages/module-ParametricFunctions.html.md",
+      "sha256": "dee0742b6a021471b653698102aecb7e18517828a64dd3a38ac1f8e30a312736",
+      "bytes": 1733
+    },
+    {
+      "path": "docs/pages/module-PoissonDenoiseShader.html.md",
+      "sha256": "6b1670541923a5d7c77a9998853d53c79e7946f74b61f761a1245f7e77ea6180",
+      "bytes": 838
+    },
+    {
+      "path": "docs/pages/module-RGBShiftShader.html.md",
+      "sha256": "9ca4ab4b12d3fa0b251ac290fbb234ba5a00b64b366917503a64bddc18843ecd",
+      "bytes": 804
+    },
+    {
+      "path": "docs/pages/module-Raymarching.html.md",
+      "sha256": "11eb4507b5994fbce888c664a8e209b91417f0ce8613eba61d2d08202c8130b2",
+      "bytes": 772
+    },
+    {
+      "path": "docs/pages/module-SAOShader.html.md",
+      "sha256": "c92a6192d92b8e8ee774743f7587869dd83e32af9ec7503178c8ccdd76bac55d",
+      "bytes": 479
+    },
+    {
+      "path": "docs/pages/module-SMAAShader.html.md",
+      "sha256": "504d95a4817cf15a83317bc5e744291281a700e0388ae958d15b31ab3c6334d5",
+      "bytes": 869
+    },
+    {
+      "path": "docs/pages/module-SSAOShader.html.md",
+      "sha256": "268a3add9fba6518287a002eebd3ec19224008f672838358e7847db13d7fc752",
+      "bytes": 1029
+    },
+    {
+      "path": "docs/pages/module-SSRShader.html.md",
+      "sha256": "b7720e8c6baa1fd3b0e1d4d4840c6f238c6062144cf16637c7f6cc374e0b0108",
+      "bytes": 815
+    },
+    {
+      "path": "docs/pages/module-SceneUtils.html.md",
+      "sha256": "592a688f65b6312cacf7625c23ca702eba4b9e31b611f48a8fcf29a684e8e68b",
+      "bytes": 3074
+    },
+    {
+      "path": "docs/pages/module-SepiaShader.html.md",
+      "sha256": "74fdb48aee5d71951bf9ef1eb99858657f0cd5ed0759c241ef7dca1b91de7327",
+      "bytes": 532
+    },
+    {
+      "path": "docs/pages/module-SkeletonUtils.html.md",
+      "sha256": "08a1dd47f258f3c74c2b895058cbfaac70298987266f4feef8c35fb5f7934a2c",
+      "bytes": 3034
+    },
+    {
+      "path": "docs/pages/module-SobelOperatorShader.html.md",
+      "sha256": "7bc705c862ff8f54b8a3120bb18c29692b7a52f7a09140c12cd7ac1346486dac",
+      "bytes": 674
+    },
+    {
+      "path": "docs/pages/module-SoftParticles.html.md",
+      "sha256": "efdcd79a89c8fe45ec2df5ffe46d25a2e848dcfc08fe5436ce00643ff10cd5c9",
+      "bytes": 1158
+    },
+    {
+      "path": "docs/pages/module-SortUtils.html.md",
+      "sha256": "a1235e6e6861cb71aa99a0614f2869e27209f914f3a9ea3ee0f7589251cdac8c",
+      "bytes": 828
+    },
+    {
+      "path": "docs/pages/module-SubsurfaceScatteringShader.html.md",
+      "sha256": "cd2920cea7454a4fd8ff361042110d3209a27440d84e4619fc1076e9895a8b06",
+      "bytes": 834
+    },
+    {
+      "path": "docs/pages/module-Text2D.html.md",
+      "sha256": "1bac5eb030e806975ca411b04fb34effe05f5aa4694855b7473e85273bd65d08",
+      "bytes": 705
+    },
+    {
+      "path": "docs/pages/module-TriangleBlurShader.html.md",
+      "sha256": "35a5c31988de0c1073864060f79eb9f9237f3c5e010ad0247a0764b8d33a260e",
+      "bytes": 4366
+    },
+    {
+      "path": "docs/pages/module-UVsDebug.html.md",
+      "sha256": "e0403159ac246fb34287eda9139dfacaa2f181ffc6de4a357060a915c814da95",
+      "bytes": 793
+    },
+    {
+      "path": "docs/pages/module-UniformsUtils.html.md",
+      "sha256": "90650d3f65d7f5c2d2b082f6df9de7db3ca2c5f7e7ee403d8ed9f5ec9c184efe",
+      "bytes": 897
+    },
+    {
+      "path": "docs/pages/module-UnpackDepthRGBAShader.html.md",
+      "sha256": "bdcfe2bde383b6a5f638918132a424026bb0177feeaa755b158834ce21ef4c96",
+      "bytes": 589
+    },
+    {
+      "path": "docs/pages/module-VelocityShader.html.md",
+      "sha256": "1c63a270eb35de63fd88fcc3d7689d5559391410e506094b2c2841da3175343e",
+      "bytes": 503
+    },
+    {
+      "path": "docs/pages/module-VerticalBlurShader.html.md",
+      "sha256": "f132f35833bc8361da7b21cfc922c5e7530880cf8bffbeb3e496d87a842be7e8",
+      "bytes": 828
+    },
+    {
+      "path": "docs/pages/module-VerticalTiltShiftShader.html.md",
+      "sha256": "ff96a4d7eeb585589a5a29b245a3934c7087e7432aeaf241226e74573ef1091e",
+      "bytes": 816
+    },
+    {
+      "path": "docs/pages/module-VignetteShader.html.md",
+      "sha256": "70fe3f1f1c66b1bbb08f3afe74bdf63e6700dbfb4b2f77246de8087b6f3de4fc",
+      "bytes": 607
+    },
+    {
+      "path": "docs/pages/module-VolumeShader.html.md",
+      "sha256": "1317fe4bc3b37c7e8c8c62c131297ef3417242d3eaf709fd8b0297e1b8d9a397",
+      "bytes": 665
+    },
+    {
+      "path": "docs/pages/module-VoronoiNoise.html.md",
+      "sha256": "f5c5ec295729ea54f6b06f425022b153cdeff9d88fda5d8aaedc2327ba6ec7bf",
+      "bytes": 1812
+    },
+    {
+      "path": "docs/pages/module-WaterRefractionShader.html.md",
+      "sha256": "c43dde36d94b98018a23742dcdc5e7fb77654805a785d4c05f40aeae9a58cfa7",
+      "bytes": 548
+    },
+    {
+      "path": "docs/pages/module-WebGLTextureUtils.html.md",
+      "sha256": "f8c422c533264f1025325c46d01668a23120a0fa3f0f7960c26d2c3d21cf50e7",
+      "bytes": 1041
+    },
+    {
+      "path": "docs/pages/module-WebGPUTextureUtils.html.md",
+      "sha256": "ae86ac78b025c0ada0eaf350d447da7b0602f680c09a9fd5f19e1ea490ecc671",
+      "bytes": 1101
+    },
+    {
+      "path": "examples/css2d_label.html",
+      "sha256": "57ed61de69b2eb3195c5b2a4d4dd327ce6643a11a0a6dd167a083bfcfa9c2a0b",
+      "bytes": 6604
+    },
+    {
+      "path": "examples/misc_controls_orbit.html",
+      "sha256": "8306652ef227f92be38219cc2a9c09f5ef4f9d77dce84a6641358bfe53aec405",
+      "bytes": 3872
+    },
+    {
+      "path": "examples/misc_controls_transform.html",
+      "sha256": "b4c66916b5f3207444af3d2caf2bbaf07022c79a290972d9f66153856266efb9",
+      "bytes": 5998
+    },
+    {
+      "path": "examples/webgl_animation_keyframes.html",
+      "sha256": "68dd0cf9d8dd135628bfe70a4f06f7d637d6b29c806af9beec2be701decf7106",
+      "bytes": 4121
+    },
+    {
+      "path": "examples/webgl_animation_skinning_morph.html",
+      "sha256": "f91f205125aba93ca5c248415c96f68366a410e68a41b0aa601e8cb89de46e1a",
+      "bytes": 6672
+    },
+    {
+      "path": "examples/webgl_buffergeometry.html",
+      "sha256": "7a4ac8162786e2a3e7ceefe0a07434f5c4d5afab790b5dd2462d68211fd0122d",
+      "bytes": 5295
+    },
+    {
+      "path": "examples/webgl_buffergeometry_custom_attributes_particles.html",
+      "sha256": "83097a9599d17b6609bb4ad10b25136ea4b6378a74174152f20448bf53496ecb",
+      "bytes": 4570
+    },
+    {
+      "path": "examples/webgl_camera_array.html",
+      "sha256": "481047a13ecb55c4ce578d881d256998167aa143a713322c78e4d631dd02a780",
+      "bytes": 4109
+    },
+    {
+      "path": "examples/webgl_instancing_dynamic.html",
+      "sha256": "1bb7cdf50e4d63065ec00435aa3f912fbc6329ffdfa104118ca557cf91593d92",
+      "bytes": 5917
+    },
+    {
+      "path": "examples/webgl_interactive_buffergeometry.html",
+      "sha256": "86e1204da36571b57ebc5e157dad1ba63e849d99444c30f620347526b26b0be2",
+      "bytes": 7095
+    },
+    {
+      "path": "examples/webgl_lights_spotlight.html",
+      "sha256": "0b618837471d5541ddfc4f9a4cd3967e728213473212a736fe91d266dd0e907a",
+      "bytes": 6770
+    },
+    {
+      "path": "examples/webgl_loader_gltf.html",
+      "sha256": "46564bbb6dc5abbfee13d3718c9853a11ba734087760d89174963e43bf0d5695",
+      "bytes": 6353
+    },
+    {
+      "path": "examples/webgl_materials_blending.html",
+      "sha256": "1cea23c77de561d18886dfe3612b7907276c9f46d08a2286b971bde5c6739df6",
+      "bytes": 5130
+    },
+    {
+      "path": "examples/webgl_materials_normalmap.html",
+      "sha256": "60d920cef908de10d41e946cf0b28c3ff8dff431e310274ba0626f3307983d3b",
+      "bytes": 6046
+    },
+    {
+      "path": "examples/webgl_points_dynamic.html",
+      "sha256": "e58edb41d59f4936e0f992fb079b0155d88e9b2ebe274117ec898ee59f7aa491",
+      "bytes": 10048
+    },
+    {
+      "path": "examples/webgl_postprocessing.html",
+      "sha256": "2643be173de09bb638683d133d2467eb4593b2e238b49fcbbbbb6a65d25330a4",
+      "bytes": 3635
+    },
+    {
+      "path": "examples/webgl_postprocessing_unreal_bloom.html",
+      "sha256": "c9a014b1fc8cc57d3448e49bc4848a0c6dffebb7c4d05c92e198c00996d6d6c0",
+      "bytes": 5483
+    },
+    {
+      "path": "examples/webgl_shadowmap.html",
+      "sha256": "2289caa0a22dfdb8bcdafd08397dbf6470ea737a767d12e67eeb8c129623a731",
+      "bytes": 9323
+    },
+    {
+      "path": "examples/webgl_sprites.html",
+      "sha256": "48d6ae182b791cb2539eb2569fe812d47f7c0c9e85d1111c12adbb7642d12c36",
+      "bytes": 6276
+    },
+    {
+      "path": "manual/list.json",
+      "sha256": "1e92bbca3f47c6cf52b3d0799ed89a6702de9f965ec041d7f47d7a191a9fcc88",
+      "bytes": 3001
+    },
+    {
+      "path": "manual/pages/align-html-elements-to-3d.html",
+      "sha256": "e19deb50ebdc470920fd054729023bbc017380aff65290fc2e216eb5a6f39ccc",
+      "bytes": 32496
+    },
+    {
+      "path": "manual/pages/animation-system.html",
+      "sha256": "973996033e50ac88586f5c34bb5fbff67fa17794d249f805f89c72aab670d244",
+      "bytes": 6349
+    },
+    {
+      "path": "manual/pages/backgrounds.html",
+      "sha256": "72b129921ba25fc795a9f3bd9b90904761ff97bfcef4a75356c49fa1e4f7d670",
+      "bytes": 13023
+    },
+    {
+      "path": "manual/pages/billboards.html",
+      "sha256": "877d017532c874cae8137ed80565b8eaa40faa74a3ff0259590f75c41e34160b",
+      "bytes": 14913
+    },
+    {
+      "path": "manual/pages/cameras.html",
+      "sha256": "dc4e6441c511c040cd9e93aeeaaacd153e9e379557aad034a1c2cb8167241bd7",
+      "bytes": 30355
+    },
+    {
+      "path": "manual/pages/canvas-textures.html",
+      "sha256": "9bd82860dd912159bc4bd0a3fed694961d2f58aba5c10d6c297785f7aeefd7eb",
+      "bytes": 17843
+    },
+    {
+      "path": "manual/pages/cleanup.html",
+      "sha256": "b97e0f50830fde3276503b5175c3538d2183a8bbf03a6948762a87ca24afa1db",
+      "bytes": 17338
+    },
+    {
+      "path": "manual/pages/color-management.html",
+      "sha256": "dd3adaa7a76857bff163974b3780804917e2a0059490f958f00ff2f111845fed",
+      "bytes": 14350
+    },
+    {
+      "path": "manual/pages/creating-a-scene.html",
+      "sha256": "46b25f147b13559cab51fdca3c53e800b741a37c21a66daa20a6e5397008917c",
+      "bytes": 9217
+    },
+    {
+      "path": "manual/pages/creating-text.html",
+      "sha256": "420018e87775f792ac78e69d6f67fbc1aee0e6a536413d9512b7e74688b45447",
+      "bytes": 7047
+    },
+    {
+      "path": "manual/pages/custom-buffergeometry.html",
+      "sha256": "4e7df7ba1bc4d177e5e1ccc08a9b6ad09de44e3349f39c507fd449f7acdc18e9",
+      "bytes": 24026
+    },
+    {
+      "path": "manual/pages/debugging-glsl.html",
+      "sha256": "5d847396ed9cce900a0ef48dd73a110ca254e34dcd609a42c513d1c45b8e1d96",
+      "bytes": 6801
+    },
+    {
+      "path": "manual/pages/debugging-javascript.html",
+      "sha256": "d8b9907da750a8dc5c7f2e44791241362cc12ec5fa57914c21ea3c3ae7170647",
+      "bytes": 28950
+    },
+    {
+      "path": "manual/pages/drawing-lines.html",
+      "sha256": "13f44f5c2fefbb7a06bba566dfe71c34f5e1c76f44cbe9205a7f73e07ce7fd86",
+      "bytes": 3342
+    },
+    {
+      "path": "manual/pages/faq.html",
+      "sha256": "bcc7b4591b1a53233d690849192870c129c31a089f0a8b0689e25010da9871d9",
+      "bytes": 5252
+    },
+    {
+      "path": "manual/pages/fog.html",
+      "sha256": "72cefa462eb4988f1e80d290c6ab012a89762746992b73e8c4d0692a3353c86b",
+      "bytes": 14476
+    },
+    {
+      "path": "manual/pages/fundamentals.html",
+      "sha256": "5114f059ad5ecc504a7caa16a046949bf918d4ed3a898fd4c55e2aecfe9f8a82",
+      "bytes": 27607
+    },
+    {
+      "path": "manual/pages/game.html",
+      "sha256": "4b83e8416d5ae5c437ad064bd70ee0f357bbe32d6131dd3ac93334818d66c186",
+      "bytes": 83525
+    },
+    {
+      "path": "manual/pages/how-to-create-vr-content.html",
+      "sha256": "4d45c113592aaa80968590ba2fcd363e972d273f79c807f5930f73757a2a3827",
+      "bytes": 3891
+    },
+    {
+      "path": "manual/pages/how-to-dispose-of-objects.html",
+      "sha256": "6f24a876d491deec996ab9bc2620addb8dc53d3c425bca29d06a3703a5e7acf1",
+      "bytes": 10974
+    },
+    {
+      "path": "manual/pages/how-to-update-things.html",
+      "sha256": "291e52ad9e9697e42cbc5663e338248b139e7b26b7017b8a9dce28b8e3a18b95",
+      "bytes": 11716
+    },
+    {
+      "path": "manual/pages/how-to-use-post-processing.html",
+      "sha256": "93db9cb383e70d396c2b60146563cf29d000d21b07d58c35e836bef5b14bd6c7",
+      "bytes": 6374
+    },
+    {
+      "path": "manual/pages/indexed-textures.html",
+      "sha256": "36d186371c647a4332d461b4783360b47b563c39cc882c8873b47b39994735fe",
+      "bytes": 29122
+    },
+    {
+      "path": "manual/pages/installation.html",
+      "sha256": "7f1d08185a7b2cb4690aa4e12431ff95695ca7fd0b0fa6e4faaf8a9e88515de9",
+      "bytes": 14151
+    },
+    {
+      "path": "manual/pages/libraries-and-plugins.html",
+      "sha256": "35e9c8825192c54c44db815d61784141499e1f0043b5a1c57ad602ca097b84b4",
+      "bytes": 6404
+    },
+    {
+      "path": "manual/pages/lights.html",
+      "sha256": "6dfc5ed632d65548b51f14da2f93b101b388bdbb26c51a12f2cd2271464db3e9",
+      "bytes": 29058
+    },
+    {
+      "path": "manual/pages/load-gltf.html",
+      "sha256": "88d89863a1f27c1d6e19dbef74bc9023eb6da17dd8a44e2c142425310b4a5a95",
+      "bytes": 33194
+    },
+    {
+      "path": "manual/pages/load-obj.html",
+      "sha256": "ec3704698529b9c611f22d9d080855f05c1b37812704816a34b357b3ebfc6134",
+      "bytes": 35387
+    },
+    {
+      "path": "manual/pages/loading-3d-models.html",
+      "sha256": "f4425dc06d7fcb4c8ba69a81602373bf9d5e7cc7779eac51c74092f261cf1b31",
+      "bytes": 8697
+    },
+    {
+      "path": "manual/pages/material-table.html",
+      "sha256": "aac2fcb896e770b2242c1510ec900e6c4a78f84f2b3837f93e326a5000f4a2d2",
+      "bytes": 1621
+    },
+    {
+      "path": "manual/pages/materials.html",
+      "sha256": "1c4f5243b37743061b383d0280df1a49611b38454670ea3a501cfd27d73e88e2",
+      "bytes": 18989
+    },
+    {
+      "path": "manual/pages/matrix-transformations.html",
+      "sha256": "6f13cc1cb3cac4a6d33facf7fef4ef711bae8cdc3fdbd8501cda45acc4c65bc2",
+      "bytes": 5229
+    },
+    {
+      "path": "manual/pages/multiple-scenes.html",
+      "sha256": "f12885b5d9092bf0cde0fa6f75614dfa664a775168ffe61028901da6a2e842e5",
+      "bytes": 27984
+    },
+    {
+      "path": "manual/pages/offscreencanvas.html",
+      "sha256": "520495873f6cf6c02babaf9dd916c7b0af7da04648b685d260da5d766c83f952",
+      "bytes": 45650
+    },
+    {
+      "path": "manual/pages/optimize-lots-of-objects-animated.html",
+      "sha256": "f19e91b88c5ac07f6ad555b6d49c0b387c31e3123b30c62fa00a278943b3e6a1",
+      "bytes": 22012
+    },
+    {
+      "path": "manual/pages/optimize-lots-of-objects.html",
+      "sha256": "6ba8ebc3c431500b79b71dda1991455ace12853e1e8e06865d1148434a857dec",
+      "bytes": 25485
+    },
+    {
+      "path": "manual/pages/physics.html",
+      "sha256": "3a9ada5e397a90a192a77b68e30eebc51f4517067fba6944fa66e071345b16d9",
+      "bytes": 11514
+    },
+    {
+      "path": "manual/pages/picking.html",
+      "sha256": "c147290d7ef79c3f6a99198eb2bc9d5f5393cccc9848cffe89e4724ae6eccbe0",
+      "bytes": 20945
+    },
+    {
+      "path": "manual/pages/post-processing.html",
+      "sha256": "d75242ccbe6171ffb26438621931c1c006f02308aedbbadcaa3862e93cbe33f4",
+      "bytes": 16841
+    },
+    {
+      "path": "manual/pages/prerequisites.html",
+      "sha256": "6ddb7cfe1da7978bff72b70fa2e7739b090b9cf136f596f98e60bc850fbdd9ef",
+      "bytes": 20782
+    },
+    {
+      "path": "manual/pages/primitives.html",
+      "sha256": "59007cc5f4cb8027630c1ce3ab8a0a83e98149f998c52c6c6d64c1b1c0b7da14",
+      "bytes": 22357
+    },
+    {
+      "path": "manual/pages/rendering-on-demand.html",
+      "sha256": "c2e4ee6338171d4b2d42cb9880356daa492920d9c91d6bf2fd5bbf43be4d2aa7",
+      "bytes": 12015
+    },
+    {
+      "path": "manual/pages/rendertargets.html",
+      "sha256": "8c1a65290bb6d52c9d5d1c076b2f902b6c43687794b325694443dce2a0c35d7c",
+      "bytes": 7852
+    },
+    {
+      "path": "manual/pages/responsive.html",
+      "sha256": "08c13b597fdd0f846e3da3fc605cf6b63b4293c840f1770d58877a1cd9c58764",
+      "bytes": 16626
+    },
+    {
+      "path": "manual/pages/scenegraph.html",
+      "sha256": "a4ca23a62d071be2aa5e98cdf7da0b1185c2086b53fc9f9bfe3f1e2476b09c86",
+      "bytes": 29347
+    },
+    {
+      "path": "manual/pages/setup.html",
+      "sha256": "0f5036fb49afc4a8ecf3f583612c60fea91e22ee7149c235485a03037105c68b",
+      "bytes": 4454
+    },
+    {
+      "path": "manual/pages/shadertoy.html",
+      "sha256": "dcdadb72beb456af56675df9f71364d1f020527fe2204cd9672d9c3767d23294",
+      "bytes": 23177
+    },
+    {
+      "path": "manual/pages/shadows.html",
+      "sha256": "58bb975063b68498bac897786f1cad62b261591ace14a161130c98ae5833ec26",
+      "bytes": 28904
+    },
+    {
+      "path": "manual/pages/textures.html",
+      "sha256": "eeef1083f7d41bc805c533e0842464ed7a654681fdb7898856e8694fcfe3e02e",
+      "bytes": 32496
+    },
+    {
+      "path": "manual/pages/tips.html",
+      "sha256": "64aa013992f4da4133931b09c5c0c2d42f54103232b94aa255efaf4a27b0f342",
+      "bytes": 16517
+    },
+    {
+      "path": "manual/pages/transparency.html",
+      "sha256": "ed375d805a94e3415af423de0f6364d5b0b320c802ce3e4f1f75e577abf06077",
+      "bytes": 18997
+    },
+    {
+      "path": "manual/pages/uniform-types.html",
+      "sha256": "af34d2b2e613804ccbb6bdc4ab6b300a1b3aaa7b6e323757378b616dc50c422e",
+      "bytes": 7395
+    },
+    {
+      "path": "manual/pages/useful-links.html",
+      "sha256": "f870c3f8d1067540504067b22a71930d0db1655e7a35fab290106f9fc1fe45a8",
+      "bytes": 9560
+    },
+    {
+      "path": "manual/pages/voxel-geometry.html",
+      "sha256": "dac91dc4bd1c9aa197f7bb4877f5fb7d90d2fa1185ef3dd86245c909fc694981",
+      "bytes": 44281
+    },
+    {
+      "path": "manual/pages/webgl-compatibility-check.html",
+      "sha256": "9b51efd96a005a29c4b40d823b90840a15671b838575476f3d7f2816cd8c63b6",
+      "bytes": 2044
+    },
+    {
+      "path": "manual/pages/webgpu-postprocessing.html",
+      "sha256": "f824df728df0c4ca1869e45a9d5da03e8f7d8be5ec982e68a0f77aec9e1bf124",
+      "bytes": 10603
+    },
+    {
+      "path": "manual/pages/webgpurenderer.html",
+      "sha256": "645a23b381580baf72ea76a4fd8adf105520e40028c01a932023a4f08de0636e",
+      "bytes": 9222
+    },
+    {
+      "path": "manual/pages/webxr-basics.html",
+      "sha256": "12c929780f8a755b411e87f3f3a14507b1f43e2766ec7e51d01b4a0f4828d0cb",
+      "bytes": 19200
+    },
+    {
+      "path": "manual/pages/webxr-look-to-select.html",
+      "sha256": "d8174ba47ebe5f8b05c854dc56e584d5d4e7ef9ff64cf6283f1c6fe714414b93",
+      "bytes": 21552
+    },
+    {
+      "path": "manual/pages/webxr-point-to-select.html",
+      "sha256": "fd58578ea65b80c9628c16046bc2fe53cc42b81b71e012f705036196af16a138",
+      "bytes": 17741
+    }
+  ],
+  "totalFiles": 911,
+  "totalBytes": 3456290
+}

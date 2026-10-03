@@ -1,0 +1,77 @@
+{
+  "startedAt": "2026-10-02T13:51:18.456Z",
+  "probes": {
+    "P1": {
+      "starCount": 52301,
+      "stateOK": true,
+      "litRatio": 0.09361,
+      "litRatioThr30": 0.10305,
+      "visualOK": true
+    },
+    "P2": {
+      "dPhase": 0.13299,
+      "stateOK": true,
+      "motionRatio": 0.23501,
+      "motionRatioThr4": 0.24941,
+      "visualOK": true
+    },
+    "P3": {
+      "before": {
+        "x": 0.31464,
+        "y": 0
+      },
+      "after": {
+        "x": 0.35856,
+        "y": 0
+      },
+      "stateOK": true,
+      "diffRatio": 0.15436,
+      "visualOK": true
+    },
+    "P4": {
+      "beforeDist": 64.451,
+      "afterDist": 51.258,
+      "stateOK": true,
+      "diffRatio": 0.44711,
+      "visualOK": true
+    },
+    "P5": {
+      "hudVisible": true,
+      "fps": 59.99,
+      "stateOK": true,
+      "hudText": "Stars: 52301 | FPS: 60 | Dist: 49.5 | Reset",
+      "textHasStarCount": true,
+      "textHasFpsRound": true,
+      "visualOK": true
+    },
+    "P6": {
+      "fps": 60,
+      "stateOK": true,
+      "visualOK": true,
+      "note": "perfSample 由本脚本帧率采样交叉验证(见 fps 序列)"
+    },
+    "P7": {
+      "epoch": 1,
+      "cameraDistance": 120,
+      "rotationPhase": 0.012,
+      "parallaxOffset": {
+        "x": 0,
+        "y": 0
+      },
+      "stateOK": true,
+      "litRatio": 0.09406,
+      "visualOK": true,
+      "navigationsAfterClick": 0,
+      "noNavigation": true
+    }
+  },
+  "errors": [],
+  "consoleErrors": [],
+  "notes": [
+    "reset 连续 3 次:epoch=3, dist=120.000, phase=0.01300"
+  ],
+  "chrome": "Chrome/154.0.8037.58",
+  "appReadyMs": 431,
+  "noUncaughtErrors": true,
+  "allPassed": true
+}

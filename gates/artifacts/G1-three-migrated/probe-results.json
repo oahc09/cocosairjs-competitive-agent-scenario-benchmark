@@ -1,0 +1,340 @@
+{
+  "runId": "MIG-smoke",
+  "generatedAt": "2026-10-03T02:24:25.324Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:800",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 800
+            },
+            "raw": "wait:800",
+            "performed": "waited 800ms"
+          }
+        ],
+        "durationMs": 810
+      },
+      "stateAssertion": {
+        "expr": "$.ready == true && $.frame >= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.03
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.1181,
+              "background": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "worstLitRatio": 0.1181
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 27,
+          "ready": true,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 76,
+          "ready": true,
+          "resetCount": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1529
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P1 passed",
+        "met": true,
+        "details": [
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:300",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 300
+            },
+            "raw": "wait:300",
+            "performed": "waited 300ms"
+          }
+        ],
+        "durationMs": 315
+      },
+      "stateAssertion": {
+        "expr": "$.after.frame > $.before.frame",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "center:80%",
+          "minMotionPixelRatio": 0.005
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 128,
+                "y": 72,
+                "w": 1024,
+                "h": 576
+              },
+              "diffRatio": 0.1056
+            }
+          ],
+          "worstDiffRatio": 0.1056
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 116,
+          "ready": true,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 172,
+          "ready": true,
+          "resetCount": 0
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 600
+      },
+      "timings": {
+        "totalMs": 2314
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P2 passed",
+        "met": true,
+        "details": [
+          {
+            "part": "P2 passed",
+            "met": true,
+            "source": "probe P2"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:200",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 200
+            },
+            "raw": "wait:200",
+            "performed": "waited 200ms"
+          }
+        ],
+        "durationMs": 201
+      },
+      "stateAssertion": {
+        "expr": "$.after.frame - $.before.frame >= 5",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 255,
+          "ready": true,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 310,
+          "ready": true,
+          "resetCount": 0
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 700
+      },
+      "timings": {
+        "totalMs": 1315
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "precondition": {
+        "expr": "P3 passed",
+        "met": true,
+        "details": [
+          {
+            "part": "P3 passed",
+            "met": true,
+            "source": "probe P3"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset+wait:400",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1243,21) ui=reset"
+          },
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 400
+            },
+            "raw": "wait:400",
+            "performed": "waited 400ms"
+          }
+        ],
+        "durationMs": 531
+      },
+      "stateAssertion": {
+        "expr": "$.resetCount >= 1 && $.frame < 120 && $.ready == true",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.03
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.1046,
+              "background": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "worstLitRatio": 0.1046
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "frame": 334,
+          "ready": true,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "three",
+          "frame": 25,
+          "ready": true,
+          "resetCount": 1
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-vis.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1150
+      }
+    }
+  ]
+}

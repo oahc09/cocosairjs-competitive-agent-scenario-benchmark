@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+// G-CAMERA-VISIBILITY:Camera.visibility 默认 undefined → 黑屏且零报错(全部 AIR Reference 实测踩中)
+// 行为契约:不显式设置 visibility 的相机应照常渲染 DEFAULT 层 ⇒ FIXED;黑屏 ⇒ BUG
+const R = await boot();
+const { Node, Camera, Vec3 } = R;
+const camNode = new Node('cam'); R.scene.addChild(camNode);
+camNode.setPosition(new Vec3(0, 0, 4)); camNode.lookAt(new Vec3(0, 0, 0));
+const cam = camNode.addComponent(Camera);
+cam.projection = Camera.ProjectionType.PERSPECTIVE; cam.fov = 45; cam.near = 0.1; cam.far = 100;
+cam.clearFlags = Camera.ClearFlag.SOLID_COLOR; cam.clearColor = new R.Color(24, 28, 36);
+// 故意不设置 cam.visibility —— 契约:默认应渲染 DEFAULT 层
+R.addLight(new R.Color(255, 255, 255, 255));
+R.mesh(R.primitives.box({ width: 1.6, height: 1.6, length: 1.6 }), R.builtinMat());
+R.app.run(R.scene);
+R.scene.globals.ambient.skyColorHDR.set(0.22, 0.22, 0.25, 1);
+R.scene.globals.ambient.skyIllum = 7000;
+const img = await R.sample(12);
+const lit = R.litRatio(img, 34);
+R.finish({ outcome: lit > 0.03 ? 'FIXED' : 'BUG', detail: `未显式设置 visibility 的相机 litRatio=${lit.toFixed(4)}(契约:默认应渲染 DEFAULT 层)` });
+</script></body></html>

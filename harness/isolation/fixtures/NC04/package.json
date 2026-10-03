@@ -1,0 +1,10 @@
+{
+  "name": "NC04-fixture",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Negative control fixture NC04 for G4 HARNESS_TRUST (no engine, self-contained)",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node ../../mini-serve.mjs --root ."
+  }
+}

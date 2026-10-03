@@ -1,0 +1,87 @@
+# environments.yaml — 运行环境与引擎 pin(M0 Contract Freeze 交付物 6/6)
+# 版本 1.0.0 | 冻结于 2026-10-02 | 状态 FROZEN(G0)
+# 修改本文件必须重新执行 G0 CONTRACT_FREEZE。
+
+environment:
+  os: Windows                          # win32 x64
+  shell: Git Bash
+  node: 24.14.0
+  npm: 11.11.1
+  browser: Chrome + Playwright chromium   # 具体版本号在 G1 时点记录并冻结进 pair.json
+  dateBaseline: "2026-10-02"
+
+  # -------------------------------------------------------------------------
+  # Worker 资源规则(计划书 §3.5)
+  worker:
+    mode: single-machine               # 单机 worker
+    developmentPhase:
+      parallelAllowed: true            # 两 Arm 可同时开发,但须全维度隔离
+      isolationDimensions:
+        - workspace
+        - process tree
+        - browser profile
+        - dev server port
+        - temp
+        - localStorage
+        - IndexedDB
+        - Service Worker
+        - logs
+        - artifact path
+    formalValidation:                  # 正式性能采样 / 录屏验证
+      parallelAllowed: false           # 共用 GPU/主机时禁止同时测
+      mode: serial-only
+      order: per-pair random           # Pair1 Three→AIR;Pair2 AIR→Three;随机顺序
+      reason: >-
+        GPU contention / CPU contention / video encoding / browser scheduling /
+        thermal & memory pressure 会污染 FPS 与录屏结果
+      parallelException: >-
+        若未来使用两台经过校准的等价 worker,允许并行验证,
+        但必须记录 worker identity 与环境 hash
+
+  # -------------------------------------------------------------------------
+  # 每个 Pair / Run 必须记录的环境字段(进入 Immutable Pair Configuration)
+  recordFields:
+    - os                               # 版本全名字符串
+    - gpu                              # 显卡型号
+    - gpuDriver                        # 驱动版本
+    - graphicsBackend                  # WebGL2(两引擎默认)
+    - cpu
+    - memory
+    - workerId                         # 本期固定单机,仍须记录
+    - environmentHash                  # 上述字段联合哈希(SHA-256)
+
+# ---------------------------------------------------------------------------
+# 引擎 pin
+enginePins:
+  three:
+    name: three
+    version: 0.186.1                   # r186
+    source: npm-registry
+    install: npm ci(lockfile 锁定,离线缓存)
+  cocosair:
+    name: cocosair.js
+    version: 1.0.0
+    source: local-tgz
+    tarball: vendor/cocosair.js-1.0.0.tgz   # 相对 bench/
+    knowledgePackaging:
+      K0: 重打包剔除 docs/ 的 tarball
+      K1: 原始 tarball(含 docs/)
+      manifest: knowledge/*/manifest.json
+    graphicsBackend: WebGL2(默认)
+
+# ---------------------------------------------------------------------------
+# 引擎源码快照(仅 Reference Implementer 可读;Agent 禁读)
+referenceOnlySources:
+  cocosairSource: E:\AIProMax\github\cocosair.js        # build/npm/cocosair.module.js + .d.ts + docs/ + examples/
+  threeSource: E:\AIProMax\Y2026M09\cocosairjs-vs-threejs\three.js-r186
+  warning: 以上路径对 Agent Run 为禁读清单项;违反即 INVALID_RUN
+
+# ---------------------------------------------------------------------------
+# 验证与取证契约(与 docs/benchmark-contract.md §10 统一)
+conventions:
+  buildCommand: npm run build
+  distContract: dist/app.js,index.html 引 dist/app.js
+  pageContract: window.__appReady + window.__bench = { getState, reset }
+  timestamps: ISO-8601
+  hashAlgorithm: SHA-256
+  jsonIndent: 2

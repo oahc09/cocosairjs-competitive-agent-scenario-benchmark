@@ -1,0 +1,367 @@
+{
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\bench\\reference\\private\\cocosair\\E08",
+  "generatedAt": "2026-10-02T12:41:12.023Z",
+  "fileCount": 55,
+  "totalBytes": 7292892,
+  "skippedDirs": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".cache"
+  ],
+  "files": [
+    {
+      "path": "package.json",
+      "bytes": 337,
+      "sha256": "dc89799131b21082ae7cd6b56c2b9a1654c418ce9dd390e7dda84804a3f4e8b5"
+    },
+    {
+      "path": "template-verify.txt",
+      "bytes": 10097,
+      "sha256": "977ffa4fd867bbc800532997df342a0831ced6a63063f7249e177e040838a30c"
+    },
+    {
+      "path": "template-manifest.json",
+      "bytes": 1530,
+      "sha256": "02f874ad5b246f06e75c04ebb4309f6089c9bbceab5d7ba987e228476cd71105"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 14919,
+      "sha256": "f7519a96e634bb27c7d41dcea0eb8827e13927ab2ef39dc1ea5267579c3ba1ee"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 3450,
+      "sha256": "00895c549220efbf57e4719178afd8ef7169f691836650137a67a545f71424eb"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "bytes": 4110,
+      "sha256": "6232e599c03499ce1b96791fbd2037ab2f796a6d0614186fe6a0c76209b34e0f"
+    },
+    {
+      "path": "src/main.js",
+      "bytes": 46944,
+      "sha256": "9ed27205a7090891a775d4f66f72c75f3772ffc0680752a494609ba03646f046"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1603,
+      "sha256": "816b2a87fcc9f7edff1e8a0a75008de3ade4c752ecc1714423f5fc7adaf04e24"
+    },
+    {
+      "path": "validation/screenshots/initial.png",
+      "bytes": 149235,
+      "sha256": "e44d035a85279b72abbdc8523dd367e6bbe6c2edf798921a55266c7b3068910d"
+    },
+    {
+      "path": "validation/screenshots/P1-before.png",
+      "bytes": 188842,
+      "sha256": "d014b83c8b26bec0bb263db71040dd521851911b97a9fffdff98eced8bc5c994"
+    },
+    {
+      "path": "validation/screenshots/P1-vis.png",
+      "bytes": 218934,
+      "sha256": "d99a8412d4c380a36c5d487a5b8492f7c51a5cd658a785fde7e7031d92f51031"
+    },
+    {
+      "path": "validation/screenshots/P1-after.png",
+      "bytes": 217163,
+      "sha256": "d7959afdb7f3122a7a61334dbaa61ba59127db8acd2fab86554c39227d8368c9"
+    },
+    {
+      "path": "validation/screenshots/mid.png",
+      "bytes": 168350,
+      "sha256": "d4ba2cd81e812d521378695ca95e86ad6485836965781d8f05d732fe453c689d"
+    },
+    {
+      "path": "validation/screenshots/final.png",
+      "bytes": 168853,
+      "sha256": "bdfdc33d0efa8092ad9bdd7816e9cfac957e509d5abd394727d1a0238985b7f8"
+    },
+    {
+      "path": "validation/screenshots/extra-1.png",
+      "bytes": 167088,
+      "sha256": "e36cea76545b2479841f439d1fe25004fe32f75776afc6213c84a91476293a0d"
+    },
+    {
+      "path": "validation/screenshots/extra-2.png",
+      "bytes": 177095,
+      "sha256": "fbc12f8709b44f25bc86a4cfae131b63e69fc01132cf3a307ddfd1972f32a1da"
+    },
+    {
+      "path": "validation/screenshots/P2-before.png",
+      "bytes": 213225,
+      "sha256": "f7635e9089bc708f8cc341a6ff82d7fdb76101136d1f8f38c9c65c09d958f43e"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-a.png",
+      "bytes": 232083,
+      "sha256": "2c2305ddcc0c9990307ffed0015d02b81a7ebaf45200e92dbd620845ebc3c2d5"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-b.png",
+      "bytes": 200147,
+      "sha256": "66b6bd3f4385a63abf4629a853938e1bd04b5228d4f9e5e10b5170ca22d88236"
+    },
+    {
+      "path": "validation/screenshots/P2-after.png",
+      "bytes": 198345,
+      "sha256": "9833472bddf60fcb9d92c8dcd6f370ec621036d9f99a1c2492809a663fd80a6b"
+    },
+    {
+      "path": "validation/screenshots/P3-before.png",
+      "bytes": 198688,
+      "sha256": "e7d6f6344f909c823f26512413c45fbfd67557c44edcfda345cd16c70d273018"
+    },
+    {
+      "path": "validation/screenshots/P3-region-a.png",
+      "bytes": 235707,
+      "sha256": "8175554ec7c0d26f0f47d58035e8ca3d114d16c16e680a49b694069276f670f6"
+    },
+    {
+      "path": "validation/screenshots/P3-region-b.png",
+      "bytes": 222204,
+      "sha256": "739a88ad8d3fd9c919dfdceee8d1f543b6f12181bc4f1f7bdbd96660faf8e4c7"
+    },
+    {
+      "path": "validation/screenshots/P3-after.png",
+      "bytes": 227058,
+      "sha256": "ee6875934def429b7b1964ebea6ca5fe62aff5554bbdae8a8b60b5813abec496"
+    },
+    {
+      "path": "validation/screenshots/P4-before.png",
+      "bytes": 229450,
+      "sha256": "b78ea6ac8a8313dc0058843116f6bf5f0a78f4bf8f3410ebac6660f29be528d9"
+    },
+    {
+      "path": "validation/screenshots/P4-motion-a.png",
+      "bytes": 179351,
+      "sha256": "e52c4ed8f38dd957b90a97e6c3a57cbbc0bfe8014537f95b024eacb71c0d13d4"
+    },
+    {
+      "path": "validation/screenshots/P4-motion-b.png",
+      "bytes": 178621,
+      "sha256": "dc8e6b945eb0a707544b8111eb6db9615e6e3ba8903c36f1e6541dcdb9abce60"
+    },
+    {
+      "path": "validation/screenshots/P4-after.png",
+      "bytes": 177713,
+      "sha256": "a1b7e5fdc6ff15359a3f157f6ca1087d80e00f9145fa7ceea44b80e0d9f5ccb5"
+    },
+    {
+      "path": "validation/screenshots/P5-before.png",
+      "bytes": 178777,
+      "sha256": "25a0a8e86d33b21af4a3003f190391e1ce73ed0de43f16be2da7554459741f99"
+    },
+    {
+      "path": "validation/screenshots/P5-region-a.png",
+      "bytes": 246617,
+      "sha256": "d3a1561ae5df6d3ccc60f3acebad963fc00b325617da2f7686b0dd6860a3d5cc"
+    },
+    {
+      "path": "validation/screenshots/P5-region-b.png",
+      "bytes": 197918,
+      "sha256": "ba14f22dd9f9f018819e70ee69eb128b6a398525bb15c2a62c3b907ca39b96d9"
+    },
+    {
+      "path": "validation/screenshots/P5-after.png",
+      "bytes": 207372,
+      "sha256": "8c9134e0bf19a3862ee8501e04087e295439fb93c8550c9548b1fc67bf2d75a8"
+    },
+    {
+      "path": "validation/screenshots/P6-before.png",
+      "bytes": 213382,
+      "sha256": "0a869cb36fdb636e6d80db595c63f24295180920edce5edf5990d2c951acb510"
+    },
+    {
+      "path": "validation/screenshots/P6-region-a.png",
+      "bytes": 216383,
+      "sha256": "b10dfd55cc2c116bdf6c373c90ce67822fe280d3cbf312b1ebc420e6fbcc18c0"
+    },
+    {
+      "path": "validation/screenshots/P6-region-b.png",
+      "bytes": 200058,
+      "sha256": "b201ce399de4cb7f3e48adbdbabcc907a855ba47c726ca7be29e8c960841af2b"
+    },
+    {
+      "path": "validation/screenshots/P6-after.png",
+      "bytes": 190394,
+      "sha256": "b3e17435c51b1a9cfdbb07b0aca25f3a22a6ffa5c5c365ad798632e05d863c8b"
+    },
+    {
+      "path": "validation/screenshots/P7-before.png",
+      "bytes": 186222,
+      "sha256": "5b9d7b6e553fdc00706c63da8f7354aa80d3217fe0cab2905e556a347197271b"
+    },
+    {
+      "path": "validation/screenshots/P7-vis.png",
+      "bytes": 205680,
+      "sha256": "be6b526396241e2efcfd9f84fc39f1a22b8289e6cffa6740ba28cd4f17a65547"
+    },
+    {
+      "path": "validation/screenshots/P7-after.png",
+      "bytes": 206869,
+      "sha256": "94fcdd440ab7241d378cbbd39c6803bead8ac1ca2b2fc7fb112865f01c5dab4d"
+    },
+    {
+      "path": "validation/screenshots/P8-before.png",
+      "bytes": 210775,
+      "sha256": "bafb2af194271bcba0ef6358e045809d544ee68b603737955e099d33c7775d91"
+    },
+    {
+      "path": "validation/screenshots/P8-delta-a.png",
+      "bytes": 194744,
+      "sha256": "62ad8b94723f2c32d09ddadfeebe1d1fbc293539a6ef5c61ebc40ff2167bac5b"
+    },
+    {
+      "path": "validation/screenshots/P8-delta-b.png",
+      "bytes": 198470,
+      "sha256": "4ee92710ecd54d101277b26f1effa6ba21719e3603117e216c3090648e1d4b29"
+    },
+    {
+      "path": "validation/screenshots/P8-after.png",
+      "bytes": 203516,
+      "sha256": "8425246dd9000bb32d80f5fae547b9b209a16b8368f7f6110a2920a0e4a24f15"
+    },
+    {
+      "path": "validation/source-sha.json",
+      "bytes": 12611,
+      "sha256": "02f394a6a3442369e3562dcfde4497e8c00fbbc8f31125731baaa82e0fe8a961"
+    },
+    {
+      "path": "validation/build.log",
+      "bytes": 338,
+      "sha256": "2ac4a6d8571f8adad1f4e0fe8a380d6ccca7faa10c1954e149847c5e78ac53ba"
+    },
+    {
+      "path": "validation/serve-log.json",
+      "bytes": 796,
+      "sha256": "258fb922d71c6c80e75cba1e8ac4227536192aa58093cbee6c70f46378549f7a"
+    },
+    {
+      "path": "validation/probe-results.json",
+      "bytes": 19295,
+      "sha256": "df3b5791cea3b042e4b1312f5142162c2c7f6c3e9c96687e16eaf6d23df9d79c"
+    },
+    {
+      "path": "validation/console.json",
+      "bytes": 2191,
+      "sha256": "b8c8d5368747a4b11068810a8a8f998a004e5a22cdcdcbbd96b88b7ee1d38c69"
+    },
+    {
+      "path": "validation/network.json",
+      "bytes": 647,
+      "sha256": "2e6976de76479fec244243a508c4bb241620e5f7fe07976ccc83b73cbd9af01c"
+    },
+    {
+      "path": "validation/perf.json",
+      "bytes": 134,
+      "sha256": "3de6d7ebfbcd9d15153e0c6d48381b27178645aaeff3b4c4b2c93332dbbac635"
+    },
+    {
+      "path": "validation/report.json",
+      "bytes": 4106,
+      "sha256": "520f294dcf750bd3a64624da4298ae3189f6c6a49ed88b0b2f1788b4639da74c"
+    },
+    {
+      "path": "validation/debug/debug-shot.mjs",
+      "bytes": 2764,
+      "sha256": "89500584da2281afe61450b8da05bc4f679f07098a4efee67b39d239f050e865"
+    },
+    {
+      "path": "validation/debug/shot.png",
+      "bytes": 158342,
+      "sha256": "24c8c9ac30b8828a1cffc21fa2c8c2e47ed1392466115e8c443dd6617ea96d2e"
+    },
+    {
+      "path": "validation/debug/state.json",
+      "bytes": 250,
+      "sha256": "597a78bd53ae1c198d0dc316a77e854acc30a7fec3b3e956368cc5a355d4fdc2"
+    },
+    {
+      "path": "validation/debug/flow-test.mjs",
+      "bytes": 3099,
+      "sha256": "e9d347cf6c7becc49a0f48fcf78da1ec00a55d455f6727d0a5fd2aa38f84cc58"
+    }
+  ],
+  "dist": [
+    {
+      "path": "dist/vendor/cocosair.module.js",
+      "bytes": 6422525
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco3d.js",
+      "bytes": 246
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/LICENSE.md",
+      "bytes": 12203
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_decoder.wasm",
+      "bytes": 285948
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_encoder.wasm",
+      "bytes": 370188
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_decoder_nodejs.js",
+      "bytes": 58763
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/draco/draco_encoder_nodejs.js",
+      "bytes": 49007
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/package.json",
+      "bytes": 25
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_decoder.cjs",
+      "bytes": 29400
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_decoder.mjs",
+      "bytes": 29059
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_encoder.mjs",
+      "bytes": 24348
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/LICENSE.md",
+      "bytes": 1079
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/meshopt_encoder.js",
+      "bytes": 24348
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/meshopt/index.js",
+      "bytes": 199
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/basis/LICENSE.md",
+      "bytes": 12400
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/basis/basis_transcoder.js",
+      "bytes": 62337
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/basis/basis_transcoder.wasm",
+      "bytes": 499935
+    },
+    {
+      "path": "dist/vendor/gltf-decoders/MANIFEST.md",
+      "bytes": 4612
+    },
+    {
+      "path": "dist/app.js",
+      "bytes": 35177
+    }
+  ]
+}

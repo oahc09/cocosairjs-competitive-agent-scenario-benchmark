@@ -1,0 +1,316 @@
+{
+  "runId": "RUN-E05-K0-R01-a",
+  "generatedAt": "2026-10-02T14:07:53.295Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "FAIL",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2507
+      },
+      "stateAssertion": {
+        "expr": "$.backgroundStarCount >= 300 && $.starStreamCount >= 200 && $.cameraDistance >= 13 && $.cameraDistance <= 15 && $.diskRotation > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "nonBlank",
+        "params": {
+          "regions": [
+            "center-third",
+            "outer-corners"
+          ],
+          "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围"
+        },
+        "notes": [],
+        "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围",
+        "metrics": {
+          "minRatio": 0.03,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 427,
+                "y": 180,
+                "w": 427,
+                "h": 360
+              },
+              "litRatio": 0.8602,
+              "background": [
+                246,
+                246,
+                248
+              ]
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.0003,
+              "background": [
+                4,
+                6,
+                12
+              ]
+            },
+            {
+              "rect": {
+                "x": 922,
+                "y": 0,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.0922,
+              "background": [
+                19,
+                24,
+                38
+              ]
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 518,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.014,
+              "background": [
+                4,
+                5,
+                9
+              ]
+            },
+            {
+              "rect": {
+                "x": 922,
+                "y": 518,
+                "w": 358,
+                "h": 202
+              },
+              "litRatio": 0.0496,
+              "background": [
+                8,
+                11,
+                20
+              ]
+            }
+          ],
+          "worstLitRatio": 0.0003
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "diskRotation": 0.4340279999999999,
+          "accretionPhase": 0.06907770164028913,
+          "cameraDistance": 14,
+          "starStreamCount": 224,
+          "backgroundStarCount": 460
+        },
+        "stateAfter": {
+          "diskRotation": 1.4840700000000004,
+          "accretionPhase": 0.2361970763943892,
+          "cameraDistance": 14,
+          "starStreamCount": 224,
+          "backgroundStarCount": 460
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4078
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P1",
+        "met": false,
+        "details": [
+          {
+            "part": "P1",
+            "met": false,
+            "source": "probe P1"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:800",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P2",
+        "met": false,
+        "details": [
+          {
+            "part": "P2",
+            "met": false,
+            "source": "probe P2"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P3",
+        "met": false,
+        "details": [
+          {
+            "part": "P3",
+            "met": false,
+            "source": "probe P3"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wheel:{dy:-600}",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P4",
+        "met": false,
+        "details": [
+          {
+            "part": "P4",
+            "met": false,
+            "source": "probe P4"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "SKIPPED",
+      "precondition": {
+        "expr": "P5",
+        "met": false,
+        "details": [
+          {
+            "part": "P5",
+            "met": false,
+            "source": "probe P5"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      }
+    }
+  ]
+}

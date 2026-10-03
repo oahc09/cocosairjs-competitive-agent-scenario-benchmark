@@ -1,0 +1,284 @@
+{
+  "id": "interaction-click",
+  "version": "1.0.0",
+  "title": "Interaction Click",
+  "category": "input",
+  "status": "stable",
+  "specStatus": "frozen",
+  "requiresDevTools": false,
+  "learning": {
+    "goal": "掌握真实指针输入链：input.on(TOUCH_START) → 状态机 → 缓动到 +90°（E010）",
+    "points": [
+      "Input.EventType.TOUCH_START 的真实事件订阅",
+      "目标角状态机 + Component.update 缓动",
+      "每次点击精确 +90°，可重复累加"
+    ]
+  },
+  "effect": {
+    "functional": "初始 rotation.y=0；点击 1 次后目标角 90° 并在约 0.5s 内到达；点击 2 次后 180°；__clickState() 返回 {clicks, targetAngle, currentAngle}。",
+    "visual": "绿色方块每次点击后顺时针转动一个直角并带缓动收尾，左上角计数与目标角实时更新"
+  },
+  "api": {
+    "primary": ["input", "Input"],
+    "supporting": ["Component", "Node.setRotationFromEuler"],
+    "claims": [
+      "createAirApp",
+      "Scene",
+      "Node",
+      "MeshRenderer",
+      "Camera",
+      "DirectionalLight",
+      "Component",
+      "input",
+      "Input",
+      "Layers",
+      "math.Vec3",
+      "math.Color",
+      "Material",
+      "Material.initialize",
+      "Material.setProperty",
+      "utils.createMesh",
+      "primitives.box",
+      "Node.addChild",
+      "Node.setPosition",
+      "Node.setRotationFromEuler"
+    ],
+    "forbiddenShortcut": ["在页面脚本里直接调用 click handler 冒充真实输入链", "用 setInterval 模拟点击"],
+    "evidence": [
+      {
+        "api": "createAirApp",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L26"
+      },
+      {
+        "api": "Scene",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L28"
+      },
+      {
+        "api": "Node",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L37"
+      },
+      {
+        "api": "MeshRenderer",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L61"
+      },
+      {
+        "api": "Camera",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L41"
+      },
+      {
+        "api": "DirectionalLight",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L54"
+      },
+      {
+        "api": "Component",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L76"
+      },
+      {
+        "api": "input",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "Input",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L88"
+      },
+      {
+        "api": "Layers",
+        "source": "src/main.ts",
+        "validator": "node-exists",
+        "sourceLocation": "L48"
+      },
+      {
+        "api": "math.Vec3",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "math.Color",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L47"
+      },
+      {
+        "api": "Material",
+        "source": "src/main.ts",
+        "validator": "scene-ready",
+        "sourceLocation": "L31"
+      },
+      {
+        "api": "Material.initialize",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L32"
+      },
+      {
+        "api": "Material.setProperty",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L33"
+      },
+      {
+        "api": "utils.createMesh",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L62"
+      },
+      {
+        "api": "primitives.box",
+        "source": "src/main.ts",
+        "validator": "material-property",
+        "sourceLocation": "L62"
+      },
+      {
+        "api": "Node.addChild",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L68"
+      },
+      {
+        "api": "Node.setPosition",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L39"
+      },
+      {
+        "api": "Node.setRotationFromEuler",
+        "source": "src/main.ts",
+        "validator": "transform-equals",
+        "sourceLocation": "L53"
+      }
+    ]
+  },
+  "capabilities": ["input"],
+  "assets": [],
+  "scene": {
+    "expectedGraph": {
+      "nodes": ["Main Camera", "Main Light", "ClickableCube"]
+    }
+  },
+  "interaction": {
+    "steps": [
+      {
+        "action": "pointer click（TOUCH_START）#1",
+        "expected": "targetAngle=90，currentAngle 在约 500ms 内达到 90±0.5（缓动收尾到精确值）"
+      },
+      {
+        "action": "pointer click #2",
+        "expected": "targetAngle=180，currentAngle 到达 180±0.5"
+      }
+    ]
+  },
+  "ready": {
+    "validators": ["scene-ready"]
+  },
+  "validation": {
+    "functional": ["node-exists", "transform-equals", "no-runtime-error", "material-property"],
+    "interaction": ["frame-diff"],
+    "visual": ["visible-frame"],
+    "lifecycle": [],
+    "capability": []
+  },
+  "coverage": {
+    "benchmarkRefs": [],
+    "recipeRefs": []
+  },
+  "screenshot": {},
+  "license": {
+    "assets": "无第三方资产"
+  },
+  "validationExpectations": {
+    "transform-equals": {
+      "Main Camera": {
+        "position": [0, 2.2, 6.5],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 39,
+            "text": "cameraNode.setPosition(new Vec3(0, 2.2, 6.5));"
+          }
+        ]
+      },
+      "Main Light": {
+        "position": [0, 8, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 52,
+            "text": "lightNode.setPosition(new Vec3(0, 8, 0));"
+          }
+        ],
+        "rotationEuler": [-45, -30, 0]
+      },
+      "ClickableCube": {
+        "position": [0, 0.6, 0],
+        "provenance": [
+          {
+            "source": "src/main.ts",
+            "line": 60,
+            "text": "cube.setPosition(new Vec3(0, 0.6, 0));"
+          },
+          {
+            "source": "src/main.ts",
+            "line": 83,
+            "text": "0,next,0 —— 该轴由交互改写，变化在交互前/后两次读回之间判定"
+          }
+        ],
+        "rotationEuler": {
+          "vary": true,
+          "deferTo": "interaction-window"
+        }
+      }
+    },
+    "material-property": {
+      "ClickableCube": {
+        "effect": "builtin-standard",
+        "props": {
+          "mainColor": {
+            "value": [95, 205, 120, 255],
+            "encoding": "0-255",
+            "tolerance": 0.002,
+            "provenance": {
+              "source": "src/main.ts",
+              "line": 63,
+              "text": "new Color(95, 205, 120, 255)"
+            }
+          }
+        }
+      }
+    }
+  },
+  "expectationExclusions": {
+    "transform-equals": {
+      "Main Camera": {
+        "reason": "运行期派生：lookAt 派生朝向（cameraNode.setPosition(new Vec3(0, 2.2, 6.5)); cameraNode.lo）",
+        "line": "L39"
+      }
+    }
+  },
+  "promotion": {
+    "spec": "e5337b3cc8f9",
+    "source": "286de09ae2f442c2",
+    "candidate": "0b9588dc80fd7afd",
+    "verified": 20,
+    "attested": 0,
+    "units": 20
+  }
+}

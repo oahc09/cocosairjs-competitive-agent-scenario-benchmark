@@ -1,0 +1,68 @@
+{
+  "briefId": "SMOKE",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T00:00:00Z",
+  "title": "G1 Template Equivalence mini-spec (canvas non-blank / motion / frame counter / reset)",
+  "goal": "最小等价性验证:双引擎 smoke 模板必须画布非空、持续运动、__bench frame 递增、reset 生效。",
+  "domains": ["Lifecycle", "State"],
+  "assets": [],
+  "scaleAndPerformance": { "minFps": 30, "notes": "smoke 模板帧率下限 30" },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:800",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.ready == true && $.frame >= 1" },
+      "visualAssertion": { "type": "nonBlank", "params": { "region": "full", "minLitPixelRatio": 0.03 } },
+      "threshold": "画布渲染出非空画面(亮像素 >= 3%)",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1 passed",
+      "action": "wait:300",
+      "waitMs": 0,
+      "sampleWindowMs": 600,
+      "stateAssertion": { "jq": "$.after.frame > $.before.frame" },
+      "visualAssertion": { "type": "motion", "params": { "region": "center:80%", "minMotionPixelRatio": 0.005 } },
+      "threshold": "600ms 采样窗内帧计数递增且中央 80% 区域存在运动像素",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2 passed",
+      "action": "wait:200",
+      "waitMs": 0,
+      "sampleWindowMs": 700,
+      "stateAssertion": { "jq": "$.after.frame - $.before.frame >= 5" },
+      "threshold": "帧计数以 >= 5 帧/700ms 的速率推进(rAF 驱动)",
+      "evidence": ["stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3 passed",
+      "action": "click:ui=reset+wait:400",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.resetCount >= 1 && $.frame < 120 && $.ready == true" },
+      "visualAssertion": { "type": "nonBlank", "params": { "region": "full", "minLitPixelRatio": 0.03 } },
+      "threshold": "reset 后 resetCount 递增、frame 从近零重新计数、画面不中断(非整页刷新)",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "构建成功且 10s 内 __appReady 为 true。",
+      "画布非空渲染(亮像素 >= 3%)。",
+      "画面持续运动(帧间像素差 >= 0.5%)且 frame 递增。",
+      "reset 生效:resetCount 递增、frame 重置、渲染不中断。"
+    ]
+  }
+}

@@ -1,0 +1,124 @@
+{
+  "tag": "t3",
+  "url": "http://127.0.0.1:7105/",
+  "probes": {
+    "P1": {
+      "st": {
+        "engine": "cocosair",
+        "diskRotation": 1.0623679999971396,
+        "accretionPhase": 0.16908111858219543,
+        "cameraDistance": 14,
+        "starStreamCount": 240,
+        "backgroundStarCount": 520,
+        "ready": true,
+        "frame": 196,
+        "resetCount": 0
+      },
+      "center": {
+        "nonBlack": 0.8889,
+        "avg": [
+          161.5,
+          123.4,
+          104.6
+        ],
+        "maxL": 255,
+        "n": 206991
+      },
+      "corners": {
+        "nonBlack": 1,
+        "minNonBlack": 1
+      },
+      "coreBox": {
+        "nonBlack": 0,
+        "avg": [
+          0,
+          0,
+          0
+        ],
+        "maxL": 0,
+        "n": 1600
+      }
+    },
+    "P2": {
+      "rotDelta": 0.2579,
+      "frameDiff": {
+        "nonzero": 0.3579,
+        "meanDiff": 11.13
+      },
+      "pxPerUnit": 84.7
+    },
+    "P3": {
+      "phase": 0.22371328096708476,
+      "pxPerUnit": 84.7,
+      "pairs": {
+        "A:in1.95-2.7/out5.0-6.3": {
+          "innerLum": 160.5,
+          "outerLum": 19.5,
+          "lumRatio": 8.23,
+          "rbDiff": -33
+        },
+        "B:in0.10-0.16hh/out0.30-0.40hh": {
+          "innerLum": 0.7,
+          "outerLum": 177.9,
+          "lumRatio": 0,
+          "rbDiff": 45.2
+        },
+        "C:in0.6-1.7/out2.3-2.9": {
+          "innerLum": 141.3,
+          "outerLum": 142,
+          "lumRatio": 1,
+          "rbDiff": 31.5
+        },
+        "D:in1.5-2.4/out3.5-4.5": {
+          "innerLum": 181.3,
+          "outerLum": 45,
+          "lumRatio": 4.03,
+          "rbDiff": 8.4
+        }
+      }
+    },
+    "P4": {
+      "pre": {
+        "coreR": 99
+      },
+      "post": {
+        "st": {
+          "cameraDistance": 6.800168661135065,
+          "diskRotation": 1.912
+        },
+        "coreR": 204,
+        "diskOuterPx": 1133
+      },
+      "coreRatio": 2.06
+    },
+    "P5": {
+      "starStreamCount": 240,
+      "frameDiff": {
+        "nonzero": 0.6759,
+        "meanDiff": 22.6
+      }
+    },
+    "P6": {
+      "st": {
+        "engine": "cocosair",
+        "diskRotation": 0.19734399999618532,
+        "accretionPhase": 0.03140827308891987,
+        "cameraDistance": 14,
+        "starStreamCount": 240,
+        "backgroundStarCount": 520,
+        "ready": true,
+        "frame": 460,
+        "resetCount": 1
+      },
+      "fullNonBlack": 0.9877
+    }
+  },
+  "consoleErrors": [],
+  "readyInMs": 1535,
+  "ready": true,
+  "canvasSize": [
+    1898,
+    982
+  ],
+  "pageUncaught": []
+}

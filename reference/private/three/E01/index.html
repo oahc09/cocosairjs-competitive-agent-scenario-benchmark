@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <!-- 空 data-URI favicon:阻止浏览器请求 /favicon.ico 产生 404 噪音(无网络资源依赖) -->
+  <link rel="icon" href="data:,">
+  <title>E01 — Deep Space Galaxy Cruise</title>
+  <style>
+    /* 1280x720 视口铺满、黑底;canvas 由 JS 按 window 尺寸设置绘制缓冲 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+    #app-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+  </style>
+  <script>
+    // 页面契约(MASTER-CONTEXT §12.1):
+    //   window.__appReady — 初始 false,应用首帧渲染完成后由 /dist/app.js 置 true
+    //   window.__bench    — { getState(): object, reset(): void },由 /dist/app.js 提供
+    window.__appReady = false;
+    window.__bench = null;
+  </script>
+  <!-- 引擎 import map:裸名 three / three/addons/ 指向本地 vendored 引擎,无任何网络依赖 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/dist/vendor/three.module.js",
+      "three/addons/": "/dist/vendor/addons/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="app-canvas"></canvas>
+  <script type="module" src="/dist/app.js"></script>
+</body>
+</html>

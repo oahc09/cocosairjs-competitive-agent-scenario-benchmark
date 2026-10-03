@@ -1,0 +1,13 @@
+{
+  "name": "cocosairjs-competitive-agent-scenario-benchmark",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Paired Three.js r186 vs Cocos AIR complex-scenario benchmark(克隆后执行 npm install 恢复全局共享依赖仓;详见 README)",
+  "type": "module",
+  "dependencies": {
+    "cocosair.js": "file:vendor/cocosair.js-1.0.0-k0.tgz",
+    "esbuild": "0.28.2",
+    "playwright-core": "1.63.0",
+    "three": "0.186.1"
+  }
+}

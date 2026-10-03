@@ -1,0 +1,25 @@
+<!doctype html><html><head><meta charset="utf-8"><style>html,body{margin:0;width:100%;height:100%;background:#111}#GameCanvas{width:100%;height:100%}</style><script type="importmap">{"imports":{"cocosair.js":"/node_modules/cocosair.js/build/npm/cocosair.module.js"}}</script></head><body><div id="GameDiv"><div id="Cocos3dGameContainer"><canvas id="GameCanvas"></canvas></div></div><script type="module">
+import { boot } from './lib.mjs';
+// G-INPUT-POISON:事件对象 getLocation(out) 传普通对象抛错后毒化引擎事件分发器(E08 实测)
+// 第一次监听里故意传普通对象(try/catch 吞掉),之后派发第二个鼠标事件,
+// 第二个监听仍能收到 ⇒ FIXED;永久失灵 ⇒ BUG
+const R = await boot();
+R.addCamera();
+R.app.run(R.scene);
+const input = R.app?.input ?? (await import('cocosair.js')).input;
+let secondListenerFired = false, poisonThrew = false;
+try {
+  input.on?.('mouse-move', (e) => { try { e.getLocation({}); } catch (err) { poisonThrew = true; } });
+} catch (e) { /* 事件名差异则降级 */ }
+input.on?.('mouse-move', () => { secondListenerFired = true; });
+await new Promise(r => setTimeout(r, 300));
+try {
+  R.canvas.dispatchEvent(new MouseEvent('mousemove', { clientX: 100, clientY: 100, bubbles: true, cancelable: true }));
+  R.canvas.dispatchEvent(new MouseEvent('mousemove', { clientX: 140, clientY: 140, bubbles: true, cancelable: true }));
+} catch (e) { /* */ }
+await new Promise(r => setTimeout(r, 300));
+R.finish({
+  outcome: secondListenerFired ? 'FIXED' : (poisonThrew ? 'BUG' : 'ERROR'),
+  detail: `poisonThrew=${poisonThrew} secondFired=${secondListenerFired}(抛错后第二个监听失灵 = 分发器被毒化)`,
+});
+</script></body></html>
