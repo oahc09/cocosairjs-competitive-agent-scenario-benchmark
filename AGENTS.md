@@ -40,7 +40,7 @@ canvas 鼠标事件被 pal 层吞(须走引擎 `input.on`,wheel 用 capture 监�
 
 ## Reference 纪元原则(多轮引擎迭代时必读)
 
-Reference 天花板 = **当前引擎 + 当前文档正典用法 + 当前 Brief** 的最优实现。三输入任一变化(引擎 tarball、K1 文档包、spec 升版)→ 受影响 Reference 需**重实现**(不是仅重跑:API 优化后旧绕行写法会低估上限),然后 `node run.mjs ceiling-freeze` 升版冻结;每轮 aggregate 自动校验批次引擎哈希与量尺纪元,不匹配标 `engine-differs`(Attainment 跨版本,单列)。漂移检测:`node run.mjs ceiling-check`(STALE 列表=下轮前必须重做的清单)。
+Reference 天花板 = **当前引擎 + 当前文档正典用法 + 当前 Brief** 的最优实现。三输入任一变化(引擎 tarball、K1 文档包、spec 升版)→ 受影响 Reference 需**重实现**(不是仅重跑:API 优化后旧绕行写法会低估上限),然后 `node run.mjs ceiling-freeze` 升版冻结并开启新纪元 EP-<日期>-R<轮次>(与批次 B-* 同构;同纪元内所有批次共用同一量尺,不随批次轮数变动);每轮 aggregate 自动校验批次引擎哈希与量尺纪元,不匹配标 `engine-differs`(Attainment 跨版本,单列)。漂移检测:`node run.mjs ceiling-check`(STALE 列表=下轮前必须重做的清单)。
 
 ## 约定速记
 

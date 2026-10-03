@@ -60,8 +60,8 @@ function refCeilingVisual() {
 
 const batchesIdx = fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path.join(RESULTS, 'batches.json')) : { batches: [] };
 // Reference 纪元账本(引擎/文档/Brief 三输入指纹):批次引擎哈希与量尺纪元不匹配时标记,防跨引擎版本误算 Attainment
-let refEpochs = null;
-try { refEpochs = rj(path.join(BENCH, 'reference', 'private', 'REFERENCE-VERSIONS.json')).epochs; } catch { /* 账本未冻结时跳过纪元匹配 */ }
+let refEpochs = null, refEpochId = null;
+try { const ledger = rj(path.join(BENCH, 'reference', 'private', 'REFERENCE-VERSIONS.json')); refEpochs = ledger.epochs; refEpochId = ledger.epochId || null; } catch { /* 账本未冻结时跳过纪元匹配 */ }
 const refVis = refCeilingVisual();
 const ceiling = {};
 for (let i = 1; i <= 10; i++) {
@@ -104,7 +104,7 @@ for (const b of [...batchesIdx.batches].sort((x, y) => (x.batchId < y.batchId ? 
       pairId: pd.name, batchId: b.batchId, scene: pj.sceneId, knowledge: pj.knowledge, rep: pj.repetition, pilot: pj.pilot ?? false,
       arms,
       attainment: att,
-      ceilingEpoch: { air: airEpochMatch, refVersion: epoch ? epoch.refVersion : null, batchEngineSha: (pj.airPackageHash || '').slice(0, 8), ceilingEngineSha: epoch ? String(epoch.inputs.engine).slice(0, 8) : null },
+      ceilingEpoch: { air: airEpochMatch, refVersion: epoch ? epoch.refVersion : null, epochId: refEpochId, refFrozenInEpoch: epoch ? epoch.frozenInEpoch : null, batchEngineSha: (pj.airPackageHash || '').slice(0, 8), ceilingEngineSha: epoch ? String(epoch.inputs.engine).slice(0, 8) : null },
       paired: both ? {
         rawDeltaAirMinusThree: rawDelta,
         attainmentDeltaAirMinusThree: (att.cocosair != null && att.three != null) ? r2(att.cocosair - att.three) : null,

@@ -1,6 +1,16 @@
 {
-  "updatedAt": "2026-10-03T04:18:39.105Z",
-  "principle": "Reference 天花板 = 当前引擎+当前文档正典+当前 Brief 的最优实现;三输入任一变化 → 重实现并 refVersion+1",
+  "epochId": "EP-20261003-R1",
+  "updatedAt": "2026-10-03T04:29:10.953Z",
+  "principle": "Reference 天花板 = 当前引擎+当前文档正典+当前 Brief 的最优实现;三输入任一变化 → 重实现并 refVersion+1,同时开启新纪元 EP-<日期>-R<轮次>(与批次 B-* 同构,单日多轮安全);同纪元内所有批次共用同一量尺",
+  "epochHistory": [
+    {
+      "epochId": "EP-20261003-R1",
+      "frozenAt": "2026-10-03T04:29:10.537Z",
+      "changed": [
+        "initial-backfill"
+      ]
+    }
+  ],
   "epochs": {
     "E01:three": {
       "refVersion": 1,
@@ -15,7 +25,8 @@
         "verdict": "PASS"
       },
       "ceiling": 89,
-      "frozenAt": "2026-10-03T04:18:39.075Z"
+      "frozenAt": "2026-10-03T04:29:10.941Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E01:cocosair": {
       "refVersion": 1,
@@ -30,7 +41,8 @@
         "verdict": "PASS"
       },
       "ceiling": 88,
-      "frozenAt": "2026-10-03T04:18:39.078Z"
+      "frozenAt": "2026-10-03T04:29:10.944Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E02:three": {
       "refVersion": 1,
@@ -45,7 +57,8 @@
         "verdict": "PASS"
       },
       "ceiling": 86,
-      "frozenAt": "2026-10-03T04:18:39.079Z"
+      "frozenAt": "2026-10-03T04:29:10.944Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E02:cocosair": {
       "refVersion": 1,
@@ -60,7 +73,8 @@
         "verdict": "PASS"
       },
       "ceiling": 87,
-      "frozenAt": "2026-10-03T04:18:39.081Z"
+      "frozenAt": "2026-10-03T04:29:10.944Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E03:three": {
       "refVersion": 1,
@@ -75,7 +89,8 @@
         "verdict": "PASS"
       },
       "ceiling": 86,
-      "frozenAt": "2026-10-03T04:18:39.082Z"
+      "frozenAt": "2026-10-03T04:29:10.946Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E03:cocosair": {
       "refVersion": 1,
@@ -90,7 +105,8 @@
         "verdict": "PASS"
       },
       "ceiling": 86,
-      "frozenAt": "2026-10-03T04:18:39.084Z"
+      "frozenAt": "2026-10-03T04:29:10.947Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E04:three": {
       "refVersion": 1,
@@ -105,7 +121,8 @@
         "verdict": "PASS"
       },
       "ceiling": 84,
-      "frozenAt": "2026-10-03T04:18:39.087Z"
+      "frozenAt": "2026-10-03T04:29:10.947Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E04:cocosair": {
       "refVersion": 1,
@@ -120,7 +137,8 @@
         "verdict": "PASS"
       },
       "ceiling": 86,
-      "frozenAt": "2026-10-03T04:18:39.088Z"
+      "frozenAt": "2026-10-03T04:29:10.947Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E05:three": {
       "refVersion": 1,
@@ -135,7 +153,8 @@
         "verdict": "PASS"
       },
       "ceiling": 89,
-      "frozenAt": "2026-10-03T04:18:39.090Z"
+      "frozenAt": "2026-10-03T04:29:10.948Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E05:cocosair": {
       "refVersion": 1,
@@ -150,7 +169,8 @@
         "verdict": "PASS"
       },
       "ceiling": 89,
-      "frozenAt": "2026-10-03T04:18:39.091Z"
+      "frozenAt": "2026-10-03T04:29:10.948Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E06:three": {
       "refVersion": 1,
@@ -165,7 +185,8 @@
         "verdict": "PASS"
       },
       "ceiling": 90,
-      "frozenAt": "2026-10-03T04:18:39.092Z"
+      "frozenAt": "2026-10-03T04:29:10.949Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E06:cocosair": {
       "refVersion": 1,
@@ -180,7 +201,8 @@
         "verdict": "PASS"
       },
       "ceiling": 90,
-      "frozenAt": "2026-10-03T04:18:39.093Z"
+      "frozenAt": "2026-10-03T04:29:10.949Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E07:three": {
       "refVersion": 1,
@@ -195,7 +217,8 @@
         "verdict": "PASS"
       },
       "ceiling": 91,
-      "frozenAt": "2026-10-03T04:18:39.095Z"
+      "frozenAt": "2026-10-03T04:29:10.950Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E07:cocosair": {
       "refVersion": 1,
@@ -210,7 +233,8 @@
         "verdict": "PASS"
       },
       "ceiling": 89,
-      "frozenAt": "2026-10-03T04:18:39.096Z"
+      "frozenAt": "2026-10-03T04:29:10.950Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E08:three": {
       "refVersion": 1,
@@ -225,7 +249,8 @@
         "verdict": "PASS"
       },
       "ceiling": 87,
-      "frozenAt": "2026-10-03T04:18:39.097Z"
+      "frozenAt": "2026-10-03T04:29:10.951Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E08:cocosair": {
       "refVersion": 1,
@@ -240,7 +265,8 @@
         "verdict": "PASS"
       },
       "ceiling": 87,
-      "frozenAt": "2026-10-03T04:18:39.098Z"
+      "frozenAt": "2026-10-03T04:29:10.951Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E09:three": {
       "refVersion": 1,
@@ -255,7 +281,8 @@
         "verdict": "PASS"
       },
       "ceiling": 88,
-      "frozenAt": "2026-10-03T04:18:39.099Z"
+      "frozenAt": "2026-10-03T04:29:10.951Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E09:cocosair": {
       "refVersion": 1,
@@ -270,7 +297,8 @@
         "verdict": "PASS"
       },
       "ceiling": 89,
-      "frozenAt": "2026-10-03T04:18:39.101Z"
+      "frozenAt": "2026-10-03T04:29:10.952Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E10:three": {
       "refVersion": 1,
@@ -285,7 +313,8 @@
         "verdict": "PASS"
       },
       "ceiling": 83,
-      "frozenAt": "2026-10-03T04:18:39.103Z"
+      "frozenAt": "2026-10-03T04:29:10.952Z",
+      "frozenInEpoch": "EP-20261003-R1"
     },
     "E10:cocosair": {
       "refVersion": 1,
@@ -300,7 +329,8 @@
         "verdict": "PASS"
       },
       "ceiling": 83,
-      "frozenAt": "2026-10-03T04:18:39.105Z"
+      "frozenAt": "2026-10-03T04:29:10.952Z",
+      "frozenInEpoch": "EP-20261003-R1"
     }
   }
 }

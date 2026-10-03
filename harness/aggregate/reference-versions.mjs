@@ -51,10 +51,31 @@ for (let i = 1; i <= 10; i++) {
       validated: ok ? { passRate: rep.probePassRate, fps: rep.fps, verdict: rep.verdict } : null,
       ceiling: ceiling && ceiling[`${scene}/${engine}`] ? ceiling[`${scene}/${engine}`].total : null,
       frozenAt: new Date().toISOString(),
+      frozenInEpoch: null, // 由下方统一填充
       ...(changed.length ? { changedFrom: old.refVersion, changedInputs: changed } : {}),
     };
     report.push({ key, status: !ok ? 'NO_VALIDATION' : changed.length ? 'STALE' : 'CURRENT', changedInputs: changed, refVersion });
   }
+}
+
+// ---- 纪元编号 EP-YYYYMMDD-Rnn:任一 scene 升版即开新纪元;无变化则沿用(幂等) ----
+const today = new Date();
+const ymd = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+const changedKeys = report.filter(r => r.status === 'STALE').map(r => r.key);
+let epochId = prev.epochId || null;
+let epochHistory = Array.isArray(prev.epochHistory) ? prev.epochHistory : [];
+if (!epochId) {
+  epochId = `EP-${ymd}-R1`; // 首次冻结(兼容旧账本回填)
+  epochHistory.push({ epochId, frozenAt: new Date().toISOString(), changed: ['initial-backfill'] });
+} else if (changedKeys.length) {
+  const seq = epochId.startsWith(`EP-${ymd}-R`) ? parseInt(epochId.split('-R')[1], 10) + 1 : 1;
+  epochId = `EP-${ymd}-R${String(seq).padStart(2, '0')}`;
+  epochHistory.push({ epochId, frozenAt: new Date().toISOString(), changed: changedKeys });
+}
+for (const k of Object.keys(epochs)) {
+  const wasChanged = changedKeys.includes(k);
+  const prevFrozen = prev.epochs[k] && prev.epochs[k].frozenInEpoch;
+  epochs[k].frozenInEpoch = wasChanged || !prevFrozen ? epochId : prevFrozen;
 }
 
 if (CHECK) {
@@ -65,5 +86,9 @@ if (CHECK) {
   process.exit(stale.length ? 3 : 0);
 }
 
-fs.writeFileSync(REG, JSON.stringify({ updatedAt: new Date().toISOString(), principle: 'Reference 天花板 = 当前引擎+当前文档正典+当前 Brief 的最优实现;三输入任一变化 → 重实现并 refVersion+1', epochs }, null, 2) + '\n');
-console.log(`REFERENCE-VERSIONS.json 已冻结(10×2 epochs);本轮升版项: ${report.filter(r => r.status === 'STALE').map(r => r.key + '(v' + r.refVersion + ')').join(', ') || '无'}`);
+fs.writeFileSync(REG, JSON.stringify({
+  epochId, updatedAt: new Date().toISOString(),
+  principle: 'Reference 天花板 = 当前引擎+当前文档正典+当前 Brief 的最优实现;三输入任一变化 → 重实现并 refVersion+1,同时开启新纪元 EP-<日期>-R<轮次>(与批次 B-* 同构,单日多轮安全);同纪元内所有批次共用同一量尺',
+  epochHistory, epochs,
+}, null, 2) + '\n');
+console.log(`REFERENCE-VERSIONS.json 已冻结:纪元 ${epochId}(历史 ${epochHistory.length} 个);本轮升版项: ${changedKeys.join(', ') || '无'}`);
