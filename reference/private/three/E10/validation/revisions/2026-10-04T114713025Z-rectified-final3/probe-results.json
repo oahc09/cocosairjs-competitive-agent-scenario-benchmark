@@ -1,0 +1,1071 @@
+{
+  "runId": "REF-E10-three-r5",
+  "generatedAt": "2026-10-04T11:47:49.942Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:21.823Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1505
+      },
+      "stateAssertion": {
+        "expr": "$.assetLoaded == true && $.instanceCount == 2 && $.instances.A.clip == \"idle\" && $.instances.B.clip == \"idle\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "minCoverage": 0.1
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.1,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.2859,
+              "background": [
+                50,
+                56,
+                74
+              ]
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.4052,
+              "background": [
+                50,
+                55,
+                72
+              ]
+            }
+          ],
+          "worstLitRatio": 0.2859
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 1.084,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 1.084,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 44.2,
+          "frame": 55
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 0.685,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 0.685,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 236
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4390
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:26.213Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1014
+      },
+      "stateAssertion": {
+        "expr": "$.instances.A.time > 0 && $.instances.B.time > 0 && $.instanceCount == 2",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.1934
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.2998
+            }
+          ],
+          "worstDiffRatio": 0.1934
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 2.084,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 2.084,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 320
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 0.701,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 0.701,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 442
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4730
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:30.943Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=anim-a-walk",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "anim-a-walk"
+            },
+            "raw": "click:ui=anim-a-walk",
+            "performed": "click @ (543,42) ui=anim-a-walk"
+          }
+        ],
+        "durationMs": 162
+      },
+      "stateAssertion": {
+        "expr": "$.instances.A.clip == \"walk\" && $.instances.B.clip == \"idle\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.08,
+            "y": 0.15,
+            "w": 0.34,
+            "h": 0.8
+          },
+          "frameGapMs": 500
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.2444
+            }
+          ],
+          "bestDiffRatio": 0.2444,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 3.368,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 3.368,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 602
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "walk",
+              "time": 0.341,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 1.134,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 673
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3457
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:34.400Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=destroy-a",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "destroy-a"
+            },
+            "raw": "click:ui=destroy-a",
+            "performed": "click @ (730,42) ui=destroy-a"
+          }
+        ],
+        "durationMs": 86
+      },
+      "stateAssertion": {
+        "expr": "$.instanceCount == 1 && $.destroyedInstance == \"A\" && $.instances.A == null",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": {
+            "x": 0.08,
+            "y": 0.15,
+            "w": 0.34,
+            "h": 0.8
+          },
+          "minChangedRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.3285
+            }
+          ],
+          "bestDiffRatio": 0.3285
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "walk",
+              "time": 0.467,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 3.385,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 808
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 0.868,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 862
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-delta.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2217
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:36.617Z",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1507
+      },
+      "stateAssertion": {
+        "expr": "$.instanceCount == 1 && $.instances.B.clip == \"idle\" && $.instances.B.time > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0.58,
+            "y": 0.15,
+            "w": 0.34,
+            "h": 0.8
+          },
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.1092
+            }
+          ],
+          "worstDiffRatio": 0.1092
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 2.184,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 941
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 1.801,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 1123
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-motion-a.png",
+          "P5-motion-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5547
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:42.164Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (789,42) ui=reset"
+          }
+        ],
+        "durationMs": 77
+      },
+      "stateAssertion": {
+        "expr": "$.resetCount == 1 && $.instanceCount == 2 && $.destroyedInstance == null && $.instances.A.clip == \"idle\" && $.instances.B.clip == \"idle\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "minCoverage": 0.1
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.1,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.6144,
+              "background": [
+                52,
+                57,
+                73
+              ]
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.2633,
+              "background": [
+                29,
+                39,
+                65
+              ]
+            }
+          ],
+          "worstLitRatio": 0.2633
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 0.901,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60,
+          "frame": 1274
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 1.517,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 1.517,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 1,
+          "fps": 60,
+          "frame": 1369
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2910
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T11:47:45.074Z",
+      "precondition": {
+        "expr": "P6",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1010
+      },
+      "stateAssertion": {
+        "expr": "$.instances.A.time > 0 && $.instances.B.time > 0 && $.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.2972
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.3579
+            }
+          ],
+          "worstDiffRatio": 0.2972
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 2.85,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 2.85,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 1,
+          "fps": 60,
+          "frame": 1449
+        },
+        "stateAfter": {
+          "engine": "three",
+          "engineVersion": "0.186.1",
+          "brief": "E10",
+          "ready": true,
+          "assetLoaded": true,
+          "assetUrl": "assets/character.glb",
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 1.45,
+              "playing": true
+            },
+            "B": {
+              "clip": "idle",
+              "time": 1.45,
+              "playing": true
+            }
+          },
+          "clipSources": {
+            "idle": "Survey",
+            "walk": "Walk"
+          },
+          "destroyedInstance": null,
+          "resetCount": 1,
+          "fps": 60,
+          "frame": 1570
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-motion-a.png",
+          "P7-motion-b.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4592
+      }
+    }
+  ]
+}

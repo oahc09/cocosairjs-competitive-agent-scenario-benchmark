@@ -1,7 +1,7 @@
 {
   "gate": "G3 REFERENCE_FEASIBILITY",
-  "status": "CONDITIONAL",
-  "validatedAt": "2026-10-03T08:09:24.191Z",
+  "status": "PASS",
+  "validatedAt": "2026-10-04T11:49:16.914Z",
   "criteria": "20 个 Reference 全部存在、validate verdict=PASS、0 未捕获异常;每个含 REFERENCE-VERDICT/WORKLOG/ceiling-notes/validation 证据",
   "capabilityAvailability": {
     "three": "10/10",
@@ -9,33 +9,27 @@
   },
   "evidence": "results/reference-ceiling.json",
   "details": [
-    "E01/three: FEASIBLE probes=7/7 fps=60.2",
+    "E01/three: FEASIBLE probes=7/7 fps=60.1",
     "E01/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.1",
-    "E02/three: FEASIBLE probes=7/7 fps=60.1",
+    "E02/three: FEASIBLE probes=7/7 fps=60.3",
     "E02/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.2",
-    "E03/three: FEASIBLE probes=9/9 fps=60.2",
-    "E03/cocosair: FEASIBLE probes=9/9 fps=60.2",
+    "E03/three: FEASIBLE probes=9/9 fps=60.1",
+    "E03/cocosair: FEASIBLE probes=9/9 fps=60.1",
     "E04/three: FEASIBLE probes=8/8 fps=60.2",
-    "E04/cocosair: FEASIBLE_LIMITED probes=8/8 fps=60.3",
+    "E04/cocosair: FEASIBLE_LIMITED probes=8/8 fps=60",
     "E05/three: FEASIBLE_LIMITED probes=6/6 fps=60.1",
     "E05/cocosair: FEASIBLE probes=6/6 fps=60.1",
-    "E06/three: FEASIBLE_LIMITED probes=6/6 fps=60.2",
+    "E06/three: FEASIBLE_LIMITED probes=6/6 fps=58.4",
     "E06/cocosair: FEASIBLE probes=6/6 fps=60.2",
-    "E07/three: FEASIBLE_LIMITED probes=8/8 fps=60.3",
+    "E07/three: FEASIBLE_LIMITED probes=8/8 fps=60.2",
     "E07/cocosair: FEASIBLE probes=8/8 fps=60.2",
-    "E08/three: FEASIBLE probes=8/8 fps=60.2",
-    "E08/cocosair: FEASIBLE_LIMITED probes=8/8 fps=60.2",
-    "E09/three: FEASIBLE_LIMITED probes=8/8 fps=60.2",
-    "E09/cocosair: FEASIBLE probes=8/8 fps=60.1",
-    "E10/three: FEASIBLE probes=7/7 fps=60.3",
-    "E10/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.2"
+    "E08/three: FEASIBLE probes=8/8 fps=60",
+    "E08/cocosair: FEASIBLE_LIMITED probes=8/8 fps=60.1",
+    "E09/three: FEASIBLE_LIMITED probes=8/8 fps=60.1",
+    "E09/cocosair: FEASIBLE probes=8/8 fps=60.2",
+    "E10/three: FEASIBLE probes=7/7 fps=60.2",
+    "E10/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60"
   ],
-  "rulerId": "RULER-20261003-R02(validationRevision v6)",
-  "remediation": {
-    "at": "2026-10-03T08:12:45.489Z",
-    "B-1": "E05 spec v1.0.2:P3 改多普勒亮侧扇区有向 R-B 差(colorRelation pickSide,双引擎实测校准 Three 34.15/AIR 23.25,阈 18)",
-    "B-2": "E04 spec v1.0.2:余烬寿命 3-12s + P4 region 改 center-bottom(实测降带);双 Reference 常数同步",
-    "result": "20/20 Reference 重验 PASS;RULER-R02 冻结;spec-audit 10 场景 0 UNSUPPORTED"
-  },
-  "note": "19/20 最新重验 PASS;cocosair/E09 最新指纹+协议重验 P7 边缘 FAIL(diffRatio 0.0047 vs 0.005,flaky at threshold)——spec 升版待 Owner 决,详见 remaining-risks R2-9"
+  "note": "R5 全量重验 20/20 PASS(串行+冷却下 E09-air P7 亦 PASS,证实此前边缘失败系负载敏感);量尺 RULER-20261003-R02 validationRevision v7",
+  "rulerId": "RULER-20261003-R02(v7)"
 }

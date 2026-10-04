@@ -175,6 +175,7 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
         brief: pj.briefSha256 ?? null,
         spec: rep.specSha256 ?? null,
         validator: rep.validatorProtocolHash ?? null,
+        toolchain: rep.toolchainFingerprint ?? null,
       })) {
         const frozen = epochEntry ? epochEntry.inputs?.[{ engine: 'engine', brief: 'briefSha', spec: 'specSha', validator: 'validatorProtocolHash', toolchain: 'toolchain' }[k]] : undefined;
         compat[k + 'Match'] = frozen == null || actual == null ? 'unknown' : (String(frozen) === String(actual) ? 'matched' : 'MISMATCH');

@@ -175,7 +175,8 @@ function stageCollect(round) {
       try {
         const exA = JSON.parse(fs.readFileSync(path.join(RESULTS, round.batchId, p.pairId, 'arm-a', 'execution.json'), 'utf8'));
         const exB = JSON.parse(fs.readFileSync(path.join(RESULTS, round.batchId, p.pairId, 'arm-b', 'execution.json'), 'utf8'));
-        const t = (e) => e.agentStartedAt || e.dispatchAt || null;
+        // P1-1:dispatchAt 只是 Runner 备妥时间,不证明 Agent 真启动;时序只认 agentStartedAt
+        const t = (e) => e.agentStartedAt ?? null;
         if (t(exA) && t(exB)) {
           const delta = Math.round(Math.abs(new Date(t(exA)) - new Date(t(exB))) / 1000);
           p.executionTiming = { status: delta <= 30 ? 'PASS' : 'PAIR_TIMING_DRIFT', startDeltaSec: delta, maxSec: 30 };

@@ -238,7 +238,11 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   // 不应错标 LEGACY(遗留)—— 单列 QUALIFIED_OBJECTIVE(正式 objective,visual 待 G7)
   else if (runVsPair && pairVsCurrent && validatorKnown.ok && agentIdentityComplete.ok && budgetMachineCounted.ok && rulerMatch.ok && !visualGate.ok) {
     const nonVisualFails = failedIds.filter((id) => id !== 'visualGate');
-    if (nonVisualFails.length === 0 && budgetCompleteness === 'FULL') status = 'QUALIFIED_OBJECTIVE';
+    // P0-3 方案 B:diagnostic 模式(agents.yaml 显式声明+G0 重冻结)下,
+    // toolcall 证据缺失不再是 hard 缺口 → binding 预算视为满足
+    const bindingBudgetSatisfied = budgetCompleteness === 'FULL'
+      || (toolCallsMode === 'diagnostic' && budgetMachineCounted.ok);
+    if (nonVisualFails.length === 0 && bindingBudgetSatisfied) status = 'QUALIFIED_OBJECTIVE';
     else if (nonVisualFails.length > 0 && nonVisualFails.every((id) => id === 'budgetToolCallEvidence')) status = 'QUALIFIED_OBJECTIVE_PARTIAL';
     else if (nonVisualFails.length > 0 && nonVisualFails.every((id) => id === 'budgetToolCallEvidence' || id === 'executionTiming')) status = 'QUALIFIED_OBJECTIVE_PARTIAL_TIMING';
   }

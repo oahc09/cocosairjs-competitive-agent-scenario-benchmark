@@ -49,6 +49,7 @@ const toolchainFingerprint = (() => {
   const chrome = (() => { try { return fs.readFileSync(path.resolve(path.dirname(fileURLToPath(import.meta.url)), 'chrome-version.cache.txt'), 'utf8').trim(); } catch { return process.env.CHROME_V || 'unknown'; } })();
   return `node${process.version}+esbuild${esb}+chrome${chrome}`;
 })();
+let chromeVersionObserved = null; // 启动后由 browser.version() 观测(P1-5/R3-7:观测值优先于缓存,Chrome 自动升级场景)
 import { runProbes, dryRunSpec, litRatio, decodePng } from './probe-executor.mjs';
 
 // probe-meta sidecar(整改 §10/§11/§12):lifecycle/fullPassDeps/failureDomains,
@@ -511,6 +512,7 @@ try {
   log('[4/14] launch browser (headless, 1280x720, fresh profile)');
   try {
     await hb.launch(wantVideo ? { videoDir: path.join(outDir, '.video-tmp') } : {});
+    try { chromeVersionObserved = hb.context.browser().version(); } catch { /* 回退缓存 */ }
   } catch (e) {
     browserLaunchFailed = true;
     throw e;
@@ -701,7 +703,9 @@ try {
   report.failureCategory = report.classification === 'PASS' ? null : report.classification;
   report.durationMs = Date.now() - tRunStart;
   report.finishedAt = isoNow();
-  report.toolchainFingerprint = toolchainFingerprint; // P1-5/R3-2:PASS/FAIL 全路径盖章
+  report.toolchainFingerprint = chromeVersionObserved
+    ? toolchainFingerprint.replace(/chrome[^+]+$/, 'chrome' + chromeVersionObserved)
+    : toolchainFingerprint; // 观测值优先(Chrome 自动升级场景),缓存/环境兜底
   for (const f of fs.readdirSync(shotDir)) {
     if (!report.screenshots.includes(f)) report.screenshots.push(f);
   }

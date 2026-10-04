@@ -141,15 +141,18 @@ function computeDependencyHashes() {
 // ---------------------------------------------------------------------------
 
 function runMetaTemplateJson() {
+  // R3-4 新 schema:sha 字段由 preflight 真算回填(留 null 即可);id 字段由 Runner 填写
   return {
-    agentRuntime: null,   // Agent 运行时标识(如 zcode-cli / claude-code / human)
-    agentBinaryHash: null,
+    agentRuntime: null,      // Agent 运行时标识(如 zcode-cli / claude-code)
+    agentBinaryHash: null,   // 云运行时填 'unavailable(...)' 并说明
     modelId: null,
     modelRevision: null,
-    systemPromptHash: null,
-    toolPolicyHash: null,
+    systemPromptId: null,    // 如 'DISPATCH-B-20261003-R05'
+    systemPromptSha256: null,// preflight 真算 sha256(DISPATCH.md) 回填并核验
+    toolPolicyId: null,      // 如 'policy-v2'
+    toolPolicySha256: null,  // preflight 真算 sha256(策略输入清单) 回填并核验
     runnerVersion: null,
-    notes: '派发前填写为 RUN-META.json',
+    notes: '派发前填写为 RUN-META.json;两个 Sha256 可留 null(ROUND dispatch/preflight 自动真算回填)',
   };
 }
 

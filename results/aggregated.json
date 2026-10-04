@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-04T02:31:18.818Z",
+  "generatedAt": "2026-10-04T11:48:52.871Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
   "rulerStatus": {
     "rulerId": "RULER-20261003-R02",
     "source": "reference/private/REFERENCE-VERSIONS.json(只读冻结账本;不动态扫描批次 judge 数据)",
     "protocol": {
-      "validatorProtocolHash": "6bb4315dc47f640dad4ea629c1ca8fa77903f1190d8cd740809c23255c78450c",
+      "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
       "validatorProtocolComponents": {
         "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
-        "validateSha256": "849baf3cef3a21891c7f6a772c648f8fd1bbf7e7ff58d1d8272c636aab04a53a"
+        "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
       },
       "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
       "judgeProtocolSource": "docs/metric-spec.md §8 盲评统计(Track D)(= 计划书 §18 口径)"
@@ -125,7 +125,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -232,7 +232,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -337,7 +337,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -448,7 +448,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -506,12 +506,12 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:38:34.050Z"
+                "at": "2026-10-04T11:28:58.776Z"
               },
               "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 0.8571,
-              "fps": 60,
+              "fps": 60.2,
               "visual18": null,
               "provisionalVisualScore": null,
               "visualPending": true,
@@ -521,9 +521,9 @@
               },
               "objective": {
                 "total": 45,
-                "attainment": null
+                "attainment": 0.82
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E01-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -561,10 +561,10 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:39:06.410Z"
+                "at": "2026-10-04T11:29:31.171Z"
               },
               "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 0.7143,
               "fps": 60.1,
               "visual18": null,
@@ -576,9 +576,9 @@
               },
               "objective": {
                 "total": 40,
-                "attainment": null
+                "attainment": 0.73
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E01-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -595,8 +595,8 @@
               "cocosair": 40
             },
             "attainment": {
-              "three": null,
-              "cocosair": null
+              "three": 0.82,
+              "cocosair": 0.73
             },
             "pairedDelta": -5,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -609,7 +609,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -647,12 +647,12 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:40:45.974Z"
+                "at": "2026-10-04T11:29:58.849Z"
               },
               "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 1,
-              "fps": 60.3,
+              "fps": 60,
               "visual18": null,
               "provisionalVisualScore": null,
               "visualPending": true,
@@ -662,9 +662,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": null
+                "attainment": 1
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E02-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -688,12 +688,12 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:41:34.734Z"
+                "at": "2026-10-04T11:30:34.249Z"
               },
               "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 1,
-              "fps": 60,
+              "fps": 60.1,
               "visual18": null,
               "provisionalVisualScore": null,
               "visualPending": true,
@@ -703,9 +703,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": null
+                "attainment": 1
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E02-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -722,8 +722,8 @@
               "cocosair": 55
             },
             "attainment": {
-              "three": null,
-              "cocosair": null
+              "three": 1,
+              "cocosair": 1
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -736,7 +736,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -788,10 +788,10 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:42:10.127Z"
+                "at": "2026-10-04T11:31:08.665Z"
               },
               "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 0.8333,
               "fps": 60.3,
               "visual18": null,
@@ -803,9 +803,9 @@
               },
               "objective": {
                 "total": 50,
-                "attainment": null
+                "attainment": 0.91
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E05-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -843,12 +843,12 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:42:40.413Z"
+                "at": "2026-10-04T11:31:37.871Z"
               },
               "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 0.8333,
-              "fps": 60.2,
+              "fps": 60.1,
               "visual18": null,
               "provisionalVisualScore": null,
               "visualPending": true,
@@ -858,9 +858,9 @@
               },
               "objective": {
                 "total": 50,
-                "attainment": null
+                "attainment": 0.91
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E05-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -877,8 +877,8 @@
               "cocosair": 50
             },
             "attainment": {
-              "three": null,
-              "cocosair": null
+              "three": 0.91,
+              "cocosair": 0.91
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -891,7 +891,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -931,12 +931,12 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:43:09.505Z"
+                "at": "2026-10-04T11:32:05.869Z"
               },
               "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 1,
-              "fps": 60.1,
+              "fps": 60.3,
               "visual18": null,
               "provisionalVisualScore": null,
               "visualPending": true,
@@ -946,9 +946,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": null
+                "attainment": 1
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E10-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
@@ -974,12 +974,12 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-03T12:43:45.325Z"
+                "at": "2026-10-04T11:32:40.921Z"
               },
               "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
-              "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
               "passRate": 1,
-              "fps": 60,
+              "fps": 60.1,
               "visual18": null,
               "provisionalVisualScore": null,
               "visualPending": true,
@@ -989,9 +989,9 @@
               },
               "objective": {
                 "total": 55,
-                "attainment": null
+                "attainment": 1
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
               "report": "B-20261003-R05/PAIR-E10-K0-R01/arm-b/validation/report.json"
             }
           },
@@ -1008,8 +1008,8 @@
               "cocosair": 55
             },
             "attainment": {
-              "three": null,
-              "cocosair": null
+              "three": 1,
+              "cocosair": 1
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
@@ -1022,7 +1022,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 9,
+            "validationRevision": 10,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -1188,9 +1188,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "edd2b07ce502b94428ed0a2493e8a4accc823977c2e3b189dd6147e60c5a2aad"
+      "evidenceHash": "64945e1e0fa862eb616dc0401e10410a575dd0ab677518ce569ffe74a2ab364f"
     },
     "E01/cocosair": {
       "objective": 55,
@@ -1204,9 +1204,9 @@
       "total": 87.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "cdd9f773cfaeb14feec1f6ae6c644fda69ee7b9cd1aba88867589c6d98ea2a98"
+      "evidenceHash": "3618cace0317ef90357b9d0c6aff495a4ba4a7e41a62accc8f3086e81c1b9771"
     },
     "E02/three": {
       "objective": 55,
@@ -1220,9 +1220,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "3f2ad12626575ff554e8772cfb93fb0953f6c3f5b645a68a724cde64f0c26fdb"
+      "evidenceHash": "a18cb34d361ef074cbc6296080e8569a1c62f27f7a63ec26be427be90314e4e0"
     },
     "E02/cocosair": {
       "objective": 55,
@@ -1236,9 +1236,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "f64ed83718ed804dccc4b970948fb10cc29caf6f17840f1227a1275758083c9c"
+      "evidenceHash": "b79ef6d05ac7c92cc0db6b93f51a89633323b677d791fed995a9353bfa68c650"
     },
     "E03/three": {
       "objective": 55,
@@ -1252,9 +1252,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "719d184ef41447ea84cc500de8e5c9b699b0ace2c37d0a956d597c78b2613e35"
+      "evidenceHash": "46d86de18ef14353898322ea370355045f6b0b7c439f26b8272d917218cc9bb7"
     },
     "E03/cocosair": {
       "objective": 55,
@@ -1268,9 +1268,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "9a3b74f1505ab1f1713d23e42b8511ec080d51dc8b1e2af97fd2a2240e2695e3"
+      "evidenceHash": "881fc6ab04e8e7164d24215748e13ad235c81bdbba10a055212dfb0885a8d623"
     },
     "E04/three": {
       "objective": 55,
@@ -1284,9 +1284,9 @@
       "total": 83.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "7fbc5e8ea105eeaa7beff498ce01df20c6ccd9435256e51346e01c3a4ef841cf"
+      "evidenceHash": "cb36da76cce93a78842c137fcb565ed0d9c44f12385707c139c4703b703dc122"
     },
     "E04/cocosair": {
       "objective": 55,
@@ -1300,9 +1300,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "9444f960295afdad9663dec831274bc985de84126f6e166ed24200816f0c8226"
+      "evidenceHash": "19d27cdcd1f47808cb1eb1c6b35b95b218f8c705a67f91e178546341de1c5d84"
     },
     "E05/three": {
       "objective": 55,
@@ -1316,9 +1316,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "4e5d118fda10b0878142f0d4c708c7f4dbde7116b8de9b4061ea5cdcb97a2a0d"
+      "evidenceHash": "e39f034600d980961d6574815d46c08a96c90d64e1b6cf0571f1d96fe34970da"
     },
     "E05/cocosair": {
       "objective": 55,
@@ -1332,9 +1332,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "16bb76b47d90f0e3c4c532664bcd8becd564d3d78b428015de34d2c719e74392"
+      "evidenceHash": "e02ecd73cc8f6661070392b5dcaa33638ce2a4998b20bb485cc3dc77756ea70c"
     },
     "E06/three": {
       "objective": 55,
@@ -1348,9 +1348,9 @@
       "total": 89.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "9830270d626470fbef97dc3ddbfe9b955d1b69d4b56e70b93dce1c863d3a5887"
+      "evidenceHash": "742a4ed993b4b948893a4e1ea3639e72fb09a11bb7fcdff57ebaf54df2d9c1e0"
     },
     "E06/cocosair": {
       "objective": 55,
@@ -1364,9 +1364,9 @@
       "total": 89.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "ade357fc027a47fba886e9ce70dd5219f6d33da206db7f4f406d581c6398ba63"
+      "evidenceHash": "63e7145620020ab3b495ca5d25b4f70ffa73addb3e4e726ac8a99dc0058b49a5"
     },
     "E07/three": {
       "objective": 55,
@@ -1380,9 +1380,9 @@
       "total": 90.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "067be1e3100fdbdfbf72a53fcd9aa2442d5258ed46b8c69f66c2e8683a8cb7fc"
+      "evidenceHash": "66569ab4d84a11a36a0abc64e25112454807be06f2a17614de53d6ecb66187d5"
     },
     "E07/cocosair": {
       "objective": 55,
@@ -1396,9 +1396,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "0995ca5a08d99d8406aa755a3dcdaecfe08f9565e1cab6ce8a14903b8bfd37c8"
+      "evidenceHash": "0056354d682f46c56b8b65ad59322866783b64a1c516b72b3288d311a5e81131"
     },
     "E08/three": {
       "objective": 55,
@@ -1412,9 +1412,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "5de3b1f0e4aa3870af5f774a39657fae2dc182e47fbd8ac107826148f565995c"
+      "evidenceHash": "23298b1ac8b40915c9cd59f4239daf026ebdd4c122c1035099f9da26d610015b"
     },
     "E08/cocosair": {
       "objective": 55,
@@ -1428,9 +1428,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "dc39c0441d19ed50afc9d543dfdd04767f5ff9bb9bf9dc9370cb4d331fbb6659"
+      "evidenceHash": "e4b51a0f6f32cd8b3c279766bc42d92fdf4f025c83c8ef7cea91f2c1636b31bb"
     },
     "E09/three": {
       "objective": 55,
@@ -1444,25 +1444,25 @@
       "total": 87.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "89ff6d8d8416fd45e5dc4c2498b6af2178d6465fce786cf04d9f12d4640ffbe4"
+      "evidenceHash": "54ae1c5c7b10f45cb0305e95fe5fed1fdfb5c7c59352785177f60b86128b07a6"
     },
     "E09/cocosair": {
-      "objective": 42,
+      "objective": 55,
       "objectiveBreakdown": {
         "s1": 15,
-        "s2": 23,
-        "s3": 4
+        "s2": 30,
+        "s3": 10
       },
       "visual18": 13,
       "visual40": 29,
-      "total": 75.3,
+      "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "412daa3722264bc23ee069b85cbc033076859e118a5501611e5e1793b9864a34"
+      "evidenceHash": "510b751ae089871b131a0aaec7d0cbc482b607883b19c54496e23979621cbb72"
     },
     "E10/three": {
       "objective": 55,
@@ -1476,9 +1476,9 @@
       "total": 82.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "c1a9c5b6c7c02724d65ef4df460b37af7f8d0fdf27e25b1593241ea59e002408"
+      "evidenceHash": "642bbd6a32f00f786f82d5e1bc77f5dd2e56c21cf38b2c14f5fa5ac00b051f48"
     },
     "E10/cocosair": {
       "objective": 55,
@@ -1492,9 +1492,9 @@
       "total": 82.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 9,
+      "validationRevision": 10,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "166cea08bdc10776e9a9932845106e42582edc3727974c74cb21af3d1941c50e"
+      "evidenceHash": "145a68245a57564e292fc2262bf5fb1ffb616ff37157e51755e330eae3c5e67d"
     }
   },
   "notes": [

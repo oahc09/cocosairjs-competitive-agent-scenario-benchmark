@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T14:51:45.163Z",
+  "generatedAt": "2026-10-04T11:48:52.420Z",
   "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
   "batch": "B-20261003-R05",
   "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
@@ -14,13 +14,13 @@
   "context": {
     "ruler": {
       "rulerId": "RULER-20261003-R02",
-      "updatedAt": "2026-10-03T14:08:45.906Z"
+      "updatedAt": "2026-10-04T11:48:51.559Z"
     },
     "g7": {
       "status": "BLOCKED",
       "source": "gates/G7.json"
     },
-    "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005"
+    "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff"
   },
   "pairs": [
     {
@@ -71,10 +71,10 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+          "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
-          "matchesCurrent": false,
+          "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "matchesCurrent": true,
           "note": null
         },
         "agentIdentityComplete": {
@@ -114,8 +114,9 @@
         "budgetToolCallEvidence": {
           "id": "budgetToolCallEvidence",
           "ok": false,
+          "mode": "hard",
           "completeness": "PARTIAL",
-          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
+          "note": "toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0"
         },
         "executionTiming": {
           "id": "executionTiming",
@@ -149,7 +150,7 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:56:58.116Z",
-            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "rulerFrozenAt": "2026-10-04T11:48:51.559Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
@@ -204,10 +205,10 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+          "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
-          "matchesCurrent": false,
+          "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "matchesCurrent": true,
           "note": null
         },
         "agentIdentityComplete": {
@@ -247,8 +248,9 @@
         "budgetToolCallEvidence": {
           "id": "budgetToolCallEvidence",
           "ok": false,
+          "mode": "hard",
           "completeness": "PARTIAL",
-          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
+          "note": "toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0"
         },
         "executionTiming": {
           "id": "executionTiming",
@@ -282,7 +284,7 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:57:02.652Z",
-            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "rulerFrozenAt": "2026-10-04T11:48:51.559Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
@@ -337,10 +339,10 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+          "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
-          "matchesCurrent": false,
+          "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "matchesCurrent": true,
           "note": null
         },
         "agentIdentityComplete": {
@@ -380,8 +382,9 @@
         "budgetToolCallEvidence": {
           "id": "budgetToolCallEvidence",
           "ok": false,
+          "mode": "hard",
           "completeness": "PARTIAL",
-          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
+          "note": "toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0"
         },
         "executionTiming": {
           "id": "executionTiming",
@@ -415,7 +418,7 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:57:07.133Z",
-            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "rulerFrozenAt": "2026-10-04T11:48:51.559Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
@@ -470,10 +473,10 @@
         "validatorKnown": {
           "id": "validatorKnown",
           "ok": true,
-          "validatorProtocolHash": "4d99816c36fd13c5cd4814cac940b092613e6d752397dcfa5cd26a1b31affa09",
+          "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
           "harnessVersion": "1.0.0",
-          "currentValidatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
-          "matchesCurrent": false,
+          "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "matchesCurrent": true,
           "note": null
         },
         "agentIdentityComplete": {
@@ -513,8 +516,9 @@
         "budgetToolCallEvidence": {
           "id": "budgetToolCallEvidence",
           "ok": false,
+          "mode": "hard",
           "completeness": "PARTIAL",
-          "note": "maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时"
+          "note": "toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0"
         },
         "executionTiming": {
           "id": "executionTiming",
@@ -548,7 +552,7 @@
           },
           "sequencing": {
             "batchCreatedAt": "2026-10-03T08:57:11.650Z",
-            "rulerFrozenAt": "2026-10-03T14:08:45.906Z",
+            "rulerFrozenAt": "2026-10-04T11:48:51.559Z",
             "note": "RULER-POSTDATES-BATCH:量尺在批次之后冻结;当时无版本账本约束,Attainment 只能回溯套用现尺(声明口径)"
           },
           "rulerId": "RULER-20261003-R02"
