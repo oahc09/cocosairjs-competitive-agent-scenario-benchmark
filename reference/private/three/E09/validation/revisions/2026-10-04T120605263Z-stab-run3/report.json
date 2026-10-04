@@ -1,0 +1,205 @@
+{
+  "runId": "REF-E09-three-s3",
+  "generatedAt": "2026-10-04T12:06:05.303Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E09",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E09\\spec.json",
+    "briefId": "E09",
+    "briefVersion": "1.0.0",
+    "sha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
+  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
+  },
+  "pairMeta": null,
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 3458,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  18.9kb\n\nDone in 17ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3456ms\n"
+  },
+  "serve": {
+    "port": 7666,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E09"
+  },
+  "ready": {
+    "appReady": true,
+    "benchReady": true,
+    "durationMs": 3553
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 1,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [
+    {
+      "probeId": "P1",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P2",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P3",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P4",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P5",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P6",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P7",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P8",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    }
+  ],
+  "probeResults": "probe-results.json",
+  "probePassRate": 1,
+  "fps": 60,
+  "perf": {
+    "fps": 60,
+    "frames": 181,
+    "sampleMs": 3016,
+    "sampledAt": "2026-10-04T12:06:53.369Z",
+    "minFpsSpec": 30,
+    "fpsMet": true
+  },
+  "downloads": [
+    {
+      "filename": "gem-stage-1791115598398-1.png",
+      "bytes": 596604,
+      "error": null
+    },
+    {
+      "filename": "gem-stage-1791115601364-2.png",
+      "bytes": 594208,
+      "error": null
+    }
+  ],
+  "networkEvents": {
+    "count": 20,
+    "totalBytes": 2415205
+  },
+  "screenshots": [
+    "initial.png",
+    "mid.png",
+    "final.png",
+    "extra-1.png",
+    "extra-2.png",
+    "P1-before.png",
+    "P1-vis.png",
+    "P1-after.png",
+    "P2-before.png",
+    "P2-region-a.png",
+    "P2-region-b.png",
+    "P2-after.png",
+    "P3-before.png",
+    "P3-region-a.png",
+    "P3-region-b.png",
+    "P3-after.png",
+    "P4-before.png",
+    "P4-region-a.png",
+    "P4-region-b.png",
+    "P4-after.png",
+    "P5-before.png",
+    "P5-region-a.png",
+    "P5-region-b.png",
+    "P5-after.png",
+    "P6-before.png",
+    "P6-vis.png",
+    "P6-after.png",
+    "P7-before.png",
+    "P7-motion-a.png",
+    "P7-motion-b.png",
+    "P7-after.png",
+    "P8-before.png",
+    "P8-region-a.png",
+    "P8-region-b.png",
+    "P8-after.png"
+  ],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "probe-results.json",
+    "console.json",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "PASS",
+  "failureCategory": null,
+  "verdict": "PASS",
+  "error": null,
+  "scoreInputs": {
+    "s1": {
+      "buildPass": true,
+      "readyNoError": true,
+      "firstShotNonBlank": true,
+      "firstShotLitRatio": 0.8379
+    },
+    "s2": {
+      "passedWeight": 8,
+      "totalWeight": 8,
+      "probePassRate": 1,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": true,
+      "lifecycleProbeId": "P8",
+      "fpsMet": true,
+      "minFps": 30
+    }
+  },
+  "durationMs": 48655,
+  "finishedAt": "2026-10-04T12:06:53.930Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
+}

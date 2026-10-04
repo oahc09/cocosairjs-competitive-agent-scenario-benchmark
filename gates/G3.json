@@ -1,6 +1,6 @@
 {
   "gate": "G3 REFERENCE_FEASIBILITY",
-  "status": "PASS",
+  "status": "CONDITIONAL",
   "validatedAt": "2026-10-04T11:49:16.914Z",
   "criteria": "20 个 Reference 全部存在、validate verdict=PASS、0 未捕获异常;每个含 REFERENCE-VERDICT/WORKLOG/ceiling-notes/validation 证据",
   "capabilityAvailability": {
@@ -30,6 +30,6 @@
     "E10/three: FEASIBLE probes=7/7 fps=60.2",
     "E10/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60"
   ],
-  "note": "R5 全量重验 20/20 PASS(串行+冷却下 E09-air P7 亦 PASS,证实此前边缘失败系负载敏感);量尺 RULER-20261003-R02 validationRevision v7",
+  "note": "E09-air P7 5×2 稳定性套件全 FAIL(0.004-0.019 骑 0.005 阈值,串行+冷却下)——spec 校准待 Owner;其余 19 项 PASS(R5)",
   "rulerId": "RULER-20261003-R02(v7)"
 }

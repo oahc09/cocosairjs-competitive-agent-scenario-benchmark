@@ -1,18 +1,22 @@
 {
   "gate": "G8 EVIDENCE_COMPLETENESS",
-  "status": "FAIL",
-  "validatedAt": "2026-10-03T15:12:06.596Z",
-  "coverage": "两批 16 臂(批次产物/验证报告/探针明细/WORKLOG/RESULT/合同/RUN-META/源码)+ 20 Reference(报告/code-review/判定/notes)",
-  "missing": [
-    "results/B-20261002-R1/PAIR-E01-K0-R01/arm-a/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E01-K0-R01/arm-b/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E02-K0-R01/arm-a/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E02-K0-R01/arm-b/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E05-K0-R01/arm-a/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E05-K0-R01/arm-b/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E10-K0-R01/arm-a/RUN-META.json",
-    "results/B-20261002-R1/PAIR-E10-K0-R01/arm-b/RUN-META.json"
-  ],
-  "missingCount": 8,
-  "note": "RUN-META.json 为 R05 新增身份证据;B-20261002-R1 历史臂无 RUN-META(QUALIFICATION 已如实降级)"
+  "status": "PASS",
+  "validatedAt": "2026-10-04T12:11:52.493Z",
+  "denominator": "eligible/current measurements only(B-20261003-R05 + 20 Reference);legacy B-20261002-R1 不进分母,缺口仅披露",
+  "missingCount": 0,
+  "missing": [],
+  "legacyDisclosure": {
+    "batch": "B-20261002-R1",
+    "status": "LEGACY_PROVISIONAL",
+    "gaps": [
+      "PAIR-E01-K0-R01/arm-a/RUN-META.json(历史豁免)",
+      "PAIR-E01-K0-R01/arm-b/RUN-META.json(历史豁免)",
+      "PAIR-E02-K0-R01/arm-a/RUN-META.json(历史豁免)",
+      "PAIR-E02-K0-R01/arm-b/RUN-META.json(历史豁免)",
+      "PAIR-E05-K0-R01/arm-a/RUN-META.json(历史豁免)",
+      "PAIR-E05-K0-R01/arm-b/RUN-META.json(历史豁免)",
+      "PAIR-E10-K0-R01/arm-a/RUN-META.json(历史豁免)",
+      "PAIR-E10-K0-R01/arm-b/RUN-META.json(历史豁免)"
+    ]
+  }
 }

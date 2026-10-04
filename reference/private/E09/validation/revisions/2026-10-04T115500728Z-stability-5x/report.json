@@ -1,0 +1,91 @@
+{
+  "runId": "REF-E09-cocosair-stab-1",
+  "generatedAt": "2026-10-04T11:55:00.742Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\E09",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E09\\spec.json",
+    "briefId": "E09",
+    "briefVersion": "1.0.0",
+    "sha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
+  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
+  },
+  "pairMeta": null,
+  "build": {
+    "ok": false,
+    "exitCode": 1,
+    "durationMs": 236,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\nnpm error Missing script: \"build\"\nnpm error\nnpm error To see a list of scripts, run:\nnpm error   npm run\nnpm error A complete log of this run can be found in: C:\\Users\\caosh\\AppData\\Local\\npm-cache\\_logs\\2026-10-04T11_55_00_923Z-debug-0.log\n\n[exit code 1] duration 235ms\n"
+  },
+  "serve": {
+    "port": null,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\E09"
+  },
+  "ready": {
+    "appReady": false,
+    "benchReady": false,
+    "durationMs": null
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0,
+  "fps": null,
+  "perf": null,
+  "downloads": [],
+  "networkEvents": {
+    "count": 0,
+    "totalBytes": 0
+  },
+  "screenshots": [],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "network.json",
+    "perf.json"
+  ],
+  "classification": "BUILD",
+  "failureCategory": "BUILD",
+  "verdict": "FAIL",
+  "error": "build failed",
+  "scoreInputs": {
+    "s1": {
+      "buildPass": false,
+      "readyNoError": false,
+      "firstShotNonBlank": false,
+      "firstShotLitRatio": null
+    },
+    "s2": {
+      "passedWeight": 0,
+      "totalWeight": 0,
+      "probePassRate": 0,
+      "behaviorItemsCount": 11
+    },
+    "s3": {
+      "lifecycleProbePassed": false,
+      "lifecycleProbeId": null,
+      "fpsMet": false,
+      "minFps": 30
+    }
+  },
+  "durationMs": 257,
+  "finishedAt": "2026-10-04T11:55:00.988Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.58"
+}

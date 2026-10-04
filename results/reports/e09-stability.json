@@ -1,0 +1,69 @@
+{
+  "generatedAt": "2026-10-04T12:11:08.235Z",
+  "protocol": "串行 + 20s 冷却 + 无并行 GPU 负载(R3-7 机制)",
+  "pass": 5,
+  "fail": 5,
+  "rows": [
+    {
+      "engine": "three",
+      "n": 1,
+      "verdict": "PASS",
+      "p7diff": 0.1361
+    },
+    {
+      "engine": "cocosair",
+      "n": 1,
+      "verdict": "FAIL",
+      "p7diff": 0.0051
+    },
+    {
+      "engine": "three",
+      "n": 2,
+      "verdict": "PASS",
+      "p7diff": 0.2979
+    },
+    {
+      "engine": "cocosair",
+      "n": 2,
+      "verdict": "FAIL",
+      "p7diff": 0.0119
+    },
+    {
+      "engine": "three",
+      "n": 3,
+      "verdict": "PASS",
+      "p7diff": 0.1298
+    },
+    {
+      "engine": "cocosair",
+      "n": 3,
+      "verdict": "FAIL",
+      "p7diff": 0.0053
+    },
+    {
+      "engine": "three",
+      "n": 4,
+      "verdict": "PASS",
+      "p7diff": 0.0999
+    },
+    {
+      "engine": "cocosair",
+      "n": 4,
+      "verdict": "FAIL",
+      "p7diff": 0.004
+    },
+    {
+      "engine": "three",
+      "n": 5,
+      "verdict": "PASS",
+      "p7diff": 0.1311
+    },
+    {
+      "engine": "cocosair",
+      "n": 5,
+      "verdict": "FAIL",
+      "p7diff": 0.0192
+    }
+  ],
+  "conclusion": "5/10,spec 校准决策(Owner)"
+}

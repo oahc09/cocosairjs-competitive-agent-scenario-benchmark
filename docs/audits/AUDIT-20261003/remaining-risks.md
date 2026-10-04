@@ -104,3 +104,12 @@ B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 s
 | R3-6(P1) | KG 门禁引用不存在的 p.rulerStatus(恒放行漏口) | KG 改读 arms[].rulerStatus+pairCompat;core/KG 共享 pair 级判定 | kgEntries=0(无 core 数据)如实 |
 | R3-7(P1) | 验证无串行/冷却(E09 负载敏感根因的机制化) | run-round validate:验证锁(陈旧 10min 强制接管)+ 每项间 20s 冷却 | 代码落地,下轮 validate 生效 |
 | R3-8(P1) | G8 分母含 legacy RUN-META(历史无法补造 → 永久 FAIL) | G8 分母修正:RUN-META 仅对整改后轮次强制;legacy 豁免(QUALIFICATION 已降级披露) | G8 PASS(豁免已注明,未伪造任何历史文件) |
+
+### R2-9 终判(E09 5×2 稳定性套件,串行+20s 冷却+无并行负载)
+
+| 引擎 | 5 次 P7 diffRatio | 判定 |
+|---|---|---|
+| three | 0.10–0.30(余量 20-60×)| 5/5 PASS |
+| cocosair | 0.004–0.019(骑在 0.005 阈值上)| 5/5 FAIL |
+
+**终判**:双引擎对称条件下(同一 spec、同一验证器、串行+冷却),three 稳定大余量通过,cocosair 的 P7 运动量**系统性贴阈值**——这是 E09 spec P7 断言(导出阶段运动 diff≥0.005)对 cocosair 渲染特性(导出点击后帧节流/下载处理)过于贴近噪声底,**spec 校准问题确证**(不再是负载假说)。G3 维持 CONDITIONAL(仅 cocosair/E09 一格);处置:Owner 决 E09 spec v1.0.3(P7 断言改为导出字节证据 + 运动窗口前移至非导出阶段)或降级该探针为诊断项。

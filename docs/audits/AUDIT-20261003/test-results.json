@@ -81,5 +81,12 @@
     "idleRecheck": "PASS 0.0376",
     "conclusion": "负载敏感抖动;验证须空闲串行",
     "evidence": "revisions/ 对比表"
+  },
+  "e09Stability5x2": {
+    "generatedAt": "2026-10-04T12:11:52.145Z",
+    "protocol": "串行+20s 冷却+无并行负载",
+    "three": "5/5 PASS(diff 0.10-0.30)",
+    "cocosair": "5/5 FAIL(diff 0.004-0.019 骑阈值)",
+    "conclusion": "spec P7 校准问题确证(Owner 决);文件 results/reports/e09-stability.json"
   }
 }

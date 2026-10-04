@@ -1,0 +1,834 @@
+{
+  "runId": "REF-E09-cocosair-s2",
+  "generatedAt": "2026-10-04T12:05:39.894Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:12.496Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1517
+      },
+      "stateAssertion": {
+        "expr": "$.selectedColor == \"diamond\" && $.cameraDistance >= 9 && $.exportCount == 0 && $.rotationAngle >= 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "minCoverage": 0.08
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.08,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 461,
+                "y": 187,
+                "w": 358,
+                "h": 302
+              },
+              "litRatio": 0.4358,
+              "background": [
+                181,
+                186,
+                196
+              ]
+            }
+          ],
+          "worstLitRatio": 0.4358
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 24.374000000000002,
+          "selectedColor": "diamond",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 151.7600000000001,
+          "selectedColor": "diamond",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3922
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:16.418Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2000
+            },
+            "raw": "wait:2000",
+            "performed": "waited 2000ms"
+          }
+        ],
+        "durationMs": 2004
+      },
+      "stateAssertion": {
+        "expr": "$.rotationAngle >= 50",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "frameGapMs": 500
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 461,
+                "y": 187,
+                "w": 358,
+                "h": 302
+              },
+              "diffRatio": 0.0409
+            }
+          ],
+          "bestDiffRatio": 0.0409,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 188.84600000000026,
+          "selectedColor": "diamond",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 357.5641999997495,
+          "selectedColor": "diamond",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-region-a.png",
+          "P2-region-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5697
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:22.115Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=swatch-2",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "swatch-2"
+            },
+            "raw": "click:ui=swatch-2",
+            "performed": "click @ (592,666) ui=swatch-2"
+          }
+        ],
+        "durationMs": 135
+      },
+      "stateAssertion": {
+        "expr": "$.selectedColor == \"ruby\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "frameGapMs": 400
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 400,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 461,
+                "y": 187,
+                "w": 358,
+                "h": 302
+              },
+              "diffRatio": 0.3451
+            }
+          ],
+          "bestDiffRatio": 0.3451,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 429.6445999998742,
+          "selectedColor": "diamond",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 469.5613999994985,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2661
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:24.776Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "dblclick:{x:640,y:360}",
+        "steps": [
+          {
+            "verb": "dblclick",
+            "arg": {
+              "kind": "xy",
+              "x": 640,
+              "y": 360
+            },
+            "raw": "dblclick:{x:640,y:360}",
+            "performed": "dblclick @ (640,360)"
+          }
+        ],
+        "durationMs": 5
+      },
+      "stateAssertion": {
+        "expr": "$.cameraDistance <= 6",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.25,
+            "y": 0.15,
+            "w": 0.5,
+            "h": 0.7
+          },
+          "frameGapMs": 600
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 600,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 320,
+                "y": 108,
+                "w": 640,
+                "h": 504
+              },
+              "diffRatio": 0.0514
+            }
+          ],
+          "bestDiffRatio": 0.0514,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 540.9445999998735,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 592.0543999994983,
+          "selectedColor": "ruby",
+          "cameraDistance": 6,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-region-a.png",
+          "P4-region-b.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2929
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-04T12:05:27.705Z",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "dblclick:{x:640,y:360}",
+        "steps": [
+          {
+            "verb": "dblclick",
+            "arg": {
+              "kind": "xy",
+              "x": 640,
+              "y": 360
+            },
+            "raw": "dblclick:{x:640,y:360}",
+            "performed": "dblclick @ (640,360)"
+          }
+        ],
+        "durationMs": 4
+      },
+      "stateAssertion": {
+        "expr": "$.cameraDistance >= 9",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.25,
+            "y": 0.15,
+            "w": 0.5,
+            "h": 0.7
+          },
+          "frameGapMs": 600
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 600,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 320,
+                "y": 108,
+                "w": 640,
+                "h": 504
+              },
+              "diffRatio": 0.0088
+            }
+          ],
+          "bestDiffRatio": 0.0088,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 661.3459999999995,
+          "selectedColor": "ruby",
+          "cameraDistance": 6,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 712.4347999996243,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-region-a.png",
+          "P5-region-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2924
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:30.629Z",
+      "precondition": {
+        "expr": "P5",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P5",
+            "met": false,
+            "source": "probe P5",
+            "status": "FAIL"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=export-png",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "export-png"
+            },
+            "raw": "click:ui=export-png",
+            "performed": "click @ (1112,677) ui=export-png"
+          }
+        ],
+        "durationMs": 90
+      },
+      "stateAssertion": {
+        "expr": "$.exportCount == 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "minCoverage": 0.08
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.08,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 461,
+                "y": 187,
+                "w": 358,
+                "h": 302
+              },
+              "litRatio": 0.4288,
+              "background": [
+                177,
+                94,
+                104
+              ]
+            }
+          ],
+          "worstLitRatio": 0.4288
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 785.2333999994995,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 852.4333999995002,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 1,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2452
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P5",
+      "failedPreconditionParts": [
+        "P5"
+      ]
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:33.081Z",
+      "precondition": {
+        "expr": "P6",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=export-png",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "export-png"
+            },
+            "raw": "click:ui=export-png",
+            "performed": "click @ (1112,677) ui=export-png"
+          }
+        ],
+        "durationMs": 75
+      },
+      "stateAssertion": {
+        "expr": "$.exportCount == 2",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "spanMs": 600
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 600,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 461,
+                "y": 187,
+                "w": 358,
+                "h": 302
+              },
+              "diffRatio": 0.0119
+            }
+          ],
+          "worstDiffRatio": 0.0119
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 888.1375999998759,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 1,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 954.6487999996257,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 2,
+          "resetCount": 0,
+          "ready": true
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-motion-a.png",
+          "P7-motion-b.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3304
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-04T12:05:36.386Z",
+      "precondition": {
+        "expr": "P7",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P7",
+            "met": true,
+            "source": "probe P7",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (1220,677) ui=reset"
+          }
+        ],
+        "durationMs": 69
+      },
+      "stateAssertion": {
+        "expr": "$.selectedColor == \"diamond\" && $.cameraDistance >= 9 && $.exportCount == 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.36,
+            "y": 0.26,
+            "w": 0.28,
+            "h": 0.42
+          },
+          "frameGapMs": 500
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 461,
+                "y": 187,
+                "w": 358,
+                "h": 302
+              },
+              "diffRatio": 0.3218
+            }
+          ],
+          "bestDiffRatio": 0.3218,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "rotationAngle": 1027.4515999998766,
+          "selectedColor": "ruby",
+          "cameraDistance": 10,
+          "exportCount": 2,
+          "resetCount": 0,
+          "ready": true
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "rotationAngle": 1093.2403999995,
+          "selectedColor": "diamond",
+          "cameraDistance": 10,
+          "exportCount": 0,
+          "resetCount": 1,
+          "ready": true
+        },
+        "shots": [
+          "P8-before.png",
+          "P8-region-a.png",
+          "P8-region-b.png",
+          "P8-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3323
+      }
+    }
+  ]
+}

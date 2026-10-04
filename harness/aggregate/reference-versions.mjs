@@ -28,7 +28,7 @@ const CHECK = process.argv.includes('--check');
 const SELFTEST = process.argv.includes('--selftest-drift');
 
 const SEMANTIC_INPUTS = ['engine', 'briefSha', 'specSha', 'docsSha'];               // 语义输入:漂移→重实现
-const PROTOCOL_INPUTS = ['validatorProtocolHash', 'judgeProtocolHash', 'toolchain']; // 测量协议:漂移→重验
+const PROTOCOL_INPUTS = ['validatorProtocolHash', 'judgeProtocolHash', 'codeReviewProtocolHash', 'toolchain']; // 测量协议:漂移→重验(S4 已入正式总分,其评审协议同属测量面)
 const ALL_INPUT_KEYS = [...SEMANTIC_INPUTS, ...PROTOCOL_INPUTS];
 
 // ---- 验证协议指纹:与 harness/runner/validate.mjs 完全同式(probe-executor + validate 内容合并 sha)
