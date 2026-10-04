@@ -1,0 +1,2786 @@
+{
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E04",
+  "generatedAt": "2026-10-04T02:20:00.068Z",
+  "fileCount": 314,
+  "totalBytes": 213918398,
+  "skippedDirs": [
+    "node_modules",
+    ".git",
+    "dist",
+    ".cache"
+  ],
+  "files": [
+    {
+      "path": "validation/screenshots/initial.png",
+      "bytes": 691316,
+      "sha256": "ab72f3f52da4769e575c2d6678e18d9bd7a63e465b6cd71e12019e81187a6f79"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-a.png",
+      "bytes": 953627,
+      "sha256": "5b1e93c9cfcb29bfedd5421a66e4141f51ca3cb8b5f6aa8320df1390865dd407"
+    },
+    {
+      "path": "validation/screenshots/mid.png",
+      "bytes": 685130,
+      "sha256": "39bcc88fc2c946a02b6f3542746075e86dfa8f0ff6bc65979c292e6ddd8c4cf9"
+    },
+    {
+      "path": "validation/screenshots/final.png",
+      "bytes": 688238,
+      "sha256": "2210d1ed5596d42df485419c894d0ea52930e62bb8d702ec32fd58d5ade19c8f"
+    },
+    {
+      "path": "validation/screenshots/extra-1.png",
+      "bytes": 685934,
+      "sha256": "534283ecc5341768c6ffb04e20d883db933d847aaa6d9c3e55f9b348f48e8e48"
+    },
+    {
+      "path": "validation/screenshots/P6-delta.png",
+      "bytes": 1004512,
+      "sha256": "8f4bccd2aa5e45161c3321e578ab9d08ba4b6b1b29f81fde07406b0b82f00a39"
+    },
+    {
+      "path": "validation/screenshots/P7-after.png",
+      "bytes": 970017,
+      "sha256": "ab42f3805254e2f0d166ec08147ddab3c90db4b4c7b137846051fcebb881b85b"
+    },
+    {
+      "path": "validation/screenshots/P5-after.png",
+      "bytes": 1004467,
+      "sha256": "998fbfa7c82df56268c844c17e332b000afbf3a783e5df68ab5f59e09a61b42a"
+    },
+    {
+      "path": "validation/screenshots/P4-motion-a.png",
+      "bytes": 951154,
+      "sha256": "38a8e781893207fb2ca079eac29429d72c2a0ba5652a211f76b4653217c50d98"
+    },
+    {
+      "path": "validation/screenshots/P3-after.png",
+      "bytes": 956291,
+      "sha256": "bf88b570ce41c81b7a3d2a77b0c8d2e17179c0cbeac095993bae4d2bb8d9d41a"
+    },
+    {
+      "path": "validation/screenshots/P1-after.png",
+      "bytes": 953949,
+      "sha256": "7ebbf7fe6901ffff285001e127cbdebb0c045a37fb20f40aa11b90574f5c3c0e"
+    },
+    {
+      "path": "validation/screenshots/P1-before.png",
+      "bytes": 951692,
+      "sha256": "8dc74cf5ca08f656e3495e78dad926271cc69590a19d2dc7c100ac22bf29edd0"
+    },
+    {
+      "path": "validation/screenshots/P1-vis.png",
+      "bytes": 950637,
+      "sha256": "bb1001c57ea5d7bf4a12bc6a3dd33aba7080754c97cd2f443ddc4a2b6e5e7d20"
+    },
+    {
+      "path": "validation/screenshots/P2-before.png",
+      "bytes": 950125,
+      "sha256": "98d9ce4d919b550dfb226e46b71b93a62d8ee2c7e53f72572e940531e29d20b3"
+    },
+    {
+      "path": "validation/screenshots/P3-before.png",
+      "bytes": 962998,
+      "sha256": "72cb47e38ca2ac43ca7edf5aeb1652b41d85308622cff0ba9c2054ff6ffe389f"
+    },
+    {
+      "path": "validation/screenshots/P4-before.png",
+      "bytes": 954000,
+      "sha256": "ebf36715e70d503e396734635a5a63aeae6f29b30d9e5591524e8ceeeced1ee7"
+    },
+    {
+      "path": "validation/screenshots/P7-delta.png",
+      "bytes": 970017,
+      "sha256": "ab42f3805254e2f0d166ec08147ddab3c90db4b4c7b137846051fcebb881b85b"
+    },
+    {
+      "path": "validation/screenshots/P8-after.png",
+      "bytes": 949577,
+      "sha256": "4b60a1cf224bdc184f50cded038c76e43612158620fde070cdab05644785c21a"
+    },
+    {
+      "path": "validation/screenshots/P2-motion-b.png",
+      "bytes": 974224,
+      "sha256": "569ba9ee10ce3627d2710f5cbf921a614a4a73bd75577c08b9d65b32eefa4998"
+    },
+    {
+      "path": "validation/screenshots/P5-before.png",
+      "bytes": 954033,
+      "sha256": "b5b5039cd6d0562cd94d3c91fe2b74ab82650eecdda9dbb5dab64475c77cc91e"
+    },
+    {
+      "path": "validation/screenshots/P5-delta.png",
+      "bytes": 999743,
+      "sha256": "c9a4c492f7bc545d8f3d79971be1fd6de426c919df4c49447c6db0fa1b53d543"
+    },
+    {
+      "path": "validation/screenshots/P6-after.png",
+      "bytes": 989502,
+      "sha256": "b1584c30aacdd22e6e34ed7f2b57512e2d04273b206087ba18f4c0829552606b"
+    },
+    {
+      "path": "validation/screenshots/P6-before.png",
+      "bytes": 1012273,
+      "sha256": "f74aec294fc6612d1dbbfdd51eff7c90a32136c853895f44763891a85fecdcd1"
+    },
+    {
+      "path": "validation/screenshots/extra-2.png",
+      "bytes": 687710,
+      "sha256": "19e0ba96ba8d55ba349f0e84683d34c0ad1bdf60f95a5e0dd786411887db97c3"
+    },
+    {
+      "path": "validation/screenshots/P7-before.png",
+      "bytes": 981056,
+      "sha256": "b58d71e1ab2c17a0e84af3f26e096e84c22fd6f6de8d52080810c1c52058f52a"
+    },
+    {
+      "path": "validation/screenshots/P3-delta.png",
+      "bytes": 961083,
+      "sha256": "438caa10e32630aa5a3801ccdd84bb4c2def95a3eac5dded6e5a668ed7dfd0ea"
+    },
+    {
+      "path": "validation/screenshots/P4-after.png",
+      "bytes": 952015,
+      "sha256": "7b968122e11a965fe1ab44303827a685423af6622f26662d83f23018ae623f20"
+    },
+    {
+      "path": "validation/screenshots/P8-before.png",
+      "bytes": 970017,
+      "sha256": "ab42f3805254e2f0d166ec08147ddab3c90db4b4c7b137846051fcebb881b85b"
+    },
+    {
+      "path": "validation/screenshots/P2-after.png",
+      "bytes": 969529,
+      "sha256": "619bafdbb8244c483b624f6e92d0b3f3824b1ad3f4db4e0f469bccb8f52c7313"
+    },
+    {
+      "path": "validation/screenshots/P4-motion-b.png",
+      "bytes": 954635,
+      "sha256": "57102c7b45bf8a346e9d646cac6b031cebae202d1b3d1df8be07a463ba6261f4"
+    },
+    {
+      "path": "validation/screenshots/P8-vis.png",
+      "bytes": 947143,
+      "sha256": "80d57067be18d7436db920246155786aab2fc2b32a46a226346a57085fee9cca"
+    },
+    {
+      "path": "validation/video.webm",
+      "bytes": 2821454,
+      "sha256": "368cf428cc52a4b7593b15bf3f5ae4f2ab8f2e4fcbcb0861a99b3bf637b0837c"
+    },
+    {
+      "path": "validation/build.log",
+      "bytes": 572,
+      "sha256": "9618e593db9668823aec9349594ea12be6085316fd62e75a26806bea7dc8433d"
+    },
+    {
+      "path": "validation/console.json",
+      "bytes": 42,
+      "sha256": "83b972a89754c9762e334748921abf4edb06c17dc74ebdf6fd0a13b67d6d3e4d"
+    },
+    {
+      "path": "validation/network.json",
+      "bytes": 847,
+      "sha256": "d0894375d3f0b5174f4d1b33e95709cb2551b4f9c9a3fa15f8dd3054be8fb1ef"
+    },
+    {
+      "path": "validation/perf.json",
+      "bytes": 142,
+      "sha256": "c59fc951d5eef79f9f1b4fab3926cda81711e55214a3e9cb28965517ccfe3c53"
+    },
+    {
+      "path": "validation/probe-results.json",
+      "bytes": 20488,
+      "sha256": "d4ebb5e059a5ce4a24d5acc314c45f347d8f227ee1aec379c2138dd1515f07be"
+    },
+    {
+      "path": "validation/serve-log.json",
+      "bytes": 994,
+      "sha256": "a6b48d5caec3a324addf7c5174ee4cbcd1725b5039dd04af0f2cfa4997a4f366"
+    },
+    {
+      "path": "validation/source-sha.json",
+      "bytes": 40120,
+      "sha256": "bb97ebf6ad2ae90eecd5384852e30f0d2ab324793683e699253e095d2581a1c0"
+    },
+    {
+      "path": "validation/revisions/2026-10-02T114312384Z-original/report.json",
+      "bytes": 4438,
+      "sha256": "ce76c163c38e2bbee551da8165a2431d0842042819fc38ca8271a3a328da7aed"
+    },
+    {
+      "path": "validation/revisions/.original-archived",
+      "bytes": 25,
+      "sha256": "cb397ba9f1733c78fc2a4d44530961a86264377342a1e262511a42bed89fc043"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/initial.png",
+      "bytes": 690186,
+      "sha256": "f150b24b1bd7d891fb71474b42c462581a308ceaa7acb25c2e7b13b6e828ca5b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/P1-before.png",
+      "bytes": 953070,
+      "sha256": "d1cc21790edbaf01fe2f05d5648a7bb09f934be48157588a6613df6c91960efd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/P1-after.png",
+      "bytes": 951606,
+      "sha256": "7e036bf4c4bff25f00d75778e37ee3bb03d4953938e7df6b9d94822bb2f8774e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/P2-before.png",
+      "bytes": 953851,
+      "sha256": "f363427022e1734749c948e918c8a495844dc5cb6ffcc9ba4e2ac07d321d4ede"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/P2-after.png",
+      "bytes": 955810,
+      "sha256": "cfc5cd7c56e6b715f0d8efc262682edd23cdb66236e5195e529b7b66e3751727"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/P5-before.png",
+      "bytes": 954874,
+      "sha256": "e8846688ab8de251ea5ecc3ee58c3daa8b653828a47663329a36509c0b8f84de"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/P5-after.png",
+      "bytes": 1000122,
+      "sha256": "e46400a4022458c023899371f1cf33389910f70272a53608e3e6b76f3bd840ff"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/mid.png",
+      "bytes": 745761,
+      "sha256": "de0b5a8962b386e298894ce4f3a25ade8e77ecef168c91291f5cc6316dbec86b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/final.png",
+      "bytes": 745366,
+      "sha256": "03aba889eb12a5420d6a86ef2607ff30153ed7f20ac42aaee0404907eda3f7e5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/extra-1.png",
+      "bytes": 740528,
+      "sha256": "9a5d17a1753c977bb06d2a51340322dae8fd9ff990664f26446260618da4b8de"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/screenshots/extra-2.png",
+      "bytes": 761297,
+      "sha256": "420c0ad141a93b772b4145c33656875b2d773a2ec2924a079e1ba2c82b9c40ba"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/source-sha.json",
+      "bytes": 38999,
+      "sha256": "d4191e724cc9692cb82e5d1534c0e3737d36761f71cdf24f24de000a8b61f96a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/build.log",
+      "bytes": 572,
+      "sha256": "4c7db82d48eb923ac0872b441d079d3790f3f44d0748b432e670cdcfe79e0014"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/serve-log.json",
+      "bytes": 945,
+      "sha256": "6915f9d066dfbc8edd1774fdbe1d90136286aec9ee1672e40b56d1ba6d82870d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/probe-results.json",
+      "bytes": 9815,
+      "sha256": "e5710184368cf45663c20daf5d78529b99b4849826c5732dd931e3b2cdd53b90"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/network.json",
+      "bytes": 806,
+      "sha256": "d8c2b2fb49e1fdfdedf5fd29cdc4f9b1d28ecb9a4847fa0f4de3013370629847"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/perf.json",
+      "bytes": 136,
+      "sha256": "a00dc36a3260339f7d5141bb03160868c962957a84edaa422936c7bd791c55fc"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T065033861Z-validator-rectification/report.json",
+      "bytes": 5586,
+      "sha256": "25bd4af09fcd9e7447cc8a0825577a734ebb0109e2a71d7ad34a56bcdfced90e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/initial.png",
+      "bytes": 691442,
+      "sha256": "5ce7ca3a80b7ea41123bd8beeff7a844a90807480fc00c1684850e3544d28979"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P1-before.png",
+      "bytes": 953627,
+      "sha256": "09bdc52d5af80c0569cad9ad93798db5413c6073ef4471e59a66f770cd3c580d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P1-vis.png",
+      "bytes": 950178,
+      "sha256": "13efffb8665dca63b9d19ffdf93319bed7c9a2c68fa970a9a906bb5f33a8020d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P1-after.png",
+      "bytes": 954140,
+      "sha256": "b5bdf6fd34d0340dd961651d387ca6f491fb9ae19d47fb7798e21f0bf9273069"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P2-before.png",
+      "bytes": 950193,
+      "sha256": "e48da84f11cbb2b0f8f72a8b6313633086bf19b87afcd802be9244a17089b8af"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P2-motion-a.png",
+      "bytes": 951455,
+      "sha256": "8ed0f125bf28017c9e107db1ae1698a63a81fbe9949cfe8c4c150dc186139f25"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P2-motion-b.png",
+      "bytes": 971782,
+      "sha256": "28c6e8522690f3e9e7cb49f2c0b3ed2a9cfee32af684b68f392bbacf8b30a558"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P2-after.png",
+      "bytes": 970075,
+      "sha256": "9dffaac93b86601a18650310ac674e634f2dc6bf8d4d923c9f96422b065770cb"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P3-before.png",
+      "bytes": 961305,
+      "sha256": "1603b86b0c8cd51277439138decbb7b64ca1cdf207832f57bcfdd35c1f15b29c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P3-delta.png",
+      "bytes": 955004,
+      "sha256": "aff2af7c3dde79bcad218637e5659f292c241c47fe4bc019acdb3ecdd2c64260"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P3-after.png",
+      "bytes": 959425,
+      "sha256": "378e25c24ca8ac5c62580e527120bf85e25d67f59b39afcd9cc5271803828365"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P4-before.png",
+      "bytes": 953923,
+      "sha256": "f2ddb2f0e64c2520f083c54d624ae7e05e53475e70d87d16aec8762696b80318"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P4-motion-a.png",
+      "bytes": 955424,
+      "sha256": "5be18e240c839635b1e9c348ba4ec9d17ae214be72f961da50e0bfcd9f7cb155"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P4-motion-b.png",
+      "bytes": 950584,
+      "sha256": "709070b4f5d3c24a046b85604e9c43065fc33ca2aea3cae86d3b7db169b7d494"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P4-after.png",
+      "bytes": 952736,
+      "sha256": "9816794073bbade2424af89be0b412084fdba9b7779f9f07e202b8b40665d09b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P5-before.png",
+      "bytes": 950460,
+      "sha256": "c3c360ced394a446592b6be19667a1d51f9dec78a6e08e49031b035fa0099530"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P5-delta.png",
+      "bytes": 998580,
+      "sha256": "739bc6a25ee010c1ec129dc73142ccac5377019b24c999156ffe013b3c185643"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P5-after.png",
+      "bytes": 1008531,
+      "sha256": "59eaf0156ac8c19457375db748ee8e9d0d906f8e6a778ff6b2739ef78ae20f8b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P6-before.png",
+      "bytes": 1016455,
+      "sha256": "0c76160b2b1bfae6347641d9878a362644f35e4304316d02ad02bd2830b41753"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P6-delta.png",
+      "bytes": 1014333,
+      "sha256": "0d57888361c8ed8101b94caaad81e6479ae089a538fabb1f5ad52edafdaab25b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P6-after.png",
+      "bytes": 996449,
+      "sha256": "f43ee2f0731fb48b588e5ad9474961c0bf2d1e74eef1a0fd1cdaf9665a2210bc"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P7-before.png",
+      "bytes": 983040,
+      "sha256": "b2f86a0ab2b2d00bba537d861dad431f0503472b1cead111e0aec2cb9b12ef96"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P7-delta.png",
+      "bytes": 973511,
+      "sha256": "1d2d5417480be4d270010216baa3186b65dc6b52c100931e434ddaca25a3aef6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P7-after.png",
+      "bytes": 973511,
+      "sha256": "1d2d5417480be4d270010216baa3186b65dc6b52c100931e434ddaca25a3aef6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P8-before.png",
+      "bytes": 973511,
+      "sha256": "1d2d5417480be4d270010216baa3186b65dc6b52c100931e434ddaca25a3aef6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P8-vis.png",
+      "bytes": 955039,
+      "sha256": "009b032c3176b4bf638c0cb787e35ba750c4dd1245f07341dc91417c22fdba5d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/P8-after.png",
+      "bytes": 951590,
+      "sha256": "d2391b553533d4a5d475c99dddc374e987e73c5c7e1a5981f389991253673d82"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/mid.png",
+      "bytes": 694162,
+      "sha256": "6a683b26dd43e9da17cd78f36fc4ca64f1e47a3c90021e6e101fccdf1b22456c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/final.png",
+      "bytes": 690767,
+      "sha256": "927d5c13aba5c77188aa0057e839fd62eb6170c6a16920e5f6a21ef727424eef"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/extra-1.png",
+      "bytes": 690533,
+      "sha256": "1ca3840bdd91e95066c905e1d055670af6bbad16f7304ab1d0cbf5d17547826d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/screenshots/extra-2.png",
+      "bytes": 693083,
+      "sha256": "1af39844fbce93259db36a8159120cce5b4a8cf8c681a54fec1496ac5f5ba642"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/source-sha.json",
+      "bytes": 43211,
+      "sha256": "a0b150582a4040b1ebb3ac3b001545bef4aed7cef0eecfacd938bd2400bf113d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/build.log",
+      "bytes": 572,
+      "sha256": "e353ae009481ef67229afd1d78e4b00c471b5ec8dc1142282265ff54fcc33113"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/serve-log.json",
+      "bytes": 945,
+      "sha256": "4b0ce5672adb299cff18cbe42e6907855bb65cd33bf2c14e12000b557d124b3b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/probe-results.json",
+      "bytes": 20026,
+      "sha256": "d19fe25623a5ba84d4c0401d13cd7fecab415ff05ac43cb70cefa73a9b90fcf1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/network.json",
+      "bytes": 806,
+      "sha256": "dfc6001f30c264e19f8bd1d2b3427dde382a76ee85ba53faa5cdb6fdc300184b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/perf.json",
+      "bytes": 136,
+      "sha256": "99bb209ab07d0687f956dfc8c4c6f865ac51af1ab76243b48677aa0c36f3a2f8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T070256037Z-validator-rectification-r3/report.json",
+      "bytes": 5502,
+      "sha256": "68f7f449ce725eb608ddef87e3dc10744513bead76beeb7b1ff7b52081054fb9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/initial.png",
+      "bytes": 688991,
+      "sha256": "c0902e02039704ce488b5a954f1f9aa293bf5593708ab42be4c4913b5f088341"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P1-before.png",
+      "bytes": 950607,
+      "sha256": "9a418e6273450d30d0fd7032becb44f015e086b8967d92d020dcad03c7ac0995"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P1-vis.png",
+      "bytes": 952388,
+      "sha256": "8b1fe2e289f6d3bacae87e8611bfe2e56396dcbe192a51302204bb3ab802e7a5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P1-after.png",
+      "bytes": 950583,
+      "sha256": "d02eccbc8b76a5389ec774227a4db4e23cb8f2fd5ea90197efed3d80da1861a6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P2-before.png",
+      "bytes": 951583,
+      "sha256": "f7bb9e00c5d92bebe108ed8a14375673a247febfa4123aa0c68311c07d6d80ec"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P2-motion-a.png",
+      "bytes": 952285,
+      "sha256": "ab7d78508ba438948fbcd4d5e80f60491e0c423229f5327e33e23f0829e681ea"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P2-motion-b.png",
+      "bytes": 972767,
+      "sha256": "ad82f21c23fc5156b2215e7ed976600db745b90b11f4f75ccd440c123682dc24"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P2-after.png",
+      "bytes": 971024,
+      "sha256": "ed77e5528780469949cc5690e96d68ee7a779ac3e1d860db71cdf9cbfd8247df"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P3-before.png",
+      "bytes": 962393,
+      "sha256": "497741e7a496cbca01be99140dc93e6f47979d373327fdece7c2ba0add9c9254"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P3-delta.png",
+      "bytes": 957993,
+      "sha256": "d6d6da82605810af78ebc384506f3e012eb9298ad3bf50b97f1bb505f07e7ec4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P3-after.png",
+      "bytes": 961265,
+      "sha256": "8d641fec1b624c7eb83fb21f9c9734df0a29169496c5bc9466a6fd3b2211352b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P4-before.png",
+      "bytes": 951639,
+      "sha256": "74a2f0ddba1332490cbe80c2bec599b1dcb8b8d3c43a1298e7ba65b558e75d4a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P4-motion-a.png",
+      "bytes": 952258,
+      "sha256": "90c9c7fc90750d075e9d8a9018e6675fa6c4264f45a1320d805e3cadd9b97372"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P4-motion-b.png",
+      "bytes": 951387,
+      "sha256": "b19ffd2d24f1fee56b209d2b12e9b22d71ca31aee3449c52b44e5bef5c15832c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P4-after.png",
+      "bytes": 950776,
+      "sha256": "d837c16c0976379569a93358ecbb5ab8871aeb1eb11778733917c322c66be57a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P5-before.png",
+      "bytes": 951702,
+      "sha256": "bc1a0a7ef8f8d5e59b5db3708e1e7986e91821068220861efd53485ec5ba6653"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P5-delta.png",
+      "bytes": 996711,
+      "sha256": "3d5aba0d2cfcb68dd5e4c119738129b39550bae660245e144625b5209c3bba2e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P5-after.png",
+      "bytes": 1006243,
+      "sha256": "d91a571616c3afacafcac5ec775bbff921529b4ac1956f5ae28823e524bef6f7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P6-before.png",
+      "bytes": 1015150,
+      "sha256": "670363ff630bfd98cf423f5a2f435b20991e21f90ec13d17aa0a926e53175f08"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P6-delta.png",
+      "bytes": 999868,
+      "sha256": "9b690e3cc6a071211fd951dbdc95cb4397c843ef157363e8d828477ef3f5dd56"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P6-after.png",
+      "bytes": 989235,
+      "sha256": "b86fab700979c87cdf669ac7d297f16d63d5fefe855eabfd47d86bf79630ba66"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P7-before.png",
+      "bytes": 977247,
+      "sha256": "045d26f4349f327d813da7ed4ee020f11ad6a410c2489a26666bc49afc053f44"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P7-delta.png",
+      "bytes": 972529,
+      "sha256": "34b1cee1edeae0a63633313d219035f61016ab50c7e8cfad722bf45a9e21c3ff"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P7-after.png",
+      "bytes": 972529,
+      "sha256": "34b1cee1edeae0a63633313d219035f61016ab50c7e8cfad722bf45a9e21c3ff"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P8-before.png",
+      "bytes": 972529,
+      "sha256": "34b1cee1edeae0a63633313d219035f61016ab50c7e8cfad722bf45a9e21c3ff"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P8-vis.png",
+      "bytes": 949418,
+      "sha256": "7ce26f695eb260666fc507f2acd151a7d4fe8e6e21d30cf8dd6ead555ebe1e77"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/P8-after.png",
+      "bytes": 955449,
+      "sha256": "75d3441af239a26e7a51f594f72511db2ec38cddec32c79d85973b49ce5090c1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/mid.png",
+      "bytes": 687595,
+      "sha256": "5e09058b2c6a8e8480722fc278be185f7a7b3520439d6de4f26c775954897e4c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/final.png",
+      "bytes": 690494,
+      "sha256": "cb4b892637291d319c77f35c7f1fd0c99803153f978ae9f7f6648b230131d559"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/extra-1.png",
+      "bytes": 689510,
+      "sha256": "f044cced05ac269a93108a5f4f501bfa69347d6ef42b8c5ebf5f666a37d5982e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/screenshots/extra-2.png",
+      "bytes": 690280,
+      "sha256": "919a5bcca189d994ab7b5c5549e9d34287fa1e9c44b4e157949dcdd2a962ff88"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/source-sha.json",
+      "bytes": 52117,
+      "sha256": "5f57135545cf77424890c466b60f9167af245d92e5c75758da7a6968a41432b8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/build.log",
+      "bytes": 572,
+      "sha256": "dd1dfe0a45b6a1beb3298218af4c0971c88d89ca080d3c744bf18a2178068b1e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/serve-log.json",
+      "bytes": 945,
+      "sha256": "7edac56706888fbc93f12875beb7d4ed9cdc1701283289e7af365e516b29d035"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/probe-results.json",
+      "bytes": 20021,
+      "sha256": "91165c2c9544cd9d41db47712664df552266d09ff2fd44587bcf34a081553b59"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/network.json",
+      "bytes": 806,
+      "sha256": "dfe2d584349c13e53d77a4bba2822e13ba1da9a8f0c8fb8ccec8e14f25f7fa19"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/perf.json",
+      "bytes": 136,
+      "sha256": "c473b7fefac6613be9ef16086d2466f19529c5d5d8a345a0728340adb599b017"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T072152581Z-rectification-final/report.json",
+      "bytes": 5501,
+      "sha256": "cf3ca52b7133c3986a56a63782f2ffa9630330bebd88b9c42006ec6422730f2b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T075638002Z-spec-v1.0.2/source-sha.json",
+      "bytes": 60748,
+      "sha256": "dc794c2d84ddcaeea9492f6a60ae83809d5d7bb999ef502cf1656636b00771e1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T075638002Z-spec-v1.0.2/build.log",
+      "bytes": 572,
+      "sha256": "80a5ba76db09d5b4f0757c4ba06fe826fe0e8c54adfefcbfee89a5960b882f14"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T075638002Z-spec-v1.0.2/network.json",
+      "bytes": 54,
+      "sha256": "22d9812ca1490fd9ab6bb2b0b9b17e5c4ba0f109670a41f5366c8741232b0155"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T075638002Z-spec-v1.0.2/perf.json",
+      "bytes": 29,
+      "sha256": "e2da6c9a133c5bcd5429cd8b8b9f85971ade7e10eb47f9b508e07e8c4e0ed809"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T075638002Z-spec-v1.0.2/report.json",
+      "bytes": 3016,
+      "sha256": "fe85ad834702568ff4765fb2bba3215408792160c6263b2f85e4cf01d9e8fcc8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/initial.png",
+      "bytes": 690734,
+      "sha256": "398f896de02dde58e6027cb19591f1fb8477fc435857fb5da2681d67d18483b2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P1-before.png",
+      "bytes": 951644,
+      "sha256": "1d811f758cb37d6483f3339e4926ce8682d0f346a5f427547515f9cbd096151c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P1-vis.png",
+      "bytes": 951061,
+      "sha256": "fb40f8ed31ea70e3cbe3cc2a11c84c0275f1550585559297b71b9a52989a9e94"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P1-after.png",
+      "bytes": 955012,
+      "sha256": "46a32455fff84cd9bbaf25d90bcf74b3715fdc2094e7217989207c1555dcec89"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P2-before.png",
+      "bytes": 951683,
+      "sha256": "a6fd73de2d62508d78aba3b1d4176c32a1fff3099f3ede24d2b6a3fcc3421fd0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P2-motion-a.png",
+      "bytes": 954995,
+      "sha256": "70e201bc45ada64de4e6fe380cea87f203b7f9293ef1c7b2454b59620deb9404"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P2-motion-b.png",
+      "bytes": 976964,
+      "sha256": "cd2089dc78447fc4dacab30f4c673305bbe29ab8e1621746a1c8ae3e34218ce5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P2-after.png",
+      "bytes": 972170,
+      "sha256": "0bec331390d49f31fe42d92fe7fa15014c8693ce756e9f9d1b4fb9984190c537"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P3-before.png",
+      "bytes": 964884,
+      "sha256": "56f86ac259075e73f0aed62cf7cb93a0afa92cc8c4aaa947753b66d813ad550e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P3-delta.png",
+      "bytes": 958277,
+      "sha256": "a935106ebeb822a37077e442a73cefa11cd277960364e2e5ea16c8604c34d10f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P3-after.png",
+      "bytes": 960406,
+      "sha256": "3fdc225af8057524acd979b67cd60a5a0882fcea2839a85b9062ca583a97961b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P4-before.png",
+      "bytes": 959616,
+      "sha256": "d790d820d68109199f1f9411f6781beef10771f205c8f8e920fc59a39caa39c8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P4-motion-a.png",
+      "bytes": 955773,
+      "sha256": "5b9937f437af37256aaea6ea1cf0f83ca4a8bc07c2e265469010c50bd337e05f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P4-motion-b.png",
+      "bytes": 958344,
+      "sha256": "74c883c70fb0c73111b0f3947fc52004e85a3f2fe4141da0f6cedcd6c41f7d53"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P4-after.png",
+      "bytes": 951872,
+      "sha256": "529bc1cb335c58ff1ece7bb553cc7a92409016ce2e76848f1e6b0c4ca6fd6410"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P5-before.png",
+      "bytes": 955601,
+      "sha256": "16830cde0eb78d3947ff6759489a85230f28b26b027285e19f47333c1aa57b26"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P5-delta.png",
+      "bytes": 1010353,
+      "sha256": "a4687e5c2a3af7d09af0fe614daa495a454a7ffd8206712eb3b21a46a1d21c68"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P5-after.png",
+      "bytes": 1005882,
+      "sha256": "c6f2f862641bf6424187dd4433f29c8fe96c702d14236c9ff0ca633f6031a601"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P6-before.png",
+      "bytes": 1007708,
+      "sha256": "a252684d21994f0c83d7f012376d8a4904b6e82575bd22badc4995217a95716e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P6-delta.png",
+      "bytes": 1004938,
+      "sha256": "b4b9e6a0fffa6a90927294c512a09d5b28228cd4161e8984d1fffb81da7168a1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P6-after.png",
+      "bytes": 998345,
+      "sha256": "17f35b938f92f3e9c95a2b13cb3cbbdc52568c2cf9a3d258c54785859dd0d7ae"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P7-before.png",
+      "bytes": 995357,
+      "sha256": "d4f269262f14309533d0459208fdce655db8de29f30fb92e84cabb8bbe7c0f65"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P7-delta.png",
+      "bytes": 991174,
+      "sha256": "6daefbd2f4cf7786943a4af1cd7e8162174fd8278f2a5f905f851a5d446bc974"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P7-after.png",
+      "bytes": 991174,
+      "sha256": "6daefbd2f4cf7786943a4af1cd7e8162174fd8278f2a5f905f851a5d446bc974"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P8-before.png",
+      "bytes": 991174,
+      "sha256": "6daefbd2f4cf7786943a4af1cd7e8162174fd8278f2a5f905f851a5d446bc974"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P8-vis.png",
+      "bytes": 953115,
+      "sha256": "88ee83fecf6f36896c267dfd9d310cf8d517744c56180ad53f7f5f04c2c3dcb3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/P8-after.png",
+      "bytes": 957914,
+      "sha256": "796e194c1359beb753e0bfc344ed1b5c2e8124ea6ac3285a67765449bb1c3bc2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/mid.png",
+      "bytes": 692939,
+      "sha256": "6d2cd837c339a1ecbede602028e237b19f142e0d6e4897715af9c4b16f01a57e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/final.png",
+      "bytes": 693507,
+      "sha256": "31628dd45e3ee65320640f808fbdbac4ac8be2bd3647ac0da452b29f154c260c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/extra-1.png",
+      "bytes": 693879,
+      "sha256": "f948a47856870c2f1658d31b540b79dcce88074722346d9b385b6901f49a4f1d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/screenshots/extra-2.png",
+      "bytes": 694607,
+      "sha256": "78cabe7eeda33f14dc7846d2a99b5268526b01c601f76b2f2e35b282a1f277f0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/source-sha.json",
+      "bytes": 61750,
+      "sha256": "0fe55af7a3adf433cabfa4f19d89f8db3ae1b36a66e39c579658631a85f5fc7b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/build.log",
+      "bytes": 572,
+      "sha256": "a4bd23acb85016180843da61ff52b36a9075f4de8714cc2156cd45a0d70e01c3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/serve-log.json",
+      "bytes": 945,
+      "sha256": "75da737b8475b9abaef862297cc40c5ee5173a3e0fd1443d2620a251ae030bf9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/probe-results.json",
+      "bytes": 19947,
+      "sha256": "4aeb2508dd44d72177af02387f584387c7527c08c39525849447588d749483b8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/network.json",
+      "bytes": 806,
+      "sha256": "39e012bbd4f1c3107656c0e356f9f5e148b3cc1950551b30e44743b5143a1f32"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/perf.json",
+      "bytes": 136,
+      "sha256": "c5fb4566a7e8cc9f112132c7a98822450c3073ca2db9f6827ed176a04d75101d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T080036061Z-spec-v1.0.2-centerbottom/report.json",
+      "bytes": 4937,
+      "sha256": "4e0d27feee6293bcfee34d10312b507725189df327e7f302cf637ebfecd6fcea"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/initial.png",
+      "bytes": 688700,
+      "sha256": "4e5e101b3c55b2ce10b99a856841631e652a8c114ba7f4cf68fe095d82f47e78"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P1-before.png",
+      "bytes": 955201,
+      "sha256": "f64600bdaad82f53852a8de9b5db14493bdce585d0ebd31f602cebf78992aa3a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P1-vis.png",
+      "bytes": 953006,
+      "sha256": "f5a4d24d70a363445679b984f66867899a7511d40aaec51b26b51b5cd5d6509b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P1-after.png",
+      "bytes": 950882,
+      "sha256": "cbdf84a3a67a2e383e4b06805451098a269aa2baaa40013cfa6277ca32657be9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P2-before.png",
+      "bytes": 954481,
+      "sha256": "14d0738b78791ab45a6db6d6a72bb9da950bac8727350f8a4ad0c0453f5c4423"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P2-motion-a.png",
+      "bytes": 955098,
+      "sha256": "7ce3524f981b055bbaa46aaf8906a8e510e992d5bc6c84d2c9b9c6092ffc8101"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P2-motion-b.png",
+      "bytes": 975337,
+      "sha256": "0c8edaf352ef77ff202305010b4db753a1ca9fa0d2aa9d4a52d77eb4bef63337"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P2-after.png",
+      "bytes": 974909,
+      "sha256": "74616a55ae5571f9da11341895f14dcf7484f6cc3eb4dbd8281f1edabea222a0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P3-before.png",
+      "bytes": 965279,
+      "sha256": "56dee7f71d4c406e3d11f47e555313a763b63cd104f324b82720d3bb7f776d0c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P3-delta.png",
+      "bytes": 962485,
+      "sha256": "25bde771c0bf38920a114b6ad25a4ce4a6adef2927d2d29eb261a62c94569e67"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P3-after.png",
+      "bytes": 959918,
+      "sha256": "def70263d14d38c70fe5dbeccec2e3028c7fcaf36a43d61c0e4253d3dbe35b5e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P4-before.png",
+      "bytes": 957990,
+      "sha256": "6fe766c3ea8f585982bb70c6ffb3d83cfafa8deb5bc203fb6afc507170d3b9cb"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P4-motion-a.png",
+      "bytes": 956095,
+      "sha256": "16ae5b8049661df83361da3c8ee58786bafe1d5c6ed5470bea0cde07a76a0e93"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P4-motion-b.png",
+      "bytes": 955304,
+      "sha256": "bb1fd8025bfc3262a702cb946dfc8566e8060534767150cc8b3329df1ed95bd0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P4-after.png",
+      "bytes": 952329,
+      "sha256": "2060cae22cb789a18bb457c1bd7e93762796ffdff5f49f02b9b6f7db1a625b49"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P5-before.png",
+      "bytes": 952445,
+      "sha256": "776289342e0f6333fc3cec386d811f4a5637bf05b63db64d391e9c0258d518c8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P5-delta.png",
+      "bytes": 1000735,
+      "sha256": "02d85c1124c09223f7e81d5d1eb6135f2afdf6a382d9629bf13997d645a17e25"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P5-after.png",
+      "bytes": 1012923,
+      "sha256": "63a275823c5e082cc8a974157dabd932ff46707b1fbc2001fa023d5ec1743e77"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P6-before.png",
+      "bytes": 1019396,
+      "sha256": "db3f49f1952ccc13f9606668de324481d7e45e81fa4e0e2c3dd3a7298c8342eb"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P6-delta.png",
+      "bytes": 1011362,
+      "sha256": "242bb84a111a10d1fe40ed9b831231f6f09298560038ad82e64fb09527d9171c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P6-after.png",
+      "bytes": 1004604,
+      "sha256": "5ec72ccf6e60b3e88b067d0ddf18046dbe180e6cda6516dec73180f9da4cf6e1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P7-before.png",
+      "bytes": 996911,
+      "sha256": "20859ca7f15ca50e4138b5da50e2f7d64d5a7e68637dfbab623c40bac3466785"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P7-delta.png",
+      "bytes": 990063,
+      "sha256": "9750cb263e585077c0614ace3ef08aaada1de847533b1395875bd2534691bb13"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P7-after.png",
+      "bytes": 990063,
+      "sha256": "9750cb263e585077c0614ace3ef08aaada1de847533b1395875bd2534691bb13"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P8-before.png",
+      "bytes": 990063,
+      "sha256": "9750cb263e585077c0614ace3ef08aaada1de847533b1395875bd2534691bb13"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P8-vis.png",
+      "bytes": 951425,
+      "sha256": "b4be5f8df248570d7b9474b1e6cd9b4f8b5e3f2919199101f94ff3aa01ce62c7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/P8-after.png",
+      "bytes": 953940,
+      "sha256": "48c6d4ccb795ef7ef184a18fe54d7ce91620a518f5ce20dda7570a9c5991279f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/mid.png",
+      "bytes": 691049,
+      "sha256": "72c2ea9dfe2598094eb710430e37751ec910e3abdc27b42e1ccd28be5a56222d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/final.png",
+      "bytes": 691116,
+      "sha256": "1cf2d0fdc20eb2a9c02c29ef82c844f8c149255892dd4d5fb6cb5f5005947563"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/extra-1.png",
+      "bytes": 691668,
+      "sha256": "88b8c86e9d747a22465b6959586d68ec9aa47aeddef58c4807656200a21a76aa"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/screenshots/extra-2.png",
+      "bytes": 691465,
+      "sha256": "0d95914f13150eba0bf264d4111b8ea593d6dc2a37af83412d94af6425678263"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/source-sha.json",
+      "bytes": 70579,
+      "sha256": "c5cefdc7813891d1532e6c791f5d7d1bf6a13611fc77bf22349a3e3e283a799c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/build.log",
+      "bytes": 572,
+      "sha256": "7d180c25e4f3548311b46f16b338c500a8660e78a6c0a84ec7aecf0324566025"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/serve-log.json",
+      "bytes": 945,
+      "sha256": "d388f22c090768785fcacf2de82d9aa0dbc27a2272b31cbd7488a8ec52143d25"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/probe-results.json",
+      "bytes": 19943,
+      "sha256": "62e192c187d4fabf3cc356ae3e8ba58ae1cb1591422f6f50c6e3161b5c9a7289"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/network.json",
+      "bytes": 806,
+      "sha256": "49efcfd5dc816fb50e0314311d7c8b28e2dff7ab728fe280868ea5b11d8aa4c8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/perf.json",
+      "bytes": 136,
+      "sha256": "02fde09786edb28639ce491a2607ebb70e1fd0fdadf494af8a16410a07061ea2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T135752920Z-ruler-r3/report.json",
+      "bytes": 4934,
+      "sha256": "ec7a1f6f56a3115397351fac9f03a1688689818ee8267fcf4d5c79c7352b0fd7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/initial.png",
+      "bytes": 691543,
+      "sha256": "3d473a02bc4650354ac897c454bd1ef36e268734a542c5ed7e827362217e7c86"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P1-before.png",
+      "bytes": 952227,
+      "sha256": "e471b7d3cd2cab50a869a175a712b03cc3708a1f6ac7f24af0dd366d2835cdf6"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P1-vis.png",
+      "bytes": 954294,
+      "sha256": "2b5f50e99f1b2abe813a9996353b21f1564a1a9f462185ee1f24ca6486c06044"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P1-after.png",
+      "bytes": 953057,
+      "sha256": "05e4f3c17290622c839f32f2c775f798c53d4fefde2461bd1f1358d1031d5143"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P2-before.png",
+      "bytes": 952206,
+      "sha256": "ab21e5677097f90bc7a7488bf924366ab794a7a61c73ca7f9beebc7908522fd1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P2-motion-a.png",
+      "bytes": 953830,
+      "sha256": "fb5e63d1207be7eaa172254e4f96822f2fd903c4be634320869329982a992541"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P2-motion-b.png",
+      "bytes": 973526,
+      "sha256": "958c25b235a0502cab84609d571a0dba80196aadc3d18c56eb13e8214690d2e4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P2-after.png",
+      "bytes": 972935,
+      "sha256": "f9a6d398a1b10bdda3a48a75651bcd6254be3aa46cb4fcc7022c789a94e78796"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P3-before.png",
+      "bytes": 962380,
+      "sha256": "19ad5a11f75925ba9f63b042db95a1ba992159a89164e76b464419dcf1fd4cd9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P3-delta.png",
+      "bytes": 961216,
+      "sha256": "628d492f4c2460f54db6fdc8c3e00b031a81670befae66827d88fd7d0fab6555"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P3-after.png",
+      "bytes": 963590,
+      "sha256": "70434d8baf90949a8da0d0d4e2d2e16f01c2ebc237f169d1d74fdaefa09297fd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P4-before.png",
+      "bytes": 955418,
+      "sha256": "49e75d47276fc10ea269f16ddf3093e263b970757900e510f9dc4109bd7d543b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P4-motion-a.png",
+      "bytes": 959469,
+      "sha256": "0fec3e339aa52a4ea7eb5d9bcfdf32080656a451a8e8c01ec8ac00c2738967b8"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P4-motion-b.png",
+      "bytes": 954158,
+      "sha256": "278e1b82f944313f253a6e190328abe5b370951268f6c25b84650c0ebe15d14e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P4-after.png",
+      "bytes": 954263,
+      "sha256": "79e94b2203b6820c28709dfc3eacb3113e93960cd87fcb6d72f3f7928e89c889"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P5-before.png",
+      "bytes": 954985,
+      "sha256": "e751e6694ed65189475c86b250f6c3d7090d534102915597feefb68c9f42e5cc"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P5-delta.png",
+      "bytes": 1000028,
+      "sha256": "927144504c98c20bd263e2e847d7706b254e2656bab319900a455bcbc766b1f0"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P5-after.png",
+      "bytes": 1008273,
+      "sha256": "7535745625a1466c81f7b1ac0e1a0a93909d58d066115ee933ceac7af3be4557"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P6-before.png",
+      "bytes": 1015567,
+      "sha256": "d8bce254c210677d1d6292c8fb13ead06c9d15c95c70db15cadde640c253418a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P6-delta.png",
+      "bytes": 1000305,
+      "sha256": "af13846d35ee0929ee715c6bb9d1b8490035a176e7a53de9fc8d8e375c12895b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P6-after.png",
+      "bytes": 994927,
+      "sha256": "6f68114c20961317c4fe7e5aaafa9dad83edff2a0fc82a603573c49784476037"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P7-before.png",
+      "bytes": 991196,
+      "sha256": "ddd95225f9b1c21a33927e94c17fcbfd15110608f784d474e4ad30035be15755"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P7-delta.png",
+      "bytes": 986729,
+      "sha256": "68591167f0c03adef55fe1e73e9b6696be492bcb92d25ac41a210b5a97d20024"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P7-after.png",
+      "bytes": 986729,
+      "sha256": "68591167f0c03adef55fe1e73e9b6696be492bcb92d25ac41a210b5a97d20024"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P8-before.png",
+      "bytes": 986729,
+      "sha256": "68591167f0c03adef55fe1e73e9b6696be492bcb92d25ac41a210b5a97d20024"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P8-vis.png",
+      "bytes": 954718,
+      "sha256": "110cc957c2e033b2cf1766f0f60c854a72e175ef7ed458bd3365d752d33c1903"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/P8-after.png",
+      "bytes": 952415,
+      "sha256": "fec684eba7c636112a7406b3091a91f28406de438dfe23f5f24f7cd8dacee6dd"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/mid.png",
+      "bytes": 693853,
+      "sha256": "faff232d3049f8dfe4d80120288f3c931e58469a06f9d51f285c4cb13cec573a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/final.png",
+      "bytes": 692125,
+      "sha256": "785ec7e12bfd07c042f6bf81ce4acc0431819e2dbd24ba45d035f255deaffbe7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/extra-1.png",
+      "bytes": 690057,
+      "sha256": "a94140b55d109822718a917a61676a5ea948a2d759f7fa7f01548f64d541efea"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/screenshots/extra-2.png",
+      "bytes": 693001,
+      "sha256": "b50515ba33e4c907a39b7df0db6c4a017f7b27941c5d2115ded2ad179fb9530d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/source-sha.json",
+      "bytes": 78466,
+      "sha256": "a37249eb3e5b74db10847139e7c61ce140120daac3f658dc73f17dc485924bfa"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/build.log",
+      "bytes": 572,
+      "sha256": "d93088d14ea10eae7f125c66ec497f1524a096f80719d8db4a59fb1d2260b839"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/serve-log.json",
+      "bytes": 945,
+      "sha256": "828fa4481af0ad12edc6904d46663521a5e36933496670a488f8449fc9bd90d7"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/probe-results.json",
+      "bytes": 19942,
+      "sha256": "bc31e8cfa9b8e02aa0369e57596f1a47f472dc972f9a59606e7903b7325cd393"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/network.json",
+      "bytes": 806,
+      "sha256": "f0c5b4459fae59c52f76c9b035e0a9aad7e64f3110d92acb5da6eb0ea37247ca"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/perf.json",
+      "bytes": 136,
+      "sha256": "c0a3ba090890cd45c9b750c89ecf55002152845422f68793055beffc337e181f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145843700Z-fingerprint-stamp/report.json",
+      "bytes": 4935,
+      "sha256": "603fbd5f6f1d5bafe928589b20aca577baf0e1d6bc81df811ad45c3eed9106eb"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/initial.png",
+      "bytes": 692158,
+      "sha256": "fe471e117de4bce492cb21de53ba2d3d556b411d2a2de93ead589fc2185465b2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P1-before.png",
+      "bytes": 952587,
+      "sha256": "5b7b2d4e442c90ea588aeb733054394608a5e5b4ad3ce1de302e3ef94b940cd1"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P1-vis.png",
+      "bytes": 951129,
+      "sha256": "462db9b1a9840afc8a05fc7352472d58b72f47b399f06e8185112e1128a70aa4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P1-after.png",
+      "bytes": 953874,
+      "sha256": "97c3d6f8a3535732665dca5a429e1ed4cfd71218adb8ad550a1a89a5db35bd9c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P2-before.png",
+      "bytes": 952069,
+      "sha256": "5eeac9cd3084fb6bdf5bd3750d9fcb7e0f26dc69f28c78289e7bc762f799714d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P2-motion-a.png",
+      "bytes": 955337,
+      "sha256": "0301de5e97b81ac90160c25d543478392ecd023986748ed8dfbeb42f5da2da16"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P2-motion-b.png",
+      "bytes": 975950,
+      "sha256": "06f029c9bfa03d9b68537333c0d5ba610db4f9915035b0c7b9f0bc9bdf0d4918"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P2-after.png",
+      "bytes": 970579,
+      "sha256": "e31b6254d8929788d536185c5e7a88a1e1acbcba8288cb2ce46387f2ad162a69"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P3-before.png",
+      "bytes": 962561,
+      "sha256": "5341ac358f1d22908fc17942b00c73af65cf62950d693b1f29d495088687308d"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P3-delta.png",
+      "bytes": 959414,
+      "sha256": "3c7e97a10e26eb929d1675083c45aadbb8a2672c33236d4115f2f679fbcfaf78"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P3-after.png",
+      "bytes": 961347,
+      "sha256": "77363403b8426aa00e84986976e86a2d8524a9d8275457e2774ee4ab180098b2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P4-before.png",
+      "bytes": 955939,
+      "sha256": "7fc2c9cabae433f5a10a71f45ca0cda81ce67b87d3bdca5c905d2cf6bcb04801"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P4-motion-a.png",
+      "bytes": 956757,
+      "sha256": "467da31b1f48a2098c9f4db157c1b4b8df5b71080391116c95ea428027629a01"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P4-motion-b.png",
+      "bytes": 953479,
+      "sha256": "6a1e5e588eaa4486005282b84c0b8fb79c2824e40457165a51735d3741c042d5"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P4-after.png",
+      "bytes": 954769,
+      "sha256": "e55024232f03d23061a25ae3a84f78c08b000815d7579f1e1261b5fe08d73225"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P5-before.png",
+      "bytes": 952284,
+      "sha256": "5aed5ad67f945d80f192065a56b6957d5e6fbd264ca011502399889c4148843b"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P5-delta.png",
+      "bytes": 998097,
+      "sha256": "d86c2b13017bbc01651143d35c2fb15abddd1b8c2084965126f95396d30b12d2"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P5-after.png",
+      "bytes": 1009567,
+      "sha256": "2b31202ce0f62b4a65a040d159b767d82a55211ebb5bab4b3ef902ad5aa3176e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P6-before.png",
+      "bytes": 1024561,
+      "sha256": "770ee30a9f14ff04ccbd9bc93180783151fbaf6d7e3c356d1cc39052b28a9d2a"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P6-delta.png",
+      "bytes": 1005484,
+      "sha256": "3682bf609dd70b39221030f0f12427e9ea4520f1a0d902c16a2fcd30dd087e69"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P6-after.png",
+      "bytes": 995995,
+      "sha256": "a9080eabcefc595b697a45f639dfe05aba6ae25c4c78a8b7086f3047a875a137"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P7-before.png",
+      "bytes": 990896,
+      "sha256": "e7fd7dd614ec715d74f12e1871409fe135cce234d72f881689f26db39b33f70f"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P7-delta.png",
+      "bytes": 989483,
+      "sha256": "a16808434bb07ee0206b2e68dc48435033709157ac069f080d1892efb357e852"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P7-after.png",
+      "bytes": 989483,
+      "sha256": "a16808434bb07ee0206b2e68dc48435033709157ac069f080d1892efb357e852"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P8-before.png",
+      "bytes": 989483,
+      "sha256": "a16808434bb07ee0206b2e68dc48435033709157ac069f080d1892efb357e852"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P8-vis.png",
+      "bytes": 955894,
+      "sha256": "bfc459acf98e87e270343c1e67d923d26daed1a1354b573505f83f9c03616859"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/P8-after.png",
+      "bytes": 954432,
+      "sha256": "7624c8e289526d06ebf7e12ee538e3c3445fbcad94e0e970717baa09a68066d4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/mid.png",
+      "bytes": 692303,
+      "sha256": "6e07d5f4573dbf0d0f2d0ef9e4a309ec1f6a0891c74826e1e768a78c3a0ad58c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/final.png",
+      "bytes": 692547,
+      "sha256": "1537d28c93e730dbfaf2dee1e3424bb066ae7b63e16c1be5264fd399f691d17e"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/extra-1.png",
+      "bytes": 694978,
+      "sha256": "85d42f2f7dc706f8f32c1a99370f96f76ab2cbdc0b7f56a42feaccef0b65d669"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/screenshots/extra-2.png",
+      "bytes": 689948,
+      "sha256": "7ad9dbece7f0dd08fffb5cff12481f2a57b74f35f4a5dc2c5614d36acd347bc9"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/source-sha.json",
+      "bytes": 87021,
+      "sha256": "f5a40b6045ee4f985d71673235591f5ddfad8243e4671f072df40b0916fbf19c"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/build.log",
+      "bytes": 572,
+      "sha256": "98048b5a7e6c0ed626ce8aab6c611947864b310d6e1992c0d79dcdb06e685fbe"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/serve-log.json",
+      "bytes": 945,
+      "sha256": "11b88166cea4e317015c52097a581ae8763b4abd3c35fddcf3247f585f9b16c4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/probe-results.json",
+      "bytes": 19942,
+      "sha256": "722332f0a1cfbfeb6163977b00d81a6a4638fc2dfbc55bf4efcd88fb614fe980"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/console.json",
+      "bytes": 38,
+      "sha256": "c619c0d814dac2fc6dba962937b7523b637c1b5f58bc584978be0b7e2b3beba4"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/network.json",
+      "bytes": 806,
+      "sha256": "a32a0f9c5d151296071ad0ff1c99e87dd0954f52f591640b7d529c671465dfe3"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/perf.json",
+      "bytes": 136,
+      "sha256": "797c85c048cc1ddf29ddd18e29923e9df125d228e41c7786cb847c07904e27bb"
+    },
+    {
+      "path": "validation/revisions/2026-10-03T145941194Z-fingerprint-stamp/report.json",
+      "bytes": 4935,
+      "sha256": "1859b951c9f35712bbce342c9036adaf7c11e63c48b3c440b24829252e9b2582"
+    },
+    {
+      "path": "validation/report.json",
+      "bytes": 4935,
+      "sha256": "1859b951c9f35712bbce342c9036adaf7c11e63c48b3c440b24829252e9b2582"
+    },
+    {
+      "path": "validation/code-review.json",
+      "bytes": 856,
+      "sha256": "5887d7148f9694d09de2aaab1db8b14627f21b0f45b2ca6b8c103ca7155adb9b"
+    },
+    {
+      "path": "template-smoke.png",
+      "bytes": 7736,
+      "sha256": "8dd14874402adcf2fb5bb2edad15a6c51fb5c511621f1b45250442c35c7313d2"
+    },
+    {
+      "path": "REFERENCE-VERDICT.md",
+      "bytes": 2165,
+      "sha256": "5f3cba8b1efd8534ee605f8369895276169ce2481e5142e4c1ca50fcb3cc0ecb"
+    },
+    {
+      "path": "WORKLOG.md",
+      "bytes": 6634,
+      "sha256": "d388f39f579fadc28c2ee33e4ec3c489ac5497ef3847eba82a09b1cd046a8bd4"
+    },
+    {
+      "path": "ceiling-notes.md",
+      "bytes": 4938,
+      "sha256": "63f8d0565e53420e4934a4074c5aa85a713462ce929febdac358b103d548245c"
+    },
+    {
+      "path": "index.html",
+      "bytes": 1473,
+      "sha256": "f9542d956fc539cffcaac43a6f9fce8cc2019c2013b4f4b5b67781c4e1b43e2d"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 15385,
+      "sha256": "c84154722c645c75d97fdde2bb5d978d27875715ccca4db35e99c2705f20d5de"
+    },
+    {
+      "path": "package.json",
+      "bytes": 515,
+      "sha256": "5d9be789000cb41ac3f8cf99a4795e9190261c4bf573922d406930cbcc526d17"
+    },
+    {
+      "path": "scripts/build.mjs",
+      "bytes": 6914,
+      "sha256": "4e484c51120fbd515817d1ce452f0a6bea5d464e9185af6294ae2c1f6aedce14"
+    },
+    {
+      "path": "scripts/serve.mjs",
+      "bytes": 3227,
+      "sha256": "17024f6182c6f788934cef0677e7e556de21c425ed667b87c60b0fe75199f700"
+    },
+    {
+      "path": "scripts/smoke-verify.mjs",
+      "bytes": 9787,
+      "sha256": "268fee736296f0524f3b2778554fc760777752f8635928f8eb98f2fcecb5191e"
+    },
+    {
+      "path": "src/main.js",
+      "bytes": 44233,
+      "sha256": "bb35cda0703d5cbf644c5bc190a37b66699e0e87fb3be19f475907d2a53b7a89"
+    },
+    {
+      "path": "template-manifest.json",
+      "bytes": 683,
+      "sha256": "b4f4ffbdbd4bd463238a6e915a90497ce3a1be666cb9ff78dace368a7cd78bde"
+    },
+    {
+      "path": "template-verify.txt",
+      "bytes": 4920,
+      "sha256": "fabd32c43581aac5589935ca84f06d83066411a398cdb542c8252c27d450c943"
+    }
+  ],
+  "dist": [
+    {
+      "path": "dist/vendor/three.module.js",
+      "bytes": 662772
+    },
+    {
+      "path": "dist/vendor/three.core.js",
+      "bytes": 1458113
+    },
+    {
+      "path": "dist/vendor/addons/loaders/3DMLoader.js",
+      "bytes": 43945
+    },
+    {
+      "path": "dist/vendor/addons/loaders/3MFLoader.js",
+      "bytes": 44293
+    },
+    {
+      "path": "dist/vendor/addons/loaders/AMFLoader.js",
+      "bytes": 11435
+    },
+    {
+      "path": "dist/vendor/addons/loaders/BVHLoader.js",
+      "bytes": 10649
+    },
+    {
+      "path": "dist/vendor/addons/loaders/collada/ColladaComposer.js",
+      "bytes": 66711
+    },
+    {
+      "path": "dist/vendor/addons/loaders/collada/ColladaParser.js",
+      "bytes": 36839
+    },
+    {
+      "path": "dist/vendor/addons/loaders/ColladaLoader.js",
+      "bytes": 3988
+    },
+    {
+      "path": "dist/vendor/addons/loaders/DDSLoader.js",
+      "bytes": 9088
+    },
+    {
+      "path": "dist/vendor/addons/loaders/DRACOLoader.js",
+      "bytes": 19030
+    },
+    {
+      "path": "dist/vendor/addons/loaders/EXRLoader.js",
+      "bytes": 86154
+    },
+    {
+      "path": "dist/vendor/addons/loaders/FBXLoader.js",
+      "bytes": 113372
+    },
+    {
+      "path": "dist/vendor/addons/loaders/FontLoader.js",
+      "bytes": 5292
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GaussianSplatPLYLoader.js",
+      "bytes": 11197
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GCodeLoader.js",
+      "bytes": 7199
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GLTFGaussianSplatLoaderExtension.js",
+      "bytes": 9063
+    },
+    {
+      "path": "dist/vendor/addons/loaders/GLTFLoader.js",
+      "bytes": 117570
+    },
+    {
+      "path": "dist/vendor/addons/loaders/HDRCubeTextureLoader.js",
+      "bytes": 3731
+    },
+    {
+      "path": "dist/vendor/addons/loaders/HDRLoader.js",
+      "bytes": 12079
+    },
+    {
+      "path": "dist/vendor/addons/loaders/IESLoader.js",
+      "bytes": 8373
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/IFFParser.js",
+      "bytes": 26740
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/LWO2Parser.js",
+      "bytes": 10137
+    },
+    {
+      "path": "dist/vendor/addons/loaders/lwo/LWO3Parser.js",
+      "bytes": 9269
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KMZLoader.js",
+      "bytes": 3298
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KSPLATLoader.js",
+      "bytes": 14309
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KTX2Loader.js",
+      "bytes": 36567
+    },
+    {
+      "path": "dist/vendor/addons/loaders/KTXLoader.js",
+      "bytes": 7187
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LDrawLoader.js",
+      "bytes": 61141
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUT3dlLoader.js",
+      "bytes": 5077
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUTCubeLoader.js",
+      "bytes": 4635
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LUTImageLoader.js",
+      "bytes": 4184
+    },
+    {
+      "path": "dist/vendor/addons/loaders/LWOLoader.js",
+      "bytes": 24156
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXArchive.js",
+      "bytes": 2219
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/compile/MaterialXCompileRegistry.js",
+      "bytes": 33733
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXDocument.js",
+      "bytes": 18477
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXHextile.js",
+      "bytes": 6250
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXInterfaceValidation.js",
+      "bytes": 7755
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXLog.js",
+      "bytes": 1199
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXNodeInterfaceRegistry.js",
+      "bytes": 277548
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXNodeLibrary.js",
+      "bytes": 36255
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/parse/MaterialXParser.js",
+      "bytes": 707
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXSurfaceMappings.js",
+      "bytes": 19238
+    },
+    {
+      "path": "dist/vendor/addons/loaders/materialx/MaterialXUtils.js",
+      "bytes": 1313
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MaterialXLoader.js",
+      "bytes": 6571
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MD2Loader.js",
+      "bytes": 13625
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MDDLoader.js",
+      "bytes": 3936
+    },
+    {
+      "path": "dist/vendor/addons/loaders/MTLLoader.js",
+      "bytes": 11356
+    },
+    {
+      "path": "dist/vendor/addons/loaders/NRRDLoader.js",
+      "bytes": 14603
+    },
+    {
+      "path": "dist/vendor/addons/loaders/OBJLoader.js",
+      "bytes": 22916
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PCDLoader.js",
+      "bytes": 16583
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PDBLoader.js",
+      "bytes": 8255
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PLYLoader.js",
+      "bytes": 21869
+    },
+    {
+      "path": "dist/vendor/addons/loaders/PVRLoader.js",
+      "bytes": 5411
+    },
+    {
+      "path": "dist/vendor/addons/loaders/RGBELoader.js",
+      "bytes": 268
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SPLATLoader.js",
+      "bytes": 3687
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SPZLoader.js",
+      "bytes": 14902
+    },
+    {
+      "path": "dist/vendor/addons/loaders/STLLoader.js",
+      "bytes": 10715
+    },
+    {
+      "path": "dist/vendor/addons/loaders/SVGLoader.js",
+      "bytes": 76850
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TDSLoader.js",
+      "bytes": 25168
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TGALoader.js",
+      "bytes": 11792
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TIFFLoader.js",
+      "bytes": 1221
+    },
+    {
+      "path": "dist/vendor/addons/loaders/TTFLoader.js",
+      "bytes": 5578
+    },
+    {
+      "path": "dist/vendor/addons/loaders/UltraHDRLoader.js",
+      "bytes": 19696
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDAParser.js",
+      "bytes": 19382
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDComposer.js",
+      "bytes": 112351
+    },
+    {
+      "path": "dist/vendor/addons/loaders/usd/USDCParser.js",
+      "bytes": 43367
+    },
+    {
+      "path": "dist/vendor/addons/loaders/USDLoader.js",
+      "bytes": 7358
+    },
+    {
+      "path": "dist/vendor/addons/loaders/USDZLoader.js",
+      "bytes": 266
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VOXLoader.js",
+      "bytes": 21829
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VRMLLoader.js",
+      "bytes": 76363
+    },
+    {
+      "path": "dist/vendor/addons/loaders/VTKLoader.js",
+      "bytes": 30565
+    },
+    {
+      "path": "dist/vendor/addons/loaders/XYZLoader.js",
+      "bytes": 3280
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ACESFilmicToneMappingShader.js",
+      "bytes": 2141
+    },
+    {
+      "path": "dist/vendor/addons/shaders/AfterimageShader.js",
+      "bytes": 1048
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BasicShader.js",
+      "bytes": 523
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BleachBypassShader.js",
+      "bytes": 1356
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BlendShader.js",
+      "bytes": 920
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BokehShader.js",
+      "bytes": 5934
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BokehShader2.js",
+      "bytes": 9865
+    },
+    {
+      "path": "dist/vendor/addons/shaders/BrightnessContrastShader.js",
+      "bytes": 1275
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ColorCorrectionShader.js",
+      "bytes": 1024
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ColorifyShader.js",
+      "bytes": 834
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ConvolutionShader.js",
+      "bytes": 1281
+    },
+    {
+      "path": "dist/vendor/addons/shaders/CopyShader.js",
+      "bytes": 729
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DepthLimitedBlurShader.js",
+      "bytes": 4187
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DigitalGlitch.js",
+      "bytes": 2525
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DOFMipMapShader.js",
+      "bytes": 1092
+    },
+    {
+      "path": "dist/vendor/addons/shaders/DotScreenShader.js",
+      "bytes": 1378
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ExposureShader.js",
+      "bytes": 791
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FilmShader.js",
+      "bytes": 1227
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FocusShader.js",
+      "bytes": 2467
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FreiChenShader.js",
+      "bytes": 3153
+    },
+    {
+      "path": "dist/vendor/addons/shaders/FXAAShader.js",
+      "bytes": 6815
+    },
+    {
+      "path": "dist/vendor/addons/shaders/GammaCorrectionShader.js",
+      "bytes": 818
+    },
+    {
+      "path": "dist/vendor/addons/shaders/GTAOShader.js",
+      "bytes": 12166
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HalftoneShader.js",
+      "bytes": 9187
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HorizontalBlurShader.js",
+      "bytes": 1667
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HorizontalTiltShiftShader.js",
+      "bytes": 1792
+    },
+    {
+      "path": "dist/vendor/addons/shaders/HueSaturationShader.js",
+      "bytes": 1678
+    },
+    {
+      "path": "dist/vendor/addons/shaders/KaleidoShader.js",
+      "bytes": 1194
+    },
+    {
+      "path": "dist/vendor/addons/shaders/LuminosityHighPassShader.js",
+      "bytes": 1291
+    },
+    {
+      "path": "dist/vendor/addons/shaders/LuminosityShader.js",
+      "bytes": 768
+    },
+    {
+      "path": "dist/vendor/addons/shaders/MirrorShader.js",
+      "bytes": 1066
+    },
+    {
+      "path": "dist/vendor/addons/shaders/NormalMapShader.js",
+      "bytes": 1165
+    },
+    {
+      "path": "dist/vendor/addons/shaders/OutputShader.js",
+      "bytes": 1876
+    },
+    {
+      "path": "dist/vendor/addons/shaders/PoissonDenoiseShader.js",
+      "bytes": 7080
+    },
+    {
+      "path": "dist/vendor/addons/shaders/RGBShiftShader.js",
+      "bytes": 1288
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SAOShader.js",
+      "bytes": 5313
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SepiaShader.js",
+      "bytes": 1098
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SMAAShader.js",
+      "bytes": 15002
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SobelOperatorShader.js",
+      "bytes": 2546
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SSAOShader.js",
+      "bytes": 6968
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SSRShader.js",
+      "bytes": 9891
+    },
+    {
+      "path": "dist/vendor/addons/shaders/SubsurfaceScatteringShader.js",
+      "bytes": 3264
+    },
+    {
+      "path": "dist/vendor/addons/shaders/TechnicolorShader.js",
+      "bytes": 1043
+    },
+    {
+      "path": "dist/vendor/addons/shaders/ToonShader.js",
+      "bytes": 7147
+    },
+    {
+      "path": "dist/vendor/addons/shaders/TriangleBlurShader.js",
+      "bytes": 1461
+    },
+    {
+      "path": "dist/vendor/addons/shaders/UnpackDepthRGBAShader.js",
+      "bytes": 972
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VelocityShader.js",
+      "bytes": 3173
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VerticalBlurShader.js",
+      "bytes": 1639
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VerticalTiltShiftShader.js",
+      "bytes": 1779
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VignetteShader.js",
+      "bytes": 1049
+    },
+    {
+      "path": "dist/vendor/addons/shaders/VolumeShader.js",
+      "bytes": 9284
+    },
+    {
+      "path": "dist/vendor/addons/shaders/WaterRefractionShader.js",
+      "bytes": 2046
+    },
+    {
+      "path": "dist/vendor/addons/Addons.js",
+      "bytes": 12559
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/AfterImageNode.js",
+      "bytes": 6286
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/AnaglyphPassNode.js",
+      "bytes": 16390
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/BilateralBlurNode.js",
+      "bytes": 10406
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/BleachBypass.js",
+      "bytes": 987
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/BloomNode.js",
+      "bytes": 17242
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/boxBlur.js",
+      "bytes": 2748
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/ChromaticAberrationNode.js",
+      "bytes": 4964
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/CRT.js",
+      "bytes": 5291
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/DenoiseNode.js",
+      "bytes": 10089
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/depthAwareBlend.js",
+      "bytes": 3352
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/depthAwareBlur.js",
+      "bytes": 2545
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/DepthOfFieldNode.js",
+      "bytes": 15341
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/DotScreenNode.js",
+      "bytes": 2542
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/FilmNode.js",
+      "bytes": 2330
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/FSR1Node.js",
+      "bytes": 15371
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/FXAANode.js",
+      "bytes": 9450
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/GaussianBlurNode.js",
+      "bytes": 11013
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/GodraysNode.js",
+      "bytes": 16457
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/GTAONode.js",
+      "bytes": 21152
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/hashBlur.js",
+      "bytes": 2299
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/ImportanceSampledEnvironment.js",
+      "bytes": 16477
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/LensflareNode.js",
+      "bytes": 8237
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/Lut3DNode.js",
+      "bytes": 2708
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/MotionBlur.js",
+      "bytes": 1099
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/OITPassNode.js",
+      "bytes": 10037
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/OutlineNode.js",
+      "bytes": 22221
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/ParallaxBarrierPassNode.js",
+      "bytes": 2089
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/PixelationPassNode.js",
+      "bytes": 9381
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/radialBlur.js",
+      "bytes": 2950
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/RecurrentDenoiseNode.js",
+      "bytes": 30219
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/RetroPassNode.js",
+      "bytes": 6698
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/RGBShiftNode.js",
+      "bytes": 2476
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/Sepia.js",
+      "bytes": 572
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/Shape.js",
+      "bytes": 1069
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SharpenNode.js",
+      "bytes": 7773
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SMAANode.js",
+      "bytes": 66466
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SobelOperatorNode.js",
+      "bytes": 4525
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSAAPassNode.js",
+      "bytes": 8686
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSAONode.js",
+      "bytes": 12395
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSGINode.js",
+      "bytes": 22532
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSRNode.js",
+      "bytes": 42095
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/SSSNode.js",
+      "bytes": 13675
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/StereoCompositePassNode.js",
+      "bytes": 4367
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/StereoPassNode.js",
+      "bytes": 2881
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TAAUNode.js",
+      "bytes": 23461
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TemporalReprojectNode.js",
+      "bytes": 33213
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TRAANode.js",
+      "bytes": 17909
+    },
+    {
+      "path": "dist/vendor/addons/tsl/display/TransitionNode.js",
+      "bytes": 4312
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/AmbientLightDataNode.js",
+      "bytes": 1003
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/DirectionalLightDataNode.js",
+      "bytes": 2666
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/HemisphereLightDataNode.js",
+      "bytes": 2378
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/PointLightDataNode.js",
+      "bytes": 3437
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/data/SpotLightDataNode.js",
+      "bytes": 4707
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/ClusteredLightsNode.js",
+      "bytes": 17738
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/DynamicLightsNode.js",
+      "bytes": 6729
+    },
+    {
+      "path": "dist/vendor/addons/tsl/lighting/LightProbeGridNode.js",
+      "bytes": 3966
+    },
+    {
+      "path": "dist/vendor/addons/tsl/math/Bayer.js",
+      "bytes": 5342
+    },
+    {
+      "path": "dist/vendor/addons/tsl/math/curlNoise.js",
+      "bytes": 3944
+    },
+    {
+      "path": "dist/vendor/addons/tsl/math/voronoiNoise.js",
+      "bytes": 3573
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/GroundedSkybox.js",
+      "bytes": 2109
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/Raymarching.js",
+      "bytes": 2008
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/RNoise.js",
+      "bytes": 1499
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/SoftParticles.js",
+      "bytes": 2607
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/SpecularHelpers.js",
+      "bytes": 12043
+    },
+    {
+      "path": "dist/vendor/addons/tsl/utils/TAAUtils.js",
+      "bytes": 6826
+    },
+    {
+      "path": "dist/vendor/addons/tsl/shadows/TileShadowNode.js",
+      "bytes": 12276
+    },
+    {
+      "path": "dist/vendor/addons/tsl/shadows/TileShadowNodeHelper.js",
+      "bytes": 5330
+    },
+    {
+      "path": "dist/vendor/addons/tsl/WebGLNodesHandler.js",
+      "bytes": 13188
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/AfterimagePass.js",
+      "bytes": 4388
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/BloomPass.js",
+      "bytes": 6445
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/BokehPass.js",
+      "bytes": 5531
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/ClearPass.js",
+      "bytes": 2167
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/CubeTexturePass.js",
+      "bytes": 3519
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/DotScreenPass.js",
+      "bytes": 2941
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/EffectComposer.js",
+      "bytes": 8501
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/FilmPass.js",
+      "bytes": 2684
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/FXAAPass.js",
+      "bytes": 738
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/GlitchPass.js",
+      "bytes": 4305
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/GTAOPass.js",
+      "bytes": 19910
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/HalftonePass.js",
+      "bytes": 2882
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/LUTPass.js",
+      "bytes": 2230
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/MaskPass.js",
+      "bytes": 4694
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/OutlinePass.js",
+      "bytes": 23272
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/OutputPass.js",
+      "bytes": 4184
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/Pass.js",
+      "bytes": 4218
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderPass.js",
+      "bytes": 4280
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderPixelatedPass.js",
+      "bytes": 8151
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/RenderTransitionPass.js",
+      "bytes": 5847
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SAOPass.js",
+      "bytes": 13105
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SavePass.js",
+      "bytes": 2998
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/ShaderPass.js",
+      "bytes": 3228
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SMAAPass.js",
+      "bytes": 50379
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSAARenderPass.js",
+      "bytes": 8150
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSAOPass.js",
+      "bytes": 13463
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/SSRPass.js",
+      "bytes": 23300
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/TAARenderPass.js",
+      "bytes": 6487
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/TexturePass.js",
+      "bytes": 2920
+    },
+    {
+      "path": "dist/vendor/addons/postprocessing/UnrealBloomPass.js",
+      "bytes": 15397
+    },
+    {
+      "path": "dist/vendor/addons/physics/AmmoPhysics.js",
+      "bytes": 9214
+    },
+    {
+      "path": "dist/vendor/addons/physics/JoltPhysics.js",
+      "bytes": 8583
+    },
+    {
+      "path": "dist/vendor/addons/physics/RapierPhysics.js",
+      "bytes": 11339
+    },
+    {
+      "path": "dist/vendor/addons/effects/AnaglyphEffect.js",
+      "bytes": 8154
+    },
+    {
+      "path": "dist/vendor/addons/effects/AsciiEffect.js",
+      "bytes": 7835
+    },
+    {
+      "path": "dist/vendor/addons/effects/OutlineEffect.js",
+      "bytes": 12661
+    },
+    {
+      "path": "dist/vendor/addons/effects/ParallaxBarrierEffect.js",
+      "bytes": 3502
+    },
+    {
+      "path": "dist/vendor/addons/effects/StereoEffect.js",
+      "bytes": 2180
+    },
+    {
+      "path": "dist/vendor/addons/animation/AnimationClipCreator.js",
+      "bytes": 4543
+    },
+    {
+      "path": "dist/vendor/addons/animation/CCDIKSolver.js",
+      "bytes": 13640
+    },
+    {
+      "path": "dist/vendor/addons/helpers/AnimationPathHelper.js",
+      "bytes": 6400
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeGridHelper.js",
+      "bytes": 4150
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeGridHelperWebGL.js",
+      "bytes": 5588
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeHelper.js",
+      "bytes": 3663
+    },
+    {
+      "path": "dist/vendor/addons/helpers/LightProbeHelperGPU.js",
+      "bytes": 2223
+    },
+    {
+      "path": "dist/vendor/addons/helpers/OctreeHelper.js",
+      "bytes": 2804
+    },
+    {
+      "path": "dist/vendor/addons/helpers/PositionalAudioHelper.js",
+      "bytes": 4384
+    },
+    {
+      "path": "dist/vendor/addons/helpers/RapierHelper.js",
+      "bytes": 1298
+    },
+    {
+      "path": "dist/vendor/addons/helpers/RectAreaLightHelper.js",
+      "bytes": 2971
+    },
+    {
+      "path": "dist/vendor/addons/helpers/TextureHelper.js",
+      "bytes": 5355
+    },
+    {
+      "path": "dist/vendor/addons/helpers/TextureHelperGPU.js",
+      "bytes": 4760
+    },
+    {
+      "path": "dist/vendor/addons/helpers/VertexNormalsHelper.js",
+      "bytes": 3458
+    },
+    {
+      "path": "dist/vendor/addons/helpers/VertexTangentsHelper.js",
+      "bytes": 2955
+    },
+    {
+      "path": "dist/vendor/addons/helpers/ViewHelper.js",
+      "bytes": 12826
+    },
+    {
+      "path": "dist/vendor/addons/webxr/ARButton.js",
+      "bytes": 5485
+    },
+    {
+      "path": "dist/vendor/addons/webxr/OculusHandModel.js",
+      "bytes": 3795
+    },
+    {
+      "path": "dist/vendor/addons/webxr/OculusHandPointerModel.js",
+      "bytes": 13518
+    },
+    {
+      "path": "dist/vendor/addons/webxr/Text2D.js",
+      "bytes": 1482
+    },
+    {
+      "path": "dist/vendor/addons/webxr/VRButton.js",
+      "bytes": 5866
+    },
+    {
+      "path": "dist/vendor/addons/webxr/WebGLXRFallback.js",
+      "bytes": 2162
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRButton.js",
+      "bytes": 4959
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRControllerModelFactory.js",
+      "bytes": 10185
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XREstimatedLight.js",
+      "bytes": 6112
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandMeshModel.js",
+      "bytes": 4112
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandModelFactory.js",
+      "bytes": 4207
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRHandPrimitiveModel.js",
+      "bytes": 3494
+    },
+    {
+      "path": "dist/vendor/addons/webxr/XRPlanes.js",
+      "bytes": 2455
+    },
+    {
+      "path": "dist/vendor/addons/controls/ArcballControls.js",
+      "bytes": 87221
+    },
+    {
+      "path": "dist/vendor/addons/controls/DragControls.js",
+      "bytes": 9510
+    },
+    {
+      "path": "dist/vendor/addons/controls/FirstPersonControls.js",
+      "bytes": 11889
+    },
+    {
+      "path": "dist/vendor/addons/controls/FlyControls.js",
+      "bytes": 9025
+    },
+    {
+      "path": "dist/vendor/addons/controls/MapControls.js",
+      "bytes": 3070
+    },
+    {
+      "path": "dist/vendor/addons/controls/OrbitControls.js",
+      "bytes": 40755
+    },
+    {
+      "path": "dist/vendor/addons/controls/PointerLockControls.js",
+      "bytes": 5890
+    },
+    {
+      "path": "dist/vendor/addons/controls/TrackballControls.js",
+      "bytes": 24048
+    },
+    {
+      "path": "dist/vendor/addons/controls/TransformControls.js",
+      "bytes": 51706
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/AST.js",
+      "bytes": 8174
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/GLSLDecoder.js",
+      "bytes": 33925
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/Linker.js",
+      "bytes": 5079
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/ShaderToyDecoder.js",
+      "bytes": 1033
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/Transpiler.js",
+      "bytes": 1560
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/TranspilerUtils.js",
+      "bytes": 653
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/TSLEncoder.js",
+      "bytes": 19843
+    },
+    {
+      "path": "dist/vendor/addons/transpiler/WGSLEncoder.js",
+      "bytes": 19452
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/basis_transcoder.js",
+      "bytes": 57529
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/README.md",
+      "bytes": 1388
+    },
+    {
+      "path": "dist/vendor/addons/libs/basis/basis_transcoder.wasm",
+      "bytes": 527333
+    },
+    {
+      "path": "dist/vendor/addons/libs/chevrotain.module.min.js",
+      "bytes": 157440
+    },
+    {
+      "path": "dist/vendor/addons/libs/demuxer_mp4.js",
+      "bytes": 3526
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_decoder.js",
+      "bytes": 719410
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_decoder.js",
+      "bytes": 512465
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_wasm_wrapper.js",
+      "bytes": 58456
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/gltf/draco_decoder.wasm",
+      "bytes": 192420
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_wasm_wrapper.js",
+      "bytes": 58763
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/README.md",
+      "bytes": 1395
+    },
+    {
+      "path": "dist/vendor/addons/libs/draco/draco_decoder.wasm",
+      "bytes": 285747
+    },
+    {
+      "path": "dist/vendor/addons/libs/fflate.module.js",
+      "bytes": 89384
+    },
+    {
+      "path": "dist/vendor/addons/libs/ktx-parse.module.js",
+      "bytes": 19932
+    },
+    {
+      "path": "dist/vendor/addons/libs/lil-gui.module.min.js",
+      "bytes": 29526
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_clusterizer.module.js",
+      "bytes": 35425
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_decoder.module.js",
+      "bytes": 29256
+    },
+    {
+      "path": "dist/vendor/addons/libs/meshopt_simplifier.module.js",
+      "bytes": 55177
+    },
+    {
+      "path": "dist/vendor/addons/libs/mikktspace.module.js",
+      "bytes": 48841
+    },
+    {
+      "path": "dist/vendor/addons/libs/motion-controllers.module.js",
+      "bytes": 13492
+    },
+    {
+      "path": "dist/vendor/addons/libs/potpack.module.js",
+      "bytes": 3951
+    },
+    {
+      "path": "dist/vendor/addons/libs/stats.module.js",
+      "bytes": 3514
+    }
+  ]
+}

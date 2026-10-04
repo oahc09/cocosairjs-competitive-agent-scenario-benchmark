@@ -701,6 +701,7 @@ try {
   report.failureCategory = report.classification === 'PASS' ? null : report.classification;
   report.durationMs = Date.now() - tRunStart;
   report.finishedAt = isoNow();
+  report.toolchainFingerprint = toolchainFingerprint; // P1-5/R3-2:PASS/FAIL 全路径盖章
   for (const f of fs.readdirSync(shotDir)) {
     if (!report.screenshots.includes(f)) report.screenshots.push(f);
   }

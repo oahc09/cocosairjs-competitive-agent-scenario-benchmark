@@ -1,6 +1,6 @@
 {
   "gate": "G3 REFERENCE_FEASIBILITY",
-  "status": "PASS",
+  "status": "CONDITIONAL",
   "validatedAt": "2026-10-03T08:09:24.191Z",
   "criteria": "20 个 Reference 全部存在、validate verdict=PASS、0 未捕获异常;每个含 REFERENCE-VERDICT/WORKLOG/ceiling-notes/validation 证据",
   "capabilityAvailability": {
@@ -30,11 +30,12 @@
     "E10/three: FEASIBLE probes=7/7 fps=60.3",
     "E10/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60.2"
   ],
-  "rulerId": "RULER-20261003-R02",
+  "rulerId": "RULER-20261003-R02(validationRevision v6)",
   "remediation": {
     "at": "2026-10-03T08:12:45.489Z",
     "B-1": "E05 spec v1.0.2:P3 改多普勒亮侧扇区有向 R-B 差(colorRelation pickSide,双引擎实测校准 Three 34.15/AIR 23.25,阈 18)",
     "B-2": "E04 spec v1.0.2:余烬寿命 3-12s + P4 region 改 center-bottom(实测降带);双 Reference 常数同步",
     "result": "20/20 Reference 重验 PASS;RULER-R02 冻结;spec-audit 10 场景 0 UNSUPPORTED"
-  }
+  },
+  "note": "19/20 最新重验 PASS;cocosair/E09 最新指纹+协议重验 P7 边缘 FAIL(diffRatio 0.0047 vs 0.005,flaky at threshold)——spec 升版待 Owner 决,详见 remaining-risks R2-9"
 }

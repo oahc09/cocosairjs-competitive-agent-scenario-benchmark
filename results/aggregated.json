@@ -1,14 +1,14 @@
 {
-  "generatedAt": "2026-10-03T15:11:32.227Z",
+  "generatedAt": "2026-10-04T02:31:18.818Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
   "rulerStatus": {
     "rulerId": "RULER-20261003-R02",
     "source": "reference/private/REFERENCE-VERSIONS.json(只读冻结账本;不动态扫描批次 judge 数据)",
     "protocol": {
-      "validatorProtocolHash": "a57639acbdc968682ae5de92eb06ec0fedd4237d6e6bd3165ff37f7f2d111005",
+      "validatorProtocolHash": "6bb4315dc47f640dad4ea629c1ca8fa77903f1190d8cd740809c23255c78450c",
       "validatorProtocolComponents": {
         "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
-        "validateSha256": "e084ebee9318d929378cf842e87a5dd4881f91d424794e0f05fe8166f8a6cd57"
+        "validateSha256": "849baf3cef3a21891c7f6a772c648f8fd1bbf7e7ff58d1d8272c636aab04a53a"
       },
       "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
       "judgeProtocolSource": "docs/metric-spec.md §8 盲评统计(Track D)(= 计划书 §18 口径)"
@@ -125,7 +125,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -232,7 +232,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -337,7 +337,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -448,7 +448,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -609,7 +609,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -736,7 +736,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -891,7 +891,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -1022,7 +1022,7 @@
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 7,
+            "validationRevision": 9,
             "rulerId": "RULER-20261003-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -1188,9 +1188,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "0c4b3f98e61d2a68de0e115fb87df9ff060e82cbbe276faa45c8fc30901b58c6"
+      "evidenceHash": "edd2b07ce502b94428ed0a2493e8a4accc823977c2e3b189dd6147e60c5a2aad"
     },
     "E01/cocosair": {
       "objective": 55,
@@ -1204,9 +1204,9 @@
       "total": 87.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "12335f66c037339b968aa5710f93860dc8fa0ee7c9136234584506ebce646ca0"
+      "evidenceHash": "cdd9f773cfaeb14feec1f6ae6c644fda69ee7b9cd1aba88867589c6d98ea2a98"
     },
     "E02/three": {
       "objective": 55,
@@ -1220,9 +1220,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "859668d4bb2cb24cc3387406285af91f46a3f33d748e0e0e2cce9b7838803860"
+      "evidenceHash": "3f2ad12626575ff554e8772cfb93fb0953f6c3f5b645a68a724cde64f0c26fdb"
     },
     "E02/cocosair": {
       "objective": 55,
@@ -1236,9 +1236,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "5017959e44b794f29e719bd6fa3a986faaf242cfadffb29008a8a01f19e1c74a"
+      "evidenceHash": "f64ed83718ed804dccc4b970948fb10cc29caf6f17840f1227a1275758083c9c"
     },
     "E03/three": {
       "objective": 55,
@@ -1252,9 +1252,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "159dac1bc6e775e7d2b543fb7e0000bccbdcf352adb05234b57df2b49aa56fd1"
+      "evidenceHash": "719d184ef41447ea84cc500de8e5c9b699b0ace2c37d0a956d597c78b2613e35"
     },
     "E03/cocosair": {
       "objective": 55,
@@ -1268,9 +1268,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "57d835752dc7d59e545762a2df158c4cf962c6da5e8f925ce08af8fb230caa92"
+      "evidenceHash": "9a3b74f1505ab1f1713d23e42b8511ec080d51dc8b1e2af97fd2a2240e2695e3"
     },
     "E04/three": {
       "objective": 55,
@@ -1284,9 +1284,9 @@
       "total": 83.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "1859b951c9f35712bbce342c9036adaf7c11e63c48b3c440b24829252e9b2582"
+      "evidenceHash": "7fbc5e8ea105eeaa7beff498ce01df20c6ccd9435256e51346e01c3a4ef841cf"
     },
     "E04/cocosair": {
       "objective": 55,
@@ -1300,9 +1300,9 @@
       "total": 85.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "27313820d6b844a7e8b05abe5496764668136b544af2b5959f5692bbbc781355"
+      "evidenceHash": "9444f960295afdad9663dec831274bc985de84126f6e166ed24200816f0c8226"
     },
     "E05/three": {
       "objective": 55,
@@ -1316,9 +1316,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "529b708a04547d4ba99939463896f646a3356f253cdb6f08405639c482e46577"
+      "evidenceHash": "4e5d118fda10b0878142f0d4c708c7f4dbde7116b8de9b4061ea5cdcb97a2a0d"
     },
     "E05/cocosair": {
       "objective": 55,
@@ -1332,9 +1332,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "840275cfada679f3e696198741e079358e3b0d069918f517dc9f83e85baf4c86"
+      "evidenceHash": "16bb76b47d90f0e3c4c532664bcd8becd564d3d78b428015de34d2c719e74392"
     },
     "E06/three": {
       "objective": 55,
@@ -1348,9 +1348,9 @@
       "total": 89.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "7260a3d3f8d6deeabdbdabbd6e1f13e9eab17176b8ed7e5d2c066171072e267e"
+      "evidenceHash": "9830270d626470fbef97dc3ddbfe9b955d1b69d4b56e70b93dce1c863d3a5887"
     },
     "E06/cocosair": {
       "objective": 55,
@@ -1364,9 +1364,9 @@
       "total": 89.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "5030fc9cbc889d62588cf6d275ec33966bdf64d60ce98208e94c07fdfa56fc64"
+      "evidenceHash": "ade357fc027a47fba886e9ce70dd5219f6d33da206db7f4f406d581c6398ba63"
     },
     "E07/three": {
       "objective": 55,
@@ -1380,9 +1380,9 @@
       "total": 90.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "2031535a2c7420e4cc918124431857b2c24e638384109ce2ba4fbde3730309f5"
+      "evidenceHash": "067be1e3100fdbdfbf72a53fcd9aa2442d5258ed46b8c69f66c2e8683a8cb7fc"
     },
     "E07/cocosair": {
       "objective": 55,
@@ -1396,9 +1396,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "07aff5c4a167903321892dc791073105556ce51bf9963e4943dcfe4b9b007ff3"
+      "evidenceHash": "0995ca5a08d99d8406aa755a3dcdaecfe08f9565e1cab6ce8a14903b8bfd37c8"
     },
     "E08/three": {
       "objective": 55,
@@ -1412,9 +1412,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "34d91012699d7a31da508f47bd76afa8754c3bc214881e4d2648f44a17f4f745"
+      "evidenceHash": "5de3b1f0e4aa3870af5f774a39657fae2dc182e47fbd8ac107826148f565995c"
     },
     "E08/cocosair": {
       "objective": 55,
@@ -1428,9 +1428,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "3be8ee6ba00be6fad026bc743da0b20a3e88cf5f5fe0588d1edd872464b41914"
+      "evidenceHash": "dc39c0441d19ed50afc9d543dfdd04767f5ff9bb9bf9dc9370cb4d331fbb6659"
     },
     "E09/three": {
       "objective": 55,
@@ -1444,9 +1444,9 @@
       "total": 87.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "b9d5aba39dee88d69c3596f23422a1ba6b19b55570d59df615e335d761c5445b"
+      "evidenceHash": "89ff6d8d8416fd45e5dc4c2498b6af2178d6465fce786cf04d9f12d4640ffbe4"
     },
     "E09/cocosair": {
       "objective": 42,
@@ -1460,9 +1460,9 @@
       "total": 75.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "774af7290651648d0c7f3683031a9690ac570006755d8ad19a00bc6b4f927170"
+      "evidenceHash": "412daa3722264bc23ee069b85cbc033076859e118a5501611e5e1793b9864a34"
     },
     "E10/three": {
       "objective": 55,
@@ -1476,9 +1476,9 @@
       "total": 82.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "c3f62d1daecb56d9fdb9942a1eea40acaafcdc10a39e396c578f22d981eb59ec"
+      "evidenceHash": "c1a9c5b6c7c02724d65ef4df460b37af7f8d0fdf27e25b1593241ea59e002408"
     },
     "E10/cocosair": {
       "objective": 55,
@@ -1492,9 +1492,9 @@
       "total": 82.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 7,
+      "validationRevision": 9,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "151f515d18ea014cde53e226ec056608c6aa3095dde9c8a4851696ce0034cc7f"
+      "evidenceHash": "166cea08bdc10776e9a9932845106e42582edc3727974c74cb21af3d1941c50e"
     }
   },
   "notes": [

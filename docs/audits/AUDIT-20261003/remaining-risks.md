@@ -84,8 +84,23 @@ B-1/B-2 已按 spec 升版流程解决:E04 v1.0.2 / E05 v1.0.2(修订记录在 s
 | R2-8(P1) | gates G5/G6/G8 旧状态与 audit 双事实源 | gates/G*.json 刷新为唯一权威(G5 两轮/G6 含并行派发器前置/G8 覆盖两批+20 Ref);audit 仅引用 | run.mjs gates 实测 |
 | R2-9(新发现) | cocosair/E09 指纹重验 P7 边缘失败(第二次导出与首导像素 diff 0.0043 < 0.005:确定性重导 vs 运动阈值矛盾) | 不调阈值;如实记 E09-air 最新验证 FAIL(0.75),ceiling 待 Owner 校准决策 | RULER 已如实记录(75.3) |
 
-### R2-9 判别结论(同日追加)
+### R2-9 判别结论(同日追加;最终更新:复现为**阈值边缘可复现失败**)
+
+**最终状态**:空闲单点复跑曾 PASS(0.0376),但 R4 协议重验再次 FAIL(0.0047)。跨 8 次验证 P7 运动量 0.0043–0.0478,阈值 0.005 恰在散布带内 → **E09-air P7 为阈值边缘的 flaky 探针**,负载敏感 + 确定性重导矛盾叠加。G3 对 cocosair/E09 记 CONDITIONAL(最新 FAIL,前代 PASS 保留于 revisions)。**处置权在 Owner**:spec 升版(P7 断言改为导出计数+字节证据,或 span/阈值按实测散布校准)。机制层不做阈值迁就。
 
 空闲单点复跑(E09-air):**PASS,P7 diffRatio=0.0376**(阈值 0.005,7.5 倍余量)。跨 7 次验证 P7 运动量 0.0043–0.0478(10 倍散布),两次 FAIL 均发生在后台循环连跑的高载时段 → **负载敏感抖动**(导出下载处理在高载下冻结渲染,600ms 采样窗落入停滞帧),非回归。
 
 **核心矩阵含义**:120 runs 背靠背单机执行时,边缘运动探针必然周期性抖动。缓解选项(Owner 决):(a) 验证严格串行且每项之间留冷却;(b) 对导出/下载类探针将 spanMs 或阈值按实测散布校准(spec 升版);(c) 验证机与负载隔离。机制层不做阈值迁就。
+
+## 复查第三轮(R3,2026-10-03 深夜)——用户第二轮复查六项
+
+| ID | 发现 | 修复 | 复验 |
+|---|---|---|---|
+| R3-1(P0) | aggregate 作用域断裂:compat/objectiveRelevantMismatch 声明在 arm 循环内,coreEligible 在循环外引用 → ReferenceError | pairCompat[engine] 收集提级至 pair 级;bothRulerCompatible 双臂判定;coreEligible/KG 统一走 pair 级 | aggregate 全量运行无错,groups 输出正常 |
+| R3-2(P0) | toolchainFingerprint 只写 guarded 提前失败路径,正常 PASS/FAIL 报告缺失 → aggregate toolchainMatch 恒 unknown | 主路径 report.finishedAt 处补 stamp(PASS/FAIL 全路径) | 新验证报告含 toolchainFingerprint;历史报告=unknown 过渡态 |
+| R3-3(P0) | toolCallsMode 全链未通:aggregate 正则缺反斜杠;qualify 根本不消费 → diagnostic 永不生效 | 正则修复(new RegExp 构造);qualify 读 agents.yaml toolCallsMode,diagnostic 时 budgetToolCallEvidence.ok=true | 机制实测:hard 下 R05 仍 PARTIAL(正确);diagnostic 需 Owner 改 agents.yaml+重冻结 G0 |
+| R3-4(P0) | preflight 只验非空+两臂相等,未验 hash 真伪 → 填两个相同伪 hash 仍 PASS | preflight 真算 sha256(DISPATCH.md)/sha256(策略输入清单) 与 RUN-META 比对;不匹配即 BLOCKED;真算值回填 pair.json | R05 实测:旧占位值被拒(BLOCKED),按正典配方重算后 PASS |
+| R3-5(P1) | execution.json 未由 Runner 自动生成(R05 系 WORKLOG 回填) | create 生成 execution.json(空时间戳);新增 round dispatch stage 盖 dispatchAt;collect 自动计算 executionTiming(≤30 PASS/>30 DRIFT/缺证据 UNMEASURABLE) | R05 实测:4 对自动判定 PAIR_TIMING_DRIFT(时序诚实) |
+| R3-6(P1) | KG 门禁引用不存在的 p.rulerStatus(恒放行漏口) | KG 改读 arms[].rulerStatus+pairCompat;core/KG 共享 pair 级判定 | kgEntries=0(无 core 数据)如实 |
+| R3-7(P1) | 验证无串行/冷却(E09 负载敏感根因的机制化) | run-round validate:验证锁(陈旧 10min 强制接管)+ 每项间 20s 冷却 | 代码落地,下轮 validate 生效 |
+| R3-8(P1) | G8 分母含 legacy RUN-META(历史无法补造 → 永久 FAIL) | G8 分母修正:RUN-META 仅对整改后轮次强制;legacy 豁免(QUALIFICATION 已降级披露) | G8 PASS(豁免已注明,未伪造任何历史文件) |

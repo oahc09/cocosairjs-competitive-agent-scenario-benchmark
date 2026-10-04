@@ -149,12 +149,38 @@ function writeDispatch(round) {
   fs.writeFileSync(path.join(RESULTS, round.batchId, 'DISPATCH.md'), lines.join('\n'));
 }
 
+
+// ---------- stage: dispatch(P1-4:编排方在真实派发双臂时调用,盖章 dispatchAt) ----------
+function stageDispatch(round) {
+  const now = new Date().toISOString();
+  for (const p of round.pairs) {
+    for (const arm of ['arm-a', 'arm-b']) {
+      const f = path.join(RESULTS, round.batchId, p.pairId, arm, 'execution.json');
+      let e = fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')) : {};
+      if (!e.dispatchAt) { e.dispatchAt = now; fs.writeFileSync(f, JSON.stringify(e, null, 2)); }
+    }
+  }
+  round.stages.dispatch = { lastRunAt: now, note: '双臂 dispatchAt 已盖章;请立即同批启动两臂会话' };
+  saveRound(round);
+  console.log('[dispatch] 两臂 dispatchAt 已盖章,立即并行启动会话(≤30s)');
+}
+
 // ---------- stage: collect ----------
 function stageCollect(round) {
   let done = 0, pending = [];
   for (const p of round.pairs) {
     for (const arm of ['arm-a', 'arm-b']) {
       const d = armStateFile(round.batchId, p.pairId, arm);
+      // P1-4:时差自动判定(execution.json 双臂 dispatchAt/agentStartedAt)
+      try {
+        const exA = JSON.parse(fs.readFileSync(path.join(RESULTS, round.batchId, p.pairId, 'arm-a', 'execution.json'), 'utf8'));
+        const exB = JSON.parse(fs.readFileSync(path.join(RESULTS, round.batchId, p.pairId, 'arm-b', 'execution.json'), 'utf8'));
+        const t = (e) => e.agentStartedAt || e.dispatchAt || null;
+        if (t(exA) && t(exB)) {
+          const delta = Math.round(Math.abs(new Date(t(exA)) - new Date(t(exB))) / 1000);
+          p.executionTiming = { status: delta <= 30 ? 'PASS' : 'PAIR_TIMING_DRIFT', startDeltaSec: delta, maxSec: 30 };
+        } else p.executionTiming = { status: 'UNMEASURABLE', maxSec: 30 };
+      } catch { p.executionTiming = { status: 'UNMEASURABLE' }; }
       const completed = fs.existsSync(path.join(d, 'RESULT.md'));
       if (completed) {
         if (p.arms[arm].state === 'created') p.arms[arm].state = 'completed';
@@ -169,7 +195,9 @@ function stageCollect(round) {
 
 // ---------- stage: preflight(FIX-C 身份/冻结一致性门禁) ----------
 // RUN-META 身份字段全集(与 coordinator 写出的 RUN-META.template.json 一一对应)
-const RUN_META_FIELDS = ['agentRuntime', 'agentBinaryHash', 'modelId', 'modelRevision', 'systemPromptHash', 'toolPolicyHash', 'runnerVersion'];
+const RUN_META_FIELDS = ['agentRuntime', 'modelId', 'modelRevision', 'systemPromptId', 'systemPromptSha256', 'toolPolicyId', 'toolPolicySha256', 'runnerVersion'];
+// sha 字段允许留空 → preflight 真算回填;已填则核验一致
+const RUN_META_SHA_FIELDS = ['systemPromptSha256', 'toolPolicySha256'];
 // 两臂必须一致的字段(engine/knowledge/template 天然允许不同,不在 RUN-META 内)
 const RUN_META_CONSISTENCY_FIELDS = ['agentRuntime', 'modelId', 'modelRevision', 'systemPromptHash', 'toolPolicyHash'];
 
@@ -235,7 +263,52 @@ function runPreflight(round) {
         }
       }
     }
-    // ④ 两臂预算一致,且与 pair.json 冻结预算一致(预算漂移 = Pair 失效,agents.yaml driftPolicy)
+    // ③b P0(复查#4):真算哈希核验 —— 不再接受"非空+两臂相等"的伪 hash
+  const dispatchFile = path.join(RESULTS, round.batchId, 'DISPATCH.md');
+  const expectedPromptSha = fs.existsSync(dispatchFile) ? sha(dispatchFile) : null;
+  const policyInputs = [
+    path.join(BENCH, 'config', 'agents.yaml'),
+    path.join(BENCH, 'templates', 'three', 'scripts', 'count.mjs'),
+    path.join(BENCH, 'templates', 'cocosair', 'scripts', 'count.mjs'),
+    path.join(BENCH, 'templates', 'three', 'scripts', 'verify-browser.mjs'),
+    path.join(BENCH, 'templates', 'cocosair', 'scripts', 'verify-browser.mjs'),
+  ].filter(fs.existsSync);
+  const expectedPolicySha = crypto.createHash('sha256').update(policyInputs.map(sha).join(':')).digest('hex');
+  for (const arm of ['arm-a', 'arm-b']) {
+    const m = metas[arm];
+    if (!m) continue;
+    if (m.systemPromptSha256 && expectedPromptSha && m.systemPromptSha256 !== expectedPromptSha) {
+      reasons.push(`${arm}: RUN-META.systemPromptSha256 ≠ sha256(DISPATCH.md)(${String(m.systemPromptSha256).slice(0, 8)}… ≠ ${expectedPromptSha.slice(0, 8)}…)—— 派发载荷被改动或填了占位值`);
+    }
+    if (m.toolPolicySha256 && m.toolPolicySha256 !== expectedPolicySha) {
+      reasons.push(`${arm}: RUN-META.toolPolicySha256 ≠ 当前策略输入哈希(${String(m.toolPolicySha256).slice(0, 8)}… ≠ ${expectedPolicySha.slice(0, 8)}…)—— 策略执行面被改动或填了占位值`);
+    }
+  }
+  // ③b-2 sha 回填 RUN-META(留空时):真算值写回,保证证据在 Agent 侧也可追溯
+  for (const arm of ['arm-a', 'arm-b']) {
+    const mf = path.join(pairDir, arm, 'RUN-META.json');
+    if (!fs.existsSync(mf)) continue;
+    try {
+      const m = JSON.parse(fs.readFileSync(mf, 'utf8'));
+      let ch = false;
+      if (!m.systemPromptSha256 && expectedPromptSha) { m.systemPromptSha256 = expectedPromptSha; ch = true; }
+      if (!m.toolPolicySha256 && expectedPolicySha) { m.toolPolicySha256 = expectedPolicySha; ch = true; }
+      if (ch) fs.writeFileSync(mf, JSON.stringify(m, null, 2));
+    } catch { /* */ }
+  }
+  // ③c 真算哈希回填 pair.json(身份哈希 = 可复算证据,非声明)
+  if (expectedPromptSha) {
+    try {
+      const pfPath = path.join(pairDir, 'pair.json');
+      const pjNow = JSON.parse(fs.readFileSync(pfPath, 'utf8'));
+      let changed = false;
+      if (pjNow.systemPromptHash !== expectedPromptSha) { pjNow.systemPromptHash = expectedPromptSha; changed = true; }
+      if (pjNow.toolPolicyHash !== expectedPolicySha) { pjNow.toolPolicyHash = expectedPolicySha; changed = true; }
+      if (changed) fs.writeFileSync(pfPath, JSON.stringify(pjNow, null, 2) + String.fromCharCode(10));
+    } catch { /* pair.json 不可读已在上方报错 */ }
+  }
+
+  // ④ 两臂预算一致,且与 pair.json 冻结预算一致(预算漂移 = Pair 失效,agents.yaml driftPolicy)
     const contractBudgets = {};
     for (const arm of ['arm-a', 'arm-b']) {
       const c = path.join(pairDir, arm, 'RUN-CONTRACT.md');
@@ -294,6 +367,26 @@ function stageValidate(round, force) {
     }
   }
   let ok = 0, fail = 0, budgetExhausted = 0, invalidEvidence = 0;
+  // R3-7:单 GPU 串行验证 + 冷却(E09 负载敏感判别的机制化)
+  // 同一时间只允许一个 Chromium 验证;每个验证之间冷却 20s;已有他方验证在跑则等待。
+  const LOCK = path.join(BENCH, 'harness', '.validation-lock');
+  const COOLDOWN_MS = 20000;
+  const acquireLock = () => {
+    for (;;) {
+      try {
+        const st = fs.existsSync(LOCK) ? fs.statSync(LOCK) : null;
+        if (!st || Date.now() - st.mtimeMs > 10 * 60 * 1000) { // 陈旧锁(>10min)强制接管
+          fs.writeFileSync(LOCK, String(process.pid));
+          return;
+        }
+      } catch { fs.writeFileSync(LOCK, String(process.pid)); return; }
+      console.log('           等待其他验证释放锁…');
+      Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);
+    }
+  };
+  const releaseLock = () => { try { fs.rmSync(LOCK, { force: true }); } catch { /* */ } };
+  acquireLock();
+  let lastValidateEnd = 0;
   for (const j of jobs) {
     const base = path.join(j.pairDir, j.arm);
     const ws = path.join(base, 'workspace');
@@ -432,6 +525,7 @@ const round = loadRound(batch);
 switch (stage) {
   case 'preflight': stagePreflight(round); break;
   case 'collect': stageCollect(round); break;
+  case 'dispatch': stageDispatch(round); break;
   case 'validate': stageValidate(round, has('force')); break;
   case 'blind': stageBlind(round); break;
   case 'aggregate': stageAggregate(round); break;

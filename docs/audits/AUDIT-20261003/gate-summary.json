@@ -14,8 +14,8 @@
       "note": "G2 ISOLATION"
     },
     "G3": {
-      "status": "PASS",
-      "note": "20/20(v1.0.2 轮后,RULER-20261003-R02)"
+      "status": "CONDITIONAL",
+      "note": "19/20;cocosair/E09 P7 边缘 flaky 待 Owner spec 校准(R2-9 最终结论)"
     },
     "G4": {
       "status": "PASS",
@@ -42,5 +42,9 @@
   "rectificationRound2": {
     "aggregatedSchema": "track 分层 + core-only 统计 + rulerCompatibility 门禁(详见 aggregated.json groups[].scope 与 arms[].rulerStatus)",
     "coreStatsNow": "空(n=0,无 track=core 数据)——正式启动矩阵(--track core)后自动填充"
+  },
+  "rectificationRound3": {
+    "date": "2026-10-03",
+    "items": "R3-1~R3-8(见 remaining-risks 复查第三轮)"
   }
 }

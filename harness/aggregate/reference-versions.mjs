@@ -172,6 +172,7 @@ for (let i = 1; i <= 10; i++) {
       briefSha: briefByScene[scene] ? briefByScene[scene].sha256 : null,   // FIX-B:经 entries 映射取值(旧版直取 briefIdx[scene] 恒为 null)
       specSha: shaFile(path.join(ROOT, 'briefs', scene, 'spec.json')),    // FIX-B:场景 spec.json 内容指纹
       docsSha: docsSha[engine],
+      codeReviewProtocolHash: shaFile(path.join(ROOT, 'harness', 'runner', 'code-review.mjs')),
       toolchain,
       validatorProtocolHash: vp.hash,
       judgeProtocolHash: jp.hash,

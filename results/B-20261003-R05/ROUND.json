@@ -1,7 +1,7 @@
 {
   "batchId": "B-20261003-R05",
   "createdAt": "2026-10-03T08:57:15.688Z",
-  "updatedAt": "2026-10-03T13:52:15.892Z",
+  "updatedAt": "2026-10-04T02:15:34.171Z",
   "plan": {
     "source": "--matrix E01,E02,E05,E10|K0|R01",
     "pairs": [
@@ -86,7 +86,12 @@
       "preflight": {
         "status": "PASS",
         "reasons": [],
-        "checkedAt": "2026-10-03T13:52:15.872Z"
+        "checkedAt": "2026-10-04T02:14:50.153Z"
+      },
+      "executionTiming": {
+        "status": "PAIR_TIMING_DRIFT",
+        "startDeltaSec": 791,
+        "maxSec": 30
       }
     },
     {
@@ -130,7 +135,12 @@
       "preflight": {
         "status": "PASS",
         "reasons": [],
-        "checkedAt": "2026-10-03T13:52:15.882Z"
+        "checkedAt": "2026-10-04T02:14:50.162Z"
+      },
+      "executionTiming": {
+        "status": "PAIR_TIMING_DRIFT",
+        "startDeltaSec": 61600,
+        "maxSec": 30
       }
     },
     {
@@ -174,7 +184,12 @@
       "preflight": {
         "status": "PASS",
         "reasons": [],
-        "checkedAt": "2026-10-03T13:52:15.887Z"
+        "checkedAt": "2026-10-04T02:14:50.169Z"
+      },
+      "executionTiming": {
+        "status": "PAIR_TIMING_DRIFT",
+        "startDeltaSec": 1373,
+        "maxSec": 30
       }
     },
     {
@@ -218,19 +233,24 @@
       "preflight": {
         "status": "PASS",
         "reasons": [],
-        "checkedAt": "2026-10-03T13:52:15.892Z"
+        "checkedAt": "2026-10-04T02:14:50.174Z"
+      },
+      "executionTiming": {
+        "status": "PAIR_TIMING_DRIFT",
+        "startDeltaSec": 3828,
+        "maxSec": 30
       }
     }
   ],
   "stages": {
     "preflight": {
-      "lastRunAt": "2026-10-03T13:52:15.892Z",
+      "lastRunAt": "2026-10-04T02:14:50.174Z",
       "summary": "PASS",
       "blocked": [],
       "pairs": 4
     },
     "collect": {
-      "lastRunAt": "2026-10-03T11:30:05.205Z",
+      "lastRunAt": "2026-10-04T02:15:34.168Z",
       "completed": "8/8",
       "pending": []
     },

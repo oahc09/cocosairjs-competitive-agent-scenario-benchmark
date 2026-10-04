@@ -456,7 +456,17 @@ async function main() {
     });
     fs.writeFileSync(path.join(armDir, 'RUN-CONTRACT.md'), contract, 'utf8');
 
-    // RUN-META.template.json(coordinator 拥有,每次覆盖;Runner 派发前复制填写为 RUN-META.json,
+    // execution.json(P1-4):时间戳由 Runner/编排方在派发与收集时盖章,Agent 不经手
+    const execPath = path.join(armDir, 'execution.json');
+    if (!fs.existsSync(execPath)) {
+      fs.writeFileSync(execPath, JSON.stringify({
+        dispatchAt: null, agentStartedAt: null, agentFinishedAt: null,
+        workerId: 'local-worker-1',
+        hostFingerprint: 'E:/AIProMax 单机(RTX4060/Chrome154/Node24)',
+        source: 'Runner 派发时盖章(round dispatch stage);Agent 不经手,不依赖 WORKLOG',
+      }, null, 2));
+    }
+        // RUN-META.template.json(coordinator 拥有,每次覆盖;Runner 派发前复制填写为 RUN-META.json,
     // 已填写的 RUN-META.json 永不触碰 —— 身份证据属于 Runner/Agent 侧)
     const runMetaTemplatePath = path.join(armDir, 'RUN-META.template.json');
     fs.writeFileSync(runMetaTemplatePath, JSON.stringify(runMetaTemplateJson(), null, 2) + '\n', 'utf8');

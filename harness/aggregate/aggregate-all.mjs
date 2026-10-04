@@ -29,7 +29,7 @@ const r2 = (x) => (x == null || !Number.isFinite(x) ? null : Math.round(x * 100)
 const chromeCached = (() => { try { return fs.readFileSync(path.join(BENCH, 'harness', 'chrome-version.cache.txt'), 'utf8').trim(); } catch { return 'unknown'; } })();
 // P0(用户裁决待定):maxToolCalls 机器强制模式。hard=冻结合同(缺 toolcall 计数 → PARTIAL 不能进 core);
 // diagnostic=宿主运行时确实无法暴露计数时的显式让步,必须先在 config/agents.yaml 增 'toolCallsMode: diagnostic' 并重冻结 G0。
-const toolCallsMode = (() => { try { const y = fs.readFileSync(path.join(BENCH, 'config', 'agents.yaml'), 'utf8'); return /toolCallsMode:s*diagnostic/.test(y) ? 'diagnostic' : 'hard'; } catch { return 'hard'; } })();
+const toolCallsMode = (() => { const y = fs.readFileSync(path.join(BENCH, 'config', 'agents.yaml'), 'utf8'); const m = new RegExp('toolCallsMode:[ \t]*(hard|diagnostic)').exec(y); return m ? m[1] : 'hard'; })();
 const median = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y); const m = s.length >> 1; return s.length % 2 ? s[m] : (s[m - 1] + s[m]) / 2; };
 const iqr = (a) => { if (a.length < 2) return null; const s = [...a].sort((x, y) => x - y); const q = (p) => { const h = (s.length - 1) * p; const lo = Math.floor(h), hi = Math.ceil(h); return s[lo] + (s[hi] - s[lo]) * (h - lo); }; return r2(q(0.75) - q(0.25)); };
 function bootstrapMedianCiDelta(deltas, draws = 2000, seed = 42) {
@@ -143,6 +143,7 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
   let vis = {};
   try { vis = rj(path.join(bDir, 'blind', 'visual-scores.json')).pairs || {}; } catch { /* 无视觉分 */ }
   const pairs = [];
+    const pairCompat = {};
   for (const pd of fs.readdirSync(bDir, { withFileTypes: true })) {
     if (!pd.isDirectory() || !pd.name.startsWith('PAIR-')) continue;
     const pj = rj(path.join(bDir, pd.name, 'pair.json'));
@@ -178,9 +179,10 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
         const frozen = epochEntry ? epochEntry.inputs?.[{ engine: 'engine', brief: 'briefSha', spec: 'specSha', validator: 'validatorProtocolHash', toolchain: 'toolchain' }[k]] : undefined;
         compat[k + 'Match'] = frozen == null || actual == null ? 'unknown' : (String(frozen) === String(actual) ? 'matched' : 'MISMATCH');
       }
-      // P1-5:比报告冻结指纹,不比 aggregate 宿主当前环境
+      // P1-5:比报告冻结指纹(运行时 stamp),不比 aggregate 宿主当前环境;unknown 与 MISMATCH 同级 fail-closed
       compat.toolchainMatch = compat.toolchainMatch ?? 'unknown';
-      const objectiveRelevantMismatch = ['engineMatch', 'briefMatch', 'specMatch', 'validatorMatch', 'toolchainMatch'].some(k => compat[k] === 'MISMATCH');
+      const objectiveRelevantMismatch = ['engineMatch', 'briefMatch', 'specMatch', 'validatorMatch', 'toolchainMatch'].some(k => compat[k] === 'MISMATCH' || compat[k] === 'unknown');
+      pairCompat[engine] = { compatible: !objectiveRelevantMismatch, mismatchKeys: ['engineMatch','briefMatch','specMatch','validatorMatch','toolchainMatch'].filter(k => compat[k] === 'MISMATCH' || compat[k] === 'unknown'), detail: compat };
       const objectiveAttainment = (ruler?.objective != null && ruler.objective > 0 && !objectiveRelevantMismatch) ? r2(objectiveTotal / ruler.objective) : null;
       const formalAttainment = (formalTotal != null && ruler?.total != null && ruler.total > 0) ? r2(formalTotal / ruler.total) : null;
       // FIX-B 4:CEILING_BREACH(>1.03 如实标记上报,不 clamp)
@@ -251,10 +253,14 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
     const track = pj.track || (pj.pilot ? 'pilot' : 'core');
     const qualEntry = (batchQual[b.batchId]?.pairs || []).find(q => q.pairId === pd.name);
     const qualStatus = qualEntry ? qualEntry.status : (b.batchId === 'B-20261002-R1' ? 'LEGACY_PROVISIONAL' : null);
+    // P0 修复:pair 级 RULER 兼容(unknown 也 fail closed);coreEligible/KG 共用此判定
+    const bothRulerCompatible = ['three', 'cocosair'].every(e => {
+      const rc = pairCompat[e];
+      return rc && rc.compatible === true && rc.mismatchKeys.length === 0 && rc.detail.toolchainMatch === 'matched';
+    });
     const coreEligible = track === 'core'
       && (qualStatus === 'QUALIFIED' || qualStatus === 'QUALIFIED' + '_OBJECTIVE')
-      && compat.engineMatch === 'matched' && compat.specMatch === 'matched'
-      && compat.validatorMatch === 'matched' && !objectiveRelevantMismatch;
+      && bothRulerCompatible;
     if (!groupMap.has(gk)) groupMap.set(gk, { scene: pj.sceneId, knowledge: pj.knowledge, deltas: [], outcomes: [], attThree: [], attAir: [] });
     const g = groupMap.get(gk);
     // 分组统计:formal 可用时用 formal delta;G7 未过时退居 objective delta 并标注 basis
@@ -286,7 +292,14 @@ const kgByScene = new Map();
 //   量尺兼容(RULER_COMPAT)+ qualification ∈ {QUALIFIED, QUALIFIED_OBJECTIVE} +
 //   track:K0/K1 → core;K2 → k2-ablation。其余(pilot/targeted-pilot/不合格)一律不进。
 const kgTrackAllow = (p) => {
-  if (p.rulerStatus && !String(p.rulerStatus).startsWith('RULER_COMPAT')) return false;
+  // P0 修正:pair 级 RULER 兼容读 arms[].rulerStatus/pairCompat(此前引用不存在的 p.rulerStatus,恒放行)
+  const rulerOk = ['three', 'cocosair'].every(e => {
+    const rs = String(p.arms[e]?.rulerStatus || '');
+    const detail = p.arms[e]?.rulerCompatDetail;
+    if (rs.startsWith('RULER_COMPAT') && detail) return detail.toolchainMatch === 'matched' && detail.mismatchKeysLength === 0;
+    return rs.startsWith('RULER_COMPAT');
+  });
+  if (!rulerOk) return false;
   const qual = p.qualificationStatus ?? null;
   if (qual != null && !['QUALIFIED', 'QUALIFIED_OBJECTIVE'].includes(qual)) return false;
   if (p.knowledge === 'K2') return p.track === 'k2-ablation';

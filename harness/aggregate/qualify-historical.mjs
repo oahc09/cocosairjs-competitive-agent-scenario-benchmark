@@ -134,6 +134,10 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     note: 'Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按"同一仪器"的声明口径采信,无法机器复核',
   };
 
+  // P0(方案 B 机制):toolCallsMode——agents.yaml 显式 'toolCallsMode: diagnostic' 时,
+  // maxToolCalls 不再是 hard gate(缺 toolcall 计数不算资格失败)。设置该键 = G0 重冻结动作,owner 裁决。
+  const toolCallsMode = (() => { const y = fs.readFileSync(path.join(ROOT, 'config', 'agents.yaml'), 'utf8'); const m = /toolCallsMode:\s*(hard|diagnostic)/.exec(y); return m ? m[1] : 'hard'; })();
+
   // ---- 5. 预算机器计数
   const budget = pj.budget ?? null;
   const budgetCounters = {};
@@ -215,7 +219,7 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   };
 
   // ---- E10 特别核:历史验证实际 spec 版本从证据推断
-  const budgetToolCallEvidence = { id: 'budgetToolCallEvidence', ok: budgetMachineCounted.completeness === 'FULL', completeness: budgetMachineCounted.completeness, note: 'maxToolCalls 机器强制需宿主 API 计数;PARTIAL=build/browser 已机器核验、toolCalls 仅声明口径(宿主 API 不暴露)——永久 PARTIAL 直到接入带计数器的 Agent 运行时' };
+  const budgetToolCallEvidence = { id: 'budgetToolCallEvidence', ok: budgetMachineCounted.completeness === 'FULL' || toolCallsMode === 'diagnostic', mode: toolCallsMode, completeness: budgetMachineCounted.completeness, note: toolCallsMode === 'diagnostic' ? 'toolCallsMode=diagnostic(G0 重冻结后生效):maxToolCalls 降为诊断指标,不阻断 qualification' : 'toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0' };
   const checks = { frozenInputsComplete, specExact, validatorKnown, agentIdentityComplete, budgetMachineCounted, budgetToolCallEvidence, executionTiming, visualGate, rulerMatch };
   const failedIds = Object.values(checks).filter((c) => !c.ok).map((c) => c.id);
   // toolcall 计数不可得 → 单列证据缺口(不算 check 失败,但阻断 FULL 预算结论)
