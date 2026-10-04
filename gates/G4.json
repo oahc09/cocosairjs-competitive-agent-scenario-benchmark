@@ -2,7 +2,7 @@
   "gate": "G4 HARNESS_TRUST",
   "status": "PASS",
   "statusBase": "PASS",
-  "generatedAt": "2026-10-03T08:12:27.425Z",
+  "generatedAt": "2026-10-04T12:14:48.025Z",
   "runnerAvailable": true,
   "runner": "harness/runner/validate.mjs",
   "cases": [
@@ -31,10 +31,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 273
+            "durationMs": 287
           },
           "report": "results\\nc\\NC01-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.1429 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC01-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.1429 fps=60.4\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC01-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -62,7 +62,7 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 13
+            "durationMs": 52
           },
           "report": "results\\nc\\NC02-E01\\report.json",
           "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.4286 fps=60.3\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC02-E01\\report.json\n",
@@ -89,10 +89,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 281
+            "durationMs": 54
           },
           "report": "results\\nc\\NC03-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
           "stderrTail": ""
         },
         {
@@ -110,10 +110,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 307
+            "durationMs": 66
           },
           "report": "results\\nc\\NC03-E02\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0 fps=60\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E02\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E02\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -140,10 +140,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 262
+            "durationMs": 57
           },
           "report": "results\\nc\\NC04-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.5714 fps=60.3\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC04-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=INTERACTION probes=7 passRate=0.5714 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC04-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -169,10 +169,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 254
+            "durationMs": 55
           },
           "report": "results\\nc\\NC05-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.8571 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=LIFECYCLE_MISUSE probes=7 passRate=0.8571 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -248,7 +248,7 @@
             ],
             "exitCode": 3,
             "timedOut": false,
-            "stdoutTail": "  [UNSUPPORTED] P1 visualAssertion.params.minLitPixelRatio: unknown params key \"minLitPixelRatio\" for motionBlur\n---\nprobes audited: 1 | UNSUPPORTED findings: 4 | PARTIAL findings: 0\nexit code 3 — UNSUPPORTED required assertion(s) present — scoring runs will classify SPEC_INVALID; fix spec (amendment) or extend executor\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\spec-capability-audit.json\n",
+            "stdoutTail": "  [UNSUPPORTED] P1 visualAssertion.params.minLitPixelRatio: unknown params key \"minLitPixelRatio\" for motionBlur\n---\nprobes audited: 1 | UNSUPPORTED findings: 4 | PARTIAL findings: 0\nexit code 3 — UNSUPPORTED required assertion(s) present — scoring runs will classify SPEC_INVALID; fix spec (amendment) or extend executor\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC07\\spec-capability-audit.json\n",
             "stderrTail": ""
           }
         ],
@@ -279,7 +279,7 @@
             ],
             "exitCode": 0,
             "timedOut": false,
-            "stdoutTail": "  [PARTIAL] P1 visualAssertion.region: outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID\n---\nprobes audited: 1 | UNSUPPORTED findings: 0 | PARTIAL findings: 1\nexit code 0 — no UNSUPPORTED required assertions\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\spec-capability-audit.json\n",
+            "stdoutTail": "  [PARTIAL] P1 visualAssertion.region: outside LEGAL_REGION_FORMS (\"accretion-torus(inner)\"): diagnostic-mode full-frame fallback only (DIAGNOSTIC-FALLBACK); strict scoring run => SPEC_INVALID\n---\nprobes audited: 1 | UNSUPPORTED findings: 0 | PARTIAL findings: 1\nexit code 0 — no UNSUPPORTED required assertions\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC08\\spec-capability-audit.json\n",
             "stderrTail": ""
           }
         ],
@@ -360,7 +360,7 @@
           "tool": "aggregate/reference-versions.mjs --check(只读现状观测,非判定)",
           "exitCode": 0,
           "staleCount": 0,
-          "summaryTail": "  CURRENT              E10:cocosair   v2.val5 | 全部 CURRENT(量尺与全部输入一致)"
+          "summaryTail": "  CURRENT              E10:cocosair   v2.val10 | 全部 CURRENT(量尺与全部输入一致)"
         },
         "readinessProbe": {
           "ready": true
@@ -372,7 +372,7 @@
         "kind": "identityPreflight",
         "expect": "run-round preflight BLOCKED(集成阶段)",
         "method": "(集成阶段)round/run-round.mjs --batch <batch> --stage preflight",
-        "caughtBy": "run-round --stage preflight 真实执行(exit 0):BLOCKED + 身份缺失 reasons ×5",
+        "caughtBy": "run-round --stage preflight 真实执行(exit 0):BLOCKED + 身份缺失 reasons ×11",
         "detected": true,
         "status": "DETECTED",
         "mode": "RUN",
@@ -382,29 +382,39 @@
             "runRoundPreflightImplemented": true,
             "identityFields": [
               "agentRuntime",
-              "agentBinaryHash",
               "modelId",
               "modelRevision",
-              "systemPromptHash",
-              "toolPolicyHash",
+              "systemPromptId",
+              "systemPromptSha256",
+              "toolPolicyId",
+              "toolPolicySha256",
               "runnerVersion"
             ],
             "armReport": {
               "arm-a": {
                 "emptyIdentityFields": [
-                  "agentBinaryHash",
                   "modelId",
-                  "systemPromptHash"
+                  "systemPromptId",
+                  "systemPromptSha256",
+                  "toolPolicyId",
+                  "toolPolicySha256"
                 ]
               },
               "arm-b": {
-                "emptyIdentityFields": []
+                "emptyIdentityFields": [
+                  "systemPromptId",
+                  "systemPromptSha256",
+                  "toolPolicyId",
+                  "toolPolicySha256"
+                ]
               }
             },
             "expectedBlockReasons": [
-              "arm-a: RUN-META.agentBinaryHash 为空",
               "arm-a: RUN-META.modelId 为空",
-              "arm-a: RUN-META.systemPromptHash 为空"
+              "arm-a: RUN-META.systemPromptId 为空",
+              "arm-a: RUN-META.systemPromptSha256 为空",
+              "arm-a: RUN-META.toolPolicyId 为空",
+              "arm-a: RUN-META.toolPolicySha256 为空"
             ]
           },
           "integrationCommand": "node round/run-round.mjs --batch <batch> --stage preflight → 本 fixture Pair 应 BLOCKED(身份字段为空,不得 validate)",
@@ -412,15 +422,15 @@
             "exit": 0,
             "blocked": true,
             "identityReasons": [
-              "arm-a: RUN-META.agentBinaryHash 为空",
               "arm-a: RUN-META.modelId 为空",
-              "arm-a: RUN-META.systemPromptHash 为空",
-              "两臂 RUN-META.modelId 不一致(arm-a=\"\", arm-b=\"GLM-5.3\")"
+              "arm-a: RUN-META.systemPromptId 为空",
+              "arm-a: RUN-META.systemPromptSha256 为空",
+              "arm-a: RUN-META.toolPolicyId 为空"
             ],
             "stdoutTail": [
-              "           - arm-a: RUN-META.agentBinaryHash 为空",
-              "           - arm-a: RUN-META.modelId 为空",
-              "           - arm-a: RUN-META.systemPromptHash 为空",
+              "           - arm-b: RUN-META.systemPromptSha256 为空",
+              "           - arm-b: RUN-META.toolPolicyId 为空",
+              "           - arm-b: RUN-META.toolPolicySha256 为空",
               "           - 两臂 RUN-META.modelId 不一致(arm-a=\"\", arm-b=\"GLM-5.3\")",
               "           - 两臂 RUN-META.systemPromptHash 不一致(arm-a=null, arm-b=\"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae\")",
               "[preflight] 1 个 pair:BLOCKED;BLOCKED(不得 validate): PAIR-E01-K0-R01"
@@ -476,23 +486,23 @@
             "args": [],
             "exitCode": 0,
             "timedOut": false,
-            "stdoutTail": "  ruler=RULER-20261003-R02 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]\n  E01 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E02 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=-23 CI=null W/T/L=0/0/1\n  E05 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n  E10 K0: n=1 [objective(S1+S2+S3;G7 未过,formal 不可用)] medianΔ=0 CI=null W/T/L=0/1/0\n",
+            "stdoutTail": "  ruler=RULER-20261003-R02 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]\n  E01 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E02 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E05 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E10 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 gro",
             "stderrTail": ""
           }
         ],
         "before": {
-          "generatedAt": "2026-10-03T08:09:06.968Z",
-          "batches": 1,
-          "pairs": 4,
+          "generatedAt": "2026-10-04T11:48:52.871Z",
+          "batches": 2,
+          "pairs": 8,
           "pilotPairs": 4,
-          "visualPendingArms": 0,
+          "visualPendingArms": 8,
           "g7": "BLOCKED"
         },
         "tool": "aggregate/aggregate-all.mjs(真实只读聚合:批次数据只读,重算其自身产物 results/aggregated.json)",
         "derivation": {
-          "pairsWithFormalSection": 4,
+          "pairsWithFormalSection": 8,
           "formalValuesAllNull": true,
-          "objectiveNonNullCount": 16,
+          "objectiveNonNullCount": 32,
           "g7": {
             "status": "BLOCKED",
             "formalImpact": "INVALID — formal total/attainment/pairedDelta 全 null,视觉分仅 provisional"
@@ -500,11 +510,11 @@
           "note": "G7(BLIND_JUDGE_VALIDITY)未过 → formal.total/attainment 全 null;objective(S1+S2+S3)照常非空 —— 门禁状态如实传播,不以 provisional 视觉分冒充正式总分"
         },
         "after": {
-          "generatedAt": "2026-10-03T08:12:27.379Z",
-          "batches": 1,
-          "pairs": 4,
+          "generatedAt": "2026-10-04T12:14:47.999Z",
+          "batches": 2,
+          "pairs": 8,
           "pilotPairs": 4,
-          "visualPendingArms": 0,
+          "visualPendingArms": 8,
           "g7": "BLOCKED"
         },
         "rule": "formal.total===null && objective.total!=null → DETECTED"

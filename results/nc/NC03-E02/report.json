@@ -1,6 +1,6 @@
 {
-  "runId": "run-2026-10-03T08-11-07-983Z",
-  "generatedAt": "2026-10-03T08:11:07.995Z",
+  "runId": "run-2026-10-04T12-13-33-383Z",
+  "generatedAt": "2026-10-04T12:13:33.393Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC03",
   "spec": {
@@ -12,20 +12,20 @@
   "pairId": null,
   "engine": null,
   "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-  "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "c4be57666c33f56fb1c114122455e6b6b0712312bb1c76fc9fad16b78335d156",
-    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 980,
+    "durationMs": 874,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> NC03-fixture@1.0.0 build\n> node build.mjs\n\n[NC03 build] dist/app.js written\n\n[exit code 0] duration 978ms\n"
+    "log": "$ npm run build\n\n> NC03-fixture@1.0.0 build\n> node build.mjs\n\n[NC03 build] dist/app.js written\n\n[exit code 0] duration 873ms\n"
   },
   "serve": {
     "port": 7413,
@@ -34,7 +34,7 @@
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 307
+    "durationMs": 66
   },
   "console": {
     "errors": 1,
@@ -109,12 +109,12 @@
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 0,
-  "fps": 60,
+  "fps": 60.1,
   "perf": {
-    "fps": 60,
+    "fps": 60.1,
     "frames": 181,
-    "sampleMs": 3016,
-    "sampledAt": "2026-10-03T08:11:29.392Z",
+    "sampleMs": 3010,
+    "sampledAt": "2026-10-04T12:13:53.580Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -171,7 +171,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.0365
+      "firstShotLitRatio": 0.0366
     },
     "s2": {
       "passedWeight": 0,
@@ -197,8 +197,8 @@
           "state",
           "visual"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "ASSET_PIPELINE",
+        "unresolvedReason": null
       },
       {
         "probeId": "P2",
@@ -206,8 +206,8 @@
         "failedAssertions": [
           "state"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "ANIMATION",
+        "unresolvedReason": null
       },
       {
         "probeId": "P3",
@@ -215,8 +215,8 @@
         "failedAssertions": [
           "state"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "ANIMATION",
+        "unresolvedReason": null
       },
       {
         "probeId": "P4",
@@ -224,8 +224,8 @@
         "failedAssertions": [
           "state"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "INTERACTION",
+        "unresolvedReason": null
       },
       {
         "probeId": "P5",
@@ -235,11 +235,12 @@
           "state",
           "visual"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "STATE_MANAGEMENT",
+        "unresolvedReason": null
       }
     ]
   },
-  "durationMs": 22354,
-  "finishedAt": "2026-10-03T08:11:30.338Z"
+  "durationMs": 20661,
+  "finishedAt": "2026-10-04T12:13:54.044Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
 }

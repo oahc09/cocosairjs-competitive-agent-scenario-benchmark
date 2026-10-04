@@ -1,6 +1,6 @@
 {
-  "runId": "run-2026-10-03T08-10-15-305Z",
-  "generatedAt": "2026-10-03T08:10:15.309Z",
+  "runId": "run-2026-10-04T12-12-41-803Z",
+  "generatedAt": "2026-10-04T12:12:41.814Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\isolation\\fixtures\\NC02",
   "spec": {
@@ -12,20 +12,20 @@
   "pairId": null,
   "engine": null,
   "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-  "validatorProtocolHash": "a5641c7addb72cc2ef76069e7bbdf0858758a6efb8eb9dfda17d09b1636deed6",
+  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "c4be57666c33f56fb1c114122455e6b6b0712312bb1c76fc9fad16b78335d156",
-    "validateSha256": "ad0df292139be13f7868a764286dd2d31125daa67c95683b595f034e2e03ceed"
+    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 429,
+    "durationMs": 845,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> NC02-fixture@1.0.0 build\n> node build.mjs\n\n[NC02 build] dist/app.js written\n\n[exit code 0] duration 428ms\n"
+    "log": "$ npm run build\n\n> NC02-fixture@1.0.0 build\n> node build.mjs\n\n[NC02 build] dist/app.js written\n\n[exit code 0] duration 844ms\n"
   },
   "serve": {
     "port": 7411,
@@ -34,7 +34,7 @@
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 13
+    "durationMs": 52
   },
   "console": {
     "errors": 1,
@@ -106,8 +106,8 @@
   "perf": {
     "fps": 60.3,
     "frames": 181,
-    "sampleMs": 3000,
-    "sampledAt": "2026-10-03T08:10:37.842Z",
+    "sampleMs": 3003,
+    "sampledAt": "2026-10-04T12:13:05.463Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -189,8 +189,8 @@
         "failedAssertions": [
           "visual"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "ANIMATION",
+        "unresolvedReason": null
       },
       {
         "probeId": "P3",
@@ -198,8 +198,8 @@
         "failedAssertions": [
           "state"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "INTERACTION",
+        "unresolvedReason": null
       },
       {
         "probeId": "P4",
@@ -207,11 +207,12 @@
         "failedAssertions": [
           "state"
         ],
-        "domain": null,
-        "unresolvedReason": "probe-not-in-sidecar"
+        "domain": "INTERACTION",
+        "unresolvedReason": null
       }
     ]
   },
-  "durationMs": 23257,
-  "finishedAt": "2026-10-03T08:10:38.562Z"
+  "durationMs": 24182,
+  "finishedAt": "2026-10-04T12:13:05.986Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
 }
