@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T11:13:41.194Z",
+  "updatedAt": "2026-10-04T14:55:17.650Z",
   "legacyNote": "G5/G7/G8 等历史门禁文件中的 results/PAIR-* 路径为迁移前时点记录;现行布局为 results/<batchId>/PAIR-*。",
   "batches": [
     {
@@ -44,6 +44,16 @@
       ],
       "lastPairAt": "2026-10-03T08:57:15.669Z",
       "pairCount": 4
+    },
+    {
+      "batchId": "B-20261004-R01",
+      "createdAt": "2026-10-04T14:55:13.782Z",
+      "pairs": [
+        "PAIR-E01-K0-R01",
+        "PAIR-E05-K0-R01"
+      ],
+      "lastPairAt": "2026-10-04T14:55:17.650Z",
+      "pairCount": 2
     }
   ],
   "selftestNote": "B-00010101-R99 为 coordinator 自测批次(未运行任何 Agent Run),移至 _selftest/。"

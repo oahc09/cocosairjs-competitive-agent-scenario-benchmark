@@ -1,0 +1,311 @@
+{
+  "generatedAt": "2026-10-04T16:04:18.956Z",
+  "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
+  "batch": "B-20261004-R01",
+  "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+  "statusDefinition": {
+    "QUALIFIED": "全部鉴定项通过,指标按正式口径引用",
+    "LEGACY_PROVISIONAL": "整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制",
+    "QUALIFIED_OBJECTIVE": "整改后数据:冻结输入/身份/预算(FULL)/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起",
+    "QUALIFIED_OBJECTIVE_PARTIAL": "整改后数据:同上,但预算证据 PARTIAL(build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数,仅声明口径)——引用时必须带此限制",
+    "QUALIFIED_OBJECTIVE_PARTIAL_TIMING": "整改后数据:预算 PARTIAL + 双臂启动时差超 30s 或不可测(PAIR_TIMING_DRIFT/UNMEASURABLE)——objective 有条件引用,正式 paired 设计主张不成立,引用必须带此时序限制",
+    "DISQUALIFIED": "冻结输入断裂且无法溯源,全部指标作废"
+  },
+  "context": {
+    "ruler": {
+      "rulerId": "RULER-20261003-R02",
+      "updatedAt": "2026-10-04T11:48:51.559Z"
+    },
+    "g7": {
+      "status": "BLOCKED",
+      "source": "gates/G7.json"
+    },
+    "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff"
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K0-R01",
+      "scene": "E01",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "failedChecks": [
+        "budgetToolCallEvidence",
+        "visualGate"
+      ],
+      "reasons": [
+        "G7=BLOCKED,视觉口径作废"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+          "currentBriefs": {
+            "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+            "version": "1.0.0",
+            "briefSha256": "225bf8c171f568e58931145bb30ad69c02578c6c275b040c9bd43e2c8bc5d8d7"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "note": "Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按\"同一仪器\"的声明口径采信,无法机器复核"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "PARTIAL",
+          "countedKinds": [
+            "build",
+            "browser"
+          ],
+          "perArmOk": true,
+          "missingKinds": [
+            "toolcall"
+          ],
+          "toolCallEvidence": "unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)",
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count"
+            ]
+          },
+          "note": "预算机器证据不完整:build,browser 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "mode": "hard",
+          "completeness": "PARTIAL",
+          "note": "toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": false,
+          "g7Status": "BLOCKED",
+          "blindMaterials": [
+            "blinding-key.json"
+          ],
+          "conclusion": "blind 材料存在,但 G7=BLOCKED → 视觉口径(六维/Preference)一律不得引用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-04T14:55:09.881Z",
+            "rulerFrozenAt": "2026-10-04T11:48:51.559Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261003-R02"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E05-K0-R01",
+      "scene": "E05",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "failedChecks": [
+        "budgetToolCallEvidence",
+        "visualGate"
+      ],
+      "reasons": [
+        "G7=BLOCKED,视觉口径作废"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+            "briefVersion": "1.0.2"
+          },
+          "diskSpec": {
+            "sha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+            "briefVersion": "1.0.2"
+          },
+          "pairSpecSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+          "currentBriefs": {
+            "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+            "version": "1.0.2",
+            "briefSha256": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "note": "Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按\"同一仪器\"的声明口径采信,无法机器复核"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "PARTIAL",
+          "countedKinds": [
+            "build",
+            "browser"
+          ],
+          "perArmOk": true,
+          "missingKinds": [
+            "toolcall"
+          ],
+          "toolCallEvidence": "unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)",
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count"
+            ]
+          },
+          "note": "预算机器证据不完整:build,browser 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "mode": "hard",
+          "completeness": "PARTIAL",
+          "note": "toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": false,
+          "g7Status": "BLOCKED",
+          "blindMaterials": [
+            "blinding-key.json"
+          ],
+          "conclusion": "blind 材料存在,但 G7=BLOCKED → 视觉口径(六维/Preference)一律不得引用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-04T14:55:14.193Z",
+            "rulerFrozenAt": "2026-10-04T11:48:51.559Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261003-R02"
+        }
+      }
+    }
+  ],
+  "batchLevel": {
+    "reusableMetrics": [
+      "冻结输入指纹组(brief/spec/assets/templates/knowledge/engine sha)—— pair.json 完整",
+      "objective S1/S2/S3 逐臂分(证据:validation/report.json;协议哈希已记录,正式口径)",
+      "objective 成对 delta(AIR−Three,S1+S2+S3 口径)",
+      "效率/诊断口径(fps、console、探针明细、网络/截图证据)",
+      "引擎哈希溯源(pair.airPackageHash 与 RULER 账本 matched)"
+    ],
+    "invalidOrPendingMetrics": [
+      "visual 六维折算分与 Preference(证据存在但 G7=BLOCKED,一律不得引用)",
+      "formal total/attainment/pairedDelta(G7 过后重跑 blind+judge 即可补齐)",
+      "存在非 visual 项失败的对: PAIR-E01-K0-R01(budgetToolCallEvidence,visualGate); PAIR-E05-K0-R01(budgetToolCallEvidence,visualGate)"
+    ],
+    "reasons": [
+      "预算证据 PARTIAL:build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数(永久 PARTIAL,接入带计数器的运行时后消除)",
+      "G7=BLOCKED:visual 口径作废/挂起(不影响 objective 正式口径)"
+    ]
+  }
+}

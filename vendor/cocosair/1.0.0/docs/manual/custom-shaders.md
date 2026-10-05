@@ -91,8 +91,7 @@ UBO 成员布局必须与引擎同源（`src/air/builtin/builtin-glsl4.ts`）；
 ```ts
 import { createAirApp, EffectAsset, Material } from "cocosair";
 
-const app = await createAirApp({ canvas: "#GameCanvas" }); // ① 必须先引导（GAP-B1：
-//    引导前 onLoaded 抛空 device TypeError）
+const app = await createAirApp({ canvas: "#GameCanvas" }); // ① 材质创建前先初始化设备
 const effect = Object.assign(new EffectAsset(), effectJson); // ② 编译后 JSON 灌入
 effect.shaders[0].glsl4 = { vert: VERT4, frag: FRAG4 }; // ③ 三变体源码
 effect.shaders[0].glsl3 = { vert: VERT3, frag: FRAG3 };
@@ -108,9 +107,14 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 
 - `EffectAsset.get(name)` / `getAll()` 可查静态表；`EffectAsset.remove(effectOrName)` 注销；
   重复注册同名 = 覆盖不抛（探针 G2 相位）。`effect.destroy()` 连带注销（get → null）。
+- `EffectAsset.onLoaded()` 可以在设备初始化前注册模板；源码会监听渲染器初始化事件延迟预编译。
+  这不代表材质已经可用：`Material.initialize()`、实际 shader 编译及渲染仍须在设备初始化后执行。
+  旧探针中 `registerBeforeBoot` 的错误记录不能覆盖当前源码合同。
 - **材质实例语义**：`renderer.setSharedMaterial(mat,0)` 直接引用（多渲染器共享同一 uniform 状态）；
   `renderer.material` getter 创建 MaterialInstance 副本（各自 setProperty 互不影响——
   "每个产品独立调色"用实例，"全场统一参数"用共享）。
+  实时 `SkinnedMeshRenderer` 是明确例外：`setSharedMaterial` 会为模型宏创建实例；绑定后用
+  `renderer.getMaterialInstance(0).setProperty(...)` 更新实际绘制材质，继续改原共享Material不保证更新该实例。
 - `material.recompileShaders` / `overridePipelineStates` 当前为 warn 存根：**defines 必须在
   initialize 时给定**，运行期改宏不可用。
 
@@ -120,7 +124,7 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 运行期 `mat.setProperty('mainTexture', texture2D)`。注意 **builtin-unlit 的纹理宏是 `USE_TEXTURE`**；
 `USE_ALBEDO_MAP` 会被静默忽略渲染成纯色（GAP-M1，实测）。程序化纹理走
 `new Texture2D(); tex.image = new ImageAsset(canvas)` 或 `tex.reset({…}) + uploadData(pixels)`
-（uploadData 不做 Y 翻转——绘制时自行倒序，[canvas-textures](canvas-textures.md) 同注记）。
+（uploadData 保留字节行序；Sprite视觉顶边v=0，而旋转+90X的原生plane顶边v=1，按实际UV选择行序，见[纹理源方向](texture-source-orientation.md)）。
 
 ## 5. 调试与诊断
 
@@ -134,7 +138,7 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 - **已知缺口对照**：`docs/reference/api-scenario-gap-matrix.md` §7。GAP-L1 已于 r53 修复：用户 Shader 可正常消费
   `cc_mainLitDir/cc_mainLitColor`（**必须用 HDR 量级**：主光 illuminance ≈65000，isHDR 默认 true、
   exposure=1/38400，LDR 量级数值视觉归零）；点光/球光经 CCForwardLight 附加 pass 生效（fixture 已对齐
-  上游 4.0 判别语义）。GAP-B1 时机边界仍适用。
+  上游 4.0 判别语义）。注册模板与创建材质的时机区别见 §3。
 
 ## 6. 参考实现索引
 
@@ -146,3 +150,78 @@ renderer.setSharedMaterial(mat, 0); // ⑦ 上屏
 | `examples/shared/shader-blocks.js`        | UBO 块样板 + standardVert + makeUserEffectJson                            |
 | `src/air/builtin/register.ts`             | 引擎内建注册路径（glsl4→3 转换 + set/binding 分配的同源参考）             |
 | `docs/evidence/g4-shader-probe.json`      | 当前 WebGL2 探针证据（14/14 PASS，含 registerBeforeBoot 边界）            |
+
+## 7. 从声明表生成 effect JSON
+
+### 注册前布局检查与双贴图（2026-10-04）
+
+可选开发工具[effect-layout.ts](../../tools/debug/effect-layout.ts)提供 `prepareEffectForRegistration(effectJson)`：克隆JSON后为缺省材质sampler分配不冲突槽位，检查set/binding、sampler类型/数量、顶点/片元stageFlags、UBO成员顺序/类型及GLSL4布局和反射一致性。失败抛 `AIR_E_EFFECT_LAYOUT`，`issues`给出shader、resource、stage和稳定规则码。调用它以后，仍由原生 `EffectAsset.onLoaded()` 注册；直接调用原生入口不会自动启用此工具。
+
+```ts
+// 仓库开发工具，调用方显式接入；不在npm默认运行时导出内。
+import { prepareEffectForRegistration } from '../../tools/debug/effect-layout';
+const { effect: checkedJson, bindings } = prepareEffectForRegistration(effectJson);
+const effect = Object.assign(new EffectAsset(), checkedJson);
+effect.onLoaded(); // 已await createAirApp，后续使用原生Material
+const material = new Material();
+material.initialize({ effectAsset: effect });
+material.setProperty('mapA', firstTexture);
+material.setProperty('mapB', secondTexture);
+```
+
+当前预检范围是**无条件vec4/mat4 UBO及sampler2D**，UBO必须从材质binding=0连续排列；有一个UBO时两个sampler为1/2，没有UBO时为0/1。显式与自动分配均检查同一GLSL4声明；存在条件资源、数组/其他成员格式时明确拒绝 `UNSUPPORTED`，需完整编译工具处理，不能推断为合法。它不验证所有GLSL语法、Vulkan或完整反射，也不把builtin私有toGlsl3当作通用编译器。
+
+VERT和FRAG各自预处理，顶点源码内的`#define`不会出现在片元源码；通过Effect的defines元数据与Material.initialize传入的宏才会按原生模板合同配置两阶段。受限声明表生成器本身不接受macro/include，手写编译产物可以使用自包含宏源码。`setProperty`更新uniform或纹理，不是运行期改宏入口。
+
+本轮[执行台账](../../ai/ledgers/port-gap-remediation.md)记录三浏览器真实双贴图切换、两阶段UBO变化、自动/显式布局、MR/SMR的effectName/effectAsset，以及现有builtin Material对照。负Shader必须进入实际绘制才触发本轮设备路径的编译/链接；原生错误16323/16326保留program名，开发session分别捕获shader/link类别，正常场景仍可绘制。SMR此探针用不蒙皮的自定义shader隔离材质注册，骨骼变形另验；GPU内存量不可测，不能以资源isValid=false代替零泄漏证明。
+
+开发工具 [effect-json.mjs](../../tools/build/effect-json.mjs) 可以生成 WebGL2 可注册的 JSON，
+不需要手抄 `blocks`、attributes、枚举和三份 shader 源码。它是受限模板生成器，运行时包不依赖该工具。
+
+```bash
+node tools/build/effect-json.mjs examples/point-cloud-basics/point.effect-spec.json examples/point-cloud-basics/point.effect.json
+```
+
+输入为声明表和两个含 `main()` 的 GLSL body；body 可直接写在 JSON 中，或用
+`"vertex": { "file": "vertex.glsl" }` / `"fragment": { "file": "fragment.glsl" }` 指定相对于声明文件的路径。
+输出路径必须显式提供；生成前先校验，不会在校验失败时覆盖旧输出。
+输出内含 `glsl4` 和从同源声明生成的 `glsl3`；WebGL2 消费后者，不生成退役的 WebGL1 变体。
+
+| 声明项     | 支持范围                                                  | 约束                                            |
+| ---------- | --------------------------------------------------------- | ----------------------------------------------- |
+| attributes | `vec2` / `vec3` / `vec4`                                  | 明确唯一 location，0–15；网格属性名和格式须匹配 |
+| varyings   | `float` / `vec2` / `vec3` / `vec4`                        | 两阶段使用同一声明，默认 highp                  |
+| uniforms   | `vec4` / `mat4`，count=1                                  | 提供4/16个有限默认值；标量参数放入 vec4 分量    |
+| samplers   | `sampler2D`                                               | 必须提供内建默认纹理名；运行时可绑定 Texture2D  |
+| primitive  | POINT_LIST、LINE_LIST/STRIP/LOOP、TRIANGLE_LIST/STRIP/FAN | 写入 effect pass；省略时保持引擎默认三角形      |
+
+`Constants` 只接收16字节对齐的 vec4 和 mat4，使引擎紧密排列的 handle 偏移与 std140 一致；
+不接受 float/vec2/vec3、数组、结构体、整数属性和用户定义 UBO，避免静默错误的 padding 推断。
+CCCamera、CCLocal、CCGlobal 声明复用 [shader-blocks.js](../../examples/shared/shader-blocks.js) 的现有样板。
+预处理、include、YAML `.effect`、动态宏、MRT、compute 和通用 GLSL 转译不在支持范围；
+片段不重复写 `uniform/in/out/layout` 声明。合法 JSON 仍须经过真实 GPU 编译及像素检查。
+
+program 名和32位模板 hash 由源码与声明内容生成；相同输入可重复生成，内容变化会改变模板身份。
+hash 用于引擎缓存，不是安全指纹；正式证据仍应记录完整文件 SHA。
+
+生成物的注册顺序：先完成 `createAirApp()`，然后 `Object.assign(new EffectAsset(), json)`、
+`effect.onLoaded()`、`Material.initialize({ effectAsset: effect })`。如果只提前注册模板，遵守 §3 的设备时机区别。
+
+## 8. 原生点和线的图元合同
+
+[point-cloud-basics](../../examples/point-cloud-basics/) 使用真实 POINT_LIST 和 LINE_LIST，
+包含上半区青色点阵、下半区橙色线段及 pointSize 的像素覆盖面积断言。
+POINT_LIST 的枚举值为0，静态和动态 createMesh 均保留它；省略图元时仍默认 TRIANGLE_LIST。
+
+**当前 PSO 以 pass.primitive 为准，mesh 单参数入口尚未实现。**
+必须同时指定 `geometry.primitiveMode` 与 effect pass 的 `primitive`，不能仅在 mesh 中赋值后假定上屏。
+生成器的 `primitive` 字段可减少手改 JSON；默认 pass 三角形不会自动适配点网格。
+点 shader 还需写 `gl_PointSize`，该值以 framebuffer 像素计，支持大小范围取决于设备。
+线宽不是 gl_PointSize，跨设备优先使用默认1像素线宽。
+
+本批保留显式 pass 语义，不更改 PSO 缓存或全局图元来源。
+同一材质可被多个 primitive 引用，必须为各图元使用匹配 pass；多 pass 材质的每个绘制 pass 都要匹配。
+PSO key 已包含 pass hash，而 pass hash 含 primitive，因此 POINT 与 LINE 使用独立缓存对象。
+instancing、附加光照、阴影、反射和自定义管线可能创建或复用不同 IA，不能仅在普通 render queue 临时改图元。
+如后续实现 mesh 自动协调，需要统一传递 IA 图元、纳入 PSO key、明确显式 pass 覆盖优先级，
+并覆盖实例化 IA、子网格替换及全部绘制队列。点/线的 shadow shader 仍须由业务提供兼容版本。

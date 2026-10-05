@@ -1,0 +1,49 @@
+{
+  "generatedAt": "2026-10-02T08:29:55.721Z",
+  "generator": "tools/gen-manifest.mjs",
+  "pathsRelativeTo": "bench root",
+  "assets": [
+    {
+      "path": "assets/boat.glb",
+      "bytes": 29132,
+      "sha256": "ed22ff2f48352b725e76d7e487d7e755fbd923cbda96145b45ec32852f2e9397",
+      "generator": "tools/gen-boat.mjs",
+      "description": "Low-poly sailboat (~2.4 m hull): station-lofted hull + transom, deck with benches, keel fin + rudder, mast/boom/stays, double-sided main sail + jib. Root node \"Boat\". Flat-shaded, pbrMetallicRoughness solid colors, metallic 0 / roughness 0.8."
+    },
+    {
+      "path": "assets/gem.glb",
+      "bytes": 7112,
+      "sha256": "fc0f895d029f648e40ea66fd20deb47588d94e0abe16b21a065078ebba8611aa",
+      "generator": "tools/gen-gem.mjs",
+      "description": "Octagonal step-cut gem: table platform, two crown facet bands, girdle, pavilion and culet point. Node \"Gem\". Diamond-white baseColorFactor, metallic 0.1 / roughness 0.05 (neutral asset; engine side may upgrade the look)."
+    },
+    {
+      "path": "assets/character.glb",
+      "bytes": 162852,
+      "sha256": "d97044e701822bac5a62696459b27d7b375aada5de8574ed4362edbba94771f7",
+      "generator": "download:Fox",
+      "description": "Khronos glTF-Sample-Assets Fox (GLTF-Binary): skinned mesh (1 skin) with 3 animation clips — Survey / Walk / Run. Serves as the shared skeletal-animation character for both engines."
+    },
+    {
+      "path": "assets/textures/ramp-warm-cool.png",
+      "bytes": 1758,
+      "sha256": "387e87c1074962843452dc92c9882179b47461309520f58b5758f38197a07035",
+      "generator": "tools/gen-textures.mjs",
+      "description": "256x256 8-bit RGB horizontal warm-to-cool color gradient ramp (no alpha)."
+    },
+    {
+      "path": "assets/textures/starfield.png",
+      "bytes": 3537,
+      "sha256": "4cf951eaf9d658c84f0f2433688c35602978174e9c421eb5431346eb851f5e13",
+      "generator": "tools/gen-textures.mjs",
+      "description": "256x256 8-bit RGB black starfield with ~400 seeded deterministic stars of random brightness/tint."
+    },
+    {
+      "path": "assets/audio/chime.wav",
+      "bytes": 44144,
+      "sha256": "3de6d20e06099944d005d707be9baafd110e5ab9c2351dde41afa6ea9af0d50d",
+      "generator": "tools/gen-chime.mjs",
+      "description": "0.5 s, 44100 Hz, 16-bit mono PCM: 880 Hz sine with exponential decay and 4 ms attack."
+    }
+  ]
+}

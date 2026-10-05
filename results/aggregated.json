@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-04T12:14:47.999Z",
+  "generatedAt": "2026-10-04T16:04:19.579Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
   "rulerStatus": {
     "rulerId": "RULER-20261003-R02",
@@ -130,6 +130,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 1620,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 24,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 3420,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 25,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 2.11,
+              "buildRatio": null
+            }
           }
         },
         {
@@ -237,6 +257,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 4620,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 24,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 405,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 38,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 0.09,
+              "buildRatio": null
+            }
           }
         },
         {
@@ -342,6 +382,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 2640,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 17,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 3240,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 14,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 1.23,
+              "buildRatio": null
+            }
           }
         },
         {
@@ -453,6 +513,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 5760,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 32,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": null,
+              "buildAttempts": null,
+              "browserAttempts": null,
+              "validationSec": 37,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": null,
+              "buildRatio": null
+            }
           }
         }
       ]
@@ -614,6 +694,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 337,
+              "buildAttempts": 11,
+              "browserAttempts": 3,
+              "validationSec": 32,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 1320,
+              "buildAttempts": 11,
+              "browserAttempts": 6,
+              "validationSec": 27,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 3.92,
+              "buildRatio": 1
+            }
           }
         },
         {
@@ -741,6 +841,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 618,
+              "buildAttempts": 7,
+              "browserAttempts": 4,
+              "validationSec": 35,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 3660,
+              "buildAttempts": 11,
+              "browserAttempts": 6,
+              "validationSec": 34,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 5.92,
+              "buildRatio": 1.57
+            }
           }
         },
         {
@@ -896,6 +1016,26 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 549,
+              "buildAttempts": 14,
+              "browserAttempts": 5,
+              "validationSec": 28,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 1680,
+              "buildAttempts": 12,
+              "browserAttempts": 3,
+              "validationSec": 27,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 3.06,
+              "buildRatio": 0.86
+            }
           }
         },
         {
@@ -1027,6 +1167,348 @@
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
             "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 1560,
+              "buildAttempts": 8,
+              "browserAttempts": 5,
+              "validationSec": 34,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 4200,
+              "buildAttempts": 8,
+              "browserAttempts": 6,
+              "validationSec": 34,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 2.69,
+              "buildRatio": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "batchId": "B-20261004-R01",
+      "createdAt": "2026-10-04T14:55:13.782Z",
+      "pairs": [
+        {
+          "pairId": "PAIR-E01-K0-R01",
+          "batchId": "B-20261004-R01",
+          "scene": "E01",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "targeted-pilot",
+          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-04T15:57:04.018Z"
+              },
+              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+              "passRate": 1,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261004-R01/PAIR-E01-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-04T15:57:39.917Z"
+              },
+              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+              "passRate": 1,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261004-R01/PAIR-E01-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 1
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 10,
+            "rulerId": "RULER-20261003-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 1140,
+              "buildAttempts": 2,
+              "browserAttempts": 2,
+              "validationSec": 34,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 1506,
+              "buildAttempts": 8,
+              "browserAttempts": 6,
+              "validationSec": 33,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 1.32,
+              "buildRatio": 4
+            }
+          }
+        },
+        {
+          "pairId": "PAIR-E05-K0-R01",
+          "batchId": "B-20261004-R01",
+          "scene": "E05",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "targeted-pilot",
+          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 25,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 50,
+              "verdict": "FAIL",
+              "classification": "PERFORMANCE",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P1",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "visual"
+                    ],
+                    "domain": "PERFORMANCE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-04T15:58:14.308Z"
+              },
+              "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+              "passRate": 0.8333,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 50,
+                "attainment": 0.91
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261004-R01/PAIR-E05-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 25,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 50,
+              "verdict": "FAIL",
+              "classification": "PERFORMANCE",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P1",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "visual"
+                    ],
+                    "domain": "PERFORMANCE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-04T15:58:43.117Z"
+              },
+              "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+              "passRate": 0.8333,
+              "fps": 60.3,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 50,
+                "attainment": 0.91
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261004-R01/PAIR-E05-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": null,
+            "attainment": null,
+            "pairedDelta": null,
+            "visualStatus": "INVALID(G7 BLOCKED)",
+            "reason": "gates/G7.json status=BLOCKED;盲评视觉分不得进入正式总分,visual 参考值见 provisionalVisualScore"
+          },
+          "objective": {
+            "total": {
+              "three": 50,
+              "cocosair": 50
+            },
+            "attainment": {
+              "three": 0.91,
+              "cocosair": 0.91
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 10,
+            "rulerId": "RULER-20261003-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          },
+          "cost": {
+            "three": {
+              "wallTimeSec": 1248,
+              "buildAttempts": 7,
+              "browserAttempts": 6,
+              "validationSec": 27,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "cocosair": {
+              "wallTimeSec": 31440,
+              "buildAttempts": 7,
+              "browserAttempts": 6,
+              "validationSec": 25,
+              "source": "WORKLOG 首末时间戳 + .budget 机器计数"
+            },
+            "comparison": {
+              "wallTimeRatio": 25.19,
+              "buildRatio": 1
+            }
           }
         }
       ]
@@ -1065,6 +1547,12 @@
           "track": "targeted-pilot",
           "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
           "delta": -5
+        },
+        {
+          "pairId": "PAIR-E01-K0-R01",
+          "track": "targeted-pilot",
+          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "delta": 0
         }
       ]
     },
@@ -1134,6 +1622,12 @@
           "pairId": "PAIR-E05-K0-R01",
           "track": "targeted-pilot",
           "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
+          "delta": 0
+        },
+        {
+          "pairId": "PAIR-E05-K0-R01",
+          "track": "targeted-pilot",
+          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
           "delta": 0
         }
       ]
@@ -1505,5 +1999,33 @@
     "FIX-B:attainment>1.03 → arm.ceilingBreach:true + rulerStatus.needsRecalibration(量尺可能被低估,需重校准;不截断)。",
     "新批次无盲评时 provisionalVisualScore=null(visualPending),补跑 build-blind + judge 后重跑本脚本回填。",
     "KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效;G7 未过期间以 objective 口径计算。"
-  ]
+  ],
+  "costSummary": {
+    "batches": [
+      {
+        "batchId": "B-20261002-R1",
+        "threeWallSec": 14640,
+        "airWallSec": 7065,
+        "wallRatio": 0.48,
+        "threeBuilds": 0,
+        "airBuilds": 0
+      },
+      {
+        "batchId": "B-20261003-R05",
+        "threeWallSec": 3064,
+        "airWallSec": 10860,
+        "wallRatio": 3.54,
+        "threeBuilds": 40,
+        "airBuilds": 42
+      },
+      {
+        "batchId": "B-20261004-R01",
+        "threeWallSec": 2388,
+        "airWallSec": 32946,
+        "wallRatio": 13.8,
+        "threeBuilds": 9,
+        "airBuilds": 15
+      }
+    ]
+  }
 }
