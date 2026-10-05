@@ -1,60 +1,15 @@
 {
-  "updatedAt": "2026-10-04T14:55:17.650Z",
-  "legacyNote": "G5/G7/G8 等历史门禁文件中的 results/PAIR-* 路径为迁移前时点记录;现行布局为 results/<batchId>/PAIR-*。",
+  "updatedAt": "2026-10-05T02:15:32.059Z",
   "batches": [
     {
-      "batchId": "B-00010101-R96",
-      "createdAt": "2026-10-04T11:13:41.194Z",
+      "batchId": "B-00010101-R95",
+      "createdAt": "2026-10-05T02:15:32.059Z",
       "pairs": [
-        "PAIR-E03-K0-R01"
+        "PAIR-E01-K0-R01"
       ],
-      "lastPairAt": "2026-10-04T11:13:41.194Z",
+      "lastPairAt": "2026-10-05T02:15:32.059Z",
       "pairCount": 1
-    },
-    {
-      "batchId": "B-00010101-R97",
-      "createdAt": "2026-10-03T14:47:53.187Z",
-      "pairs": [
-        "PAIR-E03-K0-R01"
-      ],
-      "lastPairAt": "2026-10-03T14:47:53.187Z",
-      "pairCount": 1
-    },
-    {
-      "batchId": "B-20261002-R1",
-      "createdAt": "2026-10-02T08:55:00Z",
-      "lastPairAt": "2026-10-02T15:30:00Z",
-      "pairCount": 4,
-      "pairs": [
-        "PAIR-E01-K0-R01",
-        "PAIR-E02-K0-R01",
-        "PAIR-E05-K0-R01",
-        "PAIR-E10-K0-R01"
-      ],
-      "note": "M6 Pilot(迁移自扁平布局)"
-    },
-    {
-      "batchId": "B-20261003-R05",
-      "createdAt": "2026-10-03T08:57:02.264Z",
-      "pairs": [
-        "PAIR-E01-K0-R01",
-        "PAIR-E02-K0-R01",
-        "PAIR-E05-K0-R01",
-        "PAIR-E10-K0-R01"
-      ],
-      "lastPairAt": "2026-10-03T08:57:15.669Z",
-      "pairCount": 4
-    },
-    {
-      "batchId": "B-20261004-R01",
-      "createdAt": "2026-10-04T14:55:13.782Z",
-      "pairs": [
-        "PAIR-E01-K0-R01",
-        "PAIR-E05-K0-R01"
-      ],
-      "lastPairAt": "2026-10-04T14:55:17.650Z",
-      "pairCount": 2
     }
   ],
-  "selftestNote": "B-00010101-R99 为 coordinator 自测批次(未运行任何 Agent Run),移至 _selftest/。"
+  "note": "方案 A Owner 裁决:toolCalls 保持 hard 合同;历史数据全清;下次 round create --track core 从 B-<今日>-R01 开始"
 }
