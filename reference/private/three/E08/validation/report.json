@@ -1,6 +1,6 @@
 {
-  "runId": "REF-E08-three-r5",
-  "generatedAt": "2026-10-04T11:43:45.161Z",
+  "runId": "REF-E08-three-r6-reval20261005",
+  "generatedAt": "2026-10-05T06:40:25.850Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E08",
   "spec": {
@@ -12,29 +12,29 @@
   "pairId": null,
   "engine": null,
   "specSha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
-  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+  "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "probeExecutorSha256": "adbf558fe1c93b1fba3eb3bb1ca9d6aeb92f6bb84138626d37320b8c13477804",
     "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 3568,
+    "durationMs": 3926,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  31.5kb\n\nDone in 20ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3564ms\n"
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  31.5kb\n\nDone in 22ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3923ms\n"
   },
   "serve": {
-    "port": 7630,
+    "port": 54056,
     "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E08"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 479
+    "durationMs": 511
   },
   "console": {
     "errors": 0,
@@ -103,12 +103,12 @@
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 1,
-  "fps": 60,
+  "fps": 59.4,
   "perf": {
-    "fps": 60,
-    "frames": 181,
-    "sampleMs": 3016,
-    "sampledAt": "2026-10-04T11:44:44.480Z",
+    "fps": 59.4,
+    "frames": 179,
+    "sampleMs": 3015,
+    "sampledAt": "2026-10-05T06:41:25.511Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -173,7 +173,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.4403
+      "firstShotLitRatio": 0.4404
     },
     "s2": {
       "passedWeight": 8,
@@ -188,7 +188,7 @@
       "minFps": 30
     }
   },
-  "durationMs": 59798,
-  "finishedAt": "2026-10-04T11:44:44.937Z",
+  "durationMs": 60199,
+  "finishedAt": "2026-10-05T06:41:26.023Z",
   "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
 }

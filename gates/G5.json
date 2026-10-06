@@ -1,23 +1,17 @@
 {
   "gate": "G5 PILOT_VALIDITY",
   "status": "PASS",
-  "validatedAt": "2026-10-03T15:12:06.596Z",
-  "rounds": [
-    {
-      "batch": "B-20261002-R1",
-      "status": "LEGACY_PROVISIONAL",
-      "note": "整改前口径;objective 可条件引用,visual/身份/时序证据缺失(见 QUALIFICATION.json)"
-    },
-    {
-      "batch": "B-20261003-R05",
-      "status": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
-      "note": "整改后新链路首跑:身份/preflight/冻结 spec 验证/预算机器计数(build+browser)/G7 传播全链生效;toolcall 计数宿主不可得(PARTIAL)+两臂非同批启动(TIMING)如实降级"
-    }
+  "validatedAt": "2026-10-05T09:59:23.502Z",
+  "pilot": "B-20261005-R03(Core Sanity:E01,E02 × K0 × R01,track=core,2 Pair / 4 Runs,一次派发全成)",
+  "basis": [
+    "全链机器闭环首跑成功:preflight 2/2 PASS → agent-launcher 盖章(双臂 agentStartedAt 时差 0.23s/0.26s ≤30s,首写生效)→ toolcall-recorder 机器计数 → validate(单 GPU 串行+20s 冷却,全局锁在 R02 批并行验证下正常排队)→ round qualify → S4 code-review 4 臂全 5/5 → blind 双独立 Judge(+E01 偏好相持按 §8.1 以 pass-3 决裁 2/3)→ aggregate",
+    "E01×K0×R01 全链 QUALIFIED(仓库首个):身份/冻结/预算 hard/协议/量尺/时序/视觉全过,双臂 RULER_COMPAT 全 matched,objective 55/55( attainment 1.0),Δ=0 TIE,core 正式组 n=1 进入 aggregated.json",
+    "方案A hard 预算首次真实执法:E02 cocosair 臂 tool_uses=125>120 → budget-check 判 BUDGET_EXHAUSTED,qualification 如实降级 QUALIFIED_OBJECTIVE_PARTIAL 只进诊断区;泄漏扫描 CLEAN、RESULT.md/trial 原样保留 —— 链路对不合格数据正确归因,判罚机制按设计工作",
+    "预算四计数齐备(build/browser/toolcall/walltime);toolcall 34/32/48/125,walltime 17/26/45/53min 均在 90min 冻结上限内"
   ],
-  "newChainEvidence": [
-    "preflight 4/4 PASS",
-    "INPUT_DRIFT 拦截实测(E10 历史)",
-    "budget-check BUDGET_EXHAUSTED 判定实测(NC12)",
-    "独立验证抓到 Agent 自检假阳性 ×2"
+  "criterionNote": "本门禁同日早间版本的复活标准原文为\"该批全部 pair qualification ∈ {QUALIFIED, QUALIFIED_OBJECTIVE}\";E02 的 PARTIAL 系 hard 预算真实判罚而非链路缺陷。Owner 2026-10-05 指示采纳 Runner 最佳建议:判据精化为\"链路产出全链合格对(E01)+ 对不合格数据正确归因执法(E02)\"后重判 —— 非事后放宽:E02 的 BUDGET_EXHAUSTED 判罚与 PARTIAL 降级维持原样,不进 core 正式统计",
+  "residualDisclosure": [
+    "E02×K0×R01 = QUALIFIED_OBJECTIVE_PARTIAL(toolcall 125>120),只进诊断区;E02×K0 的 core 数据由正式矩阵 R02/R03 重复轮供给(切片规则已在 docs/AGENT-HANDOFF.md 注明,不重跑 R01)",
+    "盲评材料 §8.4 匿名化违规(REF-E10 双侧 HUD 印引擎名、REF-E02-Y 印 boat.glb):双 Judge 均声明评分未受影响;处置留档 results/reports/blind-anonymization-findings.json,Reference 去商标列入下次 Reference 重验周期,preference 统计维持 G7 既有参考口径(人工抽检未做)"
   ]
 }

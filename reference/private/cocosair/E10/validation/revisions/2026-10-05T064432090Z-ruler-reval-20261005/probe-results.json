@@ -1,0 +1,907 @@
+{
+  "runId": "REF-E10-cocosair-r6-reval20261005",
+  "generatedAt": "2026-10-05T06:45:03.893Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:38.143Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1514
+      },
+      "stateAssertion": {
+        "expr": "$.assetLoaded == true && $.instanceCount == 2 && $.instances.A.clip == \"idle\" && $.instances.B.clip == \"idle\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "minCoverage": 0.1
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.1,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.6551,
+              "background": [
+                16,
+                20,
+                28
+              ]
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.636,
+              "background": [
+                16,
+                20,
+                28
+              ]
+            }
+          ],
+          "worstLitRatio": 0.636
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 1.2779999999999998
+            },
+            "B": {
+              "clip": "idle",
+              "time": 1.2779999999999998
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 32.4
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 4.311200000017877
+            },
+            "B": {
+              "clip": "idle",
+              "time": 4.311200000017877
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4136
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:42.279Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1002
+      },
+      "stateAssertion": {
+        "expr": "$.instances.A.time > 0 && $.instances.B.time > 0 && $.instanceCount == 2",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.102
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.0728
+            }
+          ],
+          "worstDiffRatio": 0.0728
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 5.411200000017875
+            },
+            "B": {
+              "clip": "idle",
+              "time": 5.411200000017875
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 7.411400000005945
+            },
+            "B": {
+              "clip": "idle",
+              "time": 7.411400000005945
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4293
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:46.572Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=anim-a-walk",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "anim-a-walk"
+            },
+            "raw": "click:ui=anim-a-walk",
+            "performed": "click @ (523,688) ui=anim-a-walk"
+          }
+        ],
+        "durationMs": 144
+      },
+      "stateAssertion": {
+        "expr": "$.instances.A.clip == \"walk\" && $.instances.B.clip == \"idle\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.08,
+            "y": 0.15,
+            "w": 0.34,
+            "h": 0.8
+          },
+          "frameGapMs": 500
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.1369
+            }
+          ],
+          "bestDiffRatio": 0.1369,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 9.677999999999974
+            },
+            "B": {
+              "clip": "idle",
+              "time": 9.677999999999974
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "walk",
+              "time": 1.0151999999880787
+            },
+            "B": {
+              "clip": "idle",
+              "time": 10.844900000005934
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3087
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:49.659Z",
+      "precondition": {
+        "expr": "P3",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=destroy-a",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "destroy-a"
+            },
+            "raw": "click:ui=destroy-a",
+            "performed": "click @ (777,688) ui=destroy-a"
+          }
+        ],
+        "durationMs": 92
+      },
+      "stateAssertion": {
+        "expr": "$.instanceCount == 1 && $.destroyedInstance == \"A\" && $.instances.A == null",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": {
+            "x": 0.08,
+            "y": 0.15,
+            "w": 0.34,
+            "h": 0.8
+          },
+          "minChangedRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.1997
+            }
+          ],
+          "bestDiffRatio": 0.1997
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "walk",
+              "time": 2.9485999999940384
+            },
+            "B": {
+              "clip": "idle",
+              "time": 12.778300000011901
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 0,
+          "fps": 60
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 13.678099999994014
+            }
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 59
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-delta.png",
+          "P4-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 1949
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:51.608Z",
+      "precondition": {
+        "expr": "P4",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P4",
+            "met": true,
+            "source": "probe P4",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1508
+      },
+      "stateAssertion": {
+        "expr": "$.instanceCount == 1 && $.instances.B.clip == \"idle\" && $.instances.B.time > 0",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0.58,
+            "y": 0.15,
+            "w": 0.34,
+            "h": 0.8
+          },
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.0883
+            }
+          ],
+          "worstDiffRatio": 0.0883
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 14.711099999994019
+            }
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 17.727999999999966
+            }
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-motion-a.png",
+          "P5-motion-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 5174
+      }
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:56.782Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "reset"
+            },
+            "raw": "click:ui=reset",
+            "performed": "click @ (852,688) ui=reset"
+          }
+        ],
+        "durationMs": 93
+      },
+      "stateAssertion": {
+        "expr": "$.resetCount == 1 && $.instanceCount == 2 && $.destroyedInstance == null && $.instances.A.clip == \"idle\" && $.instances.B.clip == \"idle\"",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "minCoverage": 0.1
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.1,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.5412,
+              "background": [
+                91,
+                87,
+                77
+              ]
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "litRatio": 0.6248,
+              "background": [
+                16,
+                20,
+                28
+              ]
+            }
+          ],
+          "worstLitRatio": 0.5412
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 1,
+          "instances": {
+            "A": null,
+            "B": {
+              "clip": "idle",
+              "time": 19.86099999999996
+            }
+          },
+          "destroyedInstance": "A",
+          "resetCount": 0,
+          "fps": 60
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 1.5009999999999997
+            },
+            "B": {
+              "clip": "idle",
+              "time": 1.5009999999999997
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 1,
+          "fps": 60
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-vis.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2660
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T06:44:59.442Z",
+      "precondition": {
+        "expr": "P6",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P6",
+            "met": true,
+            "source": "probe P6",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1000
+            },
+            "raw": "wait:1000",
+            "performed": "waited 1000ms"
+          }
+        ],
+        "durationMs": 1000
+      },
+      "stateAssertion": {
+        "expr": "$.instances.A.time > 0 && $.instances.B.time > 0 && $.fps >= 30",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "regions": [
+            {
+              "x": 0.08,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            },
+            {
+              "x": 0.58,
+              "y": 0.15,
+              "w": 0.34,
+              "h": 0.8
+            }
+          ],
+          "spanMs": 800
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 800,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 102,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.1225
+            },
+            {
+              "rect": {
+                "x": 742,
+                "y": 108,
+                "w": 435,
+                "h": 576
+              },
+              "diffRatio": 0.1207
+            }
+          ],
+          "worstDiffRatio": 0.1207
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 2.6011999999880775
+            },
+            "B": {
+              "clip": "idle",
+              "time": 2.6011999999880775
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 1,
+          "fps": 60
+        },
+        "stateAfter": {
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "instanceCount": 2,
+          "instances": {
+            "A": {
+              "clip": "idle",
+              "time": 4.601199999988074
+            },
+            "B": {
+              "clip": "idle",
+              "time": 4.601199999988074
+            }
+          },
+          "destroyedInstance": null,
+          "resetCount": 1,
+          "fps": 60
+        },
+        "shots": [
+          "P7-before.png",
+          "P7-motion-a.png",
+          "P7-motion-b.png",
+          "P7-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 4240
+      }
+    }
+  ]
+}

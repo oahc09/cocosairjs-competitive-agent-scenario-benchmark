@@ -1,6 +1,6 @@
 {
-  "rulerId": "RULER-20261003-R02",
-  "updatedAt": "2026-10-04T11:48:51.559Z",
+  "rulerId": "RULER-20261005-R02",
+  "updatedAt": "2026-10-05T12:41:46.523Z",
   "principle": "Reference 天花板 = 每个场景的满分线(量尺)。语义输入(引擎/文档/Brief/spec)变化 → 重实现并 refVersion+1,换新量尺 RULER-<日期>-R<轮次>;测量协议(validator/judge/toolchain)变化 → 仅重验,validationRevision+1,量尺不变。同一版量尺下的所有批次共用同一满分线",
   "inputTaxonomy": {
     "semantic": [
@@ -12,14 +12,16 @@
     "protocol": [
       "validatorProtocolHash(漂移→重验 validationRevision)",
       "judgeProtocolHash(漂移→重验 validationRevision)",
-      "toolchain(漂移→重验 validationRevision)"
+      "codeReviewProtocolHash(漂移→重验 validationRevision)",
+      "toolchain(漂移→重验 validationRevision)",
+      "visualEvidenceSha(漂移→重验 validationRevision)"
     ],
     "note": "旧账本 briefSha=null 系 briefs/index.json 解析 bug 所致,首次以真实值回填不算漂移"
   },
   "protocol": {
-    "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+    "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
     "validatorProtocolComponents": {
-      "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+      "probeExecutorSha256": "adbf558fe1c93b1fba3eb3bb1ca9d6aeb92f6bb84138626d37320b8c13477804",
       "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
     },
     "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
@@ -59,12 +61,30 @@
         "E10:three",
         "E10:cocosair"
       ]
+    },
+    {
+      "rulerId": "RULER-20261005-R01",
+      "frozenAt": "2026-10-05T06:58:01.011Z",
+      "changed": [
+        "E05:three",
+        "E05:cocosair",
+        "E09:three",
+        "E09:cocosair"
+      ]
+    },
+    {
+      "rulerId": "RULER-20261005-R02",
+      "frozenAt": "2026-10-05T12:41:46.523Z",
+      "changed": [
+        "E03:three",
+        "E03:cocosair"
+      ]
     }
   ],
   "epochs": {
     "E01:three": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "225bf8c171f568e58931145bb30ad69c02578c6c275b040c9bd43e2c8bc5d8d7",
@@ -72,8 +92,9 @@
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "e474131e49efd6bb08161da51058a5bb7f2482402e15c20fe238ed17f9c66f81"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -81,35 +102,28 @@
         "s3": 10
       },
       "objectiveScore": 55,
-      "visualRaw18": 13,
+      "visualRaw18": 17,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E01-X-0914"
+        "path": "reference/private/three/E01/visual-score.json",
+        "sha256": "e474131e49efd6bb08161da51058a5bb7f2482402e15c20fe238ed17f9c66f81",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
-      "visualScore40": 29,
+      "visualScore40": 38,
       "referenceS4": 4.3,
-      "totalScore": 88.3,
-      "ceiling": 88.3,
-      "evidenceHash": "64945e1e0fa862eb616dc0401e10410a575dd0ab677518ce569ffe74a2ab364f",
+      "totalScore": 97.3,
+      "ceiling": 97.3,
+      "evidenceHash": "1b4dad88266ff19e93b679f835d340e0c43a26a98e4790bbf145080f9cca8dcf",
       "validated": {
         "passRate": 1,
         "fps": 60.1,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.445Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.433Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     },
     "E01:cocosair": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "225bf8c171f568e58931145bb30ad69c02578c6c275b040c9bd43e2c8bc5d8d7",
@@ -117,8 +131,9 @@
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "3ef8b681e932221672d82de4562b346a474b1117452acca32921835cc52a9a1d"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -126,35 +141,28 @@
         "s3": 10
       },
       "objectiveScore": 55,
-      "visualRaw18": 12.5,
+      "visualRaw18": 16,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E01-Y-c9f5"
+        "path": "reference/private/cocosair/E01/visual-score.json",
+        "sha256": "3ef8b681e932221672d82de4562b346a474b1117452acca32921835cc52a9a1d",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
-      "visualScore40": 28,
+      "visualScore40": 36,
       "referenceS4": 4.3,
-      "totalScore": 87.3,
-      "ceiling": 87.3,
-      "evidenceHash": "3618cace0317ef90357b9d0c6aff495a4ba4a7e41a62accc8f3086e81c1b9771",
+      "totalScore": 95.3,
+      "ceiling": 95.3,
+      "evidenceHash": "c00eb1ef1904de389ae05ade75e3e41b77314957396ebda45e3c1915d1ce4cce",
       "validated": {
         "passRate": 1,
-        "fps": 60.1,
+        "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.453Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.442Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     },
     "E02:three": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "9e06f270f3858471695137d820d29e08d1392e4b925d19a58ecf3d3fb3a8c385",
@@ -162,458 +170,9 @@
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 11.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E02-X-dd5e"
-      },
-      "visualScore40": 26,
-      "referenceS4": 4.3,
-      "totalScore": 85.3,
-      "ceiling": 85.3,
-      "evidenceHash": "a18cb34d361ef074cbc6296080e8569a1c62f27f7a63ec26be427be90314e4e0",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.3,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.458Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E02:cocosair": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-        "briefSha": "9e06f270f3858471695137d820d29e08d1392e4b925d19a58ecf3d3fb3a8c385",
-        "specSha": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 12,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E02-Y-af6d"
-      },
-      "visualScore40": 27,
-      "referenceS4": 4.3,
-      "totalScore": 86.3,
-      "ceiling": 86.3,
-      "evidenceHash": "b79ef6d05ac7c92cc0db6b93f51a89633323b677d791fed995a9353bfa68c650",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.2,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.464Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E03:three": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "three@0.186.1",
-        "briefSha": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
-        "specSha": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
-        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 11.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E03-X-491a"
-      },
-      "visualScore40": 26,
-      "referenceS4": 4.3,
-      "totalScore": 85.3,
-      "ceiling": 85.3,
-      "evidenceHash": "46d86de18ef14353898322ea370355045f6b0b7c439f26b8272d917218cc9bb7",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.1,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.470Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E03:cocosair": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-        "briefSha": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
-        "specSha": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
-        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 11.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E03-Y-7b8f"
-      },
-      "visualScore40": 26,
-      "referenceS4": 4.3,
-      "totalScore": 85.3,
-      "ceiling": 85.3,
-      "evidenceHash": "881fc6ab04e8e7164d24215748e13ad235c81bdbba10a055212dfb0885a8d623",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.1,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.476Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E04:three": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "three@0.186.1",
-        "briefSha": "353509725ac4779a0f2ea79afb9e64b2755f6945cc90421150670ebfd3f943ca",
-        "specSha": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
-        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 11,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E04-X-814b"
-      },
-      "visualScore40": 24,
-      "referenceS4": 4.3,
-      "totalScore": 83.3,
-      "ceiling": 83.3,
-      "evidenceHash": "cb36da76cce93a78842c137fcb565ed0d9c44f12385707c139c4703b703dc122",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.2,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.482Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E04:cocosair": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-        "briefSha": "353509725ac4779a0f2ea79afb9e64b2755f6945cc90421150670ebfd3f943ca",
-        "specSha": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
-        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 11.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E04-Y-dede"
-      },
-      "visualScore40": 26,
-      "referenceS4": 4.3,
-      "totalScore": 85.3,
-      "ceiling": 85.3,
-      "evidenceHash": "19d27cdcd1f47808cb1eb1c6b35b95b218f8c705a67f91e178546341de1c5d84",
-      "validated": {
-        "passRate": 1,
-        "fps": 60,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.487Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E05:three": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "three@0.186.1",
-        "briefSha": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b",
-        "specSha": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
-        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 13,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E05-X-9835"
-      },
-      "visualScore40": 29,
-      "referenceS4": 4.3,
-      "totalScore": 88.3,
-      "ceiling": 88.3,
-      "evidenceHash": "e39f034600d980961d6574815d46c08a96c90d64e1b6cf0571f1d96fe34970da",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.1,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.493Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E05:cocosair": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-        "briefSha": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b",
-        "specSha": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
-        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 13,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E05-Y-bcfe"
-      },
-      "visualScore40": 29,
-      "referenceS4": 4.3,
-      "totalScore": 88.3,
-      "ceiling": 88.3,
-      "evidenceHash": "e02ecd73cc8f6661070392b5dcaa33638ce2a4998b20bb485cc3dc77756ea70c",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.1,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.499Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E06:three": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "three@0.186.1",
-        "briefSha": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7",
-        "specSha": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
-        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 13.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E06-X-4b20"
-      },
-      "visualScore40": 30,
-      "referenceS4": 4.3,
-      "totalScore": 89.3,
-      "ceiling": 89.3,
-      "evidenceHash": "742a4ed993b4b948893a4e1ea3639e72fb09a11bb7fcdff57ebaf54df2d9c1e0",
-      "validated": {
-        "passRate": 1,
-        "fps": 58.4,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.504Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E06:cocosair": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-        "briefSha": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7",
-        "specSha": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
-        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 13.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E06-Y-e3e8"
-      },
-      "visualScore40": 30,
-      "referenceS4": 4.3,
-      "totalScore": 89.3,
-      "ceiling": 89.3,
-      "evidenceHash": "63e7145620020ab3b495ca5d25b4f70ffa73addb3e4e726ac8a99dc0058b49a5",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.2,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.509Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E07:three": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "three@0.186.1",
-        "briefSha": "8b1fae76fbbabbac87dac1a2f718cbcc2cc641a06c3bbfc36038b750800fad6f",
-        "specSha": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
-        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "cc33420bf5f9a94a72129dfefa0e4264ce5cc0dca278af75ce3b923f3bc6c7cd"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -623,33 +182,432 @@
       "objectiveScore": 55,
       "visualRaw18": 14,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E07-X-0344"
+        "path": "reference/private/three/E02/visual-score.json",
+        "sha256": "cc33420bf5f9a94a72129dfefa0e4264ce5cc0dca278af75ce3b923f3bc6c7cd",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
       "visualScore40": 31,
       "referenceS4": 4.3,
       "totalScore": 90.3,
       "ceiling": 90.3,
-      "evidenceHash": "66569ab4d84a11a36a0abc64e25112454807be06f2a17614de53d6ecb66187d5",
+      "evidenceHash": "937bd8b5f696d74f2b9c8ba00361507cbc6555f224beafdc5e510dc103ab407f",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.447Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E02:cocosair": {
+      "refVersion": 2,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+        "briefSha": "9e06f270f3858471695137d820d29e08d1392e4b925d19a58ecf3d3fb3a8c385",
+        "specSha": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "2ffc375e647c6e120af3c4b9c4bfc4aaf72bd04fdeb225e6919c6e8305055dc8"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 17,
+      "visualEvidence": {
+        "path": "reference/private/cocosair/E02/visual-score.json",
+        "sha256": "2ffc375e647c6e120af3c4b9c4bfc4aaf72bd04fdeb225e6919c6e8305055dc8",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 38,
+      "referenceS4": 4.3,
+      "totalScore": 97.3,
+      "ceiling": 97.3,
+      "evidenceHash": "2e62941b0bd7128072ed3c4be8d75d897ff16bcb98026bd301cbcee42cbfd077",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.3,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.451Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E03:three": {
+      "refVersion": 3,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "three@0.186.1",
+        "briefSha": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
+        "specSha": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
+        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "961f02c416579813b59054b06daa8904c9a24fb1e67a5d7e3b934cfb4c77a6bc"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 14,
+      "visualEvidence": {
+        "path": "reference/private/three/E03/visual-score.json",
+        "sha256": "961f02c416579813b59054b06daa8904c9a24fb1e67a5d7e3b934cfb4c77a6bc",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 31,
+      "referenceS4": 4.3,
+      "totalScore": 90.3,
+      "ceiling": 90.3,
+      "evidenceHash": "1c1fce75586dbc6b198c475296ead63f082ee37f298ae403ea1690ca560fb4fe",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.454Z",
+      "frozenUnderRuler": "RULER-20261005-R02",
+      "changedFrom": 2,
+      "changedSemantic": [
+        "specSha"
+      ],
+      "changedProtocol": [],
+      "changedInputs": [
+        "specSha"
+      ]
+    },
+    "E03:cocosair": {
+      "refVersion": 3,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+        "briefSha": "665f22408453cfa633e8c53b437540b96cf0bfb97b160ad47bd78e95deb65ed4",
+        "specSha": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
+        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "ecf7656cf90fb5926446fcfeecbe68d4eae59fb242cb8239742f418980c95670"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 16,
+      "visualEvidence": {
+        "path": "reference/private/cocosair/E03/visual-score.json",
+        "sha256": "ecf7656cf90fb5926446fcfeecbe68d4eae59fb242cb8239742f418980c95670",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 36,
+      "referenceS4": 4.3,
+      "totalScore": 95.3,
+      "ceiling": 95.3,
+      "evidenceHash": "7b9d08685c705436bb064c4c7033d443de21e3a03de972ea24775ffd0845d2bc",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.455Z",
+      "frozenUnderRuler": "RULER-20261005-R02",
+      "changedFrom": 2,
+      "changedSemantic": [
+        "specSha"
+      ],
+      "changedProtocol": [],
+      "changedInputs": [
+        "specSha"
+      ]
+    },
+    "E04:three": {
+      "refVersion": 2,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "three@0.186.1",
+        "briefSha": "353509725ac4779a0f2ea79afb9e64b2755f6945cc90421150670ebfd3f943ca",
+        "specSha": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
+        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "b389ead377a0f2b6a04c39363b5653e53e6f2ff18899ce232fc29d4902104ada"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 11,
+      "visualEvidence": {
+        "path": "reference/private/three/E04/visual-score.json",
+        "sha256": "b389ead377a0f2b6a04c39363b5653e53e6f2ff18899ce232fc29d4902104ada",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 24,
+      "referenceS4": 4.3,
+      "totalScore": 83.3,
+      "ceiling": 83.3,
+      "evidenceHash": "8bd83017ae67d1a3c01c32ea03aa58e4a4391545b2f15b07a36f4a0656a3ff25",
       "validated": {
         "passRate": 1,
         "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.516Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.462Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E04:cocosair": {
+      "refVersion": 2,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+        "briefSha": "353509725ac4779a0f2ea79afb9e64b2755f6945cc90421150670ebfd3f943ca",
+        "specSha": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
+        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "769d96cd8310ad1face61ddfaf8d8faa2caad70446477f6abd07218cebe630a4"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 15,
+      "visualEvidence": {
+        "path": "reference/private/cocosair/E04/visual-score.json",
+        "sha256": "769d96cd8310ad1face61ddfaf8d8faa2caad70446477f6abd07218cebe630a4",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 33,
+      "referenceS4": 4.3,
+      "totalScore": 92.3,
+      "ceiling": 92.3,
+      "evidenceHash": "49ea4246b3497c2fb052fd33689c5d9e27e11ff12f236c31e68b4504f9e641ed",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.467Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E05:three": {
+      "refVersion": 3,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "three@0.186.1",
+        "briefSha": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b",
+        "specSha": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
+        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "79462c1e2f4479d229bd207d970069c3f612cf6b9dc02e3c57f1481a52b49fe6"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 15,
+      "visualEvidence": {
+        "path": "reference/private/three/E05/visual-score.json",
+        "sha256": "79462c1e2f4479d229bd207d970069c3f612cf6b9dc02e3c57f1481a52b49fe6",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 33,
+      "referenceS4": 4.3,
+      "totalScore": 92.3,
+      "ceiling": 92.3,
+      "evidenceHash": "4256a299dd2cc4c94bcb301f074403c65c76ac3dea0cce2772680a2b33836d93",
+      "validated": {
+        "passRate": 1,
+        "fps": 60,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.471Z",
+      "frozenUnderRuler": "RULER-20261005-R01"
+    },
+    "E05:cocosair": {
+      "refVersion": 3,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+        "briefSha": "e9090e4049f1c5ef1eaca8a91d52e180f2269fd59fc7ce267eba94b1d9c8c41b",
+        "specSha": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
+        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "cd9a9a5ad4015bd0df0bb62c322be40c6ca8b0f2d3511e04875010aece61a533"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 13,
+      "visualEvidence": {
+        "path": "reference/private/cocosair/E05/visual-score.json",
+        "sha256": "cd9a9a5ad4015bd0df0bb62c322be40c6ca8b0f2d3511e04875010aece61a533",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 29,
+      "referenceS4": 4.3,
+      "totalScore": 88.3,
+      "ceiling": 88.3,
+      "evidenceHash": "225b88d6385ba9e8757fcfb7b3a8d4db8ce75b230a1d7506109cec7a74d94f43",
+      "validated": {
+        "passRate": 1,
+        "fps": 60,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.476Z",
+      "frozenUnderRuler": "RULER-20261005-R01"
+    },
+    "E06:three": {
+      "refVersion": 2,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "three@0.186.1",
+        "briefSha": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7",
+        "specSha": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "cc90a32492d7dae8aab3b5cd34a60cb9bade1b5818b0b9ac2283c1b6b38ba0ee"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 16,
+      "visualEvidence": {
+        "path": "reference/private/three/E06/visual-score.json",
+        "sha256": "cc90a32492d7dae8aab3b5cd34a60cb9bade1b5818b0b9ac2283c1b6b38ba0ee",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 36,
+      "referenceS4": 4.3,
+      "totalScore": 95.3,
+      "ceiling": 95.3,
+      "evidenceHash": "a78fdcf830040053e103fc5bb901ed0836ccfbe9193605d3ea7b7f5f6f826325",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.481Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E06:cocosair": {
+      "refVersion": 2,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+        "briefSha": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7",
+        "specSha": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "abf5ac16428a33973841727727356f7fdc37f8e3e06b916eff9b776195cb6332"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 12,
+      "visualEvidence": {
+        "path": "reference/private/cocosair/E06/visual-score.json",
+        "sha256": "abf5ac16428a33973841727727356f7fdc37f8e3e06b916eff9b776195cb6332",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 27,
+      "referenceS4": 4.3,
+      "totalScore": 86.3,
+      "ceiling": 86.3,
+      "evidenceHash": "0b70922f3f25eef3c760ebbd2f84285f2d7ad44949ddc986fb24b41ec3180ca6",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.2,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.485Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E07:three": {
+      "refVersion": 2,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "three@0.186.1",
+        "briefSha": "8b1fae76fbbabbac87dac1a2f718cbcc2cc641a06c3bbfc36038b750800fad6f",
+        "specSha": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "18f8bd94de3cda76f2bd0b618920c96bc6fb6ef238a78a7ad94726f3aa493182"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 16,
+      "visualEvidence": {
+        "path": "reference/private/three/E07/visual-score.json",
+        "sha256": "18f8bd94de3cda76f2bd0b618920c96bc6fb6ef238a78a7ad94726f3aa493182",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 36,
+      "referenceS4": 4.3,
+      "totalScore": 95.3,
+      "ceiling": 95.3,
+      "evidenceHash": "3304305c55019899cf361fa303aaeae577f0450ece0849c0efd5e5685141f219",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.490Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     },
     "E07:cocosair": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "8b1fae76fbbabbac87dac1a2f718cbcc2cc641a06c3bbfc36038b750800fad6f",
@@ -657,8 +615,9 @@
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "dc909d39f5551b1a03ef78b28950effdcc6c6ac145a01fb3b09b2386e4d84a02"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -666,35 +625,28 @@
         "s3": 10
       },
       "objectiveScore": 55,
-      "visualRaw18": 13,
+      "visualRaw18": 11,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E07-Y-9089"
+        "path": "reference/private/cocosair/E07/visual-score.json",
+        "sha256": "dc909d39f5551b1a03ef78b28950effdcc6c6ac145a01fb3b09b2386e4d84a02",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
-      "visualScore40": 29,
+      "visualScore40": 24,
       "referenceS4": 4.3,
-      "totalScore": 88.3,
-      "ceiling": 88.3,
-      "evidenceHash": "0056354d682f46c56b8b65ad59322866783b64a1c516b72b3288d311a5e81131",
+      "totalScore": 83.3,
+      "ceiling": 83.3,
+      "evidenceHash": "ba185fa58414f4d78f1bc5488a6c2e70115230b46e6d7358699de28190b9f895",
       "validated": {
         "passRate": 1,
         "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.523Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.495Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     },
     "E08:three": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "3deef8172bb311ea2ef59d2181d486c984fe871d4d88c79700a47707e9d1a8be",
@@ -702,8 +654,9 @@
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "2831c04ecd37eba3c402ebecc98d33f33005dff8beb2487a06da3d51744731a5"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -711,35 +664,28 @@
         "s3": 10
       },
       "objectiveScore": 55,
-      "visualRaw18": 12,
+      "visualRaw18": 16,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E08-X-9db5"
+        "path": "reference/private/three/E08/visual-score.json",
+        "sha256": "2831c04ecd37eba3c402ebecc98d33f33005dff8beb2487a06da3d51744731a5",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
-      "visualScore40": 27,
+      "visualScore40": 36,
       "referenceS4": 4.3,
-      "totalScore": 86.3,
-      "ceiling": 86.3,
-      "evidenceHash": "23298b1ac8b40915c9cd59f4239daf026ebdd4c122c1035099f9da26d610015b",
+      "totalScore": 95.3,
+      "ceiling": 95.3,
+      "evidenceHash": "53dcce67504b4b7a713dcae0c7035808a389e50cbdf485d8773be5aa41c45424",
       "validated": {
         "passRate": 1,
-        "fps": 60,
+        "fps": 59.4,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.530Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.499Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     },
     "E08:cocosair": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "3deef8172bb311ea2ef59d2181d486c984fe871d4d88c79700a47707e9d1a8be",
@@ -747,98 +693,9 @@
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 12,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E08-Y-2c8d"
-      },
-      "visualScore40": 27,
-      "referenceS4": 4.3,
-      "totalScore": 86.3,
-      "ceiling": 86.3,
-      "evidenceHash": "e4b51a0f6f32cd8b3c279766bc42d92fdf4f025c83c8ef7cea91f2c1636b31bb",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.1,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.536Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E09:three": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "three@0.186.1",
-        "briefSha": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366",
-        "specSha": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
-        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
-      },
-      "objectiveBreakdown": {
-        "s1": 15,
-        "s2": 30,
-        "s3": 10
-      },
-      "objectiveScore": 55,
-      "visualRaw18": 12.5,
-      "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E09-X-9ff4"
-      },
-      "visualScore40": 28,
-      "referenceS4": 4.3,
-      "totalScore": 87.3,
-      "ceiling": 87.3,
-      "evidenceHash": "54ae1c5c7b10f45cb0305e95fe5fed1fdfb5c7c59352785177f60b86128b07a6",
-      "validated": {
-        "passRate": 1,
-        "fps": 60.1,
-        "verdict": "PASS"
-      },
-      "frozenAt": "2026-10-04T11:48:51.542Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
-    },
-    "E09:cocosair": {
-      "refVersion": 2,
-      "validationRevision": 10,
-      "inputs": {
-        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
-        "briefSha": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366",
-        "specSha": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
-        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
-        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
-        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "962420cca1e8f5b243f9d8f2bdafcce7bf4cc87c2a955f0a3ae60d0536b906d0"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -848,33 +705,104 @@
       "objectiveScore": 55,
       "visualRaw18": 13,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E09-Y-98d8"
+        "path": "reference/private/cocosair/E08/visual-score.json",
+        "sha256": "962420cca1e8f5b243f9d8f2bdafcce7bf4cc87c2a955f0a3ae60d0536b906d0",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
       "visualScore40": 29,
       "referenceS4": 4.3,
       "totalScore": 88.3,
       "ceiling": 88.3,
-      "evidenceHash": "510b751ae089871b131a0aaec7d0cbc482b607883b19c54496e23979621cbb72",
+      "evidenceHash": "48272e0bc94143090b26ddc641fa1baebf28541c8e19b991f9d2781c48250a2d",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.504Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
+    },
+    "E09:three": {
+      "refVersion": 3,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "three@0.186.1",
+        "briefSha": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366",
+        "specSha": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+        "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "244c3f454f554ef8f8a473d680c26e7c502e8d92251f0def0d66c7a72c482ae1"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 13,
+      "visualEvidence": {
+        "path": "reference/private/three/E09/visual-score.json",
+        "sha256": "244c3f454f554ef8f8a473d680c26e7c502e8d92251f0def0d66c7a72c482ae1",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 29,
+      "referenceS4": 4.3,
+      "totalScore": 88.3,
+      "ceiling": 88.3,
+      "evidenceHash": "464f3dd85ade4de2fa0ef67b8c86fe567e71a91496006cf43e3d6a56fcc3be16",
+      "validated": {
+        "passRate": 1,
+        "fps": 60.1,
+        "verdict": "PASS"
+      },
+      "frozenAt": "2026-10-05T12:41:46.509Z",
+      "frozenUnderRuler": "RULER-20261005-R01"
+    },
+    "E09:cocosair": {
+      "refVersion": 3,
+      "validationRevision": 11,
+      "inputs": {
+        "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
+        "briefSha": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366",
+        "specSha": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+        "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
+        "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
+        "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "1a2e0cc724c5875e09220273c2bf9ddf83967f6ebc456a202509fe27c8d4e500"
+      },
+      "objectiveBreakdown": {
+        "s1": 15,
+        "s2": 30,
+        "s3": 10
+      },
+      "objectiveScore": 55,
+      "visualRaw18": 12,
+      "visualEvidence": {
+        "path": "reference/private/cocosair/E09/visual-score.json",
+        "sha256": "1a2e0cc724c5875e09220273c2bf9ddf83967f6ebc456a202509fe27c8d4e500",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
+      },
+      "visualScore40": 27,
+      "referenceS4": 4.3,
+      "totalScore": 86.3,
+      "ceiling": 86.3,
+      "evidenceHash": "0c5373452e0fa9ac9b462908faa14dba8a94aebaa64b0d1872796ac766ff4672",
       "validated": {
         "passRate": 1,
         "fps": 60.2,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.548Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.513Z",
+      "frozenUnderRuler": "RULER-20261005-R01"
     },
     "E10:three": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "three@0.186.1",
         "briefSha": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad",
@@ -882,8 +810,9 @@
         "docsSha": "3965e24531556da32166d87351b7981c027bb1a42b2747e03e60ad795166a0b8",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "131653a3e9770e78c8d94622d604788524ed78ec3b2a84513606ee69a0560d0f"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -891,35 +820,28 @@
         "s3": 10
       },
       "objectiveScore": 55,
-      "visualRaw18": 10.5,
+      "visualRaw18": 15,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E10-X-c7ef"
+        "path": "reference/private/three/E10/visual-score.json",
+        "sha256": "131653a3e9770e78c8d94622d604788524ed78ec3b2a84513606ee69a0560d0f",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
-      "visualScore40": 23,
+      "visualScore40": 33,
       "referenceS4": 4.3,
-      "totalScore": 82.3,
-      "ceiling": 82.3,
-      "evidenceHash": "642bbd6a32f00f786f82d5e1bc77f5dd2e56c21cf38b2c14f5fa5ac00b051f48",
+      "totalScore": 92.3,
+      "ceiling": 92.3,
+      "evidenceHash": "34d1c1c935d8c1470bc392b1194fbb0e03300c533e45f80f1cf5fb54a08338d0",
       "validated": {
         "passRate": 1,
-        "fps": 60.2,
+        "fps": 60,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.554Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.519Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     },
     "E10:cocosair": {
       "refVersion": 2,
-      "validationRevision": 10,
+      "validationRevision": 11,
       "inputs": {
         "engine": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565",
         "briefSha": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad",
@@ -927,8 +849,9 @@
         "docsSha": "5dbd54df9389c49ac6caa782f05f4c962193c5fcbef99d9e13852526eb025b2c",
         "codeReviewProtocolHash": "aebd91a0f4408a414e289cd40d4d8631683d4f5f997e6a9984fc1e2c956f5d96",
         "toolchain": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97",
-        "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08"
+        "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+        "judgeProtocolHash": "3d86417c1ddadb6640e5c3f3fd13137aa0e39d98e37433935b22261fd07f9d08",
+        "visualEvidenceSha": "ee34f96f82a764995c9ac517c2b221afa6930e287f2f087480368d3de8dfc150"
       },
       "objectiveBreakdown": {
         "s1": 15,
@@ -936,31 +859,24 @@
         "s3": 10
       },
       "objectiveScore": 55,
-      "visualRaw18": 10.5,
+      "visualRaw18": 12,
       "visualEvidence": {
-        "batchId": "B-20261002-R1",
-        "itemId": "REF-E10-Y-2339"
+        "path": "reference/private/cocosair/E10/visual-score.json",
+        "sha256": "ee34f96f82a764995c9ac517c2b221afa6930e287f2f087480368d3de8dfc150",
+        "source": "self-contained(reference visual-score.json;provenance 见文件内 provenance 段)"
       },
-      "visualScore40": 23,
+      "visualScore40": 27,
       "referenceS4": 4.3,
-      "totalScore": 82.3,
-      "ceiling": 82.3,
-      "evidenceHash": "145a68245a57564e292fc2262bf5fb1ffb616ff37157e51755e330eae3c5e67d",
+      "totalScore": 86.3,
+      "ceiling": 86.3,
+      "evidenceHash": "2fbfaaa7cabe6576f4073fed7f362199180441b31e06fbf60c620c255ddbfd5a",
       "validated": {
         "passRate": 1,
-        "fps": 60,
+        "fps": 60.3,
         "verdict": "PASS"
       },
-      "frozenAt": "2026-10-04T11:48:51.559Z",
-      "frozenUnderRuler": "RULER-20261003-R02",
-      "changedFrom": 2,
-      "changedSemantic": [],
-      "changedProtocol": [
-        "validatorProtocolHash"
-      ],
-      "changedInputs": [
-        "validatorProtocolHash"
-      ]
+      "frozenAt": "2026-10-05T12:41:46.523Z",
+      "frozenUnderRuler": "RULER-20261003-R02"
     }
   }
 }

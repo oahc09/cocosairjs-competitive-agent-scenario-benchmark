@@ -1,0 +1,42 @@
+{
+  "scene": "E08",
+  "engine": "cocosair",
+  "rulerId": "RULER-20261005-R01",
+  "visualRaw18": 13,
+  "visualScore40": 29,
+  "dimsPrimary": {
+    "构图取景": 2,
+    "材质光影": 2,
+    "动效流畅": 3,
+    "特效质感": 2,
+    "交互反馈": 2,
+    "整体完成度": 2
+  },
+  "totalPrimary": 13,
+  "judgeCorroboration": {
+    "dims": {
+      "构图取景": 2,
+      "材质光影": 1,
+      "动效流畅": 3,
+      "特效质感": 2,
+      "交互反馈": 2,
+      "整体完成度": 2
+    },
+    "total": 12,
+    "average18": 12.5,
+    "itemId": "REF-E08-Y-2c8d"
+  },
+  "provenance": {
+    "itemId": "REF-E08-Y-2c8d",
+    "extractedFrom": "results/B-20261005-R01/blind/judge-pass-1.json",
+    "sha256Source": "fbfb00214dd64882017651204d0e7895f677114b48b6bbf5913dc2881efa4794",
+    "corroboratedFrom": "results/B-20261005-R01/blind/judge-pass-2.json",
+    "sha256Corroboration": "d64e13cff7cac48abd70f2fa070279751868a2ebdc946124eefe6630b8f0ee98",
+    "extractedAt": "2026-10-05T07:42:48.204Z",
+    "extractor": "tools/extract-ref-visual-score.mjs"
+  },
+  "protocol": {
+    "judgeProtocolHash": null
+  },
+  "note": "Reference 视觉证据自包含文件(R4/Phase 4):REFERENCE-VERSIONS.json 以本文件(path+sha256)冻结 visualRaw18,不再依赖 results/ 批次产物;删除批次不影响 ceiling-check。"
+}

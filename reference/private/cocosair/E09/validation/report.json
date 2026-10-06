@@ -1,40 +1,40 @@
 {
-  "runId": "REF-E09-cocosair-s5",
-  "generatedAt": "2026-10-04T12:10:29.071Z",
+  "runId": "REF-E09-cocosair-r6-reval20261005-cd",
+  "generatedAt": "2026-10-05T06:54:04.892Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E09",
   "spec": {
     "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E09\\spec.json",
     "briefId": "E09",
-    "briefVersion": "1.0.0",
-    "sha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4"
+    "briefVersion": "1.0.1",
+    "sha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7"
   },
   "pairId": null,
   "engine": null,
-  "specSha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
-  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+  "specSha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+  "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "probeExecutorSha256": "adbf558fe1c93b1fba3eb3bb1ca9d6aeb92f6bb84138626d37320b8c13477804",
     "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 1401,
+    "durationMs": 1532,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  32.0kb\n\nDone in 19ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1399ms\n"
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  32.0kb\n\nDone in 18ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1529ms\n"
   },
   "serve": {
-    "port": 7671,
+    "port": 56056,
     "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E09"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 2546
+    "durationMs": 2819
   },
   "console": {
     "errors": 0,
@@ -74,12 +74,10 @@
     },
     {
       "probeId": "P5",
-      "status": "FAIL",
+      "status": "PASS",
       "weight": 1,
       "visualType": "regionChange",
-      "failedAssertions": [
-        "visual"
-      ]
+      "failedAssertions": []
     },
     {
       "probeId": "P6",
@@ -92,7 +90,7 @@
       "probeId": "P7",
       "status": "PASS",
       "weight": 1,
-      "visualType": "motion",
+      "visualType": "nonBlank",
       "failedAssertions": []
     },
     {
@@ -104,25 +102,25 @@
     }
   ],
   "probeResults": "probe-results.json",
-  "probePassRate": 0.875,
+  "probePassRate": 1,
   "fps": 60.2,
   "perf": {
     "fps": 60.2,
     "frames": 181,
-    "sampleMs": 3005,
-    "sampledAt": "2026-10-04T12:11:07.681Z",
+    "sampleMs": 3007,
+    "sampledAt": "2026-10-05T06:54:43.226Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [
     {
       "filename": "gem-E09-001.png",
-      "bytes": 258069,
+      "bytes": 257607,
       "error": null
     },
     {
       "filename": "gem-E09-002.png",
-      "bytes": 260862,
+      "bytes": 260821,
       "error": null
     }
   ],
@@ -159,8 +157,7 @@
     "P6-vis.png",
     "P6-after.png",
     "P7-before.png",
-    "P7-motion-a.png",
-    "P7-motion-b.png",
+    "P7-vis.png",
     "P7-after.png",
     "P8-before.png",
     "P8-region-a.png",
@@ -177,21 +174,21 @@
     "serve-log.json",
     "perf.json"
   ],
-  "classification": "INTERACTION",
-  "failureCategory": "INTERACTION",
-  "verdict": "FAIL",
+  "classification": "PASS",
+  "failureCategory": null,
+  "verdict": "PASS",
   "error": null,
   "scoreInputs": {
     "s1": {
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.4741
+      "firstShotLitRatio": 0.4724
     },
     "s2": {
-      "passedWeight": 7,
+      "passedWeight": 8,
       "totalWeight": 8,
-      "probePassRate": 0.875,
+      "probePassRate": 1,
       "behaviorItemsCount": 11
     },
     "s3": {
@@ -201,22 +198,7 @@
       "minFps": 30
     }
   },
-  "classificationEvidence": {
-    "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-    "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E09.json",
-    "failedProbes": [
-      {
-        "probeId": "P5",
-        "status": "FAIL",
-        "failedAssertions": [
-          "visual"
-        ],
-        "domain": "INTERACTION",
-        "unresolvedReason": null
-      }
-    ]
-  },
-  "durationMs": 39154,
-  "finishedAt": "2026-10-04T12:11:08.206Z",
+  "durationMs": 38932,
+  "finishedAt": "2026-10-05T06:54:43.795Z",
   "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
 }

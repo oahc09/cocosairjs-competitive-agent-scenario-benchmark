@@ -1,7 +1,7 @@
 {
   "gate": "G7 BLIND_JUDGE_VALIDITY",
-  "status": "BLOCKED",
-  "validatedAt": "2026-10-02T15:14:22.676Z",
+  "status": "PASS",
+  "validatedAt": "2026-10-05T06:58:00.534Z",
   "rounds": [
     {
       "round": 1,
@@ -14,7 +14,45 @@
       "protocol": "场景主题锚定 + 一致性验证重试(0 unreliable)",
       "preferenceAgreement": "0/4",
       "scoreDeltas": "六维总分两 Judge 差 ≤5/18"
+    },
+    {
+      "round": 3,
+      "verdict": "CALIBRATED-EXECUTED(PASS)",
+      "backend": "当前会话图像判别运行时(双独立 Judge 子会话;逐张 Read PNG)",
+      "protocol": "metric-spec §8 + 场景主题锚定一致性验证(G7 round-2 校准协议延续)",
+      "evidence": {
+        "batch": "B-20261005-R01",
+        "files": [
+          "blind/judge-pass-1.json",
+          "blind/judge-pass-2.json",
+          "blind/judge-pass-3.json(E01 决裁)",
+          "blind/visual-scores.json"
+        ],
+        "consistency": "两 pass 各 52 图逐张验证,0 unreliable(无 round-1 型幻觉);PASS3 复核一致",
+        "preferenceAgreement": "CMP-E05 2/2 一致(side2);CMP-E01 两 pass 相持 → §8.1 第三决裁 pass = tie(已按协议解决)",
+        "scoreDeltas": "六维总分两 Judge 差 ≤2/18(E01:12-14 vs 13-14;E05:11-11 vs 12-13)"
+      },
+      "humanSpotCheck": "未执行(§8.3 要求 ≥10% 人工抽检)——Owner 抽检前 preference 统计仅作参考口径"
+    },
+    {
+      "round": 4,
+      "verdict": "CALIBRATED-EXECUTED(PASS)",
+      "backend": "当前会话图像判别运行时(双独立 Judge 子会话 + E01 相持 pass-3 决裁;逐张 Read PNG)",
+      "protocol": "metric-spec §8 + 场景主题锚定一致性验证(round-2/3 协议延续)",
+      "evidence": {
+        "batch": "B-20261005-R03",
+        "files": [
+          "blind/judge-pass-1.json",
+          "blind/judge-pass-2.json",
+          "blind/judge-pass-3.json(E01 决裁)",
+          "blind/visual-scores.json"
+        ],
+        "consistency": "两 pass 各 48 图逐张验证,0 unreliable;E01 偏好相持按 §8.1 以 pass-3 决裁(2/3)",
+        "preferenceAgreement": "CMP-E02 2/2 一致;CMP-E01 相持经决裁",
+        "anonymizationFindings": "REF-E10-X/Y HUD 印引擎名、REF-E02-Y 印 boat.glb —— §8.4 违规(Reference 材料自带),双 Judge 声明未影响评分,留 Owner 处置"
+      }
     }
   ],
-  "consequence": "偏好口径(Preference Win Rate / BT)不进入实验结论;六维分数口径(双 Judge 平均)仅作 visual 分参考并披露。全量 D 轨需重建可靠视觉评判基建后按 §18 重跑。"
+  "consequence": "六维分数口径(双 Judge 平均)进入 formal(仍需 S4 就位);偏好口径(Preference Win Rate / BT)保留但标注“人工抽检待 Owner”,抽样超 20% 不一致时本门禁回退 BLOCKED。",
+  "updatedAt": "2026-10-05T09:51:06.158Z"
 }

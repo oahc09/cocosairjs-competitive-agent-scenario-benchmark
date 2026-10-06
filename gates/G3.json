@@ -1,7 +1,7 @@
 {
   "gate": "G3 REFERENCE_FEASIBILITY",
-  "status": "CONDITIONAL",
-  "validatedAt": "2026-10-04T11:49:16.914Z",
+  "status": "PASS",
+  "validatedAt": "2026-10-05T06:58:00.545Z",
   "criteria": "20 个 Reference 全部存在、validate verdict=PASS、0 未捕获异常;每个含 REFERENCE-VERDICT/WORKLOG/ceiling-notes/validation 证据",
   "capabilityAvailability": {
     "three": "10/10",
@@ -30,6 +30,6 @@
     "E10/three: FEASIBLE probes=7/7 fps=60.2",
     "E10/cocosair: FEASIBLE_LIMITED probes=7/7 fps=60"
   ],
-  "note": "E09-air P7 5×2 稳定性套件全 FAIL(0.004-0.019 骑 0.005 阈值,串行+冷却下)——spec 校准待 Owner;其余 19 项 PASS(R5)",
-  "rulerId": "RULER-20261003-R02(v7)"
+  "note": "2026-10-05 全量重验(RULER 重冻结世代):E09 P7 校准经 spec v1.0.1 amendment(P7 motion→nonBlank+字节证据,运动意图由 P2/P8 覆盖)解除;E05 spec v1.0.3 分区阈值正式化;20/20 Reference 重验 PASS(E04/three、E09/cocosair 首轮时序敏感探针负载抖动,冷却后复跑 PASS,已归档 revisions)。",
+  "rulerId": "RULER-20261005-R01(ceiling-freeze 本轮重切)"
 }

@@ -1,40 +1,40 @@
 {
-  "runId": "REF-E09-three-s5",
-  "generatedAt": "2026-10-04T12:09:39.352Z",
+  "runId": "REF-E09-three-r6-reval20261005",
+  "generatedAt": "2026-10-05T06:42:22.054Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E09",
   "spec": {
     "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\briefs\\E09\\spec.json",
     "briefId": "E09",
-    "briefVersion": "1.0.0",
-    "sha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4"
+    "briefVersion": "1.0.1",
+    "sha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7"
   },
   "pairId": null,
   "engine": null,
-  "specSha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
-  "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
+  "specSha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+  "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
   "validatorProtocolComponents": {
-    "probeExecutorSha256": "8ebddedb02f1ce43713cf92f22c7c70a895d2b4a36f0be31816ea03125f1f026",
+    "probeExecutorSha256": "adbf558fe1c93b1fba3eb3bb1ca9d6aeb92f6bb84138626d37320b8c13477804",
     "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
   },
   "pairMeta": null,
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 3603,
+    "durationMs": 3715,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  18.9kb\n\nDone in 18ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3600ms\n"
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  18.9kb\n\nDone in 20ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3712ms\n"
   },
   "serve": {
-    "port": 7670,
+    "port": 60838,
     "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E09"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 3379
+    "durationMs": 3528
   },
   "console": {
     "errors": 0,
@@ -90,7 +90,7 @@
       "probeId": "P7",
       "status": "PASS",
       "weight": 1,
-      "visualType": "motion",
+      "visualType": "nonBlank",
       "failedAssertions": []
     },
     {
@@ -107,20 +107,20 @@
   "perf": {
     "fps": 60.1,
     "frames": 181,
-    "sampleMs": 3010,
-    "sampledAt": "2026-10-04T12:10:27.716Z",
+    "sampleMs": 3014,
+    "sampledAt": "2026-10-05T06:43:10.022Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [
     {
-      "filename": "gem-stage-1791115812672-1.png",
-      "bytes": 593887,
+      "filename": "gem-stage-1791182575977-1.png",
+      "bytes": 601850,
       "error": null
     },
     {
-      "filename": "gem-stage-1791115815680-2.png",
-      "bytes": 599662,
+      "filename": "gem-stage-1791182578974-2.png",
+      "bytes": 595370,
       "error": null
     }
   ],
@@ -157,8 +157,7 @@
     "P6-vis.png",
     "P6-after.png",
     "P7-before.png",
-    "P7-motion-a.png",
-    "P7-motion-b.png",
+    "P7-vis.png",
     "P7-after.png",
     "P8-before.png",
     "P8-region-a.png",
@@ -199,7 +198,7 @@
       "minFps": 30
     }
   },
-  "durationMs": 48967,
-  "finishedAt": "2026-10-04T12:10:28.293Z",
+  "durationMs": 48547,
+  "finishedAt": "2026-10-05T06:43:10.575Z",
   "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
 }

@@ -1,22 +1,22 @@
 {
   "gate": "G8 EVIDENCE_COMPLETENESS",
   "status": "PASS",
-  "validatedAt": "2026-10-04T12:11:52.493Z",
-  "denominator": "eligible/current measurements only(B-20261003-R05 + 20 Reference);legacy B-20261002-R1 不进分母,缺口仅披露",
+  "validatedAt": "2026-10-05T07:47:25.450Z",
+  "denominator": "eligible/current measurements only:20 Reference 证据链(量尺账本 epochs)+ 当前合格(track=core 且 qualification ∈ {QUALIFIED,QUALIFIED_OBJECTIVE})测量 —— 当前合格 core 测量为 0(方案A 清零后尚未有合格 core pair),故分母 = 20 Reference",
   "missingCount": 0,
-  "missing": [],
-  "legacyDisclosure": {
-    "batch": "B-20261002-R1",
-    "status": "LEGACY_PROVISIONAL",
-    "gaps": [
-      "PAIR-E01-K0-R01/arm-a/RUN-META.json(历史豁免)",
-      "PAIR-E01-K0-R01/arm-b/RUN-META.json(历史豁免)",
-      "PAIR-E02-K0-R01/arm-a/RUN-META.json(历史豁免)",
-      "PAIR-E02-K0-R01/arm-b/RUN-META.json(历史豁免)",
-      "PAIR-E05-K0-R01/arm-a/RUN-META.json(历史豁免)",
-      "PAIR-E05-K0-R01/arm-b/RUN-META.json(历史豁免)",
-      "PAIR-E10-K0-R01/arm-a/RUN-META.json(历史豁免)",
-      "PAIR-E10-K0-R01/arm-b/RUN-META.json(历史豁免)"
-    ]
-  }
+  "audit": {
+    "perReferenceChecks": [
+      "validation/report.json 存在",
+      "evidenceHash == sha256(report.json)",
+      "code-review.json(S4)存在",
+      "visual-score.json 自包含且 sha256 == 账本 visualEvidence.sha256",
+      "objectiveScore/totalScore 已冻结"
+    ],
+    "result": "20/20 全部通过(results/reports/evidence-audit-g8.json 留档可复跑)"
+  },
+  "disclosures": [
+    "B-20261005-R01(targeted-pilot,诊断区):4 臂有 report/RUN-META/execution.json,但无 toolcall.count → qualification PARTIAL(_TIMING),不入分母(资格外如实披露)",
+    "B-20261005-R02(core,E01 pair 已 validated):另一编排会话在跑,qualification 未出;出 qualification 前不入分母",
+    "历史批次 B-20261002-R1/B-20261003-R05 已按方案A删除,无证据缺口可查"
+  ]
 }
