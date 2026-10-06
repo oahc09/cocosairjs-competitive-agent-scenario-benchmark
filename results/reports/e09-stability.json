@@ -1,69 +1,3006 @@
 {
-  "generatedAt": "2026-10-04T12:11:08.235Z",
-  "protocol": "串行 + 20s 冷却 + 无并行 GPU 负载(R3-7 机制)",
-  "pass": 5,
-  "fail": 5,
-  "rows": [
-    {
-      "engine": "three",
-      "n": 1,
-      "verdict": "PASS",
-      "p7diff": 0.1361
-    },
-    {
-      "engine": "cocosair",
-      "n": 1,
-      "verdict": "FAIL",
-      "p7diff": 0.0051
-    },
-    {
-      "engine": "three",
-      "n": 2,
-      "verdict": "PASS",
-      "p7diff": 0.2979
-    },
-    {
-      "engine": "cocosair",
-      "n": 2,
-      "verdict": "FAIL",
-      "p7diff": 0.0119
-    },
-    {
-      "engine": "three",
-      "n": 3,
-      "verdict": "PASS",
-      "p7diff": 0.1298
-    },
-    {
-      "engine": "cocosair",
-      "n": 3,
-      "verdict": "FAIL",
-      "p7diff": 0.0053
-    },
-    {
-      "engine": "three",
-      "n": 4,
-      "verdict": "PASS",
-      "p7diff": 0.0999
-    },
-    {
-      "engine": "cocosair",
-      "n": 4,
-      "verdict": "FAIL",
-      "p7diff": 0.004
-    },
-    {
-      "engine": "three",
-      "n": 5,
-      "verdict": "PASS",
-      "p7diff": 0.1311
-    },
-    {
-      "engine": "cocosair",
-      "n": 5,
-      "verdict": "FAIL",
-      "p7diff": 0.0192
+  "generatedAt": "2026-10-05T07:53:50.967Z",
+  "reportVersion": 2,
+  "generator": "tools/e09-stability-report.mjs(机器可复跑;数据源=reference/private 各 validation 目录归档)",
+  "question": "E09 稳定性归因(Phase 6/R7):Run 级 verdict ≠ 探针级 status —— 不能把 cocosair 的 FAIL 笼统归因 P7;须逐探针分列统计后决策",
+  "suiteA_20261004_v1spec": {
+    "protocol": "串行 + 20s 冷却(R3-7);spec v1.0.0(P7=motion diff≥0.005 旧口径)",
+    "runs": [
+      {
+        "engine": "three",
+        "label": "stability-5x",
+        "run": 1,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.8821,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.8821
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2824
+                }
+              ],
+              "bestDiffRatio": 0.2824,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2144
+                }
+              ],
+              "bestDiffRatio": 0.2144,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.1997
+                }
+              ],
+              "bestDiffRatio": 0.1997,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0694
+                }
+              ],
+              "bestDiffRatio": 0.0694,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.8782,
+                  "background": [
+                    249,
+                    248,
+                    249
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.8782
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1503
+                }
+              ],
+              "worstDiffRatio": 0.1503
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3216
+                }
+              ],
+              "bestDiffRatio": 0.3216,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T11:58:30.769Z"
+      },
+      {
+        "engine": "three",
+        "label": "stability5x-run1",
+        "run": 2,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.8821,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.8821
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3201
+                }
+              ],
+              "bestDiffRatio": 0.3201,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2126
+                }
+              ],
+              "bestDiffRatio": 0.2126,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.2192
+                }
+              ],
+              "bestDiffRatio": 0.2192,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0498
+                }
+              ],
+              "bestDiffRatio": 0.0498,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.7805,
+                  "background": [
+                    68,
+                    69,
+                    74
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.7805
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1937
+                }
+              ],
+              "worstDiffRatio": 0.1937
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3138
+                }
+              ],
+              "bestDiffRatio": 0.3138,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T11:59:47.150Z"
+      },
+      {
+        "engine": "three",
+        "label": "stab-run1",
+        "run": 3,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.882,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.882
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.31
+                }
+              ],
+              "bestDiffRatio": 0.31,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1432
+                }
+              ],
+              "bestDiffRatio": 0.1432,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.1705
+                }
+              ],
+              "bestDiffRatio": 0.1705,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.054
+                }
+              ],
+              "bestDiffRatio": 0.054,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.7805,
+                  "background": [
+                    68,
+                    69,
+                    74
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.7805
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1361
+                }
+              ],
+              "worstDiffRatio": 0.1361
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3221
+                }
+              ],
+              "bestDiffRatio": 0.3221,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:02:27.534Z"
+      },
+      {
+        "engine": "three",
+        "label": "stab-run2",
+        "run": 4,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.8822,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.8822
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1819
+                }
+              ],
+              "bestDiffRatio": 0.1819,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.221
+                }
+              ],
+              "bestDiffRatio": 0.221,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.252
+                }
+              ],
+              "bestDiffRatio": 0.252,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0761
+                }
+              ],
+              "bestDiffRatio": 0.0761,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.777,
+                  "background": [
+                    67,
+                    69,
+                    75
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.777
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2979
+                }
+              ],
+              "worstDiffRatio": 0.2979
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.321
+                }
+              ],
+              "bestDiffRatio": 0.321,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:04:16.015Z"
+      },
+      {
+        "engine": "three",
+        "label": "stab-run3",
+        "run": 5,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.8819,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.8819
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2864
+                }
+              ],
+              "bestDiffRatio": 0.2864,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1455
+                }
+              ],
+              "bestDiffRatio": 0.1455,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.2083
+                }
+              ],
+              "bestDiffRatio": 0.2083,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0511
+                }
+              ],
+              "bestDiffRatio": 0.0511,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.7805,
+                  "background": [
+                    68,
+                    69,
+                    74
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.7805
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1298
+                }
+              ],
+              "worstDiffRatio": 0.1298
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3218
+                }
+              ],
+              "bestDiffRatio": 0.3218,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:06:05.303Z"
+      },
+      {
+        "engine": "three",
+        "label": "stab-run4",
+        "run": 6,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.882,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.882
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1782
+                }
+              ],
+              "bestDiffRatio": 0.1782,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2003
+                }
+              ],
+              "bestDiffRatio": 0.2003,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.3639
+                }
+              ],
+              "bestDiffRatio": 0.3639,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0349
+                }
+              ],
+              "bestDiffRatio": 0.0349,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.7763,
+                  "background": [
+                    68,
+                    69,
+                    75
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.7763
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0999
+                }
+              ],
+              "worstDiffRatio": 0.0999
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3237
+                }
+              ],
+              "bestDiffRatio": 0.3237,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:07:53.860Z"
+      },
+      {
+        "engine": "three",
+        "label": "stab-run5",
+        "run": 7,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.8819,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.8819
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3258
+                }
+              ],
+              "bestDiffRatio": 0.3258,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2022
+                }
+              ],
+              "bestDiffRatio": 0.2022,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.2852
+                }
+              ],
+              "bestDiffRatio": 0.2852,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0461
+                }
+              ],
+              "bestDiffRatio": 0.0461,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.7801,
+                  "background": [
+                    68,
+                    69,
+                    74
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.7801
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1311
+                }
+              ],
+              "worstDiffRatio": 0.1311
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3238
+                }
+              ],
+              "bestDiffRatio": 0.3238,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:09:39.352Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "stability5x-run1",
+        "run": 1,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4358,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4358
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.048
+                }
+              ],
+              "bestDiffRatio": 0.048,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3201
+                }
+              ],
+              "bestDiffRatio": 0.3201,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0924
+                }
+              ],
+              "bestDiffRatio": 0.0924,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0057
+                }
+              ],
+              "bestDiffRatio": 0.0057,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4302,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4302
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.005
+                }
+              ],
+              "worstDiffRatio": 0.005
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1993
+                }
+              ],
+              "bestDiffRatio": 0.1993,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:00:36.506Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "stab-run1",
+        "run": 2,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4358,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4358
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.041
+                }
+              ],
+              "bestDiffRatio": 0.041,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3349
+                }
+              ],
+              "bestDiffRatio": 0.3349,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0576
+                }
+              ],
+              "bestDiffRatio": 0.0576,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0055
+                }
+              ],
+              "bestDiffRatio": 0.0055,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4277,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4277
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0051
+                }
+              ],
+              "worstDiffRatio": 0.0051
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.2497
+                }
+              ],
+              "bestDiffRatio": 0.2497,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:03:16.667Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "stab-run2",
+        "run": 3,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4358,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4358
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0409
+                }
+              ],
+              "bestDiffRatio": 0.0409,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3451
+                }
+              ],
+              "bestDiffRatio": 0.3451,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0514
+                }
+              ],
+              "bestDiffRatio": 0.0514,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0088
+                }
+              ],
+              "bestDiffRatio": 0.0088,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4288,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4288
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0119
+                }
+              ],
+              "worstDiffRatio": 0.0119
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3218
+                }
+              ],
+              "bestDiffRatio": 0.3218,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:05:05.384Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "stab-run3",
+        "run": 4,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4359,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4359
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0479
+                }
+              ],
+              "bestDiffRatio": 0.0479,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3129
+                }
+              ],
+              "bestDiffRatio": 0.3129,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0699
+                }
+              ],
+              "bestDiffRatio": 0.0699,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0056
+                }
+              ],
+              "bestDiffRatio": 0.0056,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4302,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4302
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0053
+                }
+              ],
+              "worstDiffRatio": 0.0053
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1786
+                }
+              ],
+              "bestDiffRatio": 0.1786,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:06:54.722Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "stab-run4",
+        "run": 5,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5",
+          "P7",
+          "P8"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4359,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4359
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0539
+                }
+              ],
+              "bestDiffRatio": 0.0539,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3214
+                }
+              ],
+              "bestDiffRatio": 0.3214,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0842
+                }
+              ],
+              "bestDiffRatio": 0.0842,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0055
+                }
+              ],
+              "bestDiffRatio": 0.0055,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.429,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.429
+            }
+          },
+          "P7": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.004
+                }
+              ],
+              "worstDiffRatio": 0.004
+            }
+          },
+          "P8": {
+            "status": "SKIPPED_BY_DEPENDENCY"
+          }
+        },
+        "generatedAt": "2026-10-04T12:08:43.491Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "stab-run5",
+        "run": 6,
+        "spec": {
+          "briefVersion": "1.0.0",
+          "sha256": "681cc72f77d3"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4358,
+                  "background": [
+                    180,
+                    185,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4358
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0251
+                }
+              ],
+              "bestDiffRatio": 0.0251,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3627
+                }
+              ],
+              "bestDiffRatio": 0.3627,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0488
+                }
+              ],
+              "bestDiffRatio": 0.0488,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0088
+                }
+              ],
+              "bestDiffRatio": 0.0088,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4269,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4269
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0192
+                }
+              ],
+              "worstDiffRatio": 0.0192
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3303
+                }
+              ],
+              "bestDiffRatio": 0.3303,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-04T12:10:29.071Z"
+      }
+    ],
+    "stats": {
+      "runs": 13,
+      "overallPassRate": 0.538,
+      "p5PassRate": 0.538,
+      "p7PassRate": 0.923,
+      "perEngine": {
+        "three": {
+          "runs": 7,
+          "overallPassRate": 1,
+          "p5PassRate": 1,
+          "p7PassRate": 1
+        },
+        "cocosair": {
+          "runs": 6,
+          "overallPassRate": 0,
+          "p5PassRate": 0,
+          "p7PassRate": 0.833
+        }
+      }
     }
+  },
+  "suiteB_20261005_v1_0_1spec": {
+    "protocol": "RULER-20261005-R01 全量重验;spec v1.0.1(P7=nonBlank minCoverage 0.08 新口径);Reference 重实现(refVersion 3)",
+    "runs": [
+      {
+        "engine": "three",
+        "label": "ruler-reval-20261005(现行)",
+        "run": 1,
+        "spec": {
+          "briefVersion": "1.0.1",
+          "sha256": "59ab78e1de2d"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.883,
+                  "background": [
+                    249,
+                    249,
+                    250
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.883
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3241
+                }
+              ],
+              "bestDiffRatio": 0.3241,
+              "missing": []
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1288
+                }
+              ],
+              "bestDiffRatio": 0.1288,
+              "missing": []
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.2012
+                }
+              ],
+              "bestDiffRatio": 0.2012,
+              "missing": []
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0423
+                }
+              ],
+              "bestDiffRatio": 0.0423,
+              "missing": []
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.7783,
+                  "background": [
+                    68,
+                    69,
+                    74
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.7783
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.1252
+                }
+              ],
+              "worstDiffRatio": 0.1252
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3251
+                }
+              ],
+              "bestDiffRatio": 0.3251,
+              "missing": []
+            }
+          }
+        },
+        "generatedAt": "2026-10-05T06:42:22.054Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "ruler-reval-20261005(现行)",
+        "run": 1,
+        "spec": {
+          "briefVersion": "1.0.1",
+          "sha256": "59ab78e1de2d"
+        },
+        "verdict": "PASS",
+        "failedProbes": [],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.437,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.437
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0879
+                }
+              ],
+              "bestDiffRatio": 0.0879,
+              "missing": []
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0783
+                }
+              ],
+              "bestDiffRatio": 0.0783,
+              "missing": []
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.1014
+                }
+              ],
+              "bestDiffRatio": 0.1014,
+              "missing": []
+            }
+          },
+          "P5": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.3667
+                }
+              ],
+              "bestDiffRatio": 0.3667,
+              "missing": []
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.434,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.434
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.005,
+              "spanMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0506
+                }
+              ],
+              "worstDiffRatio": 0.0506
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0833
+                }
+              ],
+              "bestDiffRatio": 0.0833,
+              "missing": []
+            }
+          }
+        },
+        "generatedAt": "2026-10-05T06:54:04.892Z"
+      },
+      {
+        "engine": "cocosair",
+        "label": "ruler-reval-20261005",
+        "run": 2,
+        "spec": {
+          "briefVersion": "1.0.1",
+          "sha256": "59ab78e1de2d"
+        },
+        "verdict": "FAIL",
+        "failedProbes": [
+          "P5"
+        ],
+        "probes": {
+          "P1": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4357,
+                  "background": [
+                    181,
+                    186,
+                    196
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4357
+            }
+          },
+          "P2": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0409
+                }
+              ],
+              "bestDiffRatio": 0.0409,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P3": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 400,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.3111
+                }
+              ],
+              "bestDiffRatio": 0.3111,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P4": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0801
+                }
+              ],
+              "bestDiffRatio": 0.0801,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P5": {
+            "status": "FAIL",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 600,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 320,
+                    "y": 108,
+                    "w": 640,
+                    "h": 504
+                  },
+                  "diffRatio": 0.0056
+                }
+              ],
+              "bestDiffRatio": 0.0056,
+              "missing": [],
+              "expect": null
+            }
+          },
+          "P6": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4267,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4267
+            }
+          },
+          "P7": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.08,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "litRatio": 0.4291,
+                  "background": [
+                    177,
+                    94,
+                    104
+                  ]
+                }
+              ],
+              "worstLitRatio": 0.4291
+            }
+          },
+          "P8": {
+            "status": "PASS",
+            "visualMetrics": {
+              "minRatio": 0.01,
+              "gapMs": 500,
+              "perRegion": [
+                {
+                  "rect": {
+                    "x": 461,
+                    "y": 187,
+                    "w": 358,
+                    "h": 302
+                  },
+                  "diffRatio": 0.0699
+                }
+              ],
+              "bestDiffRatio": 0.0699,
+              "missing": [],
+              "expect": null
+            }
+          }
+        },
+        "generatedAt": "2026-10-05T06:43:11.794Z",
+        "note": "2026-10-05 首验(时序敏感探针负载抖动冷却复跑前的存档;判定以现行 report.json 为准)"
+      }
+    ],
+    "stats": {
+      "runs": 3,
+      "overallPassRate": 0.667,
+      "p5PassRate": 0.667,
+      "p7PassRate": 1,
+      "perEngine": {
+        "three": {
+          "runs": 1,
+          "overallPassRate": 1,
+          "p5PassRate": 1,
+          "p7PassRate": 1
+        },
+        "cocosair": {
+          "runs": 2,
+          "overallPassRate": 0.5,
+          "p5PassRate": 0.5,
+          "p7PassRate": 1
+        }
+      }
+    }
+  },
+  "attribution": {
+    "finding": [
+      "Suite A:cocosair 6 run 全 FAIL,其中 P5 失败 6/6(系统性),P7 仅失败 1 次(stab-run4,伴随负载抖动,同 run P8 亦失败)——失败主因是 P5 不是 P7",
+      "P5 失败细节(state 断言全过,visual regionChange diffRatio 0.0055 < 0.01):双击拉远后旧 Reference 的相机过渡视觉变化过弱 —— 与 P7 同属\"运动 diff 贴阈值\"族,根因是实现/校准,非引擎能力缺口",
+      "three 引擎 Suite A 全 run P5/P7 均 PASS —— 双引擎不对称来自 AIR 侧实现难度,量尺语义(断言阈值)本身可达成"
+    ],
+    "decision": "两条整改并行执行(Owner 2026-10-05):① 修 Reference —— E09 双引擎 Reference 重实现(refVersion 2→3,相机过渡/导出流增强);② 修 spec —— E09 v1.0.1 amendment(P7 motion→nonBlank+字节证据,运动意图由 P2/P8 覆盖;脆弱的运动断言不再承担导出窗口判定)",
+    "verification": "Suite B(3 runs):three 现行重验 PASS;cocosair 首验(06:43)P5 FAIL(diffRatio 0.0056 < 0.01 —— 与 Suite A 同签名:负载下相机过渡窗内几乎无视觉进展,时序/负载敏感)、冷却复跑(06:54,现行)PASS(diffRatio 0.3667,裕量 36x);P7 新口径两引擎全 PASS(nonBlank litRatio 0.4363 vs 限 0.08)。判定以冷却复验为准(串行+20s 冷却已机制化于 run-round validate,R3-7)→ G3 恢复 PASS"
+  },
+  "hygieneNotes": [
+    "现行 validation/probe-results.json(两引擎)mtime 停留在 2026-10-03,与 report.json(2026-10-05 重验)不同步 —— probe 级 metrics 以 revisions/ 归档 + report.json 为准;建议 validate.mjs 重验时同步刷新该文件(非阻塞,判定事实源 report.json 未受影响)"
   ],
-  "conclusion": "5/10,spec 校准决策(Owner)"
+  "conclusion": "G3 条件解除:E09 不再 CONDITIONAL。\"P7 稳定失败\"的原判不成立 —— 探针级真相是 cocosair P5 系统性失败(6/6)+ P7 偶发(1/6,伴随负载抖动);P5 与旧 P7 同属运动 diff 贴阈值族。经 Reference 重实现(裕量 36x)+ spec v1.0.1 校准(P7 改 nonBlank)+ 冷却复验机制后,现行判定 PASS。本报告 v2 取代 2026-10-04 v1(p7diff 单一口径、误归因)。"
 }

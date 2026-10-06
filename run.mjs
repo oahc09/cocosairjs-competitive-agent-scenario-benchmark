@@ -2,7 +2,7 @@
 // bench/run.mjs — 全实验单入口 CLI(外部 AI Agent / 人只需要记住这一条命令)
 // 用法: node run.mjs <命令> [参数]
 //   round create  --plan "<file|--matrix E01,E02|K0,K1|R01>"   一轮:建 Pair + 生成 DISPATCH.md
-//   round <stage> --batch <B-YYYYMMDD-Rnn>   collect/validate/blind/aggregate/status
+//   round <stage> --batch <B-YYYYMMDD-Rnn>   preflight/dispatch/collect/validate/qualify/blind/aggregate/status
 //   validate --workspace <dir> --spec <spec> [--out <dir>] [--video]   单臂验证
 //   blind --batch <id> [--refs]              盲评材料构建
 //   aggregate                                全量聚合(aggregated.json)
@@ -20,7 +20,7 @@ const BENCH = path.dirname(fileURLToPath(import.meta.url));
 const pass = (arr) => arr; // 透传
 const CMD = {
   round: (rest) => { const stage = rest[0] || 'status'; rest = rest.slice(1);
-    if (['create', 'collect', 'validate', 'blind', 'aggregate', 'status', 'preflight'].includes(stage))
+    if (['create', 'collect', 'validate', 'qualify', 'blind', 'aggregate', 'status', 'preflight', 'dispatch'].includes(stage))
       return ['node', path.join(BENCH, 'harness/round/run-round.mjs'), '--stage', stage, ...pass(rest)];
     return null; },
   validate: (rest) => ['node', path.join(BENCH, 'harness/runner/validate.mjs'), ...pass(rest)],
