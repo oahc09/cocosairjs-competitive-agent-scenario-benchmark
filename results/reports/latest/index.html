@@ -114,7 +114,7 @@ function renderOverview() {
   $('kpis').innerHTML = `
     <div class="kpi"><div class="l">Capability Availability(Track A)</div><div class="v">Three ${h.capabilityAvailability?.three ?? '–'} · AIR ${h.capabilityAvailability?.air ?? '–'}</div><div class="n">Reference 全 FEASIBLE(探针全绿/60fps)</div></div>
     <div class="kpi"><div class="l">已完成 Batches / Pairs</div><div class="v">${h.batches} / ${h.pairs}</div><div class="n">批次 = 触发日期+当日轮次,支持单日多轮</div></div>
-    <div class="kpi"><div class="l">K0 成本比(AIR/Three)</div><div class="v">${h.costRatios ? h.costRatios.toolRatio + '× / ' + h.costRatios.tokenRatio + '×' : '–'}</div><div class="n">工具 / token(派发侧客观口径)</div></div>
+    <div class="kpi"><div class="l">K0 成本比(AIR/Three)</div><div class="v">${h.costRatios ? h.costRatios.toolRatio + '×' + (h.costRatios.tokenRatio && h.costRatios.tokenRatio !== 'n/a' ? ' / ' + h.costRatios.tokenRatio + '×' : '(token 待累积)') : '–'}</div><div class="n">工具调用机器口径 / token(待新切片累积)</div></div>
     <div class="kpi"><div class="l">知识增益(KnowledgeGain)</div><div class="v">${OV.knowledgeGain.length ? OV.knowledgeGain.length + ' 组' : '待 K1/K2'}</div><div class="n">出现 K1/K2 批次后自动计算</div></div>`;
   $('gatechips').innerHTML = OV.gates.map(g => `<a class="chip ${statusClass(g.status)}" href="${g.file}" target="_blank">${g.id} ${g.status}</a>`).join('');
   const rows = (h.groups || []).map(g => `<tr><td>${g.scene} · ${g.knowledge}</td><td>${g.n}</td><td>${g.rawDelta.median ?? '–'}</td><td>${g.rawDelta.iqr ?? '–'}</td><td>${JSON.stringify(g.rawDelta.bootstrapCi95) ?? '–'}</td><td>${g.winTieLoss.air}/${g.winTieLoss.tie}/${g.winTieLoss.three}</td><td>${g.attainmentMedian.three ?? '–'} / ${g.attainmentMedian.air ?? '–'}</td></tr>`).join('');

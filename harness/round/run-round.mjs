@@ -19,6 +19,10 @@
 //        validate.mjs(以 arm 内 spec.json 冻结副本为 --spec,传 --pair-meta pair.json)
 //        + leak-scanner + budget-check(机器计数超限 → classification 覆盖 BUDGET_EXHAUSTED;
 //        validate 报 INPUT_DRIFT/ENV_DRIFT → 该臂标 INVALID_EVIDENCE)(--force 全部重验)
+//   node round/run-round.mjs --batch <id> --stage qualify
+//        证据链鉴定(qualify-historical):validate 之后、blind/aggregate 之前运行;
+//        生成 results/<batch>/QUALIFICATION.json(逐对 QUALIFIED 家族判定),并把
+//        各对 qualification 状态记入 ROUND.json —— aggregate 按 QUALIFICATION.json 分层
 //   node round/run-round.mjs --batch <id> --stage blind
 //        build-blind 生成盲评材料 + JUDGE-INSTRUCTIONS.md;已存在 visual-scores.json 则标记就绪
 //   node round/run-round.mjs --batch <id> --stage aggregate
@@ -31,7 +35,8 @@
 // 状态机(ROUND.json):
 //   pair.arm.state: created → dispatched(标记) → completed(RESULT.md) → validated
 //   pair.preflight: { status: PASS|BLOCKED, reasons[] }(preflight/validate stage 写入)
-//   stages: {create, preflight, collect, validate, blind, aggregate} 各记 lastRunAt/summary
+//   pair.executionTiming: { status: PASS|PAIR_TIMING_DRIFT|UNMEASURABLE }(collect 读 execution.json)
+//   stages: {create, preflight, dispatch, collect, validate, qualify, blind, aggregate} 各记 lastRunAt/summary
 // 零依赖(validate/budget-check 等 harness 模块除外)。
 import fs from 'node:fs';
 import path from 'node:path';
@@ -237,6 +242,31 @@ function runPreflight(round) {
     } catch (e) {
       reasons.push(`pair.json 不可读: ${e.message}`);
     }
+    // ⓪ sha 真算 + 回填前置(R6 修复 2026-10-05:RUN-META.template 承诺"两个 Sha256 可留空由
+    // preflight 自动回填",但原实现回填发生在非空校验之后 —— 留空必 BLOCKED,文档与行为不一致。
+    // 现先真算并写回 RUN-META.json,再进 ① 非空校验;③b 的核验语义不变,照常拦截填错的占位值)
+    const dispatchFile = path.join(RESULTS, round.batchId, 'DISPATCH.md');
+    const expectedPromptSha = fs.existsSync(dispatchFile) ? sha(dispatchFile) : null;
+    const policyInputs = [
+      path.join(BENCH, 'config', 'agents.yaml'),
+      path.join(BENCH, 'templates', 'three', 'scripts', 'count.mjs'),
+      path.join(BENCH, 'templates', 'cocosair', 'scripts', 'count.mjs'),
+      path.join(BENCH, 'templates', 'three', 'scripts', 'verify-browser.mjs'),
+      path.join(BENCH, 'templates', 'cocosair', 'scripts', 'verify-browser.mjs'),
+    ].filter(fs.existsSync);
+    const expectedPolicySha = crypto.createHash('sha256').update(policyInputs.map(sha).join(':')).digest('hex');
+    for (const arm of ['arm-a', 'arm-b']) {
+      const mf = path.join(pairDir, arm, 'RUN-META.json');
+      if (!fs.existsSync(mf)) continue;
+      try {
+        const m = JSON.parse(fs.readFileSync(mf, 'utf8'));
+        let ch = false;
+        if (!m.systemPromptSha256 && expectedPromptSha) { m.systemPromptSha256 = expectedPromptSha; ch = true; }
+        if (!m.toolPolicySha256 && expectedPolicySha) { m.toolPolicySha256 = expectedPolicySha; ch = true; }
+        if (ch) fs.writeFileSync(mf, JSON.stringify(m, null, 2));
+      } catch { /* 解析失败由 ① 上报 */ }
+    }
+
     // ① 各臂 RUN-META.json 存在且身份字段非空
     const metas = {};
     for (const arm of ['arm-a', 'arm-b']) {
@@ -265,16 +295,7 @@ function runPreflight(round) {
       }
     }
     // ③b P0(复查#4):真算哈希核验 —— 不再接受"非空+两臂相等"的伪 hash
-  const dispatchFile = path.join(RESULTS, round.batchId, 'DISPATCH.md');
-  const expectedPromptSha = fs.existsSync(dispatchFile) ? sha(dispatchFile) : null;
-  const policyInputs = [
-    path.join(BENCH, 'config', 'agents.yaml'),
-    path.join(BENCH, 'templates', 'three', 'scripts', 'count.mjs'),
-    path.join(BENCH, 'templates', 'cocosair', 'scripts', 'count.mjs'),
-    path.join(BENCH, 'templates', 'three', 'scripts', 'verify-browser.mjs'),
-    path.join(BENCH, 'templates', 'cocosair', 'scripts', 'verify-browser.mjs'),
-  ].filter(fs.existsSync);
-  const expectedPolicySha = crypto.createHash('sha256').update(policyInputs.map(sha).join(':')).digest('hex');
+    // (expectedPromptSha/expectedPolicySha 已在 ⓪ 真算;空值已在 ⓪ 回填,此处只拦"填了错值")
   for (const arm of ['arm-a', 'arm-b']) {
     const m = metas[arm];
     if (!m) continue;
@@ -284,18 +305,6 @@ function runPreflight(round) {
     if (m.toolPolicySha256 && m.toolPolicySha256 !== expectedPolicySha) {
       reasons.push(`${arm}: RUN-META.toolPolicySha256 ≠ 当前策略输入哈希(${String(m.toolPolicySha256).slice(0, 8)}… ≠ ${expectedPolicySha.slice(0, 8)}…)—— 策略执行面被改动或填了占位值`);
     }
-  }
-  // ③b-2 sha 回填 RUN-META(留空时):真算值写回,保证证据在 Agent 侧也可追溯
-  for (const arm of ['arm-a', 'arm-b']) {
-    const mf = path.join(pairDir, arm, 'RUN-META.json');
-    if (!fs.existsSync(mf)) continue;
-    try {
-      const m = JSON.parse(fs.readFileSync(mf, 'utf8'));
-      let ch = false;
-      if (!m.systemPromptSha256 && expectedPromptSha) { m.systemPromptSha256 = expectedPromptSha; ch = true; }
-      if (!m.toolPolicySha256 && expectedPolicySha) { m.toolPolicySha256 = expectedPolicySha; ch = true; }
-      if (ch) fs.writeFileSync(mf, JSON.stringify(m, null, 2));
-    } catch { /* */ }
   }
   // ③c 真算哈希回填 pair.json(身份哈希 = 可复算证据,非声明)
   if (expectedPromptSha) {
@@ -455,6 +464,25 @@ function stageValidate(round, force) {
     (jobs.length ? ' → 可进入 blind/aggregate' : '(无待验臂)'));
 }
 
+// ---------- stage: qualify(Phase 2 接入:qualification 进入 Round 状态机) ----------
+// validate 之后、blind/aggregate 之前运行;产出 QUALIFICATION.json 并把状态记进 ROUND.json。
+function stageQualify(round) {
+  const q = spawnSync('node', [path.join(HARN, 'aggregate', 'qualify-historical.mjs'), '--batch', round.batchId], { encoding: 'utf8' });
+  console.log(q.stdout.trim());
+  if (q.status !== 0 && q.stderr) console.error(q.stderr);
+  const qualFile = path.join(RESULTS, round.batchId, 'QUALIFICATION.json');
+  let summary = 'MISSING', statuses = {};
+  try {
+    const qual = JSON.parse(fs.readFileSync(qualFile, 'utf8'));
+    summary = qual.status;
+    for (const p of qual.pairs || []) statuses[p.pairId] = p.status;
+    for (const p of round.pairs) p.qualificationStatus = statuses[p.pairId] ?? null;
+  } catch { /* 生成失败:如实标 MISSING */ }
+  round.stages.qualify = { lastRunAt: iso(), summary, statuses, exitCode: q.status };
+  saveRound(round);
+  console.log(`[qualify] 批次 ${round.batchId}: ${summary}` + (q.status !== 0 ? `(qualifier 退出码 ${q.status},见上方输出)` : ''));
+}
+
 // ---------- stage: blind ----------
 function stageBlind(round) {
   const b = spawnSync('node', [path.join(HARN, 'judge', 'build-blind.mjs'), '--batch', round.batchId, '--refs'], { encoding: 'utf8' });
@@ -473,6 +501,13 @@ function stageAggregate(round) {
   console.log(a.stdout.trim()); if (a.status !== 0) console.error(a.stderr);
   round.stages.aggregate = { lastRunAt: iso(), output: 'results/aggregated.json' };
   saveRound(round);
+  // 报告自动刷新(每次测试结束的固定动作;失败只告警,不影响数据管线)
+  const rp = spawnSync('node', [path.join(HARN, 'report', 'generate-report.mjs')], { encoding: 'utf8' });
+  if (rp.status === 0) console.log(rp.stdout.trim());
+  else console.error('[report] 刷新失败(不影响数据):\n' + (rp.stderr || rp.stdout));
+  const cm = spawnSync('node', [path.join(HARN, 'report', 'generate-cost-metrics.mjs')], { encoding: 'utf8' });
+  if (cm.status === 0) console.log(cm.stdout.trim());
+  else console.error('[cost-metrics] 刷新失败(不影响数据):\n' + (cm.stderr || cm.stdout));
 }
 
 // ---------- stage: status ----------
@@ -486,7 +521,9 @@ function stageStatus(round) {
       return `${a}:${p.arms[a].state}${extra}`;
     });
     const pf = p.preflight ? ` preflight:${p.preflight.status}` : ' preflight:未检';
-    console.log(`  ${p.pairId}  ${cells.join('  ')}${pf}`);
+    const tm = p.executionTiming ? ` timing:${p.executionTiming.status}` : '';
+    const q = p.qualificationStatus ? ` qual:${p.qualificationStatus}` : '';
+    console.log(`  ${p.pairId}  ${cells.join('  ')}${pf}${tm}${q}`);
   }
   for (const [k, v] of Object.entries(round.stages)) console.log(`  [${k}] ${JSON.stringify(v).slice(0, 120)}`);
 }
@@ -528,8 +565,9 @@ switch (stage) {
   case 'collect': stageCollect(round); break;
   case 'dispatch': stageDispatch(round); break;
   case 'validate': stageValidate(round, has('force')); break;
+  case 'qualify': stageQualify(round); break;
   case 'blind': stageBlind(round); break;
   case 'aggregate': stageAggregate(round); break;
   case 'status': stageStatus(round); break;
-  default: die('未知 --stage;可用:create/preflight/collect/validate/blind/aggregate/status');
+  default: die('未知 --stage;可用:create/preflight/dispatch/collect/validate/qualify/blind/aggregate/status');
 }

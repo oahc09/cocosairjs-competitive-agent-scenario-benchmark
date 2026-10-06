@@ -11,7 +11,7 @@
 - **达成率 Attainment**(Track B):引擎满分线被这台标准仪器发挥出的比例(引擎易用性对比);
 - **Knowledge Gain**(Track C):K0 冷启动 → K1 文档 → K2 完整知识的增益。
 
-进度(2026-10-03):基础设施全部就绪,G0-G5/G8 PASS;已完成批次 `results/B-20261002-R1`(Pilot:4 pairs × K0);**K1/K2 与核心矩阵未运行**(G6 声明),补跑只需一条命令。
+进度(2026-10-05):基础设施全部就绪,G0-G4/G7/G8 PASS;方案 A(Owner 裁决:toolCalls 保持 hard)已清除全部历史 Pilot 数据,G5 回退 NOT_RUN(待新 Core Pilot);核心矩阵前置闭环已补齐(toolcall 机器计数器 / agent-launcher 时序盖章 / round qualify 鉴定阶段 / Reference 视觉证据自包含),E09 归因解除(G3 PASS);**下一步 = Core Sanity Run(E01,E02×K0×R01)→ 60 Pair / 120 Run 正式矩阵**(G6 声明)。
 
 ## 60 秒路径图
 
@@ -19,7 +19,7 @@
 |---|---|
 | 了解全貌与约定 | `docs/MASTER-CONTEXT.md`(全局事实源)→ `docs/ARCHITECTURE.md`(结构) |
 | 查实验计划 | `docs/BENCHMARK-PLAN.md`(冻结计划书) |
-| 执行一轮实验 | `node run.mjs round create --matrix "E01|K1|R01"` → 按 `results/<batch>/DISPATCH.md` 派发 → `collect/validate/blind/aggregate` |
+| 执行一轮实验 | `node run.mjs round create --track core --matrix "E01|K1|R01"` → 按 `results/<batch>/DISPATCH.md` 派发(时序/计数工具见 `harness/runtime/`)→ `collect/validate/qualify/blind/aggregate` |
 | 单独验证某工作区 | `node harness/runner/validate.mjs --workspace <dir> --spec briefs/<E>/spec.json --out <dir>` |
 | 引擎改版验收 | `node run.mjs regression`(BUG 归零才可开新一轮) |
 | 看结果/报告 | 门户 `node run.mjs portal`(7800)· 数据 `results/aggregated.json` · 报告 `results/reports/latest/` |

@@ -63,7 +63,7 @@ node run.mjs round create --matrix "E01,E02,E05,E10|K0|R01"
 ### 第 2 步 填写 RUN-META.json(派发前必做;缺失 → preflight BLOCKED,该 Pair 不得 validate)
 
 对**每个 arm 目录**(`results/$B/PAIR-*/arm-a/` 与 `arm-b/`):把 `RUN-META.template.json`
-复制为同目录 `RUN-META.json`,将 7 个 null 字段全部填为**非空字符串**;同一 Pair 两臂必须
+复制为同目录 `RUN-META.json`,将 null 字段全部填为**非空字符串**;同一 Pair 两臂必须
 **同值**——这是"同一台仪器"的机器校验点:
 
 | 字段 | 机械填法 |
@@ -72,8 +72,8 @@ node run.mjs round create --matrix "E01,E02,E05,E10|K0|R01"
 | `agentBinaryHash` | 真实二进制哈希;取不到时如实写 `unavailable(原因)` |
 | `modelId` | **将被派发的 Run Agent** 的模型标识(供应商+模型名,非你编排者自己的) |
 | `modelRevision` | 模型修订/快照标识;不可知时如实写(如 `session-pinned`) |
-| `systemPromptHash` | Run Agent 提示词版本标识(同轮同文,如 `DISPATCH-v2`) |
-| `toolPolicyHash` | 工具策略标识,如 `default-tools(read/write/bash/browser)` |
+| `systemPromptId` / `systemPromptSha256` | 提示词版本标识 + sha256;Sha 可留 null(preflight 自动真算回填 = sha256(DISPATCH.md)) |
+| `toolPolicyId` / `toolPolicySha256` | 工具策略版本标识 + sha256;Sha 可留 null(preflight 自动回填) |
 | `runnerVersion` | 编排器/harness 版本,如 `run-round@<git 短哈希>` |
 
 (可另补 `pairId` / `arm` 字段便于追溯。)
@@ -89,23 +89,44 @@ node run.mjs round preflight --batch $B   # 全 PASS → 第 3 步;BLOCKED → �
 - **逐 Pair 进行;同一 Pair 的两臂在同一条消息/同一时刻并行启动(时差 ≤30s)**:
   有子代理能力就并行派生两个全新子代理;没有就用任意外部 Agent CLI,同样的提示词与隔离规则;
   两者皆不可用 → **带报告终止**(说明环境缺少 Agent 运行时,已建批次保留待续)。
+- **时序闭环(硬要求)**:每个 Arm 会话真正派发前一刻盖章 `agentStartedAt`、会话返回后立刻
+  盖 `agentFinishedAt` —— execution.json 是时序唯一事实源(不从 WORKLOG/dispatchAt 推断、不人工填写):
+
+  ```bash
+  node harness/runtime/agent-launcher.mjs start  --arm-dir results/$B/PAIR-*/arm-a   # 派发前一刻
+  # …启动该臂 Agent 会话(输入 DISPATCH.md 该臂提示词原文)…
+  node harness/runtime/agent-launcher.mjs finish --arm-dir results/$B/PAIR-*/arm-a   # 会话返回后立刻
+  ```
+
+- **工具调用机器计数(方案A hard 合同)**:每臂会话结束后、collect 之前,把宿主机器口径的
+  工具调用次数写入该臂 `workspace/.budget/toolcall.count`(行数=次数,超限 → validate 判
+  BUDGET_EXHAUSTED,如实接受,不得改写):
+
+  ```bash
+  # 首选:从宿主会话转录(JSONL)逐调用提取(含真实时间戳)
+  node harness/runtime/toolcall-recorder.mjs transcript --workspace <arm>/workspace --from <transcript.jsonl>
+  # 宿主只报总数时:
+  node harness/runtime/toolcall-recorder.mjs bulk --workspace <arm>/workspace --count N --start <ISO> --end <ISO>
+  ```
+
 - 提示词 = `DISPATCH.md` 中该 Arm 代码块的**原文,一个字不改**(两臂同文、仅工作目录不同——
   这就是"同提示词"的仪器保证)。
 - 每个 Run 的完成标志 = 其 Arm 目录出现 `RESULT.md`(只能由 Run Agent 自己写)。
 - 单个 Run 可能耗时数十分钟(墙钟预算见各 Arm 的 RUN-CONTRACT.md)。用轮询推进:
 
   ```bash
-  node run.mjs round collect --batch $B    # 幂等;报 completed x/总数 与 pending 清单
+  node run.mjs round collect --batch $B    # 幂等;报 completed x/总数 与 pending 清单;自动算双臂时差
   ```
 
   - pending 的臂子代理还在跑 → 等待后重跑 collect;
   - pending 的臂子代理已死/超时 → **用同一提示词原样重派**(全新会话);禁止删改臂目录、禁止代写任何产物。
 - collect 报全部就绪 → 第 4 步。
 
-### 第 4~7 步 收尾四连(全部幂等,失败修复原因后重跑同一条命令即可续推)
+### 第 4~8 步 收尾五连(全部幂等,失败修复原因后重跑同一条命令即可续推)
 
 ```bash
 node run.mjs round validate  --batch $B   # 14 步验证流水线 + 泄漏扫描 + 预算机检(唯一判定事实源;--force 强制重验)
+node run.mjs round qualify   --batch $B   # 证据链鉴定 → QUALIFICATION.json(资格分层:QUALIFIED 家族才进 core 正式统计)
 node run.mjs round blind     --batch $B   # 生成盲评材料 + blind/JUDGE-INSTRUCTIONS.md
 node run.mjs round aggregate --batch $B   # 全量聚合 → results/aggregated.json
 ```
@@ -124,7 +145,7 @@ node run.mjs round aggregate --batch $B   # 全量聚合 → results/aggregated.
 若运行时确实无法执行 Judge:跳过此分支直接 aggregate——该批如实标 `visualPending`,
 **这不是失败**,客观分照算,日后补 Judge 再重跑 aggregate 即可。
 
-### 第 8 步 终止报告(无论走到哪一步、正常或提前结束,都必须产出)
+### 第 9 步 终止报告(无论走到哪一步、正常或提前结束,都必须产出)
 
 ```bash
 node run.mjs round status --batch $B      # 仪表盘:各臂状态 + 各阶段时间线
@@ -150,7 +171,7 @@ run.mjs              单入口 CLI(全部操作的唯一入口)
 AGENTS.md            AI Agent 上手须知(60 秒理解 + 红线 + 引擎坑速查)
 docs/                BENCHMARK-PLAN(计划书)/ 合同三件套 / ARCHITECTURE / MULTI-RUN-GUIDE / MASTER-CONTEXT
 config/ briefs/ templates/ knowledge/ vendor/ assets/   冻结配置与输入(规格/模板/知识包/引擎 SDK 与 tarball/资产)
-harness/             round 状态机 / coordinator / validate / isolation / judge / aggregate
+harness/             round 状态机 / coordinator / validate / isolation / judge / aggregate / runtime(launcher+toolcall-recorder)
 regression/          引擎缺陷回归套件(用例 + 版本注册表)
 reference/private/   Reference 满分线(⚠️ Agent Run 禁读的答案区)+ 量尺版本账本 REFERENCE-VERSIONS.json + 对照画廊
 results/             B-<日期>-R<轮次>/ 批次产物 + batches.json + aggregated.json + reports/(门户与报告)

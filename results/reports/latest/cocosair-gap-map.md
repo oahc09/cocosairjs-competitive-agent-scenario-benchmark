@@ -1,9 +1,57 @@
 # CocosAirJS Gap Map — M11 差距归因(实验证据 → 路线图输入)
 
-> 生成:2026-10-02(M11)。证据窗口:静态审计基线 2026-09-26 + Reference/Reference-Verdict 20 份 + Pilot 4 pairs/8 arms + gates/G5。
+> 生成:2026-10-02(M11);**R2 增补:2026-10-06**。证据窗口:静态审计基线 2026-09-26 + Reference/Reference-Verdict 20 份 + Pilot 4 pairs/8 arms + gates/G5;**R2 增补窗口:core 战役 5 批次(B-20261005-R01/-R02/-R03/-R04、B-20261006-R01)44 臂 K0 实测(15 对全链)。
 > 红线遵守:每条差距均关联实际证据文件;引擎上限差距与 Agent 发挥差距以 attainment 数据分离;未在证据中出现的缺陷不收录。
 
 ---
+
+## 0. R2 增补(2026-10-06):core 战役 K0 实测更新
+
+> 本节为 M11 原文(§1-§9)的增量修订;原文全部保留且仍然有效。证据均为 toolcall/build/browser 机器计数与 RESULT/WORKLOG 归档,批次可回溯。
+
+### 0.1 成本差结论被机器计数确证并强化(修订 M11 §1.5)
+
+K0 下 cocosair 臂工具调用系统性 ≈2× 于 three 臂(宿主运行时 machine count,非自报):
+S1: 80/34、86/45、49/42;S2: 63/34、95/42、124/90、98/70、85/24;S3(臂位互换后): 82/25、84/45、81/43、90/49、107/56。
+三次独立批次、两种臂位安排方向一致 → M11 的"成本差是系统性信号"从自报口径升级为机器口径,**≈2× 是当前最稳健的单项差距**。且 E08(124>120)出现首个 hard 预算真实判罚——成本差已开始转化为资格损失,不再只是效率问题。
+
+### 0.2 新增确证的 K0 引擎暗坑目录(R2,14 项;M11 目录之外的净增)
+
+| # | 暗坑 | 后果 | 首证批次/臂 |
+|---|---|---|---|
+| N1 | `createDynamicMesh` 默认容量 1024 顶点,须显式 `maxSubMeshVertices/maxSubMeshIndices` | 大网格静默截断/异常 | E02-R02 arm-a |
+| N2 | 静态 `createMesh` 读 `geometry.indices`,动态 `updateSubMesh` 读 `indices16/32` —— 两套键并存 | 传错键 → 无索引绘制 → 四边形变跨屏长条(两次独立踩中) | E04-R02 arm-a、E05-R01 arm-b |
+| N3 | 带索引动态网格每帧 `updateSubMesh` 必须重传 `indices16`,否则每帧 console.error | 每帧报错刷屏 | E05-R02 arm-a |
+| N4 | `createDynamicMesh` 依赖 gfxDevice,必须在 `createAirApp()` 之后调用 | 时序约束静默失败 | E05-R02 arm-a |
+| N5 | K0 bundle 内 `air-gltf-standard` 蒙皮路径输出纯黑(M11 E10 已录,core 战役再证) | 蒙皮 GLB 黑体,须克隆 builtin-standard 等价替换 | E10-R04 arm-b |
+| N6 | glTF 剪辑默认 wrapMode=Normal → 播完即冻结;须首实例化前置 `wrapMode=Loop` | idle 动画 3.4s 后僵死 | E10-R04 arm-b |
+| N7 | 加载器在实例根自动附加 Animation,再手动加第二个 → 冲突冻结状态 | 双动画通道冲突 | E10-R04 arm-b |
+| N8 | builtin-unlit 顶点色须显式 `defines:{USE_VERTEX_COLOR:true}`(默认材质不启用) | 顶点色全丢 | E06-R04 arm-b、E07-R04 arm-b |
+| N9 | K0 bundle 的 builtin-unlit `USE_VERTEX_COLOR` 变体不消费 `a_color`(define 存在但着色器未接线) | 天穹染色降级为均匀色 | E02-R02 arm-a |
+| N10 | 自定义 mesh 四边形绕序:cross(u,v) 不指法线 → 背面剔除"棋盘破洞",零报错 | 最迷惑的静默失败形态 | E06-R04 arm-b、E07-R04 arm-b |
+| N11 | `buildFlat` 无 UV + USE_TEXTURE → 采样 (0,0) 透明像素,整面隐形 | 整片几何消失 | E06-R04 arm-b |
+| N12 | builtin-unlit 仅单一 opaque technique;透明/加色须 `Material.initialize({states:{blendState/…}})` 覆盖 | 混合效果不可达(声明式路径) | E03-R02 arm-a |
+| N13 | 雾 setter 次序:`fog.enabled` 与 `fog.type` 设置顺序敏感,type 会被重置 NONE | 雾静默失效 | E07-R04 arm-b |
+| N14 | `worldToScreen` 为底左原点(需手工翻转);`setRotationFromEuler` 为角度口径;场景仅允许 1 盏 DirectionalLight;节点 setScale 个别路径不生效(尺寸须烘进几何) | 坐标/角度/灯光/缩放四处语义陷阱 | E03-R02 arm-a、E05-R02 arm-a、E09-R04 arm-b |
+
+**模式判断(M11 §1.3 的强化)**:R2 新增 14 项里 11 项是"静默错误"(无报错或报错与根因无关),集中在**动态网格 API 家族(N1-N4)与着色器/材质声明面(N8-N12)**——这两族是 K0 回灌的最高杠杆,建议直接产出 Recipe 级文档(含可复制的安全初始化序列),而非逐坑修文档。
+
+### 0.3 上限与校准面更新
+
+- **E09 P7"导出后运动 diff"已按 spec v1.0.1 移除**(cocosair 导出后帧节流使确定性噪声 ≈0.0043 与运动信号不可分;运动意图由 P2/P8 承担)——core S2 起 E09 双臂 PASS,该差距项关闭。E05 P1 分区阈值经 v1.0.3 `regionThresholds` 正式化(仪器-合同偏离修正,非引擎差距)。
+- **E10 黑狐狸(N5)仍是唯一 P0 级引擎缺陷候选**;core 战役 E10 双臂 PASS(three 走 InstancedMesh 式克隆、AIR 走 builtin 克隆+wrapMode 补丁),但修复靠 Agent 逆向,engine 侧根因仍未修。
+- **needsRecalibration 出现 4 项**(E02/E03/E09 three、E04 cocosair attainment>1.03):新世代 Agent 实现开始超越 Reference 天花板——Reference 量尺的复测周期(AGENTS.md"Reference 量尺版本原则")应在战役 12 切片完成后触发,否则 attainment 会系统性 >1。
+
+### 0.4 对路线图输入的净变化(M11 §1.10 修订)
+
+"AIR 不缺能做什么,缺可预期性"结论不变且加强;优先级排序更新为:
+1. **动态网格/材质 API 的静默失败族(N1-N4、N8-N12)→ Recipe + Error Diagnostics**(新增证据最多、每臂必踩);
+2. **成本差 ≈2× 的结构性归因**(哪部分是调试静默失败的时间,哪部分是 API 表达力)→ 用 WORKLOG 时间线做归因拆分;
+3. E10 蒙皮黑体根因修复(P0 维持);
+4. Reference 天花板复测(战役完成后,处理 >1.03项)。
+
+---
+
 
 ## 1. 执行摘要(实验后 AIR 的真实地位 vs 静态审计认知)
 
