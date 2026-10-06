@@ -1,11 +1,13 @@
 {
   "fixture": "NC12",
   "counters": {
-    "build.count": 9
+    "build.count": 2,
+    "toolcall.count": 121
   },
   "frozenLimit": {
     "source": "config/agents.yaml agentRun.budget (FROZEN G0)",
-    "maxBuildAttempts": 8
+    "maxBuildAttempts": 8,
+    "maxToolCalls": 120
   },
-  "note": "机器计数 9 > 冻结上限 8 → budget-check.mjs 应判 BUDGET_EXHAUSTED。其余计数器刻意不放置,保证缺陷唯一。"
+  "note": "方案A口径:build 2/8 限内,toolcall 121/120 超限且为唯一缺陷 → budget-check.mjs 应判 BUDGET_EXHAUSTED。首尾 session 行参与墙钟跨度(30min < 90min),不引入 walltime 误报。"
 }

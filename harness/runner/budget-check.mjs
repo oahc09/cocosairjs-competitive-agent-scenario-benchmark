@@ -5,6 +5,7 @@
 //   buildAttempt  = 每次 `npm run build`              → workspace/.budget/build.count   行数
 //   browserAttempt= 每次创建浏览器会话                → workspace/.budget/browser.count 行数
 //   toolCall      = 运行时原始调用(Runner 侧记录)    → workspace/.budget/toolcall.count 行数(如写入)
+//                   写入口 = harness/runtime/toolcall-recorder.mjs(call/transcript/bulk 三模式,方案A)
 //   wallTime      = 计数文件 ISO 时间戳首尾跨度(分钟) → 上限 maxWallTimeMinutes(存在任一计数时判定)
 // 触达上限由系统计数判定,自报仅诊断 —— 本模块就是"系统计数"的判定侧。
 //
@@ -81,6 +82,17 @@ export function readBudgetCounts(workspace) {
 }
 
 /**
+ * 计数行 → 时间戳:取行首第一个空白分隔 token 做 ISO 解析。
+ * 兼容三种历史/现行行式:纯 ISO("2026-…Z")、toolcall-recorder 事件行("2026-…Z tool=bash")
+ * 与 session 标记行("2026-…Z session=start")—— 直接对整行 Date.parse 会得 NaN(带尾巴),必须先切。
+ */
+function lineTime(line) {
+  const token = String(line).trim().split(/\s+/)[0] || '';
+  const t = Date.parse(token);
+  return Number.isFinite(t) ? t : NaN;
+}
+
+/**
  * 判定:counts = readBudgetCounts() 的返回值,limits = readLimits() 的返回值。
  * 超限项进 exceeded;wallTime 用全部计数文件的 ISO 时间戳首尾跨度(向上取整分钟)。
  */
@@ -96,10 +108,10 @@ export function checkBudget(counts, limits, { now = new Date().toISOString() } =
     checked.push({ kind, used: n, max });
     if (n > max) exceeded.push({ kind, used: n, max });
   }
-  // wallTime:取所有 ISO 行的最小/最大时间戳跨度(harness 无独立计时文件时的保守口径)
+  // wallTime:取所有 ISO 行的首 token 时间戳最小/最大跨度(harness 无独立计时文件时的保守口径)
   const stamps = Object.values(counts.kinds)
     .flatMap((k) => k.lines)
-    .map((l) => Date.parse(l))
+    .map(lineTime)
     .filter((t) => Number.isFinite(t))
     .sort((a, b) => a - b);
   if (stamps.length >= 1 && limits.maxWallTimeMinutes !== undefined) {
@@ -110,6 +122,7 @@ export function checkBudget(counts, limits, { now = new Date().toISOString() } =
   }
   return {
     verdict: exceeded.length ? 'BUDGET_EXHAUSTED' : 'OK',
+    status: exceeded.length ? 'BUDGET_EXHAUSTED' : 'PASS', // status 为 verdict 的方案A任务书别名(build/browser/toolcall/walltime 同一口径)
     exceeded,
     checked,
     used,

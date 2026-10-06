@@ -8,7 +8,7 @@
 //   NC09       validate --pair-meta 输入漂移前置闸门(秒级,不建浏览器)→ 退出码 4/INPUT_DRIFT
 //   NC10       reference-versions --selftest-drift 量尺漂移自检 → 输出含 PASS
 //   NC11       AGENT_IDENTITY_MISSING:设计归 run-round preflight(FIX-C)集成阶段验证 → 恒 PENDING-INTEGRATION
-//   NC12       budget-check 机器计数超 agents.yaml 冻结上限 → BUDGET_EXHAUSTED
+//   NC12       budget-check 机器计数超 agents.yaml 冻结上限 → BUDGET_EXHAUSTED(方案A:toolcall 121/120,build 限内保缺陷唯一)
 //   NC13       aggregate-all 真实只读聚合 → formal.total===null 且 objective.total 非 null(§17)
 // runner 尚未建成(并行 Agent)→ 对应 case 标 PENDING,由集成阶段重跑本脚本。
 // 输出 gates/G4.json(原字段全保留,新增 ncExtended 段)。零依赖。
@@ -355,33 +355,38 @@ async function runNc11(c) {
   }
 }
 
-// ---- NC12 BUDGET_EXHAUSTION:budget-check 机器计数超冻结上限 ----
+// ---- NC12 BUDGET_EXHAUSTION:budget-check 机器计数超冻结上限(方案A:toolcall hard) ----
 async function runNc12(c) {
   const ws = path.join(FIXTURES, 'NC12');
-  let count = null, limit = null;
-  try {
-    // as-built 口径(budget-check.mjs):.budget/*.count 为追加日志,机器计数 = 非空行数
-    count = fs.readFileSync(path.join(ws, '.budget', 'build.count'), 'utf8')
-      .split(/\r?\n/).map((l) => l.trim()).filter(Boolean).length;
-  } catch { /* 缺文件保持 null */ }
+  // as-built 口径(budget-check.mjs):.budget/*.count 为追加日志,机器计数 = 非空行数
+  const linesOf = (k) => { try { return fs.readFileSync(path.join(ws, '.budget', k + '.count'), 'utf8').split(/\r?\n/).map((l) => l.trim()).filter(Boolean).length; } catch { return null; } };
+  const counts = { build: linesOf('build'), toolcall: linesOf('toolcall'), browser: linesOf('browser') };
   const yaml = readTextSafe(path.join(BENCH_ROOT, 'config', 'agents.yaml')) || '';
   const lm = /maxBuildAttempts:\s*(\d+)/.exec(yaml);
-  if (lm) limit = Number(lm[1]);
+  const tm = /maxToolCalls:\s*(\d+)/.exec(yaml);
+  const limits = { maxBuildAttempts: lm ? Number(lm[1]) : null, maxToolCalls: tm ? Number(tm[1]) : null };
+  // 缺陷唯一性自检:toolcall 必须超限且 build 限内(否则 fixture 与方案A口径漂移)
+  const toolcallOver = counts.toolcall != null && limits.maxToolCalls != null ? counts.toolcall > limits.maxToolCalls : null;
+  const buildWithin = counts.build != null && limits.maxBuildAttempts != null ? counts.build <= limits.maxBuildAttempts : null;
   const evidence = {
     auxiliary: {
-      tool: '.budget/build.count 行数(追加日志口径)vs config/agents.yaml agentRun.budget.maxBuildAttempts(G0 冻结,只读)',
-      buildCount: count, maxBuildAttempts: limit,
-      countOverLimit: count != null && limit != null ? count > limit : null,
+      tool: '.budget/toolcall.count 行数(追加日志口径)vs config/agents.yaml agentRun.budget.maxToolCalls(G0 冻结,只读);build 限内保证缺陷唯一',
+      counts, limits,
+      toolcallCountOverLimit: toolcallOver,
+      buildCountWithinLimit: buildWithin,
     },
   };
+  if (toolcallOver !== true || buildWithin !== true) {
+    return pendingCase(c, `fixture 与方案A口径漂移:toolcall 超限=${toolcallOver},build 限内=${buildWithin}(应为 true/true);修复 fixture 后重跑`, evidence);
+  }
   if (!fs.existsSync(BUDGET_CHECK)) {
     return pendingCase(c, 'harness/runner/budget-check.mjs 未建成(run-round validate stage 已声明接线);集成阶段重跑本脚本', evidence);
   }
   const proc = await runNode(BUDGET_CHECK, ['--workspace', ws], 30000);
   const out = proc.stdout + proc.stderr;
-  const detected = /BUDGET_EXHAUSTED/i.test(out);
+  const detected = /BUDGET_EXHAUSTED/i.test(out) && /toolcall\s+121\s*\/\s*120/.test(out.replace(/\s+/g, ' '));
   return runCase(c, proc, detected,
-    detected ? `budget-check → BUDGET_EXHAUSTED(build.count=${count} > maxBuildAttempts=${limit})` : `exit ${proc.code},输出未含 BUDGET_EXHAUSTED`,
+    detected ? `budget-check → BUDGET_EXHAUSTED(toolcall.count=${counts.toolcall} > maxToolCalls=${limits.maxToolCalls};build ${counts.build}/${limits.maxBuildAttempts} 限内,缺陷唯一)` : `exit ${proc.code},输出未含 BUDGET_EXHAUSTED 或未指认 toolcall 121/120`,
     { ...evidence, toolPath: BUDGET_CHECK, toolArgs: ['--workspace', ws] });
 }
 
@@ -481,12 +486,21 @@ async function runNc13(c) {
       note: 'formalPairCount=0(G6:正式矩阵未跑)→ formal.total=null;pilot 客观分非空 → objective.total 非 null(不冒充正式总分)',
     };
   }
-  const detected = formalTotal === null && objectiveTotal !== null;
-  return runCase(c, proc, detected,
+  // 传播是双向的:断言跟随当前活门禁(G7)方向 —— 阻塞期 formal 必须 null;开放期 formal 必须流出。
+  // 固定单向断言会在门禁修复后把"正确行为"误报为缺陷(NC13 于 2026-10-06 由单向改双向)。
+  let g7Live = null;
+  try { g7Live = JSON.parse(fs.readFileSync(path.join(GATES_DIR, 'G7.json'), 'utf8')).status ?? null; } catch { /* 无门禁文件按阻塞口径 */ }
+  const gateOpen = g7Live === 'PASS';
+  const detected = gateOpen
+    ? (formalTotal !== null && objectiveTotal !== null)
+    : (formalTotal === null && objectiveTotal !== null);
+  const r = runCase(c, proc, detected,
     detected
-      ? `聚合如实传播门禁:${shape};formal.total=${JSON.stringify(formalTotal)} 且 objective.total=${JSON.stringify(objectiveTotal)}(未过的门禁保持 formal=null,客观分如实呈现)`
-      : `传播口径未满足(${shape};formal.total=${JSON.stringify(formalTotal)},objective.total=${JSON.stringify(objectiveTotal)})`,
-    { ...evidence, toolPath: AGG_ALL, toolArgs: [], after: aggSnapshot(), rule: 'formal.total===null && objective.total!=null → DETECTED' });
+      ? `聚合如实传播门禁(G7=${g7Live ?? '未知'},${gateOpen ? '开放' : '阻塞'}口径):${shape};formal.total=${JSON.stringify(formalTotal)} 且 objective.total=${JSON.stringify(objectiveTotal)}`
+      : `传播口径未满足(G7=${g7Live ?? '未知'},${gateOpen ? '开放期 formal 应非空' : '阻塞期 formal 应为 null'};${shape};formal.total=${JSON.stringify(formalTotal)},objective.total=${JSON.stringify(objectiveTotal)})`,
+    { ...evidence, toolPath: AGG_ALL, toolArgs: [], after: aggSnapshot(), rule: gateOpen ? 'G7=PASS → formal.total!=null 且 objective.total!=null → DETECTED' : 'formal.total===null && objective.total!=null → DETECTED' });
+  r.expect = gateOpen ? 'G7=PASS → formal.total!=null && objective.total!=null(双向传播)' : c.expect;
+  return r;
 }
 
 const EXTENDED_CASES = [
@@ -523,13 +537,13 @@ const EXTENDED_CASES = [
   {
     id: 'NC12', name: 'budget-exhaustion', kind: 'budgetCheck', expect: 'BUDGET_EXHAUSTED(budget-check exit 3)',
     method: 'runner/budget-check.mjs --workspace fixtures/NC12',
-    caughtBy: 'budget-check 机器计数(.budget/build.count 追加日志行数口径):build 9/8 > config/agents.yaml maxBuildAttempts=8(G0 冻结;触及上限即终止并判 BUDGET_EXHAUSTED)',
+    caughtBy: 'budget-check 机器计数(.budget/toolcall.count 追加日志行数口径,方案A hard):toolcall 121/120 > config/agents.yaml maxToolCalls=120(G0 冻结;触及上限即终止并判 BUDGET_EXHAUSTED;build 2/8 限内保证缺陷唯一)',
     run: runNc12,
   },
   {
-    id: 'NC13', name: 'gate-propagation', kind: 'gatePropagation', expect: 'formal.total==null && objective.total!=null',
-    method: 'aggregate/aggregate-all.mjs(真实只读聚合)→ 解析 results/aggregated.json',
-    caughtBy: '聚合器如实传播未过的门禁(G7 BLOCKED → formal.total/attainment 全 null,objective=S1+S2+S3 照常非空;不以 provisional 视觉分冒充正式总分)(整改 §17)',
+    id: 'NC13', name: 'gate-propagation', kind: 'gatePropagation', expect: 'G7 阻塞→formal.total==null 且 objective!=null;G7=PASS→formal.total!=null(双向传播)',
+    method: 'aggregate/aggregate-all.mjs(真实只读聚合)→ 解析 results/aggregated.json;断言方向跟随 gates/G7.json 活状态',
+    caughtBy: '聚合器如实传播门禁状态(G7 BLOCKED → formal 全 null、objective 照常;G7=PASS → formal 流出。2026-10-06 起双向:单向断言在门禁修复后会把正确行为误报为缺陷)(整改 §17)',
     run: runNc13,
   },
 ];

@@ -1,24 +1,31 @@
-// qualify-historical.mjs — 历史批次证据链鉴定(FIX-B 新增)
-// 用途:对冻结合同整改(FIX-B)之前产生的批次做逐项鉴定,回答
-//   "这批历史数据的哪些指标还能用、哪些必须作废/挂起、为什么"。
-// 只读历史产物(不改任何已有文件),输出 results/<batch>/QUALIFICATION.json(新增文件)。
+// qualify-historical.mjs — 批次证据链鉴定(Round 状态机 qualify 阶段的判定引擎)
+// 用途:对任何批次(P0-1 分层:core 正式统计的资格判定)做逐项鉴定,回答
+//   "这批数据的哪些指标还能用、哪些必须作废/挂起、为什么"。
+// 只读批次产物(不改任何已有文件),输出 results/<batch>/QUALIFICATION.json。
 //
-//   node harness/aggregate/qualify-historical.mjs --batch B-20261002-R1
+//   node run.mjs round qualify --batch B-YYYYMMDD-Rnn
+//   (等价:harness/aggregate/qualify-historical.mjs --batch B-YYYYMMDD-Rnn)
 //
 // 鉴定项(每对逐项,证据取自产物本身,不做无证据推断):
 //   1. frozenInputsComplete  冻结输入指纹是否完整(pair.json 各 sha 字段)
 //   2. specExact             spec 精确性:验证时实际所用 spec(report.spec.sha256)
 //                            vs pair.specSha256 vs arm 落盘 spec vs 现行 briefs;
 //   3. validatorKnown        验证器版本是否可追溯(report.validatorProtocolHash)
-//   4. agentIdentityComplete Agent 身份五元组是否完整
-//   5. budgetMachineCounted  预算是否有机器计数证据(.budget 计数器)
+//   4. agentIdentityComplete Agent 身份五元组是否完整(事实源 = 各臂 RUN-META.json,
+//                            pair.json 同名字段仅作历史回退 —— 不再要求 Runner 人工回填 pair.json)
+//   5. budgetMachineCounted  预算是否有机器计数证据(.budget 计数器;方案A下含 toolcall.count)
+//   5b. budgetToolCallEvidence toolcall 计数存在且 ≤ maxToolCalls(方案A:hard 合同)
 //   6. visualGate            视觉口径是否可用(blind 材料 × gates/G7.json)
+//   6b. executionTiming      双臂启动时差 ≤30s(事实源 = 各臂 execution.json 的 agentStartedAt,
+//                            collect/qualify 直读,不经人工转抄)
 //   7. rulerMatch            批次引擎哈希 vs RULER 量尺账本(含量尺晚于批次的时序核)
-// 结论 status:LEGACY_PROVISIONAL(历史遗留,有条件可用)/ QUALIFIED / DISQUALIFIED。
+// 结论 status:QUALIFIED / QUALIFIED_OBJECTIVE / QUALIFIED_OBJECTIVE_PARTIAL(_TIMING) /
+//   LEGACY_PROVISIONAL(历史遗留,有条件可用)/ DISQUALIFIED。
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { readLimits } from '../runner/budget-check.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
 const RESULTS = path.join(ROOT, 'results');
@@ -64,6 +71,11 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   const pairDir = path.join(BATCH_DIR, pd.name);
   const pj = j(path.join(pairDir, 'pair.json'));
   const scene = pj.sceneId;
+  // 各臂 RUN-META.json(身份/预算证据的 Runner 侧事实源;preflight 已校验,这里只读取证)
+  const metas = {};
+  for (const arm of ['arm-a', 'arm-b']) {
+    try { metas[arm] = j(path.join(pairDir, arm, 'RUN-META.json')); } catch { metas[arm] = null; }
+  }
 
   // ---- 1. 冻结输入完整
   const missing = REQUIRED_PAIR_FIELDS.filter((k) => !pj[k]);
@@ -125,50 +137,91 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     note: vphs[0] ? null : '历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任',
   };
 
-  // ---- 4. Agent 身份完整
-  const missingIdentity = AGENT_IDENTITY_FIELDS.filter((k) => !pj[k]);
+  // ---- 4. Agent 身份完整(事实源 = 各臂 RUN-META.json;pair.json 仅历史回退)
+  // 字段映射:pair.json 命名 ↔ RUN-META 命名(modelRevisionId/modelRevision、systemPromptHash/systemPromptSha256、toolPolicyHash/toolPolicySha256)
+  const RUNMETA_IDENTITY_MAP = {
+    agentBinaryHash: ['agentBinaryHash'],
+    modelId: ['modelId'],
+    modelRevisionId: ['modelRevisionId', 'modelRevision'],
+    systemPromptHash: ['systemPromptHash', 'systemPromptSha256'],
+    toolPolicyHash: ['toolPolicyHash', 'toolPolicySha256'],
+  };
+  const identity = {};
+  const identitySources = {};
+  for (const k of AGENT_IDENTITY_FIELDS) {
+    // 优先 pair.json 历史回填;否则取两臂 RUN-META(两臂一致才成立 —— preflight 已校验一致性,这里再取证)
+    let v = pj[k] ?? null;
+    let src = 'pair.json';
+    if (v == null || String(v).trim() === '') {
+      const vals = ['arm-a', 'arm-b'].map((a) => {
+        const m = metas?.[a];
+        if (!m) return undefined;
+        for (const f of RUNMETA_IDENTITY_MAP[k]) if (m[f] != null && String(m[f]).trim() !== '') return m[f];
+        return undefined;
+      });
+      if (vals.every((x) => x !== undefined) && String(vals[0]) === String(vals[1])) { v = vals[0]; src = 'RUN-META.json(两臂)'; }
+      else if (vals.some((x) => x !== undefined)) { v = vals.find((x) => x !== undefined) ?? null; src = 'RUN-META.json(单臂,不一致)'; }
+    }
+    identity[k] = v ?? null;
+    identitySources[k] = src;
+  }
+  const missingIdentity = AGENT_IDENTITY_FIELDS.filter((k) => !identity[k] || String(identity[k]).trim() === '');
   const agentIdentityComplete = {
     id: 'agentIdentityComplete',
     ok: missingIdentity.length === 0,
     missing: missingIdentity,
-    note: 'Agent 作为测量仪器的身份链不完整 → 跨批次/跨引擎可比性只能按"同一仪器"的声明口径采信,无法机器复核',
+    identity,
+    sources: identitySources,
+    note: '身份事实源 = 各臂 RUN-META.json(preflight 已校验非空+两臂一致);历史批次的 pair.json 人工回填仅作回退',
   };
 
-  // P0(方案 B 机制):toolCallsMode——agents.yaml 显式 'toolCallsMode: diagnostic' 时,
-  // maxToolCalls 不再是 hard gate(缺 toolcall 计数不算资格失败)。设置该键 = G0 重冻结动作,owner 裁决。
+  // P0(方案 A,2026-10-05 Owner 裁决):toolCallsMode 默认 hard —— toolcall.count 必须存在
+  // 且 ≤ maxToolCalls;agents.yaml 显式 'toolCallsMode: diagnostic' 时降为诊断口径(= G0 重冻结动作,owner 裁决)。
   const toolCallsMode = (() => { const y = fs.readFileSync(path.join(ROOT, 'config', 'agents.yaml'), 'utf8'); const m = /toolCallsMode:\s*(hard|diagnostic)/.exec(y); return m ? m[1] : 'hard'; })();
+  const limits = readLimits(path.join(ROOT, 'config', 'agents.yaml'));
+  const maxToolCalls = limits.maxToolCalls ?? null;
 
-  // ---- 5. 预算机器计数
+  // ---- 5. 预算机器计数(计数器位置:arm/workspace/.budget(FIX-C 布局);兼容旧约定 arm/.budget)
   const budget = pj.budget ?? null;
-  const budgetCounters = {};
+  const armBudget = {};
   for (const arm of ['arm-a', 'arm-b']) {
-    // 计数器位置:arm/workspace/.budget(FIX-C 布局);兼容旧约定 arm/.budget
     const bDir = ['workspace/.budget', '.budget'].map(r => path.join(pairDir, arm, r)).find(p => fs.existsSync(p)) || path.join(pairDir, arm, 'workspace', '.budget');
-    budgetCounters[arm] = fs.existsSync(bDir) ? fs.readdirSync(bDir) : null;
+    const files = fs.existsSync(bDir) ? fs.readdirSync(bDir).filter((f) => /^[a-z0-9-]+\.count$/i.test(f)) : [];
+    const lines = {};
+    for (const f of files) {
+      const kind = f.replace(/\.count$/i, '').toLowerCase();
+      lines[kind] = fs.readFileSync(path.join(bDir, f), 'utf8').split(/\r?\n/).map((l) => l.trim()).filter(Boolean).length;
+    }
+    armBudget[arm] = { dir: fs.existsSync(bDir) ? path.relative(ROOT, bDir).replaceAll('\\', '/') : null, files, lines };
   }
   const budgetDeclared = Boolean(budget) && [budget.maxToolCalls, budget.maxWallTimeMinutes, budget.maxBuildAttempts, budget.maxBrowserAttempts].every((x) => typeof x === 'number');
-  // P0-3A 收紧:build+browser 计数齐备才算机器证据;toolCalls 宿主 API 不可得 → budgetCompleteness=PARTIAL
-  const counterKinds = [...new Set(Object.values(budgetCounters).flatMap((v) => (Array.isArray(v) ? v : []).map((x) => String(x).replace(/.count$/, '').trim())) )].filter(Boolean);
-  const perArmOk = Object.values(budgetCounters).every((v) => Array.isArray(v) && v.some((x) => /build.count$/.test(String(x))) && v.some((x) => /browser.count$/.test(String(x))));
-  const hasBuild = counterKinds.includes('build');
-  const hasBrowser = counterKinds.includes('browser');
+  const counterKinds = [...new Set(Object.values(armBudget).flatMap((a) => Object.keys(a.lines)))];
+  const hasFilePerArm = (kind) => ['arm-a', 'arm-b'].every((a) => armBudget[a].files.some((f) => f.toLowerCase() === kind + '.count'));
+  const perArmOk = hasFilePerArm('build') && hasFilePerArm('browser');       // build+browser 双臂齐备
   const hasToolcall = counterKinds.includes('toolcall');
-  const budgetCompleteness = perArmOk && hasToolcall ? 'FULL' : (hasBuild && hasBrowser ? 'PARTIAL' : (hasBuild || hasBrowser ? 'PARTIAL' : 'NONE'));
+  const hasToolcallPerArm = hasFilePerArm('toolcall');
+  const budgetCompleteness = perArmOk && hasToolcall ? 'FULL' : (perArmOk ? 'PARTIAL' : (counterKinds.length ? 'PARTIAL' : 'NONE'));
+  // 方案A:toolcall 计数两臂均须存在且 ≤ maxToolCalls(超限 = BUDGET_EXHAUSTED 的证据事实,qualification 如实降级)
+  const toolcallOverLimitArms = ['arm-a', 'arm-b'].filter((a) => maxToolCalls != null && armBudget[a].lines.toolcall != null && armBudget[a].lines.toolcall > maxToolCalls);
+  const toolcallWithinLimit = hasToolcallPerArm && maxToolCalls != null && toolcallOverLimitArms.length === 0;
   const budgetMachineCounted = {
     id: 'budgetMachineCounted',
     ok: budgetDeclared && budget.identicalAcrossEngines === true && budgetCompleteness !== 'NONE',
     completeness: budgetCompleteness,
     countedKinds: counterKinds,
-    perArmOk,
+    perArmBuildBrowser: perArmOk,
+    toolcallPerArm: hasToolcallPerArm,
+    toolcallCounts: Object.fromEntries(['arm-a', 'arm-b'].map((a) => [a, armBudget[a].lines.toolcall ?? null])),
+    maxToolCalls,
+    toolcallOverLimitArms,
     missingKinds: ['build', 'browser', 'toolcall'].filter((k) => !counterKinds.includes(k)),
-    toolCallEvidence: 'unavailable(宿主 Agent API 不暴露原始 tool invocation 计数;自报仅诊断口径)',
     declared: budgetDeclared,
     identicalAcrossEngines: budget?.identicalAcrossEngines ?? null,
     source: budget?.source ?? null,
-    machineCounters: budgetCounters,
+    machineCounters: Object.fromEntries(['arm-a', 'arm-b'].map((a) => [a, armBudget[a].files])),
     note: budgetCompleteness === 'FULL'
-      ? 'build/browser 机器计数齐备(核验 maxBuildAttempts/maxBrowserAttempts)'
-      : '预算机器证据不完整:' + counterKinds.join(',') + ' 有计数;toolCalls 无法机器核验(声明口径),maxToolCalls 未被机器强制',
+      ? `build/browser/toolcall 三计数双臂齐备(toolcall ${armBudget['arm-a'].lines.toolcall ?? '?'}/${armBudget['arm-b'].lines.toolcall ?? '?'} vs maxToolCalls ${maxToolCalls ?? '?'})`
+      : '预算机器证据不完整:' + (counterKinds.join(',') || '无') + ' 有计数;' + (['build', 'browser', 'toolcall'].filter(k => !counterKinds.includes(k)).join(',') || '无') + ' 缺失',
   };
 
   // ---- 6. 视觉门禁
@@ -181,22 +234,34 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     conclusion: g7Status === 'PASS' ? 'visual 可用' : `blind 材料存在,但 G7=${g7Status} → 视觉口径(六维/Preference)一律不得引用`,
   };
 
-  // ---- 6b. 同时启动/时序(整改 P1-4)
-  const execTimingRaw = (() => {
-    const d = pj.timingDrift || '';
-    if (/PAIR_TIMING_DRIFT/.test(d)) return 'PAIR_TIMING_DRIFT';
-    if (/^OK/.test(d) || /delta=d+s≤30s/.test(d)) return 'PASS';
-    if (/UNMEASURABLE/.test(d)) return 'UNMEASURABLE';
-    return d ? 'UNKNOWN' : 'UNMEASURABLE(无 execution.json/时序记录)';
-  })();
-  const startDelta = pj.execution?.startTimeDeltaActualSec ?? null;
+  // ---- 6b. 同批启动/时序(Phase 3 闭环:execution.json 是唯一事实源,qualify 直读两臂)
+  let execTimingRaw = null;
+  let startDelta = null;
+  let timingSource = 'execution.json(agentStartedAt 直读)';
+  try {
+    const exA = j(path.join(pairDir, 'arm-a', 'execution.json'));
+    const exB = j(path.join(pairDir, 'arm-b', 'execution.json'));
+    const tA = exA.agentStartedAt ?? null, tB = exB.agentStartedAt ?? null;
+    if (tA && tB) {
+      startDelta = Math.round(Math.abs(new Date(tA) - new Date(tB)) / 1000);
+      execTimingRaw = startDelta <= 30 ? 'PASS' : 'PAIR_TIMING_DRIFT';
+    }
+  } catch { /* execution.json 缺失/损坏 → 走历史回退 */ }
+  if (execTimingRaw == null && pj.execution?.startTimeDeltaActualSec != null) {
+    // 历史批次回退:pair.json 的 Runner 转抄字段(Phase 3 之前的手工链路)
+    startDelta = pj.execution.startTimeDeltaActualSec;
+    execTimingRaw = startDelta <= 30 ? 'PASS' : 'PAIR_TIMING_DRIFT';
+    timingSource = 'pair.json.execution(历史转抄回退)';
+  }
+  if (execTimingRaw == null) { execTimingRaw = 'UNMEASURABLE'; timingSource = '无 execution.json/时序记录'; }
   const executionTiming = {
     id: 'executionTiming',
-    ok: execTimingRaw === 'PASS' && startDelta != null && startDelta <= 30,
+    ok: execTimingRaw === 'PASS',
     status: execTimingRaw,
     startDeltaSec: startDelta,
     maxSec: 30,
-    note: 'track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进 diagnostic 区',
+    source: timingSource,
+    note: 'track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进诊断区',
   };
 
   // ---- 7. 量尺匹配
@@ -218,11 +283,24 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     rulerId: ruler?.rulerId ?? null,
   };
 
-  // ---- E10 特别核:历史验证实际 spec 版本从证据推断
-  const budgetToolCallEvidence = { id: 'budgetToolCallEvidence', ok: budgetMachineCounted.completeness === 'FULL' || toolCallsMode === 'diagnostic', mode: toolCallsMode, completeness: budgetMachineCounted.completeness, note: toolCallsMode === 'diagnostic' ? 'toolCallsMode=diagnostic(G0 重冻结后生效):maxToolCalls 降为诊断指标,不阻断 qualification' : 'toolCallsMode=hard(默认):宿主 API 不暴露 toolcall 计数 → 永久 PARTIAL,除非接入带计数器的运行时或 Owner 切 diagnostic 并重冻结 G0' };
+  // ---- 方案A hard 合同:toolcall 计数证据(存在 + ≤ maxToolCalls 才算满足绑定预算)
+  const budgetToolCallEvidence = {
+    id: 'budgetToolCallEvidence',
+    ok: toolCallsMode === 'diagnostic' ? budgetMachineCounted.ok : toolcallWithinLimit,
+    mode: toolCallsMode,
+    completeness: budgetCompleteness,
+    toolcallWithinLimit,
+    toolcallOverLimitArms,
+    toolcallCounts: budgetMachineCounted.toolcallCounts,
+    maxToolCalls,
+    note: toolCallsMode === 'diagnostic'
+      ? 'toolCallsMode=diagnostic(G0 重冻结后生效):maxToolCalls 降为诊断指标,不阻断 qualification'
+      : (toolcallWithinLimit
+        ? `方案A hard 满足:两臂 toolcall.count 存在且 ≤ ${maxToolCalls}(计数 ${armBudget['arm-a'].lines.toolcall}/${armBudget['arm-b'].lines.toolcall})`
+        : `方案A hard 不满足:toolcall 计数${hasToolcallPerArm ? `超限(arm: ${toolcallOverLimitArms.join('/')})` : '缺失'} → 资格降级 PARTIAL`),
+  };
   const checks = { frozenInputsComplete, specExact, validatorKnown, agentIdentityComplete, budgetMachineCounted, budgetToolCallEvidence, executionTiming, visualGate, rulerMatch };
   const failedIds = Object.values(checks).filter((c) => !c.ok).map((c) => c.id);
-  // toolcall 计数不可得 → 单列证据缺口(不算 check 失败,但阻断 FULL 预算结论)
   let status = 'LEGACY_PROVISIONAL';
   const reasons = [];
   if (!frozenInputsComplete.ok) reasons.push(`冻结输入字段缺失: ${frozenInputsComplete.missing.join(', ')}`);
@@ -231,20 +309,21 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   if (!validatorKnown.ok) reasons.push('验证协议哈希未记录(整改前 report 格式)');
   if (!agentIdentityComplete.ok) reasons.push(`Agent 身份字段缺失: ${missingIdentity.join(', ')}`);
   if (!budgetMachineCounted.ok) reasons.push('预算机器计数证据未归档(仅声明口径)');
+  if (!budgetToolCallEvidence.ok) reasons.push(budgetToolCallEvidence.note);
   if (!visualGate.ok) reasons.push(`G7=${g7Status},视觉口径作废`);
+  if (!executionTiming.ok) reasons.push(`双臂启动时差 ${startDelta ?? '未知'}s(限 30s;来源:${timingSource})→ ${execTimingRaw}`);
   if (!rulerMatch.ok) reasons.push('量尺匹配失败(见 rulerMatch)');
-  if (runVsPair && pairVsCurrent && validatorKnown.ok && agentIdentityComplete.ok && budgetMachineCounted.ok && visualGate.ok && rulerMatch.ok) status = 'QUALIFIED';
-  // 整改后数据(身份/冻结/预算/协议全过)仅因 G7=BLOCKED 挂视觉:objective 口径完全可信,
-  // 不应错标 LEGACY(遗留)—— 单列 QUALIFIED_OBJECTIVE(正式 objective,visual 待 G7)
-  else if (runVsPair && pairVsCurrent && validatorKnown.ok && agentIdentityComplete.ok && budgetMachineCounted.ok && rulerMatch.ok && !visualGate.ok) {
-    const nonVisualFails = failedIds.filter((id) => id !== 'visualGate');
-    // P0-3 方案 B:diagnostic 模式(agents.yaml 显式声明+G0 重冻结)下,
-    // toolcall 证据缺失不再是 hard 缺口 → binding 预算视为满足
-    const bindingBudgetSatisfied = budgetCompleteness === 'FULL'
-      || (toolCallsMode === 'diagnostic' && budgetMachineCounted.ok);
-    if (nonVisualFails.length === 0 && bindingBudgetSatisfied) status = 'QUALIFIED_OBJECTIVE';
-    else if (nonVisualFails.length > 0 && nonVisualFails.every((id) => id === 'budgetToolCallEvidence')) status = 'QUALIFIED_OBJECTIVE_PARTIAL';
-    else if (nonVisualFails.length > 0 && nonVisualFails.every((id) => id === 'budgetToolCallEvidence' || id === 'executionTiming')) status = 'QUALIFIED_OBJECTIVE_PARTIAL_TIMING';
+  // 状态判定(方案A):objective 基座(冻结/身份/协议/量尺) + 预算 hard + 时序 + 视觉门禁 正交组合
+  const objectiveBaseOk = runVsPair && pairVsCurrent && validatorKnown.ok && agentIdentityComplete.ok && budgetMachineCounted.ok && rulerMatch.ok;
+  const budgetOk = budgetToolCallEvidence.ok;
+  const timingOk = executionTiming.ok;
+  if (objectiveBaseOk && budgetOk && timingOk) {
+    status = visualGate.ok ? 'QUALIFIED' : 'QUALIFIED_OBJECTIVE';
+  } else if (objectiveBaseOk) {
+    const blockers = failedIds.filter((id) => id !== 'visualGate');
+    if (blockers.every((id) => id === 'budgetToolCallEvidence')) status = 'QUALIFIED_OBJECTIVE_PARTIAL';
+    else if (blockers.every((id) => id === 'budgetToolCallEvidence' || id === 'executionTiming')) status = 'QUALIFIED_OBJECTIVE_PARTIAL_TIMING';
+    // 其余(身份/协议/冻结断裂)保持 LEGACY_PROVISIONAL
   }
 
   const pairEntry = {
@@ -295,7 +374,7 @@ if (allPairs.some((p) => ['E02', 'E05'].includes(p.scene)) && isLegacyBatch) {
 if (anyRunDrift) batchReasons.push('存在"验证时 spec ≠ pair 冻结 spec"的对(E10):回溯 INPUT_DRIFT');
 if (isLegacyBatch) batchReasons.push('全部 pair 的 Agent 身份五元组与验证协议哈希未记录 → 整批只能按 LEGACY_PROVISIONAL 口径引用');
 const budgetIncomplete = allPairs.some((p) => (p.failedChecks || []).includes('budgetToolCallEvidence'));
-if (!isLegacyBatch && budgetIncomplete) batchReasons.push('预算证据 PARTIAL:build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数(永久 PARTIAL,接入带计数器的运行时后消除)');
+if (!isLegacyBatch && budgetIncomplete) batchReasons.push('预算 hard 合同(方案A)未满足:toolcall 计数缺失或超限(计入 qualification 的对降级 PARTIAL,只进诊断区)');
 if (g7Status !== 'PASS') batchReasons.push(`G7=${g7Status}:visual 口径作废/挂起(不影响 objective 正式口径)`);
 
 // 批级状态 = 最弱 pair 状态(DISQUALIFIED > LEGACY_PROVISIONAL > QUALIFIED_OBJECTIVE > QUALIFIED)
@@ -309,11 +388,11 @@ const qualification = {
   batch: batchArg,
   status,
   statusDefinition: {
-    QUALIFIED: '全部鉴定项通过,指标按正式口径引用',
+    QUALIFIED: '全部鉴定项通过(含方案A toolcall hard、双臂时序 ≤30s、G7),指标按正式口径引用',
     LEGACY_PROVISIONAL: '整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制',
-    QUALIFIED_OBJECTIVE: '整改后数据:冻结输入/身份/预算(FULL)/协议/量尺全部验证通过,objective 口径(S1/S2/S3)按正式引用;visual 因 G7=BLOCKED 挂起',
-    QUALIFIED_OBJECTIVE_PARTIAL: '整改后数据:同上,但预算证据 PARTIAL(build/browser 已机器核验;maxToolCalls 宿主 API 不暴露计数,仅声明口径)——引用时必须带此限制',
-    QUALIFIED_OBJECTIVE_PARTIAL_TIMING: '整改后数据:预算 PARTIAL + 双臂启动时差超 30s 或不可测(PAIR_TIMING_DRIFT/UNMEASURABLE)——objective 有条件引用,正式 paired 设计主张不成立,引用必须带此时序限制',
+    QUALIFIED_OBJECTIVE: 'objective 基座(冻结/身份/预算 hard/协议/量尺)+ 时序全部通过,objective 口径(S1/S2/S3)按正式引用;仅视觉口径挂起(G7 未过)',
+    QUALIFIED_OBJECTIVE_PARTIAL: 'objective 基座通过但方案A hard 预算不满足(toolcall 计数缺失或超限)——objective 有条件引用,引用时必须带此限制',
+    QUALIFIED_OBJECTIVE_PARTIAL_TIMING: 'objective 基座通过但双臂启动时差超 30s 或不可测(PAIR_TIMING_DRIFT/UNMEASURABLE,可叠加预算缺口)——objective 有条件引用,正式 paired 设计主张不成立,引用必须带此时序限制',
     DISQUALIFIED: '冻结输入断裂且无法溯源,全部指标作废',
   },
   context: {

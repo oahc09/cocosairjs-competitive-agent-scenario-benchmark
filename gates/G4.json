@@ -2,7 +2,7 @@
   "gate": "G4 HARNESS_TRUST",
   "status": "PASS",
   "statusBase": "PASS",
-  "generatedAt": "2026-10-04T12:14:48.025Z",
+  "generatedAt": "2026-10-06T02:32:24.674Z",
   "runnerAvailable": true,
   "runner": "harness/runner/validate.mjs",
   "cases": [
@@ -31,10 +31,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 287
+            "durationMs": 260
           },
           "report": "results\\nc\\NC01-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.1429 fps=60.4\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC01-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.1429 fps=60.5\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC01-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -62,10 +62,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 52
+            "durationMs": 17
           },
           "report": "results\\nc\\NC02-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.4286 fps=60.3\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC02-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0.4286 fps=60.6\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC02-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -89,10 +89,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 54
+            "durationMs": 217
           },
           "report": "results\\nc\\NC03-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: PASS classification=PASS probes=7 passRate=1 fps=60\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E01\\report.json\n",
           "stderrTail": ""
         },
         {
@@ -110,7 +110,7 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 66
+            "durationMs": 222
           },
           "report": "results\\nc\\NC03-E02\\report.json",
           "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=UNRESOLVED probes=7 passRate=0 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC03-E02\\report.json\n",
@@ -140,7 +140,7 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 57
+            "durationMs": 234
           },
           "report": "results\\nc\\NC04-E01\\report.json",
           "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=INTERACTION probes=7 passRate=0.5714 fps=60.1\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC04-E01\\report.json\n",
@@ -169,10 +169,10 @@
           "ready": {
             "appReady": true,
             "benchReady": true,
-            "durationMs": 55
+            "durationMs": 31
           },
           "report": "results\\nc\\NC05-E01\\report.json",
-          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=LIFECYCLE_MISUSE probes=7 passRate=0.8571 fps=60.2\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
+          "stdoutTail": "[7/14] execute probes\n[11/14] fps sampling (3s rAF)\ndone: FAIL classification=LIFECYCLE_MISUSE probes=7 passRate=0.8571 fps=60\nreport: E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\nc\\NC05-E01\\report.json\n",
           "stderrTail": ""
         }
       ]
@@ -360,7 +360,7 @@
           "tool": "aggregate/reference-versions.mjs --check(只读现状观测,非判定)",
           "exitCode": 0,
           "staleCount": 0,
-          "summaryTail": "  CURRENT              E10:cocosair   v2.val10 | 全部 CURRENT(量尺与全部输入一致)"
+          "summaryTail": "  CURRENT              E10:cocosair   v2.val11 | 全部 CURRENT(量尺与全部输入一致)"
         },
         "readinessProbe": {
           "ready": true
@@ -372,7 +372,7 @@
         "kind": "identityPreflight",
         "expect": "run-round preflight BLOCKED(集成阶段)",
         "method": "(集成阶段)round/run-round.mjs --batch <batch> --stage preflight",
-        "caughtBy": "run-round --stage preflight 真实执行(exit 0):BLOCKED + 身份缺失 reasons ×11",
+        "caughtBy": "run-round --stage preflight 真实执行(exit 0):BLOCKED + 身份缺失 reasons ×9",
         "detected": true,
         "status": "DETECTED",
         "mode": "RUN",
@@ -428,9 +428,9 @@
               "arm-a: RUN-META.toolPolicyId 为空"
             ],
             "stdoutTail": [
+              "           - arm-b: RUN-META.systemPromptId 为空",
               "           - arm-b: RUN-META.systemPromptSha256 为空",
               "           - arm-b: RUN-META.toolPolicyId 为空",
-              "           - arm-b: RUN-META.toolPolicySha256 为空",
               "           - 两臂 RUN-META.modelId 不一致(arm-a=\"\", arm-b=\"GLM-5.3\")",
               "           - 两臂 RUN-META.systemPromptHash 不一致(arm-a=null, arm-b=\"2c26b46b68ffc68ff99b453c1d30413413422d706483bfa0f98a5e886266e7ae\")",
               "[preflight] 1 个 pair:BLOCKED;BLOCKED(不得 validate): PAIR-E01-K0-R01"
@@ -446,8 +446,8 @@
         "mode": "RUN",
         "expected": "BUDGET_EXHAUSTED(budget-check exit 3)",
         "detected": true,
-        "caughtBy": "budget-check 机器计数(.budget/build.count 追加日志行数口径):build 9/8 > config/agents.yaml maxBuildAttempts=8(G0 冻结;触及上限即终止并判 BUDGET_EXHAUSTED)",
-        "caughtByActual": "budget-check → BUDGET_EXHAUSTED(build.count=9 > maxBuildAttempts=8)",
+        "caughtBy": "budget-check 机器计数(.budget/toolcall.count 追加日志行数口径,方案A hard):toolcall 121/120 > config/agents.yaml maxToolCalls=120(G0 冻结;触及上限即终止并判 BUDGET_EXHAUSTED;build 2/8 限内保证缺陷唯一)",
+        "caughtByActual": "budget-check → BUDGET_EXHAUSTED(toolcall.count=121 > maxToolCalls=120;build 2/8 限内,缺陷唯一)",
         "status": "DETECTED",
         "runs": [
           {
@@ -458,27 +458,35 @@
             ],
             "exitCode": 3,
             "timedOut": false,
-            "stdoutTail": "[budget-check] build    9/8\n[budget-check] browser  0/6\n[budget-check] toolcall 0/120\n[budget-check] walltime 6/90\n[budget-check] verdict: BUDGET_EXHAUSTED(忽略非计数文件: meta.json)\n",
+            "stdoutTail": "[budget-check] build    2/8\n[budget-check] browser  0/6\n[budget-check] toolcall 121/120\n[budget-check] walltime 30/90\n[budget-check] verdict: BUDGET_EXHAUSTED(忽略非计数文件: meta.json)\n",
             "stderrTail": ""
           }
         ],
         "auxiliary": {
-          "tool": ".budget/build.count 行数(追加日志口径)vs config/agents.yaml agentRun.budget.maxBuildAttempts(G0 冻结,只读)",
-          "buildCount": 9,
-          "maxBuildAttempts": 8,
-          "countOverLimit": true
+          "tool": ".budget/toolcall.count 行数(追加日志口径)vs config/agents.yaml agentRun.budget.maxToolCalls(G0 冻结,只读);build 限内保证缺陷唯一",
+          "counts": {
+            "build": 2,
+            "toolcall": 121,
+            "browser": null
+          },
+          "limits": {
+            "maxBuildAttempts": 8,
+            "maxToolCalls": 120
+          },
+          "toolcallCountOverLimit": true,
+          "buildCountWithinLimit": true
         }
       },
       {
         "id": "NC13",
         "name": "gate-propagation",
         "kind": "gatePropagation",
-        "method": "aggregate/aggregate-all.mjs(真实只读聚合)→ 解析 results/aggregated.json",
+        "method": "aggregate/aggregate-all.mjs(真实只读聚合)→ 解析 results/aggregated.json;断言方向跟随 gates/G7.json 活状态",
         "mode": "RUN",
-        "expected": "formal.total==null && objective.total!=null",
+        "expected": "G7 阻塞→formal.total==null 且 objective!=null;G7=PASS→formal.total!=null(双向传播)",
         "detected": true,
-        "caughtBy": "聚合器如实传播未过的门禁(G7 BLOCKED → formal.total/attainment 全 null,objective=S1+S2+S3 照常非空;不以 provisional 视觉分冒充正式总分)(整改 §17)",
-        "caughtByActual": "聚合如实传播门禁:per-pair-formal-objective(FIX-B as-built);formal.total=null 且 objective.total=55(未过的门禁保持 formal=null,客观分如实呈现)",
+        "caughtBy": "聚合器如实传播门禁状态(G7 BLOCKED → formal 全 null、objective 照常;G7=PASS → formal 流出。2026-10-06 起双向:单向断言在门禁修复后会把正确行为误报为缺陷)(整改 §17)",
+        "caughtByActual": "聚合如实传播门禁(G7=PASS,开放口径):per-pair-formal-objective(FIX-B as-built);formal.total=98 且 objective.total=55",
         "status": "DETECTED",
         "runs": [
           {
@@ -486,38 +494,39 @@
             "args": [],
             "exitCode": 0,
             "timedOut": false,
-            "stdoutTail": "  ruler=RULER-20261003-R02 g7=BLOCKED formal=ALL-NULL(objective 口径照常) needsRecalibration=[]\n  E01 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E02 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E05 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E10 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 gro",
+            "stdoutTail": "  E06 K0: n=1 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=-7 CI=null W/T/L=0/0/1\n  E07 K0: n=1 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=-23 CI=null W/T/L=0/0/1\n  E08 K0: n=0 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=null CI=null W/T/L=0/0/0\n  E09 K0: n=1 [core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic] medianΔ=-4 CI=null W/T/L=0/0/1\n  E10 K0: n=1 [core-only(track=core 且 qualificati",
             "stderrTail": ""
           }
         ],
         "before": {
-          "generatedAt": "2026-10-04T11:48:52.871Z",
-          "batches": 2,
-          "pairs": 8,
-          "pilotPairs": 4,
-          "visualPendingArms": 8,
-          "g7": "BLOCKED"
+          "generatedAt": "2026-10-06T02:28:16.558Z",
+          "batches": 5,
+          "pairs": 19,
+          "pilotPairs": 0,
+          "visualPendingArms": 0,
+          "g7": "PASS"
         },
         "tool": "aggregate/aggregate-all.mjs(真实只读聚合:批次数据只读,重算其自身产物 results/aggregated.json)",
         "derivation": {
-          "pairsWithFormalSection": 8,
-          "formalValuesAllNull": true,
-          "objectiveNonNullCount": 32,
+          "pairsWithFormalSection": 19,
+          "formalValuesAllNull": false,
+          "objectiveNonNullCount": 76,
           "g7": {
-            "status": "BLOCKED",
-            "formalImpact": "INVALID — formal total/attainment/pairedDelta 全 null,视觉分仅 provisional"
+            "status": "PASS",
+            "formalImpact": "VALID"
           },
           "note": "G7(BLIND_JUDGE_VALIDITY)未过 → formal.total/attainment 全 null;objective(S1+S2+S3)照常非空 —— 门禁状态如实传播,不以 provisional 视觉分冒充正式总分"
         },
         "after": {
-          "generatedAt": "2026-10-04T12:14:47.999Z",
-          "batches": 2,
-          "pairs": 8,
-          "pilotPairs": 4,
-          "visualPendingArms": 8,
-          "g7": "BLOCKED"
+          "generatedAt": "2026-10-06T02:32:24.657Z",
+          "batches": 5,
+          "pairs": 19,
+          "pilotPairs": 0,
+          "visualPendingArms": 0,
+          "g7": "PASS"
         },
-        "rule": "formal.total===null && objective.total!=null → DETECTED"
+        "rule": "G7=PASS → formal.total!=null 且 objective.total!=null → DETECTED",
+        "expect": "G7=PASS → formal.total!=null && objective.total!=null(双向传播)"
       }
     ],
     "notes": [

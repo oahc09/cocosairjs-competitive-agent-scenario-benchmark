@@ -28,7 +28,7 @@ const CHECK = process.argv.includes('--check');
 const SELFTEST = process.argv.includes('--selftest-drift');
 
 const SEMANTIC_INPUTS = ['engine', 'briefSha', 'specSha', 'docsSha'];               // 语义输入:漂移→重实现
-const PROTOCOL_INPUTS = ['validatorProtocolHash', 'judgeProtocolHash', 'codeReviewProtocolHash', 'toolchain']; // 测量协议:漂移→重验(S4 已入正式总分,其评审协议同属测量面)
+const PROTOCOL_INPUTS = ['validatorProtocolHash', 'judgeProtocolHash', 'codeReviewProtocolHash', 'toolchain', 'visualEvidenceSha']; // 测量协议:漂移→重验(S4 已入正式总分,其评审协议同属测量面;visual 证据文件变化 → 视觉判定需重新采集)
 const ALL_INPUT_KEYS = [...SEMANTIC_INPUTS, ...PROTOCOL_INPUTS];
 
 // ---- 验证协议指纹:与 harness/runner/validate.mjs 完全同式(probe-executor + validate 内容合并 sha)
@@ -103,8 +103,31 @@ function refObjective(report) {
   return { s1, s2, s3, objectiveScore: s1 + s2 + s3 };
 }
 
-// ---- 冻结时一次性采集 Reference 视觉原始分(18 制):
-// 扫描 results/B-*/blind/judge-pass-1.json 的 referenceItems,取首个 REF-<SCENE>-<X|Y>- 命中项。
+// ---- 冻结时采集 Reference 视觉原始分(18 制),证据来源两级:
+// ① 自包含(reference/private/<engine>/<scene>/visual-score.json,R4/Phase 4 正典):
+//    以该文件的 path+sha256 入账,删除 results/ 批次不影响量尺证据链;
+// ② 回退(legacy):扫描 results/B-*/blind/judge-pass-1.json referenceItems
+//    (方案A 清历史批次后通常不可复现,仅为旧账本重冻结保留)。
+function refVisualEvidence(scene, engine) {
+  const selfPath = path.join(ROOT, 'reference', 'private', engine, scene, 'visual-score.json');
+  if (fs.existsSync(selfPath)) {
+    try {
+      const v = j(selfPath);
+      if (v.visualRaw18 != null) {
+        return {
+          visualRaw18: Number(v.visualRaw18),
+          evidence: {
+            path: path.relative(ROOT, selfPath).replaceAll('\\', '/'),
+            sha256: shaFile(selfPath),
+            source: 'self-contained(reference visual-score.json;provenance 见文件内 provenance 段)',
+          },
+        };
+      }
+    } catch { /* 文件损坏 → 回退批次扫描 */ }
+  }
+  return firstRefVisual18(scene, engine);
+}
+
 function firstRefVisual18(scene, engine) {
   const letter = engine === 'three' ? 'X' : 'Y';
   const batches = fs.readdirSync(path.join(ROOT, 'results'), { withFileTypes: true })
@@ -176,6 +199,8 @@ for (let i = 1; i <= 10; i++) {
       toolchain,
       validatorProtocolHash: vp.hash,
       judgeProtocolHash: jp.hash,
+      // R4/Phase 4:视觉证据文件内容指纹(visual-score.json;漂移 → 视觉判定需重新采集,validationRevision+1)
+      visualEvidenceSha: (() => { const p = path.join(ROOT, 'reference', 'private', engine, scene, 'visual-score.json'); try { return shaFile(p); } catch { return null; } })(),
     };
     const key = `${scene}:${engine}`;
     const old = prev.epochs[key];
@@ -185,7 +210,7 @@ for (let i = 1; i <= 10; i++) {
     const validationRevision = (old?.validationRevision || 1) + (drift.protocol.length ? 1 : 0);
     // ---- 冻结完整指标(FIX-B) ----
     const obj = refObjective(rep);
-    const vis = ok ? firstRefVisual18(scene, engine) : { visualRaw18: null, evidence: null };
+    const vis = ok ? refVisualEvidence(scene, engine) : { visualRaw18: null, evidence: null };
     const visualScore40 = vis.visualRaw18 != null ? Math.round(vis.visualRaw18 * 40 / 18) : null;
     // R2-7(方案 A):Reference 同样采 code-review S4,分子分母口径一致(formalAttainment 不再天然 >100%)
     let referenceS4 = null;
