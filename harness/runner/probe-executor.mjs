@@ -1052,7 +1052,7 @@ export const VISUAL_ASSERTION_TYPES = [
  * spec-audit.mjs reports those as PARTIAL, never as silently-checked.
  */
 export const VISUAL_PARAM_KEYS = {
-  nonBlank: ['region', 'regions', 'minLitPixelRatio', 'minCoverage', 'ratio', 'threshold', 'litDistance', 'bgDistance', 'locator', 'expect'],
+  nonBlank: ['region', 'regions', 'minLitPixelRatio', 'minCoverage', 'ratio', 'threshold', 'litDistance', 'bgDistance', 'locator', 'expect', 'regionThresholds'],
   motion: ['region', 'regions', 'minMotionPixelRatio', 'minChangedRatio', 'ratio', 'threshold', 'spanMs', 'frameGapMs', 'intervalMs', 'pixThreshold', 'expect'],
   pixelDelta: ['region', 'regions', 'metric', 'minShift', 'minDiffPixelRatio', 'minChangedRatio', 'ratio', 'threshold', 'pixThreshold', 'frameGapMs', 'spanMs', 'expect'],
   regionChange: ['region', 'regions', 'expect', 'ring', 'metric', 'minDiffPixelRatio', 'minChangedRatio', 'ratio', 'threshold', 'frameGapMs', 'spanMs', 'pixThreshold'],
@@ -1184,12 +1184,34 @@ export async function runVisualAssertion(page, va, ctx, shotBefore = null) {
         const minRatio = pickNumber(params, ['minLitPixelRatio', 'minCoverage', 'ratio', 'threshold'], DEFAULTS.nonBlankRatio);
         const litDistance = pickNumber(params, ['litDistance', 'bgDistance'], DEFAULTS.litDistance);
         const regionSpec = params.regions ?? params.region ?? 'full';
+        const frame = await shoot(page);
+        await ctx.saveShot(frame, 'vis');
+        // 分区机器阈值(regionThresholds:E05 v1.0.3 起;键=区域名,'*' 兜底)。
+        // 无该键时走原有单阈值路径,行为逐位不变(NC/G4 可复现)。
+        const regionThresholds = (params.regionThresholds && typeof params.regionThresholds === 'object' && !Array.isArray(params.regionThresholds))
+          ? params.regionThresholds : null;
+        if (regionThresholds) {
+          const names = Array.isArray(regionSpec) ? regionSpec : [regionSpec];
+          const perRegion = [];
+          for (const item of names) {
+            const rrOne = await resolveRegions(item, ctx);
+            notes.push(...rrOne.notes);
+            const badOne = guardUnknownRegions(rrOne, ctx, meta);
+            if (badOne) return badOne;
+            const t = Number(regionThresholds[String(item)] ?? regionThresholds['*'] ?? minRatio);
+            for (const rect of rrOne.rects) {
+              const m = litRatio(frame, rect, litDistance);
+              perRegion.push({ rect, region: String(item), threshold: t, litRatio: Math.round(m.ratio * 10000) / 10000, background: m.background });
+            }
+          }
+          const min = Math.min(...perRegion.map((p) => p.litRatio));
+          const ok = perRegion.every((p) => p.litRatio >= p.threshold);
+          return { ok, ...meta, metrics: { minRatio, regionThresholds, perRegion, worstLitRatio: min } };
+        }
         const rr = await resolveRegions(regionSpec, ctx);
         notes.push(...rr.notes);
         const bad = guardUnknownRegions(rr, ctx, meta);
         if (bad) return bad;
-        const frame = await shoot(page);
-        await ctx.saveShot(frame, 'vis');
         const perRegion = [];
         for (const rect of rr.rects) {
           const m = litRatio(frame, rect, litDistance);

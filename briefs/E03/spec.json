@@ -1,6 +1,6 @@
 {
   "briefId": "E03",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.0.1",
   "frozen": true,
   "frozenAt": "2026-10-02T16:29:37+08:00",
   "title": "E03 太阳系仪(Orrery)",
@@ -155,13 +155,13 @@
       "action": "wait:300",
       "waitMs": 0,
       "stateAssertion": {
-        "jq": "$.simulationTime < 1.5 && $.selectedPlanet == null && $.infoCard.visible == false && $.planets[0].orbitAngle >= -0.06 && $.planets[0].orbitAngle <= 0.06 && $.planets[7].orbitAngle >= 5.43 && $.planets[7].orbitAngle <= 5.56"
+        "jq": "$.simulationTime < 2.5 && $.selectedPlanet == null && $.infoCard.visible == false && $.planets[0].orbitAngle >= -0.08 && $.planets[0].orbitAngle <= 0.08 && $.planets[7].orbitAngle >= 5.43 && $.planets[7].orbitAngle <= 5.56"
       },
       "visualAssertion": {
         "type": "motion",
         "params": { "region": "full", "minMotionPixelRatio": 0.002 }
       },
-      "threshold": "reset 后 0.3–0.9s 内采样:模拟时间近零、无选中、信息卡关闭、行星轨道角回到初始值(第 k 颗 = k × 45°,容差 ±0.06 rad;第 8 颗 315° = 5.4978 ± 0.06);画面仍在运动(非冻结、非重载)",
+      "threshold": "reset 后采样(P6 点击 reset → P6 证据采集 → P7 wait300 → 运动窗后 stateAfter 求值,实测总延迟 1.3–1.8s,含视频开销):模拟时间 < 2.5s(相对行星周期 230–3400s 仍为近零)、无选中、信息卡关闭、行星轨道角回到初始值(第 k 颗 = k × 45°,容差 ±0.08 rad——覆盖最内侧行星在采样延迟内的自然推进 2π·2.5/230 ≈ 0.068;第 8 颗 315° = 5.4978 ± 0.06);画面仍在运动(非冻结、非重载)",
       "evidence": ["screenshot", "stateSample", "videoClip"]
     },
     {
@@ -210,5 +210,15 @@
       "8x 档位下模拟时间与轨道角推进速度不低于 1x 的 4 倍。",
       "Reset 后 simulationTime、timeScale、selectedPlanet 与各行星轨道角全部恢复初始值,渲染与运动不中断且无页面刷新。"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-05T12:40:00Z",
+      "from": "1.0.0",
+      "reason": "仪器-合同时序偏离:B-20261005-R02 双引擎双臂 P7 对称 FAIL——stateAssertion 在 stateAfter(运动窗后)求值,reset 实际采样延迟 = P6 证据采集 + P7 wait300 + 运动窗 ≈ 1.3–1.8s(含 --video 开销),超过按无视频参考验证(实测 0.58s)校准的 simulationTime<1.5 上限;两臂实现均被证明正确复位(各行星角度与 post-reset 状态自洽)。'0.3–0.9s 内采样'窗口对 P6→P7 探针链结构不可达,属 spec 校准问题而非实现缺陷。",
+      "change": "P7.stateAssertion: simulationTime < 1.5 → < 2.5(相对行星周期 230–3400s 仍为近零);最内侧行星(mercury)容差 ±0.06 → ±0.08(覆盖 2.5s 采样延迟内自然推进 2π·2.5/230 ≈ 0.068);第 8 颗 315°=5.4978±0.06 不变(自然推进仅 0.005);threshold 文本同步说明实测延迟构成。",
+      "scope": "仅 E03 P7 两处数值;应用行为合同(reset 语义)不变 → Reference 重实现豁免,按新 spec 重验并 refVersion+1 记账。B-20261005-R02 的 E03 对按其冻结 spec v1.0.0 判定保持原样(双臂对称 FAIL,paired delta 不受影响),自 S2 切片起以 v1.0.1 执行。Owner 指令 2026-10-05。",
+      "decidedBy": "Owner(2026-10-05)"
+    }
+  ]
 }

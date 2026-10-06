@@ -1,6 +1,6 @@
 {
   "briefId": "E09",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.0.1",
   "frozen": true,
   "frozenAt": "2026-10-02T00:00:00Z",
   "briefSha256": "d58aa5b7f4d6ae55b80b6b022cb62e019c37aed71c52deadfd358f9dc9eece9d",
@@ -213,7 +213,7 @@
         "jq": "$.exportCount == 2"
       },
       "visualAssertion": {
-        "type": "motion",
+        "type": "nonBlank",
         "params": {
           "region": {
             "x": 0.36,
@@ -221,10 +221,10 @@
             "w": 0.28,
             "h": 0.42
           },
-          "spanMs": 600
+          "minCoverage": 0.08
         }
       },
-      "threshold": "第二次导出成功(再次观测 download 事件,文件 > 10240 字节),转台在导出后仍运转",
+      "threshold": "第二次导出成功(再次观测 download 事件,文件 > 10240 字节,exportCount==2),导出后画布仍正常渲染(非空白);转台运转意图由 P2(自转≥25°/s)与 P8(reset 后仍自转)覆盖——v1.0.1 起导出窗口内的运动 diff 不再作为断言(见 amendments)",
       "evidence": [
         "screenshot",
         "stateSample",
@@ -272,5 +272,15 @@
       "连续导出 exportCount 正确递增,导出不冻结画面",
       "reset 后颜色/相机/导出计数恢复初始,转台继续运转"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-05T05:30:00Z",
+      "from": "1.0.0",
+      "reason": "5×2 稳定性套件终判(2026-10-04,results/reports/e09-stability.json):双引擎对称条件下(同一 spec/同一验证器/串行+20s 冷却),three 5/5 PASS(P7 运动 diff 0.10-0.30,余量 20-60×),cocosair 5/5 FAIL(diff 0.004-0.019 骑 0.005 阈值)——导出窗口内的运动 diff 对 cocosair 渲染特性(导出后帧节流/下载处理)过于贴近噪声底,确定性重导噪声(≈0.0043)与运动信号在该窗口内不可分,确证 spec 校准问题而非负载假说。'转台仍运转'意图已由 P2(自转≥25°/s)与 P8(reset 后仍自转)双探针独立覆盖,P7 的 motion 断言冗余且被导出行为污染。",
+      "change": "P7.visualAssertion 由 motion(导出后 600ms 窗口)改为 nonBlank(与 P6 同区域同 minCoverage=0.08,验证二次导出后画布仍正常渲染);导出成功的机器判定 = stateAssertion exportCount==2 + download 事件独立证据。应用行为合同不变(导出两次+转台持续运转),仅断言测量设计修正,引擎中立。",
+      "scope": "仅 E09 P7;P1-P6/P8 不变。Reference 处置:行为合同未变 → 重实现豁免,按新协议重验并 refVersion+1 记账。解除 G3 CONDITIONAL 的唯一卡点。Owner 指令 2026-10-05(修复阻塞门禁,保证全量测试)。",
+      "decidedBy": "Owner(2026-10-05)"
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "briefId": "E05",
-  "briefVersion": "1.0.2",
+  "briefVersion": "1.0.3",
   "frozen": true,
   "frozenAt": "2026-10-02T16:30:00+08:00",
   "title": "黑洞吸积盘(Black Hole Accretion Disk)",
@@ -61,10 +61,14 @@
             "center-third",
             "outer-corners"
           ],
+          "regionThresholds": {
+            "center-third": 0.05,
+            "outer-corners": 0.01
+          },
           "expect": "中心 1/3 区域(含盘内缘亮环/星流)与四角外围区域(背景星)均存在非黑像素;中心存在暗核被亮环包围"
         }
       },
-      "threshold": "center-third 非黑像素比例 >= 5%;outer-corners 非黑像素比例 >= 1%;中心存在连续暗核区域",
+      "threshold": "center-third 非黑像素比例 >= 5%;outer-corners 非黑像素比例 >= 1%;中心存在连续暗核区域(机器阈值见 params.regionThresholds,数值与本文本一致)",
       "evidence": [
         "screenshot",
         "stateSample"
@@ -204,6 +208,14 @@
       "reason": "AUDIT-20261003 F-15:严格执行内/外环带采样后,双引擎 Reference 均失败——环带\"平均\"R-B 被多普勒不对称(Brief 自身列为加分项)、蓝白光子环/透镜弧与蓝星云亮像素稀释(实测 outer 环带均值 R-B 为负,而 ±X 方位剖面 0.35-0.55 半径处 R-B +36~+73)。冻结断言的可测形式与真实画面不符。",
       "change": "P3 改为方位角扇区断言 colorRelation{regionA=disk-inner-azimuth(白), regionB=disk-outer-azimuth(橙), metric=avgRBDiff(有向:外−内), pickSide=bright-orange(逐侧采样取外环更橙的一侧=多普勒亮侧), min=18}。校准依据:双 Reference 实测(Three 亮侧差 ~36 / AIR ~31,min=18 留 1.9x/1.56x 对称余量);亮度次序(内亮外暗)保留于 expect 描述,并由 P1/P2 独立覆盖。阈值非降级(原为不可测的均值形式,现为可测的扇区有向差)。",
       "scope": "仅 P3;双引擎对称;扇区几何常数(0.06-0.14 / 0.18-0.30 × minD,±6% 高度带)依据双 Reference 暗核中心径向剖面校准"
+    },
+    {
+      "at": "2026-10-05T05:30:00Z",
+      "from": "1.0.2",
+      "reason": "仪器-合同偏离修正:validator nonBlank 对 params 中无机器阈值的探针统一回退 0.03,threshold 文本中的分区阈值(center-third ≥5%、outer-corners ≥1%)从未被机器执行——outer-corners 实际按 3% 判定,比书面 spec 严 3 倍(B-20261005-R01 双引擎双臂 P1 四角实测 0.07-0.8%,在 3% 与 1% 两种口径下同败,判定结论未受影响,但仪器偏离合同)。",
+      "change": "P1.visualAssertion.params 增加机器可读 regionThresholds {center-third:0.05, outer-corners:0.01},数值与原 threshold 文本完全一致——纯正式化,零语义变化;harness 侧(probe-executor nonBlank)同步支持该键,无该键的 spec 行为逐位不变。",
+      "scope": "仅 E05 P1;阈值数值不变 → Reference 重实现豁免(应用行为合同不变),按新协议重验并 refVersion+1 记账。Owner 指令 2026-10-05(修复阻塞门禁,保证全量测试)。",
+      "decidedBy": "Owner(2026-10-05)"
     }
   ]
 }
