@@ -1,0 +1,16 @@
+
+> bench-template-three@1.0.0 build
+> node scripts/count.mjs build && node scripts/build.mjs
+
+[count] build #3 -> .budget/build.count
+
+  dist\app.js  16.3kb
+
+Done in 17ms
+[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)
+[build] vendor: three.module.js (662772 bytes)
+[build] vendor: three.core.js (1458113 bytes)
+[build] vendor: examples/jsm -> dist/vendor/addons (500 files)
+[build] wrote dist/index.html (relative-path variant)
+[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html
+[build] OK

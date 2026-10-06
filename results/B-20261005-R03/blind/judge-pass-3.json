@@ -1,0 +1,45 @@
+{
+  "pass": 3,
+  "judgeId": "judge-pass-3",
+  "generatedAt": "2026-10-05T09:48:06Z",
+  "protocol": "metric-spec §8 + 场景主题锚定一致性验证(G7 round-3;E01 两 pass 偏好相持后的决裁)",
+  "consistency": [
+    {
+      "anchor": "REF-E01-X-0914 / REF-E01-Y-c9f5",
+      "theme": "E01 深空星系巡航:旋涡星系(双臂)+ 亮核球 + 背景星场 + 左上 HUD(Stars/FPS/Dist/Phase|Epoch + Reset),慢速自转(相位/Epoch 走数)",
+      "side1": "暗调黄白双色旋涡星系,中心亮核带轻微光晕,外围双臂由细小暗点构成,底部散布少量橙色星;背景星稀疏;左上角等宽字体 HUD『STARS 66000 | FPS 0.0 | DIST 120.0 | EPOCH 0』+ Reset;三帧间 EPOCH 0→1、FPS 0.0→60.0,旋臂取向缓慢转动。matchesTheme",
+      "side2": "明亮大画幅旋涡星系,米黄色核球显著、外围蓝白色臂,背景星密集;左上角 HUD『E01 · DEEP SPACE GALAXY CRUISE / Stars: 66000 | FPS: 0 | Dist: 120 | Epoch: 0』+ Reset;三帧间 FPS 0→61、Epoch 0→1,臂形缓移。matchesTheme"
+    }
+  ],
+  "comparisons": [
+    {
+      "cmpId": "CMP-E01-K0-PAIR-E01-K0-R01-vs-PAIR-E01-K0-R01",
+      "side1": {
+        "composition": 2,
+        "materialLight": 1,
+        "motion": 2,
+        "fxQuality": 1,
+        "interaction": 2,
+        "completeness": 2,
+        "total": 10
+      },
+      "side2": {
+        "composition": 3,
+        "materialLight": 2,
+        "motion": 2,
+        "fxQuality": 1,
+        "interaction": 2,
+        "completeness": 3,
+        "total": 13
+      },
+      "preference": "side2",
+      "reason": "side2 画幅饱满、核球-旋臂明暗与冷暖对比更接近参考锚,星系主体能量感与完成度明显占优(13:10);side1 整体过暗、色彩单一(几乎丢失蓝臂色相),旋臂对比度低致主体存在感弱。两侧共性扣分:side2 粒子呈方形块状且核心平坦缺光晕衰减,side1 点过暗几乎无发光层,故特效质感同判 1;动效均以 HUD 走数+臂向缓转推断为流畅,同判 2。"
+    }
+  ],
+  "referenceItems": [
+    "REF-E01-X-0914/shot-1.png",
+    "REF-E01-X-0914/shot-2.png",
+    "REF-E01-Y-c9f5/shot-1.png",
+    "REF-E01-Y-c9f5/shot-2.png"
+  ]
+}

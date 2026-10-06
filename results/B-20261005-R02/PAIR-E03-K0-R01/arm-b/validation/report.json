@@ -1,0 +1,232 @@
+{
+  "runId": "RUN-PAIR-E03-K0-R01-b",
+  "generatedAt": "2026-10-05T09:18:02.495Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261005-R02\\PAIR-E03-K0-R01\\arm-b\\workspace",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261005-R02\\PAIR-E03-K0-R01\\arm-b\\spec.json",
+    "briefId": "E03",
+    "briefVersion": "1.0.0",
+    "sha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
+  "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "adbf558fe1c93b1fba3eb3bb1ca9d6aeb92f6bb84138626d37320b8c13477804",
+    "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
+  },
+  "pairMeta": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261005-R02\\PAIR-E03-K0-R01\\pair.json",
+    "pairId": "PAIR-E03-K0-R01",
+    "batchId": "B-20261005-R02",
+    "sceneId": "E03",
+    "knowledge": "K0",
+    "loadError": null
+  },
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 1660,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/count.mjs build && node scripts/build.mjs\n\n[count] build #4 -> .budget/build.count\n\n  dist\\app.js  21.7kb\n\nDone in 17ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1657ms\n"
+  },
+  "serve": {
+    "port": 64068,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261005-R02\\PAIR-E03-K0-R01\\arm-b\\workspace"
+  },
+  "ready": {
+    "appReady": true,
+    "benchReady": true,
+    "durationMs": 921
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [
+    {
+      "probeId": "P1",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P2",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P3",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P4",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P5",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P6",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P7",
+      "status": "FAIL",
+      "weight": 1,
+      "visualType": "motion",
+      "failedAssertions": [
+        "state"
+      ]
+    },
+    {
+      "probeId": "P8",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "nonBlank",
+      "failedAssertions": []
+    },
+    {
+      "probeId": "P9",
+      "status": "PASS",
+      "weight": 1,
+      "visualType": "regionChange",
+      "failedAssertions": []
+    }
+  ],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0.8889,
+  "fps": 60,
+  "perf": {
+    "fps": 60,
+    "frames": 181,
+    "sampleMs": 3016,
+    "sampledAt": "2026-10-05T09:18:28.809Z",
+    "minFpsSpec": 30,
+    "fpsMet": true
+  },
+  "downloads": [],
+  "networkEvents": {
+    "count": 4,
+    "totalBytes": 6448043
+  },
+  "screenshots": [
+    "initial.png",
+    "mid.png",
+    "final.png",
+    "extra-1.png",
+    "extra-2.png",
+    "P1-before.png",
+    "P1-vis.png",
+    "P1-after.png",
+    "P2-before.png",
+    "P2-region-a.png",
+    "P2-region-b.png",
+    "P2-after.png",
+    "P3-before.png",
+    "P3-after.png",
+    "P4-before.png",
+    "P4-vis.png",
+    "P4-after.png",
+    "P5-before.png",
+    "P5-motion-a.png",
+    "P5-motion-b.png",
+    "P5-after.png",
+    "P6-before.png",
+    "P6-vis.png",
+    "P6-after.png",
+    "P7-before.png",
+    "P7-motion-a.png",
+    "P7-motion-b.png",
+    "P7-after.png",
+    "P8-before.png",
+    "P8-vis.png",
+    "P8-after.png",
+    "P9-before.png",
+    "P9-after.png"
+  ],
+  "video": "video.webm",
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "probe-results.json",
+    "console.json",
+    "video.webm",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "LIFECYCLE_MISUSE",
+  "failureCategory": "LIFECYCLE_MISUSE",
+  "verdict": "FAIL",
+  "error": null,
+  "scoreInputs": {
+    "s1": {
+      "buildPass": true,
+      "readyNoError": true,
+      "firstShotNonBlank": true,
+      "firstShotLitRatio": 0.0556
+    },
+    "s2": {
+      "passedWeight": 8,
+      "totalWeight": 9,
+      "probePassRate": 0.8889,
+      "behaviorItemsCount": 12
+    },
+    "s3": {
+      "lifecycleProbePassed": true,
+      "lifecycleProbeId": "P6",
+      "fpsMet": true,
+      "minFps": 30
+    }
+  },
+  "inputGuard": {
+    "kind": "PASS",
+    "checked": [
+      "specSha256",
+      "dependencyHashes"
+    ],
+    "at": "2026-10-05T09:18:02.513Z"
+  },
+  "classificationEvidence": {
+    "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+    "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E03.json",
+    "failedProbes": [
+      {
+        "probeId": "P7",
+        "status": "FAIL",
+        "failedAssertions": [
+          "state"
+        ],
+        "domain": "LIFECYCLE_MISUSE",
+        "unresolvedReason": null
+      }
+    ]
+  },
+  "durationMs": 27207,
+  "finishedAt": "2026-10-05T09:18:29.666Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
+}

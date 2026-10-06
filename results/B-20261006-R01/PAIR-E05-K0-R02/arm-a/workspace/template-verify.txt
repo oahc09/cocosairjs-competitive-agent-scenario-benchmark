@@ -1,0 +1,130 @@
+================================================================================
+template-verify.txt — bench-template-cocosair(Cocos AIR 冻结模板 M2)
+验证时间:2026-10-02 16:30–17:05 (+08:00) | 环境:Windows Git Bash / Node 24.14.0 / npm 11.11.1
+验证人:模板工程师(M2) | 全部为实际执行结果,非推断
+================================================================================
+
+【交付物文件清单】(bench/templates/cocosair/)
+  package.json                name=bench-template-cocosair, private, type=module
+                              scripts: build=node scripts/build.mjs, dev=node scripts/serve.mjs
+                              devDeps: esbuild@0.28.2(精确); deps: cocosair.js@file:../../vendor/cocosair.js-1.0.0-k0.tgz
+                              (file: 相对路径仅原位有效;install 后 node_modules 已落盘,拷贝走 node_modules,声明作来源记录)
+  package-lock.json           npm install 生成,sha256=f7519a96e634bb27c7d41dcea0eb8827e13927ab2ef39dc1ea5267579c3ba1ee
+  scripts/build.mjs           esbuild 打包 + vendor 复制 + 自检(详见下)
+  scripts/serve.mjs           node:http 静态服务,PORT env 默认 5174,MIME 覆盖 wasm/mjs/glb
+  index.html                  import map { "cocosair.js": "/dist/vendor/cocosair.module.js" }
+                              + __appReady=false 内联初始 + 官方 DOM 结构(GameDiv>Cocos3dGameContainer>GameCanvas)
+  src/main.js                 Smoke 场景(Code First 正统写法)
+  template-manifest.json      引擎/构建元数据 + sha256
+  node_modules/               vendored(cocosair.js@1.0.0-k0 + esbuild@0.28.2 + @esbuild/win32-x64),模板拷贝即离线可用
+  dist/                       build 产物(19 文件)
+
+【验证 a:构建 + K0 无 docs】
+  1. npm install(file: tgz,离线)退出码 0,"added 3 packages in 3s"。
+  2. node_modules/cocosair.js/ 目录清单 = LICENSE README.md build licenses package.json
+     —— **无 docs 目录**(test -d node_modules/cocosair.js/docs → 不存在)✅ K0 冷启动隔离成立。
+  3. tar -tzf cocosair.js-1.0.0-k0.tgz 共 64 条,package/docs 前缀计数 0(与 vendor tarball 一致)。
+  4. npm run build 退出码 0:
+       dist/app.js                    2.4 KB(引擎 external,仅应用代码)
+       dist/vendor/cocosair.module.js 6,422,525 B(= node_modules/cocosair.js/build/npm/cocosair.module.js 逐字节)
+       dist/vendor/gltf-decoders/     17 文件(basis/draco/meshopt + MANIFEST.md + package.json,
+                                       相对结构与 node_modules/cocosair.js/build/gltf-decoders/ 一致)
+     自检通过(缺任一文件退出码 1)。
+  5. dist/app.js 内 import 保留为 `from "cocosair.js"`(第 18 行),引擎未打进 bundle ✅
+     dist/app.js sha256=ba867b8b041981727ff9d102dec45680cad4b66899d285c58f41354cc88091e4
+
+【验证 b:serve + curl】
+  node scripts/serve.mjs → http://127.0.0.1:5174/(PORT env,默认 5174,serve 根=模板根)
+  GET /                              → 200 text/html; charset=utf-8 (1444 B)
+  GET /dist/app.js                   → 200 text/javascript; charset=utf-8 (2504 B)
+  GET /dist/vendor/cocosair.module.js→ 200 text/javascript; charset=utf-8 (6422525 B)
+  GET /dist/vendor/gltf-decoders/meshopt/meshopt_decoder.mjs → 200 text/javascript (29059 B)
+  GET /dist/vendor/gltf-decoders/draco/draco_decoder.wasm     → 200 application/wasm (285948 B)
+  最终 serve 日志:3×200,0×4xx/5xx(favicon 已由 data: 空 icon 抑制)。
+
+【验证 c:浏览器冒烟】(playwright-core 1.62.1 + headless Chrome)
+  启动参数(成功参数,原样可复现):
+    executablePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+    headless: true, viewport 1280×720, fresh context
+    args: ["--no-sandbox", "--disable-dev-shm-usage"]
+    **未启用** --use-angle=swiftshader / --enable-unsafe-swiftshader:
+    本机 headless Chrome 直接拿到硬件 WebGL2:
+      getContext('webgl2') → "WebGL 2.0 (OpenGL ES 3.0 Chromium) | WebKit WebGL"
+  结果(最终 dist,最终代码):
+    __appReady === true 用时      795 ms(上一次运行 266 ms;< 10s ✅)
+    window.__airApp 存在          true(createAirApp 成功)
+    frame 递增                    1s 采样 4 → 65(≈61 fps,EVENT_AFTER_DRAW 计数)✅
+    getState() 样本               { engine:"cocosair", frame:65, ready:true } ✅
+    截图非黑                      nonBlackRatio = 1.0000(> 5% 要求)✅
+    (口径说明:clearColor=(30,40,60) 非纯黑,故整幅非黑;另测非背景像素
+     nonBackgroundRatio = 12.16%,即立方体真实可见且占屏 ~12%,非清屏色冒充)
+    动效                          两帧截图 buffer 不相等(motion=true,旋转中)✅
+    reset 生效                    reset 前 frame=135 → reset 后立即 0 → 600ms 后 37 ✅
+    canvas 尺寸                   1280×720(引擎 ScreenAdapter 已接管全屏适配)
+    视觉复核                      截图人工复核:居中 3D 立方体、透视取景、深蓝背景 (30,40,60)、
+                                  各面明暗不同(方向光 -45°/-30° 生效)、非纯黑 ✅
+
+【验证 d:console 无未捕获错误】
+  page.on('pageerror')  → 0 条
+  console type='error'  → 0 条
+  console 全量          → 仅引擎 timeEnd 计时日志 + "[smoke] running on cocosair smoke"
+  (首轮曾出现 /favicon.ico 404 噪声 → index.html 加 <link rel="icon" href="data:,"> 后归零)
+
+【验证 e:serve 进程清理】
+  taskkill //PID <pid> //F 成功,netstat 确认 5174 端口释放(两轮 serve 各自验证后均清理)。
+
+【幂等 build】
+  build #1 与 #2(改动前)、最终 build 两次(改动后)均:dist/ 全部 19 文件 sha256 逐一相等 ✅
+  最终指纹:dist/app.js=ba867b8b…91e4,dist/vendor/cocosair.module.js=3ccfdde1…ced6
+
+【引擎模块大小】
+  build/npm/cocosair.module.js = 6,422,525 B(6.13 MiB,dev 未压缩 ESM)
+  tarball = 3,166,338 B;tarballSha256=ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565
+  (包内另有 cocosair.module.min.js 压缩版;模板按契约用 package.json main/module 指向的 dev 版)
+
+【引擎坑位与关键事实记录】(供 harness/reference/后续模板维护参考)
+  1. canvas 约束:#GameCanvas 必须在引擎模块 import 前存在于 DOM(pal/screen-adapter 为模块
+     顶层单例,import 即绑定)。官方 DOM 结构 GameDiv > Cocos3dGameContainer > GameCanvas。
+     本模板 module script 在 DOM 解析完成后执行,天然满足;绝不能动态插入 canvas 后再 import。
+  2. 引擎 bundle 为浏览器专用:模块顶层即访问 window.navigator(SystemInfo 单例),
+     裸 Node 环境 import 直接 ReferenceError —— 无法在 Node 侧做冒烟,必须真浏览器。
+  3. Camera.visibility 必须显式 = Layers.Enum.DEFAULT(4.0-alpha 默认 undefined → 什么都不画)。
+  4. 环境光:scene.globals.ambient(HDR 默认 isHDR=true,exposure=1/38400)。
+     skyColorHDR 为 AmbientInfo 与渲染场景 Ambient **按引用共享**的 Vec4(Ambient.initialize
+     直接赋引用),app.run 后原位 .set() 即生效(examples/render-composite P2a 已验证路径);
+     skyIllum 走公开 setter(同步 _resource)。HDR 量级:方向光 illuminance≈50000 lux;
+     若误用 LDR 量级(1~900)× exposure ≈ 0 → 不可见。
+  5. import map 裸名必须用 "cocosair.js"(npm 包名);引擎仓库 examples 源码内是
+     'cocosair'(其私有 dev-server importmap),照抄裸名在 npm 安装场景会 404,需换写。
+  6. gltf-decoders 路径解析(任务要求核查项):
+     - 引擎模块 cocosair.module.js 内 grep 计数:import.meta 出现 0 次,
+       "gltf-decoders" 字符串出现 0 次 → **引擎对 decoder 部署路径零假设,无 import.meta.url
+       相对解析逻辑**;
+     - decoder 为应用显式注入 provider(GLTFLoader.setMeshoptDecoder(createMeshoptDecoder(…))
+       等,见 docs/gltf/gltf-decoder-deployment.md),未用压缩扩展时不加载、无 worker;
+     - 故 dist/vendor/gltf-decoders/ 只需保持与 node_modules 相对结构(basis/draco/meshopt
+       子目录),应用侧用绝对/相对 URL import('/dist/vendor/gltf-decoders/…')即可;
+     - 静态服务 MIME 硬约束已满足:.mjs/.js/.cjs → text/javascript,.wasm → application/wasm
+       (instantiateStreaming 前置;serve.mjs 已按引擎部署文档 §3 实现)。
+  7. Draco 浏览器边界:随包 draco3d.js 是 Node/CommonJS 形态,浏览器正向解码需应用另配
+     factory 注入 —— 与本 smoke 无关(未用压缩),记录备查。
+  8. 应用代码顶层 await(es2022)要求 esbuild target ≥ es2022(否则 esbuild 报
+     top-level await 不可用);本模板 target=es2022。
+  9. 引擎导出面已核对:createAirApp/Scene/Node/Camera/DirectionalLight/MeshRenderer/Layers/
+     builtinResMgr/utils/primitives/Vec3/Color/Component/director/Director 均在
+     build/npm/cocosair.module.js 的 export 列表(单条巨型 export 语句,共数百导出)。
+
+【红线契约:模板整体拷贝后独立 build+serve】(实际执行)
+  cp -r templates/cocosair → %TEMP%/cocosair-copy-test(旁无 vendor tarball,不执行 npm install):
+    npm run build 退出码 0,dist 19 文件,vendor 模块 sha256 与原位一致(3ccfdde1…ced6);
+    node scripts/serve.mjs → GET / 200,index.html 含 import map 引用 ✅(测后已清理临时目录与进程)。
+
+【复现命令】(Git Bash,模板根)
+  npm install                # 仅首次;模板拷贝分发时连 node_modules 整体复制,无需 install
+  npm run build && npm run build   # 幂等:两次 dist 哈希一致
+  npm run dev                # = node scripts/serve.mjs → http://127.0.0.1:5174/
+  # 浏览器冒烟:playwright-core(任意 1.5x+)+ chrome.exe headless,断言
+  # __appReady(10s)/frame 递增/截图非黑>5%/reset/无 console error,参数见【验证 c】
+================================================================================
+结论:四项验证(build/serve+curl/浏览器冒烟/幂等)+ console 清洁 + 进程清理全部 PASS。
+================================================================================

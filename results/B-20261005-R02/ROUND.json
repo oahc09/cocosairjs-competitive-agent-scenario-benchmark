@@ -1,0 +1,367 @@
+{
+  "batchId": "B-20261005-R02",
+  "createdAt": "2026-10-05T06:59:55.422Z",
+  "updatedAt": "2026-10-05T13:21:34.316Z",
+  "plan": {
+    "source": "--matrix E01,E02,E03,E04,E05|K0|R01",
+    "pairs": [
+      {
+        "scene": "E01",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E01-K0-R01",
+        "batchId": "B-20261005-R02"
+      },
+      {
+        "scene": "E02",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E02-K0-R01",
+        "batchId": "B-20261005-R02"
+      },
+      {
+        "scene": "E03",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E03-K0-R01",
+        "batchId": "B-20261005-R02"
+      },
+      {
+        "scene": "E04",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E04-K0-R01",
+        "batchId": "B-20261005-R02"
+      },
+      {
+        "scene": "E05",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E05-K0-R01",
+        "batchId": "B-20261005-R02"
+      }
+    ]
+  },
+  "engine": {
+    "three": {
+      "version": "0.186.1"
+    },
+    "cocosair": {
+      "tarball": "vendor/cocosair.js-1.0.0-k0.tgz",
+      "sha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565"
+    }
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T07:32:54.363Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 2,
+              "toolcall": 34,
+              "walltime": 19
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T07:33:26.460Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 3,
+              "toolcall": 80,
+              "walltime": 31
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T12:37:45.205Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      }
+    },
+    {
+      "pairId": "PAIR-E02-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T09:17:00.672Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 5,
+              "toolcall": 45,
+              "walltime": 31
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "INTERACTION",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T09:17:29.012Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 7,
+              "browser": 6,
+              "toolcall": 86,
+              "walltime": 58
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T12:37:45.237Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      }
+    },
+    {
+      "pairId": "PAIR-E03-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "LIFECYCLE_MISUSE",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T09:18:01.588Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 4,
+              "toolcall": 42,
+              "walltime": 24
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "LIFECYCLE_MISUSE",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T09:18:29.952Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 2,
+              "toolcall": 49,
+              "walltime": 44
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T12:37:45.251Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      }
+    },
+    {
+      "pairId": "PAIR-E04-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "BUDGET_EXHAUSTED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T10:12:36.287Z",
+            "classificationSource": "budget-check@run-round(机器计数,验证后判定;计数窗口=Agent Run 期间)",
+            "budgetVerdict": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 7,
+              "browser": 7,
+              "toolcall": 63,
+              "walltime": 39
+            },
+            "budgetExceeded": [
+              {
+                "kind": "browser",
+                "used": 7,
+                "max": 6
+              }
+            ]
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "ANIMATION",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T10:13:07.201Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 2,
+              "toolcall": 40,
+              "walltime": 31
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T12:37:45.263Z"
+      },
+      "executionTiming": {
+        "status": "PAIR_TIMING_DRIFT",
+        "startDeltaSec": 2347,
+        "maxSec": 30
+      }
+    },
+    {
+      "pairId": "PAIR-E05-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "BUDGET_EXHAUSTED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T12:38:16.251Z",
+            "classificationSource": "budget-check@run-round(机器计数,验证后判定;计数窗口=Agent Run 期间)",
+            "budgetVerdict": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 5,
+              "browser": 7,
+              "toolcall": 41,
+              "walltime": 119
+            },
+            "budgetExceeded": [
+              {
+                "kind": "browser",
+                "used": 7,
+                "max": 6
+              },
+              {
+                "kind": "walltime",
+                "used": 119,
+                "max": 90
+              }
+            ]
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "BUDGET_EXHAUSTED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T12:38:47.165Z",
+            "classificationSource": "budget-check@run-round(机器计数,验证后判定;计数窗口=Agent Run 期间)",
+            "budgetVerdict": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 6,
+              "browser": 6,
+              "toolcall": 58,
+              "walltime": 115
+            },
+            "budgetExceeded": [
+              {
+                "kind": "walltime",
+                "used": 115,
+                "max": 90
+              }
+            ]
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T12:37:45.271Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      }
+    }
+  ],
+  "stages": {
+    "preflight": {
+      "lastRunAt": "2026-10-05T12:37:45.271Z",
+      "summary": "PASS",
+      "blocked": [],
+      "pairs": 5
+    },
+    "collect": {
+      "lastRunAt": "2026-10-05T12:37:13.463Z",
+      "completed": "10/10",
+      "pending": []
+    },
+    "validate": {
+      "lastRunAt": "2026-10-05T12:38:47.165Z",
+      "jobs": 2,
+      "ok": 0,
+      "fail": 2,
+      "forced": false,
+      "blockedPairs": [],
+      "budgetExhausted": 2,
+      "invalidEvidence": 0
+    },
+    "blind": {
+      "lastRunAt": "2026-10-05T12:40:14.682Z",
+      "material": "built",
+      "visualScores": "pending-judge"
+    },
+    "aggregate": {
+      "lastRunAt": "2026-10-05T13:21:34.312Z",
+      "output": "results/aggregated.json"
+    }
+  },
+  "notes": [
+    "Agent Run 执行说明见同目录 DISPATCH.md;执行完毕后依次 --stage collect/validate/blind/aggregate"
+  ]
+}

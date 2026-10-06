@@ -1,0 +1,877 @@
+{
+  "generatedAt": "2026-10-05T17:36:39.262Z",
+  "qualifier": "harness/aggregate/qualify-historical.mjs (FIX-B)",
+  "batch": "B-20261005-R04",
+  "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+  "statusDefinition": {
+    "QUALIFIED": "全部鉴定项通过(含方案A toolcall hard、双臂时序 ≤30s、G7),指标按正式口径引用",
+    "LEGACY_PROVISIONAL": "整改前产生的遗留数据:客观口径(S1/S2/S3)可有条件引用,正式口径(formal/visual/attainment)作废或挂起,引用时必须带本文件指认的限制",
+    "QUALIFIED_OBJECTIVE": "objective 基座(冻结/身份/预算 hard/协议/量尺)+ 时序全部通过,objective 口径(S1/S2/S3)按正式引用;仅视觉口径挂起(G7 未过)",
+    "QUALIFIED_OBJECTIVE_PARTIAL": "objective 基座通过但方案A hard 预算不满足(toolcall 计数缺失或超限)——objective 有条件引用,引用时必须带此限制",
+    "QUALIFIED_OBJECTIVE_PARTIAL_TIMING": "objective 基座通过但双臂启动时差超 30s 或不可测(PAIR_TIMING_DRIFT/UNMEASURABLE,可叠加预算缺口)——objective 有条件引用,正式 paired 设计主张不成立,引用必须带此时序限制",
+    "DISQUALIFIED": "冻结输入断裂且无法溯源,全部指标作废"
+  },
+  "context": {
+    "ruler": {
+      "rulerId": "RULER-20261005-R02",
+      "updatedAt": "2026-10-05T12:41:46.523Z"
+    },
+    "g7": {
+      "status": "PASS",
+      "source": "gates/G7.json"
+    },
+    "currentValidatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0"
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E06-K0-R01",
+      "scene": "E06",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED",
+      "failedChecks": [],
+      "reasons": [],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+          "currentBriefs": {
+            "specSha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
+            "version": "1.0.0",
+            "briefSha256": "5a2ae8c8b8e23da614b581bdd3dc4a34455dd08da3827e84cae9fc1ccbfd8ef7"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "identity": {
+            "agentBinaryHash": "unavailable(local runtime; identity frozen by model+prompt in DISPATCH/RUN-CONTRACT)",
+            "modelId": "GLM-5.3(account:bigmodel-start-plan)",
+            "modelRevisionId": "glm-5.3-flash@2026-10(session-pinned)",
+            "systemPromptHash": "8d3a99a3dffd2aac430efc2d578f81d1dc9fc2cc5ea687c20679a1a81faa9478",
+            "toolPolicyHash": "c7fb3adbab340eae9894042c57b6c511a3f7830550a4d59e7ff0529c87d50d72"
+          },
+          "sources": {
+            "agentBinaryHash": "pair.json",
+            "modelId": "pair.json",
+            "modelRevisionId": "pair.json",
+            "systemPromptHash": "pair.json",
+            "toolPolicyHash": "pair.json"
+          },
+          "note": "身份事实源 = 各臂 RUN-META.json(preflight 已校验非空+两臂一致);历史批次的 pair.json 人工回填仅作回退"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "FULL",
+          "countedKinds": [
+            "build",
+            "browser",
+            "toolcall"
+          ],
+          "perArmBuildBrowser": true,
+          "toolcallPerArm": true,
+          "toolcallCounts": {
+            "arm-a": 34,
+            "arm-b": 63
+          },
+          "maxToolCalls": 120,
+          "toolcallOverLimitArms": [],
+          "missingKinds": [],
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ]
+          },
+          "note": "build/browser/toolcall 三计数双臂齐备(toolcall 34/63 vs maxToolCalls 120)"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": true,
+          "mode": "hard",
+          "completeness": "FULL",
+          "toolcallWithinLimit": true,
+          "toolcallOverLimitArms": [],
+          "toolcallCounts": {
+            "arm-a": 34,
+            "arm-b": 63
+          },
+          "maxToolCalls": 120,
+          "note": "方案A hard 满足:两臂 toolcall.count 存在且 ≤ 120(计数 34/63)"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "source": "execution.json(agentStartedAt 直读)",
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进诊断区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": true,
+          "g7Status": "PASS",
+          "blindMaterials": [
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "judge-pass-3.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "visual 可用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-05T13:21:35.621Z",
+            "rulerFrozenAt": "2026-10-05T12:41:46.523Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261005-R02"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E07-K0-R01",
+      "scene": "E07",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED",
+      "failedChecks": [],
+      "reasons": [],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+          "currentBriefs": {
+            "specSha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+            "version": "1.0.0",
+            "briefSha256": "8b1fae76fbbabbac87dac1a2f718cbcc2cc641a06c3bbfc36038b750800fad6f"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "identity": {
+            "agentBinaryHash": "unavailable(local runtime; identity frozen by model+prompt in DISPATCH/RUN-CONTRACT)",
+            "modelId": "GLM-5.3(account:bigmodel-start-plan)",
+            "modelRevisionId": "glm-5.3-flash@2026-10(session-pinned)",
+            "systemPromptHash": "8d3a99a3dffd2aac430efc2d578f81d1dc9fc2cc5ea687c20679a1a81faa9478",
+            "toolPolicyHash": "c7fb3adbab340eae9894042c57b6c511a3f7830550a4d59e7ff0529c87d50d72"
+          },
+          "sources": {
+            "agentBinaryHash": "pair.json",
+            "modelId": "pair.json",
+            "modelRevisionId": "pair.json",
+            "systemPromptHash": "pair.json",
+            "toolPolicyHash": "pair.json"
+          },
+          "note": "身份事实源 = 各臂 RUN-META.json(preflight 已校验非空+两臂一致);历史批次的 pair.json 人工回填仅作回退"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "FULL",
+          "countedKinds": [
+            "build",
+            "browser",
+            "toolcall"
+          ],
+          "perArmBuildBrowser": true,
+          "toolcallPerArm": true,
+          "toolcallCounts": {
+            "arm-a": 42,
+            "arm-b": 95
+          },
+          "maxToolCalls": 120,
+          "toolcallOverLimitArms": [],
+          "missingKinds": [],
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ]
+          },
+          "note": "build/browser/toolcall 三计数双臂齐备(toolcall 42/95 vs maxToolCalls 120)"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": true,
+          "mode": "hard",
+          "completeness": "FULL",
+          "toolcallWithinLimit": true,
+          "toolcallOverLimitArms": [],
+          "toolcallCounts": {
+            "arm-a": 42,
+            "arm-b": 95
+          },
+          "maxToolCalls": 120,
+          "note": "方案A hard 满足:两臂 toolcall.count 存在且 ≤ 120(计数 42/95)"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "source": "execution.json(agentStartedAt 直读)",
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进诊断区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": true,
+          "g7Status": "PASS",
+          "blindMaterials": [
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "judge-pass-3.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "visual 可用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-05T13:21:40.136Z",
+            "rulerFrozenAt": "2026-10-05T12:41:46.523Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261005-R02"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E08-K0-R01",
+      "scene": "E08",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED_OBJECTIVE_PARTIAL",
+      "failedChecks": [
+        "budgetToolCallEvidence"
+      ],
+      "reasons": [
+        "方案A hard 不满足:toolcall 计数超限(arm: arm-b) → 资格降级 PARTIAL"
+      ],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
+            "briefVersion": "1.0.0"
+          },
+          "diskSpec": {
+            "sha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
+            "briefVersion": "1.0.0"
+          },
+          "pairSpecSha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
+          "currentBriefs": {
+            "specSha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
+            "version": "1.0.0",
+            "briefSha256": "3deef8172bb311ea2ef59d2181d486c984fe871d4d88c79700a47707e9d1a8be"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "identity": {
+            "agentBinaryHash": "unavailable(local runtime; identity frozen by model+prompt in DISPATCH/RUN-CONTRACT)",
+            "modelId": "GLM-5.3(account:bigmodel-start-plan)",
+            "modelRevisionId": "glm-5.3-flash@2026-10(session-pinned)",
+            "systemPromptHash": "8d3a99a3dffd2aac430efc2d578f81d1dc9fc2cc5ea687c20679a1a81faa9478",
+            "toolPolicyHash": "c7fb3adbab340eae9894042c57b6c511a3f7830550a4d59e7ff0529c87d50d72"
+          },
+          "sources": {
+            "agentBinaryHash": "pair.json",
+            "modelId": "pair.json",
+            "modelRevisionId": "pair.json",
+            "systemPromptHash": "pair.json",
+            "toolPolicyHash": "pair.json"
+          },
+          "note": "身份事实源 = 各臂 RUN-META.json(preflight 已校验非空+两臂一致);历史批次的 pair.json 人工回填仅作回退"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "FULL",
+          "countedKinds": [
+            "build",
+            "browser",
+            "toolcall"
+          ],
+          "perArmBuildBrowser": true,
+          "toolcallPerArm": true,
+          "toolcallCounts": {
+            "arm-a": 90,
+            "arm-b": 124
+          },
+          "maxToolCalls": 120,
+          "toolcallOverLimitArms": [
+            "arm-b"
+          ],
+          "missingKinds": [],
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ]
+          },
+          "note": "build/browser/toolcall 三计数双臂齐备(toolcall 90/124 vs maxToolCalls 120)"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": false,
+          "mode": "hard",
+          "completeness": "FULL",
+          "toolcallWithinLimit": false,
+          "toolcallOverLimitArms": [
+            "arm-b"
+          ],
+          "toolcallCounts": {
+            "arm-a": 90,
+            "arm-b": 124
+          },
+          "maxToolCalls": 120,
+          "note": "方案A hard 不满足:toolcall 计数超限(arm: arm-b) → 资格降级 PARTIAL"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "source": "execution.json(agentStartedAt 直读)",
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进诊断区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": true,
+          "g7Status": "PASS",
+          "blindMaterials": [
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "judge-pass-3.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "visual 可用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-05T13:21:44.499Z",
+            "rulerFrozenAt": "2026-10-05T12:41:46.523Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261005-R02"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E09-K0-R01",
+      "scene": "E09",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED",
+      "failedChecks": [],
+      "reasons": [],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+            "briefVersion": "1.0.1"
+          },
+          "diskSpec": {
+            "sha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+            "briefVersion": "1.0.1"
+          },
+          "pairSpecSha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+          "currentBriefs": {
+            "specSha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
+            "version": "1.0.1",
+            "briefSha256": "cef006231cc48717d3cbe3433903c199f874eb41b704cc378a8c587937ba6366"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "identity": {
+            "agentBinaryHash": "unavailable(local runtime; identity frozen by model+prompt in DISPATCH/RUN-CONTRACT)",
+            "modelId": "GLM-5.3(account:bigmodel-start-plan)",
+            "modelRevisionId": "glm-5.3-flash@2026-10(session-pinned)",
+            "systemPromptHash": "8d3a99a3dffd2aac430efc2d578f81d1dc9fc2cc5ea687c20679a1a81faa9478",
+            "toolPolicyHash": "c7fb3adbab340eae9894042c57b6c511a3f7830550a4d59e7ff0529c87d50d72"
+          },
+          "sources": {
+            "agentBinaryHash": "pair.json",
+            "modelId": "pair.json",
+            "modelRevisionId": "pair.json",
+            "systemPromptHash": "pair.json",
+            "toolPolicyHash": "pair.json"
+          },
+          "note": "身份事实源 = 各臂 RUN-META.json(preflight 已校验非空+两臂一致);历史批次的 pair.json 人工回填仅作回退"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "FULL",
+          "countedKinds": [
+            "build",
+            "browser",
+            "toolcall"
+          ],
+          "perArmBuildBrowser": true,
+          "toolcallPerArm": true,
+          "toolcallCounts": {
+            "arm-a": 70,
+            "arm-b": 98
+          },
+          "maxToolCalls": 120,
+          "toolcallOverLimitArms": [],
+          "missingKinds": [],
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ]
+          },
+          "note": "build/browser/toolcall 三计数双臂齐备(toolcall 70/98 vs maxToolCalls 120)"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": true,
+          "mode": "hard",
+          "completeness": "FULL",
+          "toolcallWithinLimit": true,
+          "toolcallOverLimitArms": [],
+          "toolcallCounts": {
+            "arm-a": 70,
+            "arm-b": 98
+          },
+          "maxToolCalls": 120,
+          "note": "方案A hard 满足:两臂 toolcall.count 存在且 ≤ 120(计数 70/98)"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "source": "execution.json(agentStartedAt 直读)",
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进诊断区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": true,
+          "g7Status": "PASS",
+          "blindMaterials": [
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "judge-pass-3.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "visual 可用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-05T13:21:48.942Z",
+            "rulerFrozenAt": "2026-10-05T12:41:46.523Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261005-R02"
+        }
+      }
+    },
+    {
+      "pairId": "PAIR-E10-K0-R01",
+      "scene": "E10",
+      "knowledge": "K0",
+      "repetition": "R01",
+      "pilot": false,
+      "status": "QUALIFIED",
+      "failedChecks": [],
+      "reasons": [],
+      "checks": {
+        "frozenInputsComplete": {
+          "id": "frozenInputsComplete",
+          "ok": true,
+          "missing": [],
+          "note": "dependencyHashes(依赖环境指纹)历史批次未冻结 → 新版 validate.mjs --pair-meta 已支持;历史运行的环境不可事后核验,ENV 口径只能标 unknown",
+          "dependencyHashesFrozen": true
+        },
+        "specExact": {
+          "id": "specExact",
+          "ok": true,
+          "runVsPair": true,
+          "diskVsPair": true,
+          "pairVsCurrent": true,
+          "runTimeSpec": {
+            "sha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "briefVersion": "1.0.1"
+          },
+          "diskSpec": {
+            "sha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "briefVersion": "1.0.1"
+          },
+          "pairSpecSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+          "currentBriefs": {
+            "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "version": "1.0.1",
+            "briefSha256": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad"
+          },
+          "evidence": "验证时实际所用 spec 以 report.spec.sha256 为准(唯一事实源);arm 落盘 spec.json 可能事后被刷新,不能替代 report 证据"
+        },
+        "validatorKnown": {
+          "id": "validatorKnown",
+          "ok": true,
+          "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "harnessVersion": "1.0.0",
+          "currentValidatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+          "matchesCurrent": true,
+          "note": null
+        },
+        "agentIdentityComplete": {
+          "id": "agentIdentityComplete",
+          "ok": true,
+          "missing": [],
+          "identity": {
+            "agentBinaryHash": "unavailable(local runtime; identity frozen by model+prompt in DISPATCH/RUN-CONTRACT)",
+            "modelId": "GLM-5.3(account:bigmodel-start-plan)",
+            "modelRevisionId": "glm-5.3-flash@2026-10(session-pinned)",
+            "systemPromptHash": "8d3a99a3dffd2aac430efc2d578f81d1dc9fc2cc5ea687c20679a1a81faa9478",
+            "toolPolicyHash": "c7fb3adbab340eae9894042c57b6c511a3f7830550a4d59e7ff0529c87d50d72"
+          },
+          "sources": {
+            "agentBinaryHash": "pair.json",
+            "modelId": "pair.json",
+            "modelRevisionId": "pair.json",
+            "systemPromptHash": "pair.json",
+            "toolPolicyHash": "pair.json"
+          },
+          "note": "身份事实源 = 各臂 RUN-META.json(preflight 已校验非空+两臂一致);历史批次的 pair.json 人工回填仅作回退"
+        },
+        "budgetMachineCounted": {
+          "id": "budgetMachineCounted",
+          "ok": true,
+          "completeness": "FULL",
+          "countedKinds": [
+            "build",
+            "browser",
+            "toolcall"
+          ],
+          "perArmBuildBrowser": true,
+          "toolcallPerArm": true,
+          "toolcallCounts": {
+            "arm-a": 24,
+            "arm-b": 85
+          },
+          "maxToolCalls": 120,
+          "toolcallOverLimitArms": [],
+          "missingKinds": [],
+          "declared": true,
+          "identicalAcrossEngines": true,
+          "source": "config/agents.yaml (agentRun.budget, FROZEN G0)",
+          "machineCounters": {
+            "arm-a": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ],
+            "arm-b": [
+              "build.count",
+              "browser.count",
+              "toolcall.count"
+            ]
+          },
+          "note": "build/browser/toolcall 三计数双臂齐备(toolcall 24/85 vs maxToolCalls 120)"
+        },
+        "budgetToolCallEvidence": {
+          "id": "budgetToolCallEvidence",
+          "ok": true,
+          "mode": "hard",
+          "completeness": "FULL",
+          "toolcallWithinLimit": true,
+          "toolcallOverLimitArms": [],
+          "toolcallCounts": {
+            "arm-a": 24,
+            "arm-b": 85
+          },
+          "maxToolCalls": 120,
+          "note": "方案A hard 满足:两臂 toolcall.count 存在且 ≤ 120(计数 24/85)"
+        },
+        "executionTiming": {
+          "id": "executionTiming",
+          "ok": true,
+          "status": "PASS",
+          "startDeltaSec": 0,
+          "maxSec": 30,
+          "source": "execution.json(agentStartedAt 直读)",
+          "note": "track=core 必须 PASS(双臂 ≤30s 同批启动);DRIFT/UNMEASURABLE 只能进诊断区"
+        },
+        "visualGate": {
+          "id": "visualGate",
+          "ok": true,
+          "g7Status": "PASS",
+          "blindMaterials": [
+            "blinding-key.json",
+            "judge-pass-1.json",
+            "judge-pass-2.json",
+            "judge-pass-3.json",
+            "visual-scores.json"
+          ],
+          "conclusion": "visual 可用"
+        },
+        "rulerMatch": {
+          "id": "rulerMatch",
+          "ok": true,
+          "air": {
+            "pairHash": "ddd5072a",
+            "rulerEngine": "ddd5072a",
+            "match": true
+          },
+          "three": {
+            "pairHash": "f9c474a2",
+            "rulerEngine": "three@0.186.1",
+            "match": "matched"
+          },
+          "sequencing": {
+            "batchCreatedAt": "2026-10-05T13:21:53.465Z",
+            "rulerFrozenAt": "2026-10-05T12:41:46.523Z",
+            "note": "量尺先于批次"
+          },
+          "rulerId": "RULER-20261005-R02"
+        }
+      },
+      "e10SpecialCheck": {
+        "mandate": "E10 特别核:arm spec=v1.0.0、现行全局 v1.0.1,历史验证实际 spec 版本从证据推断如实记录",
+        "inference": {
+          "pairCreatedAt": "2026-10-05T13:21:53.465Z",
+          "pairSpecSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+          "validationTimeSpec": {
+            "sha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "briefVersion": "1.0.1"
+          },
+          "diskSpecNow": {
+            "sha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "briefVersion": "1.0.1"
+          },
+          "currentGlobalSpec": {
+            "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
+            "version": "1.0.1",
+            "briefSha256": "b80e01f9c218cf6c29d48853bab06a53be00cdc3155e4d85616f777399d510ad"
+          }
+        },
+        "conclusion": "历史验证实际运行于 1.0.1(sha=83c8d350,中间版,现行库中无此文件);现行全局 v1.0.1(sha=83c8d350)内容与之不同(sha 不等);arm 落盘 spec 为 v1.0.1(sha=83c8d350,与验证时所用亦不同)。四份指纹互不相等 → E10 两臂的验证结论只对其运行时那个中间版 spec 负责,对 v1.0.1 现行 spec 无证明力。",
+        "action": "E10 需在现行 v1.0.1 下重跑(重跑时新版 validate.mjs --pair-meta 会在入口拦截此类漂移为 INPUT_DRIFT)"
+      }
+    }
+  ],
+  "batchLevel": {
+    "reusableMetrics": [
+      "冻结输入指纹组(brief/spec/assets/templates/knowledge/engine sha)—— pair.json 完整",
+      "objective S1/S2/S3 逐臂分(证据:validation/report.json;协议哈希已记录,正式口径)",
+      "objective 成对 delta(AIR−Three,S1+S2+S3 口径)",
+      "效率/诊断口径(fps、console、探针明细、网络/截图证据)",
+      "引擎哈希溯源(pair.airPackageHash 与 RULER 账本 matched)"
+    ],
+    "invalidOrPendingMetrics": [
+      "存在非 visual 项失败的对: PAIR-E08-K0-R01(budgetToolCallEvidence)"
+    ],
+    "reasons": [
+      "预算 hard 合同(方案A)未满足:toolcall 计数缺失或超限(计入 qualification 的对降级 PARTIAL,只进诊断区)"
+    ]
+  }
+}

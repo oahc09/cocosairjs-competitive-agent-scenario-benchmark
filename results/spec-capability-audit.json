@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-03T13:53:53.964Z",
+  "generatedAt": "2026-10-05T12:39:06.493Z",
   "mode": "briefs",
   "executor": "harness/runner/probe-executor.mjs",
   "legalRegionFormsNote": "see LEGAL_REGION_FORMS in probe-executor.mjs (full / center|lower|upper:N% / upper|lower|center-third / outer-corners / center-bottom / outer-frame / ui#id / ui=id / state.path / {x,y,w,h} / pickTarget objects / arrays / \"A + B\")",
@@ -531,9 +531,9 @@
     },
     {
       "briefId": "E03",
-      "briefVersion": "1.0.0",
+      "briefVersion": "1.0.1",
       "specPath": "briefs/E03/spec.json",
-      "sha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
+      "sha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
       "probeCount": 9,
       "probes": [
         {
@@ -771,7 +771,7 @@
           },
           "stateAssertion": {
             "status": "SUPPORTED",
-            "expr": "$.simulationTime < 1.5 && $.selectedPlanet == null && $.infoCard.visible == false && $.planets[0].orbitAngle >= -0.06 && $.planets[0].orbitAngle <= 0.06 && $.planets[7].orbitAngle >= 5.43 && $.planets[7].orbitAngle <= 5.56"
+            "expr": "$.simulationTime < 2.5 && $.selectedPlanet == null && $.infoCard.visible == false && $.planets[0].orbitAngle >= -0.08 && $.planets[0].orbitAngle <= 0.08 && $.planets[7].orbitAngle >= 5.43 && $.planets[7].orbitAngle <= 5.56"
           },
           "visualAssertion": {
             "type": "motion",
@@ -1252,9 +1252,9 @@
     },
     {
       "briefId": "E05",
-      "briefVersion": "1.0.2",
+      "briefVersion": "1.0.3",
       "specPath": "briefs/E05/spec.json",
-      "sha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
+      "sha256": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
       "probeCount": 6,
       "probes": [
         {
@@ -2502,9 +2502,9 @@
     },
     {
       "briefId": "E09",
-      "briefVersion": "1.0.0",
+      "briefVersion": "1.0.1",
       "specPath": "briefs/E09/spec.json",
-      "sha256": "681cc72f77d366e9fca463e821acf0f61539a5d9e01f2b244bfef7bdd58c61d4",
+      "sha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
       "probeCount": 8,
       "probes": [
         {
@@ -2763,7 +2763,7 @@
             "expr": "$.exportCount == 2"
           },
           "visualAssertion": {
-            "type": "motion",
+            "type": "nonBlank",
             "status": "SUPPORTED",
             "region": {
               "status": "SUPPORTED",

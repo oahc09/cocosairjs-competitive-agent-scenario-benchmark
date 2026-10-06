@@ -1,0 +1,238 @@
+{
+  "briefId": "E02",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T16:29:37+08:00",
+  "title": "E02 落日海面与孤舟(Asset Driven)",
+  "goal": "运行时加载 assets/boat.glb 并在动态落日海面上呈现孤舟:材质保留、船体随波起伏、鼠标环绕、暖冷色调切换、reset 释放并重建,全程无泄漏无未捕获异常。",
+  "domains": [
+    "AssetLoading",
+    "SceneGraph",
+    "Material",
+    "Animation",
+    "Shader",
+    "Lifecycle",
+    "Camera"
+  ],
+  "assets": [
+    {
+      "path": "assets/boat.glb",
+      "required": true,
+      "sha256": "ed22ff2f48352b725e76d7e487d7e755fbd923cbda96145b45ec32852f2e9397",
+      "notes": "共享资产,由资产 Agent 生成后由资产冻结流程回填。契约:低多边形船体网格,最长边 1–4 单位,Y 轴向上,含 >= 2 个可辨识部件;内嵌基本材质且部件颜色有区分;无外部纹理依赖;文件 <= 2MB;无法线贴图/蒙皮/动画片段要求。"
+    }
+  ],
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "minSeaVertices": 2000,
+    "maxAssetSizeBytes": 2097152,
+    "notes": "海面几何顶点数 >= 2000(或等价波形分辨率);fps 以 2s 滚动平均计;__appReady 前置包含资产加载完成。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内,含资产加载)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "stateContract": {
+    "assetLoaded": "boolean — assets/boat.glb 是否成功加载并实例化;__appReady 置 true 时必须为 true",
+    "assetRequests": "number — 对 assets/boat.glb 完成加载的请求计数(每次重建重新加载时 +1)",
+    "boatPosition": "{ x: number, y: number, z: number } — 船体参考点世界坐标(建议包围盒中心),y 随波起伏",
+    "wavePhase": "number — 海面波形全局相位,持续递增(弧度或秒均可,须单调)",
+    "toneMix": "number — 色调混合系数,0=暖(落日),1=冷(暮蓝),初始 0,切换过渡 <= 2.5s",
+    "cameraAzimuth": "number — 相机方位角(度),初始 35,水平拖拽改变;reset 恢复 35",
+    "fps": "number — 最近 2s 滚动平均帧率",
+    "epoch": "number — 场景释放重建(reset)计数,初始 0,每次 reset +1"
+  },
+  "probeConventions": {
+    "dollar": "单样本探针:$ = getState()。双样本探针(含 sampleWindowMs 字段):动作后先取 before 采样,再等待 sampleWindowMs 毫秒取 after 采样,$ = { before, after }。",
+    "ui": "ui#<locator> 表示经 UI 控件操作:harness 按可见文本或 aria-label 定位控件后执行底层输入;必需控件已在 brief.md 第 4 节冻结。",
+    "coordinates": "坐标均为 CSS 像素比例(x,y ∈ [0,1],原点左上);drag:(x1,y1)->(x2,y2) 为按下-移动-释放。",
+    "jq": "仅允许比较、算术与逻辑运算,禁止函数调用。"
+  },
+  "forbiddenShortcuts": [
+    "不得在构建期把 GLB 转译或内联为代码数据冒充运行时加载(必须出现对 assets/boat.glb 的真实网络请求)",
+    "不得以占位几何(方块/胶囊/圆锥)长期替代船体资产(加载完成后画面仍非船形即 FAIL)",
+    "不得丢弃资产材质,改用单一纯色或无光照白模呈现船体",
+    "海面不得以静态贴图、静止几何或仅相机晃动冒充动态波浪",
+    "船体不得固定不动,也不得以与波形无关的随机抖动冒充随波起伏",
+    "不得以 __bench 状态声称代替像素/网络证据(对齐 NC01/NC03)",
+    "不得用 2D 画布位图、CSS 动画或 DOM 元素冒充 3D 场景",
+    "reset 不得以整页刷新实现;重建后旧渲染资源必须释放(连续 reset 出现错误/黑屏/内存持续增长即 FAIL,对齐 NC05)",
+    "不得通过隐藏画布、遮挡视口、把画布缩为 1px 等手段骗过像素断言",
+    "不得探测或篡改 harness/validator(检出即 INVALID_RUN)"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:1500",
+      "waitMs": 0,
+      "stateAssertion": {
+        "jq": "$.assetLoaded == true && $.assetRequests >= 1"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        }
+      },
+      "threshold": "__appReady 置 true 前资产已加载;画面同时呈现天空、海面与可辨识船体;harness 记录到对 assets/boat.glb 的网络请求且状态 200(或自缓存命中)",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "networkRequest:assets/boat.glb"
+      ]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1 passed",
+      "action": "wait:500",
+      "sampleWindowMs": 1500,
+      "stateAssertion": {
+        "jq": "$.after.wavePhase != $.before.wavePhase"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": {
+          "region": "lower:60%",
+          "minMotionPixelRatio": 0.01
+        }
+      },
+      "threshold": "海面区域(画面下 60%)存在持续运动像素;波形相位在采样窗内变化",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "videoClip"
+      ]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2 passed",
+      "action": "wait:300",
+      "sampleWindowMs": 900,
+      "stateAssertion": {
+        "jq": "$.after.boatPosition.y != $.before.boatPosition.y"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": {
+          "region": "center:40%",
+          "minMotionPixelRatio": 0.002
+        }
+      },
+      "threshold": "900ms 采样窗内船体竖直坐标发生变化;harness 另以 4s 观测的 stateSeries 佐证竖直坐标极差 >= 0.02 单位",
+      "evidence": [
+        "stateSample",
+        "stateSeries",
+        "screenshot"
+      ]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3 passed",
+      "action": "drag:(0.50,0.50)->(0.78,0.50)",
+      "waitMs": 500,
+      "sampleWindowMs": 200,
+      "stateAssertion": {
+        "jq": "($.after.cameraAzimuth - $.before.cameraAzimuth > 20) || ($.before.cameraAzimuth - $.after.cameraAzimuth > 20)"
+      },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "minDiffPixelRatio": 0.02
+        }
+      },
+      "threshold": "水平拖拽使方位角变化 >= 20°,画面构图改变(太阳/海平线相对船体的位置变化)",
+      "evidence": [
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4 passed",
+      "action": "click:ui#tone-toggle",
+      "waitMs": 2500,
+      "stateAssertion": {
+        "jq": "$.toneMix > 0.7"
+      },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "metric": "avgColorShift",
+          "minShift": 8
+        }
+      },
+      "threshold": "切换后 2.5s 内 toneMix > 0.7;画面平均颜色相对切换前显著偏移(RGB 分量平均偏移 >= 8/255)",
+      "evidence": [
+        "screenshot:before",
+        "screenshot",
+        "stateSample"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5 passed",
+      "action": "click:ui#reset",
+      "waitMs": 3000,
+      "stateAssertion": {
+        "jq": "$.epoch >= 1 && $.assetLoaded == true && $.toneMix < 0.05 && $.cameraAzimuth >= 32 && $.cameraAzimuth <= 38"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        }
+      },
+      "threshold": "reset(释放并重建)后 3s 内:资产重新就绪、色调回到暖端、方位角回到 35°±3°、船体回初始位姿;无未捕获异常;无页面导航",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "consoleLog:clean",
+        "navigation:none"
+      ]
+    },
+    {
+      "probeId": "P7",
+      "precondition": "P6 passed",
+      "action": "click:ui#reset",
+      "waitMs": 3000,
+      "stateAssertion": {
+        "jq": "$.epoch >= 2 && $.assetLoaded == true && $.assetRequests >= 2 && $.toneMix < 0.05"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        }
+      },
+      "threshold": "连续第二次 reset 正常完成(释放与重建稳定性):资产重新加载、画面正常恢复;控制台无新增错误;无内存持续增长征象(harness 记录内存样本对比)",
+      "evidence": [
+        "screenshot",
+        "stateSample",
+        "consoleLog:clean",
+        "memorySample"
+      ]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "页面在运行时对 assets/boat.glb 发起真实网络请求,成功加载后 __appReady 置 true 且 assetLoaded 为 true。",
+      "画面呈现可辨识的船体形体:非空白、非占位几何、非单一纯色块。",
+      "船体保留资产多部件材质特征,受光面与背光面明暗可辨。",
+      "海面持续动态波动:wavePhase 持续推进且海面区域存在运动像素。",
+      "船体随波起伏:竖直坐标随时间周期变化且与波形相位耦合。",
+      "水平拖拽使相机环绕孤舟,方位角变化 >= 20° 且画面构图正确变化。",
+      "色调控件可在暖(落日)与冷(暮蓝)间切换,toneMix 与画面色偏一致。",
+      "Reset 释放并重建场景:色调、方位角、模拟时间与船体位姿恢复初始,epoch 递增且无页面刷新。",
+      "连续多次 Reset 稳定:assetRequests 递增、无未捕获异常、无泄漏征象。",
+      "空闲与交互状态下滚动平均帧率均不低于 30fps。"
+    ]
+  }
+}

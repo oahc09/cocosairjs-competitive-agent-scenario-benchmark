@@ -1,0 +1,181 @@
+{
+  "briefId": "E08",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T00:00:00Z",
+  "briefSha256": "computed-by-harness",
+  "title": "深海鱼群 (Deep Sea Fish School)",
+  "goal": ">=80 条程序化鱼的 boids 实时模拟(聚集/对齐/分离),鼠标惊散与重聚,点击投喂并向食物聚集,悬浮颗粒,>=30fps。",
+  "domains": [
+    "Simulation",
+    "Interaction",
+    "Procedural body",
+    "Particles",
+    "State"
+  ],
+  "assets": [],
+  "stateContract": {
+    "fishCount": "integer,鱼个体数,恒 >= 80",
+    "planktonCount": "integer,悬浮颗粒数,恒 >= 300",
+    "boidMode": "string, \"normal\" | \"scatter\",初始 normal",
+    "foodActive": "boolean,是否存在食物,初始 false",
+    "foodPosition": "object {x,y,z} 或 null,食物世界坐标",
+    "avgCohesion": "number 0-1,1 - min(1, 个体到质心平均距离 / 10)",
+    "avgDistanceToFood": "number 或 null,鱼群到食物的平均距离(无食物为 null)"
+  },
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "notes": "鱼 >=80(建议 80-120),悬浮颗粒 >=300(建议 300-600);boids 逐帧实时计算,邻域搜索朴素 O(n^2) 或空间划分均可但须保帧率;禁止预烘焙轨迹。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "forbiddenShortcuts": [
+    "禁止预定义路径/预烘焙动画代替逐帧 boids 模拟",
+    "禁止广告牌贴图或纯 DOM 元素冒充 3D 鱼体",
+    "禁止定时器/脚本触发器代替基于指针距离的惊散判定",
+    "禁止状态字段(avgCohesion/boidMode/foodActive)与画面脱钩",
+    "禁止食物成为无法消耗的永久装饰",
+    "禁止探针期间临时提升规模",
+    "禁止 reset 通过页面刷新实现"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:2500",
+      "waitMs": 2500,
+      "stateAssertion": {
+        "jq": "$.fishCount >= 80 && $.planktonCount >= 300 && $.boidMode == \"normal\" && $.foodActive == false"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "minCoverage": 0.25 }
+      },
+      "threshold": "水下场景非空,鱼群与颗粒可见",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1",
+      "action": "wait:2000",
+      "waitMs": 2000,
+      "stateAssertion": {
+        "jq": "$.boidMode == \"normal\" && $.avgCohesion >= 0.45"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": { "x": 0.3, "y": 0.25, "w": 0.4, "h": 0.5 }, "spanMs": 1000 }
+      },
+      "threshold": "常态聚群:内聚度达标且中央水域持续游动",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2",
+      "action": "drag:{from:{x:320,y:360},to:{x:960,y:360}}",
+      "waitMs": 1200,
+      "stateAssertion": {
+        "jq": "$.boidMode == \"scatter\" && $.avgCohesion < 0.35"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": { "region": { "x": 0.2, "y": 0.2, "w": 0.6, "h": 0.6 }, "frameGapMs": 500 }
+      },
+      "threshold": "指针扫过中央水域后鱼群炸开,内聚度显著下降",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3",
+      "action": "pointermove:{x:20,y:20}",
+      "waitMs": 6000,
+      "stateAssertion": {
+        "jq": "$.boidMode == \"normal\" && $.avgCohesion >= 0.45"
+      },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": { "x": 0.3, "y": 0.25, "w": 0.4, "h": 0.5 }, "spanMs": 1000 }
+      },
+      "threshold": "指针移出水域 6s 内重聚:normal 模式且内聚度恢复",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4",
+      "action": "click:{x:640,y:360}",
+      "waitMs": 800,
+      "stateAssertion": {
+        "jq": "$.foodActive == true && $.foodPosition != null"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": { "region": { "x": 0.42, "y": 0.32, "w": 0.16, "h": 0.26 }, "frameGapMs": 400 }
+      },
+      "threshold": "点击后食物颗粒出现在点击位置附近",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5",
+      "action": "wait:4000",
+      "waitMs": 4000,
+      "stateAssertion": {
+        "jq": "$.avgDistanceToFood != null && $.avgDistanceToFood < 6"
+      },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": { "region": { "x": 0.35, "y": 0.28, "w": 0.3, "h": 0.4 }, "frameGapMs": 600 }
+      },
+      "threshold": "鱼群向食物点聚集,平均距离降至 6 世界单位以内",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P7",
+      "precondition": "P6",
+      "action": "click:ui=reset",
+      "waitMs": 2000,
+      "stateAssertion": {
+        "jq": "$.fishCount >= 80 && $.boidMode == \"normal\" && $.foodActive == false && $.avgDistanceToFood == null"
+      },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "minCoverage": 0.25 }
+      },
+      "threshold": "reset 后状态恢复初始:无食物、normal 模式、鱼群完整",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P8",
+      "precondition": "P7",
+      "action": "wait:1500",
+      "waitMs": 1500,
+      "stateAssertion": {
+        "jq": "$.fishCount >= 80 && $.planktonCount >= 300"
+      },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": { "x": 0, "y": 0, "w": 1, "h": 1 }, "frameGapMs": 300, "minChangedRatio": 0.02 }
+      },
+      "threshold": "reset 后模拟继续(鱼群游动 + 颗粒漂浮),无未捕获异常",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "鱼 >=80 条且为程序化形体(分节身体/摆尾形变),与 fishCount 一致",
+      "聚集规则:常态 avgCohesion >= 0.45,鱼群抱团可辨",
+      "对齐规则:邻域个体朝向趋同,整体游向整齐",
+      "分离规则:个体互不穿插,保持最小间距",
+      "鼠标接近惊散:boidMode=scatter 且 avgCohesion < 0.35,炸开可辨",
+      "指针离开后 6s 内重聚为 normal,内聚度恢复",
+      "点击投喂:食物颗粒出现,foodActive=true 且 foodPosition 非空",
+      "鱼群向食物点聚集,avgDistanceToFood 降至阈值内,食物可被消耗",
+      "悬浮颗粒 >=300 持续漂浮,增强水下纵深",
+      "reset 恢复初始(计数/模式/食物清除),模拟继续运行"
+    ]
+  }
+}

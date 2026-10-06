@@ -1,0 +1,185 @@
+{
+  "batchId": "B-20261005-R01",
+  "createdAt": "2026-10-05T02:58:21.241Z",
+  "updatedAt": "2026-10-05T08:05:25.521Z",
+  "plan": {
+    "source": "--matrix E01,E05|K0|R01",
+    "pairs": [
+      {
+        "scene": "E01",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "targeted-pilot",
+        "pairId": "PAIR-E01-K0-R01",
+        "batchId": "B-20261005-R01"
+      },
+      {
+        "scene": "E05",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "targeted-pilot",
+        "pairId": "PAIR-E05-K0-R01",
+        "batchId": "B-20261005-R01"
+      }
+    ]
+  },
+  "engine": {
+    "three": {
+      "version": "0.186.1"
+    },
+    "cocosair": {
+      "tarball": "vendor/cocosair.js-1.0.0-k0.tgz",
+      "sha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565"
+    }
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T04:57:45.145Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 1,
+              "browser": 2,
+              "toolcall": 0,
+              "walltime": 6
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T04:58:15.469Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 6,
+              "toolcall": 0,
+              "walltime": 27
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T04:57:10.726Z"
+      },
+      "executionTiming": {
+        "status": "PAIR_TIMING_DRIFT",
+        "startDeltaSec": 3430,
+        "maxSec": 30
+      },
+      "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING"
+    },
+    {
+      "pairId": "PAIR-E05-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "PERFORMANCE",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T04:58:45.250Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 6,
+              "browser": 6,
+              "toolcall": 0,
+              "walltime": 10
+            }
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "PERFORMANCE",
+            "leakScan": "CLEAN",
+            "at": "2026-10-05T04:59:10.994Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 5,
+              "browser": 6,
+              "toolcall": 0,
+              "walltime": 19
+            }
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-05T04:57:10.742Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      },
+      "qualificationStatus": "LEGACY_PROVISIONAL"
+    }
+  ],
+  "stages": {
+    "preflight": {
+      "lastRunAt": "2026-10-05T04:57:10.743Z",
+      "summary": "PASS",
+      "blocked": [],
+      "pairs": 2
+    },
+    "dispatch": {
+      "lastRunAt": "2026-10-05T02:59:33.318Z",
+      "note": "双臂 dispatchAt 已盖章;请立即同批启动两臂会话"
+    },
+    "collect": {
+      "lastRunAt": "2026-10-05T04:57:03.637Z",
+      "completed": "4/4",
+      "pending": []
+    },
+    "validate": {
+      "lastRunAt": "2026-10-05T04:59:10.994Z",
+      "jobs": 4,
+      "ok": 2,
+      "fail": 2,
+      "forced": false,
+      "blockedPairs": [],
+      "budgetExhausted": 0,
+      "invalidEvidence": 0
+    },
+    "blind": {
+      "lastRunAt": "2026-10-05T04:59:40.531Z",
+      "material": "built",
+      "visualScores": "pending-judge"
+    },
+    "aggregate": {
+      "lastRunAt": "2026-10-05T08:05:25.518Z",
+      "output": "results/aggregated.json"
+    },
+    "qualify": {
+      "lastRunAt": "2026-10-05T08:05:24.731Z",
+      "summary": "LEGACY_PROVISIONAL",
+      "statuses": {
+        "PAIR-E01-K0-R01": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
+        "PAIR-E05-K0-R01": "LEGACY_PROVISIONAL"
+      },
+      "exitCode": 0
+    }
+  },
+  "notes": [
+    "Agent Run 执行说明见同目录 DISPATCH.md;执行完毕后依次 --stage collect/validate/blind/aggregate"
+  ]
+}

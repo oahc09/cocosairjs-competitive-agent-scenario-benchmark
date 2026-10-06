@@ -1,0 +1,20 @@
+{
+  "name": "bench-template-three",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "CocosAirJS benchmark frozen template (Three.js r186 / 0.186.1). Smoke scene: rotating lit cube. See bench/docs/MASTER-CONTEXT.md section 12.1.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "node scripts/count.mjs build && node scripts/build.mjs",
+    "dev": "node scripts/serve.mjs"
+  },
+  "dependencies": {
+    "three": "file:../../vendor/three-0.186.1.tgz"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
+  }
+}

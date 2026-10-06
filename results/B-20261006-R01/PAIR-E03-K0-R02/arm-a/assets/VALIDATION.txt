@@ -1,0 +1,60 @@
+ASSETS VALIDATION — 2026-10-02T08:29:55.999Z
+Target engines: Three.js r186 GLTFLoader + Cocos AIR built-in glTF
+
+[PASS] assets/boat.glb: GLB magic 0x46546C67 + glTF 2.0 + length header
+[PASS] assets/boat.glb: meshes >= 1 — meshes=6
+[PASS] assets/boat.glb: materials >= 1 — materials=6
+[PASS] assets/boat.glb: named node "Boat" — nodes=[Hull, Deck, KeelAndRudder, Rigging, MainSail, Jib, Boat]
+[PASS] assets/boat.glb: triangle budget [200, 800] — triangles=309
+[PASS] assets/boat.glb: size < 300 KB — 28.4 KB
+[PASS] assets/boat.glb: POSITION accessors have min/max + primitives have material — 6 primitives
+[PASS] assets/gem.glb: GLB magic 0x46546C67 + glTF 2.0 + length header
+[PASS] assets/gem.glb: meshes >= 1 — meshes=1
+[PASS] assets/gem.glb: materials >= 1 — materials=1
+[PASS] assets/gem.glb: named node "Gem" — nodes=[Gem]
+[PASS] assets/gem.glb: triangle budget [60, 200] — triangles=78
+[PASS] assets/gem.glb: size < 300 KB — 6.9 KB
+[PASS] assets/gem.glb: POSITION accessors have min/max + primitives have material — 1 primitives
+[PASS] assets/character.glb: GLB magic 0x46546C67 + glTF 2.0
+[PASS] assets/character.glb: skins >= 1 — skins=1
+[PASS] assets/character.glb: animations >= 2 — animations=3
+[PASS] assets/character.glb: meshes >= 1 — meshes=1
+[PASS] assets/character.glb: animation clips recorded — clips=[Survey, Walk, Run]
+[PASS] assets/textures/ramp-warm-cool.png: PNG signature
+[PASS] assets/textures/ramp-warm-cool.png: IHDR first chunk
+[PASS] assets/textures/ramp-warm-cool.png: dimensions 256x256 — got 256x256
+[PASS] assets/textures/ramp-warm-cool.png: 8-bit RGB, no interlace — bitDepth=8 colorType=2 interlace=0
+[PASS] assets/textures/ramp-warm-cool.png: chunk walk ends exactly at IEND
+[PASS] assets/textures/ramp-warm-cool.png: IDAT non-empty — idatBytes=1701
+[PASS] assets/textures/starfield.png: PNG signature
+[PASS] assets/textures/starfield.png: IHDR first chunk
+[PASS] assets/textures/starfield.png: dimensions 256x256 — got 256x256
+[PASS] assets/textures/starfield.png: 8-bit RGB, no interlace — bitDepth=8 colorType=2 interlace=0
+[PASS] assets/textures/starfield.png: chunk walk ends exactly at IEND
+[PASS] assets/textures/starfield.png: IDAT non-empty — idatBytes=3480
+[PASS] assets/audio/chime.wav: RIFF/WAVE container
+[PASS] assets/audio/chime.wav: PCM mono 44100 Hz 16-bit — format=1 ch=1 sr=44100 bits=16
+[PASS] assets/audio/chime.wav: 0.5 s of samples — dataBytes=44100
+[PASS] MANIFEST.json: parses
+[PASS] MANIFEST.json: covers all required assets — entries=6
+[PASS] assets/boat.glb: exists (per manifest)
+[PASS] assets/boat.glb: bytes match manifest — disk=29132 manifest=29132
+[PASS] assets/boat.glb: sha256 matches manifest — ed22ff2f48352b72...
+[PASS] assets/gem.glb: exists (per manifest)
+[PASS] assets/gem.glb: bytes match manifest — disk=7112 manifest=7112
+[PASS] assets/gem.glb: sha256 matches manifest — fc0f895d029f648e...
+[PASS] assets/character.glb: exists (per manifest)
+[PASS] assets/character.glb: bytes match manifest — disk=162852 manifest=162852
+[PASS] assets/character.glb: sha256 matches manifest — d97044e701822bac...
+[PASS] assets/textures/ramp-warm-cool.png: exists (per manifest)
+[PASS] assets/textures/ramp-warm-cool.png: bytes match manifest — disk=1758 manifest=1758
+[PASS] assets/textures/ramp-warm-cool.png: sha256 matches manifest — 387e87c107496284...
+[PASS] assets/textures/starfield.png: exists (per manifest)
+[PASS] assets/textures/starfield.png: bytes match manifest — disk=3537 manifest=3537
+[PASS] assets/textures/starfield.png: sha256 matches manifest — 4cf951eaf9d658c8...
+[PASS] assets/audio/chime.wav: exists (per manifest)
+[PASS] assets/audio/chime.wav: bytes match manifest — disk=44144 manifest=44144
+[PASS] assets/audio/chime.wav: sha256 matches manifest — 3de6d20e06099944...
+
+TOTAL: 54 checks, 54 PASS, 0 FAIL
+RESULT: PASS

@@ -1,0 +1,46 @@
+{
+  "pass": 3,
+  "judgeId": "judge-pass-3-decisive",
+  "scope": "CMP-E02 only",
+  "generatedAt": "2026-10-05T21:00:16+08:00",
+  "protocol": "metric-spec §8.1 第三次决定性 pass(前两轮 preference 相持)",
+  "consistency": [
+    {
+      "itemId": "CMP-E02-K0-PAIR-E02-K0-R01-vs-PAIR-E02-K0-R01/side1",
+      "seen": "三帧小舟海面:shot-1 暖橙落日(太阳圆盘+软光晕、海面金色高光带、双白帆帆船、HUD 'Tone: Sunset 落日'+Reset),shot-2/3 切冷蓝暮色(HUD 'Tone: Dusk 暮蓝')但海面近平坦、船体不可见、天穹无日月,2→3 帧几乎静止",
+      "matchesTheme": true,
+      "unreliable": false
+    },
+    {
+      "itemId": "CMP-E02-K0-PAIR-E02-K0-R01-vs-PAIR-E02-K0-R01/side2",
+      "seen": "三帧落日海面:多层太阳光晕、立体起伏浪涌、碎金反射光路、木色船体清晰出水(HUD 'tone-toggle · sunset 落日'/'dusk 暮蓝'+Reset 重置),shot-2/3 标签切暮蓝但画面仍保持暖橙,浪峰位置与船体姿态有可见变化",
+      "matchesTheme": true,
+      "unreliable": false
+    }
+  ],
+  "comparisons": [
+    {
+      "cmpId": "CMP-E02-K0-PAIR-E02-K0-R01-vs-PAIR-E02-K0-R01",
+      "side1": {
+        "构图取景": 2,
+        "材质光影": 2,
+        "动效流畅": 1,
+        "特效质感": 1,
+        "交互反馈": 2,
+        "整体完成度": 2,
+        "total": 10
+      },
+      "side2": {
+        "构图取景": 3,
+        "材质光影": 3,
+        "动效流畅": 2,
+        "特效质感": 3,
+        "交互反馈": 2,
+        "整体完成度": 2,
+        "total": 15
+      },
+      "preference": "side2",
+      "reason": "side2 海面具真实 3D 浪涌起伏与碎金反射光路、木色船体完整出水贴合波面、太阳多层光晕层次丰富且构图佳,而 side1 海面平淡带涂抹感、船体不可见、光晕单薄且暮色帧近乎静止;side1 仅在暖冷色调切换的真实性上占优,side2 的'暮蓝'标签未带来视觉冷色为其主要扣分点,但整体差距(15:10)远超 tie 阈值。"
+    }
+  ]
+}

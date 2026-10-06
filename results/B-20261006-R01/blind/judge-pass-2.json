@@ -1,0 +1,97 @@
+{
+  "pass": 2,
+  "judgeId": "judge-pass-2",
+  "generatedAt": "2026-10-06T08:51:00+08:00",
+  "protocol": "metric-spec §8 盲评 + 场景主题锚定一致性验证",
+  "consistency": [
+    { "itemId": "CMP-E01-K0-PAIR-E01-K0-R02-vs-PAIR-E01-K0-R02/side1", "seen": "粒子旋涡星系:暖白核球+两条缠绕旋臂+盘面散星+背景星,HUD 显示 Stars 60000/FPS/Dist 120 与 Reset,三帧间旋臂方位缓慢转动", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E01-K0-PAIR-E01-K0-R02-vs-PAIR-E01-K0-R02/side2", "seen": "粒子旋涡星系:过曝白核+清晰双旋臂+带橙蓝色散星,HUD 显示 Stars 64000/Distance/Phase(0.01→0.08 rad 递增)/Reset", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E02-K0-PAIR-E02-K0-R02-vs-PAIR-E02-K0-R02/side1", "seen": "落日海面+孤舟:黄橙天幕+苍白日轮+深蓝海面+帆船模型,shot-1 有太阳镜面光路与 Tone:Warm Sunset,后两帧拖拽换视角且 Tone 变 Cool Dusk,船体随波微晃", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E02-K0-PAIR-E02-K0-R02-vs-PAIR-E02-K0-R02/side2", "seen": "落日海面+孤舟:橙红渐变天穹+日轮辉光+大起伏波浪位移+金色镜面反射光路+白帆孤舟,Tone 按钮在 Sunset 落日/Dusk 黄昏间切换,船随浪起伏", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E03-K0-PAIR-E03-K0-R02-vs-PAIR-E03-K0-R02/side1", "seen": "太阳系仪:中心发光恒星+轨道线+8 颗行星(土星带环、木星/土星带卫星点、火星红/地球蓝)+块状小行星带,底部五档时间倍率按钮(1x 高亮→0.5x)与 Reset", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E03-K0-PAIR-E03-K0-R02-vs-PAIR-E03-K0-R02/side2", "seen": "太阳系仪:径向辉光恒星+椭圆轨道+8 行星(土星/天王星带半透明环、木星带卫星)+细尘小行星带,顶部时间倍率按钮 1x→0.5x,底部提示栏(拖拽旋转/滚轮缩放/点击行星查看信息),行星位置帧间位移", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E04-K0-PAIR-E04-K0-R02-vs-PAIR-E04-K0-R02/side1", "seen": "城市夜景:黑色楼群剪影+暖/冷窗灯+星空紫渐变地平线,HUD 自动展演(关)/暂停/重置;三帧均只见红色上升光点,无烟花爆炸", "matchesTheme": true, "unreliable": false, "reason": "场景与控件符合城市烟花夜(自动展演处于关),但证据帧未捕获任何爆炸瞬间,特效只能保守计分" },
+    { "itemId": "CMP-E04-K0-PAIR-E04-K0-R02-vs-PAIR-E04-K0-R02/side2", "seen": "城市夜景+烟花:紫色地平线光带+窗灯楼群,shot-1 火箭红点升空,shot-2/3 三处烟花同爆(白热核心+金紫火花+下落余烬流),HUD 自动展演(关)/运行中·暂停/重置", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "CMP-E05-K0-PAIR-E05-K0-R02-vs-PAIR-E05-K0-R02/side1", "seen": "黑色事件视界圆盘+白热放射状辐条光环向橙黄衰减+方形颗粒星点背景,仅 Reset 按钮,帧间辐条图案微转", "matchesTheme": true, "unreliable": false, "reason": "呈放射辐条状而非盘面吸积盘,多普勒不对称弱,但主题元素(视界+暖盘+背景星)齐备,不构成矛盾" },
+    { "itemId": "CMP-E05-K0-PAIR-E05-K0-R02-vs-PAIR-E05-K0-R02/side2", "seen": "黑洞:黑色视界剪影+内白热光子环+螺旋条纹吸积盘(内白外橙红)+盘内星流拖尾+景深弥散背景星,提示'滚轮缩放',shot-1→2 视角推近", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E01-X-0914", "seen": "深空星系巡航:蓝白旋臂+橙色散星+亮白核球,HUD DEEP SPACE·GALAXY CRUISE(65000 星/Phase 0.01→0.09/FPS 57),底部指针视差/滚轮巡航/复位提示", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E01-Y-c9f5", "seen": "深空星系巡航:暖金内臂+蓝色外臂双色星系,74500 星,Phase 0.3°→5.5°,Dist 120.0→119.9(相机推近),FPS 60", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E02-X-dd5e", "seen": "落日海面与孤舟:桃橙渐变天穹+日轮辉光+细密波纹海面+反射光路+蓝帆帆船,信息面板(拖拽环绕/滚轮缩放)+色调暖→冷切换按钮", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E02-Y-af6d", "seen": "落日海面与孤舟:饱和橙红天穹+大位移涌浪+浪脊金色镜面反射+GLTF 孤舟,状态栏 boat.glb loaded/fps 60/toneMix/az 35°/epoch 0→2", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E03-X-491a", "seen": "太阳系仪:纹理发光太阳+带条纹木星+土星环+致密岩石小行星带+8 行星,TIME SCALE 五档按钮(1x→0.5x),SIM 时间 0.1s→3.8s 且 FPS 2→60", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E03-Y-7b8f", "seen": "太阳系仪(ORRERY·E03):同款 TIME SCALE 五档 UI+SIM 遥测 0.1s→4.1s,行星辉光风格化,小行星带极淡近不可见", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E04-X-814b", "seen": "城市烟花夜:夜空紫渐变+红色火箭光点数枚+漂浮窗灯点阵(楼体剪影几乎不可辨),HUD 自动表演·关/暂停/重置,提示栏'烟花 0 · 粒子 0 · 手动模式—点击夜空发射烟花',两帧均无爆炸", "matchesTheme": true, "unreliable": false, "reason": "HUD 文案确认 E04 场景身份,但楼体近乎不可见且烟花计数为 0,属实现/捕获薄弱而非主题矛盾" },
+    { "itemId": "REF-E04-Y-dede", "seen": "城市烟花夜:双层楼群剪影+紫色地平线+密集星空,火箭红点升空后 shot-2 五处橙金烟花同爆(白热核心+余烬拖尾),提示'点击夜空任意位置发射烟花'", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E05-X-9835", "seen": "黑洞:黑色视界+明亮白热光子环+右侧暖橙盘弧(不对称)+紫蓝星云斑块背景+星流拖尾粒子,提示滚轮缩放/拖拽视角,帧间盘面微转", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E05-Y-bcfe", "seen": "黑洞:金色光子环环绕视界剪影+奶油金螺旋吸积盘(外缘橙红)+紫色星云雾+轨道带状星流拖尾,提示滚轮缩放/拖拽微调视角", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E06-X-4b20", "seen": "低多边形森林营火夜景:地形空地中央篝火(火焰+飞火星)+暖光地面光斑+针叶林+萤火虫光点,HUD 昼夜:夜/环绕:开/重置,两帧视角环绕位移", "matchesTheme": true, "unreliable": false, "reason": "E06 主题未在锚定清单内,按画面自证(营火森林+昼夜/环绕控件)一致处理" },
+    { "itemId": "REF-E06-Y-e3e8", "seen": "低多边形森林营火夜景:亮绿松树+营火木塔+白色地面光池+原木坐凳+萤火虫,HUD 日夜切换/暂停环绕/重置+状态'夜·环绕:开'+拖拽提示,两帧环绕视角变化,但地面不可见(树悬于黑暗中)", "matchesTheme": true, "unreliable": false, "reason": "同上按画面自证一致处理" },
+    { "itemId": "REF-E07-X-0344", "seen": "霓虹雨城街道:街谷透视+彩色霓虹灯牌(绿/粉/紫/青)+密集雨丝+湿地多彩反射+车灯光晕,遥测面板 NEON CITY·E07(FPS 8→60/BLD 220/WIN 4340/CAR 86/RAIN 2200)+FOG:ON 切换", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E07-Y-9089", "seen": "雨夜城市街道:灰绿粉彩楼盒+窗灯纹理+中央车道+车灯光点+稀疏雨丝,HUD 雾:开/重置+状态'楼 240·车 80·雨 2200·雾:开',无霓虹与地面反射", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E08-X-9db5", "seen": "深海鱼群:水下光柱+鱼形网格鱼群(约百条)游动重组+海床岩石海草+悬浮颗粒,HUD 深海鱼群 E08(fish 110/plankton 520/cohesion 61% 进度条/mode NORMAL)+提示移动指针惊散鱼群/单击投喂/R 重置", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E08-Y-2c8d", "seen": "深海鱼群:斜向光柱+青色浮游生物点+灰色鱼群(形态偏片状)自中央游向右侧+cohesion 0.85→0.81,但水体与海床交界呈生硬水平分带", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E09-X-9ff4", "seen": "珠宝展台(GEM ATELIER):刻面钻石悬浮于发光基座圆环上方,基座强光泛白洗地,暗色星空背景,COLOR 五色球切换(diamond 标签)+导出 PNG/重置,shot-2 内反射闪光增强", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E09-Y-98d8", "seen": "珠宝工作室(E09·JEWELRY STUDIO):大颗刻面半透明钻石悬于金环黑基座上,灰墙柔光箱布景,COLOR 五色球+Export PNG/Reset,两帧几乎无变化、无闪光/焦散", "matchesTheme": true, "unreliable": false, "reason": null },
+    { "itemId": "REF-E10-X-c7ef", "seen": "动画角色展示空间:两只低多边形狐狸立于青色发光圆台 A/B,顶部实例 A/B 的 Idle/Walk 与销毁 A/重置按钮,底部遥测(fps 60/frames 1770/instances 2/idle 计时),shot-1 残留'正在加载 assets/character.glb'遮罩,shot-2 姿态变化", "matchesTheme": true, "unreliable": false, "reason": "加载遮罩为捕获时机瑕疵,不影响主题一致性判定" },
+    { "itemId": "REF-E10-Y-2339", "seen": "动画角色展示空间:两只低多边形狐狸立于素色地面(无展台),HUD 文本块(asset: character.glb loaded/idle 0.00s→6.91s/fps 60/resets 1),底部 Inst A/B Idle/Walk+Destroy A/Reset,两帧姿态变化", "matchesTheme": true, "unreliable": false, "reason": null }
+  ],
+  "comparisons": [
+    {
+      "cmpId": "CMP-E01-K0-PAIR-E01-K0-R02-vs-PAIR-E01-K0-R02",
+      "side1": { "构图取景": 3, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 2, "整体完成度": 2, "total": 13 },
+      "side2": { "构图取景": 3, "材质光影": 3, "动效流畅": 2, "特效质感": 3, "交互反馈": 2, "整体完成度": 3, "total": 16 },
+      "preference": "side2",
+      "reason": "两侧同为合格旋涡星系,side2 旋臂更清晰、星场带橙蓝色彩层次且 HUD 提供 Phase 遥测,side1 色彩偏灰、臂形松散"
+    },
+    {
+      "cmpId": "CMP-E02-K0-PAIR-E02-K0-R02-vs-PAIR-E02-K0-R02",
+      "side1": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 2, "整体完成度": 2, "total": 12 },
+      "side2": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 3, "交互反馈": 2, "整体完成度": 3, "total": 17 },
+      "preference": "side2",
+      "reason": "side2 具大位移涌浪几何+浪脊金色镜面反射+日轮辉光,海面质感与光影层次全面占优;side1 海面平、后两帧太阳出画"
+    },
+    {
+      "cmpId": "CMP-E03-K0-PAIR-E03-K0-R02-vs-PAIR-E03-K0-R02",
+      "side1": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 2, "整体完成度": 2, "total": 12 },
+      "side2": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 2, "交互反馈": 3, "整体完成度": 3, "total": 17 },
+      "preference": "side2",
+      "reason": "side2 行星位移证据明确、恒星辉光与半透明行星环更精致,且提示栏+五档倍率交互齐备;side1 小行星带颗粒粗大、帧间几乎静止"
+    },
+    {
+      "cmpId": "CMP-E04-K0-PAIR-E04-K0-R02-vs-PAIR-E04-K0-R02",
+      "side1": { "构图取景": 2, "材质光影": 2, "动效流畅": 1, "特效质感": 1, "交互反馈": 2, "整体完成度": 2, "total": 10 },
+      "side2": { "构图取景": 3, "材质光影": 2, "动效流畅": 2, "特效质感": 3, "交互反馈": 2, "整体完成度": 3, "total": 15 },
+      "preference": "side2",
+      "reason": "side2 捕获到火箭升空→三处同爆(白热核+金紫火花+余烬流)的完整生命周期;side1 三帧均无爆炸、仅红点升空,核心特效未得证实"
+    },
+    {
+      "cmpId": "CMP-E05-K0-PAIR-E05-K0-R02-vs-PAIR-E05-K0-R02",
+      "side1": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 1, "整体完成度": 2, "total": 11 },
+      "side2": { "构图取景": 3, "材质光影": 3, "动效流畅": 2, "特效质感": 3, "交互反馈": 2, "整体完成度": 3, "total": 16 },
+      "preference": "side2",
+      "reason": "side2 呈现螺旋条纹吸积盘+白热光子环+星流拖尾+景深星场并演示滚轮推近,符合主题要素;side1 为放射辐条状光晕、星点呈方块颗粒且仅有 Reset"
+    }
+  ],
+  "referenceItems": [
+    { "id": "REF-E01-X-0914", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 3, "交互反馈": 2, "整体完成度": 3 }, "total": 17 },
+    { "id": "REF-E01-Y-c9f5", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 3, "交互反馈": 2, "整体完成度": 3 }, "total": 17 },
+    { "id": "REF-E02-X-dd5e", "dims": { "构图取景": 3, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 2, "整体完成度": 3 }, "total": 14 },
+    { "id": "REF-E02-Y-af6d", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 3, "交互反馈": 3, "整体完成度": 3 }, "total": 18 },
+    { "id": "REF-E03-X-491a", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 2, "交互反馈": 3, "整体完成度": 3 }, "total": 17 },
+    { "id": "REF-E03-Y-7b8f", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 3, "特效质感": 2, "交互反馈": 3, "整体完成度": 2 }, "total": 14 },
+    { "id": "REF-E04-X-814b", "dims": { "构图取景": 1, "材质光影": 1, "动效流畅": 1, "特效质感": 1, "交互反馈": 2, "整体完成度": 1 }, "total": 7 },
+    { "id": "REF-E04-Y-dede", "dims": { "构图取景": 3, "材质光影": 2, "动效流畅": 3, "特效质感": 2, "交互反馈": 3, "整体完成度": 3 }, "total": 16 },
+    { "id": "REF-E05-X-9835", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 2, "特效质感": 2, "交互反馈": 2, "整体完成度": 3 }, "total": 15 },
+    { "id": "REF-E05-Y-bcfe", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 2, "特效质感": 3, "交互反馈": 2, "整体完成度": 3 }, "total": 16 },
+    { "id": "REF-E06-X-4b20", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 3, "整体完成度": 2 }, "total": 13 },
+    { "id": "REF-E06-Y-e3e8", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 3, "整体完成度": 2 }, "total": 13 },
+    { "id": "REF-E07-X-0344", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 3, "交互反馈": 2, "整体完成度": 3 }, "total": 17 },
+    { "id": "REF-E07-Y-9089", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 1, "交互反馈": 2, "整体完成度": 2 }, "total": 11 },
+    { "id": "REF-E08-X-9db5", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 3, "特效质感": 2, "交互反馈": 3, "整体完成度": 3 }, "total": 15 },
+    { "id": "REF-E08-Y-2c8d", "dims": { "构图取景": 2, "材质光影": 1, "动效流畅": 3, "特效质感": 2, "交互反馈": 2, "整体完成度": 2 }, "total": 12 },
+    { "id": "REF-E09-X-9ff4", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 2, "特效质感": 2, "交互反馈": 3, "整体完成度": 2 }, "total": 13 },
+    { "id": "REF-E09-Y-98d8", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 1, "特效质感": 1, "交互反馈": 3, "整体完成度": 2 }, "total": 11 },
+    { "id": "REF-E10-X-c7ef", "dims": { "构图取景": 3, "材质光影": 3, "动效流畅": 3, "特效质感": 2, "交互反馈": 3, "整体完成度": 3 }, "total": 17 },
+    { "id": "REF-E10-Y-2339", "dims": { "构图取景": 2, "材质光影": 2, "动效流畅": 3, "特效质感": 1, "交互反馈": 3, "整体完成度": 2 }, "total": 13 }
+  ]
+}

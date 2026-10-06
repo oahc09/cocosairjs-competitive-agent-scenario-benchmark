@@ -1,0 +1,55 @@
+{
+  "batchId": "B-20261005-R03",
+  "generatedAt": "2026-10-05T09:49:50.516Z",
+  "source": "双 Judge 六维总分平均,口径 /18(metric-spec §8);E01 两 pass 偏好相持 → pass-3 决裁(R01 先例)",
+  "passes": [
+    "judge-pass-1.json",
+    "judge-pass-2.json",
+    "judge-pass-3.json(E01 决裁)"
+  ],
+  "pairs": {
+    "PAIR-E01-K0-R01": {
+      "three": 13.5,
+      "cocosair": 13.5
+    },
+    "PAIR-E02-K0-R01": {
+      "cocosair": 11.5,
+      "three": 15
+    }
+  },
+  "preferences": {
+    "PAIR-E01-K0-R01": {
+      "preference": "side2",
+      "passes": [
+        "side2",
+        "side1",
+        "side2"
+      ],
+      "pass3Applied": true
+    },
+    "PAIR-E02-K0-R01": {
+      "preference": "side2",
+      "passes": [
+        "side2",
+        "side2"
+      ],
+      "pass3Applied": false
+    }
+  },
+  "disagreements": [
+    {
+      "cmpId": "CMP-E01-K0-PAIR-E01-K0-R01-vs-PAIR-E01-K0-R01",
+      "prefs": [
+        "side2",
+        "side1",
+        "side2"
+      ],
+      "resolvedBy": "pass-3(2/3 多数)"
+    }
+  ],
+  "anonymizationFindings": [
+    "REF-E10-X HUD 显示 three.js r0.186.1 / REF-E10-Y HUD 显示 Cocos AIR(双 Judge 独立发现)—— 违反 §8.4 匿名化;双 Judge 均声明评分未受影响",
+    "REF-E02-Y 底部状态栏含资产文件名 boat.glb(pass2 发现)—— 同上"
+  ],
+  "note": "§8.4 违规系 Reference 盲评材料自带 HUD 所致,须 Owner 决断是否重制无水印参考截图;preference 统计维持参考口径(人工抽检未做,沿 G7 round-3 披露)"
+}

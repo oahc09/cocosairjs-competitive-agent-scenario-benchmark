@@ -1,0 +1,31 @@
+{
+  "generatedAt": "2026-10-05T09:59:38.335Z",
+  "finding": "盲评材料 §8.4 匿名化硬约束违规(批次 B-20261005-R03 blind/ 的 REF 材料)",
+  "items": [
+    {
+      "item": "REF-E10-X-...",
+      "leak": "HUD 显示 three.js r0.186.1 · Khronos Fox / SkeletonUtils.clone 等引擎身份字样",
+      "discoveredBy": "judge-pass-1 与 judge-pass-2 独立发现"
+    },
+    {
+      "item": "REF-E10-Y-...",
+      "leak": "HUD 显示 Cocos AIR",
+      "discoveredBy": "同上(双 Judge 独立一致)"
+    },
+    {
+      "item": "REF-E02-Y-...",
+      "leak": "底部状态栏含资产文件名 boat.glb",
+      "discoveredBy": "judge-pass-2"
+    }
+  ],
+  "impactAssessment": "CMP(两臂对照)材料无泄露——Agent Run 的 HUD 为自建(星点数/FPS/距离/EPOCH、tone/azimuth 等,无引擎名);违规仅在 REF 主题锚定材料,且两位 Judge 均书面声明评分与偏好形成于打开 REF 之前、未受身份信息影响;视觉分均值与 preference 已按盲测口径产出",
+  "disposition": {
+    "decision": "留档披露 + 列入下次 Reference 重验周期,不在战役中途改动冻结 Reference",
+    "actions": [
+      "本文件 = 处置留档;G5 residualDisclosure 与 G7 round-4 evidence 已交叉引用",
+      "E10 双引擎 Reference HUD 去商标 + E02 cocosair Reference 状态栏去资产文件名:并入下次 Reference 重实现/重验周期(与引擎或 spec 升版同批执行,零额外验证成本);完成后重建 blind --refs 并由下轮双 Judge 复核",
+      "在完成前,preference 统计维持 G7 既有参考口径(§8.3 人工抽检未做,超 20% 不一致即回退 BLOCKED 的条款不变)"
+    ]
+  },
+  "ownerAuthorization": "Owner 2026-10-05 指示按 Runner 最佳建议执行(会话内指令)"
+}

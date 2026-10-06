@@ -1,0 +1,673 @@
+{
+  "runId": "RUN-PAIR-E08-K0-R01-b",
+  "generatedAt": "2026-10-05T15:54:05.552Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T15:53:37.501Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2500
+            },
+            "raw": "wait:2500",
+            "performed": "waited 2500ms"
+          }
+        ],
+        "durationMs": 2510
+      },
+      "stateAssertion": {
+        "expr": "$.fishCount >= 80 && $.planktonCount >= 300 && $.boidMode == \"normal\" && $.foodActive == false",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": {
+            "x": 0,
+            "y": 0,
+            "w": 1,
+            "h": 1
+          },
+          "minCoverage": 0.25
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.25,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.4566,
+              "background": [
+                5,
+                37,
+                57
+              ]
+            }
+          ],
+          "worstLitRatio": 0.4566
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 37,
+          "fps": 55.4,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.6440219812736688,
+          "avgDistanceToFood": null,
+          "panicking": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 339,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.636618303638123,
+          "avgDistanceToFood": null,
+          "panicking": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 6023
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T15:53:43.524Z",
+      "precondition": {
+        "expr": "P1",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:2000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 2000
+            },
+            "raw": "wait:2000",
+            "performed": "waited 2000ms"
+          }
+        ],
+        "durationMs": 2006
+      },
+      "stateAssertion": {
+        "expr": "$.boidMode == \"normal\" && $.avgCohesion >= 0.45",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": {
+            "x": 0.3,
+            "y": 0.25,
+            "w": 0.4,
+            "h": 0.5
+          },
+          "spanMs": 1000
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.005,
+          "spanMs": 1000,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 384,
+                "y": 180,
+                "w": 512,
+                "h": 360
+              },
+              "diffRatio": 0.1524
+            }
+          ],
+          "worstDiffRatio": 0.1524
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 398,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.5156711124839465,
+          "avgDistanceToFood": null,
+          "panicking": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 639,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.6138246224874555,
+          "avgDistanceToFood": null,
+          "panicking": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 6254
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-05T15:53:49.778Z",
+      "precondition": {
+        "expr": "P2",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "drag:{from:{x:320,y:360},to:{x:960,y:360}}",
+        "steps": [
+          {
+            "verb": "drag",
+            "arg": {
+              "from": {
+                "x": 320,
+                "y": 360
+              },
+              "to": {
+                "x": 960,
+                "y": 360
+              }
+            },
+            "raw": "drag:{from:{x:320,y:360},to:{x:960,y:360}}",
+            "performed": "drag (320,360)->(960,360)"
+          }
+        ],
+        "durationMs": 405
+      },
+      "stateAssertion": {
+        "expr": "$.boidMode == \"scatter\" && $.avgCohesion < 0.35",
+        "ok": false,
+        "value": false,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.2,
+            "y": 0.2,
+            "w": 0.6,
+            "h": 0.6
+          },
+          "frameGapMs": 500
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 256,
+                "y": 144,
+                "w": 768,
+                "h": 432
+              },
+              "diffRatio": 0.1002
+            }
+          ],
+          "bestDiffRatio": 0.1002,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 773,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.7254458343315092,
+          "avgDistanceToFood": null,
+          "panicking": 0,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 869,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "scatter",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.3506305390291543,
+          "avgDistanceToFood": null,
+          "panicking": 46,
+          "resetCount": 0
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-region-a.png",
+          "P3-region-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3355
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-05T15:53:53.133Z",
+      "precondition": null,
+      "action": {
+        "raw": "pointermove:{x:20,y:20}",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P3"
+        ]
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-05T15:53:53.133Z",
+      "precondition": {
+        "expr": "P4",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P4",
+            "met": false,
+            "source": "probe P4",
+            "status": "SKIPPED_BY_DEPENDENCY"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:{x:640,y:360}",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "xy",
+              "x": 640,
+              "y": 360
+            },
+            "raw": "click:{x:640,y:360}",
+            "performed": "click @ (640,360)"
+          }
+        ],
+        "durationMs": 8
+      },
+      "stateAssertion": {
+        "expr": "$.foodActive == true && $.foodPosition != null",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.42,
+            "y": 0.32,
+            "w": 0.16,
+            "h": 0.26
+          },
+          "frameGapMs": 400
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 400,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 538,
+                "y": 230,
+                "w": 205,
+                "h": 187
+              },
+              "diffRatio": 0.0534
+            }
+          ],
+          "bestDiffRatio": 0.0534,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 973,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.5813433433895276,
+          "avgDistanceToFood": null,
+          "panicking": 46,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1021,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": true,
+          "foodPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "avgCohesion": 0.7260818380546046,
+          "avgDistanceToFood": 8.49084024472368,
+          "panicking": 0,
+          "resetCount": 0
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-region-a.png",
+          "P5-region-b.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2415
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P4",
+      "failedPreconditionParts": [
+        "P4"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-05T15:53:55.548Z",
+      "precondition": {
+        "expr": "P5",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P5",
+            "met": true,
+            "source": "probe P5",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:4000",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 4000
+            },
+            "raw": "wait:4000",
+            "performed": "waited 4000ms"
+          }
+        ],
+        "durationMs": 4001
+      },
+      "stateAssertion": {
+        "expr": "$.avgDistanceToFood != null && $.avgDistanceToFood < 6",
+        "ok": false,
+        "value": false,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": false,
+        "type": "regionChange",
+        "params": {
+          "region": {
+            "x": 0.35,
+            "y": 0.28,
+            "w": 0.3,
+            "h": 0.4
+          },
+          "frameGapMs": 600
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "gapMs": 600,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 448,
+                "y": 202,
+                "w": 384,
+                "h": 288
+              },
+              "diffRatio": 0.0095
+            }
+          ],
+          "bestDiffRatio": 0.0095,
+          "missing": [],
+          "expect": null
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "frame": 1117,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "scatter",
+          "foodActive": true,
+          "foodPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "avgCohesion": 0.6902208360551298,
+          "avgDistanceToFood": 3.4675515296091612,
+          "panicking": 33,
+          "resetCount": 0
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "frame": 1598,
+          "fps": 60,
+          "fishCount": 90,
+          "planktonCount": 420,
+          "boidMode": "normal",
+          "foodActive": false,
+          "foodPosition": null,
+          "avgCohesion": 0.16710956262088994,
+          "avgDistanceToFood": null,
+          "panicking": 30,
+          "resetCount": 0
+        },
+        "shots": [
+          "P6-before.png",
+          "P6-region-a.png",
+          "P6-region-b.png",
+          "P6-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 9830
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-05T15:54:05.378Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:ui=reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P6"
+        ]
+      }
+    },
+    {
+      "probeId": "P8",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-05T15:54:05.378Z",
+      "precondition": null,
+      "action": {
+        "raw": "wait:1500",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P7"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,156 @@
+{
+  "briefId": "E06",
+  "briefVersion": "1.0.0",
+  "frozen": true,
+  "frozenAt": "2026-10-02T16:30:00+08:00",
+  "title": "荒野篝火营地(Wilderness Campfire)",
+  "goal": "低多边形树环(>=12)围绕的荒野营地:中央篝火含火苗与火星,一盏动态火光真实闪烁照明地面与树干;>=16 只萤火虫游走明灭;日夜切换(2.5-4s 连续渐变);可暂停的自动环绕相机。覆盖程序化/粒子/动态光/状态/相机。",
+  "domains": [
+    "Procedural",
+    "Particles",
+    "DynamicLight",
+    "State",
+    "Camera"
+  ],
+  "assets": [],
+  "scaleAndPerformance": {
+    "minFps": 30,
+    "notes": "树>=12(建议14-24)、萤火虫>=16、火星同屏峰值>=40、火苗>=30 粒子或等效面片;夜间+环绕运行常态 >=30fps;日夜渐变与火光闪烁按真实时间步进。"
+  },
+  "completionContract": {
+    "build": "npm run build 必须退出码 0",
+    "ready": "window.__appReady === true(10s 内)",
+    "state": "window.__bench = { getState(): object, reset(): void }",
+    "noUncaughtErrors": true
+  },
+  "stateChannel": {
+    "timeOfDay": "归一化时间,0=深夜、1=正午;初始 0(<=0.05);切换经 2.5-4s 渐变到达另一端点",
+    "fireLightIntensity": "当前火光强度 [0,1],基准约 0.55,闪烁幅度 >=0.08,多频混合 0.5-6Hz",
+    "fireflyCount": "萤火虫数量(>=16,恒定)",
+    "cameraOrbitAngle": "环绕方位角累计弧度(自上次 reset 起)",
+    "orbitEnabled": "自动环绕开关(初始 true)",
+    "treeCount": "树数量(>=12,恒定)"
+  },
+  "uiControls": [
+    { "dataUi": "day-night", "kind": "toggle", "label": "日夜切换" },
+    { "dataUi": "orbit-toggle", "kind": "toggle", "label": "环绕 暂停/恢复" },
+    { "dataUi": "reset", "kind": "button", "label": "重置" }
+  ],
+  "actionNotation": "click:{x,y} 为归一化视口坐标(左上原点);click:ui=<data-ui值> 表示点击 document.querySelector('[data-ui=\"<值>\"]') 元素中心。",
+  "forbiddenShortcuts": [
+    "不得用预渲染视频、帧序列、GIF 或任何逐帧回放素材冒充火焰/萤火虫/日夜变化",
+    "火苗、火星必须经 WebGL 渲染管线绘制,不得用 DOM 元素/CSS 动画冒充",
+    "不得用两张(昼/夜)静态场景图瞬时切换冒充日夜切换,必须有连续渐变中间态",
+    "不得让火光只照亮火苗自身(火苗亮而地面/树干无明暗变化视为未达成动态光)",
+    "不得在 __bench.getState() 中伪造状态(如 timeOfDay 只报数而不真正渐变、fireLightIntensity 只做数值抖动而画面静止,视为作弊)",
+    "不得引入外部图片/视频/音频资产(assets 契约为空)",
+    "不得对 harness/validator 做针对性特判(如检测自动化环境时改变行为)"
+  ],
+  "probes": [
+    {
+      "probeId": "P1",
+      "precondition": "__appReady",
+      "action": "wait:2500",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.timeOfDay <= 0.25 && $.treeCount >= 12 && $.fireflyCount >= 16 && $.orbitEnabled == true && $.cameraOrbitAngle > 0" },
+      "visualAssertion": {
+        "type": "nonBlank",
+        "params": {
+          "region": "full + center-bottom",
+          "expect": "夜景:树环/营地剪影可见,篝火区域存在暖橙亮像素并被火光照亮的地面/树干包围;上部为深蓝夜空与星点"
+        }
+      },
+      "threshold": "center(篝火邻域)暖色(橙/红通道显著占优)像素数 >= 冻结阈值;树环轮廓像素可辨;夜空区域平均亮度低于火光区域",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P2",
+      "precondition": "P1",
+      "action": "wait:600",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.fireLightIntensity >= 0 && $.fireLightIntensity <= 1" },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": {
+          "region": "center-bottom(篝火、被照地面与近处树干)",
+          "expect": "火光闪烁照明变化:两帧(间隔 >=500ms)像素差 > 冻结阈值(亮度波动扩散到环境,而非仅火苗自身)"
+        }
+      },
+      "threshold": "两次间隔 >=500ms 的 fireLightIntensity 采样 |Δ| >= 0.02;center-bottom 区域两帧差分非零像素 >= 冻结阈值;环境(地面/树)区域亮度均值变化 >= 冻结阈值",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P3",
+      "precondition": "P2",
+      "action": "click:ui=day-night",
+      "waitMs": 4500,
+      "stateAssertion": { "jq": "$.timeOfDay >= 0.9" },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": "upper-third(天空)+ full",
+          "expect": "天空亮度较夜间显著上升,环境光变亮,整体从冷暗过渡到亮暖/亮蓝白天"
+        }
+      },
+      "threshold": "渐变时长 2.5-4s,过程中 harness 每 500ms 采样至少捕获 1 个中间态(0.25 < timeOfDay < 0.85);upper-third 平均亮度较切换前 >= 1.5x",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P4",
+      "precondition": "P3",
+      "action": "wait:3000",
+      "waitMs": 0,
+      "stateAssertion": { "jq": "$.cameraOrbitAngle >= 0.15 && $.orbitEnabled == true" },
+      "visualAssertion": {
+        "type": "motion",
+        "params": { "region": "full", "expect": "环绕构图连续变化:树/营地相对位置移动(两帧差>阈值),画面稳定无跳变" }
+      },
+      "threshold": "环绕角速度 0.05-0.4 rad/s;P4 内两次间隔 3000ms 的 cameraOrbitAngle 采样差 >= 0.15",
+      "evidence": ["screenshot", "stateSample", "frameDiff"]
+    },
+    {
+      "probeId": "P5",
+      "precondition": "P4",
+      "action": "click:ui=orbit-toggle",
+      "waitMs": 400,
+      "stateAssertion": { "jq": "$.orbitEnabled == false" },
+      "visualAssertion": {
+        "type": "pixelDelta",
+        "params": { "region": "outer-frame(画面边缘的树/地平线区域)", "expect": "相机静止后边缘区域构图冻结(残余变化仅来自火光闪烁/萤火虫)" }
+      },
+      "threshold": "P5 内两次间隔 >=1500ms 的 cameraOrbitAngle 采样差 < 0.01(角度冻结);fireLightIntensity 等局部动态不受影响",
+      "evidence": ["screenshot", "stateSample"]
+    },
+    {
+      "probeId": "P6",
+      "precondition": "P5",
+      "action": "click:ui=reset",
+      "waitMs": 1000,
+      "stateAssertion": { "jq": "$.timeOfDay <= 0.05 && $.orbitEnabled == true && $.cameraOrbitAngle < 0.6 && $.fireflyCount >= 16 && $.treeCount >= 12" },
+      "visualAssertion": {
+        "type": "regionChange",
+        "params": {
+          "region": "upper-third(天空)",
+          "expect": "回到夜景:天空亮度回落(较 P3 白天显著变暗),星空重现,篝火重新成为视觉焦点"
+        }
+      },
+      "threshold": "reset 后 timeOfDay 在 300ms 内回到 0;cameraOrbitAngle 归零后随环绕继续累计(waitMs 1000 内 < 0.6 rad);upper-third 平均亮度较白天下降 >= 40%",
+      "evidence": ["screenshot", "stateSample"]
+    }
+  ],
+  "scoring": {
+    "behaviorItems": [
+      "[统一契约] npm run build 退出码 0;10s 内 window.__appReady===true;window.__bench={getState,reset} 可用;全程无未捕获异常",
+      "[P1] 营地可见:地面 + >=12 棵低多边形树环 + 中央篝火(初始夜景,火区暖橙像素可见)",
+      "[P1] 夜空与星点可见(初始 timeOfDay<=0.05),篝火为视觉焦点",
+      "[P2] 火苗:火焰呈橙黄→红渐变、向上运动/摆动,形态连续(同屏 >=30 粒子或等效面片)",
+      "[P2] 火星粒子:持续上升并消散(运动证据),同屏峰值 >=40",
+      "[P2] 动态火光:fireLightIntensity 随时间波动(两采样 |Δ|>=0.02),且地面/树干亮度随之变化(两帧像素差,环境真实受光)",
+      "[P1/P6] 萤火虫 >=16:黄绿亮点缓慢游走 + 明灭(夜间可见)",
+      "[P3] 日夜切换:timeOfDay 0→1 经 2.5-4s 连续渐变(存在中间态),天空/环境光/场景亮度连续变化",
+      "[P3] 白天端点:timeOfDay>=0.9,环境明显变亮,火光相对减弱但篝火仍可见",
+      "[P4/P5] 环绕相机:cameraOrbitAngle 以 0.05-0.4 rad/s 持续增长、构图连续变化;暂停后角度冻结(差 <0.01),恢复后继续",
+      "[P6] reset:timeOfDay≈0、orbitEnabled=true、cameraOrbitAngle 归零,火光/火苗/火星/萤火虫恢复初始"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "engine": "three",
+  "level": "K0",
+  "version": "three@0.186.1",
+  "curatedAt": "2026-10-02",
+  "sources": [
+    "npm registry: three@0.186.1 (README.md from package tarball)"
+  ],
+  "domainCoverage": {
+    "Scene setup": {
+      "status": "yes",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "Camera": {
+      "status": "yes",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "Material": {
+      "status": "yes",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "Animation": {
+      "status": "yes",
+      "evidence": [
+        "README.md"
+      ]
+    },
+    "Asset load": {
+      "status": "absent",
+      "evidence": []
+    },
+    "Input": {
+      "status": "absent",
+      "evidence": []
+    },
+    "Shader": {
+      "status": "absent",
+      "evidence": []
+    },
+    "Postprocess": {
+      "status": "absent",
+      "evidence": []
+    },
+    "Particles": {
+      "status": "absent",
+      "evidence": []
+    }
+  },
+  "curationRule": "不含当前 benchmark 场景答案型内容",
+  "notes": "three npm 包不带 .d.ts,K0 即包+README+模板。Agent 只能读 npm install 后的包内容(无类型声明)与本 README。",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "d553d824625a07d7690de93af6f8daf13d6aaed42700929d7ce4e725fa5ef10d",
+      "bytes": 2969
+    }
+  ],
+  "totalFiles": 1,
+  "totalBytes": 2969
+}

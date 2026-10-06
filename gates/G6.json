@@ -2,12 +2,16 @@
   "gate": "G6 CORE_MATRIX_COMPLETENESS",
   "status": "NOT_RUN",
   "declaredAt": "2026-10-03T15:12:06.596Z",
+  "updatedAt": "2026-10-06T00:54:04.063Z",
   "contract": "10 scenes × K0/K1 × N=3 = 60 pairs = 120 runs(track=core)",
-  "executed": "Pilot 两轮:B-20261002-R1(LEGACY)+ B-20261003-R05(QUALIFIED_OBJECTIVE_PARTIAL_TIMING),共 8 pairs/16 臂次",
+  "executed": "战役进行中(本会话编排):S1(R02)+S2(R04)+S3(B-20261006-R01)完成,K0×R01/R02 覆盖 15 对;S3 首个整批 QUALIFIED(5/5 对 failedChecks 空)。core 分组(formal, cocosair−three):E01 n=3 Δ=+9 [0,11] 2胜1平 / E02 n=2 −26.5 / E03 n=1 −28 / E04 n=1 +12 / E05 n=2 −4 / E06 −7 / E07 −23 / E09 −4 / E10 −9;QUALIFIED 对累计 14。诊断区:E08(超限)。needsRecalibration 4 项(E02/E03/E09 three、E04 cocosair attainment>1.03,agent 超越 Reference 天花板,Owner 层复核)。余 S4..S12(45 对)+E08 复跑",
   "startPrerequisites": [
-    "并行派发器:双臂同批启动 ≤30s 并写 execution.json(当前 targeted pilot 为顺序派发,PAIR_TIMING_DRIFT×2 如实)",
-    "toolCalls 证据决策(方案 A 换带计数器 Runner / 方案 B G0 重冻结降级 diagnostic)——未决",
-    "E09 P7 导出重渲染 diff 阈值校准决策(本轮指纹重验 0.0043 vs 0.005,确定性重导 vs 运动阈值矛盾)"
+    "✅ toolcall hard 计数器就绪(方案A):harness/runtime/toolcall-recorder.mjs(call/transcript/bulk)+ budget-check toolcall 行式判定 + NC12 负向对照(toolcall 121/120 → BUDGET_EXHAUSTED)",
+    "✅ execution timing 闭环就绪:execution.json 唯一事实源 + harness/runtime/agent-launcher.mjs start/finish 盖章(agentStartedAt 首写生效,拒 dispatchAt 推断)",
+    "✅ qualification 进入 Round 状态机:node run.mjs round qualify --batch <id>(qualify-historical 直读 execution.json/RUN-META.json,不再依赖人工回填 pair.json)",
+    "✅ E09 已解决(2026-10-05):P7 经 spec v1.0.1 amendment 校准(motion→nonBlank+字节证据),G3 PASS;稳定性报告 results/reports/e09-stability.json v2",
+    "✅ Reference 证据自包含(R4):20 个 visual-score.json 入 reference/private/,量尺冻结不再依赖 results/ 批次(删除 results 后 ceiling-check 实测 PASS)",
+    "✅ Core Sanity Run(B-20261005-R03)完成:E01×K0×R01 全链 QUALIFIED(objective 55/55 双引擎、Δ=0 TIE、core 组 n=1);E02×K0×R01 的 cocosair 臂 toolcalls 125>120 如实判 BUDGET_EXHAUSTED(方案A hard 的首次真实判罚,该对降级 PARTIAL 进诊断区)—— G5 重判权留 Owner"
   ],
-  "resumeProcedure": "round create --track core --matrix \"E01..E10|K0,K1|R01..R03\"(并行派发器就绪后)"
+  "resumeProcedure": "round create --track core --matrix \"E01..E10|K0,K1|R01..R03\"(12 切片见 docs/AGENT-HANDOFF.md)"
 }
