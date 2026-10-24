@@ -53,6 +53,8 @@ node run.mjs round aggregate --batch <batch>
 - 所有工作区(reference 20 个、pilot 8 臂、未来 pair)一律**不带自有 node_modules**,
   `scripts/build.mjs`(模板已内建向上查找)自动解析到共享仓。
 - 迁移/整体搬移时:bench/ 树整体移动即可;单独拷走某工作区将无法 build(需连带共享仓或 npm install)。
+- 安装 tarball(vendor 顶层 `*.tgz`)是 sdkDir 的派生工件、git 不跟踪:缺失或换机恢复时
+  `node tools/pack-engine.mjs && node tools/pack-engine.mjs --engine three` 确定性重打(sha 恒定)后再 `npm install`。
 
 ## 4. 统计口径
 

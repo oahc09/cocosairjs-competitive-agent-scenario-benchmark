@@ -182,13 +182,17 @@ secret/  tools/  node_modules/   串扰 marker / 构建工具 / 全局共享依�
 
 - **批次 B-日期-轮次**:第几场考试;**量尺版本 RULER-日期-轮次**:第几版满分线(引擎/文档/规格/工具链任一变化即换新尺;同一版量尺下的所有批次分数直接可比)。
 - **判定唯一事实源** = `validate.mjs` 的 report.json;Agent 自检不作数;失败 trial 永不删除。
-- **git 只跟踪最小必要集**(系统 + 不可再生的运行证据 + 资产 + tarball);可再生媒体磁盘保留(gitignore 分层)。
+- **git 只跟踪最小必要集**(系统 + 不可再生的运行证据 + 资产 + 引擎 SDK 正典);可再生媒体与安装工件磁盘保留(gitignore 分层;vendor 顶层 tgz 已派生化,不入 git)。
 
 ## 克隆恢复
 
 ```bash
-npm install                 # 恢复全局共享依赖仓(双引擎均来自 vendor 内置 tarball,全程离线可装)
+node tools/pack-engine.mjs                  # 从 sdkDir 正典确定性重打 AIR 两个 tgz(缺失/漂移才写)
+node tools/pack-engine.mjs --engine three   # 同律重打 three tgz(安装面 = package.json files 字段)
+npm install                 # 恢复全局共享依赖仓(双引擎均来自 vendor 内 tgz,全程离线可装)
 cd harness && npm install   # harness 自身依赖(已含则跳过)
 # 运行某工作区:在其目录 npm run build 重建 dist(幂等)
 # 证据媒体按需再生:Reference 媒体重跑 validate(--video);盲评材料 build-blind;NC 产物 run-nc
 ```
+
+> tgz 是 `vendor/<engine>/<版本>/` sdkDir 的**派生安装工件**(2026-10-24 起不再入 git):同一 sdkDir 任意重打 sha256 恒定,`create-pair` 建对前自动校验/重打,注册表哈希随重打同步。删除 tgz 后任何建对/npm install 前先跑上面两行 pack 命令即可。

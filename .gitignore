@@ -30,3 +30,9 @@ Thumbs.db
 
 # 可再生的自测产物(harness/runner/selftest.mjs)
 harness/selftest-out/
+
+# ===== 引擎安装工件(tgz)· 2026-10-24 派生化:磁盘按需再生,git 不跟踪 =====
+# 正典 = vendor/<engine>/<版本>/ sdkDir;tgz 由 tools/pack-engine.mjs 确定性重打
+# (同一 sdkDir 重打 sha 恒定;create-pair 建对前自动校验/重打)。
+# 克隆恢复:node tools/pack-engine.mjs && node tools/pack-engine.mjs --engine three && npm install
+vendor/*.tgz

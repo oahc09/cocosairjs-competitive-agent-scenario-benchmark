@@ -34,12 +34,12 @@
           "sdkDir": "vendor/three/0.186.1",
           "moduleSha256": "9052042d676cb0fdc1ddfefe193053f34b7ac0513a616fdac4535d49987812ea",
           "tarball": "vendor/three-0.186.1.tgz",
-          "tarballSha256": "174704440516508e920a47f3f6c5672d26fd6db756d86a28db4b3cb793dcab38",
+          "tarballSha256": "7d4bd89b05c809b806d9413b15e3cedcd04bc522628defdbbd5fa74d3803fcbb",
           "tarballNote": "npm pack sdkDir 所得,root 与模板的 file: 离线安装源(exFAT 不支持 file: 目录的 symlink 安装)",
-          "source": "npm registry three@0.186.1(即 r186);本仓库内 sdkDir 为离线正典(含 src/ 源码与 examples/jsm addons)"
+          "source": "vendor/three/0.186.1 经 tools/pack-engine.mjs 从 sdkDir 确定性重打(安装面:package.json files 字段)"
         }
       }
     }
   },
-  "updatedAt": "2026-10-24T10:15:27.695Z"
+  "updatedAt": "2026-10-24T14:43:47.968Z"
 }
