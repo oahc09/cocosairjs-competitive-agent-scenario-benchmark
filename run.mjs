@@ -8,6 +8,7 @@
 //   aggregate                                全量聚合(aggregated.json)
 //   ceiling                                  Reference Ceiling 复算
 //   regression [--force]                     引擎缺陷回归套件(版本注册表)
+//   evidence-audit                           G8 证据链复跑(量尺每次重冻结后必跑)
 //   portal [--port 7800]                     报告门户
 //   gates                                    打印 G0-G8 状态
 //   guide                                    打印多轮执行指南
@@ -31,6 +32,7 @@ const CMD = {
   'ceiling-freeze': () => ['node', path.join(BENCH, 'harness/aggregate/reference-versions.mjs')],
   qualify: (rest) => ['node', path.join(BENCH, 'harness/aggregate/qualify-historical.mjs'), ...pass(rest)],
   'spec-audit': (rest) => ['node', path.join(BENCH, 'harness/runner/spec-audit.mjs'), ...pass(rest)],
+  'evidence-audit': (rest) => ['node', path.join(BENCH, 'harness/report/audit-evidence-g8.mjs'), ...pass(rest)],
   regression: (rest) => ['node', path.join(BENCH, 'regression/run-regression.mjs'), ...pass(rest)],
   portal: (rest) => ['node', path.join(BENCH, 'results/reports/latest/portal-server.mjs'), ...pass(rest)],
   gates: () => {
