@@ -2,7 +2,8 @@
 
 ```yaml
 briefId: E05
-briefVersion: 1.0.2
+briefVersion: 1.1.0
+> v1.1.0 (2026-10-24): 澄清性升版——frontmatter 追平 1.0.3 漂移;§4 增补交互时序契约(滚轮 1s 内基本到位、reset 400ms 采样点瞬时复位与重累计);新增 §11 交付前时序自检。探针判据零改动。详见 spec.json amendments。
 > v1.0.2 (2026-10-03): P3 内白外橙断言改为多普勒亮侧扇区有向 R-B 差(AUDIT F-15);详见 spec.json amendments。
 frozen: true
 frozenAt: 2026-10-02T16:30:00+08:00
@@ -52,6 +53,11 @@ assets: []
 - **reset**:`data-ui="reset"` 按钮(等价于 `__bench.reset()`):`cameraDistance` 回 14.0(±0.5)、`diskRotation` 与 `accretionPhase` 归零、星流粒子复位重生、背景星不变。
 - **UI 契约(自动化必需)**:控件为 DOM 元素,携带 `data-ui="reset"`,置于右上角(归一化 x>0.8, y<0.25),不得渲染在画布内部。
 - **坐标记法**:探针 click 坐标为归一化视口坐标 `{x,y}∈[0,1]`(左上为原点);`click:ui=<data-ui值>` 表示点击 `document.querySelector('[data-ui="<值>"]')` 的中心;`wheel:{dy}` 负值=向上滚=靠近。
+
+**交互时序契约(由 spec.json 探针的采样点语义决定,必须满足)**
+- E05 探针为单采样制,采样点链:P1 wait 2.5s(diskRotation 已 > 0,启动即转)、P2/P3/P5 为纯等待观测、P4 滚轮后 1.2s、P6 reset 后 400ms。
+- 滚轮缩放:P4 在 wheel 后 1.2s 采样,要求 cameraDistance 已从 14 缩至 < 10 且仍在 [5,28] 内——平滑插值须在 ~1s 内基本到位(残差 < 10% 目标值),过慢的缓动会在采样点未到位而 FAIL;瞬时跳变同样违规(§4 首条)。
+- reset:P6 在 reset 后 400ms 采样,要求 cameraDistance 已回 14.0±0.5——**reset 必须瞬时复位**(不做长缓动,否则 400ms 时未归位即 FAIL);diskRotation/accretionPhase 归零后随运行重新累计(400ms × 0.15–0.6 rad/s ≤ 0.24 rad,判据上限 0.3 rad 已按该重累计校准),不要冻结画面。
 
 ## 5. Asset Contract
 
@@ -114,3 +120,14 @@ P6 reset:cameraDistance 回 14±0.5、diskRotation/accretionPhase 归零
 4. 不得引入外部图片/视频资产(assets 契约为空)。
 5. 不得以静态截图、纯黑画面或空场景通过任何探针。
 6. 不得对 harness/validator 做针对性特判(如检测自动化环境时改变行为)。
+
+## 11. 交付前时序自检(探针采样点)
+
+判据镜像见 §9;此处只列时序要点,任何一条不满足即视为未完成。
+
+1. P1(加载后 2.5s):背景星/星流计数达标,cameraDistance ∈ [13,15],盘已在旋转(diskRotation > 0)。
+2. P2(0.8s 双采样):diskRotation 采样差 ≥ 0.1 rad(角速度 0.15–0.6 rad/s 的下限即满足),盘面两帧像素差非零。
+3. P3:accretionPhase ∈ [0,1);多普勒亮侧扇区有向 R-B 差 ≥ 18(内白外橙)。
+4. P4(wheel 后 1.2s):cameraDistance < 10 且 ≥ 5——插值 ~1s 内基本到位,构图(暗核/盘占屏比)显著增大。
+5. P5:starStreamCount 恒定 ≥ 200,星流区域有螺旋流向中心的运动像素。
+6. P6(reset 后 400ms):cameraDistance ∈ [13.5,14.5](瞬时复位)、diskRotation < 0.3(重累计)、accretionPhase < 0.1;画面完整非空。

@@ -1,6 +1,6 @@
 {
   "briefId": "E01",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T16:29:37+08:00",
   "title": "E01 深空星系巡航(Deep Space Galaxy Cruise)",
@@ -174,5 +174,14 @@
       "空闲与交互状态下滚动平均帧率均不低于 30fps。",
       "点击 Reset 后相机距离、视差与旋转相位恢复初始值,画面不中断且无页面刷新。"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-24T10:39:31Z",
+      "from": "1.0.0",
+      "reason": "B-20261024-R01 归因:交互时序契约(探针双采样语义)未在 brief 中显式声明,实现方无从得知滚轮穿行须为动作后 500–800ms 窗口内仍可测的阻尼滑行(瞬时跳变会使 before≈after 而 FAIL)、Reset 须在 800ms 采样点前收敛到位;另 §7 原文\"恢复过程在 1s 内完成\"与 P7 的 800ms 采样时限不一致,易误导实现方做 1s 缓动。澄清性升版。",
+      "change": "brief.md §4 增补交互时序契约(阻尼滑行 1–2s、500–800ms 窗口判据、Reset 瞬时复位建议)、§7 恢复时限 1s→0.8s(对齐 P7)、新增 §11 交付自检清单(P1–P7 人读镜像);spec.json probes/stateContract/forbiddenShortcuts 零改动。",
+      "scope": "仅 E01 文本澄清;全部探针判据不变,存量已 PASS 运行不受影响"
+    }
+  ]
 }

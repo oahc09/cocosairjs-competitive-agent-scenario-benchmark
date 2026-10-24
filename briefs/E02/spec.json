@@ -1,6 +1,6 @@
 {
   "briefId": "E02",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T16:29:37+08:00",
   "title": "E02 落日海面与孤舟(Asset Driven)",
@@ -234,5 +234,14 @@
       "连续多次 Reset 稳定:assetRequests 递增、无未捕获异常、无泄漏征象。",
       "空闲与交互状态下滚动平均帧率均不低于 30fps。"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-24T10:39:31Z",
+      "from": "1.0.0",
+      "reason": "E02 P4 为 2026-10-17 归因报告确认的双引擎同构失败点:brief 原文只写\"环绕运动逐帧插值平滑,方位角无跳变\",未写释放后惯性;而 P4 判据(拖拽释放后 500–700ms 窗口内 |ΔcameraAzimuth| > 20°)只有在带阻尼的甩动惯性滑行下才可满足,释放即停的实现必然 FAIL——这是判据语义与 brief 文本的显式缺口,非引擎能力缺口。另 §7\"重建在 3s 内完成\"贴着 P6/P7 的 3s 采样点,无采样延迟余量;assetRequests 每次 reset +1 的语义未在 brief 写明(P7 判据要求 >= 2)。澄清性升版,不改任何探针判据。",
+      "change": "brief.md §4 增补交互时序契约(甩动惯性显式化 + 500–700ms 窗口判据、色调过渡建议 1–2s、重建 2.5s 建议)、§7 重建时限 3s→2.5s 并写明 assetRequests 每次 reset +1、新增 §11 交付自检清单(P1–P7 人读镜像);spec.json probes/stateContract/forbiddenShortcuts 零改动。",
+      "scope": "仅 E02 文本澄清;全部探针判据不变"
+    }
+  ]
 }

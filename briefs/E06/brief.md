@@ -2,7 +2,8 @@
 
 ```yaml
 briefId: E06
-briefVersion: 1.0.0
+briefVersion: 1.1.0
+> v1.1.0 (2026-10-24): 澄清性升版——§4 增补交互时序契约(日夜渐变起点/时长、环绕暂停冻结、reset 重累计语义);新增 §11 交付前时序自检。探针判据零改动。详见 spec.json amendments。
 frozen: true
 frozenAt: 2026-10-02T16:30:00+08:00
 briefSha256: computed-by-harness
@@ -47,6 +48,12 @@ assets: []
 - **reset**:`data-ui="reset"` 按钮(等价于 `__bench.reset()`):`timeOfDay` 立即(<=300 ms)回到 0(夜)、`orbitEnabled=true`、`cameraOrbitAngle=0`,火光/火苗/火星/萤火虫恢复初始默认状态。
 - **UI 契约(自动化必需)**:所有控件为 DOM 元素,固定携带 `data-ui` 属性(取值:`day-night` / `orbit-toggle` / `reset`),置于页面右上角区域(归一化 x>0.8, y<0.25),不得渲染在画布内部。控件旁显示当前状态(夜/昼、环绕:开/关)为建议项。
 - **坐标记法**:探针 click 坐标为归一化视口坐标 `{x,y}∈[0,1]`(左上为原点);`click:ui=<data-ui值>` 表示点击 `document.querySelector('[data-ui="<值>"]')` 的中心。
+
+**交互时序契约(由 spec.json 探针的采样点语义决定,必须满足)**
+- E06 探针为单采样制(部分判据内嵌双采样),采样点链:P1 wait 2.5s、P2 双帧间隔 ≥500ms、P3 点击日夜切换后 4.5s、P4 环绕 3s 双采样、P5 暂停后 400ms(及 1.5s 角度冻结复核)、P6 reset 后 1s。
+- 日夜切换:P3 在点击后 4.5s 采样要求 timeOfDay ≥ 0.9——渐变必须**点击后立即开始**且时长取 2.5–4 s(贴 4s 上限会压缩采样余量,建议 2.5–3.5s);切换过程须有连续中间态(harness 每 500ms 采样须至少一次落在 0.25–0.85)。
+- 环绕:P4 的 3s 双采样要求角度差 ≥ 0.15 rad(即平均 ≥ 0.05 rad/s,取角速度区间下限即可满足);暂停(P5)后 400ms 采样 orbitEnabled == false,且暂停期间 cameraOrbitAngle 冻结(1.5s 差 < 0.01)——**只冻结相机环绕,火光闪烁/萤火虫/火星等局部动态照常**。
+- reset:P6 在 reset 后 1s 采样,要求 timeOfDay 已 ≤ 0.05(按 §4 的 300ms 内归零执行)、orbitEnabled == true、cameraOrbitAngle < 0.6——角度归零后随环绕立即重新累计(1s × 0.05–0.4 rad/s ≤ 0.4 < 0.6,判据已按重累计校准),不要冻结画面。
 
 ## 5. Asset Contract
 
@@ -111,3 +118,14 @@ P6 reset:timeOfDay≈0、orbitEnabled=true、角度归零、萤火虫恢复
 5. 不得在 `__bench.getState()` 中伪造状态(如 `timeOfDay` 只报数而不真正渐变、`fireLightIntensity` 只做数值抖动而画面静止,视为作弊,NC 级失败)。
 6. 不得引入外部图片/视频/音频资产(assets 契约为空)。
 7. 不得对 harness/validator 做针对性特判(如检测自动化环境时改变行为)。
+
+## 11. 交付前时序自检(探针采样点)
+
+判据镜像见 §9;此处只列时序要点,任何一条不满足即视为未完成。
+
+1. P1(加载后 2.5s):夜景完整(timeOfDay ≤ 0.25),树 ≥ 12、萤火虫 ≥ 16,环绕已在进行(角度 > 0)。
+2. P2(≥500ms 双帧):fireLightIntensity |Δ| ≥ 0.02,center-bottom 两帧像素差非零(环境真实受光)。
+3. P3(点击切换后 4.5s):timeOfDay ≥ 0.9,渐变立即开始、2.5–4s 连续、存在中间态;天空亮度 ≥ 1.5x。
+4. P4(3s 双采样):角度差 ≥ 0.15 rad(orbitEnabled 仍为 true),构图连续变化无跳变。
+5. P5(暂停后 400ms):orbitEnabled == false,1.5s 角度差 < 0.01(相机冻结);火光等局部动态不受影响。
+6. P6(reset 后 1s):timeOfDay ≤ 0.05(300ms 内归零)、orbitEnabled == true、cameraOrbitAngle < 0.6(重累计)、萤火虫/树计数不变。

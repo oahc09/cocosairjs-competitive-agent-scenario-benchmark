@@ -1,6 +1,6 @@
 ---
 briefId: E01
-briefVersion: 1.0.0
+briefVersion: 1.1.0
 frozen: true
 frozenAt: 2026-10-02T16:29:37+08:00
 briefSha256: computed-by-harness
@@ -8,6 +8,7 @@ briefSha256: computed-by-harness
 
 # E01 — 深空星系巡航(Deep Space Galaxy Cruise)
 
+> v1.1.0 (2026-10-24):澄清性升版——§4 增补交互时序契约(阻尼滑行与 Reset 收敛时限)、§7 恢复时限对齐 P7 改为 0.8s、新增 §11 交付前自检清单;探针判据零改动。详见 spec.json amendments。
 > 冻结规格(Frozen Brief)。本文件为人读版,与同目录 spec.json 机读版必须一致;两者冲突时以 spec.json 为准并触发 SPEC_INVALID 复审。
 > 全文使用图形领域语言,不引用任何引擎类名或 API;任何能真实达成下述行为的实现路径均可接受。
 
@@ -53,6 +54,12 @@ briefSha256: computed-by-harness
 - 视差偏移幅度不超过画布尺寸的 10%,方向正确、无过冲振荡。
 - HUD 数字必须来自真实运行数据(星点数、帧率、距离),与 __bench 状态一致(允许四舍五入显示)。
 
+**交互时序契约(由 spec.json 探针的双采样语义决定,必须满足)**
+- 双采样探针在动作后先取 before 采样,再等待 sampleWindowMs 取 after 采样;E01 P4 即:滚轮后 500ms 取 before、800ms 取 after,判据为 after.cameraDistance < before.cameraDistance - 5。
+- 因此滚轮穿行必须是带阻尼的平滑滑行:动作后 500–800ms 窗口内 cameraDistance 仍在持续减小且该窗口内累计下降 ≥ 5 单位;瞬时跳变(动作后立即到位)会使 before ≈ after 而 FAIL。
+- 建议滚轮响应采用 1–2s 的阻尼收敛(指数/弹簧插值均可),动作后 500ms 时仍应保有可测速度,并始终处于 [40, 400] 范围内。
+- Reset 后 800ms 即采样:P7 要求此时 cameraDistance 已回 120±5、parallaxOffset 已归零、rotationPhase < 0.1;建议瞬时复位(同一帧内到位),不做长缓动。
+
 ## 5. Asset Contract
 
 无共享资产。全部星点与结构必须程序化生成(构建期生成数据、运行期渲染均可),不得依赖任何外部图片、模型或预烘焙资源。
@@ -69,7 +76,7 @@ briefSha256: computed-by-harness
 - 页面暴露 `window.__appReady`(场景首帧渲染完成后置 true)。
 - 页面暴露 `window.__bench = { getState(): object, reset(): void }`:
   - `getState()` 返回:`starCount`、`rotationPhase`(弧度,初始 0,随时间单调递增)、`cameraDistance`(初始 120)、`parallaxOffset`({x,y},初始 {0,0})、`fps`、`hudVisible`、`epoch`(初始 0)。
-  - `reset()`:恢复初始相机距离(120)、视差({0,0})与旋转相位(0);`epoch` +1;恢复过程在 1s 内完成;不得以整页刷新实现。
+  - `reset()`:恢复初始相机距离(120)、视差({0,0})与旋转相位(0);`epoch` +1;恢复在 0.8s 内完成(建议瞬时复位,不做长缓动——探针在 reset 后 800ms 即采样);不得以整页刷新实现。
 - 生命周期内不得产生未捕获异常;reset 可连续执行多次且行为一致。
 
 ## 8. Technical Constraints
@@ -99,3 +106,15 @@ briefSha256: computed-by-harness
 8. 不得通过隐藏画布、遮挡视口、把画布缩为 1px 等手段骗过像素断言。
 9. reset 不得以 location.reload 或整页刷新实现。
 10. 不得探测或篡改 harness/validator(检出即 INVALID_RUN)。
+
+## 11. 交付前自检清单(与 spec.json 探针一一对应)
+
+逐项通过后再交付;任何一项不满足即视为未完成。判据细节以 spec.json 为准,本清单是其在人读语言下的镜像。
+
+1. P1:`__appReady` 后画面非空(亮像素占比 ≥ 2%),`starCount` ≥ 50,000 且等于真实提交渲染的星点数。
+2. P2:`rotationPhase` 在 2s 采样窗内增量 > 0.001 rad,中央 80% 区域存在运动像素(星系在真实旋转)。
+3. P3:指针移至 (0.68, 0.50) 后 `parallaxOffset` 变化,画面出现可测像素变化。
+4. P4:滚轮后 500–800ms 窗口内 `cameraDistance` 累计下降 ≥ 5 单位(阻尼滑行,瞬时跳变必 FAIL)。
+5. P5:HUD 可见,显示星点总数与实时帧率,数值与 `__bench` 状态一致(允许四舍五入)。
+6. P6:滚动平均帧率 ≥ 30fps(3s 窗口;空闲态与交互态均须满足)。
+7. P7:Reset 后 800ms 内相机距离回 120±5、视差归零、`rotationPhase` < 0.1;画面不中断、无页面刷新。

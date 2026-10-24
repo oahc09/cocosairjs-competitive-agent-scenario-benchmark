@@ -1,6 +1,6 @@
 {
   "briefId": "E07",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T00:00:00Z",
   "briefSha256": "computed-by-harness",
@@ -175,5 +175,15 @@
       "reset 后计数与开关恢复初始,城市完整重建",
       "低角度天际线构图,画面层次分明,无明显渲染破损"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.0",
+      "reason": "探针采样点时序未在 brief 声明:P5/P6 雾开关在点击后 800ms 即采样(fogEnabled 须即时翻转,长缓动会 FAIL)、P7 reset 后 2s 采样恢复初始;另 brief §4 只写 data-bench 属性,而 harness 定位器实际双兼容 [data-ui]/[data-bench],未写明会导致实现方参照其他场景模板时误判契约。澄清性升版,判据零改动。",
+      "change": "brief.md §4 增补交互时序契约与 data-ui/data-bench 双兼容说明、新增 §11 交付前时序自检(P1-P8);spec.json probes/stateContract/forbiddenShortcuts 零改动。",
+      "scope": "仅 E07 文本澄清;P1-P8 全部判据不变",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
+    }
+  ]
 }

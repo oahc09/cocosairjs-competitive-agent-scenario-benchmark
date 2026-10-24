@@ -1,6 +1,6 @@
 {
   "briefId": "E08",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T00:00:00Z",
   "briefSha256": "computed-by-harness",
@@ -177,5 +177,15 @@
       "悬浮颗粒 >=300 持续漂浮,增强水下纵深",
       "reset 恢复初始(计数/模式/食物清除),模拟继续运行"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.0",
+      "reason": "探针采样点时序未在 brief 声明,含两处隐性陷阱:(1) P6 在投喂后约 4.8s 采样要求 avgDistanceToFood 非 null 且 < 6——若食物在采样前被鱼吃尽,该字段变 null 必 FAIL,食物消耗节奏(渐进/8s 超时兜底)未显式关联采样点;(2) P3 在拖拽后 1.2s 采样 scatter,要求惊散状态在指针停止后维持 >=2s(§4.2 已有语义但未与采样点关联)。澄清性升版,判据零改动。",
+      "change": "brief.md §4 增补交互时序契约(惊散持续/重聚时限/投喂即时/食物消耗节奏/reset 重累计)、新增 §11 交付前时序自检(P1-P8);spec.json probes/stateContract/forbiddenShortcuts 零改动。",
+      "scope": "仅 E08 文本澄清;P1-P8 全部判据不变",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
+    }
+  ]
 }

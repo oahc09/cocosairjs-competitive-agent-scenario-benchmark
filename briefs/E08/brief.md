@@ -3,11 +3,13 @@
 | 元数据 | 值 |
 |---|---|
 | briefId | E08 |
-| briefVersion | 1.0.0 |
+| briefVersion | 1.1.0 |
 | frozen | true |
 | frozenAt | 2026-10-02T00:00:00Z |
 | briefSha256 | computed-by-harness |
 | domains | Simulation / Interaction / Procedural body / Particles / State |
+
+> v1.1.0 (2026-10-24): 澄清性升版——§4 增补交互时序契约(惊散持续/重聚时限/投喂采样点/食物消耗节奏)并新增 §11 交付前时序自检;探针判据零改动。详见 spec.json amendments。
 
 ## 1. Goal
 
@@ -38,6 +40,13 @@
 3. 点击投喂:在画布上单击,于该点对应的水域位置生成食物颗粒(1–5 粒),`foodActive=true`、`foodPosition` 记录世界坐标;鱼群受食物吸引向其聚集,`avgDistanceToFood` 随时间下降;食物被吃尽(或 ≥8s 超时)后消失,`foodActive=false`。
 4. 重置按钮(UI 控件 `data-bench="reset"`):清除食物、恢复 normal 模式与初始鱼群分布;不得整页刷新。
 5. 光标在水域内时应有涟漪/微光等指针反馈(可选加分,不强制)。
+
+**交互时序契约(由 spec.json 探针的采样点语义决定,必须满足)**
+- E08 探针为单采样制(像素坐标系,1280×720),采样点链:P1 约 5s、P3 拖拽后 1.2s、P4 指针移到角落 (20,20) 后 6s、P5 点击投喂后 800ms、P6 投喂后约 4.8s、P7 reset 后 2s。
+- 惊散:P3 在拖拽结束后 1.2s 采样要求 boidMode == "scatter" 且 avgCohesion < 0.35——**惊散状态须在指针停止移动后维持 ≥2s** 才允许回 normal(§4.2 语义),不得指针一停就重聚。
+- 重聚:P4 在指针移出后 6s 采样要求 normal 且 avgCohesion ≥ 0.45——重聚须在 ~5s 内完成(建议 3–4s,留采样余量)。
+- 投喂:P5 在点击后 800ms 采样要求 foodActive == true(食物即时出现);P6 在投喂后约 4.8s 采样要求 `avgDistanceToFood` **非 null 且 < 6**——鱼群吸引须在 ~4s 内把平均距离压进 6 单位,且**食物不得在该采样点前被吃尽**(渐进消耗,或以 §4.3 的 8s 超时兜底),否则 avgDistanceToFood 变 null 必 FAIL。
+- reset:P7 在 reset 后 2s 采样,要求食物清除、normal 模式、计数恢复——瞬时恢复即可,reset 后模拟立即继续(P8 有运动断言)。
 
 ## 5. Asset Contract
 
@@ -94,3 +103,16 @@ window.__bench = { getState(): object, reset(): void }
 5. 禁止把食物做成无法被吃掉的永久装饰(foodActive 语义必须真实)。
 6. 禁止 getState 返回与模拟无关的硬编码值。
 7. 禁止 reset 通过 location 刷新实现。
+
+## 11. 交付前时序自检(探针采样点)
+
+任何一条不满足即视为未完成;判据细节以 spec.json 为准。
+
+1. P1(加载后约 5s):鱼 ≥ 80、颗粒 ≥ 300、normal 模式、无食物;水下场景非空。
+2. P2(2s 窗):avgCohesion ≥ 0.45(常态聚群),中央水域持续游动。
+3. P3(拖拽后 1.2s):boidMode == "scatter" 且 avgCohesion < 0.35——惊散在指针停止后维持 ≥2s。
+4. P4(指针移出后 6s):normal 且 avgCohesion ≥ 0.45(重聚 ≤5s 完成)。
+5. P5(投喂后 800ms):foodActive == true、foodPosition 非 null,食物出现在点击水域附近。
+6. P6(投喂后约 4.8s):avgDistanceToFood 非 null 且 < 6——食物未被提前耗尽。
+7. P7(reset 后 2s):食物清除、normal、鱼群完整计数恢复。
+8. P8(reset 后 1.5s):模拟继续(鱼群 + 颗粒运动像素 ≥ 2%),无未捕获异常。

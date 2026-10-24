@@ -1,6 +1,6 @@
 {
   "briefId": "E04",
-  "briefVersion": "1.0.2",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T16:30:00+08:00",
   "title": "城市烟花夜(City Fireworks Night)",
@@ -240,7 +240,7 @@
       "[P2] 上升尾迹可见:0.6-1.6 s 升空段持续产生尾迹粒子(运动/像素证据)",
       "[P3] 爆炸:每发 100-240 粒子球状扩散,峰值 particlesAlive >= 40",
       "[P3/P4] 粒子受重力下坠且速度/亮度/尺寸衰减:爆发后 particlesAlive 单调下降",
-      "[P4] 余烬:每发 >=12 个寿命 3-7 s 的长寿命粒子,缓慢下坠并闪烁,爆发后 ~2.6 s 仍存活",
+      "[P4] 余烬:每发 >=12 个寿命 3-12 s 的长寿命粒子(分层:短尾 3-7s、长尾 >=30% 铺至 10-12s),缓慢下坠并闪烁,爆发后 ~2.6 s 仍存活",
       "[P5] 自动表演:开启后以 0.5-1.5 s 随机间隔自动发射,fireworkCount 持续增长",
       "[P6] 关闭自动表演后 fireworkCount 冻结(手动点击发射仍可用)",
       "[P7] 暂停:enabled=false 冻结全部动态(两帧像素差≈0),恢复后从冻结处继续",
@@ -254,6 +254,14 @@
       "reason": "AUDIT-20261003 F-16:严格执行 region 后 P4 失败。双引擎轨迹实测证明:爆炸点 y≈216px 的余烬在采样时刻已降至 y≈400-600 降带;旧版\"通过\"系 full-frame 回退把下半屏城市活动计入(§8 spec写A测B)。区域修正依据为双 Reference 对称实测,非单侧迁就。",
       "change": "(1) 余烬分层寿命窗口 3-7s → 3-12s(长尾≥30% 铺至 10-12s);(2) P4 运动断言 region upper-half → center-bottom:实测 P4 采样时刻(点击后 ~7.3s)three 余烬已坠过中线(上半 diffRatio 0.0000 / 降带 center-bottom 0.009x),AIR 0.0066/0.0107;余烬物理=持续下坠,upper-half 假设其滞留上半屏与轨迹不符。center-bottom 双引擎对称(~2x 余量),运动阈值 0.005 不降低。",
       "scope": "P4.threshold 与 brief 余烬寿命描述;双引擎对称;校准依据=双 Reference 实测采样时序(整改期间以 --revision 记录)"
+    },
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.2",
+      "reason": "1.0.2 amendment 把余烬寿命窗口改为 3-12s 分层,但 brief §3.3 与本 spec scoring.behaviorItems 仍写\"3-7 s\"——三处自相矛盾:实现方按 brief 做 7s 封顶寿命,长尾余烬在 P4 采样点(爆发后 ~7-12s,含探针间截图时延)已全部消亡,P4 必 FAIL。另探针采样点链(P2 500ms/P3 +1.2s/P4 +2.6s、P5 4s 内 >=4 发、P7 暂停 300ms、P8 reset 600ms)未在 brief 声明。澄清性升版,判据零改动。",
+      "change": "brief.md §3.3 余烬寿命 3-7s→3-12s 分层(长尾 >=30% 铺至 10-12s)、§4 增补交互时序契约(采样点链与各采样点硬要求)、新增 §11 交付前时序自检;spec.json 仅 scoring.behaviorItems 的 [P4] 行同步 3-7s→3-12s 分层(与 1.0.2 amendment 对齐,非判据变更);probes/stateChannel/forbiddenShortcuts 零改动。",
+      "scope": "仅 E04 文本澄清 + behaviorItems 文本对齐;P1-P8 全部判据不变",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
     }
   ]
 }

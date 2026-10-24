@@ -1,6 +1,6 @@
 {
   "briefId": "E06",
-  "briefVersion": "1.0.0",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T16:30:00+08:00",
   "title": "荒野篝火营地(Wilderness Campfire)",
@@ -152,5 +152,15 @@
       "[P4/P5] 环绕相机:cameraOrbitAngle 以 0.05-0.4 rad/s 持续增长、构图连续变化;暂停后角度冻结(差 <0.01),恢复后继续",
       "[P6] reset:timeOfDay≈0、orbitEnabled=true、cameraOrbitAngle 归零,火光/火苗/火星/萤火虫恢复初始"
     ]
-  }
+  },
+  "amendments": [
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.0",
+      "reason": "探针采样点时序未在 brief 声明:P3 在点击日夜切换后 4.5s 采样要求 timeOfDay>=0.9,渐变若延迟启动或贴 4s 上限则采样余量不足;P5 暂停语义(只冻结相机环绕,火光/萤火虫等局部动态照常)未显式写出,P6 的 cameraOrbitAngle<0.6 上限按\"归零后 1s 重累计\"校准的语义未写明。澄清性升版,判据零改动。",
+      "change": "brief.md §4 增补交互时序契约(日夜渐变立即启动/2.5-4s/中间态采样、环绕暂停只冻结相机、reset 重累计语义)、新增 §11 交付前时序自检;spec.json probes/stateChannel/forbiddenShortcuts 零改动。",
+      "scope": "仅 E06 文本澄清;P1-P6 全部判据不变",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
+    }
+  ]
 }

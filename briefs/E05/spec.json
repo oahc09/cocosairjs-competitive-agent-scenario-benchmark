@@ -1,6 +1,6 @@
 {
   "briefId": "E05",
-  "briefVersion": "1.0.3",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T16:30:00+08:00",
   "title": "黑洞吸积盘(Black Hole Accretion Disk)",
@@ -216,6 +216,14 @@
       "change": "P1.visualAssertion.params 增加机器可读 regionThresholds {center-third:0.05, outer-corners:0.01},数值与原 threshold 文本完全一致——纯正式化,零语义变化;harness 侧(probe-executor nonBlank)同步支持该键,无该键的 spec 行为逐位不变。",
       "scope": "仅 E05 P1;阈值数值不变 → Reference 重实现豁免(应用行为合同不变),按新协议重验并 refVersion+1 记账。Owner 指令 2026-10-05(修复阻塞门禁,保证全量测试)。",
       "decidedBy": "Owner(2026-10-05)"
+    },
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.3",
+      "reason": "brief frontmatter 仍为 1.0.2(10-05 的 P1 regionThresholds 正式化未同步 brief,版本漂移);探针采样点时序未在 brief 声明——尤其 P6 在 reset 后 400ms 即采样,reset 若做长缓动则 cameraDistance 未归位必 FAIL,diskRotation<0.3 上限按\"归零后 400ms 重累计\"校准的语义未写明;P4 的 ~1s 插值到位时限散落在 threshold 文本,brief §3.5 只写\"1 s 内基本到位\"未与采样点关联。澄清性升版,判据零改动。",
+      "change": "brief.md frontmatter 1.0.2→1.1.0(追平漂移)、§4 增补交互时序契约(P4 滚轮 1.2s 采样/1s 基本到位、P6 reset 400ms 采样/瞬时复位/重累计语义)、新增 §11 交付前时序自检;spec.json probes/stateChannel/forbiddenShortcuts 零改动。",
+      "scope": "仅 E05 文本澄清;P1-P6 全部判据不变",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
     }
   ]
 }

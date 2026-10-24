@@ -1,9 +1,9 @@
 {
   "briefId": "E10",
-  "briefVersion": "1.0.1",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T00:00:00Z",
-  "briefSha256": "d31dec3ba9bf9e289fe45245b9b8fb24e90c1b702bcba999bdb93f052a79b984",
+  "briefSha256": "d3f4c21f375638dadc53fded70238d9ad98f8e31c56df261a9bd0f44caeeae97",
   "title": "动画角色展示空间 (Animated Character Showcase) — Asset / Lifecycle",
   "goal": "runtime 加载 assets/character.glb(骨骼 + >= 2 动画剪辑),双实例动画状态完全独立,Idle/Walk 切换,销毁实例 A 后实例 B 继续动画,reset 恢复双实例。",
   "domains": [
@@ -290,6 +290,14 @@
       "reason": "Pilot G5 归因:regionChange 比较动作后两帧(测持续运动),与 P4 阈值文本\"实例A从画面消失\"的动作前后语义不符;双引擎双臂同等受害(P4 diffRatio=0 但状态断言通过、销毁真实发生)。Reference 通过系因保留了 A 区动态内容,属偶然适配而非语义正确。",
       "change": "P4.visualAssertion 由 regionChange(frameGapMs) 改为 pixelDelta(动作前 vs 动作后,同区域,minChangedRatio=0.02),对齐阈值文本意图;引擎中立。",
       "scope": "仅 E10 P4;P5-P7 级联解除依赖本修订"
+    },
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.1",
+      "reason": "brief 澄清性升版(E04-E10 批处理,E10 收尾)。元数据漂移:brief.md 表头仍写 briefVersion 1.0.0,而 spec.json 已是 1.0.1;§4 只有定性要求(切换 ≤300ms、销毁须移除、reset 不重请求),探针采样点时序未声明;P6 的'无新资产请求'需与资产合同'整会话仅一次请求'的联动语义显式化,避免实现者在 reset 时重建加载器造成第二次网络请求。",
+      "change": "brief.md:briefVersion 1.0.0→1.1.0,补 v1.1.0 说明行;§4 增补第 5 条交互时序契约(逐探针采样点语义,含 P6 单次加载规则);新增 §11 交付前时序自检 P1-P7;spec 顶层 briefSha256 按新 brief.md 字节同步回填(真实哈希,brief-freeze 不覆盖非占位值)。探针、stateContract、forbiddenShortcuts 零改动。",
+      "scope": "仅 E10 文本澄清;P1-P7 判据不变,既有实现与已归档判定不受影响。",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
     }
   ]
 }

@@ -3,11 +3,13 @@
 | 元数据 | 值 |
 |---|---|
 | briefId | E07 |
-| briefVersion | 1.0.0 |
+| briefVersion | 1.1.0 |
 | frozen | true |
 | frozenAt | 2026-10-02T00:00:00Z |
 | briefSha256 | computed-by-harness |
 | domains | Instancing / Emission / Animation / Atmosphere / Scale |
+
+> v1.1.0 (2026-10-24): 澄清性升版——§4 增补交互时序契约与 data-ui/data-bench 双兼容说明;新增 §11 交付前时序自检。探针判据零改动。详见 spec.json amendments。
 
 ## 1. Goal
 
@@ -39,6 +41,13 @@
 1. 雾开关(UI 控件 `data-bench="toggle-fog"`):点击切换雾的启用/停用,状态 `fogEnabled` 与画面立即同步(远处楼群对比度变化)。
 2. 重置按钮(UI 控件 `data-bench="reset"`):调用应用内重置,恢复初始计数与开关,不得整页刷新。
 3. 控件需有 hover/active 视觉反馈,位于画布边缘固定位置,不遮挡天际线主体。
+4. **UI 属性双兼容**:harness 定位控件时同时匹配 `[data-ui="<名>"]` 与 `[data-bench="<名>"]`,两种属性均可;本场景文档沿用 `data-bench`,实现者二选一即可(其余场景文档用 `data-ui`,勿混用同一页面内的两种属性)。
+
+**交互时序契约(由 spec.json 探针的采样点语义决定,必须满足)**
+- E07 探针为单采样制(wait + waitMs 后取一次样),采样点链:P1 约 4s、P5/P6 雾开关点击后 800ms、P7 reset 后 2s、P8 再 1.5s。
+- 雾开关:P5/P6 在点击后 800ms 采样要求 `fogEnabled` 已翻转——切换必须**即时生效**(雾浓度瞬时切换或快速过渡,不做长缓动),且上部天际线区域在 400ms 帧距下有可测像素变化。
+- reset:P7 在 reset 后 2s 采样,要求楼/车/雨计数与 `fogEnabled=true` 全部恢复初始、城市完整重建——瞬时恢复即可,2s 为宽松上限;reset 后动画(车流/雨/霓虹)立即继续(P8 有运动证据断言)。
+- fps:`fps` 为最近 60 帧滚动平均,P4 在运行约 8–15s 后采样要求 ≥ 30;必须真实测量,不得返回常数。
 
 ## 5. Asset Contract
 
@@ -94,3 +103,16 @@ window.__bench = { getState(): object, reset(): void }
 5. 禁止 getState 与画面脱钩(例如画面无车而 carCount ≥60)。
 6. 禁止为通过探针临时提升规模,探针结束后回落("探针模式")。
 7. 禁止 reset 通过 location 刷新实现。
+
+## 11. 交付前时序自检(探针采样点)
+
+任何一条不满足即视为未完成;判据细节以 spec.json 为准。
+
+1. P1(加载后约 4s):楼 ≥ 200、车 ≥ 60、雨 ≥ 1500、雾开启;天际线轮廓可辨识(非空覆盖率 ≥ 35%)。
+2. P2(街道层 600ms 帧距):车流产生明显像素变化。
+3. P3(100ms 帧距):全屏细密像素差 ≥ 2%(雨下落),雨计数稳定。
+4. P4(运行约 8–15s):fps ≥ 30(最近 60 帧真实平均),画面持续运动。
+5. P5(关雾后 800ms):fogEnabled == false,上部天际线对比度/亮度可测变化。
+6. P6(开雾后 800ms):fogEnabled == true,上部区域再次变化(雾衰减恢复)。
+7. P7(reset 后 2s):计数与雾开关恢复初始,城市完整重建,非整页刷新。
+8. P8(reset 后 1.5s):车流/雨仍在运动,fps ≥ 30,无未捕获异常。

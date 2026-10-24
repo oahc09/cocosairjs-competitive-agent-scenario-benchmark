@@ -3,11 +3,13 @@
 | 元数据 | 值 |
 |---|---|
 | briefId | E09 |
-| briefVersion | 1.0.0 |
+| briefVersion | 1.1.0 |
 | frozen | true |
 | frozenAt | 2026-10-02T00:00:00Z |
 | briefSha256 | computed-by-harness |
 | domains | Material ceiling / Reflection-Refraction look / Lighting / Camera transition / Screenshot export |
+
+> v1.1.0 (2026-10-24): 澄清性升版——§3.5 色样顺序由"建议"升级为硬性要求(探针点击 swatch-2 断言 ruby)、§4 增补交互时序契约、新增 §11 交付前时序自检;探针判据零改动。详见 spec.json amendments。
 
 ## 1. Goal
 
@@ -28,7 +30,7 @@
 2. 展台/底座:低反射深色圆台或方台,承接宝石,边缘可有细金属亮边。
 3. 布光:三盏有向光(主/辅/轮廓)+ 环境光照(环境贴图或等价环境光),位置与强度构成三点棚拍格局。
 4. 背景:暗色摄影棚背景幕(渐变或弧幕),地面有轻微反射。
-5. 色板 UI:≥5 个色样(建议命名:diamond #E8EEF2 / ruby #D6323F / emerald #23A96E / sapphire #2E5FD8 / amber #E8A33D),当前选中色有描边/放大反馈。
+5. 色板 UI:**恰好 ≥5 个色样,顺序必须为 diamond、ruby、emerald、sapphire、amber**(`data-bench="swatch-{i}"`,i 从 1 起——探针 P3 点击 swatch-2 并断言 `selectedColor == "ruby"`,顺序不同必 FAIL);建议配色:diamond #E8EEF2 / ruby #D6323F / emerald #23A96E / sapphire #2E5FD8 / amber #E8A33D,当前选中色有描边/放大反馈。
 6. 操作按钮:导出 PNG(UI 控件 `data-bench="export-png"`)、重置(UI 控件 `data-bench="reset"`)。
 
 ## 4. Interaction & Feedback
@@ -38,6 +40,14 @@
 3. 双击推近:双击宝石(画布中央)→ 相机向宝石平滑推近(缓动过渡,时长 ≥600ms),`cameraDistance` 从默认 10 降至 ≤6;再次双击 → 平滑拉回 ≥9。过渡期间帧率不塌陷、无跳变。
 4. PNG 导出:点击导出按钮 → 从当前画布像素导出 PNG 并触发浏览器下载(文件 >10KB),`exportCount` +1;导出分辨率与画布一致。
 5. 重置:`selectedColor` 回默认色(diamond)、`cameraDistance` 回 10、`exportCount` 清零;转台继续运转;不得整页刷新。
+
+**交互时序契约(由 spec.json 探针的采样点语义决定,必须满足)**
+- E09 探针为单采样制(像素坐标系,1280×720),采样点链:P1 约 3s、P2 再 2s(rotationAngle ≥ 50°)、P3 点击色样后 800ms、P4/P5 双击后 1.2s、P6/P7 导出后 1.5s、P8 reset 后 1.5s。
+- 转台:自转 ≥25°/s 从启动即计(P2 采样点约在启动后 5s,50° 阈值即按此校准;建议 30°/s),`rotationAngle` 单调累计不折返。
+- 色板:P3 点击 swatch-2 后 800ms 采样要求 `selectedColor == "ruby"`——切换即时生效,不做长过渡。
+- 双击推近/拉回:P4/P5 各在双击后 1.2s 采样,要求 cameraDistance 已过阈值(≤6 / ≥9)——缓动时长须 ≥600ms 且**在 1.2s 内完成**,建议 600–900ms;双击为近/远两态切换,非连续多档。
+- 导出:P6/P7 各在点击后 1.5s 采样 exportCount(==1 / ==2),download 事件为独立观测;文件名带序号/时间戳,导出不冻结主循环 >200ms。
+- reset:P8 在 reset 后 1.5s 采样,要求色板/相机/导出计数(归零)全部恢复;转台继续运转,画面仍有高光流动。
 
 ## 5. Asset Contract
 
@@ -97,3 +107,16 @@ window.__bench = { getState(): object, reset(): void }
 5. 禁止 rotationAngle 返回与画面转台不一致的值(含返回常数)。
 6. 禁止 exportCount 无真实下载而递增。
 7. 禁止 reset 通过 location 刷新实现。
+
+## 11. 交付前时序自检(探针采样点)
+
+任何一条不满足即视为未完成;判据细节以 spec.json 为准。
+
+1. P1(加载后约 3s):默认 diamond、cameraDistance ∈ [9,∞)、exportCount == 0;宝石居中可见。
+2. P2(再 2s):rotationAngle ≥ 50°(≥25°/s),高光/火彩流动有区域变化证据。
+3. P3(点击 swatch-2 后 800ms):selectedColor == "ruby"(色样顺序 diamond/ruby/emerald/sapphire/amber),宝石色调立即变化。
+4. P4(双击后 1.2s):cameraDistance ≤ 6,过渡 ≥600ms 缓动且已到位,宝石显著变大。
+5. P5(再双击后 1.2s):cameraDistance ≥ 9,平滑拉回无跳变。
+6. P6(导出后 1.5s):exportCount == 1,真实 download 事件、PNG >10240 字节、分辨率与画布一致。
+7. P7(再导出后 1.5s):exportCount == 2,画布仍正常渲染(非空白)。
+8. P8(reset 后 1.5s):diamond、cameraDistance ≥ 9、exportCount == 0,转台继续自转。

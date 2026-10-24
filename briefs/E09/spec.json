@@ -1,9 +1,9 @@
 {
   "briefId": "E09",
-  "briefVersion": "1.0.1",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T00:00:00Z",
-  "briefSha256": "d58aa5b7f4d6ae55b80b6b022cb62e019c37aed71c52deadfd358f9dc9eece9d",
+  "briefSha256": "d4608a8bdba35f3111defe44ac4e55bc53f684782d0164d4074a3613f89302db",
   "title": "珠宝展示台 (Jewelry Display Stand)",
   "goal": "暗色摄影棚中的多切面宝石:高折射/反射/色散观感 + 三点棚拍 + 转台自转 + 5 色色板 + 双击推近相机过渡 + 真实 PNG 下载导出。",
   "domains": [
@@ -281,6 +281,14 @@
       "change": "P7.visualAssertion 由 motion(导出后 600ms 窗口)改为 nonBlank(与 P6 同区域同 minCoverage=0.08,验证二次导出后画布仍正常渲染);导出成功的机器判定 = stateAssertion exportCount==2 + download 事件独立证据。应用行为合同不变(导出两次+转台持续运转),仅断言测量设计修正,引擎中立。",
       "scope": "仅 E09 P7;P1-P6/P8 不变。Reference 处置:行为合同未变 → 重实现豁免,按新协议重验并 refVersion+1 记账。解除 G3 CONDITIONAL 的唯一卡点。Owner 指令 2026-10-05(修复阻塞门禁,保证全量测试)。",
       "decidedBy": "Owner(2026-10-05)"
+    },
+    {
+      "at": "2026-10-24T10:52:33Z",
+      "from": "1.0.1",
+      "reason": "brief frontmatter 仍为 1.0.0(10-05 的 P7 motion→nonBlank 修正未同步 brief,版本漂移);色样顺序(swatch-2==ruby)在 brief 仅以\"建议命名\"暗示,而 P3 是硬断言——顺序不同的实现必 FAIL;探针采样点时序(双击过渡须在 1.2s 采样点前完成、导出/reset 1.5s 采样)未声明。澄清性升版,判据零改动。同步回填顶层 briefSha256 为新 brief.md 哈希。",
+      "change": "brief.md frontmatter 1.0.0→1.1.0、§3.5 色样顺序升级为硬性要求(保留建议配色值)、§4 增补交互时序契约、新增 §11 交付前时序自检;spec.json briefVersion→1.1.0 + briefSha256 回填,probes/stateContract/forbiddenShortcuts 零改动。",
+      "scope": "仅 E09 文本澄清 + briefSha256 绑定刷新;P1-P8 全部判据不变",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E04-E10 批处理,探针不动)"
     }
   ]
 }

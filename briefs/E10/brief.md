@@ -3,8 +3,9 @@
 | 元数据 | 值 |
 |---|---|
 | briefId | E10 |
-| briefVersion | 1.0.0 |
+| briefVersion | 1.1.0 |
 > v1.0.1 (2026-10-02): P4 视觉断言 regionChange→pixelDelta(动作前后帧),修复语义与阈值文本不符;详见 spec.json amendments。
+> v1.1.0 (2026-10-24): 澄清性升版——§4 增补交互时序契约;新增 §11 交付前时序自检。探针判据零改动。详见 spec.json amendments。
 | frozen | true |
 | frozenAt | 2026-10-02T00:00:00Z |
 | briefSha256 | computed-by-harness |
@@ -41,6 +42,14 @@
 2. 销毁实例 A:点击 `destroy-a` → 实例 A 从画面移除并释放其实例资源(从场景图移除;仅设为不可见不算销毁),`instanceCount` 变 1,`destroyedInstance="A"`;实例 B 不受任何影响。
 3. 重置:点击 `reset` → 双实例恢复(实例 A 重建),两实例回到 Idle 初始状态,`destroyedInstance=null`、`resetCount`+1;reset 必须应用内重建,**不得触发新的 assets/character.glb 网络请求**(资产已加载,实例由缓存数据派生),不得整页刷新。
 4. 按钮需有 hover/active 反馈;销毁按钮在实例 A 已销毁时置灰或无效。
+5. **交互时序契约(探针采样点显式化,实现前必读)**:
+   - P1(加载就绪后 wait 1500ms 采样):`assetLoaded=true`、`instanceCount=2`、双实例均为 Idle;两角色区域均非空且非缺省纯色;
+   - P2(再 wait 1000ms 采样):双实例 `time` 均已推进(time 为当前剪辑播放秒数,随播放推进,循环剪辑回绕允许),两区域均有视觉运动;
+   - P3(click `anim-a-walk` 后采样 1000ms):**即时切换**(≤300ms 内开始过渡,见第 1 条)——采样点时实例 A 已在 Walk、实例 B 仍 Idle;禁止延迟切换/排队切换;动画状态必须隔离(A 切换不影响 B 的剪辑与播放时间,反之亦然);
+   - P4(click `destroy-a` 后采样 800ms):实例 A 已从场景图移除并释放实例资源(仅设为不可见不算销毁),`instanceCount=1`、`instances.A=null`、`destroyedInstance="A"`;A 区域回到背景,B 区域不受任何影响;
+   - P5(销毁后再 wait 1500ms 采样):实例 B 仍正常动画(time 推进 + 视觉运动),无未捕获异常;
+   - P6(click `reset` 后采样 1500ms):`resetCount=1`、双实例恢复 Idle、`destroyedInstance=null`;**应用内重建——不得触发新的 assets/character.glb 网络请求**(资产合同:整会话对该文件仅允许 1 次请求,即初始加载;实例由已加载数据派生),不得整页刷新;
+   - P7(reset 后再 wait 1000ms 采样):双实例 time 均在推进且 `fps>=30`。
 
 ## 5. Asset Contract
 
@@ -109,3 +118,13 @@ window.__bench = { getState(): object, reset(): void }
 5. 禁止 instances.A/B 的 clip/time 与画面脱钩(状态说 Walk 画面在 Idle 即违规)。
 6. 禁止用简单几何假人 + 程序化摆动冒充 GLB 角色(必须渲染 GLB 网格与材质)。
 7. 禁止在销毁实例 A 时静默销毁/重置实例 B(实例隔离是本场景核心观测点)。
+
+## 11. 交付前时序自检(实现完成后逐条对照)
+
+- [ ] P1:加载就绪后 1.5s,`assetLoaded=true` 且双实例 Idle 同屏(两角色区域非空非缺省纯色);
+- [ ] P2:双实例 time 均已推进,两区域均有视觉运动;
+- [ ] P3:点击 `anim-a-walk` 后 1s 采样点,A=Walk、B=Idle(即时切换 ≤300ms);
+- [ ] P4:点击 `destroy-a` 后 0.8s,instanceCount=1、A 从画面消失(A 区回背景)、B 不受影响;
+- [ ] P5:销毁 A 后 1.5s,B 仍正常动画(time 推进 + 视觉运动);
+- [ ] P6:reset 后 1.5s,resetCount=1、双实例 Idle、destroyedInstance=null、无新的 assets/character.glb 网络请求;
+- [ ] P7:reset 后双实例 time 推进且 fps>=30。

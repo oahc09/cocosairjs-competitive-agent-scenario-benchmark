@@ -1,6 +1,6 @@
 {
   "briefId": "E03",
-  "briefVersion": "1.0.1",
+  "briefVersion": "1.1.0",
   "frozen": true,
   "frozenAt": "2026-10-02T16:29:37+08:00",
   "title": "E03 太阳系仪(Orrery)",
@@ -18,7 +18,7 @@
     "planetCount": 8,
     "minMoonCount": 2,
     "minAsteroidCount": 500,
-    "notes": "小行星带 >= 500 个独立小天体;fps 以 2s 滚动平均计(含 8x 档位运行时);公转周期:最内侧行星 120–240 模拟秒,最外侧 1600–4000 模拟秒,单调递增。"
+    "notes": "小行星带 >= 500 个独立小天体;fps 以 2s 滚动平均计(含 8x 档位运行时);公转周期:最内侧行星 230 模拟秒、最外侧 3400 模拟秒(中间行星可在 [230, 3400] 内单调取值;最内侧不得低于 230——与 P7 采样容差校准一致),单调递增。"
   },
   "completionContract": {
     "build": "npm run build 必须退出码 0",
@@ -219,6 +219,14 @@
       "change": "P7.stateAssertion: simulationTime < 1.5 → < 2.5(相对行星周期 230–3400s 仍为近零);最内侧行星(mercury)容差 ±0.06 → ±0.08(覆盖 2.5s 采样延迟内自然推进 2π·2.5/230 ≈ 0.068);第 8 颗 315°=5.4978±0.06 不变(自然推进仅 0.005);threshold 文本同步说明实测延迟构成。",
       "scope": "仅 E03 P7 两处数值;应用行为合同(reset 语义)不变 → Reference 重实现豁免,按新 spec 重验并 refVersion+1 记账。B-20261005-R02 的 E03 对按其冻结 spec v1.0.0 判定保持原样(双臂对称 FAIL,paired delta 不受影响),自 S2 切片起以 v1.0.1 执行。Owner 指令 2026-10-05。",
       "decidedBy": "Owner(2026-10-05)"
+    },
+    {
+      "at": "2026-10-24T10:39:31Z",
+      "from": "1.0.1",
+      "reason": "B-20261024-R01 复核发现 brief 与 spec.notes 的周期合同同 P7 校准自相矛盾:brief §3.2 与 scaleAndPerformance.notes 仍写\"最内侧 120–240,最外侧 1600–4000\",而 P7 容差按 230–3400 校准(mercury ±0.08 rad 覆盖 2π·2.5/230 ≈ 0.068)——实现方若按 brief 取最内侧 120s,reset 后采样延迟内的自然推进 2π·2.5/120 ≈ 0.131 rad 必超容差 FAIL。本轮两臂 doReset 经源码核验均正确复位、周期实现恰为 230–3400(P6 实测 1679ms / P7 实测 2922ms,采样延迟贴近校准上限)。澄清性升版把周期合同收敛到与 P7 一致,写明 reset 后重累计语义与 P6 600ms 采样时限;若未来仪器延迟进一步上升,建议由 Owner 裁决把 P7 simulationTime 上限 2.5→4(并同步 mercury 容差),本轮不动。",
+      "change": "brief.md frontmatter 1.0.0→1.1.0(追平 1.0.1 时 frontmatter 漂移)、§3.2 周期 120–240/1600–4000→230/3400([230,3400] 单调)、§4 增补交互时序契约(reset 瞬时复位、重累计语义、点击/变速采样点)、§7 恢复时限 1s→0.6s(对齐 P6)并写明 simulationTime 重累计、新增 §11 交付自检清单(P1–P9);spec.json 仅 scaleAndPerformance.notes 周期区间同步为 [230,3400];probes/stateContract/forbiddenShortcuts 零改动。",
+      "scope": "仅 E03 文本澄清 + scaleAndPerformance.notes 同步;P1–P9 全部判据不变;存量 Reference(周期 230–3400)不受影响,无需重实现,下轮 ceiling-freeze 按新 briefSha 记账",
+      "decidedBy": "Owner(2026-10-24,brief 澄清性升版指令:范围 E01–E03,探针不动)"
     }
   ]
 }

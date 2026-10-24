@@ -1,6 +1,6 @@
 ---
 briefId: E02
-briefVersion: 1.0.0
+briefVersion: 1.1.0
 frozen: true
 frozenAt: 2026-10-02T16:29:37+08:00
 briefSha256: computed-by-harness
@@ -8,6 +8,7 @@ briefSha256: computed-by-harness
 
 # E02 — 落日海面与孤舟(Asset Driven)
 
+> v1.1.0 (2026-10-24):澄清性升版——§4 增补交互时序契约(拖拽甩动惯性显式化、色调过渡与重建时限建议)、§7 重建时限 3s→2.5s 并写明 assetRequests 每次 reset +1、新增 §11 交付前自检清单;探针判据零改动。详见 spec.json amendments。
 > 冻结规格(Frozen Brief)。本文件为人读版,与同目录 spec.json 机读版必须一致;两者冲突时以 spec.json 为准并触发 SPEC_INVALID 复审。
 > 全文使用图形领域语言,不引用任何引擎类名或 API;任何能真实达成下述行为的实现路径均可接受。
 
@@ -54,6 +55,12 @@ briefSha256: computed-by-harness
 - 色调控件在任意时刻可再次点击反向切换。
 - 资产加载失败时给出可见错误提示,且不得产生未捕获异常。
 
+**交互时序契约(由 spec.json 探针的双采样语义决定,必须满足)**
+- 双采样探针在动作后先取 before 采样,再等待 sampleWindowMs 取 after 采样;E02 P4 即:拖拽释放后 500ms 取 before、700ms 取 after,判据为该 200ms 窗口内 cameraAzimuth 变化绝对值 > 20°。
+- 因此水平拖拽必须带**甩动惯性**:释放后相机以阻尼减速继续环绕,且惯性强度须使释放后 500–700ms 窗口内方位角仍变化 > 20°;释放即停(无惯性)或惯性过弱必 FAIL。建议拖拽期间记录指针速度,释放后按带阻尼的动量滑行(总时长 1–2s),全程逐帧插值、方位角无跳变。
+- 色调切换:点击后 2.5s 采样点要求 toneMix > 0.7,建议过渡时长 1–2s 平滑插值(不要贴着 2.5s 上限设计,否则采样延迟会翻转结果)。
+- Reset:P6/P7 在 reset 后 3s 采样,要求资产重新加载完成(assetRequests +1)、toneMix < 0.05、方位角回 35°±3°;建议重建在 2.5s 内完成,为 harness 采样延迟留出余量。
+
 ## 5. Asset Contract
 
 - **`assets/boat.glb`**(共享资产,由资产 Agent 生成;本 Brief 只冻结契约,不实现):
@@ -73,12 +80,12 @@ briefSha256: computed-by-harness
 
 - `window.__appReady`:资产加载完成且首帧渲染后置 true。
 - `window.__bench.getState()` 返回:
-  - `assetLoaded`(布尔)、`assetRequests`(对 boat.glb 完成加载的请求计数);
+  - `assetLoaded`(布尔)、`assetRequests`(对 boat.glb 完成加载的请求计数;初始 1,每次 reset 重建重新加载后 +1);
   - `boatPosition`({x,y,z},船体参考点世界坐标,建议取包围盒中心);
   - `wavePhase`(持续递增的海面波形相位);
   - `toneMix`(0=暖,1=冷,初始 0);
   - `cameraAzimuth`(度,初始 35)、`fps`、`epoch`(初始 0)。
-- `reset()` 执行**释放并重建**:卸载当前船与海面的渲染资源(显式释放 GPU 侧资源),重新加载 `assets/boat.glb`,恢复初始色调(toneMix=0)、初始方位角(35°)与模拟时间;`epoch` +1;重建在 3s 内完成;不得以整页刷新实现。
+- `reset()` 执行**释放并重建**:卸载当前船与海面的渲染资源(显式释放 GPU 侧资源),重新加载 `assets/boat.glb`,恢复初始色调(toneMix=0)、初始方位角(35°)与模拟时间;`epoch` +1;重建在 2.5s 内完成(探针在 reset 后 3s 采样,须留采样延迟余量);不得以整页刷新实现。
 - 连续多次 reset 必须稳定:无未捕获异常、无可见泄漏征象、画面正常恢复(NC05 对齐)。
 
 ## 8. Technical Constraints
@@ -108,3 +115,15 @@ briefSha256: computed-by-harness
 8. reset 不得以整页刷新实现;重建后旧渲染资源必须释放(连续 reset 出现错误、黑屏或内存持续增长即 FAIL,对齐 NC05)。
 9. 不得通过隐藏画布、遮挡视口、把画布缩为 1px 等手段骗过像素断言。
 10. 不得探测或篡改 harness/validator(检出即 INVALID_RUN)。
+
+## 11. 交付前自检清单(与 spec.json 探针一一对应)
+
+逐项通过后再交付;任何一项不满足即视为未完成。判据细节以 spec.json 为准,本清单是其在人读语言下的镜像。
+
+1. P1:对 `assets/boat.glb` 的真实网络请求被记录且 200(或自缓存命中),`assetLoaded` 为 true,画面同时呈现天空、海面与可辨识船体(亮像素 ≥ 5%)。
+2. P2:`wavePhase` 在 1.5s 采样窗内变化,画面下 60% 区域存在运动像素(海面在真实波动)。
+3. P3:900ms 采样窗内 `boatPosition.y` 变化,4s 观测极差 ≥ 0.02 单位(船体随波起伏)。
+4. P4:拖拽释放后 500–700ms 窗口内 `cameraAzimuth` 仍变化 > 20°(甩动惯性,释放即停必 FAIL),画面构图改变。
+5. P5:点击色调控件后 2.5s 内 `toneMix` > 0.7,画面平均色显著偏移(RGB 平均偏移 ≥ 8/255)。
+6. P6:Reset 后 3s 采样点:epoch ≥ 1、资产重新就绪、toneMix < 0.05、方位角回 35°±3°;无未捕获异常、无页面导航。
+7. P7:连续第二次 Reset 稳定:epoch ≥ 2、`assetRequests` ≥ 2、控制台无新增错误、无内存持续增长征象。

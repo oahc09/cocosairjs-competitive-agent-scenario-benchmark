@@ -1,6 +1,6 @@
 ---
 briefId: E03
-briefVersion: 1.0.0
+briefVersion: 1.1.0
 frozen: true
 frozenAt: 2026-10-02T16:29:37+08:00
 briefSha256: computed-by-harness
@@ -8,6 +8,7 @@ briefSha256: computed-by-harness
 
 # E03 — 太阳系仪(Orrery)
 
+> v1.1.0 (2026-10-24):澄清性升版——§3.2 公转周期区间 120–240/1600–4000 收敛为 230/3400(与 P7 采样容差校准一致)、§4 增补交互时序契约、§7 恢复时限 1s→0.6s(对齐 P6)并写明 simulationTime 重累计语义、新增 §11 交付前自检清单;探针判据零改动。详见 spec.json amendments。
 > 冻结规格(Frozen Brief)。本文件为人读版,与同目录 spec.json 机读版必须一致;两者冲突时以 spec.json 为准并触发 SPEC_INVALID 复审。
 > 全文使用图形领域语言,不引用任何引擎类名或 API;任何能真实达成下述行为的实现路径均可接受。
 
@@ -40,7 +41,7 @@ briefSha256: computed-by-harness
 ## 3. World Composition
 
 1. **恒星(太阳)**:中心发光球体 + 光晕,位于系统原点。
-2. **8 颗行星**:名称沿用太阳系真实命名(小写英文:mercury/venus/earth/mars/jupiter/saturn/uranus/neptune),按轨道半径升序排列(状态 `planets` 数组同序);轨道半径比例参考真实太阳系数量级压缩;公转周期:最内侧 120–240 模拟秒,最外侧 1600–4000 模拟秒,自内向外单调递增;每颗行星初始轨道角 = 其序号 × 45°。
+2. **8 颗行星**:名称沿用太阳系真实命名(小写英文:mercury/venus/earth/mars/jupiter/saturn/uranus/neptune),按轨道半径升序排列(状态 `planets` 数组同序);轨道半径比例参考真实太阳系数量级压缩;公转周期:最内侧行星 230 模拟秒、最外侧行星 3400 模拟秒(中间行星可在 [230, 3400] 内单调取值;**最内侧不得低于 230**——P7 探针的采样容差按 230 校准,更小的周期必 FAIL),自内向外单调递增;每颗行星初始轨道角 = 其序号 × 45°。
 3. **至少 2 颗卫星**:绕至少一颗行星公转,公转周期 8–40 模拟秒;卫星与所属行星构成父子层级(卫星跟随行星公转)。
 4. **行星环**:至少 1 颗行星带半透明环面(建议土星),环面倾斜使初始视角可辨。
 5. **小行星带**:不少于 500 个独立小天体(实例化或粒子群),分布于第 4 与第 5 条轨道之间的环带。
@@ -60,6 +61,12 @@ briefSha256: computed-by-harness
 - 点击判定必须针对行星的可视投影区域;点击空白不得触发选中(对齐 NC04)。
 - 变速即时作用于全部天体的公转与自转,平滑无跳变。
 - 相机交互为可选增强项,不作为必需探针。
+
+**交互时序契约(由 spec.json 探针的采样点语义决定,必须满足)**
+- Reset 采样点:P6 在 reset 后 600ms 即采样(epoch ≥ 1、timeScale == 1),建议 reset 瞬时完成(同一帧内到位),不做长缓动;P7 在其后采样(实测总延迟 1.3–1.8s,含视频开销),要求 simulationTime < 2.5、选中已清空、信息卡已关闭、各行星轨道角回到 k × 45°(mercury 容差 ±0.08 rad,已覆盖采样延迟内的自然推进 2π·2.5/230 ≈ 0.068)。
+- reset 后场景必须继续运行:`simulationTime` 从 0 重新累计、行星自初始角自然推进;冻结画面或让 simulationTime 恒为 0 会同时触发运动断言与状态断言 FAIL。
+- 点击选中:P2 在点击后 600ms 采样,选中高亮与信息卡须即时出现(不要做长入场动画)。
+- 变速:P4 点击 8x 后 500ms 采样 timeScale == 8;倍率切换即时生效于全部天体,无过渡延迟。
 
 ## 5. Asset Contract
 
@@ -82,7 +89,7 @@ briefSha256: computed-by-harness
   - `planets`([{name, orbitRadius, orbitAngle}],按轨道半径升序;orbitAngle 为弧度、连续累计不取模,第 k 颗初始角 = k × 45°);
   - `pickTargets`([{name, screenX, screenY, screenRadius}],每帧更新的屏幕投影;screenRadius >= 8 CSS 像素,供探针执行真实点击);
   - `infoCard`({visible, name, fieldCount},镜像 DOM 信息卡)、`fps`、`epoch`(初始 0)。
-- `reset()`:`simulationTime` = 0、`timeScale` = 1、`selectedPlanet` = null、信息卡关闭、各行星轨道角回到 k × 45°;`epoch` +1;恢复在 1s 内完成;不得以整页刷新实现;reset 后场景立即继续渲染与运动。
+- `reset()`:`simulationTime` = 0、`timeScale` = 1、`selectedPlanet` = null、信息卡关闭、各行星轨道角回到 k × 45°;`epoch` +1;恢复在 0.6s 内完成(P6 在 reset 后 600ms 即采样,建议瞬时复位);不得以整页刷新实现;reset 后场景立即继续渲染与运动——`simulationTime` 从 0 重新累计、行星自初始角自然推进,P7 的容差(simulationTime < 2.5、mercury ±0.08 rad)已按该重累计与采样延迟校准。
 
 ## 8. Technical Constraints
 
@@ -113,3 +120,17 @@ briefSha256: computed-by-harness
 8. 点击不得无条件触发选中(点空白也选中即 FAIL,对齐 NC04)。
 9. reset 不得以 location.reload 或整页刷新实现。
 10. 不得通过隐藏画布、遮挡视口、把画布缩为 1px 等手段骗过像素断言;不得探测或篡改 harness/validator(检出即 INVALID_RUN)。
+
+## 11. 交付前自检清单(与 spec.json 探针一一对应)
+
+逐项通过后再交付;任何一项不满足即视为未完成。判据细节以 spec.json 为准,本清单是其在人读语言下的镜像。
+
+1. P1:初始画面非空(亮像素 ≥ 3%);`planetCount` == 8、`moonCount` ≥ 2、`asteroidCount` ≥ 500、`ringedPlanetCount` ≥ 1;2s 采样窗内最内侧行星轨道角增量 > 4 × 最外侧行星(公转分层证据)。
+2. P2:点击第 3 颗行星(earth)的屏幕投影位置后 `selectedPlanet` == "earth",出现可见选中反馈。
+3. P3:信息卡可见,名称为 earth,`fieldCount` ≥ 3,DOM 文本与状态一致。
+4. P4:点击 8x 后 `timeScale` == 8,当前档位高亮,五档控件(0.5/1/2/4/8)在 DOM 中齐全。
+5. P5:8x 下 1.5s 采样窗:`simulationTime` 增量 ≥ 6、mercury 轨道角增量 ≥ 0.05 rad;8x 增量 ≥ 4 × 1x 基线增量。
+6. P6:Reset 后 600ms:`epoch` ≥ 1、`timeScale` == 1;无页面导航、控制台无未捕获异常。
+7. P7:reset 后采样点:`simulationTime` < 2.5、无选中、信息卡关闭、各行星轨道角回到 k × 45°(mercury ±0.08 rad、第 8 颗 ±0.06 rad);画面仍在运动(非冻结、非重载)。
+8. P8:0.5x 档位可用,`timeScale` == 0.5,降速后运动仍持续。
+9. P9:点击空白角点(harness 校验距所有行星投影 ≥ 80 CSS 像素)不产生选中、不弹信息卡。
