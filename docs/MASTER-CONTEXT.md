@@ -19,7 +19,8 @@
 | 引擎版本注册表 | `<ROOT>\vendor\engine-versions.json`(schema 2:双引擎 activeVersion + versions;V9 机器校验 SDK↔tarball 一致) |
 | 能力差异审计(2026-09-26) | `<ROOT>\reports\inputs\COCOSAIRJS_VS_THREEJS_R186_能力差异与路线图.md` |
 | 旧 bench 方案设计 | `<ROOT>\reports\inputs\AGENT_ENGINE_BENCH_方案设计.md` |
-| 运行环境 | Windows + Git Bash;Node v24.14.0;npm 11.11.1;Chrome + Playwright chromium 已装 |
+| 运行环境 | Windows + Git Bash;Node v24.14.0;npm 11.11.1;Playwright chromium 已装 |
+| **测量用浏览器(正典=钉住快照,非系统 Chrome)** | `E:\AIProMax\Y2026M10\chrome-pin-155.0.8059.40\chrome.exe`(`harness\launch-config.json` 的 `executablePath` 指向它)。系统 Chrome 会自动升级(154.0.8037.97→155.0.8059.40),升级即换仪器,所以基线钉在只读快照;恢复系统浏览器=把该行改回 `C:\Program Files\Google\Chrome\Application\chrome.exe` |
 
 ## 3. 引擎事实(已验证,勿再重复侦察)
 
@@ -96,6 +97,15 @@
 ## 11. 当前执行阶段
 
 M0-M1 已完成(2026-10-02):合同/指标/失败分类三件套 + 3 配置 + G0.json;E01-E10 brief.md+spec.json 全部冻结;assets(boat/gem/character/textures/audio)+MANIFEST 校验 54/54 PASS;K0/K1/K2 知识包 + cocosair k0 tarball 构建 verify PASS。
+
+### 11.1 仪器换版与量尺重基线(2026-10-17,Owner 决断:"换尺 + 旧时代单列 + 只补跑关键对照")
+
+- **发生了什么**:宿主系统 Chrome 自升级 154.0.8037.97 → 155.0.8059.40。工具链是测量仪器的一部分(量尺账本 `inputs.toolchain`),换浏览器=换仪器;aggregate 的 fail-closed 门禁把 B-20261016-R01(S5)整批判为 `toolchainMatch=MISMATCH`,R03 五对进不了正式分组。
+- **处置**:浏览器钉到仓库外只读快照 `chrome-pin-155.0.8059.40`;20 个 Reference 在钉住仪器下全量重验(16 个逐项复刻 era-1:passRate=1 / obj=55 / fps≈60);E06/E08 首验抖动、冷却复验回到 1.0;E04 双臂各做 4 次重复取样,cocosair 恒 1.0,three 分布 0.875/1.0/0.75/0.5 → 上限按"可达最好的一次"取 1.0,全部历次产物留在 `validation/revisions/`。
+- **量尺**:语义漂移=无,协议漂移=20 项(全 `toolchain`)→ `rulerId` 仍是 **RULER-20261005-R02**,`validationRevision` 11→12,**天花板数值不变**。冻结时必须显式带 `CHROME_V=155.0.8059.40`:`reference-versions.mjs` 在未设 `CHROME_V` 时会沿用旧账本的 Chrome 版本(只比 node+esbuild 前缀),漏设等于把 154 再抄一遍。
+- **分层口径**:154 时代 22 对(core/targeted-pilot)+ 2 对 pilot = 24 对 `toolchainEra.mismatched`,原样保留在 `batches`/`diagnosticDeltas` 但**不入 core 分组**;同仪器对 5 对(B-20261016-R01)入组,现各场景 K0 组 n=1(E03 因 arm-b toolcall 150>120 判罚,n=0)。跨时代比较只能看诊断区。
+- **已知判据盲区(不掩盖)**:155 下 `__appReady` 时延缩短 1.4–2.8×,探针双采样(`$.before`/`$.after` 都在动作之后)因此落在更早的动画相位,绝对量断言(E04 `particlesAlive` 上下界、E06/E08 夜间 litRatio)会翻转。这是判据设计缺陷被仪器换版暴露,不是引擎退化;修 probe-executor 的采样语义属于会改 `validatorProtocolHash` 的测量协议变更,须先重验 20 个 Reference 再动。
+- **补跑对照**:R04(`results/B-20261017-R01`,E01/E02 × K0,rep 偶数 → arm-a=cocosair)让新基线下首个场景至少有 2 个同仪器重复,便于看仪器自身噪声带。它不是 12 切片战役序列的新位置,登记为战役外对照。
 
 ## 12. Wave 2 接口契约(模板/Harness/协调器必须共同遵守)
 

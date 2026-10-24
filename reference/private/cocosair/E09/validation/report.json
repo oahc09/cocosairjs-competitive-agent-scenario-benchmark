@@ -1,6 +1,6 @@
 {
-  "runId": "REF-E09-cocosair-r6-reval20261005-cd",
-  "generatedAt": "2026-10-05T06:54:04.892Z",
+  "runId": "REF-E09-cocosair-reval20261017",
+  "generatedAt": "2026-10-16T23:44:33.021Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E09",
   "spec": {
@@ -21,20 +21,20 @@
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 1532,
+    "durationMs": 760,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  32.0kb\n\nDone in 18ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1529ms\n"
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  32.0kb\n\nDone in 10ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 756ms\n"
   },
   "serve": {
-    "port": 56056,
+    "port": 55427,
     "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E09"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 2819
+    "durationMs": 954
   },
   "console": {
     "errors": 0,
@@ -103,24 +103,24 @@
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 1,
-  "fps": 60.2,
+  "fps": 60.1,
   "perf": {
-    "fps": 60.2,
+    "fps": 60.1,
     "frames": 181,
-    "sampleMs": 3007,
-    "sampledAt": "2026-10-05T06:54:43.226Z",
+    "sampleMs": 3013,
+    "sampledAt": "2026-10-16T23:45:02.055Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
   "downloads": [
     {
       "filename": "gem-E09-001.png",
-      "bytes": 257607,
+      "bytes": 325695,
       "error": null
     },
     {
       "filename": "gem-E09-002.png",
-      "bytes": 260821,
+      "bytes": 265598,
       "error": null
     }
   ],
@@ -183,7 +183,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.4724
+      "firstShotLitRatio": 0.553
     },
     "s2": {
       "passedWeight": 8,
@@ -198,7 +198,7 @@
       "minFps": 30
     }
   },
-  "durationMs": 38932,
-  "finishedAt": "2026-10-05T06:54:43.795Z",
-  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
+  "durationMs": 31093,
+  "finishedAt": "2026-10-16T23:45:04.106Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40"
 }

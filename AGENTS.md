@@ -33,6 +33,7 @@
 4. **失败 trial 永不删除**;判定唯一事实源 = `validate.mjs` 的 report.json,Agent 自检口径不算数。
 5. **环境**:E: 盘是 **exFAT**——不支持任何链接(junction/symlink 均报"函数不正确");依赖共享 = 根 `node_modules` + 各工作区 build.mjs 向上解析,**不要在工作区放 node_modules**;浏览器 = 系统 Chrome headless 1280×720(WebGL2 正常,无需 swiftshader)。
 6. **引擎资产(仓库内自包含)**:正典在 `vendor/<engine>/<版本>/`(`vendor/cocosair/1.0.0/`、`vendor/three/0.186.1/`,Reference 实现者可读;**Agent Run 禁读**,内含官方 docs/examples);安装源 = vendor 内 tarball(`cocosair.js-1.0.0-k0.tgz`、`three-0.186.1.tgz`,exFAT 不支持 file: 目录的 symlink 安装,故必须走 tarball)。版本登记与更换流程见 `vendor/engine-versions.json`(schema 2)头部注释;`node tools/verify-knowledge.mjs` V9 机器校验"SDK 目录 ↔ tarball ↔ node_modules"三方一致。引擎上游源码仓库(仅打包新版本时需要):`E:\AIProMax\github\cocosair.js`、`E:\AIProMax\Y2026M09\cocosairjs-vs-threejs\three.js-r186`。
+7. **引擎技能包供给(2026-10-17 起,是世代分界线)**:`create-pair` 默认把 AIR 正典 `vendor/cocosair/<版本>/skills/`(191 文件,Agent 仍禁读 vendor)拷进 cocosair 臂的 `knowledge/skills/`,并在 RUN-CONTRACT §0/§1 与 DISPATCH 提示词里写明"**开工第一步先读 `knowledge/skills/README.md` 与相关技能的 `SKILL.md`/`references/{contracts,common-mistakes}.md`**";来源+树哈希记入 `pair.json.airSkills`。three 臂无对应拷贝(其对称供给是包内 `examples/jsm` 标准件,随安装依赖已在)。**跨 10-17 比较 K0 达成率/成本必须分世代**(此前批次无技能包);`node harness/coordinator/create-pair.mjs --no-skills` 可复现旧供给口径。
 
 ## 已知引擎实测坑(AIR,来自 20 个 Reference + 8 个 Pilot Run)
 

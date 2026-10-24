@@ -1,6 +1,6 @@
 {
-  "runId": "REF-E07-three-r6-reval20261005",
-  "generatedAt": "2026-10-05T06:38:42.034Z",
+  "runId": "REF-E07-three-reval20261017",
+  "generatedAt": "2026-10-16T23:41:04.085Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E07",
   "spec": {
@@ -21,20 +21,20 @@
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 3879,
+    "durationMs": 2853,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  33.4kb\n\nDone in 19ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 3877ms\n"
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  33.4kb\n\nDone in 14ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 2848ms\n"
   },
   "serve": {
-    "port": 54404,
+    "port": 62817,
     "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\three\\E07"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 1060
+    "durationMs": 292
   },
   "console": {
     "errors": 0,
@@ -103,12 +103,12 @@
   ],
   "probeResults": "probe-results.json",
   "probePassRate": 1,
-  "fps": 60.1,
+  "fps": 60.3,
   "perf": {
-    "fps": 60.1,
+    "fps": 60.3,
     "frames": 181,
-    "sampleMs": 3013,
-    "sampledAt": "2026-10-05T06:39:33.449Z",
+    "sampleMs": 3004,
+    "sampledAt": "2026-10-16T23:41:43.609Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -173,7 +173,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.4535
+      "firstShotLitRatio": 0.4327
     },
     "s2": {
       "passedWeight": 8,
@@ -188,7 +188,7 @@
       "minFps": 30
     }
   },
-  "durationMs": 52015,
-  "finishedAt": "2026-10-05T06:39:34.021Z",
-  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
+  "durationMs": 40987,
+  "finishedAt": "2026-10-16T23:41:45.061Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40"
 }

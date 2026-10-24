@@ -102,9 +102,11 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     runSpec[arm] = { sha256: rs, briefVersion: rv };
     armSpec[arm] = { sha256: ds, briefVersion: dv };
   }
-  const runShas = [...new Set(Object.values(runSpec).map((x) => x.sha256))];
+  const noReportArms = Object.entries(runSpec).filter(([, v]) => v.sha256 === null).map(([k]) => k);
+  const runShas = [...new Set(Object.values(runSpec).map((x) => x.sha256).filter((x) => x !== null))];
   const diskShas = [...new Set(Object.values(armSpec).map((x) => x.sha256))];
-  const runVsPair = runShas.length === 1 && runShas[0] === pj.specSha256;   // 验证时是否精确用了 pair 冻结的 spec
+  // 双臂 report 齐备才有"验证时实际 sha"可言;缺臂不得写成 INPUT_DRIFT(那是指纹不同,不是漂移)
+  const runVsPair = noReportArms.length === 0 && runShas.length === 1 && runShas[0] === pj.specSha256;   // 验证时是否精确用了 pair 冻结的 spec
   const diskVsPair = diskShas.length === 1 && diskShas[0] === pj.specSha256; // 落盘 spec 是否仍与 pair 冻结一致
   const pairVsCurrent = pj.specSha256 === curBriefSpecSha;                    // pair 冻结 spec 是否即现行 spec
   const runVersion = runShas.length === 1 ? runSpec['arm-a'].briefVersion : null;
@@ -112,6 +114,7 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     id: 'specExact',
     ok: runVsPair && pairVsCurrent,
     runVsPair, diskVsPair, pairVsCurrent,
+    missingValidationReports: noReportArms,
     runTimeSpec: runShas.length === 1 ? { sha256: runShas[0], briefVersion: Object.values(runSpec)[0].briefVersion } : { sha256: runShas, briefVersion: Object.values(runSpec).map((x) => x.briefVersion) },
     diskSpec: diskShas.length === 1 ? { sha256: diskShas[0], briefVersion: Object.values(armSpec)[0].briefVersion } : { sha256: diskShas, briefVersion: Object.values(armSpec).map((x) => x.briefVersion) },
     pairSpecSha256: pj.specSha256,
@@ -134,7 +137,9 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
     harnessVersion: harnessVs.length === 1 ? harnessVs[0] : harnessVs,
     currentValidatorProtocolHash: vp,
     matchesCurrent: vphs.length === 1 && vphs[0] === vp,
-    note: vphs[0] ? null : '历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任',
+    note: noReportArms.length
+      ? `缺验证 report 的臂: ${noReportArms.join(', ')}(未验证/截断)→ 双臂协议无法对勘,非整改前格式`
+      : (vphs[0] ? null : '历史 report 无 validatorProtocolHash(整改前格式),验证协议内容不可追溯 → 只能按 harnessVersion 粗粒度信任'),
   };
 
   // ---- 4. Agent 身份完整(事实源 = 各臂 RUN-META.json;pair.json 仅历史回退)
@@ -304,9 +309,10 @@ for (const pd of fs.readdirSync(BATCH_DIR, { withFileTypes: true }).sort((a, b) 
   let status = 'LEGACY_PROVISIONAL';
   const reasons = [];
   if (!frozenInputsComplete.ok) reasons.push(`冻结输入字段缺失: ${frozenInputsComplete.missing.join(', ')}`);
-  if (!runVsPair) reasons.push(`验证时实际 spec(sha=${sha8(specExact.runTimeSpec.sha256)}, v${specExact.runTimeSpec.briefVersion})与 pair.specSha256(${sha8(pj.specSha256)})不一致 —— 回溯判定 INPUT_DRIFT`);
+  if (noReportArms.length) reasons.push(`缺验证 report 的臂(${noReportArms.join(', ')})→ "验证时实际 spec"无证据,specExact 不可证明(非 INPUT_DRIFT;arm 落盘 spec sha=${diskShas.length === 1 ? sha8(diskShas[0]) : '多值/缺失'} vs pair ${sha8(pj.specSha256)})`);
+  else if (!runVsPair) reasons.push(`验证时实际 spec(sha=${sha8(specExact.runTimeSpec.sha256)}, v${specExact.runTimeSpec.briefVersion})与 pair.specSha256(${sha8(pj.specSha256)})不一致 —— 回溯判定 INPUT_DRIFT`);
   if (!pairVsCurrent) reasons.push(`pair 冻结 spec(${sha8(pj.specSha256)})≠现行 briefs spec(${sha8(curBriefSpecSha)} v${curBriefVersion})`);
-  if (!validatorKnown.ok) reasons.push('验证协议哈希未记录(整改前 report 格式)');
+  if (!validatorKnown.ok) reasons.push(noReportArms.length ? '验证协议哈希无法双臂对勘(存在未验证臂)' : '验证协议哈希未记录(整改前 report 格式)');
   if (!agentIdentityComplete.ok) reasons.push(`Agent 身份字段缺失: ${missingIdentity.join(', ')}`);
   if (!budgetMachineCounted.ok) reasons.push('预算机器计数证据未归档(仅声明口径)');
   if (!budgetToolCallEvidence.ok) reasons.push(budgetToolCallEvidence.note);

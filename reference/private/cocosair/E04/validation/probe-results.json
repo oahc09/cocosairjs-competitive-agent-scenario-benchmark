@@ -1,14 +1,16 @@
 {
-  "runId": "REF-E04-cocosair",
-  "generatedAt": "2026-10-02T11:17:33.002Z",
+  "runId": "REF-E04-cocosair-repeat4",
+  "generatedAt": "2026-10-17T00:12:45.319Z",
   "results": [
     {
       "probeId": "P1",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:10.406Z",
       "precondition": {
         "expr": "__appReady",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "__appReady",
@@ -29,7 +31,7 @@
             "performed": "waited 2500ms"
           }
         ],
-        "durationMs": 2507
+        "durationMs": 2508
       },
       "stateAssertion": {
         "expr": "$.buildingCount >= 24 && $.fireworkCount == 0 && $.autoShow == false && $.enabled == true",
@@ -44,9 +46,7 @@
           "region": "bottom-third",
           "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)"
         },
-        "notes": [
-          "named region \"bottom-third\" not geometric; fell back to full frame"
-        ],
+        "notes": [],
         "expect": "暗色城市剪影像素 + >=80 个暖色亮窗像素块同时可见;上部夜空非纯黑(渐变+星点)",
         "metrics": {
           "minRatio": 0.03,
@@ -54,46 +54,46 @@
             {
               "rect": {
                 "x": 0,
-                "y": 0,
+                "y": 480,
                 "w": 1280,
-                "h": 720
+                "h": 240
               },
-              "litRatio": 0.2182,
+              "litRatio": 0.2482,
               "background": [
                 8,
-                10,
-                21
+                11,
+                19
               ]
             }
           ],
-          "worstLitRatio": 0.2182
+          "worstLitRatio": 0.2482
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 80,
+          "frame": 64,
           "resetCount": 0,
           "fireworkCount": 0,
           "particlesAlive": 0,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 230,
+          "frame": 183,
           "resetCount": 0,
           "fireworkCount": 0,
           "particlesAlive": 0,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -104,16 +104,18 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 4712
+        "totalMs": 4673
       }
     },
     {
       "probeId": "P2",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:15.079Z",
       "precondition": {
         "expr": "__appReady",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "__appReady",
@@ -136,7 +138,7 @@
             "performed": "click @ (640,216)"
           }
         ],
-        "durationMs": 10
+        "durationMs": 7
       },
       "stateAssertion": {
         "expr": "$.fireworkCount == 1 && $.particlesAlive >= 1",
@@ -151,9 +153,7 @@
           "region": "mid-vertical-band(点击列 x∈[0.4,0.6])",
           "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)"
         },
-        "notes": [
-          "named region \"mid-vertical-band(点击列 x∈[0.4,0.6])\" not geometric; fell back to full frame"
-        ],
+        "notes": [],
         "expect": "上升尾迹运动证据(两帧像素差>阈值,亮点自下而上移动)",
         "metrics": {
           "minRatio": 0.005,
@@ -161,42 +161,42 @@
           "perRegion": [
             {
               "rect": {
-                "x": 0,
+                "x": 512,
                 "y": 0,
-                "w": 1280,
+                "w": 256,
                 "h": 720
               },
-              "diffRatio": 0.0224
+              "diffRatio": 0.0895
             }
           ],
-          "worstDiffRatio": 0.0224
+          "worstDiffRatio": 0.0895
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 361,
+          "frame": 303,
           "resetCount": 0,
           "fireworkCount": 0,
           "particlesAlive": 0,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 392,
+          "frame": 334,
           "resetCount": 0,
           "fireworkCount": 1,
-          "particlesAlive": 38,
+          "particlesAlive": 37,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -208,21 +208,24 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 3884
+        "totalMs": 3300
       }
     },
     {
       "probeId": "P3",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:18.379Z",
       "precondition": {
         "expr": "P2",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "P2",
             "met": true,
-            "source": "probe P2"
+            "source": "probe P2",
+            "status": "PASS"
           }
         ]
       },
@@ -238,7 +241,7 @@
             "performed": "waited 1200ms"
           }
         ],
-        "durationMs": 1208
+        "durationMs": 1202
       },
       "stateAssertion": {
         "expr": "$.particlesAlive >= 40",
@@ -253,9 +256,7 @@
           "region": "upper-half",
           "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)"
         },
-        "notes": [
-          "named region \"upper-half\" not geometric; fell back to full frame"
-        ],
+        "notes": [],
         "expect": "爆点附近出现球状扩散亮粒子群(亮像素数显著上升后开始回落)",
         "metrics": {
           "minRatio": 0.01,
@@ -266,39 +267,39 @@
                 "x": 0,
                 "y": 0,
                 "w": 1280,
-                "h": 720
+                "h": 360
               },
-              "diffRatio": 0.0282
+              "diffRatio": 0.044
             }
           ],
-          "bestDiffRatio": 0.0282
+          "bestDiffRatio": 0.044
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 594,
+          "frame": 482,
           "resetCount": 0,
           "fireworkCount": 1,
-          "particlesAlive": 100,
+          "particlesAlive": 248,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 667,
+          "frame": 553,
           "resetCount": 0,
           "fireworkCount": 1,
           "particlesAlive": 68,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -309,21 +310,24 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 3443
+        "totalMs": 3119
       }
     },
     {
       "probeId": "P4",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:21.498Z",
       "precondition": {
         "expr": "P3",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "P3",
             "met": true,
-            "source": "probe P3"
+            "source": "probe P3",
+            "status": "PASS"
           }
         ]
       },
@@ -339,7 +343,7 @@
             "performed": "waited 2600ms"
           }
         ],
-        "durationMs": 2604
+        "durationMs": 2613
       },
       "stateAssertion": {
         "expr": "$.particlesAlive >= 1 && $.particlesAlive < 40",
@@ -351,12 +355,11 @@
         "ok": true,
         "type": "motion",
         "params": {
-          "region": "upper-half",
-          "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)"
+          "region": "center-bottom",
+          "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)",
+          "minMotionPixelRatio": 0.005
         },
-        "notes": [
-          "named region \"upper-half\" not geometric; fell back to full frame"
-        ],
+        "notes": [],
         "expect": "少量余烬缓慢下坠/闪烁的微弱运动(低于爆发期强度)",
         "metrics": {
           "minRatio": 0.005,
@@ -364,42 +367,42 @@
           "perRegion": [
             {
               "rect": {
-                "x": 0,
-                "y": 0,
-                "w": 1280,
-                "h": 720
+                "x": 256,
+                "y": 396,
+                "w": 768,
+                "h": 324
               },
-              "diffRatio": 0.0062
+              "diffRatio": 0.0448
             }
           ],
-          "worstDiffRatio": 0.0062
+          "worstDiffRatio": 0.0448
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 802,
+          "frame": 681,
           "resetCount": 0,
           "fireworkCount": 1,
-          "particlesAlive": 42,
+          "particlesAlive": 58,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 958,
+          "frame": 836,
           "resetCount": 0,
           "fireworkCount": 1,
-          "particlesAlive": 15,
+          "particlesAlive": 28,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -411,21 +414,24 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 6119
+        "totalMs": 5802
       }
     },
     {
       "probeId": "P5",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:27.300Z",
       "precondition": {
         "expr": "P4",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "P4",
             "met": true,
-            "source": "probe P4"
+            "source": "probe P4",
+            "status": "PASS"
           }
         ]
       },
@@ -442,7 +448,7 @@
             "performed": "click @ (1209,25) ui=auto-show"
           }
         ],
-        "durationMs": 153
+        "durationMs": 160
       },
       "stateAssertion": {
         "expr": "$.autoShow == true && $.fireworkCount >= 4",
@@ -457,9 +463,7 @@
           "region": "upper-half",
           "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)"
         },
-        "notes": [
-          "named region \"upper-half\" not geometric; fell back to full frame"
-        ],
+        "notes": [],
         "expect": "多发的连续爆炸亮团(4s 内 >=3 次亮度脉冲)",
         "metrics": {
           "minRatio": 0.01,
@@ -470,39 +474,39 @@
                 "x": 0,
                 "y": 0,
                 "w": 1280,
-                "h": 720
+                "h": 360
               },
-              "diffRatio": 0.0737
+              "diffRatio": 0.0739
             }
           ],
-          "bestDiffRatio": 0.0737
+          "bestDiffRatio": 0.0739
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 1168,
+          "frame": 1026,
           "resetCount": 0,
           "fireworkCount": 1,
-          "particlesAlive": 0,
+          "particlesAlive": 18,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 1414,
+          "frame": 1275,
           "resetCount": 0,
-          "fireworkCount": 4,
-          "particlesAlive": 579,
+          "fireworkCount": 5,
+          "particlesAlive": 727,
           "autoShow": true,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -513,21 +517,24 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 6417
+        "totalMs": 6464
       }
     },
     {
       "probeId": "P6",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:33.764Z",
       "precondition": {
         "expr": "P5",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "P5",
             "met": true,
-            "source": "probe P5"
+            "source": "probe P5",
+            "status": "PASS"
           }
         ]
       },
@@ -544,7 +551,7 @@
             "performed": "click @ (1209,25) ui=auto-show"
           }
         ],
-        "durationMs": 105
+        "durationMs": 145
       },
       "stateAssertion": {
         "expr": "$.autoShow == false",
@@ -559,9 +566,7 @@
           "region": "upper-half",
           "expect": "无新爆炸脉冲(既有粒子仅自然衰减)"
         },
-        "notes": [
-          "named region \"upper-half\" not geometric; fell back to full frame"
-        ],
+        "notes": [],
         "expect": "无新爆炸脉冲(既有粒子仅自然衰减)",
         "metrics": {
           "minRatio": 0.01,
@@ -572,39 +577,39 @@
                 "x": 0,
                 "y": 0,
                 "w": 1280,
-                "h": 720
+                "h": 360
               },
-              "diffRatio": 0.1417
+              "diffRatio": 0.09
             }
           ],
-          "bestDiffRatio": 0.1417
+          "bestDiffRatio": 0.09
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 1549,
+          "frame": 1416,
           "resetCount": 0,
-          "fireworkCount": 8,
-          "particlesAlive": 738,
+          "fireworkCount": 7,
+          "particlesAlive": 627,
           "autoShow": true,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 1705,
+          "frame": 1573,
           "resetCount": 0,
           "fireworkCount": 8,
-          "particlesAlive": 692,
+          "particlesAlive": 634,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -615,21 +620,24 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 4931
+        "totalMs": 4867
       }
     },
     {
       "probeId": "P7",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:38.631Z",
       "precondition": {
         "expr": "P6",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "P6",
             "met": true,
-            "source": "probe P6"
+            "source": "probe P6",
+            "status": "PASS"
           }
         ]
       },
@@ -646,7 +654,7 @@
             "performed": "click @ (1209,60) ui=pause"
           }
         ],
-        "durationMs": 82
+        "durationMs": 175
       },
       "stateAssertion": {
         "expr": "$.enabled == false",
@@ -674,37 +682,37 @@
                 "w": 1280,
                 "h": 720
               },
-              "diffRatio": 0.0809
+              "diffRatio": 0.0847
             }
           ],
-          "bestDiffRatio": 0.0809
+          "bestDiffRatio": 0.0847
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 1846,
+          "frame": 1709,
           "resetCount": 0,
           "fireworkCount": 8,
-          "particlesAlive": 268,
+          "particlesAlive": 283,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 1870,
+          "frame": 1737,
           "resetCount": 0,
           "fireworkCount": 8,
-          "particlesAlive": 259,
+          "particlesAlive": 277,
           "autoShow": false,
           "enabled": false,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "shots": [
@@ -715,21 +723,24 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 2662
+        "totalMs": 2966
       }
     },
     {
       "probeId": "P8",
       "weight": 1,
       "status": "PASS",
+      "startedTs": "2026-10-17T00:12:41.597Z",
       "precondition": {
         "expr": "P7",
         "met": true,
+        "outcome": "PASS",
         "details": [
           {
             "part": "P7",
             "met": true,
-            "source": "probe P7"
+            "source": "probe P7",
+            "status": "PASS"
           }
         ]
       },
@@ -746,7 +757,7 @@
             "performed": "click @ (1209,95) ui=reset"
           }
         ],
-        "durationMs": 89
+        "durationMs": 129
       },
       "stateAssertion": {
         "expr": "$.fireworkCount == 0 && $.particlesAlive == 0 && $.autoShow == false && $.enabled == true && $.buildingCount >= 24",
@@ -773,7 +784,7 @@
                 "w": 1280,
                 "h": 720
               },
-              "litRatio": 0.2718,
+              "litRatio": 0.2563,
               "background": [
                 8,
                 10,
@@ -781,34 +792,34 @@
               ]
             }
           ],
-          "worstLitRatio": 0.2718
+          "worstLitRatio": 0.2563
         }
       },
       "evidence": {
         "stateBefore": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 2006,
+          "frame": 1882,
           "resetCount": 0,
           "fireworkCount": 8,
-          "particlesAlive": 259,
+          "particlesAlive": 277,
           "autoShow": false,
           "enabled": false,
-          "buildingCount": 29,
-          "windowCount": 136,
+          "buildingCount": 28,
+          "windowCount": 123,
           "starCount": 170
         },
         "stateAfter": {
           "engine": "cocosair",
           "ready": true,
-          "frame": 2049,
+          "frame": 1927,
           "resetCount": 1,
           "fireworkCount": 0,
           "particlesAlive": 0,
           "autoShow": false,
           "enabled": true,
-          "buildingCount": 26,
-          "windowCount": 142,
+          "buildingCount": 30,
+          "windowCount": 188,
           "starCount": 170
         },
         "shots": [
@@ -819,7 +830,7 @@
         "networkSince": []
       },
       "timings": {
-        "totalMs": 2976
+        "totalMs": 3092
       }
     }
   ]

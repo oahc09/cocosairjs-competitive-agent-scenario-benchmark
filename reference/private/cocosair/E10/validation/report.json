@@ -1,6 +1,6 @@
 {
-  "runId": "REF-E10-cocosair-r6-reval20261005",
-  "generatedAt": "2026-10-05T06:44:32.125Z",
+  "runId": "REF-E10-cocosair-reval20261017",
+  "generatedAt": "2026-10-16T23:45:37.334Z",
   "harnessVersion": "1.0.0",
   "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E10",
   "spec": {
@@ -21,20 +21,20 @@
   "build": {
     "ok": true,
     "exitCode": 0,
-    "durationMs": 1416,
+    "durationMs": 960,
     "attempts": 1,
     "logFile": "build.log",
     "timedOut": false,
-    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  16.1kb\n\nDone in 17ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 1414ms\n"
+    "log": "$ npm run build\n\n> bench-template-cocosair@1.0.0 build\n> node scripts/build.mjs\n\n\n  dist\\app.js  16.1kb\n\nDone in 12ms\n[build] OK — dist/app.js (engine external) + dist/vendor/cocosair.module.js\n[build] dist/vendor/cocosair.module.js sha256=3ccfdde16441c04d7be17d90ed7f341a48bc2a86e0925ab2ceb74c536451ced6\n\n[exit code 0] duration 959ms\n"
   },
   "serve": {
-    "port": 63685,
+    "port": 52438,
     "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\reference\\private\\cocosair\\E10"
   },
   "ready": {
     "appReady": true,
     "benchReady": true,
-    "durationMs": 1590
+    "durationMs": 649
   },
   "console": {
     "errors": 0,
@@ -100,8 +100,8 @@
   "perf": {
     "fps": 60.3,
     "frames": 181,
-    "sampleMs": 3001,
-    "sampledAt": "2026-10-05T06:45:08.019Z",
+    "sampleMs": 3002,
+    "sampledAt": "2026-10-16T23:46:05.438Z",
     "minFpsSpec": 30,
     "fpsMet": true
   },
@@ -161,7 +161,7 @@
       "buildPass": true,
       "readyNoError": true,
       "firstShotNonBlank": true,
-      "firstShotLitRatio": 0.5498
+      "firstShotLitRatio": 0.5471
     },
     "s2": {
       "passedWeight": 7,
@@ -176,7 +176,7 @@
       "minFps": 30
     }
   },
-  "durationMs": 36431,
-  "finishedAt": "2026-10-05T06:45:08.532Z",
-  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome154.0.8037.97"
+  "durationMs": 30449,
+  "finishedAt": "2026-10-16T23:46:07.773Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40"
 }

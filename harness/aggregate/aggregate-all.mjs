@@ -131,6 +131,11 @@ const outBatches = [];
 const groupMap = new Map();
 const batchQual = {}; // batchId → QUALIFICATION.json 内容(track/qualification 门禁数据源)
 const needsRecalibration = [];
+// ---- 仪器换版分层(toolchain era):量尺冻结时的 inputs.toolchain vs 各臂实测 toolchainFingerprint。
+//      浏览器/Node/esbuild 任一换版 = 测量仪器换版 → toolchainMatch=MISMATCH → 该对排除出 core 分组。
+//      此处只如实把全库划成两个时代,不删除、不改分(历史 trial 不可删)。
+const frozenToolchain = refEpochs ? (Object.values(refEpochs)[0]?.inputs?.toolchain ?? null) : null;
+const toolchainEra = { matched: [], mismatched: [] };
 // coordinator 自测批次(batches.json selftestNote:未运行任何 Agent Run)不进入聚合;
 // 该目录会被 run-round 自测临时重建,聚合若纳入会污染正式看板。
 const SELFTEST_BATCHES = new Set(['B-00010101-R99']);
@@ -259,6 +264,9 @@ for (const b of [...(fs.existsSync(path.join(RESULTS, 'batches.json')) ? rj(path
       const rc = pairCompat[e];
       return rc && rc.compatible === true && rc.mismatchKeys.length === 0 && rc.detail.toolchainMatch === 'matched';
     });
+    const tcObserved = Object.fromEntries(['three', 'cocosair'].map((e) => [e, pairCompat[e]?.detail?.toolchain ?? null]));
+    const tcMatchedAll = ['three', 'cocosair'].every((e) => pairCompat[e]?.detail?.toolchainMatch === 'matched');
+    (tcMatchedAll ? toolchainEra.matched : toolchainEra.mismatched).push({ pair: `${b.batchId}/${pd.name}`, observed: tcObserved });
     const coreEligible = track === 'core'
       && (qualStatus === 'QUALIFIED' || qualStatus === 'QUALIFIED' + '_OBJECTIVE')
       && bothRulerCompatible;
@@ -340,6 +348,15 @@ wj(path.join(RESULTS, 'aggregated.json'), {
   },
   batches: outBatches,
   ...(excludedBatches.length ? { excludedBatches } : {}),
+  toolchainEra: {
+    frozen: frozenToolchain,
+    basis: '量尺账本 inputs.toolchain(Reference 重验时刷新)vs 各臂 validation/report.json 的 toolchainFingerprint',
+    rule: '实验唯一允许变量是引擎;浏览器/Node/esbuild 换版即仪器换版 → 该对排除出 core 分组(fail closed),仅入本分层清单',
+    matchedCount: toolchainEra.matched.length,
+    mismatchedCount: toolchainEra.mismatched.length,
+    matched: toolchainEra.matched,
+    mismatched: toolchainEra.mismatched,
+  },
   groups,
   knowledgeGain,
   referenceCeiling: Object.fromEntries(Object.entries(ceiling).map(([k, v]) => [k.replace(':', '/'), v])),
@@ -351,9 +368,11 @@ wj(path.join(RESULTS, 'aggregated.json'), {
     'FIX-B:attainment>1.03 → arm.ceilingBreach:true + rulerStatus.needsRecalibration(量尺可能被低估,需重校准;不截断)。',
     '新批次无盲评时 provisionalVisualScore=null(visualPending),补跑 build-blind + judge 后重跑本脚本回填。',
     'KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效;G7 未过期间以 objective 口径计算。',
+    `仪器换版分层见 toolchainEra:量尺冻结指纹=${frozenToolchain};与之不同的对不进 core 分组(历史数据保留原样,Re-validation 时须显式 CHROME_V,否则 reference-versions.mjs 会沿用旧账本 Chrome 版本)。`,
   ],
 });
 const n = outBatches.reduce((s, b) => s + b.pairs.length, 0);
 console.log(`aggregated.json: ${outBatches.length} batches / ${n} pairs / ${groups.length} groups / kgEntries=${knowledgeGain.length}`);
 console.log(`  ruler=${refRulerId} g7=${g7Status} formal=${g7Pass ? 'enabled' : 'ALL-NULL(objective 口径照常)'} needsRecalibration=${JSON.stringify(needsRecalibration)}`);
+console.log(`  toolchain=${frozenToolchain} 同仪器对=${toolchainEra.matched.length} 换仪器对(排除出 core)=${toolchainEra.mismatched.length}`);
 for (const g of groups) console.log(`  ${g.scene} ${g.knowledge}: n=${g.n} [${g.scope}] medianΔ=${g.rawDelta.median} CI=${JSON.stringify(g.rawDelta.bootstrapCi95)} W/T/L=${g.winTieLoss.air}/${g.winTieLoss.tie}/${g.winTieLoss.three}`);

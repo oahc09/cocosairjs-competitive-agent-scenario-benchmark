@@ -6,7 +6,9 @@
 // execution.json.toolCallsEvidence(宿主运行时 tool_uses 机器计数)重建同 schema 文件。
 // 口径:
 //   runs        = 双臂都有机器计数的 pair(缺任一臂则整对排除,不猜)
-//   toolUses    = toolCallsEvidence.count(宿主 Agent 工具调用次数,机器口径)
+//   toolUses    = toolCallsEvidence.count(宿主 Agent 工具调用次数,机器口径);
+//                 该字段缺失的臂(如 R03 起的子代理仪器)回退 .budget/toolcall.count 行数,
+//                 逐臂在 run.evidence 记口径来源,不改写任何已落盘计数。
 //   durationSec = execution.json agentStartedAt→agentFinishedAt 跨度(含臂内空闲,偏保守)
 //   tokenRatio  = 'n/a':宿主不持久化每臂 token;自 2026-10-06 起新切片在
 //                 toolCallsEvidence.tokens 记录(subagent usage),攒够后本脚本自动给出
@@ -22,8 +24,27 @@ const ROOT = path.resolve(__dirname, '..', '..');
 const RESULTS = path.join(ROOT, 'results');
 const BATCH_RE = /^B-\d{8}-R\d+$/;
 const rj = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+// 回退口径:harness/runtime/toolcall-recorder.mjs 逐调用落盘的 workspace/.budget/toolcall.count,
+// 一行一次 tool_use(与 qualification budgetToolCallEvidence 读的同一事实源),行数即机器计数。
+const budgetToolcallCount = (pairDir, armDir) => {
+  try {
+    return fs.readFileSync(path.join(pairDir, armDir, 'workspace', '.budget', 'toolcall.count'), 'utf8')
+      .split(/\r?\n/).filter((l) => l.trim()).length;
+  } catch { return null; }
+};
 
 const runs = [];
+// 测量仪器 = 该对臂验证报告里的工具链指纹(node+esbuild+chrome)。浏览器换版即换仪器,
+// 成本比只在同仪器内可比,故逐对登记并给出分组聚合。
+const instrumentOf = (pairDir) => {
+  for (const dir of ['arm-a', 'arm-b']) {
+    try {
+      const fp = rj(path.join(pairDir, dir, 'validation', 'report.json')).toolchainFingerprint;
+      if (fp) return fp;
+    } catch { /* 本臂无报告,试另一臂 */ }
+  }
+  return 'unknown';
+};
 for (const ent of fs.readdirSync(RESULTS, { withFileTypes: true })) {
   if (!ent.isDirectory() || !BATCH_RE.test(ent.name)) continue;
   const batchDir = path.join(RESULTS, ent.name);
@@ -40,7 +61,12 @@ for (const ent of fs.readdirSync(RESULTS, { withFileTypes: true })) {
       const exPath = path.join(pairDir, dir, 'execution.json');
       try {
         const ex = rj(exPath);
-        const n = ex?.toolCallsEvidence?.count;
+        let n = ex?.toolCallsEvidence?.count;
+        let evidence = 'execution.toolCallsEvidence';
+        if (!Number.isFinite(n)) {
+          n = budgetToolcallCount(pairDir, dir);
+          evidence = 'workspace/.budget/toolcall.count(行数)';
+        }
         if (!Number.isFinite(n)) { ok = false; break; }
         const spanSec = (ex.agentStartedAt && ex.agentFinishedAt)
           ? Math.max(0, Math.round((Date.parse(ex.agentFinishedAt) - Date.parse(ex.agentStartedAt)) / 1000))
@@ -48,8 +74,9 @@ for (const ent of fs.readdirSync(RESULTS, { withFileTypes: true })) {
         arms[key] = {
           engine: pj.arms?.[key]?.engine ?? null,
           toolUses: n,
-          tokens: Number.isFinite(ex.toolCallsEvidence.tokens) ? ex.toolCallsEvidence.tokens : null,
+          tokens: Number.isFinite(ex.toolCallsEvidence?.tokens) ? ex.toolCallsEvidence.tokens : null,
           durationSec: spanSec,
+          evidence,
         };
       } catch { ok = false; break; }
     }
@@ -63,8 +90,9 @@ for (const ent of fs.readdirSync(RESULTS, { withFileTypes: true })) {
       scene: pj.sceneId,
       knowledge: pj.knowledge,
       repetition: pj.repetition,
-      three: { toolUses: t.toolUses, durationSec: t.durationSec, tokens: t.tokens },
-      cocosair: { toolUses: a.toolUses, durationSec: a.durationSec, tokens: a.tokens },
+      instrument: instrumentOf(pairDir),
+      three: { toolUses: t.toolUses, durationSec: t.durationSec, tokens: t.tokens, evidence: t.evidence },
+      cocosair: { toolUses: a.toolUses, durationSec: a.durationSec, tokens: a.tokens, evidence: a.evidence },
     });
   }
 }
@@ -78,18 +106,37 @@ const airSec = sum(runs, r => r.cocosair.durationSec);
 const withTokens = runs.filter(r => r.three.tokens != null && r.cocosair.tokens != null);
 const r1 = (v) => Math.round(v * 100) / 100;
 
+// 分仪器聚合:总量比值会把 154 时代与 155 时代的臂混在一起(仪器换版即口径变化),
+// 因此按 measurement instrument 各自给出可比口径;unknown = 该对无验证报告工具链指纹。
+const byInstrument = {};
+for (const r of runs) {
+  const g = byInstrument[r.instrument] ||= { pairs: 0, threeTools: 0, airTools: 0, threeSec: 0, airSec: 0 };
+  g.pairs += 1;
+  g.threeTools += r.three.toolUses ?? 0; g.airTools += r.cocosair.toolUses ?? 0;
+  g.threeSec += r.three.durationSec ?? 0; g.airSec += r.cocosair.durationSec ?? 0;
+}
+for (const [k, g] of Object.entries(byInstrument)) {
+  byInstrument[k] = {
+    pairs: g.pairs,
+    toolRatio: g.threeTools ? r1(g.airTools / g.threeTools) : null,
+    wallTimeRatio: g.threeSec ? r1(g.airSec / g.threeSec) : null,
+  };
+}
+
 const out = {
   generatedAt: new Date().toISOString(),
-  source: '机器口径:各臂 execution.json.toolCallsEvidence(宿主运行时 tool_uses)+ 起止时戳;双臂齐备的 pair 才计入,缺任一臂整对排除',
+  source: '机器口径:各臂 execution.json.toolCallsEvidence(宿主运行时 tool_uses);该字段缺失的臂回退 workspace/.budget/toolcall.count 行数(toolcall-recorder 逐调用落盘,与 qualification 同事实源),两口径逐臂记入 evidence;双臂齐备的 pair 才计入,缺任一臂整对排除',
   coverage: { batches: [...new Set(runs.map(r => r.batch))].sort(), pairs: runs.length },
   runs: runs.map(r => ({
     pair: `${r.pair} @ ${r.batch}`,
+    instrument: r.instrument,
     three: r.three, cocosair: r.cocosair,
     dTools: r.cocosair.toolUses - r.three.toolUses,
   })),
   totals: {
     three: { toolUses: threeTools, durationSec: threeSec },
     cocosair: { toolUses: airTools, durationSec: airSec },
+    byInstrument,
   },
   pairedDeltasAirMinusThree: {
     perPair: runs.map(r => ({
@@ -108,6 +155,7 @@ const out = {
     '已知保守性:个别臂(如 E05@B-20261005-R02)的计数含派发失败重试前的部分工作,使用时注意;',
     'durationSec 为 agentStartedAt→agentFinishedAt 全跨度,含臂内等待,偏保守;',
     'token 口径:宿主不持久化每臂 token;toolCallsEvidence.tokens 字段自 2026-10-06 起由 Runner 在派发后回填(subagent usage),存量批次无法补录。',
+    '跨仪器提示:R03 起的臂用 .budget 行数口径,且批次所属测量仪器(浏览器工具链)不同 —— 成本比只宜同仪器内比较,分层见 results/aggregated.json 的 toolchainEra。',
   ],
 };
 

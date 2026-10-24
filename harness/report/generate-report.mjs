@@ -60,6 +60,9 @@ const ruler = agg.rulerStatus?.rulerId || (typeof agg.rulerStatus === 'string' ?
 L.push('',
   `> 生成:${new Date().toISOString()}(每轮 aggregate 后自动刷新,勿手改;数据源 results/aggregated.json)`,
   `> 量尺:${ruler} | 门禁:G7 视觉 ${gates.G7?.status ?? '—'} / G3 Reference ${gates.G3?.status ?? '—'} | 覆盖批次:${agg.batches.length}`,
+  ...(agg.toolchainEra ? ['> 测量仪器(量尺冻结指纹):`' + agg.toolchainEra.frozen + '`;同仪器入组 '
+    + agg.toolchainEra.matchedCount + ' 对,换仪器排除 ' + agg.toolchainEra.mismatchedCount
+    + ' 对(浏览器/Node/esbuild 换版即仪器换版,被排除的对仍完整保留在 batches 与 toolchainEra 清单中,只是不入正式分组)。'] : []),
   '> 怎么读:Δ = cocosair 得分 − three 得分(**正数 = cocosair 领先**,负数 = three 领先,|Δ|≤3 算平局);',
   '> "客观分"= 构建+行为探针+生命周期(满分 60);"formal 总分"= 客观分 + 代码健康 S4(5)+ 盲评视觉 40,仅双臂数据齐时给出。','');
 

@@ -1,5 +1,5 @@
 {
-  "executablePath": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "executablePath": "E:\\AIProMax\\Y2026M10\\chrome-pin-155.0.8059.40\\chrome.exe",
   "headless": true,
   "viewport": {
     "width": 1280,
@@ -13,6 +13,6 @@
     "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4060 Laptop GPU (0x000028E0) Direct3D11 vs_5_0 ps_5_0, D3D11)"
   },
   "swiftshaderFallback": false,
-  "detectedAt": "2026-10-06T02:25:14.402Z",
-  "notes": "Chrome with default ANGLE backend; WebGL2 OK"
+  "detectedAt": "2026-10-16T23:35:00.000Z",
+  "notes": "PINNED: 系统 Chrome 自动升级(154.0.8037.97→155.0.8059.40,.80 待生效)导致仪器漂移,故把 155.0.8059.40 整棵版本树复制到更新器不可达的 chrome-pin-155.0.8059.40/ 并指向该副本;副本已实测 version=155.0.8059.40 + WebGL2/ANGLE-D3D11 正常。恢复系统浏览器=改回 C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
 }

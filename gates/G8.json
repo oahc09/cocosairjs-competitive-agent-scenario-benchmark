@@ -1,22 +1,40 @@
 {
   "gate": "G8 EVIDENCE_COMPLETENESS",
   "status": "PASS",
-  "validatedAt": "2026-10-05T07:47:25.450Z",
-  "denominator": "eligible/current measurements only:20 Reference 证据链(量尺账本 epochs)+ 当前合格(track=core 且 qualification ∈ {QUALIFIED,QUALIFIED_OBJECTIVE})测量 —— 当前合格 core 测量为 0(方案A 清零后尚未有合格 core pair),故分母 = 20 Reference",
+  "validatedAt": "2026-10-17T00:26:13.233Z",
+  "generator": "harness/report/audit-evidence-g8.mjs(只读审计,可复跑;退出码 0=PASS/3=有缺口)",
+  "evidence": "results/reports/evidence-audit-g8.json",
+  "denominator": "量尺 RULER-20261005-R02(账本 validationRevision 见各条目)+ track=core 且 qualification ∈ [\"QUALIFIED\",\"QUALIFIED_OBJECTIVE\"] 的臂;Reference 分母 = 量尺账本 20 条,合格 core 臂分母 = 42 臂",
   "missingCount": 0,
   "audit": {
-    "perReferenceChecks": [
-      "validation/report.json 存在",
-      "evidenceHash == sha256(report.json)",
-      "code-review.json(S4)存在",
-      "visual-score.json 自包含且 sha256 == 账本 visualEvidence.sha256",
-      "objectiveScore/totalScore 已冻结"
-    ],
-    "result": "20/20 全部通过(results/reports/evidence-audit-g8.json 留档可复跑)"
+    "references": {
+      "checked": 20,
+      "passed": 20,
+      "checks": [
+        "validation/report.json 存在",
+        "evidenceHash == sha256(report.json)",
+        "code-review.json(S4)存在",
+        "visual-score.json 自包含且 sha256 == 账本 visualEvidence.sha256",
+        "objectiveScore/totalScore 已冻结"
+      ]
+    },
+    "qualifiedArms": {
+      "checked": 42,
+      "passed": 42,
+      "checks": [
+        "validation/report.json 存在",
+        "report.spec.sha256 == pair.specSha256",
+        "RUN-META 身份字段齐全",
+        "execution.json 时序+hostFingerprint 盖章",
+        "workspace/.budget/toolcall.count 存在",
+        "盲评材料出现在 batch/blind/visual-scores.json"
+      ]
+    }
   },
   "disclosures": [
-    "B-20261005-R01(targeted-pilot,诊断区):4 臂有 report/RUN-META/execution.json,但无 toolcall.count → qualification PARTIAL(_TIMING),不入分母(资格外如实披露)",
-    "B-20261005-R02(core,E01 pair 已 validated):另一编排会话在跑,qualification 未出;出 qualification 前不入分母",
-    "历史批次 B-20261002-R1/B-20261003-R05 已按方案A删除,无证据缺口可查"
+    "量尺已于 2026-10-17 按钉住 Chrome 155.0.8059.40 重冻结(协议漂移 20 项,rulerId 不变 RULER-20261005-R02,validationRevision 12);账本 evidenceHash/visualEvidence.sha256 全部重写,故 G8 必须复跑而非沿用历史 PASS —— 本次复跑 20/20 Reference + 42/42 合格 core 臂全通过。",
+    "跨仪器口径:154 时代 24 对已被 aggregate 排除出 core 分组(toolchainEra.mismatched),其证据链仍完整保留;合格 core 臂分母中的历史对属旧仪器,证据完整性与正式分组资格是两回事。",
+    "未入分母批次:B-20261017-R01(未鉴定)(批次进行中,鉴定未出)。",
+    "文件隔离为策略级(prompt 约束 + 产物扫描),非 OS 强制;本审计只核证据存在性与自洽,不核隔离未被绕过。"
   ]
 }

@@ -64,7 +64,20 @@ function driftClassification(oldInputs, newInputs) {
 const driftStatus = (d) => (d.semantic.length ? 'STALE' : d.protocol.length ? 'NEEDS_REVALIDATION' : 'CURRENT');
 
 // ---- 当前三输入指纹 ----
-const engineSha = shaFile(path.join(ROOT, 'vendor', 'cocosair.js-1.0.0-k0.tgz')); // AIR 引擎指纹(three 版本由 registry 另记)
+// AIR 引擎指纹:K0 tarball 路径经 engine-versions.json 解析(与 create-pair/run-round 同式,
+// 换引擎只改注册表;tgz 是 sdkDir 的派生工件,由 tools/pack-engine.mjs 保证新鲜);
+// three 版本由 registry 另记。
+function airK0TarballRel() {
+  let rel = 'vendor/cocosair.js-1.0.0-k0.tgz';
+  try {
+    const reg = JSON.parse(fs.readFileSync(path.join(ROOT, 'vendor', 'engine-versions.json'), 'utf8'));
+    const e = reg.engines && reg.engines.cocosair;
+    const v = e && e.versions && e.versions[e.activeVersion];
+    if (v && v.k0Tarball) rel = v.k0Tarball;
+  } catch { /* 注册表缺失/损坏时沿用历史文件名 */ }
+  return rel;
+}
+const engineSha = shaFile(path.join(ROOT, ...airK0TarballRel().split('/')));
 const threePkg = j(path.join(ROOT, 'node_modules', 'three', 'package.json')).version;
 // FIX-B bug 修复:briefs/index.json 是 { entries: [{briefId, version, sha256}] },先建映射再取
 const briefIdx = j(path.join(ROOT, 'briefs', 'index.json'));
