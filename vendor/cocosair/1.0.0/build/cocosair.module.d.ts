@@ -3931,7 +3931,7 @@
          * @param primitiveIndex @en sub mesh index @zh 子网格索引
          * @param dynamicGeometry @en sub mesh geometry data @zh 子网格几何数据
          */
-        updateSubMesh(primitiveIndex: number, dynamicGeometry: primitives.IDynamicGeometry): void;
+        updateSubMesh(primitiveIndex: number, dynamicGeometry: Partial<primitives.IDynamicGeometry>): void;
         /**
          * @en Destroy the mesh and release all related GPU resources
          * @zh 销毁此网格，并释放它占有的所有 GPU 资源。
@@ -7475,6 +7475,8 @@
              * @param regions The region descriptions
              */
             abstract copyTextureToBuffers(texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): void;
+            /** Readback completion is explicit on asynchronous backends. */
+            copyTextureToBuffersAsync(texture: Readonly<Texture>, buffers: ArrayBufferView[], regions: Readonly<BufferTextureCopy[]>): Promise<void>;
             /**
              * @en Copy texture images to texture.
              * @zh 拷贝图像到纹理。
@@ -11498,6 +11500,8 @@
              * @zh 渲染场景管理的主方向光源。
              */
             get mainLight(): scene.DirectionalLight | null;
+            /** Registered ordinary directionals; the legacy forward camera UBO uses mainLight only. */
+            get directionalLights(): readonly scene.DirectionalLight[];
             /**
              * @en All sphere light sources of the render scene.
              * @zh 渲染场景管理的所有球面光源。
@@ -19665,21 +19669,21 @@
          * @zh
          * 注册screen事件回调。
          */
-        on(type: PalScreenEvent, callback: (...args: any) => void, target?: any): void;
+        on(type: sparkRuntime, callback: (...args: any) => void, target?: any): void;
         /**
          * @en
          * Register a callback of a specific screen event type once.
          * @zh
          * 注册单次的screen事件回调。
          */
-        once(type: PalScreenEvent, callback: (...args: any) => void, target?: any): void;
+        once(type: sparkRuntime, callback: (...args: any) => void, target?: any): void;
         /**
          * @en
          * Unregister screen event callback.
          * @zh
          * 取消注册screen事件回调。
          */
-        off(type: PalScreenEvent, callback?: (...args: any) => void, target?: any): void;
+        off(type: sparkRuntime, callback?: (...args: any) => void, target?: any): void;
     }
     /**
      * @en A set of system related variables.
@@ -19899,7 +19903,7 @@
          * @zh
          * 平台相关的特性枚举类型。
          */
-        export type Feature = __private.__types_globals__EnumAlias<typeof Feature>;
+        export type Feature = __private.__types_globals__EnumAlias<typeof sparkRuntime>;
     }
     /**
      * @en
@@ -55515,6 +55519,18 @@
         protected _loop: boolean;
         protected _playOnAwake: boolean;
         protected _volume: number;
+        get loadState(): "empty" | "loading" | "ready" | "error" | "cancelled";
+        /** Options or retry start a fresh attempt; plain calls share the current attempt. */
+        loadAsync(options?: {
+            clip?: AudioClip;
+            timeoutMs?: number;
+            signal?: AbortSignal;
+            retry?: boolean;
+            transport?: "media" | "buffered";
+        }): Promise<void>;
+        cancelLoad(): void;
+        /** Request identity is local to this source; legacy play() keeps its void signature. */
+        playRequest(): AudioPlaybackRequest;
         constructor();
         /**
          * @en
@@ -55631,6 +55647,17 @@
          */
         stop(): void;
         /**
+         * Stop DOM audio and wait until this stop operation completes.
+         * Other loaded backends, or unloaded clips not explicitly requesting DOM audio,
+         * reject with error.code === 'AUDIO_STOP_ASYNC_UNSUPPORTED' without changing playback.
+         * DOM playback is paused and rewound immediately, including an unacknowledged play.
+         * A pending clip load may finish, but playback requested before this call is cancelled.
+         * This promise covers only operations preceding the call: a later play may already
+         * be running when its continuation executes. It does not wait for or emit STARTED.
+         * No player/clip and destroyed sources resolve. Repeated DOM stops are safe.
+         */
+        stopAsync(): Promise<void>;
+        /**
          * @en
          * Plays an AudioClip, and scales volume by volumeScale. The result volume is `audioSource.volume * volumeScale`. <br>
          * @zh
@@ -55677,11 +55704,39 @@
          */
         get playing(): boolean;
     }
+    export interface AudioPlaybackRequest {
+        readonly id: number;
+        /** Real startup acknowledgement, or the terminal result if it happened first. */
+        readonly started: Promise<AudioPlaybackStartResult>;
+        readonly result: Promise<AudioPlaybackResult>;
+        cancel(): void;
+    }
+    export interface AudioPlaybackResult {
+        readonly id: number;
+        readonly status: "ended" | "cancelled" | "failed";
+        readonly error?: unknown;
+    }
+    export type AudioPlaybackStartResult = AudioPlaybackResult | Readonly<{
+        id: number;
+        status: "started";
+    }>;
     export class AudioPCMDataView {
         constructor(arrayBufferView: __private._pal_audio_type__AudioBufferView, normalizeFactor: number);
         constructor(arrayBuffer: ArrayBuffer, Ctor: __private.__types_globals__Constructor<__private._pal_audio_type__AudioBufferView>, normalizeFactor: number);
         get length(): number;
         getData(offset: number): number;
+    }
+    /** Load the optional pinned 3.2.0 module. Does not select a backend or create a world. */
+    export function loadBox2D3(options?: Box2D3Options): Promise<void>;
+    /** Select once, before the 2D system creates its world. Called by createAirApp. */
+    export function selectPhysics2DBackend(backend: "box2d" | "box2d-v3-wasm"): void;
+    /** Backend-specific observability for diagnostics and resource acceptance. */
+    export function getBox2D3Stats(): ReturnType<__private._air_physics_2d_box2d3__Box2D3Module["stats"]> | null;
+    export interface Box2D3Options {
+        /** Directory containing air-box2d.mjs and air-box2d.wasm. Defaults beside the main runtime. */
+        assetBaseUrl?: string;
+        /** Solver subdivisions per fixed physics tick, independent of PhysicsSystem2D.maxSubSteps. Default 4. */
+        subStepCount?: number;
     }
     /** A cooperative cleanup scope; it cannot preempt a blocking synchronous callback. */
     export function createSessionScope(): AirSessionScope;
@@ -55798,7 +55853,25 @@
      * @zh AIR_VERSION 去掉点号后的数字版本：1.0.0 → 100，1.0.1 → 101。
      */
     export const AIR_REVISION = 100;
+    /**
+     * @en Build time in yyyyMMddHHmm, Asia/Shanghai, injected by the AIR build.
+     * Direct source imports return 'unbuilt'. SOURCE_DATE_EPOCH can pin the time.
+     * @zh 编译时间（北京时间 yyyyMMddHHmm），由 AIR 构建自动注入。源码为 'unbuilt'；
+     * 可用 SOURCE_DATE_EPOCH（Unix 秒）固定时间。
+     */
+    export const AIR_BUILD_DATE: string;
+    /**
+     * @en Successful runtime compilation number, starting at 1. Source default is 1.
+     * @zh 运行时编译序号，从 1 开始；每次成功输出 JS 后递增。源码默认值为 1。
+     */
+    export const AIR_BUILD_NUMBER: number;
     export interface AirAppOptions {
+        /** Explicit browser backend. Defaults to WebGL2; WebGPU never silently falls back. */
+        renderer?: "webgl2" | "webgpu";
+        /** Offline shader translator deployment; resolved relative to document.baseURI when provided. */
+        webgpu?: {
+            assetBaseUrl?: string;
+        };
         /** canvas 元素，或 CSS selector 字符串（如 '#game'）。 */
         canvas: HTMLCanvasElement | string;
         /** 可选：强制渲染模式（3 = HEADLESS，供测试/无头环境使用）。 */
@@ -55809,6 +55882,13 @@
          * `'builtin'` 为官方内置离散碰撞检测器（不模拟）。须在 createAirApp 内 game.init 前生效。
          */
         physics?: "builtin" | "cannon";
+        /** Optional 2D backend. Existing JavaScript Box2D remains the default. */
+        physics2D?: "box2d" | "box2d-v3-wasm";
+        /** Separate WASM deployment and solver configuration, used only by box2d-v3-wasm. */
+        box2d3?: {
+            assetBaseUrl?: string;
+            subStepCount?: number;
+        };
         /**
          * 可选：WebGL 上下文丢失状态机（W01）。lost 时默认自动 game.pause() 停止绘制与
          * 业务时钟；恢复路径如实现不能安全重建 GPU 资源，进入 failed 并提供受控重载。
@@ -55886,6 +55966,45 @@
      * ```
      */
     export function createAirApp(options: AirAppOptions): Promise<AirApp>;
+    export function getAirHTMLSourceSupport(canvas: HTMLCanvasElement): {
+        supported: boolean;
+        reason: string | null;
+    };
+    /** Uploads only on canvas paint events. Owns listeners/snapshots, borrows DOM and Texture2D. */
+    export function createAirHTMLSource(options: AirHTMLSourceOptions): {
+        readonly texture: AirHTMLTextureTarget;
+        readonly status: "waiting" | "ready" | "failed" | "disposed";
+        readonly error: unknown;
+        /** Queues a paint; upload completion is signalled by onUpdate/onError. */
+        update(): void;
+        updateGeometry(options: {
+            canvasTransform?: DOMMatrixInit;
+            clip?: DOMRectInit;
+            preserveHitTestOrder?: boolean;
+        }): void;
+        dispose(): void;
+    };
+    /** Experimental, engine-free opt-in entry. A native Texture2D is supplied by the caller. */
+    export interface AirHTMLTextureTarget {
+        readonly width: number;
+        readonly height: number;
+        reset(info: {
+            width: number;
+            height: number;
+            mipmapLevel: number;
+        }): void;
+        getGFXTexture(): unknown;
+    }
+    export interface AirHTMLSourceOptions {
+        canvas: HTMLCanvasElement;
+        element: HTMLElement;
+        texture: AirHTMLTextureTarget;
+        resolution?: number;
+        autoUpdate?: boolean;
+        snapshot?: boolean;
+        onUpdate?: () => void;
+        onError?: (error: unknown) => void;
+    }
     /**
      * @en Select the 3D physics backend before engine initialization. Must be called before
      * `game.init()` (Air does this inside [[createAirApp]]); after the physics world exists
@@ -55941,7 +56060,7 @@
     /** @en Context health state. @zh 上下文健康状态（W01 状态机）。 */
     export type AirContextHealthState = "healthy" | "lost" | "restoring" | "failed";
     /** @en Detected WebGL backend of the attached canvas. @zh 画布实际使用的 WebGL 后端。 */
-    export type AirContextBackend = "webgl2" | "none" | "unknown";
+    export type AirContextBackend = "webgl2" | "webgpu" | "none" | "unknown";
     /** @en Readable point-in-time health report. @zh 可轮询的健康快照。 */
     export interface AirContextHealthSnapshot {
         state: AirContextHealthState;
@@ -55982,6 +56101,13 @@
     /** @en Health handle exposed on [[AirApp]]. @zh 挂在 AirApp 上的健康句柄。 */
     export interface AirContextHealth {
         snapshot(): AirContextHealthSnapshot;
+        /** Observe the actual initialized WebGPU device without acquiring another canvas context. */
+        watchWebGPUDevice(device: {
+            readonly lost: Promise<{
+                readonly reason: string;
+                readonly message: string;
+            }>;
+        }): void;
         /** 订阅状态迁移，返回退订函数。 */
         onChange(cb: (snapshot: AirContextHealthSnapshot) => void): () => void;
         /**
@@ -56426,6 +56552,443 @@
         protected _render(renderer: __private._cocos_2d_renderer_i_batcher__IBatcher): void;
         /** @internal Keeps the packed texture and original page alive through dynamic-atlas restoration. */
         refreshFrame(): void;
+    }
+    /** @en Which size the fitter may write on one axis. @zh 单轴自适应模式。 */
+    export type AirFitMode = "off" | "min" | "preferred";
+    /** @en Intrinsic sizes returned by a measurer. @zh 测量器返回的固有尺寸。 */
+    export interface AirFitMeasure {
+        minWidth?: number;
+        minHeight?: number;
+        preferredWidth?: number;
+        preferredHeight?: number;
+    }
+    /** @en Custom measurer hook; return null to fall back to the built-in sources. @zh 自定义测量钩子，返回 null 回落内置测量。 */
+    export type AirFitMeasureFn = (fitter: AirContentSizeFitter) => AirFitMeasure | null;
+    /**
+     * @en Resizes the node's UITransform to the intrinsic size of its content.
+     * @zh 按节点内容的固有尺寸回写 `UITransform` 内容尺寸。
+     *
+     * @example
+     * ```ts
+     * const fitter = node.addComponent(AirContentSizeFitter);
+     * fitter.horizontalFit = 'preferred';
+     * fitter.verticalFit = 'preferred';
+     * ```
+     */
+    export class AirContentSizeFitter extends Component {
+        /** @en Recompute in `update` while dirty. Set false to drive {@link fitNow} yourself. @zh 置 true 时每帧按脏标记重算；关闭后由 fitNow 手动驱动。 */
+        autoFit: boolean;
+        protected _horizontalFit: AirFitMode;
+        protected _verticalFit: AirFitMode;
+        protected _measure: AirFitMeasureFn | null;
+        protected _affectedByScale: boolean;
+        protected _dirty: boolean;
+        /** @en Horizontal fit mode. @zh 水平轴自适应模式。 */
+        get horizontalFit(): AirFitMode;
+        set horizontalFit(value: AirFitMode);
+        /** @en Vertical fit mode. @zh 垂直轴自适应模式。 */
+        get verticalFit(): AirFitMode;
+        set verticalFit(value: AirFitMode);
+        /** @en Optional custom measurer; wins over the built-in sources. @zh 可选自定义测量器，优先于内置测量源。 */
+        get measure(): AirFitMeasureFn | null;
+        set measure(value: AirFitMeasureFn | null);
+        /** @en Whether child scale counts toward the children bounding box, like `Layout.affectedByScale`. @zh 子节点缩放是否计入包围盒测量，语义同 `Layout.affectedByScale`。 */
+        get affectedByScale(): boolean;
+        set affectedByScale(value: boolean);
+        protected onEnable(): void;
+        protected onDisable(): void;
+        protected update(): void;
+        /** @en Mark the fitter dirty; the next `update` (or {@link fitNow}) recomputes. Call this after you change the measured content. @zh 置脏；内容变化后调用，下一次 update 或 fitNow 时重算。 */
+        markDirty(): void;
+        /**
+         * @en Measure and apply immediately. Returns true when the content size changed.
+         * @zh 立即测量并回写尺寸；内容尺寸发生变化时返回 true。
+         */
+        fitNow(): boolean;
+        protected _axisSize(source: AirFitMeasure, axis: "Width" | "Height", mode: AirFitMode): number | null;
+        protected _assertFitMode(field: string, value: AirFitMode): void;
+        /**
+         * Content that lays itself out lazily (a Label's assembler pass, a Layout relayout) reports back
+         * through these node events, so the fitter has to be woken up rather than only measured on demand.
+         * Binding set mirrors upstream `Layout._addChildrenEventListeners`.
+         */
+        protected _bindChildren(): void;
+        protected _unbindChildren(): void;
+        protected _addChildListeners(child: Node): void;
+        protected _removeChildListeners(child: Node): void;
+        protected _onChildAdded(child: Node): void;
+        protected _onChildRemoved(child: Node): void;
+    }
+    /**
+     * @en Resolve the integer device-pixels-per-UI-unit ratio a camera should render at. Floored at 1:
+     *  when the buffer is smaller than the reference area, show less of it rather than scaling below
+     *  1:1.
+     * @zh 求出相机应当使用的"设备像素 / UI 单位"整数倍率。下限为 1：缓冲比参考区域还小时，
+     *  宁可少显示一块，也不做小于 1:1 的整数缩放。
+     */
+    export function resolveAirPixelRatio(vp: AirPixelViewport, options?: AirPixelRatioOptions): number;
+    /**
+     * @en Orthographic half sizes that make the camera cover `pixelRatio` device pixels per UI unit
+     *  across its viewport.
+     * @zh 让相机在其视口内达到"每 UI 单位 `pixelRatio` 个设备像素"的正交半宽高。
+     */
+    export function airPixelOrtho(vp: AirPixelViewport, pixelRatio: number): {
+        orthoHeight: number;
+        orthoWidth: number;
+    };
+    /** @en Rounding used when picking the automatic integer scale. @zh 自动推导整数倍率时的舍入方式。 */
+    export type AirPixelRounding = "nearest" | "down";
+    /**
+     * @en Everything the pixel grid needs to know about one orthographic camera, expressed as plain
+     *  numbers so the math stays testable without a running app.
+     * @zh 推导像素网格所需的正交相机状态，全部用裸数值表达，便于不启动 app 直接单测。
+     */
+    export interface AirPixelViewport {
+        /** @en Framebuffer size in device pixels. @zh 帧缓冲尺寸（设备像素）。 */
+        windowWidth: number;
+        windowHeight: number;
+        /** @en Normalized viewport rect (`Camera.rect`). @zh 归一化视口（`Camera.rect`）。 */
+        viewportX: number;
+        viewportY: number;
+        viewportWidth: number;
+        viewportHeight: number;
+        /** @en Camera node world position, in UI units. @zh 相机节点世界坐标（UI 单位）。 */
+        cameraX: number;
+        cameraY: number;
+        /** @en Orthographic half height, in UI units. @zh 正交半高（UI 单位）。 */
+        orthoHeight: number;
+        /**
+         * @en Orthographic half width in UI units; `0` means "derive from the viewport aspect",
+         *  which is what the upstream camera does.
+         * @zh 正交半宽（UI 单位）；`0` 表示按上游规则由视口宽高比推导。
+         */
+        orthoWidth: number;
+    }
+    /** @en Options that steer automatic ratio resolution. @zh 自动倍率求解选项。 */
+    export interface AirPixelRatioOptions {
+        /** @en Exact ratio to use; `0` keeps the automatic guess. @zh 指定倍率，`0` 为自动推导。 */
+        pixelRatio?: number;
+        /**
+         * @en Reference height in UI units (Unity `refResolutionY` stand-in). `0` uses the
+         *  currently visible height.
+         * @zh 参考高度（UI 单位，Unity `refResolutionY` 的对应物）。`0` 用当前可见高度。
+         */
+        referenceHeight?: number;
+        /** @en How to round the automatic ratio. @zh 自动倍率的舍入方式。 */
+        rounding?: AirPixelRounding;
+    }
+    /** @en Axis-aligned rect in UI units, position being the anchor point. @zh UI 单位下的矩形，位置为锚点。 */
+    export interface AirPixelRect {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }
+    /**
+     * @en Device-pixel grid for one camera viewport. The scales are read back from the camera state,
+     *  so the grid always describes the mapping that is really about to render — integer or not;
+     *  `roundX/roundY` snap a UI coordinate onto the nearest pixel boundary either way.
+     * @zh 单个相机视口对应的设备像素网格。缩放值直接读自相机状态，因此它表示本帧真正生效的映射，
+     *  是否为整数都能用 `roundX/roundY` 吸附到最近的像素边界。
+     */
+    export class AirPixelGrid {
+        /** @en Device pixels per UI unit on X. @zh X 轴设备像素 / UI 单位。 */
+        readonly scaleX: number;
+        /** @en Device pixels per UI unit on Y. @zh Y 轴设备像素 / UI 单位。 */
+        readonly scaleY: number;
+        /** @en UI coordinate mapping to framebuffer column 0. @zh 映射到帧缓冲第 0 列的 UI 坐标。 */
+        readonly originX: number;
+        /** @en UI coordinate mapping to framebuffer row 0. @zh 映射到帧缓冲第 0 行的 UI 坐标。 */
+        readonly originY: number;
+        constructor(vp: AirPixelViewport);
+        /** @en Device pixel column for a UI x. @zh UI x 对应的设备像素列。 */
+        toPixelX(uiX: number): number;
+        /** @en Device pixel row for a UI y. @zh UI y 对应的设备像素行。 */
+        toPixelY(uiY: number): number;
+        /** @en UI x of the pixel boundary nearest `uiX`. @zh 距 `uiX` 最近的像素边界对应 UI x。 */
+        roundX(uiX: number): number;
+        /** @en UI y of the pixel boundary nearest `uiY`. @zh 距 `uiY` 最近的像素边界对应 UI y。 */
+        roundY(uiY: number): number;
+        /**
+         * @en Snap both edges of a rect onto pixel boundaries while keeping the anchor over the same
+         *  corner. An axis narrower than half a pixel keeps its authored extent instead of collapsing.
+         * @zh 把矩形两条边都吸附到像素边界，锚点仍指向同一角；不足半像素的轴保留原尺寸，避免塌成 0。
+         */
+        snapRect(centerX: number, centerY: number, width: number, height: number, anchorX: number, anchorY: number, out?: AirPixelRect): AirPixelRect;
+    }
+    /**
+     * @en Put one 2D/UI layer onto the device-pixel grid and, unless disabled, lock its camera to an
+     *  integer scale. Attach it to the layers that must be pixel perfect and leave the ones that must
+     *  keep fractional scaling alone.
+     * @zh 把一层 2D/UI 内容放到设备像素网格上，并（默认）把它的相机锁到整数缩放。
+     *  需要像素完美的层挂本组件，需要保持非整数缩放的层不挂即可。
+     *
+     * @en Unity counterpart: `PixelPerfectCamera` on the camera side, `Canvas.pixelPerfect` and
+     *  `PixelPerfectHorizontalLayoutGroup` on the transform side.
+     * @zh Unity 对应物：相机侧 `PixelPerfectCamera`，变换侧 `Canvas.pixelPerfect` 与
+     *  `PixelPerfectHorizontalLayoutGroup`。
+     */
+    export class AirPixelPerfect extends Component {
+        /**
+         * @en Keep the camera at an integer device-pixels-per-UI-unit ratio.
+         * @zh 是否把相机锁定为"每 UI 单位整数个设备像素"。
+         */
+        snapCamera: boolean;
+        /**
+         * @en Snap node world positions in this subtree onto pixel boundaries.
+         * @zh 是否把本子树节点的世界坐标吸附到像素边界。
+         */
+        snapPosition: boolean;
+        /**
+         * @en Snap `UITransform` content sizes too, so both edges land on pixel boundaries. Off by
+         *  default: `Label` writes its laid-out size during the render-data pass that follows our snap.
+         * @zh 是否同时吸附 `UITransform` 尺寸，让两条边都落在像素边界上。默认关闭：`Label` 的排版尺寸
+         *  是在我们之后的渲染数据阶段回写的。与 {@link snapPosition} 同时开启才是"两条边都对齐"，
+         *  单独开启只按锚点伸缩尺寸。
+         */
+        snapSizes: boolean;
+        /** @en Exact integer ratio; `0` resolves it automatically. @zh 指定整数倍率，`0` 为自动推导。 */
+        pixelRatioOverride: number;
+        /** @en Reference height in UI units; `0` uses the currently visible height. @zh 参考高度（UI 单位），`0` 用当前可见高度。 */
+        referenceHeight: number;
+        /** @en Rounding for the automatic ratio. @zh 自动倍率的舍入方式。 */
+        rounding: AirPixelRounding;
+        /** @en Camera to drive; otherwise take this node's `Canvas` camera or its own `Camera`. @zh 要驱动的相机；留空则取本节点 `Canvas` 的相机或本节点自身的 `Camera`。 */
+        camera: Camera | null;
+        /** @en Snap once per `BEFORE_DRAW`. @zh 是否每帧 `BEFORE_DRAW` 吸附一次。 */
+        autoSnap: boolean;
+        /** @en Device pixels per UI unit currently applied to this layer; `0` before the first snap. */
+        get pixelRatio(): number;
+        /** @en Current grid; `null` until the first successful snap. @zh 当前网格；首次吸附成功前为 `null`。 */
+        get grid(): AirPixelGrid | null;
+        protected onEnable(): void;
+        protected onDisable(): void;
+        /**
+         * @en Snap once, right now — for code that moves content later than `BEFORE_DRAW` (a tween
+         *  completion, a manual `Layout.updateLayout()`).
+         * @zh 立即吸附一次：供比 `BEFORE_DRAW` 更晚改动内容的代码使用（补间收尾、手动
+         *  `Layout.updateLayout()`）。
+         * @return Whether anything changed. @returns 是否有实际改动。
+         */
+        snapNow(): boolean;
+        /**
+         * @en The grid the current camera viewport implies, without snapping or changing the camera.
+         *  Lets a probe build its expectations in the same coordinate frame it is going to measure.
+         * @zh 按当前相机视口算出网格，不吸附、不改相机。让验收探针能用与测量同一套坐标系来摆期望值。
+         * @return `null` when there is no usable camera or the viewport is degenerate.
+         */
+        peekGrid(): AirPixelGrid | null;
+        /**
+         * @en Snap a world coordinate onto the grid, keeping z — the `RoundToPixel` counterpart.
+         *  Identity while no grid exists.
+         * @zh 把世界坐标吸附到网格，z 原样保留；对应 Unity 的 `RoundToPixel`。网格未建立时原样返回。
+         */
+        roundToPixel(x: number, y: number, z?: number): {
+            x: number;
+            y: number;
+            z: number;
+        };
+    }
+    /** Owns one independent overlay; never changes game.container or the host's styles. */
+    export function createAirDOMOverlay(options: AirDOMOverlayOptions): AirDOMOverlay;
+    export interface AirDOMOverlayOptions {
+        canvas: HTMLCanvasElement;
+        host?: HTMLElement;
+        className?: string;
+    }
+    export interface AirDOMOverlayBinding {
+        /** Call after camera/node changes, or from the application's frame callback. */
+        update(): void;
+        dispose(): void;
+    }
+    export interface AirDOMOverlay {
+        readonly root: HTMLDivElement;
+        /** Element is borrowed and restored to its original DOM position on detach. */
+        attach(element: HTMLElement, node: Node, camera: Camera, options?: {
+            width?: number;
+            height?: number;
+            anchor?: readonly [
+                number,
+                number
+            ];
+        }): AirDOMOverlayBinding;
+        update(): void;
+        dispose(): void;
+    }
+    /** Texture is borrowed; owns the frame and node. No texture metadata is mutated. */
+    export function createAirTextureSprite(parent: Node, texture: __private._cocos_asset_assets_texture_base__TextureBase, options?: AirTextureSpriteOptions): {
+        readonly node: Node;
+        readonly sprite: Sprite;
+        readonly frame: SpriteFrame;
+        refresh(): void;
+        dispose(): void;
+    };
+    export interface AirTextureSpriteOptions extends SpriteNodeOptions {
+        name?: string;
+        anchor?: readonly [
+            number,
+            number
+        ];
+    }
+    export function validateAirGraphicsCommands(commands: readonly AirGraphicsCommand[], bounds?: AirGraphicsBounds): void;
+    /** Solid native replay; richer paints/holes use rasterizeAirGraphics, never silently degrade. */
+    export function drawAirGraphics(graphics: GraphicsComponent, commands: readonly AirGraphicsCommand[], clear?: boolean): void;
+    /** SVG preserves original curves and per-paint styles; cannot reconstruct arbitrary Graphics.impl. */
+    export function airGraphicsCommandsToSvg(commands: readonly AirGraphicsCommand[], bounds: AirGraphicsBounds): string;
+    /** Data only; replay uses the original Cocos Graphics component. Coordinates are Y up. */
+    export type AirGraphicsCommand = {
+        op: "moveTo" | "lineTo";
+        args: readonly [
+            number,
+            number
+        ];
+    } | {
+        op: "bezierCurveTo";
+        args: readonly [
+            number,
+            number,
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "quadraticCurveTo";
+        args: readonly [
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "arc";
+        args: readonly [
+            number,
+            number,
+            number,
+            number,
+            number,
+            boolean
+        ];
+    } | {
+        op: "rect" | "ellipse";
+        args: readonly [
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "roundRect";
+        args: readonly [
+            number,
+            number,
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "circle";
+        args: readonly [
+            number,
+            number,
+            number
+        ];
+    } | {
+        op: "close";
+    } | {
+        op: "fill";
+        paint: AirGraphicsPaint;
+        rule?: "nonzero" | "evenodd";
+    } | {
+        op: "stroke";
+        paint: AirSolidPaint;
+        width: number;
+        cap?: "butt" | "round" | "square";
+        join?: "miter" | "round" | "bevel";
+    };
+    export interface AirSolidPaint {
+        color: string;
+        opacity?: number;
+    }
+    export interface AirGradientStop {
+        offset: number;
+        color: string;
+        opacity?: number;
+    }
+    export type AirAffine2D = readonly [
+        number,
+        number,
+        number,
+        number,
+        number,
+        number
+    ];
+    export type AirGraphicsPaint = AirSolidPaint | {
+        kind: "linear";
+        from: readonly [
+            number,
+            number
+        ];
+        to: readonly [
+            number,
+            number
+        ];
+        stops: readonly AirGradientStop[];
+    } | {
+        kind: "radial";
+        center: readonly [
+            number,
+            number
+        ];
+        radius: number;
+        stops: readonly AirGradientStop[];
+    } | {
+        kind: "pattern";
+        image: CanvasImageSource;
+        width: number;
+        height: number;
+        textureSpace?: "local" | "global";
+        transform?: AirAffine2D;
+        sourceURL?: string;
+    };
+    export interface AirGraphicsBounds {
+        x: number;
+        y: number;
+        width: number;
+        height: number;
+    }
+    /** Canvas2D rasterizes rich paints into a native Texture2D. Explicit updates; no perpetual upload loop. */
+    export function rasterizeAirGraphics(commands: readonly AirGraphicsCommand[], options: AirGraphicsRasterOptions): {
+        readonly texture: Texture2D;
+        readonly canvas: HTMLCanvasElement;
+        update(commands?: readonly AirGraphicsCommand[], options?: AirGraphicsRasterOptions): void;
+        dispose(): void;
+    };
+    export interface AirGraphicsRasterOptions {
+        bounds: AirGraphicsBounds;
+        resolution?: number;
+        /** Local -> world affine matrix. Required for global patterns. Call update when it changes. */
+        worldTransform?: AirAffine2D;
+    }
+    /** Explicit opt-in subtree controller. Native nodes gain no implicit global blend inheritance. */
+    export function createAirUIBlendScope(root: Node, mode?: AirUIBlendMode): {
+        set(node: Node, mode: AirUIBlendMode | null): void;
+        update(): void;
+        dispose(): void;
+    };
+    export type AirUIBlendMode = "normal" | "add" | "multiply";
+    /** Per-sprite mask in normalized content UVs; supports trimmed/rotated atlas frames. */
+    export function attachAirSpriteMask(sprite: Sprite, texture: __private._cocos_asset_assets_texture_base__TextureBase, options?: AirSpriteMaskOptions): {
+        readonly material: Material;
+        update(): void;
+        dispose(): void;
+    };
+    export interface AirSpriteMaskOptions {
+        channel?: "alpha" | "red";
+        mode?: "soft" | "threshold";
+        threshold?: number;
+        inverted?: boolean;
     }
     /** @en A persistent page handle. @zh 常驻页面句柄。 */
     export interface PageHandle {
@@ -57133,6 +57696,216 @@
         }): Float32Array | Uint8Array;
         dispose(): void;
     }
+    /**
+     * @en Assemble and register a full-screen effect asset at runtime. Returns an asset the caller
+     *  owns (addRef while a material uses it, destroy when done).
+     * @zh 运行期装配并注册一个全屏 effect 资产。返回的资产由调用方持有（材质使用期间 addRef，用完
+     *  destroy）；调用时机与 `createAirRenderTarget` 一样必须在 `createAirApp()` 之后。
+     */
+    export function createAirScreenEffect(options: AirScreenEffectOptions): EffectAsset;
+    export interface AirScreenEffectOptions {
+        /** @en Effect name; must be unique, registration keeps it until the asset is destroyed. @zh effect 名，必须唯一，注册后直到资产销毁才释放。 */
+        name: string;
+        /**
+         * @en GLSL ES 3.00 fragment body (helper functions plus `void main()`), written after the
+         *  generated preamble that declares `v_uv`, the `Constants` block, the samplers and
+         *  `cc_FragColor`.
+         * @zh 片元主体（辅助函数 + `void main()`），接在自动生成的声明之后：`v_uv`、`Constants`
+         *  块、采样器和 `cc_FragColor` 都已声明好，主体只需写它们并使用 `cc_FragColor` 输出。
+         */
+        body: string;
+        /** @en `vec4` members of the generated `Constants` block, in declaration order. @zh 生成的 `Constants` 块的 vec4 成员，按声明顺序。 */
+        constants: readonly string[];
+        /** @en `sampler2D` names, bound after the `Constants` block. @zh sampler2D 名称，接在 `Constants` 块之后绑定。 */
+        samplers?: readonly string[];
+        /** @en Boolean macro names the material can switch on through `initialize({ defines })`. @zh 可通过 material `initialize({ defines })` 打开的布尔宏名。 */
+        defines?: readonly string[];
+        /** @en Initial values for the pass properties; every key must be a declared constant. @zh pass 属性初值，键必须是已声明的常量。 */
+        defaults?: Readonly<Record<string, readonly number[]>>;
+    }
+    /**
+     * @en Route one camera's output through a full-screen effect and draw the result with an owned
+     *  higher-priority camera.
+     * @zh 把源相机的输出接到全屏效果上，由本 pass 自持的高优先级相机把结果画回屏幕。
+     */
+    export function createAirScreenPass(options: AirScreenPassOptions): AirScreenPass;
+    /**
+     * @en Default node layer for the full-screen quad. Bits 20-31 are engine-preserved
+     *  (`src/cocos/scene-graph/layers.ts:33-45`), and 1 << 25 is UI_2D, which every UI camera can see.
+     * @zh 全屏 quad 的默认图层。20~31 位是引擎保留位（`src/cocos/scene-graph/layers.ts:33-45`），
+     *  而 `1 << 25` 是 UI_2D，会被所有 UI 相机看到，所以这里取一个用户位。
+     */
+    export const AIR_SCREEN_PASS_LAYER: number;
+    /** @en A `vec4` constant, given as a Vec4, a Color or four finite numbers. @zh vec4 常量：Vec4、Color 或四个有限数。 */
+    export type AirScreenConstant = math.Vec4 | math.Color | readonly number[];
+    export interface AirScreenPassOptions {
+        /** @en Camera whose output is post-processed. @zh 被后处理的源相机。 */
+        camera: Camera;
+        /** @en Effect from `createAirScreenEffect`; the pass holds a reference to it. @zh `createAirScreenEffect` 产出的 effect，本 pass 持有一份引用。 */
+        effect: EffectAsset;
+        /** @en Name of the sampler2D that receives the source colour. @zh 接收源颜色的 sampler2D 名称。 */
+        sampler: string;
+        /** @en Initial `vec4` constants, applied through the same path as `setConstant`. @zh 初始 vec4 常量，走与 `setConstant` 相同的写入路径。 */
+        constants?: Readonly<Record<string, AirScreenConstant>>;
+        /** @en Quad layer; must stay invisible to every other camera. @zh quad 图层，必须对其他相机不可见。 */
+        layer?: number;
+        /** @en Output camera priority; defaults to the source camera priority plus one. @zh 输出相机优先级，默认源相机优先级 +1。 */
+        priority?: number;
+        /** @en Render-target resolution scale relative to the viewport in device pixels. @zh 相对视口设备像素的 RT 分辨率倍率。 */
+        resolutionScale?: number;
+        /** @en RT filtering; `nearest` keeps the 1:1 pixel mapping exact. @zh RT 滤波方式，`nearest` 保持 1:1 像素对应。 */
+        filter?: "nearest" | "linear";
+        /** @en RT colour format. @zh RT 颜色格式。 */
+        colorFormat?: AirTargetColorFormat;
+        /** @en RT depth attachment; keep the default when the source camera renders 3D. @zh RT 深度附件，源相机渲染 3D 时保持默认。 */
+        depthFormat?: "none" | "depth24-stencil8";
+        /**
+         * @en Multisample count for the render target. The window framebuffer is usually multisampled,
+         *  so a target with `1` sample re-rasterises every edge without that smoothing; match the
+         *  window's count when the pass must reproduce the direct path pixel for pixel. A driver that
+         *  refuses the request settles on the closest supported count instead of throwing — read
+         *  `info.samples` for what the target actually got.
+         * @zh RT 的采样数。屏幕帧缓冲默认是多重采样的，`1` 会让所有边在重画时丢掉这层平滑；
+         *  要求 pass 与直连路径逐像素一致时，把这里设成窗口实际的采样数。驱动不接受请求值时会自动
+         *  降到最近的支持档位而不是抛错，实际拿到多少看 `info.samples`。
+         */
+        samples?: 1 | 2 | 4 | 8;
+        /** @en Clear colour of the screen window behind the quad. @zh quad 之后屏幕窗口的清屏色。 */
+        clearColor?: math.Color;
+        /**
+         * @en Called with the render-target size whenever it changes, including once at creation.
+         *  Effects that need the viewport aspect push their constant from here.
+         * @zh RT 尺寸变化时回调（创建时也会调用一次）。需要视口宽高比的效果从这里写回自己的常量。
+         */
+        onResize?: (width: number, height: number) => void;
+        /** @en Prefix for the owned nodes. @zh 自建节点的名字前缀。 */
+        name?: string;
+    }
+    export interface AirScreenPassInfo {
+        readonly width: number;
+        readonly height: number;
+        /** @en Multisample count the render target actually got, which can be below the request. @zh RT 实际拿到的采样数，可能低于请求值。 */
+        readonly samples: number;
+        readonly layer: number;
+        readonly priority: number;
+        readonly enabled: boolean;
+        readonly disposed: boolean;
+    }
+    export interface AirScreenPass {
+        /** @en Material of the full-screen quad; owns the effect's constants and sampler. @zh 全屏 quad 的材质。 */
+        readonly material: Material;
+        /** @en Render target holding the source camera output. @zh 承载源相机输出的渲染目标。 */
+        readonly target: AirRenderTarget;
+        /** @en Owned output camera that draws the quad back to the screen. @zh 自持的输出相机。 */
+        readonly camera: Camera;
+        /** @en Node carrying the quad renderer. @zh 挂载 quad 的节点。 */
+        readonly quadNode: Node;
+        readonly enabled: boolean;
+        readonly info: Readonly<AirScreenPassInfo>;
+        setConstant(key: string, value: AirScreenConstant): void;
+        setEnabled(enabled: boolean): void;
+        /** @en Re-read the viewport; runs automatically before the source camera renders. @zh 主动同步视口；源相机渲染前会自动执行。 */
+        syncViewport(): void;
+        dispose(): void;
+    }
+    /**
+     * @en Post-process one camera with a full-screen vignette.
+     * @zh 给一个相机接上全屏暗角。返回句柄持有 effect、材质、节点与 render target，`dispose()`
+     *  按 sampler unbind → camera detach → 资源释放回收，并把源相机接回原来的输出。
+     */
+    export function attachAirVignette(camera: Camera, options?: AirVignetteOptions): AirVignette;
+    export interface AirVignetteOptions {
+        /** @en Only `classic` exists; `masked` would need a mask texture this module does not carry. @zh 只实现 `classic`；`masked` 需要本模块未提供的遮罩纹理。 */
+        mode?: "classic";
+        /** @en Tint multiplied into the darkened area. @zh 变暗区域乘上的色调。 */
+        color?: math.Color;
+        /** @en Falloff centre, expressed as an offset from the viewport centre (Unity's convention). @zh 暗角中心，按 Unity 约定用相对视口中心的偏移表达。 */
+        center?: {
+            x: number;
+            y: number;
+        };
+        /** @en Size of the clear area; larger shrinks the vignette. @zh 亮区大小，越大暗角越小。 */
+        intensity?: number;
+        /** @en Width of the falloff band, 0..1. @zh 过渡带宽度，0..1。 */
+        smoothness?: number;
+        /** @en Exponent applied to each axis before the distance is measured. @zh 距离度量前施加在每个轴上的指数。 */
+        roundness?: number;
+        /** @en Circular instead of rectangular falloff. @zh 用圆形衰减替代矩形衰减。 */
+        rounded?: boolean;
+        /** @en Overall strength, 0..1. @zh 总体强度，0..1。 */
+        opacity?: number;
+        /** @en Quad layer for the underlying pass. @zh 底层 pass 的 quad 图层。 */
+        layer?: number;
+        /**
+         * @en Render-target colour format. The default `rgba8` keeps the source camera's own output
+         *  byte-exact for solid colours; `srgb8-alpha8` is the option for pipelines that blend
+         *  partial-coverage fragments against an sRGB backbuffer.
+         * @zh RT 颜色格式。默认 `rgba8` 对纯色像素保持源相机输出一致；`srgb8-alpha8` 是给
+         *  "半覆盖片元要按 sRGB 帧缓冲混合"的场景准备的开关。
+         */
+        colorFormat?: AirTargetColorFormat;
+        /**
+         * @en Render-target multisample count; set it to the window framebuffer's count so anti-aliased
+         *  edges survive the round trip unchanged. `pass.info.samples` reports what the target got.
+         * @zh RT 的采样数；设成屏幕帧缓冲的采样数，抗锯齿边缘才能在往返后保持不变。实际档位看
+         *  `pass.info.samples`。
+         */
+        samples?: 1 | 2 | 4 | 8;
+        /** @en Name prefix for the owned effect and nodes. @zh 自建 effect 与节点的名字前缀。 */
+        name?: string;
+    }
+    export interface AirVignette {
+        /** @en Underlying full-screen pass; its `target` is where the source camera now renders. @zh 底层全屏 pass，其 `target` 就是源相机现在的输出。 */
+        readonly pass: AirScreenPass;
+        readonly settings: Readonly<__private._air_effects_vignette__AirVignetteSettings>;
+        setOptions(next: AirVignetteOptions): void;
+        setEnabled(enabled: boolean): void;
+        dispose(): void;
+    }
+    /**
+     * @en Post-process one camera with a single-pass bloom.
+     * @zh 给一个相机接上单 pass 泛光。生命周期与 `attachAirVignette` 相同：`dispose()` 归还源相机
+     *  的输出并释放本句柄创建的 effect/材质/节点/render target。
+     */
+    export function attachAirBloom(camera: Camera, options?: AirBloomOptions): AirBloom;
+    export interface AirBloomOptions {
+        /** @en Weight of the added glow. @zh 叠加辉光的权重。 */
+        intensity?: number;
+        /** @en Luminance a tap must pass before it contributes. @zh 采样点亮度超过该阈值才贡献辉光。 */
+        threshold?: number;
+        /** @en Soft-knee width as a fraction of the threshold, 0..1. @zh 以阈值比例表达的软拐点宽度，0..1。 */
+        softKnee?: number;
+        /** @en Per-tap contribution cap in LDR units. @zh 单个采样点贡献的上限（LDR 0..1 量纲）。 */
+        clamp?: number;
+        /** @en Kernel radius in device pixels. @zh 卷积核半径，单位是设备像素。 */
+        diffusion?: number;
+        /** @en -1 vertical streak, 0 isotropic, 1 horizontal streak. @zh -1 竖向拉丝，0 各向同性，1 横向拉丝。 */
+        anamorphicRatio?: number;
+        /** @en Tint multiplied into the glow. @zh 辉光叠加时乘上的色调。 */
+        color?: math.Color;
+        /** @en Eight taps instead of sixteen. @zh 用 8 个采样点代替 16 个。 */
+        fastMode?: boolean;
+        /** @en Quad layer for the underlying pass. @zh 底层 pass 的 quad 图层。 */
+        layer?: number;
+        /** @en Render-target colour format, same trade-off as the vignette pass. @zh RT 颜色格式，取舍同暗角 pass。 */
+        colorFormat?: AirTargetColorFormat;
+        /**
+         * @en Render-target multisample count; set it to the window framebuffer's count so anti-aliased
+         *  edges survive the round trip unchanged. `pass.info.samples` reports what the target got.
+         * @zh RT 的采样数；设成屏幕帧缓冲的采样数，抗锯齿边缘才能在往返后保持不变。实际档位看
+         *  `pass.info.samples`。
+         */
+        samples?: 1 | 2 | 4 | 8;
+        /** @en Name prefix for the owned effect and nodes. @zh 自建 effect 与节点的名字前缀。 */
+        name?: string;
+    }
+    export interface AirBloom {
+        readonly pass: AirScreenPass;
+        readonly settings: Readonly<__private._air_effects_bloom__AirBloomSettings>;
+        setOptions(next: AirBloomOptions): void;
+        setEnabled(enabled: boolean): void;
+        dispose(): void;
+    }
     export function isAirSRGBFormat(format: number): boolean;
     export function isAirDepthFormat(format: number): boolean;
     /** Omitting format preserves the caller's native default. An explicitly undefined format is a mistake. */
@@ -57211,6 +57984,324 @@
             mipLevels?: number;
             comparison?: number;
         }>[];
+    }
+    export function inspectAirMeshMaterial(mesh: Mesh, material: Material, primitiveIndex?: number, renderer?: MeshRenderer): Readonly<{
+        primitiveIndex: number;
+        attributes: readonly string[];
+        builtinContractChecked: boolean;
+        passes: readonly Readonly<{
+            passIndex: number;
+            defines: Readonly<{
+                [x: string]: string | number | boolean;
+            }>;
+            reflection: "unavailable" | "webgl-active";
+            activeAttributes: readonly string[] | null;
+        }>[];
+        states: readonly AirMaterialPassDiagnostic[];
+        issues: readonly Readonly<AirContractIssue>[];
+    }>;
+    export function inspectAirGeometry(mesh: Mesh, node: Node, material?: Material, primitiveIndex?: number, maxTriangles?: number): Readonly<{
+        scope: "sampled-local-triangle-winding";
+        available: boolean;
+        reason: "topology is not TRIANGLE_LIST" | "CPU positions unavailable" | null;
+        worldMatrix: readonly number[];
+        determinant: number;
+        negativeScale: boolean;
+        singular: boolean;
+        states: readonly AirMaterialPassDiagnostic[];
+        triangles: readonly Readonly<{
+            index: number;
+            normal: readonly number[];
+            providedNormalDot: number | null;
+            degenerate: boolean;
+        }>[];
+    }>;
+    export function inspectAirAnimationControllers(root: Node): Readonly<{
+        scope: "potential-track-overlap";
+        controllerCount: number;
+        conflicts: readonly (readonly Readonly<{
+            controller: string;
+            clip: string;
+            target: string;
+            channel: string;
+        }>[])[];
+        unresolved: readonly string[];
+        note: "Metadata overlaps are potential conflicts, not proof of simultaneous playback. No states were initialized.";
+    }>;
+    export function inspectAirDirectionalLights(scene: Scene): Readonly<{
+        status: "unavailable";
+        reason: "scene has no native render scene";
+        lights: never[];
+    }> | Readonly<{
+        status: "available";
+        scope: "legacy-forward-main-directional";
+        ordinaryDirectionalCapacity: 1;
+        selection: "native-mainLight";
+        lights: readonly Readonly<{
+            node: string | null;
+            name: string | null;
+            effective: boolean;
+        }>[];
+        mainLight: string | null;
+        note: "Custom pipeline/ranged directionals are outside this ordinary mainLight contract.";
+    }>;
+    export interface AirContractIssue {
+        readonly code: string;
+        readonly severity: "info" | "warning" | "error";
+        readonly message: string;
+    }
+    /**
+     * Pure and total: no engine state, so the whole grammar is testable without a renderer.
+     * An unbalanced tag is an error instead of a silent drop — dialogue text is authored by hand and a
+     * swallowed `</link>` would otherwise hide a whole hover target.
+     */
+    export function parseAirGlyphTags(source: string): AirGlyphTaggedText;
+    /** One grapheme (U+FFFC OBJECT REPLACEMENT CHARACTER) standing in for an inline sprite in the display string. */
+    export const AIR_ICON_PLACEHOLDER: string;
+    export interface AirGlyphIconSlot {
+        /**
+         * Grapheme index in the *display string* the parser returns. `AirGlyphText.tags` hands out the
+         * same slots with this re-expressed as a layout ordinal — the index `getCharacterRect` uses —
+         * because layout drops line feeds and the trailing spaces it folds away.
+         */
+        readonly ordinal: number;
+        readonly name: string;
+        /** TMP `tint=1`: paint with the text colour. `tint=0` keeps the sprite as authored. */
+        readonly tint: boolean;
+        /** Id of the innermost `<link>` wrapping this sprite, or null when it is not a target. */
+        readonly linkId: string | null;
+    }
+    export interface AirGlyphLinkSpan {
+        readonly id: string;
+        /** First and last display-string grapheme owned by the span, inclusive; see `AirGlyphIconSlot.ordinal`. */
+        readonly start: number;
+        readonly end: number;
+    }
+    export interface AirGlyphTaggedText {
+        /** Tags removed, each sprite replaced by one `AIR_ICON_PLACEHOLDER` grapheme. */
+        readonly text: string;
+        readonly icons: ReadonlyArray<AirGlyphIconSlot>;
+        readonly links: ReadonlyArray<AirGlyphLinkSpan>;
+    }
+    /**
+     * Pure layout: no canvas and no engine state, so it is unit-testable with an injected measurer.
+     * Visibility is deliberately not a layout concern — `maxVisibleCharacters` must never reflow.
+     */
+    export function layoutAirGlyphs(text: string, options: AirGlyphLayoutOptions): AirGlyphLayout;
+    /** Advance width of one grapheme cluster at `fontSize`, in design-space units. */
+    export type AirGlyphMeasurer = (grapheme: string, fontSize: number) => number;
+    /** Deterministic stand-in used when there is no canvas 2D context and the caller injected none. */
+    export const measureAirGlyphFallback: AirGlyphMeasurer;
+    export type AirHAlign = "left" | "center" | "right";
+    export interface AirGlyphLayoutOptions {
+        readonly fontSize: number;
+        readonly lineHeight?: number;
+        readonly letterSpacing?: number;
+        /** 0 (default) disables wrapping; any positive value wraps lines at that width. */
+        readonly maxWidth?: number;
+        readonly measure?: AirGlyphMeasurer;
+    }
+    /** One grapheme cluster in text-block space: `x`/`y` are the quad's top-left, `y` grows downward. */
+    export interface AirGlyphInfo {
+        readonly char: string;
+        /** Ordinal of this grapheme in the source string, line feeds included — so it can run ahead of the glyph's own index. */
+        readonly sourceIndex: number;
+        readonly line: number;
+        /** True when a `\n` in the source put this glyph at the start of a line; soft wraps are false. */
+        readonly afterLineFeed: boolean;
+        readonly x: number;
+        readonly y: number;
+        readonly width: number;
+        readonly height: number;
+        readonly advance: number;
+    }
+    export interface AirGlyphLayout {
+        readonly glyphs: ReadonlyArray<AirGlyphInfo>;
+        readonly lineWidths: ReadonlyArray<number>;
+        readonly lineCount: number;
+        /** Natural content size of the laid-out block. */
+        readonly width: number;
+        readonly height: number;
+    }
+    /** Node-local rect, `y` growing upward like every other UI space in this engine. */
+    export interface AirGlyphRect {
+        readonly x: number;
+        readonly y: number;
+        readonly width: number;
+        readonly height: number;
+    }
+    export interface AirGlyphMesh {
+        readonly positions: number[];
+        readonly uvs: number[];
+        readonly alphas: number[];
+        readonly indices: number[];
+    }
+    /**
+     * Character-addressable text. Unlike `Label` this keeps one contract per glyph: `glyphAt(i)`,
+     * `getCharacterRect(i)`, `setCharacterAlpha(i, a)` and `maxVisibleCharacters` all index the same
+     * grapheme order, and revealing never changes layout. The order is TMP's: every rendered glyph
+     * counts, line feeds and inline tags do not (`AirGlyphInfo.sourceIndex` maps back to the source).
+     *
+     * `<link>` spans are hover targets resolved against the same per-glyph rects, and `<sprite>` tags
+     * reserve a glyph rect without emitting geometry — `AirGlyphIconLayer` draws the frame there.
+     */
+    export class AirGlyphText extends UIRenderer {
+        /** Fires when the pointer moves onto a link span — TMP's OnLinkEnter. */
+        onLinkEnter?: (id: string) => void;
+        /** Fires when the pointer leaves a link span — TMP's OnLinkExit. */
+        onLinkExit?: (id: string) => void;
+        /** Fires every `updatePointer` call while a link stays hovered. The game's StayLink handler is an empty stub. */
+        onLinkStay?: (id: string) => void;
+        get string(): string;
+        /**
+         * The source text, inline tags included. `<link>` / `<sprite>` are parsed out and the layout
+         * runs on the remaining display string — same as TMP, where the tag never occupies glyphs.
+         */
+        set string(value: string);
+        get fontSize(): number;
+        set fontSize(value: number);
+        /** Line box height; defaults to `ceil(fontSize * 1.25)`. Set it to emulate TMP's lineSpacing. */
+        get lineHeight(): number;
+        set lineHeight(value: number);
+        get letterSpacing(): number;
+        set letterSpacing(value: number);
+        /** 0 keeps a single unwrapped line; any positive value wraps at that width. */
+        get maxWidth(): number;
+        set maxWidth(value: number);
+        get horizontalAlign(): AirHAlign;
+        set horizontalAlign(value: AirHAlign);
+        /**
+         * TMP-shaped reveal window. Layout is computed over the whole string once, so changing this
+         * never reflows. Default is `Infinity` (everything visible).
+         */
+        get maxVisibleCharacters(): number;
+        set maxVisibleCharacters(value: number);
+        get firstVisibleCharacter(): number;
+        set firstVisibleCharacter(value: number);
+        /** Grapheme count of the display string — the unit every character index below is in. */
+        get characterCount(): number;
+        /** Parsed view of `string`: display text, icon slots and link spans. */
+        get tags(): AirGlyphTaggedText;
+        /** Bumped whenever the mesh goes dirty — the seam `AirGlyphIconLayer` polls instead of re-syncing blindly. */
+        get meshRevision(): number;
+        /** Link currently under the pointer, or null. */
+        get hoveredLink(): string | null;
+        get spriteFrame(): SpriteFrame | null;
+        get disposed(): boolean;
+        /** Injected measurer — the seam that keeps headless layout tests deterministic. */
+        setMeasurer(measure: AirGlyphMeasurer | null): void;
+        layout(): AirGlyphLayout;
+        glyphAt(index: number): AirGlyphInfo | null;
+        /**
+         * True when glyph `index` starts a line because the source had a `\n` before it, as opposed to a
+         * soft wrap. The typewriter uses this to pause on line feeds only — a dropped trailing space also
+         * leaves a gap in `sourceIndex`, which is why the layout records the break itself.
+         */
+        isLineStartFromBreak(index: number): boolean;
+        /**
+         * Node-local point → id of the `<link>` span that owns the glyph under it, else null.
+         * TMP's `FindIntersectingLink` equivalent: a glyph outside the reveal window has no rect, so a
+         * link the typewriter has not finished typing cannot be hovered yet.
+         */
+        linkIdAtPoint(point: {
+            readonly x: number;
+            readonly y: number;
+        }): string | null;
+        /** Feeds a pointer position in this node's space, `null` when the pointer left. Fires the link callbacks. */
+        updatePointer(point: {
+            readonly x: number;
+            readonly y: number;
+        } | null): string | null;
+        /** Node-local rect of glyph `index`, or null when it is out of range or currently hidden. */
+        getCharacterRect(index: number): AirGlyphRect | null;
+        isCharacterVisible(index: number): boolean;
+        /** Per-glyph multiplier on top of `color` — the hook fade-in appearances animate. */
+        setCharacterAlpha(index: number, alpha: number): void;
+        getCharacterAlpha(index: number): number;
+        clearCharacterAlphas(): void;
+        /** Read-only view of the built vertex data — for the acceptance gate, not for mutation. */
+        get meshData(): AirGlyphMesh | null;
+        /** Rebuilds mesh + per-glyph rects. Idempotent; the assembler calls it every dirty pass. */
+        rebuild(): void;
+        /** Releases the atlas and its GPU texture. The node itself is left alone. */
+        dispose(): void;
+        onDestroy(): void;
+        protected _flushAssembler(): void;
+        protected _canRender(): boolean;
+        protected _render(renderer: __private._cocos_2d_renderer_i_batcher__IBatcher): void;
+    }
+    export class AirGlyphIconLayer extends Component {
+        /** Extra multiplier on the reserved em box — TMP's sprite scale knob. */
+        scale: number;
+        get glyphText(): AirGlyphText;
+        /** Registers the frame an icon slot looks up by `name`. Passing null removes it. */
+        setFrames(name: string, frame: SpriteFrame | null): void;
+        frameFor(name: string): SpriteFrame | null;
+        /** Live child sprites this layer owns — node destruction is deferred, so count the registry instead. */
+        get slotCount(): number;
+        /** Places a child sprite per icon slot of the current text. Idempotent. */
+        sync(): void;
+        /** Removes every child sprite this layer created. */
+        dispose(): void;
+        protected start(): void;
+        /** Re-syncs after text changes or a registered frame arrives, changes or is removed. */
+        protected update(): void;
+        protected onDestroy(): void;
+    }
+    export interface AirTypewriterEvents {
+        /** Fired once when a reveal/hide pass starts. */
+        onTypewriterStart?: () => void;
+        /** Fired per revealed grapheme — the typewriter-sound hook (`TAnimSoundWriter.OnCharacter`). */
+        onCharacterVisible?: (grapheme: string) => void;
+        /** Fired when the last grapheme has been revealed. */
+        onTextShowed?: () => void;
+        /** Fired when the hide pass has emptied the text. */
+        onTextDisappeared?: () => void;
+    }
+    /**
+     * Per-character reveal for an `AirGlyphText`. Timing is in seconds per grapheme, with
+     * punctuation and newline overrides, matching the Febucci parameter model.
+     */
+    export class AirTypewriter extends Component {
+        /** Master switch: when false, `showText()` reveals instantly. */
+        useTypewriter: boolean;
+        /** Whether `onEnable`/`start` should kick off a reveal automatically. */
+        startTypewriterMode: boolean;
+        waitForNormalChars: number;
+        waitMiddle: number;
+        waitLong: number;
+        /** Consecutive punctuation waits only once (e.g. "?!" or "…"). */
+        avoidMultiplePunctuationWait: boolean;
+        waitForNewLines: number;
+        waitForLastCharacter: number;
+        useTypewriterWaitForDisappearances: boolean;
+        disappearanceWaitTime: number;
+        disappearanceSpeedMultiplier: number;
+        /** On skip, jump straight to the fully revealed (or fully hidden) state. */
+        hideAppearancesOnSkip: boolean;
+        /** Whether a skip still fires `onCharacterVisible` for the skipped graphemes. */
+        triggerEventsOnSkip: boolean;
+        onTypewriterStart?: () => void;
+        onCharacterVisible?: (grapheme: string) => void;
+        onTextShowed?: () => void;
+        onTextDisappeared?: () => void;
+        get isShowingText(): boolean;
+        get isHidingText(): boolean;
+        /** Graphemes revealed so far. */
+        get visibleCharacterCount(): number;
+        get glyphText(): AirGlyphText;
+        /** Assigns the string and starts the reveal pass. Returns the grapheme count being revealed. */
+        showText(value?: string): number;
+        /** Starts the reverse pass, emptying the text one grapheme at a time. */
+        hideText(): void;
+        /** Jumps to the end of the current pass — the dialogue "skip" input. */
+        skip(): void;
+        /** Stops the reveal pass where it is, leaving the currently visible prefix on screen. */
+        stopShowingText(): void;
+        /** Seconds still needed at the current position — 0 while idle or hiding. */
+        get remainingTime(): number;
+        protected start(): void;
+        protected update(dt: number): void;
     }
     export namespace rendering {
         export function createCustomPipeline(): BasicPipeline;
@@ -59338,6 +60429,765 @@
          * @param view The render view
          */
         abstract render(camera: renderer.scene.Camera): void;
+    }
+    export class CocosRenderer {
+        static create({ canvas, width, height, pixelRatio, engineUrl, antialias, alpha, ...options }?: __private._air_spark_cocos_renderer__CocosRendererOptions): Promise<CocosRenderer>;
+        cc: __private._air_spark_cocos_renderer__AirEngineSurface;
+        app: __private._air_spark_cocos_renderer__AirAppSurface;
+        domElement: HTMLCanvasElement;
+        device: WebGL2Device;
+        g: __private._air_spark_cocos_renderer__GfxNamespace;
+        gl: WebGL2RenderingContext;
+        coordinateSystem: number;
+        ownsApp: boolean;
+        isCocosRenderer: true;
+        autoClear: boolean;
+        autoClearColor: boolean;
+        autoClearDepth: boolean;
+        autoClearStencil: boolean;
+        outputColorSpace: string;
+        toneMapping: number;
+        toneMappingExposure: number;
+        sortObjects: boolean;
+        _target: __private._air_spark_cocos_renderer__SparkRenderTarget | null;
+        _layer: number;
+        _mip: number;
+        _pixelRatio: number;
+        _renderDepth: number;
+        _clearColor: number[];
+        _clearAlpha: number;
+        _engineScene?: unknown;
+        _width: number;
+        _height: number;
+        _viewport: __private._air_spark_cocos_renderer__ViewportRect;
+        _scissor: __private._air_spark_cocos_renderer__ViewportRect;
+        _scissorTest?: boolean;
+        _eyeViewport: __private._air_spark_cocos_renderer__SparkRectLike | null;
+        _screen?: __private._air_spark_cocos_renderer__PassSet;
+        _boundTarget: number;
+        _raf: number | null;
+        _loop: __private._air_spark_cocos_renderer__AnimationLoopCallback | null;
+        _disposed?: boolean;
+        _liveMaterials: Set<__private._air_spark_cocos_renderer__MaterialEntry>;
+        _liveGeometries: Set<__private._air_spark_cocos_renderer__GeometryEntry>;
+        properties: {
+            get: (o: object) => Record<string, unknown>;
+            has: (o: object) => boolean;
+            remove: (o: object) => boolean;
+        };
+        /** SPK-10 inert XR shell: the field itself must survive because frozen Spark reads renderer.xr.* unconditionally. */
+        xr: __private._air_spark_cocos_renderer__InertXrShell;
+        capabilities: {
+            isWebGL2: true;
+            logarithmicDepthBuffer: boolean;
+            maxTextureSize: number;
+            maxTextures: number;
+            maxVertexTextures: number;
+            precision: string;
+        };
+        extensions: {
+            get(name: string): unknown;
+            has(name: string): boolean;
+        };
+        info: {
+            render: {
+                frame: number;
+                calls: number;
+                triangles: number;
+                points: number;
+                lines: number;
+            };
+            memory: {
+                geometries: number;
+                textures: number;
+            };
+            programs: {
+                program: WebGLProgram;
+                name: string;
+                vertex: string;
+                fragment: string;
+            }[];
+        };
+        cmd: gfx.CommandBuffer;
+        _texBinding: number;
+        state: {
+            activeTexture(unit: number): void;
+            bindTexture(target: number, texture: WebGLTexture | null): void;
+            unbindTexture(): void;
+            pixelStorei(...args: [
+                number,
+                unknown
+            ]): void;
+            reset(): void;
+        };
+        constructor(cc: typeof __private._index, app: AirApp, canvas: HTMLCanvasElement, options?: __private._air_spark_cocos_renderer__CocosRendererOptions);
+        constructor(cc: __private._air_spark_cocos_renderer__AirEngineSurface, app: __private._air_spark_cocos_renderer__AirAppSurface, canvas: HTMLCanvasElement, options?: __private._air_spark_cocos_renderer__CocosRendererOptions);
+        getContext(): WebGL2RenderingContext;
+        getPixelRatio(): number;
+        setPixelRatio(r: number): void;
+        setSize(w: number, h: number, updateStyle?: boolean): this;
+        getSize<T extends __private._air_spark_cocos_renderer__SparkVector2Setter>(out: T): T;
+        getDrawingBufferSize<T extends __private._air_spark_cocos_renderer__SparkVector2Setter>(out: T): T;
+        setViewport(x: number | __private._air_spark_cocos_renderer__SparkRectLike, y?: number, w?: number, h?: number): void;
+        getViewport<T extends __private._air_spark_cocos_renderer__SparkVector4Setter>(out: T): T;
+        setScissor(x: number | __private._air_spark_cocos_renderer__SparkRectLike, y?: number, w?: number, h?: number): void;
+        getScissor<T extends __private._air_spark_cocos_renderer__SparkVector4Setter>(out: T): T;
+        setScissorTest(v: boolean): void;
+        getScissorTest(): boolean;
+        setClearColor(c: number | string | {
+            r: number;
+            g: number;
+            b: number;
+        }, a?: number): this;
+        setClearAlpha(a: number): void;
+        getClearAlpha(): number;
+        getClearColor<T extends __private._air_spark_cocos_renderer__SparkColorSetter>(out: T): T;
+        getRenderTarget(): __private._air_spark_cocos_renderer__SparkRenderTarget | null;
+        getActiveCubeFace(): number;
+        getActiveMipmapLevel(): number;
+        setRenderTarget(target: __private._air_spark_cocos_renderer__SparkRenderTarget | null, layer?: number, mip?: number): void;
+        _own<T extends {
+            destroy(): void;
+        }>(o: T): T;
+        _destroy(o?: {
+            destroy(): void;
+        } | null): void;
+        _format(t: __private._air_spark_cocos_renderer__SparkTexture): gfx.Format;
+        _sampler(t: __private._air_spark_cocos_renderer__SparkTexture): gfx.Sampler;
+        initTexture(t: __private._air_spark_cocos_renderer__SparkTexture): gfx.Texture;
+        _texture(t: __private._air_spark_cocos_renderer__SparkTexture | null | undefined, renderTarget?: boolean): __private._air_spark_cocos_renderer__TextureEntry;
+        _ensureTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): __private._air_spark_cocos_renderer__TargetEntry;
+        _disposeTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): void;
+        _framebuffer(t?: __private._air_spark_cocos_renderer__SparkRenderTarget | null, layer?: number, mip?: number): __private._air_spark_cocos_renderer__FramebufferEntry;
+        _ensureCocosTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): __private._air_spark_cocos_renderer__TargetEntry;
+        releaseRenderTarget(target: __private._air_spark_cocos_renderer__SparkRenderTarget): void;
+        _ensureXrTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget): __private._air_spark_cocos_renderer__TargetEntry;
+        _releaseXrTarget(t: __private._air_spark_cocos_renderer__SparkRenderTarget | null | undefined): void;
+        _screenPasses(): __private._air_spark_cocos_renderer__PassSet;
+        _sources(m: __private._air_spark_cocos_renderer__SparkMaterial): {
+            vs: string;
+            fs: string;
+        };
+        _material(m: __private._air_spark_cocos_renderer__SparkMaterial): __private._air_spark_cocos_renderer__MaterialEntry;
+        _disposeMaterial(m: __private._air_spark_cocos_renderer__SparkMaterial): void;
+        _disposeGeometry(geo: __private._air_spark_cocos_renderer__SparkGeometry): void;
+        purgeMaterialCache(): {
+            materials: number;
+            geometries: number;
+            released: number;
+            remaining: number;
+        };
+        _generateMipmaps(texture: gfx.Texture): void;
+        compile(scene: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): __private._air_spark_cocos_renderer__SparkObject;
+        compileAsync(scene: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): Promise<__private._air_spark_cocos_renderer__SparkObject>;
+        _geometry(geo: __private._air_spark_cocos_renderer__SparkGeometry, p: __private._air_spark_cocos_renderer__MaterialEntry): __private._air_spark_cocos_renderer__GeometryEntry;
+        _pso(m: __private._air_spark_cocos_renderer__SparkMaterial, p: __private._air_spark_cocos_renderer__MaterialEntry, geometry: __private._air_spark_cocos_renderer__GeometryEntry, pass: gfx.RenderPass, flipped?: boolean): gfx.PipelineState;
+        _uniforms(m: __private._air_spark_cocos_renderer__SparkMaterial, p: __private._air_spark_cocos_renderer__MaterialEntry, obj: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): void;
+        _draw(obj: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null, scene: __private._air_spark_cocos_renderer__SparkObject): void;
+        render(scene: __private._air_spark_cocos_renderer__SparkObject, camera: __private._air_spark_cocos_renderer__SparkCamera | null): void;
+        clear(color?: boolean, depth?: boolean, stencil?: boolean): void;
+        readRenderTargetPixels(target: __private._air_spark_cocos_renderer__SparkRenderTarget, x: number, y: number, w: number, h: number, buffer: ArrayBufferView, face?: number | null, textureIndex?: number): ArrayBufferView;
+        readRenderTargetPixelsAsync(target: __private._air_spark_cocos_renderer__SparkRenderTarget, x: number, y: number, w: number, h: number, buffer: ArrayBufferView, face?: number | null, textureIndex?: number): Promise<ArrayBufferView>;
+        setAnimationLoop(callback: __private._air_spark_cocos_renderer__AnimationLoopCallback | null): void;
+        resetState(): void;
+        dispose(): void;
+    }
+    export class CocosSparkLayer {
+        cc: any;
+        app: any;
+        nativeCamera: any;
+        scene: __private._air_spark_spark_api_adapter__Scene;
+        camera: __private._air_spark_spark_api_adapter__Camera;
+        bindings: Map<sparkRuntime, __private._air_spark_cocos_spark_layer__SplatBinding>;
+        autoRender: boolean;
+        renderHook: string;
+        renderer: CocosRenderer;
+        spark: sparkRuntime;
+        renderTarget: __private._air_spark_cocos_spark_layer__SparkTarget | null;
+        _disposed: boolean;
+        _onRender: () => void;
+        _onCameraRender: (native: any) => void;
+        constructor({ cc, app, camera, canvas, sparkOptions, autoRender, renderHook, }: __private._air_spark_cocos_spark_layer__CocosSparkLayerOptions);
+        _validateTarget(): void;
+        add({ node, visible, ...options }: {
+            node: any;
+            visible?: boolean;
+            [key: string]: any;
+        }): sparkRuntime;
+        setVisible(mesh: sparkRuntime, visible: boolean): void;
+        remove(mesh: sparkRuntime, { dispose }?: {
+            dispose?: boolean;
+        }): void;
+        _matrix(native: any, dest: any): any;
+        sync(): this;
+        _syncRenderTarget(window: any, width: number, height: number): void;
+        render(): boolean;
+        dispose(): void;
+    }
+    export class PMREMGenerator {
+        _renderer: __private._air_spark_pmrem__PMREMRenderer;
+        _pingPongRenderTarget: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null;
+        _lodPlanes: __private._air_spark_spark_api_adapter__BufferGeometry[];
+        _sizeLods: number[];
+        _sigmas: number[];
+        _blurMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _cubemapMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _equirectMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _solidMaterial: __private._air_spark_spark_api_adapter__RawShaderMaterial | null;
+        _flatCamera: __private._air_spark_spark_api_adapter__OrthographicCamera;
+        _layout: __private._air_spark_pmrem__PMREMLayout | null;
+        _cubeSize: number;
+        _lodMax: number;
+        constructor(renderer: __private._air_spark_pmrem__PMREMRenderer);
+        _prepare(size: number): void;
+        _newTarget(): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        _inputMaterial(cube: boolean): __private._air_spark_spark_api_adapter__RawShaderMaterial;
+        _draw(material: __private._air_spark_spark_api_adapter__RawShaderMaterial, index: number, target: __private._air_spark_spark_api_adapter__WebGLRenderTarget, box: readonly [
+            number,
+            number,
+            number,
+            number
+        ]): void;
+        _convert(texture: __private._air_spark_pmrem__PMREMSourceTexture, target: __private._air_spark_spark_api_adapter__WebGLRenderTarget): void;
+        _halfBlur(input: __private._air_spark_spark_api_adapter__WebGLRenderTarget, output: __private._air_spark_spark_api_adapter__WebGLRenderTarget, inIndex: number, outIndex: number, sigma: number, latitudinal: boolean, pole?: sparkMath.Vector3): void;
+        _blur(target: __private._air_spark_spark_api_adapter__WebGLRenderTarget, inIndex: number, outIndex: number, sigma: number, pole?: sparkMath.Vector3): void;
+        _filter(target: __private._air_spark_spark_api_adapter__WebGLRenderTarget): void;
+        _fromTexture(texture: __private._air_spark_pmrem__PMREMSourceTexture, target: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null, cube: boolean): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        fromCubemap(texture: __private._air_spark_pmrem__PMREMSourceTexture, target?: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        fromEquirectangular(texture: __private._air_spark_pmrem__PMREMSourceTexture, target?: __private._air_spark_spark_api_adapter__WebGLRenderTarget | null): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        fromScene(scene: __private._air_spark_spark_api_adapter__Scene, sigma?: number, near?: number, far?: number, options?: __private._air_spark_pmrem__PMREMSceneOptions): __private._air_spark_spark_api_adapter__WebGLRenderTarget;
+        _compile(material: __private._air_spark_spark_api_adapter__RawShaderMaterial): void;
+        compileCubemapShader(): void;
+        compileEquirectangularShader(): void;
+        _releaseLevels(): void;
+        dispose(): void;
+    }
+    export function pmremLayout(requestedSize: number): __private._air_spark_pmrem__PMREMLayout;
+    export const CUBEUV_SAMPLING_GLSL = "\nfloat airCubeFace(vec3 d){\n vec3 a=abs(d);\n if(a.x>a.z){if(a.x>a.y)return d.x>0.0?0.0:3.0;else return d.y>0.0?1.0:4.0;}\n else{if(a.z>a.y)return d.z>0.0?2.0:5.0;else return d.y>0.0?1.0:4.0;}\n}\nvec2 airCubeFaceUV(vec3 d,float f){\n vec2 uv;\n if(f==0.0)uv=vec2(d.z,d.y)/abs(d.x);\n else if(f==1.0)uv=vec2(-d.x,-d.z)/abs(d.y);\n else if(f==2.0)uv=vec2(-d.x,d.y)/abs(d.z);\n else if(f==3.0)uv=vec2(-d.z,d.y)/abs(d.x);\n else if(f==4.0)uv=vec2(-d.x,d.z)/abs(d.y);\n else uv=vec2(d.x,d.y)/abs(d.z);\n return 0.5*(uv+1.0);\n}\nvec3 airBilinearCubeUV(sampler2D atlas,vec3 d,float mip){\n float face=airCubeFace(d);\n float extra=max(4.0-mip,0.0);\n mip=max(mip,4.0);\n float size=exp2(mip);\n highp vec2 uv=airCubeFaceUV(d,face)*(size-2.0)+1.0;\n if(face>2.0){uv.y+=size;face-=3.0;}\n uv.x+=face*size;\n uv.x+=extra*3.0*16.0;\n uv.y+=4.0*(exp2(CUBEUV_MAX_MIP)-size);\n uv.x*=CUBEUV_TEXEL_WIDTH;\n uv.y*=CUBEUV_TEXEL_HEIGHT;\n return textureGrad(atlas,uv,vec2(0.0),vec2(0.0)).rgb;\n}\nfloat airRoughnessToMip(float r){\n if(r>=0.8)return (1.0-r)*(-1.0-(-2.0))/(1.0-0.8)+(-2.0);\n if(r>=0.4)return (0.8-r)*(2.0-(-1.0))/(0.8-0.4)+(-1.0);\n if(r>=0.305)return (0.4-r)*(3.0-2.0)/(0.4-0.305)+2.0;\n if(r>=0.21)return (0.305-r)*(4.0-3.0)/(0.305-0.21)+3.0;\n return -2.0*log2(1.16*r);\n}\nvec4 airTextureCubeUV(sampler2D atlas,vec3 d,float roughness){\n float mip=clamp(airRoughnessToMip(roughness),-2.0,CUBEUV_MAX_MIP);\n float fraction=fract(mip),whole=floor(mip);\n vec3 c=airBilinearCubeUV(atlas,d,whole);\n if(fraction==0.0)return vec4(c,1.0);\n return vec4(mix(c,airBilinearCubeUV(atlas,d,whole+1.0),fraction),1.0);\n}\n";
+    export namespace sparkMath {
+        export const clamp: (value: number, min: number, max: number) => number;
+        export class Vector2 {
+            x: number;
+            y: number;
+            readonly isVector2 = true;
+            constructor(x?: number, y?: number);
+            get width(): number;
+            set width(v: number);
+            get height(): number;
+            set height(v: number);
+            set(x: number, y: number): this;
+            setScalar(s: number): this;
+            setComponent(i: number, v: number): this;
+            getComponent(i: number): number;
+            setX(v: number): this;
+            setY(v: number): this;
+            clone(): Vector2;
+            copy(v: Vector2): this;
+            add(v: Vector2): this;
+            sub(v: Vector2): this;
+            multiply(v: Vector2): this;
+            divide(v: Vector2): this;
+            addScalar(v: number): this;
+            subScalar(v: number): this;
+            multiplyScalar(v: number): this;
+            divideScalar(v: number): this;
+            addVectors(a: Vector2, b: Vector2): this;
+            subVectors(a: Vector2, b: Vector2): this;
+            multiplyVectors(a: Vector2, b: Vector2): this;
+            addScaledVector(v: Vector2, s: number): this;
+            dot(v: Vector2): number;
+            lengthSq(): number;
+            length(): number;
+            /** 引擎无 Manhattan 长度静态，这里是两分量的绝对值求和（标量映射，见文件头第 8 条）。 */
+            manhattanLength(): number;
+            normalize(): this;
+            setLength(v: number): this;
+            distanceToSquared(v: Vector2): number;
+            distanceTo(v: Vector2): number;
+            /** 同上：两分量绝对差求和（标量映射）。 */
+            manhattanDistanceTo(v: Vector2): number;
+            negate(): this;
+            min(v: Vector2): this;
+            max(v: Vector2): this;
+            clamp(a: Vector2, b: Vector2): this;
+            clampScalar(a: number, b: number): this;
+            clampLength(a: number, b: number): this;
+            lerp(v: Vector2, t: number): this;
+            lerpVectors(a: Vector2, b: Vector2, t: number): this;
+            floor(): this;
+            ceil(): this;
+            round(): this;
+            /** 引擎无 Vec2.trunc 静态：逐分量 Math.trunc（标量映射）。 */
+            roundToZero(): this;
+            equals(v: Vector2): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            /** 从 BufferAttribute 取值是数据源索引（非算法），保留 Three 的 itemSize 寻址。 */
+            fromBufferAttribute(a: __private._air_spark_spark_math__IBindableAttribute, i: number): this;
+            random(): this;
+            [Symbol.iterator](): IterableIterator<number>;
+            /** 2D 叉积是标量；引擎 cc.Vec2.cross 产出 3D 向量，语义不同，故保留 Three 的标量式。 */
+            cross(v: Vector2): number;
+            /** 自身辐角（[0, 2π) 约定）；引擎 cc.Vec2.angle 是「两向量夹角」，语义不同，故保留原式。 */
+            angle(): number;
+            /** 委托 cc.Vec2.angle；零向量按 Three 契约补 π/2（引擎返回 0）。 */
+            angleTo(v: Vector2): number;
+            /** 引擎无 2D 绕点旋转原语（cc.Vec2.rotate 不存在），保留 Three 的原式。 */
+            rotateAround(c: Vector2, a: number): this;
+            applyMatrix3(m: Matrix3): this;
+        }
+        export class Vector3 {
+            x: number;
+            y: number;
+            z: number;
+            readonly isVector3 = true;
+            constructor(x?: number, y?: number, z?: number);
+            set(x: number, y: number, z: number): this;
+            setScalar(s: number): this;
+            setComponent(i: number, v: number): this;
+            getComponent(i: number): number;
+            setX(v: number): this;
+            setY(v: number): this;
+            setZ(v: number): this;
+            clone(): Vector3;
+            copy(v: Vector3): this;
+            add(v: Vector3): this;
+            sub(v: Vector3): this;
+            multiply(v: Vector3): this;
+            divide(v: Vector3): this;
+            addScalar(v: number): this;
+            subScalar(v: number): this;
+            multiplyScalar(v: number): this;
+            divideScalar(v: number): this;
+            addVectors(a: Vector3, b: Vector3): this;
+            subVectors(a: Vector3, b: Vector3): this;
+            multiplyVectors(a: Vector3, b: Vector3): this;
+            addScaledVector(v: Vector3, s: number): this;
+            dot(v: Vector3): number;
+            lengthSq(): number;
+            length(): number;
+            /** 三分量绝对值求和（标量映射，见文件头第 8 条）。 */
+            manhattanLength(): number;
+            normalize(): this;
+            setLength(v: number): this;
+            distanceToSquared(v: Vector3): number;
+            distanceTo(v: Vector3): number;
+            /** 三分量绝对差求和（标量映射）。 */
+            manhattanDistanceTo(v: Vector3): number;
+            negate(): this;
+            min(v: Vector3): this;
+            max(v: Vector3): this;
+            clamp(a: Vector3, b: Vector3): this;
+            clampScalar(a: number, b: number): this;
+            clampLength(a: number, b: number): this;
+            lerp(v: Vector3, t: number): this;
+            lerpVectors(a: Vector3, b: Vector3, t: number): this;
+            floor(): this;
+            ceil(): this;
+            round(): this;
+            /** 引擎无 Vec3.trunc 静态：逐分量 Math.trunc（标量映射）。 */
+            roundToZero(): this;
+            equals(v: Vector3): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            fromBufferAttribute(a: __private._air_spark_spark_math__IBindableAttribute, i: number): this;
+            /** 引擎 cc.Vec3.random 产出随机单位向量，与 Three 的逐分量 [0,1) 不同，故用 cc.random。 */
+            random(): this;
+            [Symbol.iterator](): IterableIterator<number>;
+            cross(v: Vector3): this;
+            crossVectors(a: Vector3, b: Vector3): this;
+            applyMatrix3(m: Matrix3): this;
+            applyMatrix4(m: Matrix4): this;
+            applyNormalMatrix(m: Matrix3): this;
+            applyQuaternion(q: Quaternion): this;
+            applyEuler(e: Euler): this;
+            applyAxisAngle(axis: Vector3, a: number): this;
+            /** 方向变换：cc.Vec3.transformMat4Normal 在仿射矩阵下不除 rhw（m03/m07/m11 为 0），与 Three 一致。 */
+            transformDirection(m: Matrix4): this;
+            project(c: __private._air_spark_spark_math__ICameraMatrices): this;
+            unproject(c: __private._air_spark_spark_math__ICameraMatrices): this;
+            setFromMatrixPosition(m: Matrix4): this;
+            setFromMatrixColumn(m: Matrix4, i: number): this;
+            setFromMatrix3Column(m: Matrix3, i: number): this;
+            /** Three 的 setFromMatrixScale 取列向量模长（不含反射取负），故用 cc.Vec3.len 而非 cc.Mat4.getScaling。 */
+            setFromMatrixScale(m: Matrix4): this;
+            /** 球坐标转直角坐标：引擎无对应静态（cc.geometry 只有形状检测），保留 Three 原式。 */
+            setFromSphericalCoords(r: number, phi: number, theta: number): this;
+            setFromCylindricalCoords(r: number, theta: number, y: number): this;
+            /** 委托 cc.Vec3.angle；零向量按 Three 契约补 π/2（引擎返回 0）。 */
+            angleTo(v: Vector3): number;
+            /** 委托 cc.Vec3.project（引擎退化阈值 1e-6，Three 为 === 0，见文件头第 7 条）。 */
+            projectOnVector(v: Vector3): this;
+            projectOnPlane(v: Vector3): this;
+            reflect(n: Vector3): this;
+        }
+        export class Vector4 {
+            x: number;
+            y: number;
+            z: number;
+            w: number;
+            readonly isVector4 = true;
+            constructor(x?: number, y?: number, z?: number, w?: number);
+            get width(): number;
+            set width(v: number);
+            get height(): number;
+            set height(v: number);
+            set(x: number, y: number, z: number, w: number): this;
+            setScalar(s: number): this;
+            setComponent(i: number, v: number): this;
+            getComponent(i: number): number;
+            setX(v: number): this;
+            setY(v: number): this;
+            setZ(v: number): this;
+            setW(v: number): this;
+            clone(): Vector4;
+            /** Three 允许从三分量对象拷贝并把 w 补 1，引擎 cc.Vec4.copy 要求 w 存在，故显式映射。 */
+            copy(v: {
+                x: number;
+                y: number;
+                z: number;
+                w?: number;
+            }): this;
+            add(v: Vector4): this;
+            sub(v: Vector4): this;
+            multiply(v: Vector4): this;
+            divide(v: Vector4): this;
+            addScalar(v: number): this;
+            subScalar(v: number): this;
+            multiplyScalar(v: number): this;
+            divideScalar(v: number): this;
+            addVectors(a: Vector4, b: Vector4): this;
+            subVectors(a: Vector4, b: Vector4): this;
+            multiplyVectors(a: Vector4, b: Vector4): this;
+            addScaledVector(v: Vector4, s: number): this;
+            dot(v: Vector4): number;
+            lengthSq(): number;
+            length(): number;
+            /** 四分量绝对值求和（标量映射）。 */
+            manhattanLength(): number;
+            normalize(): this;
+            setLength(v: number): this;
+            distanceToSquared(v: Vector4): number;
+            distanceTo(v: Vector4): number;
+            /** 四分量绝对差求和（标量映射）。 */
+            manhattanDistanceTo(v: Vector4): number;
+            negate(): this;
+            min(v: Vector4): this;
+            max(v: Vector4): this;
+            clamp(a: Vector4, b: Vector4): this;
+            clampScalar(a: number, b: number): this;
+            clampLength(a: number, b: number): this;
+            lerp(v: Vector4, t: number): this;
+            lerpVectors(a: Vector4, b: Vector4, t: number): this;
+            floor(): this;
+            ceil(): this;
+            round(): this;
+            /** 引擎无 Vec4.trunc 静态：逐分量 Math.trunc（标量映射）。 */
+            roundToZero(): this;
+            equals(v: Vector4): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            fromBufferAttribute(a: __private._air_spark_spark_math__IBindableAttribute, i: number): this;
+            random(): this;
+            [Symbol.iterator](): IterableIterator<number>;
+            applyMatrix4(m: Matrix4): this;
+            /** 委托 cc.Quat.getAxisAngle（引擎对 s===0 回退 (1,0,0)，与 Three 的 s<1e-4 阈值等价语义）。 */
+            setAxisAngleFromQuaternion(q: Quaternion): this;
+        }
+        export class Quaternion {
+            readonly isQuaternion = true;
+            constructor(x?: number, y?: number, z?: number, w?: number);
+            get x(): number;
+            set x(v: number);
+            get y(): number;
+            set y(v: number);
+            get z(): number;
+            set z(v: number);
+            get w(): number;
+            set w(v: number);
+            set(x: number, y: number, z: number, w: number): this;
+            identity(): this;
+            copy(q: Quaternion): this;
+            clone(): Quaternion;
+            _onChange(f: () => void): this;
+            /**
+             * Closed-form products of intrinsic axis rotations. Keep each triple product
+             * left-associated so conversion to the eventual GPU float32 is predictable.
+             * 引擎 cc.Quat.fromEuler 是「角度制 + 固定 YXZ 序」，无法覆盖 Three 的弧度六序契约，故保留原式。
+             */
+            setFromEuler(e: Euler, update?: boolean): this;
+            setFromAxisAngle(a: Vector3, t: number): this;
+            /**
+             * 委托 cc.Mat3.fromMat4（降阶取左上 3x3）+ cc.Quat.fromMat3。
+             * 引擎按「四分量中最大者取正」分支、Three 先判 trace>0，两个分支同解；同一旋转矩阵下
+             * 二者可能给出整体差一个符号的四元数（q 与 -q 表示同一旋转，均为合法结果）。
+             */
+            setFromRotationMatrix(m: Matrix4): this;
+            /** 委托 cc.Quat.rotationTo；反平行时引擎换轴方式与 Three 不同（同为合法 180° 旋转）。 */
+            setFromUnitVectors(a: Vector3, b: Vector3): this;
+            multiply(q: Quaternion): this;
+            premultiply(q: Quaternion): this;
+            multiplyQuaternions(a: Quaternion, b: Quaternion): this;
+            dot(q: Quaternion): number;
+            lengthSq(): number;
+            length(): number;
+            /** 引擎在零四元数上置 (0,0,0,0)，Three 契约是回单位元，故补长度守卫。 */
+            normalize(): this;
+            conjugate(): this;
+            /** Three 的 invert 即共轭（cc.Quat.invert 会除以长度平方，语义不同）。 */
+            invert(): this;
+            angleTo(q: Quaternion): number;
+            /** 委托 cc.Quat.rotateTowards：入参是角度制（step 弧度换算），且夹角 0 时按 Three 原地返回。 */
+            rotateTowards(q: Quaternion, step: number): this;
+            slerp(q: Quaternion, t: number): this;
+            slerpQuaternions(a: Quaternion, b: Quaternion, t: number): this;
+            equals(q: Quaternion): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            [Symbol.iterator](): IterableIterator<number>;
+        }
+        export class Euler {
+            readonly isEuler = true;
+            constructor(x?: number, y?: number, z?: number, order?: string);
+            get x(): number;
+            set x(v: number);
+            get y(): number;
+            set y(v: number);
+            get z(): number;
+            set z(v: number);
+            get order(): string;
+            set order(v: string);
+            set(x: number, y: number, z: number, o?: string): this;
+            copy(e: Euler): this;
+            clone(): Euler;
+            _onChange(f: () => void): this;
+            setFromRotationMatrix(m: Matrix4, o?: string, update?: boolean): this;
+            setFromQuaternion(q: Quaternion, o?: string, update?: boolean): this;
+            setFromVector3(v: Vector3, o?: string): this;
+            reorder(o: string): this;
+            equals(e: Euler): boolean;
+            fromArray(a: ArrayLike<unknown>): this;
+            toArray(a?: unknown[], o?: number): unknown[];
+        }
+        export class Matrix2 extends __private._air_spark_spark_math__MatrixStorage {
+            readonly isMatrix2 = true;
+            constructor(...v: number[]);
+            clone(): Matrix2;
+            multiply(m: Matrix2): this;
+            premultiply(m: Matrix2): this;
+            multiplyMatrices(a: Matrix2, b: Matrix2): this;
+            multiplyScalar(s: number): this;
+            determinant(): number;
+            /** 2x2 伴随矩阵求逆（列主序存储：e0=m00,e1=m10,e2=m01,e3=m11）；奇异时与 Three 同样写零矩阵。 */
+            invert(): this;
+            transpose(): this;
+        }
+        export class Matrix3 extends __private._air_spark_spark_math__MatrixStorage {
+            readonly isMatrix3 = true;
+            constructor(...v: number[]);
+            clone(): Matrix3;
+            setFromMatrix4(m: Matrix4): this;
+            /** 委托 cc.Mat3.inverseTransposeMat4；引擎在奇异输入上返回 null（Three 无此返回），此时按零矩阵处理。 */
+            getNormalMatrix(m: Matrix4): this;
+            multiply(m: Matrix3): this;
+            premultiply(m: Matrix3): this;
+            multiplyMatrices(a: Matrix3, b: Matrix3): this;
+            multiplyScalar(s: number): this;
+            determinant(): number;
+            /** 引擎 cc.Mat3.invert 与 Three 一致：奇异矩阵写零矩阵（mat3.ts:158 的 Mat3.set(out, 0...)）。 */
+            invert(): this;
+            transpose(): this;
+            extractBasis(x: Vector3, y: Vector3, z: Vector3): this;
+            /** 转置写入外部数组：复用引擎 cc.Mat3.transpose 的镜像结果再按列主序导出，不另写 3x3 展开循环。 */
+            transposeIntoArray(a: number[]): this;
+            /**
+             * UV 变换：引擎 cc.Mat3 有 fromScaling/fromRotation/fromTranslation 三个基元，
+             * 但没有 Three 的七参数合成入口，故保留 Three 的列主序写入（纯字段映射，无算法主体）。
+             */
+            setUvTransform(tx: number, ty: number, sx: number, sy: number, r: number, cx: number, cy: number): this;
+        }
+        export class Matrix4 extends __private._air_spark_spark_math__MatrixStorage {
+            readonly isMatrix4 = true;
+            constructor(...v: number[]);
+            clone(): Matrix4;
+            copyPosition(m: Matrix4): this;
+            /**
+             * 引擎 cc.Mat4 没有 fromMat3 静态（cc.Mat3 与 cc.Mat4 之间只有 Mat3.fromMat4 降阶方向），
+             * 因此这里按 Three 契约做纯索引升阶（3x3 列主序 → 4x4 列主序 + 单位齐次行/列），无算法主体。
+             */
+            setFromMatrix3(m: Matrix3): this;
+            setPosition(x: number | Vector3, y?: number, z?: number): this;
+            makeTranslation(x: number | Vector3, y?: number, z?: number): this;
+            makeScale(x: number, y: number, z: number): this;
+            makeRotationX(t: number): this;
+            makeRotationY(t: number): this;
+            makeRotationZ(t: number): this;
+            /** 委托 cc.Mat4.identity + cc.Mat4.rotate（绕任意轴）；退化轴（长度 0）引擎返回 null，此处保持单位阵。 */
+            makeRotationAxis(axis: Vector3, t: number): this;
+            /** 委托 cc.Mat4.fromQuat（平移列写 0、齐次位写 1，与 Three 的纯旋转阵逐一对应）。 */
+            makeRotationFromQuaternion(q: Quaternion): this;
+            makeRotationFromEuler(e: Euler): this;
+            makeBasis(x: Vector3, y: Vector3, z: Vector3): this;
+            extractBasis(x: Vector3, y: Vector3, z: Vector3): this;
+            /** 逐列取 cc.Vec3.normalize 后重建基（与 Three 原文一致，标准化本身委托引擎）。 */
+            extractRotation(m: Matrix4): this;
+            /** 委托 cc.Mat4.fromSRT（`(out, q, v, s)` 即 Three 的 S→R→T 次序，16 个字段逐一同解）。 */
+            compose(p: Vector3, q: Quaternion, s: Vector3): this;
+            /** 委托 cc.Mat4.toSRT；缩放分量为 0 时引擎给单位四元数（Three 原式给 NaN），见文件头第 7 条。 */
+            decompose(p: Vector3, q: Quaternion, s: Vector3): this;
+            scale(s: Vector3): this;
+            /** 逐列模长取最大（用 cc.Vec3.len，不用 cc.Mat4.getScaling：后者在反射时把 x 取负）。 */
+            getMaxScaleOnAxis(): number;
+            multiply(m: Matrix4): this;
+            premultiply(m: Matrix4): this;
+            /** 委托 cc.Mat4.multiply（同为列主序 4x4 相乘，16 个字段逐一同解）。 */
+            multiplyMatrices(a: Matrix4, b: Matrix4): this;
+            multiplyScalar(s: number): this;
+            determinant(): number;
+            /** 委托 cc.Mat4.invert（奇异时引擎与本层契约同样写零矩阵）。 */
+            invert(): this;
+            transpose(): this;
+            /**
+             * 委托 cc.Mat4.lookAt 取基，再按 Three 的 Matrix4.lookAt 契约做列主序映射：
+             * cc.Mat4.lookAt（gl-matrix 血统）产出「视图基」——3x3 是 Three 世界基的转置，并把 -(基·eye) 写进平移列；
+             * Three 的 Matrix4.lookAt 只写世界基的 3x3，不改动平移/齐次列（保持构造时的单位阵）。
+             * 正常输入用 CCMat4.transpose 把视图基转成世界基（3x3 转置把 cc 的平移搬进 m03/m07/m11，置零即还原
+             * Three 的单位齐次列，纯引擎静态 + 逐字段映射，无自建算法主体）；
+             * 退化输入（视线长度 0 或与 up 平行，引擎产出 NaN）按 Three 原文用 cc.Vec3 原语重建世界基。见文件头第 7 条。
+             */
+            lookAt(eye: Vector3, target: Vector3, up: Vector3): this;
+            /**
+             * 委托 cc.Mat4.frustum（同为 -1..1 深度约定，逐字段等价）；
+             * far === Infinity 与 coordinateSystem === 2001（WebGPU 0..1）两分支引擎无对应静态，
+             * 按 Three 原式做列主序字段写入（纯映射）。
+             */
+            makePerspective(l: number, r: number, t: number, b: number, n: number, f: number, coordinateSystem?: number): this;
+            /** 委托 cc.Mat4.ortho，Three 的 coordinateSystem 直接映射到引擎的 minClipZ 参数。 */
+            makeOrthographic(l: number, r: number, t: number, b: number, n: number, f: number, coordinateSystem?: number): this;
+        }
+        export const SRGBColorSpace = "srgb";
+        export const LinearSRGBColorSpace = "srgb-linear";
+        export const NoColorSpace = "";
+        export const SRGBToLinear: (c: number) => number;
+        export const LinearToSRGB: (c: number) => number;
+        export const ColorManagement: {
+            enabled: boolean;
+            workingColorSpace: string;
+            convert(c: Color, from: string, to: string): Color;
+            toWorkingColorSpace(c: Color, from: string): Color;
+            fromWorkingColorSpace(c: Color, to: string): Color;
+        };
+        export class Color {
+            r: number;
+            g: number;
+            b: number;
+            readonly isColor = true;
+            constructor(r?: number, g?: number, b?: number);
+            set(v: number | string | Color, g?: number, b?: number): this;
+            setRGB(r: number, g: number, b: number, cs?: string): this;
+            setScalar(v: number): this;
+            /** 十六进制取字节委托 cc.Color.fromHEX（先 & 0xffffff，与 Three 的移位取字节完全等价）。 */
+            setHex(h: number, cs?: string): this;
+            /** CSS 颜色解析（引擎无 CSS 解析入口，命名色板是数据表；取到 hex 后仍委托 setHex/cc.Color）。 */
+            setStyle(s: string, cs?: string): this;
+            /** HSL 合成：引擎只有 HSV（cc.Color.fromHSV），无 HSL 等价，故保留 Three 原式。 */
+            setHSL(h: number, s: number, l: number, cs?: string): this;
+            copy(c: Color): this;
+            clone(): Color;
+            add(c: Color): this;
+            addScalar(s: number): this;
+            multiply(c: Color): this;
+            multiplyScalar(s: number): this;
+            /** 逐分量插值委托 cc.lerp（引擎 cc.Color.lerp 是 8bit 存储，不等价）。 */
+            lerp(c: Color, t: number): this;
+            lerpColors(a: Color, b: Color, t: number): this;
+            equals(c: Color): boolean;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            copySRGBToLinear(c: Color): this;
+            convertSRGBToLinear(): this;
+            copyLinearToSRGB(c: Color): this;
+            convertLinearToSRGB(): this;
+            getRGB(target: Color, cs?: string): Color;
+            getHex(cs?: string): number;
+            getHexString(cs?: string): string;
+            [Symbol.iterator](): IterableIterator<number>;
+        }
+        export class Box3 {
+            min: Vector3;
+            max: Vector3;
+            readonly isBox3 = true;
+            constructor(min?: Vector3, max?: Vector3);
+            set(min: Vector3, max: Vector3): this;
+            copy(b: Box3): this;
+            clone(): Box3;
+            makeEmpty(): this;
+            /** min/max 命名面上的空盒判定（引擎 AABB 无「空盒」概念，故属于命名适配而非算法）。 */
+            isEmpty(): boolean;
+            expandByPoint(p: Vector3): this;
+            expandByVector(v: Vector3): this;
+            expandByScalar(s: number): this;
+            setFromPoints(p: Iterable<Vector3>): this;
+            setFromCenterAndSize(c: Vector3, s: Vector3): this;
+            getCenter(t: Vector3): Vector3;
+            getSize(t: Vector3): Vector3;
+            /** 点包含：引擎 cc.geometry 无「点在 AABB 内」公共 API（只有形状间相交检测），属命名面比较。 */
+            containsPoint(p: Vector3): boolean;
+            /** 盒-盒相交委托 cc.geometry.intersect 的 AABB-AABB 检测；空盒先短路（AABB 无法表达 ±Infinity）。 */
+            intersectsBox(b: Box3): boolean;
+            /** 钳制点委托 cc.geometry.distance.pt_point_aabb；空盒时按 Three 语义得到 min 角点。 */
+            clampPoint(p: Vector3, t: Vector3): Vector3;
+            distanceToPoint(p: Vector3): number;
+            union(b: Box3): this;
+            intersect(b: Box3): this;
+            translate(v: Vector3): this;
+            equals(b: Box3): boolean;
+            /** 委托 cc.geometry.AABB.transform（极值点法，仿射矩阵下与 Three 的八顶点展开同解）。 */
+            applyMatrix4(m: Matrix4): this;
+        }
+        export class Ray {
+            origin: Vector3;
+            direction: Vector3;
+            constructor(origin?: Vector3, direction?: Vector3);
+            set(o: Vector3, d: Vector3): this;
+            copy(r: Ray): this;
+            clone(): Ray;
+            /** 委托 cc.Vec3.scaleAndAdd（Three 的 at 假设 direction 已归一，与引擎 Ray.computeHit 的归一化不同，故用原语）。 */
+            at(t: number, target: Vector3): Vector3;
+            lookAt(v: Vector3): this;
+            recast(t: number): this;
+            closestPointToPoint(p: Vector3, t: Vector3): Vector3;
+            distanceSqToPoint(p: Vector3): number;
+            distanceToPoint(p: Vector3): number;
+            /**
+             * 委托 cc.geometry.intersect 的 ray-AABB slab（引擎返回距离而非布尔）。
+             * 补两处契约空隙：空盒无法表达为 AABB；方向分量为 0 时引擎以 1/d 计算会得 ±Infinity/NaN，
+             * 用 Number.EPSILON 摄动等价于 Three 的 ±Infinity 分支。
+             */
+            intersectBox(b: Box3, t: Vector3): Vector3 | null;
+            /** 引擎命中距离为 0 才判空；起点在盒内时 Three 仍认为相交。 */
+            containsOriginInside(b: Box3): boolean;
+            intersectsBox(b: Box3): boolean;
+            applyMatrix4(m: Matrix4): this;
+            equals(r: Ray): boolean;
+        }
+        export const MathUtils: {
+            clamp: typeof math.clamp;
+            degToRad: typeof math.toRadian;
+            radToDeg: typeof math.toDegree;
+            lerp: typeof math.lerp;
+            euclideanModulo: typeof math.repeat;
+            /** mapLinear 由 cc.inverseLerp 组合：c + inverseLerp(a, b, x) * (d - c)。 */
+            mapLinear: (x: number, a: number, b: number, c: number, d: number) => number;
+            /** 引擎无 smoothstep 静态（core/math/utils 未提供），保留 Three 的 3t²-2t³ 标量式。 */
+            smoothstep: (x: number, a: number, b: number) => number;
+            isPowerOfTwo: (v: number) => boolean;
+            ceilPowerOfTwo: (v: number) => number;
+            /** floorPowerOfTwo 由 cc.nextPow2 组合：已是 2 的幂则原值，否则降一档。 */
+            floorPowerOfTwo: (v: number) => number;
+            /** 引擎无 UUID 生成器；浏览器有 crypto.randomUUID 时用之，否则退回时间戳 + cc.random。 */
+            generateUUID: () => string;
+        };
     }
     export import find = utils.find;
     export import bits = math.bits;
@@ -64740,11 +66590,2507 @@
             reuse(args: any): void;
         }
         export type _extensions_ccpool_node_pool__Constructor<T = {}> = new (...args: any[]) => T;
-        export type _pal_input__InputSourceButton = import('pal/input/input-source').InputSourceButton;
-        export type _pal_input__InputSourceDpad = import('pal/input/input-source').InputSourceDpad;
-        export type _pal_input__InputSourceStick = import('pal/input/input-source').InputSourceStick;
-        export type _pal_input__InputSourcePosition = import('pal/input/input-source').InputSourcePosition;
-        export type _pal_input__InputSourceOrientation = import('pal/input/input-source').InputSourceOrientation;
+        /**
+         * @en The abstract class for input source, which is used to control the input signal of a mono input source
+         * @zh InputSource 抽象类，该类用于控制单一输入源的输入信号
+         */
+        export abstract class __pal_input_input_source__InputSource<T> {
+            /**
+             * @en Get the signal value of the input source
+             * @zh 获取输入源的信号值
+             */
+            abstract getValue(): T;
+        }
+        /**
+         * @en The class for input source of 1D Axis, which is used to control the input signal of a mono input source
+         * @zh 1D 轴的 InputSource 类，该类用于控制单一输入源的输入信号
+         */
+        export class __pal_input_input_source__InputSourceAxis1D extends __pal_input_input_source__InputSource<number> {
+            /**
+             * @en Get the signal value of the input source, ranged from -1 to 1
+             * @zh 获取输入源的信号值，取值范围从 -1 到 1
+             */
+            getValue(): number;
+        }
+        /**
+         * @en The class for input source of mono button, whose input signal value is ranged from 0 to 1
+         * @zh 单一按键输入源类, 输入信号源的取值范围是 0 到 1
+         */
+        export class __pal_input_input_source__InputSourceButton extends __pal_input_input_source__InputSourceAxis1D {
+            /**
+             * @en Get the signal value of the input source, ranged from 0 to 1
+             * @zh 获取输入源的信号值，取值范围从 0 到 1
+             */
+            getValue(): number;
+        }
+        export type _pal_input__InputSourceButton = __pal_input_input_source__InputSourceButton;
+        /**
+         * @en The class for input source of 1D Axis, which is used to control the input signal of a composite of multi input source
+         * @zh 1D 轴的 InputSource 类，该类用于控制多个输入源组合的输入信号
+         */
+        export class __pal_input_input_source__CompositeInputSourceAxis1D extends __pal_input_input_source__InputSourceAxis1D {
+            /**
+             * @en The input source object of positive 1D axis
+             * @zh 1D 轴的正向的输入源对象
+             */
+            positive: __pal_input_input_source__InputSourceButton;
+            /**
+             * @en The input source object of negative 1D axis
+             * @zh 1D 轴的负向的输入源对象
+             */
+            negative: __pal_input_input_source__InputSourceButton;
+            constructor(options: {
+                positive: __pal_input_input_source__InputSourceButton;
+                negative: __pal_input_input_source__InputSourceButton;
+            });
+            /**
+             * @en Get the signal value of the input source, ranged from -1 to 1.
+             * @zh 获取输入源的信号值，取值范围从 -1 到 1
+             */
+            getValue(): number;
+        }
+        export interface __cocos_core_math_type_define__IVec2Like {
+            x: number;
+            y: number;
+        }
+        export interface __cocos_core_math_type_define__IVec3Like {
+            x: number;
+            y: number;
+            z: number;
+        }
+        export interface __cocos_core_math_type_define__IMat4Like {
+            m00: number;
+            m01: number;
+            m02: number;
+            m03: number;
+            m04: number;
+            m05: number;
+            m06: number;
+            m07: number;
+            m08: number;
+            m09: number;
+            m10: number;
+            m11: number;
+            m12: number;
+            m13: number;
+            m14: number;
+            m15: number;
+        }
+        export interface __cocos_core_math_type_define__IMat3Like {
+            m00: number;
+            m01: number;
+            m02: number;
+            m03: number;
+            m04: number;
+            m05: number;
+            m06: number;
+            m07: number;
+            m08: number;
+        }
+        export interface __cocos_core_math_type_define__IQuatLike {
+            x: number;
+            y: number;
+            z: number;
+            w: number;
+        }
+        /**
+         * @en The base class of all value types.
+         * @zh 所有值类型的基类。
+         */
+        export class __cocos_core_value_types_value_type__ValueType {
+            constructor();
+            /**
+             * @en
+             * Clone the current object. The clone result of the object should be equal to the current object,
+             * i.e. satisfy `this.equals(this, value.clone())`.
+             * The base version of this method do nothing and returns `this'.
+             * The derived class **must** rewrite this method and the returned object should not be `this`, i.e. satisfy `this !== this.clone()`.
+             * @zh
+             * 克隆当前值。克隆的结果值应与当前值相等，即满足 `this.equals(this, value.clone())`。
+             * 本方法的基类版本简单地返回 `this`；
+             * 派生类**必须**重写本方法，并且返回的对象不应当为 `this`，即满足 `this !== this.clone()`。
+             * @returns @en The cloned object. @zh 克隆的对象。
+             */
+            public clone(): __cocos_core_value_types_value_type__ValueType;
+            /**
+             * @en
+             * Check whether the current object is equal to the specified object.
+             * This check should be interchangeable, i.e. satisfy `this.equals(other) === other.equals(this)`.
+             * The base version of this method will returns `false'.
+             * @zh
+             * 判断当前值是否与指定值相等。此判断应当具有交换性，即满足 `this.equals(other) === other.equals(this)`。
+             * 本方法的基类版本简单地返回 `false`。
+             * @param other @en The other object @zh 指定值。
+             * @returns @en `true` if equal, otherwise returns `false` @zh 如果相等，则返回 `true`，否则返回 `false`。
+             */
+            public equals(other: this): boolean;
+            /**
+             * @en
+             * Set the property values of the current object with the given object.
+             * The base version of this method will returns `this' and the derived class **must** rewrite this method.
+             * @zh
+             * 赋值当前值使其与指定值相等。
+             * 本方法的基类版本简单地返回 `this`，派生类**必须**重写本方法。
+             * @param other @en The other object. @zh 指定值。
+             */
+            public set(other: this): void;
+            /**
+             * @en
+             * Convert the current object to a string.
+             * The base version of this method will returns an empty string.
+             * @zh
+             * 返回当前值的字符串表示。
+             * 本方法的基类版本返回空字符串。
+             * @returns @en The string representation of the current value. @zh 当前值的字符串表示。
+             */
+            public toString(): string;
+        }
+        /**
+         * @en Mathematical 3x3 matrix.
+         * @zh 表示三维（3x3）矩阵。
+         */
+        export class __cocos_core_math_mat3__Mat3 extends __cocos_core_value_types_value_type__ValueType {
+            public static IDENTITY = "Bad expression <Object.freeze(new Mat3())>";
+            /**
+             * @en Clone a matrix and save the results to out matrix
+             * @zh 获得指定矩阵的拷贝
+             */
+            public static clone<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Copy content of a matrix into another and save the results to out matrix
+             * @zh 复制目标矩阵
+             */
+            public static copy<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out): Out;
+            /**
+             * @en Sets the elements of a matrix with the given values and save the results to out matrix
+             * @zh 设置矩阵值
+             */
+            public static set<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, m00: number, m01: number, m02: number, m03: number, m04: number, m05: number, m06: number, m07: number, m08: number): Out;
+            /**
+             * @en Reset the out matrix to an identity matrix
+             * @zh 将目标赋值为单位矩阵
+             */
+            public static identity<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out): Out;
+            /**
+             * @en Transposes a matrix and save the results to out matrix
+             * @zh 转置矩阵
+             */
+            public static transpose<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out): Out;
+            /**
+             * @en Inverts a matrix. When matrix is not invertible the matrix will be set to zeros.
+             * @zh 矩阵求逆，注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
+             */
+            public static invert<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out): Out;
+            /**
+             * @en Calculates the determinant of a matrix
+             * @zh 矩阵行列式
+             */
+            public static determinant<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out): number;
+            /**
+             * @en Multiply two matrices explicitly and save the results to out matrix: a * b
+             * @zh 矩阵乘法：a * b
+             */
+            public static multiply<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Take the first third order of the fourth order matrix and multiply by the third order matrix: a * b
+             * @zh 取四阶矩阵的前三阶，与三阶矩阵相乘：a * b
+             */
+            public static multiplyMat4<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: __cocos_core_math_type_define__IMat4Like): Out;
+            /**
+             * @en Multiply a matrix with a translation vector given by a translation offset, first translate, then transform：a * T(v).
+             * @zh 在给定矩阵变换基础上加入位移变换，先位移，再变换，即a * T(v)。
+             */
+            /**
+             * @deprecated since v3.8.0, the function name is misleading, please use translate instead.
+             */
+            public static transform<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): void;
+            /**
+             * @en Multiply a matrix with a translation vector given by a translation offset, first translate, then transform：a * T(v).
+             * @zh 在给定矩阵变换基础上加入位移变换，先位移，再变换，即a * T(v)。
+             */
+            public static translate<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
+            /**
+             * @en Multiply a matrix with a scale matrix given by a scale vector and save the results to out matrix, first scale, then transform：a * S(v).
+             * @zh 在给定矩阵变换基础上加入新缩放变换，先缩放，再变换，即a * S(v)。
+             */
+            public static scale<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
+            /**
+             * @en Rotates the transform by the given angle and save the results into the out matrix, first rotate, then transform：a * R(rad).
+             * @zh 在给定矩阵变换基础上加入新旋转变换，先旋转，再变换，即a * R(rad)。
+             * @param rad radian of rotation
+             */
+            public static rotate<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Copies the first third order matrix of a fourth order matrix to the out third order matrix
+             * @zh 取四阶矩阵的前三阶
+             */
+            public static fromMat4<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: __cocos_core_math_type_define__IMat4Like): Out;
+            /**
+             * @en Sets a third order matrix with view direction and up direction. Then save the results to out matrix
+             * @zh 根据视口前方向和上方向计算矩阵
+             * @param view The view direction, it`s must be normalized.
+             * @param up The view up direction, it`s must be normalized, default value is (0, 1, 0).
+             */
+            public static fromViewUp<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, view: VecLike, up?: __cocos_core_math_vec3__Vec3): Out;
+            /**
+             * @en Sets the given matrix with a translation vector and save the results to out matrix
+             * @zh 计算位移矩阵
+             */
+            public static fromTranslation<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec2Like>(out: Out, v: VecLike): Out;
+            /**
+             * @en Sets the given matrix with a scale vector and save the results to out matrix
+             * @zh 计算缩放矩阵
+             */
+            public static fromScaling<Out extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec2Like>(out: Out, v: VecLike): Out;
+            /**
+             * @en Sets the given matrix with a given angle and save the results to out matrix
+             * @zh 计算旋转矩阵
+             */
+            public static fromRotation<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, rad: number): Out;
+            /**
+             * @en Sets the given matrix with the given quaternion and save the results to out matrix
+             * @zh 根据四元数旋转信息计算矩阵
+             */
+            public static fromQuat<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, q: __cocos_core_math_type_define__IQuatLike): Out;
+            /**
+             * @deprecated since v3.8.0, this function is too complicated, and should be split into several functions.
+             */
+            /**
+             * @en Calculates the upper-left 3x3 matrix of a 4x4 matrix's inverse transpose
+             * @zh 计算指定四维矩阵的逆转置三维矩阵
+             */
+            public static inverseTransposeMat4<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: __cocos_core_math_type_define__IMat4Like): Out | null;
+            /**
+             * @en Transform a matrix object to a flat array
+             * @zh 矩阵转数组
+             * @param ofs Array Start Offset
+             */
+            public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, m: __cocos_core_math_type_define__IMat3Like, ofs): Out;
+            /**
+             * @en Generates or sets a matrix with a flat array
+             * @zh 数组转矩阵
+             * @param ofs Array Start Offset
+             */
+            public static fromArray<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
+            /**
+             * @en Adds two matrices and save the results to out matrix
+             * @zh 逐元素矩阵加法
+             */
+            public static add<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Subtracts matrix b from matrix a and save the results to out matrix
+             * @zh 逐元素矩阵减法
+             */
+            public static subtract<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Multiply each element of a matrix by a scalar number and save the results to out matrix
+             * @zh 矩阵标量乘法
+             */
+            public static multiplyScalar<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: number): Out;
+            /**
+             * @en Adds two matrices after multiplying each element of the second operand by a scalar number. And save the results to out matrix.
+             * @zh 逐元素矩阵标量乘加: A + B * scale
+             */
+            public static multiplyScalarAndAdd<Out extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, b: Out, scale: number): Out;
+            /**
+             * @en Returns whether the specified matrices are equal.
+             * @zh 矩阵等价判断
+             */
+            public static strictEquals<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out, b: Out): boolean;
+            /**
+             * @en Returns whether the specified matrices are approximately equal.
+             * @zh 排除浮点数误差的矩阵近似等价判断
+             */
+            public static equals<Out extends __cocos_core_math_type_define__IMat3Like>(a: Out, b: Out, epsilon): boolean;
+            /**
+             * @en Convert Matrix to euler angle, resulting angle y, z in the range of [-PI, PI],
+             *  x in the range of [-PI/2, PI/2], the rotation order is YXZ, first rotate around Y, then around X, and finally around Z.
+             * @zh 将矩阵转换成欧拉角, 返回角度 y,z 在 [-PI, PI] 区间内, x 在 [-PI/2, PI/2] 区间内，旋转顺序为 YXZ，即先绕Y旋转，再绕X，最后绕Z旋转。
+             */
+            public static toEuler<InType extends __cocos_core_math_type_define__IMat3Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(matrix: InType, v: VecLike): boolean;
+            /**
+             * matrix layout
+             * |m00  m03  m06|
+             * |m01  m04  m07|
+             * |m02  m05  m08|
+             */
+            /**
+             * @en Value at column 0 row 0 of the matrix.
+             * @zh 矩阵第 0 列第 0 行的元素。
+             */
+            public m00: number;
+            /**
+             * @en Value at column 0 row 1 of the matrix.
+             * @zh 矩阵第 0 列第 1 行的元素。
+             */
+            public m01: number;
+            /**
+             * @en Value at column 0 row 2 of the matrix.
+             * @zh 矩阵第 0 列第 2 行的元素。
+             */
+            public m02: number;
+            /**
+             * @en Value at column 1 row 0 of the matrix.
+             * @zh 矩阵第 1 列第 0 行的元素。
+             */
+            public m03: number;
+            /**
+             * @en Value at column 1 row 1 of the matrix.
+             * @zh 矩阵第 1 列第 1 行的元素。
+             */
+            public m04: number;
+            /**
+             * @en Value at column 1 row 2 of the matrix.
+             * @zh 矩阵第 1 列第 2 行的元素。
+             */
+            public m05: number;
+            /**
+             * @en Value at column 2 row 0 of the matrix.
+             * @zh 矩阵第 2 列第 0 行的元素。
+             */
+            public m06: number;
+            /**
+             * @en Value at column 2 row 1 of the matrix.
+             * @zh 矩阵第 2 列第 1 行的元素。
+             */
+            public m07: number;
+            /**
+             * @en Value at column 2 row 2 of the matrix.
+             * @zh 矩阵第 2 列第 2 行的元素。
+             */
+            public m08: number;
+            constructor(other: __cocos_core_math_mat3__Mat3);
+            constructor(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number);
+            constructor(m00: number | __cocos_core_math_mat3__Mat3, m01, m02, m03, m04, m05, m06, m07, m08);
+            /**
+             * @en Clone a new matrix from the current matrix.
+             * @zh 克隆当前矩阵。
+             */
+            public clone(): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Sets the matrix with another one's value.
+             * @zh 设置当前矩阵使其与指定矩阵相等。
+             * @param other Specified matrix
+             * @return this
+             */
+            public set(other: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Set the matrix with values of all elements
+             * @zh 设置当前矩阵指定元素值。
+             * @return this
+             */
+            public set(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number): __cocos_core_math_mat3__Mat3;
+            public set(m00: number | __cocos_core_math_mat3__Mat3, m01, m02, m03, m04, m05, m06, m07, m08): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Returns whether the specified matrices are approximately equal.
+             * @zh 判断当前矩阵是否在误差范围内与指定矩阵相等。
+             * @param other Comparative matrix
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
+             */
+            public equals(other: __cocos_core_math_mat3__Mat3, epsilon): boolean;
+            /**
+             * @en Returns whether the specified matrices are equal.
+             * @zh 判断当前矩阵是否与指定矩阵相等。
+             * @param other Comparative matrix
+             * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
+             */
+            public strictEquals(other: __cocos_core_math_mat3__Mat3): boolean;
+            /**
+             * @en Returns a string representation of a matrix.
+             * @zh 返回当前矩阵的字符串表示。
+             * @return The string representation of this matrix
+             */
+            public toString(): string;
+            /**
+             * @en set the current matrix to an identity matrix.
+             * @zh 将当前矩阵设为单位矩阵。
+             * @return `this`
+             */
+            public identity(): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Transposes the current matrix.
+             * @zh 计算当前矩阵的转置矩阵。
+             */
+            public transpose(): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Inverts the current matrix. When matrix is not invertible the matrix will be set to zeros.
+             * @zh 计算当前矩阵的逆矩阵。注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
+             */
+            public invert(): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Calculates the determinant of the current matrix.
+             * @zh 计算当前矩阵的行列式。
+             * @return 当前矩阵的行列式。
+             */
+            public determinant(): number;
+            /**
+             * @en Adds the current matrix and another matrix to the current matrix.
+             * @zh 矩阵加法。将当前矩阵与指定矩阵的相加，结果返回给当前矩阵。
+             * @param mat the second operand
+             */
+            public add(mat: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Subtracts another matrix from the current matrix.
+             * @zh 计算矩阵减法。将当前矩阵减去指定矩阵的结果赋值给当前矩阵。
+             * @param mat the second operand
+             */
+            public subtract(mat: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Multiply the current matrix with another matrix.
+             * @zh 矩阵乘法。将当前矩阵左乘指定矩阵的结果赋值给当前矩阵。
+             * @param mat the second operand
+             */
+            public multiply(mat: __cocos_core_math_mat3__Mat3): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Multiply each element of the current matrix by a scalar number.
+             * @zh 矩阵数乘。将当前矩阵与指定标量的数乘结果赋值给当前矩阵。
+             * @param scalar amount to scale the matrix's elements by
+             */
+            public multiplyScalar(scalar: number): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Multiply the current matrix with a scale matrix given by a scale vector, that is M * S(vec).
+             * @zh 将当前矩阵左乘缩放矩阵的结果赋值给当前矩阵，缩放矩阵由各个轴的缩放给出，即M * S(vec)。
+             * @param vec vector to scale by
+             */
+            public scale(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Rotates the current matrix by the given angle, that is M * R(rad).
+             * @zh 将当前矩阵左乘旋转矩阵的结果赋值给当前矩阵，旋转矩阵由旋转轴和旋转角度给出，即M * R(rad)。
+             * @param rad radian of rotation
+             */
+            public rotate(rad: number): __cocos_core_math_mat3__Mat3;
+            /**
+             * @en Resets the current matrix from the given quaternion.
+             * @zh 重置当前矩阵的值，使其表示指定四元数表示的旋转变换。
+             * @param q The quaternion.
+             * @returns this
+             */
+            public fromQuat(q: __cocos_core_math_quat__Quat): __cocos_core_math_mat3__Mat3;
+        }
+        /**
+         * @en quaternion
+         * @zh 四元数
+         */
+        export class __cocos_core_math_quat__Quat extends __cocos_core_value_types_value_type__ValueType {
+            public static IDENTITY = "Bad expression <Object.freeze(new Quat())>";
+            /**
+             * @en Obtain a copy of the given quaternion
+             * @zh 获得指定四元数的拷贝
+             */
+            public static clone<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out): __cocos_core_math_quat__Quat;
+            /**
+             * @en Copy the given quaternion to the out quaternion
+             * @zh 复制目标四元数
+             */
+            public static copy<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike): Out;
+            /**
+             * @en Sets the out quaternion with values of each component
+             * @zh 设置四元数值
+             */
+            public static set<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, x: number, y: number, z: number, w: number): Out;
+            /**
+             * @en Sets the out quaternion to an identity quaternion
+             * @zh 将目标赋值为单位四元数
+             */
+            public static identity<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out): Out;
+            /**
+             * @en Sets the out quaternion with the shortest path orientation between two vectors, considering both vectors normalized
+             * @zh 设置四元数为两向量间的最短路径旋转，默认两向量都已归一化
+             */
+            public static rotationTo<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: VecLike, b: VecLike): Out;
+            /**
+             * @en Gets the rotation axis and the arc of rotation from the quaternion
+             * @zh 获取四元数的旋转轴和旋转弧度
+             * @param outAxis output axis
+             * @param q input quaternion
+             * @return radian of rotation
+             */
+            public static getAxisAngle<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(outAxis: VecLike, q: Out): number;
+            /**
+             * @en Quaternion multiplication and save the results to out quaternion, that is a * b.
+             * @zh 四元数乘法，即a * b。
+             */
+            public static multiply<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike_1 extends __cocos_core_math_type_define__IQuatLike, QuatLike_2 extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike_1, b: QuatLike_2): Out;
+            /**
+             * @en Quaternion scalar multiplication and save the results to out quaternion
+             * @zh 四元数标量乘法
+             */
+            public static multiplyScalar<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: number): Out;
+            /**
+             * @en Quaternion multiplication and addition: A + B * scale
+             * @zh 四元数乘加：A + B * scale
+             */
+            public static scaleAndAdd<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: Out, scale: number): Out;
+            /**
+             * @en Sets the out quaternion to represent a radian rotation around x axis
+             * @zh 绕 X 轴旋转指定四元数
+             * @param rad radian of rotation
+             */
+            public static rotateX<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Sets the out quaternion to represent a radian rotation around y axis
+             * @zh 绕 Y 轴旋转指定四元数
+             * @param rad radian of rotation
+             */
+            public static rotateY<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Sets the out quaternion to represent a radian rotation around z axis
+             * @zh 绕 Z 轴旋转指定四元数
+             * @param rad radian of rotation
+             */
+            public static rotateZ<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Sets the out quaternion to represent a radian rotation around a given rotation axis in world space
+             * @zh 绕世界空间下指定轴旋转四元数
+             * @param axis axis of rotation, normalized by default
+             * @param rad radian of rotation
+             */
+            public static rotateAround<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, rot: Out, axis: VecLike, rad: number): Out;
+            /**
+             * @en Sets the out quaternion to represent a radian rotation around a given rotation axis in local space
+             * @zh 绕本地空间下指定轴旋转四元数
+             * @param axis axis of rotation
+             * @param rad radian of rotation
+             */
+            public static rotateAroundLocal<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, rot: Out, axis: VecLike, rad: number): Out;
+            /**
+             * @en Calculates the w component with xyz components, considering the given quaternion normalized
+             * @zh 根据 xyz 分量计算 w 分量，默认已归一化
+             */
+            public static calculateW<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out): Out;
+            /**
+             * @en Quaternion dot product (scalar product)
+             * @zh 四元数点积（数量积）
+             */
+            public static dot<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out, b: Out): number;
+            /**
+             * @en Element by element linear interpolation: A + t * (B - A)
+             * @zh 逐元素线性插值： A + t * (B - A)
+             */
+            public static lerp<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: Out, t: number): Out;
+            /**
+             * @en Spherical quaternion interpolation
+             * @zh 四元数球面插值
+             */
+            public static slerp<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike_1 extends __cocos_core_math_type_define__IQuatLike, QuatLike_2 extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike_1, b: QuatLike_2, t: number): Out;
+            /**
+             * @en Spherical quaternion interpolation with two control points
+             * @zh 带两个控制点的四元数球面插值
+             * @param out the receiving quaternion
+             * @param a the first operand
+             * @param b the second operand
+             * @param c the third operand
+             * @param d the fourth operand
+             * @param t interpolation amount, in the range [0-1], between the two inputs
+             * @returns out
+             */
+            public static sqlerp<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out, b: Out, c: Out, d: Out, t: number): Out;
+            /**
+             * @en Sets the inverse of the given quaternion to out quaternion
+             * @zh 四元数求逆
+             */
+            public static invert<Out extends __cocos_core_math_type_define__IQuatLike, QuatLike extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: QuatLike): Out;
+            /**
+             * @en Conjugating a quaternion, it's equivalent to the inverse of the unit quaternion, but more efficient
+             * @zh 求共轭四元数，对单位四元数与求逆等价，但更高效
+             */
+            public static conjugate<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out): Out;
+            /**
+             * @en Calculates the length of the quaternion
+             * @zh 求四元数长度
+             */
+            public static len<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out): number;
+            /**
+             * @en Calculates the squared length of the quaternion
+             * @zh 求四元数长度平方
+             */
+            public static lengthSqr<Out extends __cocos_core_math_type_define__IQuatLike>(a: Out): number;
+            /**
+             * @en Normalize the given quaternion, returns a zero quaternion if input is a zero quaternion.
+             * @zh 归一化四元数，输入零四元数将会返回零四元数。
+             */
+            public static normalize<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, a: Out): Out;
+            /**
+             * @en Calculated the quaternion represents the given coordinates, considering all given vectors are normalized and mutually perpendicular
+             * @zh 根据本地坐标轴朝向计算四元数，默认三向量都已归一化且相互垂直
+             */
+            public static fromAxes<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, xAxis: VecLike, yAxis: VecLike, zAxis: VecLike): Out;
+            /**
+             * @en Calculates the quaternion with the up direction and the direction of the viewport
+             * @zh 根据视口的前方向和上方向计算四元数
+             * @param view The view direction, it`s must be normalized.
+             * @param up The view up direction, it`s must be normalized, default value is (0, 1, 0).
+             */
+            public static fromViewUp<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, view: VecLike, up?: __cocos_core_math_vec3__Vec3): Out;
+            /**
+             * @en Calculates the quaternion from a given rotary shaft and a radian rotation around it.
+             * @zh 根据旋转轴和旋转弧度计算四元数
+             */
+            public static fromAxisAngle<Out extends __cocos_core_math_type_define__IQuatLike, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, axis: VecLike, rad: number): Out;
+            /**
+             * @en Calculates the quaternion with the three-dimensional transform matrix, considering no scale included in the matrix
+             * @zh 根据三维矩阵信息计算四元数，默认输入矩阵不含有缩放信息
+             */
+            public static fromMat3<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, m: __cocos_core_math_mat3__Mat3): Out;
+            /**
+             * @en Calculates the quaternion with Euler angles, the rotation order is YZX, first rotate around Y, then around Z, and finally around X.
+             * @zh 根据欧拉角信息计算四元数，旋转顺序为 YZX，即先绕Y旋转，再绕Z，最后绕X旋转。
+             */
+            public static fromEuler<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, x: number, y: number, z: number): Out;
+            /**
+             * @en Calculates the quaternion with given 2D angle (0, 0, z).
+             * @zh 根据 2D 角度（0, 0, z）计算四元数
+             *
+             * @param out Output quaternion
+             * @param z Angle to rotate around Z axis in degrees.
+             */
+            public static fromAngleZ<Out extends __cocos_core_math_type_define__IQuatLike>(out: Out, z: number): Out;
+            /**
+             * @en This returns the X-axis vector of the quaternion
+             * @zh 返回定义此四元数的坐标系 X 轴向量
+             */
+            public static toAxisX(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): __cocos_core_math_type_define__IVec3Like;
+            /**
+             * @en This returns the Y-axis vector of the quaternion
+             * @zh 返回定义此四元数的坐标系 Y 轴向量
+             */
+            public static toAxisY(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): __cocos_core_math_type_define__IVec3Like;
+            /**
+             * @en This returns the Z-axis vector of the quaternion
+             * @zh 返回定义此四元数的坐标系 Z 轴向量
+             */
+            public static toAxisZ(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): __cocos_core_math_type_define__IVec3Like;
+            /**
+             * @en Converts the quaternion to angles, result angle x, y in the range of [-180, 180], z in the range of [-90, 90] interval,
+             * the rotation order is YZX, first rotate around Y, then around Z, and finally around X
+             * @zh 根据四元数计算欧拉角，返回角度 x, y 在 [-180, 180] 区间内, z 默认在 [-90, 90] 区间内，旋转顺序为 YZX，即先绕Y旋转，再绕Z，最后绕X旋转。
+             * @param outerZ change z value range to [-180, -90] U [90, 180]
+             */
+            public static toEuler(out: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike, outerZ?: boolean): __cocos_core_math_type_define__IVec3Like;
+            /**
+             * @en Converts the quaternion to euler angles, result angle y, z in the range of [-180, 180], x in the range of [-90, 90],
+             * the rotation order is YXZ, first rotate around Y, then around X, and finally around Z.
+             * @zh 根据四元数计算欧拉角，返回角度 yz 在 [-180, 180], x 在 [-90, 90]，旋转顺序为 YXZ，即先绕Y旋转，再绕X，最后绕Z旋转。
+             */
+            public static toEulerInYXZOrder(out: __cocos_core_math_vec3__Vec3, q: __cocos_core_math_type_define__IQuatLike): void;
+            /**
+             * @en Converts quaternion to an array
+             * @zh 四元数转数组
+             * @param ofs Array Start Offset
+             */
+            public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, q: __cocos_core_math_type_define__IQuatLike, ofs): Out;
+            /**
+             * @en Array to a quaternion
+             * @zh 数组转四元数
+             * @param ofs Array Start Offset
+             */
+            public static fromArray(out: __cocos_core_math_type_define__IQuatLike, arr: __types_globals__IWritableArrayLike<number>, ofs): __cocos_core_math_type_define__IQuatLike;
+            /**
+             * @en Check whether two quaternions are equal
+             * @zh 四元数等价判断
+             */
+            public static strictEquals(a: __cocos_core_math_type_define__IQuatLike, b: __cocos_core_math_type_define__IQuatLike): boolean;
+            /**
+             * @en Check whether two quaternions are approximately equal
+             * @zh 排除浮点数误差的四元数近似等价判断
+             */
+            public static equals(a: __cocos_core_math_type_define__IQuatLike, b: __cocos_core_math_type_define__IQuatLike, epsilon): boolean;
+            /**
+             * @en Gets the angular distance between two unit quaternions
+             * @zh 获取两个单位四元数的夹角
+             * @param a The first unit quaternion
+             * @param b The second unit quaternion
+             * @returns Angle between the two quaternions in radians
+             */
+            public static angle(a: __cocos_core_math_type_define__IQuatLike, b: __cocos_core_math_type_define__IQuatLike): number;
+            /**
+             * @en Rotate a `from` unit quaternion towards `to` unit quaternion
+             * @zh 将一个起始单位四元数旋转到一个目标单位四元数
+             * @param from The first unit quaternion
+             * @param to The second unit quaternion
+             * @param maxStep The maximum angle of rotation in degrees
+             * @returns new unit quaternion generated during rotation
+             */
+            public static rotateTowards(out: __cocos_core_math_type_define__IQuatLike, from: __cocos_core_math_type_define__IQuatLike, to: __cocos_core_math_type_define__IQuatLike, maxStep: number): __cocos_core_math_type_define__IQuatLike;
+            /**
+             * @en x component.
+             * @zh x 分量。
+             */
+            public x: number;
+            /**
+             * @en y component.
+             * @zh y 分量。
+             */
+            public y: number;
+            /**
+             * @en z component.
+             * @zh z 分量。
+             */
+            public z: number;
+            /**
+             * @en w component.
+             * @zh w 分量。
+             */
+            public w: number;
+            constructor(other: __cocos_core_math_quat__Quat);
+            constructor(x?: number, y?: number, z?: number, w?: number);
+            constructor(x?: number | __cocos_core_math_type_define__IQuatLike, y?: number, z?: number, w?: number);
+            /**
+             * @en clone the current Quat
+             * @zh 克隆当前四元数。
+             */
+            public clone(): __cocos_core_math_quat__Quat;
+            /**
+             * @en Set values with another quaternion
+             * @zh 设置当前四元数使其与指定四元数相等。
+             * @param other Specified quaternion
+             * @returns `this`
+             */
+            public set(other: __cocos_core_math_quat__Quat): __cocos_core_math_quat__Quat;
+            /**
+             * @en Set the value of each component of the current quaternion
+             * @zh 设置当前四元数指定元素值。
+             * @returns `this`
+             */
+            public set(x?: number, y?: number, z?: number, w?: number): __cocos_core_math_quat__Quat;
+            public set(x?: number | __cocos_core_math_quat__Quat, y?: number, z?: number, w?: number): __cocos_core_math_quat__Quat;
+            /**
+             * @en Check whether the quaternion approximately equals another one
+             * @zh 判断当前四元数是否在误差范围内与指定向量相等。
+             * @param other Comparative quaternion
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @returns Returns `true' when the components of the two quaternions are equal within the specified error range; otherwise, returns `false'.
+             */
+            public equals(other: __cocos_core_math_quat__Quat, epsilon): boolean;
+            /**
+             * @en Check whether the current quaternion strictly equals other quaternion
+             * @zh 判断当前四元数是否与指定四元数相等。
+             * @param other Comparative quaternion
+             * @returns Returns `true' when the components of the two quaternions are equal within the specified error range; otherwise, returns `false'.
+             */
+            public strictEquals(other: __cocos_core_math_quat__Quat): boolean;
+            /**
+             * @en Convert quaternion to Euler angles
+             * @zh 将当前四元数转化为欧拉角（x-y-z）并赋值给输出向量。
+             * @param out the output vector
+             */
+            public getEulerAngles(out: __cocos_core_math_vec3__Vec3): __cocos_core_math_type_define__IVec3Like;
+            /**
+             * @en Calculate the linear interpolation result between this quaternion and another one with given ratio
+             * @zh 根据指定的插值比率，从当前四元数到目标四元数之间做线性插值。
+             * @param to The target quaternion
+             * @param ratio The interpolation coefficient. The range is [0,1].
+             */
+            public lerp(to: __cocos_core_math_quat__Quat, ratio: number): __cocos_core_math_quat__Quat;
+            /**
+             * @en Calculates the spherical interpolation result between this quaternion and another one with the given ratio
+             * @zh 根据指定的插值比率，从当前四元数到目标四元数之间做球面插值。
+             * @param to The target quaternion
+             * @param ratio The interpolation coefficient. The range is [0,1].
+             */
+            public slerp(to: __cocos_core_math_quat__Quat, ratio: number): __cocos_core_math_quat__Quat;
+            /**
+             * @en Calculates the length of the quaternion
+             * @zh 求四元数长度
+             */
+            public length(): number;
+            /**
+             * @en Calculates the squared length of the quaternion
+             * @zh 求四元数长度平方
+             */
+            public lengthSqr(): number;
+            /**
+             * @en Return the information of the quaternion in string.
+             * @zh 返回当前四元数的字符串表示。
+             */
+            public toString(): string;
+        }
+        export class __cocos_core_math_mat4__Mat4 extends __cocos_core_value_types_value_type__ValueType {
+            public static IDENTITY = "Bad expression <Object.freeze(new Mat4())>";
+            /**
+             * @en Clone a matrix and save the results to out matrix
+             * @zh 获得指定矩阵的拷贝
+             */
+            public static clone(a: __cocos_core_math_type_define__IMat4Like): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Copy a matrix into the out matrix
+             * @zh 复制目标矩阵
+             */
+            public static copy<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out;
+            /**
+             * @en Sets a matrix with the given values and save the results to out matrix
+             * @zh 设置矩阵值
+             *
+             * @param out The receive matrix
+             * @param m00 Component in column 0, row 0 position (index 0)
+             * @param m01 Component in column 0, row 1 position (index 1)
+             * @param m02 Component in column 0, row 2 position (index 2)
+             * @param m03 Component in column 0, row 3 position (index 3)
+             * @param m10 Component in column 1, row 0 position (index 4)
+             * @param m11 Component in column 1, row 1 position (index 5)
+             * @param m12 Component in column 1, row 2 position (index 6)
+             * @param m13 Component in column 1, row 3 position (index 7)
+             * @param m20 Component in column 2, row 0 position (index 8)
+             * @param m21 Component in column 2, row 1 position (index 9)
+             * @param m22 Component in column 2, row 2 position (index 10)
+             * @param m23 Component in column 2, row 3 position (index 11)
+             * @param m30 Component in column 3, row 0 position (index 12)
+             * @param m31 Component in column 3, row 1 position (index 13)
+             * @param m32 Component in column 3, row 2 position (index 14)
+             * @param m33 Component in column 3, row 3 position (index 15)
+             * @returns The receive matrix
+             */
+            public static set<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, m00: number, m01: number, m02: number, m03: number, m10: number, m11: number, m12: number, m13: number, m20: number, m21: number, m22: number, m23: number, m30: number, m31: number, m32: number, m33: number): Out;
+            /**
+             * @en return an identity matrix.
+             * @zh 将目标赋值为单位矩阵
+             */
+            public static identity<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out): Out;
+            /**
+             * @en return an zero matrix.
+             * @zh 将目标赋值为0矩阵
+             */
+            public static zero<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out): Out;
+            /**
+             * @en Transposes a matrix and save the results to out matrix
+             * @zh 转置矩阵
+             */
+            public static transpose<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out;
+            /**
+             * @en Inverts a matrix. When matrix is not invertible the matrix will be set to zeros.
+             * @zh 矩阵求逆，注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
+             */
+            public static invert<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out;
+            /**
+             * @en Calculates the determinant of a matrix
+             * @zh 矩阵行列式
+             */
+            public static determinant<InType extends __cocos_core_math_type_define__IMat4Like>(a: InType): number;
+            /**
+             * @en Multiply two matrices and save the results to out matrix, (out = a * b)
+             * @zh 矩阵乘法 (out = a * b)
+             *
+             * @param out The out matrix
+             * @param a The first operand
+             * @param b The second operand
+             * @returns out matrix
+             */
+            public static multiply<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Translate a matrix with the given vector and save results to the out matrix, the translate is applied before the matrix, i.e. (out = a * T)
+             * @zh 在给定矩阵变换基础上加入平移变换，并将结果保存到 out 矩阵中，平移变换将应用在矩阵变换之前，即 (out = a * T)
+             *
+             * @param out The out matrix
+             * @param a The matrix to translate
+             * @param v The vector to translate with
+             */
+            public static transform<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
+            /**
+             * @en Transform a matrix with the given translation vector and save results to the out matrix,
+             * the translate is applied after the transformation, i.e. (out = T * a)
+             * @zh 在给定矩阵变换基础上加入新位移变换，平移变换在变换之后应用，即 (out = T * a)
+             *
+             * @param out The out matrix
+             * @param a The matrix to translate
+             * @param v The vector to translate with
+             * @deprecated Since 3.8.0, please use [[transform]] instead
+             */
+            public static translate<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
+            /**
+             * @en Multiply a matrix with a scale matrix given by a scale vector and save the results into the out matrix,
+             * the scale is applied before the matrix, i.e. (out = a * S)
+             * @zh 在给定矩阵变换基础上加入新缩放变换，并将结果保存到 out 矩阵中，缩放变换将应用在矩阵变换之前，即 (out = a * S)
+             */
+            public static scale<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, v: VecLike): Out;
+            /**
+             * @en Rotates the transform by the given angle and save the results into the out matrix, the rotate is applied before
+             * the matrix, i.e. (out = a * R)
+             * @zh 在给定矩阵变换基础上加入新旋转变换, 并将结果保存到 out 矩阵中，旋转变换将应用在矩阵变换之前，即 (out = a * R)
+             * @param rad Angle of rotation (in radians)
+             * @param axis axis of rotation
+             */
+            public static rotate<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Out, rad: number, axis: VecLike): Out | null;
+            /**
+             * @en Transform a matrix with a given angle around X axis and save the results to the out matrix, the rotate is applied
+             * before the matrix, i.e. (out = a * R)
+             * @zh 在给定矩阵变换基础上加入绕 X 轴的旋转变换, 并将结果保存到 out 矩阵中，旋转变换将应用在矩阵变换之前，即 (out = a * R)
+             * @param rad Angle of rotation (in radians)
+             */
+            public static rotateX<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Transform a matrix with a given angle around Y axis and save the results to the out matrix
+             * @zh 在给定矩阵变换基础上加入绕 Y 轴的旋转变换
+             * @param rad Angle of rotation (in radians)
+             */
+            public static rotateY<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Transform a matrix with a given angle around Z axis and save the results to the out matrix
+             * @zh 在给定矩阵变换基础上加入绕 Z 轴的旋转变换
+             * @param rad Angle of rotation (in radians)
+             */
+            public static rotateZ<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, rad: number): Out;
+            /**
+             * @en Sets the out matrix with a translation vector
+             * @zh 计算位移矩阵
+             */
+            public static fromTranslation<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: VecLike): Out;
+            /**
+             * @en Sets the out matrix with a scale vector
+             * @zh 计算缩放矩阵
+             */
+            public static fromScaling<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: VecLike): Out;
+            /**
+             * @en Sets the out matrix with rotation angle
+             * @zh 计算旋转矩阵
+             */
+            public static fromRotation<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, rad: number, axis: VecLike): Out | null;
+            /**
+             * @en Calculates the matrix representing a rotation around the X axis
+             * @zh 计算绕 X 轴的旋转矩阵
+             */
+            public static fromXRotation<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, rad: number): Out;
+            /**
+             * @en Calculates the matrix representing a rotation around the Y axis
+             * @zh 计算绕 Y 轴的旋转矩阵
+             */
+            public static fromYRotation<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, rad: number): Out;
+            /**
+             * @en Calculates the matrix representing a rotation around the Z axis
+             * @zh 计算绕 Z 轴的旋转矩阵
+             */
+            public static fromZRotation<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, rad: number): Out;
+            /**
+             * @en Calculates the transform representing the combination of a rotation and a translation, and stores the result in out.
+             * The order is rotation then translation.
+             * @zh 根据旋转和位移信息计算矩阵
+             */
+            public static fromRT<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike): Out;
+            /**
+             * @en Extracts the translation from the matrix, assuming it's composed in order of scale, rotation, translation
+             * @zh 提取矩阵的位移信息, 默认矩阵中的变换以 S->R->T 的顺序应用
+             */
+            public static getTranslation<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: VecLike, mat: InType): VecLike;
+            /**
+             * @en Extracts the scale vector from the matrix, assuming it's composed in order of scale, rotation, translation
+             * @zh 提取矩阵的缩放信息, 默认矩阵中的变换以 S->R->T 的顺序应用
+             */
+            public static getScaling<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: VecLike, mat: InType): VecLike;
+            /**
+             * @en Extracts the rotation from the matrix, assuming it's composed in order of scale, rotation, translation
+             * @zh 提取矩阵的旋转信息, 默认输入矩阵不含有缩放信息，如考虑缩放应使用 `toRTS` 函数。
+             */
+            public static getRotation<InType extends __cocos_core_math_type_define__IMat4Like>(out: __cocos_core_math_quat__Quat, mat: InType): __cocos_core_math_quat__Quat;
+            /**
+             * @en Extracts the scale, rotation and translation from the matrix, assuming it's composed in order of scale, rotation, translation
+             * @zh 提取旋转、位移、缩放信息， 默认矩阵中的变换以 S->R->T 的顺序应用
+             *
+             * @param m The input transform matrix
+             * @param q The corresponding rotation quat
+             * @param v The corresponding translate vector
+             * @param s The corresponding scaling vector
+             *
+             * @deprecated Since 3.8.0, please use toSRT instead
+             */
+            public static toRTS<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(m: InType, q: __cocos_core_math_quat__Quat | null, v: VecLike | null, s: VecLike | null): void;
+            /**
+             * @en Extracts the scale, rotation and translation from the matrix, assuming it's composed in order of scale, rotation, translation
+             * @zh 提取旋转、位移、缩放信息， 默认矩阵中的变换以 S->R->T 的顺序应用
+             *
+             * @param m The input transform matrix
+             * @param q The corresponding rotation quat
+             * @param v The corresponding translate vector
+             * @param s The corresponding scaling vector
+             */
+            public static toSRT<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(m: InType, q: __cocos_core_math_quat__Quat | null, v: VecLike | null, s: VecLike | null): void;
+            /**
+             * @en Convert Matrix to euler angle, resulting angle y, z in the range of [-PI, PI],
+             *  x in the range of [-PI/2, PI/2], the rotation order is YXZ.
+             * @zh 将矩阵转换为欧拉角，结果角度 y, z 在 [-PI, PI] 范围内，x 在 [-PI/2, PI/2] 区间内，旋转顺序为 YXZ.
+             */
+            public static toEuler<InType extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(m: InType, v: VecLike): boolean;
+            /**
+             * @en Compose a matrix from scale, rotation and translation, applied in order.
+             * @zh 根据旋转、位移、缩放信息计算矩阵，以 S->R->T 的顺序应用
+             * @deprecated Since 3.8.0, please use [[fromSRT]] instead.
+             */
+            public static fromRTS<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike): Out;
+            /**
+             * @en Compose a matrix from scale, rotation and translation, applied in order.
+             * @zh 根据旋转、位移、缩放信息计算矩阵，以 S->R->T 的顺序应用
+             * @param out The receiving matrix
+             * @param q Rotation quaternion
+             * @param v Translation vector
+             * @param s Scaling vector
+             * @returns The receiving matrix
+             */
+            public static fromSRT<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike): Out;
+            /**
+             * @en Compose a matrix from scale, rotation and translation, applied in order, from a given origin
+             * @zh 根据指定的旋转、位移、缩放及变换中心信息计算矩阵，以 S->R->T 的顺序应用
+             * @param q Rotation quaternion
+             * @param v Translation vector
+             * @param s Scaling vector
+             * @param o transformation Center
+             * @deprecated Please use [[fromSRTOrigin]] instead.
+             */
+            public static fromRTSOrigin<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike, o: VecLike): Out;
+            /**
+             * @en Compose a matrix from scale, rotation and translation, applied in order, from a given origin
+             * @zh 根据指定的旋转、位移、缩放及变换中心信息计算矩阵，以 O^{-1}->S->R->O->T 的顺序应用
+             * @param out The receiving matrix
+             * @param q Rotation quaternion
+             * @param v Translation vector
+             * @param s Scaling vector
+             * @param o transformation Center
+             * @returns The receiving matrix
+             */
+            public static fromSRTOrigin<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, q: __cocos_core_math_quat__Quat, v: VecLike, s: VecLike, o: VecLike): Out;
+            /**
+             * @en Sets the out matrix with the given quaternion
+             * @zh 根据指定的旋转信息计算矩阵
+             */
+            public static fromQuat<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, q: __cocos_core_math_quat__Quat): Out;
+            /**
+             * @en Calculates the matrix representing the given frustum
+             * @zh 根据指定的视锥体信息计算矩阵
+             * @param out The receiving matrix.
+             * @param left The X coordinate of the left side of the near projection plane in view space.
+             * @param right The X coordinate of the right side of the near projection plane in view space.
+             * @param bottom The Y coordinate of the bottom side of the near projection plane in view space.
+             * @param top The Y coordinate of the top side of the near projection plane in view space.
+             * @param near Z distance to the near plane from the origin in view space.
+             * @param far Z distance to the far plane from the origin in view space.
+             *
+             * @return The receiving matrix.
+             */
+            public static frustum<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, left: number, right: number, bottom: number, top: number, near: number, far: number): Out;
+            /**
+             * @en Calculates perspective projection matrix
+             * @zh 计算透视投影矩阵
+             * @param out The receiving matrix.
+             * @param fovy Vertical field-of-view in degrees.
+             * @param aspect Aspect ratio
+             * @param near Near depth clipping plane value.
+             * @param far Far depth clipping plane value.
+             * @param isFOVY Whether the fovy is based on the vertical field-of-view.
+             * @param minClipZ The minimum value of the near clipping plane, e.g. -1 for OpenGL, 0 for Vulkan and Metal.
+             * @param projectionSignY The sign of the Y axis of the projection matrix, which is used to flip the Y axis.
+             * @param orientation The orientation of the projection matrix, which is used to rotate the projection matrix.
+             *
+             * @return The receiving matrix.
+             */
+            public static perspective<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, fov: number, aspect: number, near: number, far: number, isFOVY, minClipZ, projectionSignY, orientation): Out;
+            /**
+             * @en Calculates orthogonal projection matrix
+             * @zh 计算正交投影矩阵
+             * @param out The receiving matrix.
+             * @param left Left-side x-coordinate.
+             * @param right Right-side x-coordinate.
+             * @param bottom Bottom y-coordinate.
+             * @param top Top y-coordinate.
+             * @param near Near depth clipping plane value.
+             * @param far Far depth clipping plane value.
+             * @param minClipZ The minimum value of the near clipping plane, e.g. -1 for OpenGL, 0 for Vulkan and Metal.
+             * @param projectionSignY The sign of the Y axis of the projection matrix, which is used to flip the Y axis.
+             * @param orientation The orientation of the projection matrix, which is used to rotate the projection matrix.
+             *
+             * @return The receiving matrix.
+             */
+            public static ortho<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, left: number, right: number, bottom: number, top: number, near: number, far: number, minClipZ, projectionSignY, orientation): Out;
+            /**
+             * @en
+             * Calculates the matrix with the view point information, given by eye position, target center and the up vector.
+             * Note that center to eye vector can't be zero or parallel to the up vector
+             * @zh
+             * 计算视图矩阵，给定眼睛位置、目标中心和上向量。注意，中心到眼睛向量不能为零或与上向量平行。
+             * @out The receiving matrix.
+             * @param eye The source point.
+             * @param center The target point.
+             * @param up The vector describing the up direction.
+             * @return The receiving matrix.
+             */
+            public static lookAt<Out extends __cocos_core_math_type_define__IMat4Like, VecLike extends __cocos_core_math_type_define__IVec3Like>(out: Out, eye: VecLike, center: VecLike, up: VecLike): Out;
+            /**
+             * @en Calculates the inverse transpose of a matrix and save the results to out matrix
+             * @zh 计算逆转置矩阵
+             *
+             * @deprecated This function is too complicated, and should be split into several functions.
+             */
+            public static inverseTranspose<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out): Out | null;
+            /**
+             * @en Transform a matrix object to a flat array
+             * @zh 矩阵转数组
+             * @param ofs Array Start Offset
+             */
+            public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, m: __cocos_core_math_type_define__IMat4Like, ofs): Out;
+            /**
+             * @en Generates or sets a matrix with a flat array
+             * @zh 数组转矩阵
+             * @param ofs Array Start Offset
+             */
+            public static fromArray<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
+            /**
+             * @en Adds two matrices and save the results to out matrix
+             * @zh 逐元素矩阵加法
+             */
+            public static add<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Subtracts matrix b from matrix a and save the results to out matrix
+             * @zh 逐元素矩阵减法
+             */
+            public static subtract<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Multiply each element of a matrix by a scalar number and save the results to out matrix
+             * @zh 矩阵标量乘法
+             */
+            public static multiplyScalar<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: number): Out;
+            /**
+             * @en Adds two matrices after multiplying each element of the second operand by a scalar number. And save the results to out matrix.
+             * @zh 逐元素矩阵标量乘加: A + B * scale
+             */
+            public static multiplyScalarAndAdd<Out extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, b: Out, scale: number): Out;
+            /**
+             * @en Returns whether the specified matrices are equal.
+             * @zh 矩阵等价判断
+             */
+            public static strictEquals<InType extends __cocos_core_math_type_define__IMat4Like>(a: InType, b: InType): boolean;
+            /**
+             * @en Returns whether the specified matrices are approximately equal.
+             * @zh 排除浮点数误差的矩阵近似等价判断
+             *
+             * @param a The first matrix to be compared.
+             * @param b The second matrix to be compared.
+             * @param epsilon The tolerance value.
+             * @return
+             */
+            public static equals<InType extends __cocos_core_math_type_define__IMat4Like>(a: InType, b: InType, epsilon): boolean;
+            /**
+             * matrix layout
+             * |m00  m04  m08 m12|
+             * |m01  m05  m09 m13|
+             * |m02  m06  m10 m14|
+             * |m03  m07  m11 m15|
+             */
+            /**
+             * @en Value at column 0 row 0 of the matrix.
+             * @zh 矩阵第 0 列第 0 行的元素。
+             */
+            public m00: number;
+            /**
+             * @en Value at column 0 row 1 of the matrix.
+             * @zh 矩阵第 0 列第 1 行的元素。
+             */
+            public m01: number;
+            /**
+             * @en Value at column 0 row 2 of the matrix.
+             * @zh 矩阵第 0 列第 2 行的元素。
+             */
+            public m02: number;
+            /**
+             * @en Value at column 0 row 3 of the matrix.
+             * @zh 矩阵第 0 列第 3 行的元素。
+             */
+            public m03: number;
+            /**
+             * @en Value at column 1 row 0 of the matrix.
+             * @zh 矩阵第 1 列第 0 行的元素。
+             */
+            public m04: number;
+            /**
+             * @en Value at column 1 row 1 of the matrix.
+             * @zh 矩阵第 1 列第 1 行的元素。
+             */
+            public m05: number;
+            /**
+             * @en Value at column 1 row 2 of the matrix.
+             * @zh 矩阵第 1 列第 2 行的元素。
+             */
+            public m06: number;
+            /**
+             * @en Value at column 1 row 3 of the matrix.
+             * @zh 矩阵第 1 列第 3 行的元素。
+             */
+            public m07: number;
+            /**
+             * @en Value at column 2 row 0 of the matrix.
+             * @zh 矩阵第 2 列第 0 行的元素。
+             */
+            public m08: number;
+            /**
+             * @en Value at column 2 row 1 of the matrix.
+             * @zh 矩阵第 2 列第 1 行的元素。
+             */
+            public m09: number;
+            /**
+             * @en Value at column 2 row 2 of the matrix.
+             * @zh 矩阵第 2 列第 2 行的元素。
+             */
+            public m10: number;
+            /**
+             * @en Value at column 2 row 3 of the matrix.
+             * @zh 矩阵第 2 列第 3 行的元素。
+             */
+            public m11: number;
+            /**
+             * @en Value at column 3 row 0 of the matrix.
+             * @zh 矩阵第 3 列第 0 行的元素。
+             */
+            public m12: number;
+            /**
+             * @en Value at column 3 row 1 of the matrix.
+             * @zh 矩阵第 3 列第 1 行的元素。
+             */
+            public m13: number;
+            /**
+             * @en Value at column 3 row 2 of the matrix.
+             * @zh 矩阵第 3 列第 2 行的元素。
+             */
+            public m14: number;
+            /**
+             * @en Value at column 3 row 3 of the matrix.
+             * @zh 矩阵第 3 列第 3 行的元素。
+             */
+            public m15: number;
+            constructor(other: __cocos_core_math_mat4__Mat4);
+            constructor(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number, m09?: number, m10?: number, m11?: number, m12?: number, m13?: number, m14?: number, m15?: number);
+            constructor(m00: __cocos_core_math_mat4__Mat4 | number, m01, m02, m03, m04, m05, m06, m07, m08, m09, m10, m11, m12, m13, m14, m15);
+            /**
+             * @en Clone a new matrix from the current matrix.
+             * @zh 克隆当前矩阵。
+             */
+            public clone(): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Sets the matrix with another one's value.
+             * @zh 设置当前矩阵使其与指定矩阵相等。
+             * @param other Specified matrix.
+             * @return this
+             */
+            public set(other: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Set the matrix with values of all elements
+             * @zh 设置当前矩阵指定元素值。
+             *
+             * @return this
+             */
+            public set(m00?: number, m01?: number, m02?: number, m03?: number, m04?: number, m05?: number, m06?: number, m07?: number, m08?: number, m09?: number, m10?: number, m11?: number, m12?: number, m13?: number, m14?: number, m15?: number): __cocos_core_math_mat4__Mat4;
+            public set(m00: __cocos_core_math_mat4__Mat4 | number, m01, m02, m03, m04, m05, m06, m07, m08, m09, m10, m11, m12, m13, m14, m15): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Returns whether the specified matrices are approximately equal.
+             * @zh 判断当前矩阵是否在误差范围内与指定矩阵相等。
+             * @param other Comparative matrix
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
+             */
+            public equals(other: __cocos_core_math_mat4__Mat4, epsilon): boolean;
+            /**
+             * @en Returns whether the specified matrices are equal.
+             * @zh 判断当前矩阵是否与指定矩阵相等。
+             * @param other Comparative matrix
+             * @return Returns `true' when the elements of both matrices are equal; otherwise returns `false'.
+             */
+            public strictEquals(other: __cocos_core_math_mat4__Mat4): boolean;
+            /**
+             * @en Returns a string representation of a matrix.
+             * @zh 返回当前矩阵的字符串表示。
+             * @return 当前矩阵的字符串表示。
+             */
+            public toString(): string;
+            /**
+             * @en set the current matrix to an identity matrix.
+             * @zh 将当前矩阵设为单位矩阵。
+             * @return `this`
+             */
+            public identity(): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en set the current matrix to an zero matrix.
+             * @zh 将当前矩阵设为 0矩阵。
+             * @return `this`
+             */
+            public zero(): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Transposes the current matrix.
+             * @zh 计算当前矩阵的转置矩阵。
+             */
+            public transpose(): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Inverts the current matrix. When matrix is not invertible the matrix will be set to zeros.
+             * @zh 计算当前矩阵的逆矩阵。注意，在矩阵不可逆时，会返回一个全为 0 的矩阵。
+             */
+            public invert(): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Calculates the determinant of the current matrix.
+             * @zh 计算当前矩阵的行列式。
+             * @return 当前矩阵的行列式。
+             */
+            public determinant(): number;
+            /**
+             * @en Adds the current matrix and another matrix to the current matrix.
+             * @zh 矩阵加法。将当前矩阵与指定矩阵的相加，结果返回给当前矩阵。
+             * @param mat the second operand
+             */
+            public add(mat: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Subtracts another matrix from the current matrix.
+             * @zh 计算矩阵减法。将当前矩阵减去指定矩阵的结果赋值给当前矩阵。
+             * @param mat the second operand
+             */
+            public subtract(mat: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Multiply the current matrix with another matrix.
+             * @zh 矩阵乘法。将当前矩阵左乘指定矩阵的结果赋值给当前矩阵。
+             * @param mat the second operand
+             */
+            public multiply(mat: __cocos_core_math_mat4__Mat4): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Multiply each element of the current matrix by a scalar number.
+             * @zh 矩阵数乘。将当前矩阵与指定标量的数乘结果赋值给当前矩阵。
+             * @param scalar amount to scale the matrix's elements by
+             */
+            public multiplyScalar(scalar: number): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Translate the current matrix by the given vector
+             * @zh 将当前矩阵左乘位移矩阵的结果赋值给当前矩阵，位移矩阵由各个轴的位移给出。
+             * @param vec vector to translate by
+             *
+             * @deprecated since v3.0, please use [[transform]] instead
+             */
+            public translate(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Translate the current matrix by the given vector
+             * @zh 将当前矩阵左乘位移矩阵的结果赋值给当前矩阵，位移矩阵由各个轴的位移给出。
+             * @param vec vector to translate by
+             */
+            public transform(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Multiply the current matrix with a scale vector.
+             * @zh 将当前矩阵左乘缩放矩阵的结果赋值给当前矩阵，缩放矩阵由各个轴的缩放给出。
+             * @param vec vector to scale by
+             */
+            public scale(vec: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Rotates the current matrix by the given angle around the given axis
+             * @zh 将当前矩阵左乘旋转矩阵的结果赋值给当前矩阵，旋转矩阵由旋转轴和旋转角度给出。
+             * @param rad Angle of rotation (in radians)
+             * @param axis Axis of rotation
+             */
+            public rotate(rad: number, axis: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4 | null;
+            /**
+             * @en Returns the translation vector component of a transformation matrix.
+             * @zh 从当前矩阵中计算出位移变换的部分，并以各个轴上位移的形式赋值给输出向量。
+             * @param out Vector to receive translation component.
+             */
+            public getTranslation(out: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Returns the scale factor component of a transformation matrix
+             * @zh 从当前矩阵中计算出缩放变换的部分，并以各个轴上缩放的形式赋值给输出向量。
+             * @param out Vector to receive scale component
+             */
+            public getScale(out: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Returns the rotation factor component of a transformation matrix
+             * @zh 从当前矩阵中计算出旋转变换的部分，并以四元数的形式赋值给输出四元数。
+             * @param out Vector to receive rotation component
+             */
+            public getRotation(out: __cocos_core_math_quat__Quat): __cocos_core_math_quat__Quat;
+            /**
+             * @en Resets the matrix values by the given rotation quaternion, translation vector and scale vector
+             * @zh 重置当前矩阵的值，使其表示指定的旋转、缩放、位移依次组合的变换。
+             * @param q Rotation quaternion
+             * @param v Translation vector
+             * @param s Scaling vector
+             * @return `this`
+             *
+             * @deprecated Since 3.8.0, please use [[fromSRT]] instead
+             */
+            public fromRTS(q: __cocos_core_math_quat__Quat, v: __cocos_core_math_vec3__Vec3, s: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Resets the matrix values by the given rotation quaternion, translation vector and scale vector
+             * @zh 重置当前矩阵的值，使其表示指定的旋转、缩放、位移依次组合的变换。
+             * @param q Rotation quaternion
+             * @param v Translation vector
+             * @param s Scaling vector
+             * @return `this`
+             */
+            public fromSRT(q: __cocos_core_math_quat__Quat, v: __cocos_core_math_vec3__Vec3, s: __cocos_core_math_vec3__Vec3): __cocos_core_math_mat4__Mat4;
+            /**
+             * @en Resets the current matrix from the given quaternion.
+             * @zh 重置当前矩阵的值，使其表示指定四元数表示的旋转变换。
+             * @param q Rotation quaternion
+             * @return `this`
+             */
+            public fromQuat(q: __cocos_core_math_quat__Quat): __cocos_core_math_mat4__Mat4;
+        }
+        /**
+         * @en Representation of 3D vectors and points.
+         * @zh 三维向量。
+         */
+        export class __cocos_core_math_vec3__Vec3 extends __cocos_core_value_types_value_type__ValueType {
+            public static UNIT_X = "Bad expression <freezeVec3(1, 0, 0)>";
+            public static UNIT_Y = "Bad expression <freezeVec3(0, 1, 0)>";
+            public static UNIT_Z = "Bad expression <freezeVec3(0, 0, 1)>";
+            public static RIGHT = "Bad expression <freezeVec3(1, 0, 0)>";
+            public static UP = "Bad expression <freezeVec3(0, 1, 0)>";
+            public static FORWARD = "Bad expression <freezeVec3(0, 0, -1)>";
+            public static ZERO = "Bad expression <freezeVec3(0, 0, 0)>";
+            public static ONE = "Bad expression <freezeVec3(1, 1, 1)>";
+            public static NEG_ONE = "Bad expression <freezeVec3(-1, -1, -1)>";
+            /**
+             * @en return a Vec3 object with x = 0, y = 0, z = 0.
+             * @zh 将目标赋值为零向量
+             */
+            public static zero<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out): Out;
+            /**
+             * @en Obtains a clone of the given vector object
+             * @zh 获得指定向量的拷贝
+             */
+            public static clone<Out extends __cocos_core_math_type_define__IVec3Like>(a: Out): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Copy the target vector and save the results to out vector object
+             * @zh 复制目标向量
+             */
+            public static copy<Out extends __cocos_core_math_type_define__IVec3Like, Vec3Like extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Vec3Like): Out;
+            /**
+             * @en Sets the out vector with the given x, y and z values
+             * @zh 设置向量值
+             */
+            public static set<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, x: number, y: number, z: number): Out;
+            /**
+             * @en Element-wise vector addition and save the results to out vector object
+             * @zh 逐元素向量加法
+             */
+            public static add<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Element-wise vector subtraction and save the results to out vector object
+             * @zh 逐元素向量减法
+             */
+            public static subtract<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Element-wise vector multiplication and save the results to out vector object
+             * @zh 逐元素向量乘法 (分量积)
+             */
+            public static multiply<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Element-wise vector division and save the results to out vector object
+             * @zh 逐元素向量除法
+             */
+            public static divide<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Rounds up by elements of the vector and save the results to out vector object
+             * @zh 逐元素向量向上取整
+             */
+            public static ceil<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Element-wise rounds down of the current vector and save the results to the out vector
+             * @zh 逐元素向量向下取整
+             */
+            public static floor<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates element-wise minimum values and save to the out vector
+             * @zh 逐元素向量最小值
+             */
+            public static min<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates element-wise maximum values and save to the out vector
+             * @zh 逐元素向量最大值
+             */
+            public static max<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates element-wise round results and save to the out vector
+             * @zh 逐元素向量四舍五入取整
+             */
+            public static round<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Vector scalar multiplication and save the results to out vector object
+             * @zh 向量标量乘法
+             */
+            public static multiplyScalar<Out extends __cocos_core_math_type_define__IVec3Like, Vec3Like extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: Vec3Like, b: number): Out;
+            /**
+             * @en Element-wise multiplication and addition with the equation: a + b * scale
+             * @zh 逐元素向量乘加: A + B * scale
+             */
+            public static scaleAndAdd<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like, scale: number): Out;
+            /**
+             * @en Calculates the euclidean distance of two vectors
+             * @zh 求两向量的欧氏距离
+             */
+            public static distance(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): number;
+            /**
+             * @en Calculates the squared euclidean distance of two vectors
+             * @zh 求两向量的欧氏距离平方
+             */
+            public static squaredDistance(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): number;
+            /**
+             * @en Calculates the length of the vector
+             * @zh 求向量长度
+             */
+            public static len(a: __cocos_core_math_type_define__IVec3Like): number;
+            /**
+             * @en Calculates the squared length of the vector
+             * @zh 求向量长度平方
+             */
+            public static lengthSqr(a: __cocos_core_math_type_define__IVec3Like): number;
+            /**
+             * @en Sets each element to its negative value
+             * @zh 逐元素向量取负
+             */
+            public static negate<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Sets each element to its inverse value, zero value will become Infinity
+             * @zh 逐元素向量取倒数，接近 0 时返回 Infinity
+             */
+            public static invert<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Sets each element to its inverse value, zero value will remain zero
+             * @zh 逐元素向量取倒数，接近 0 时返回 0
+             */
+            public static invertSafe<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Sets the normalized vector to the out vector, returns a zero vector if input is a zero vector.
+             * @zh 归一化向量，输入零向量将会返回零向量。
+             */
+            public static normalize<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates the dot product of the vector
+             * @zh 向量点积（数量积）
+             */
+            public static dot<Out extends __cocos_core_math_type_define__IVec3Like>(a: Out, b: __cocos_core_math_type_define__IVec3Like): number;
+            /**
+             * @en Calculates the cross product of the vector
+             * @zh 向量叉积（向量积）
+             */
+            public static cross<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates the linear interpolation between two vectors with a given ratio: A + t * (B - A)
+             * @zh 逐元素向量线性插值： A + t * (B - A)
+             */
+            public static lerp<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like, t: number): Out;
+            /**
+             * @zh 球面线性插值。多用于插值两个方向向量。
+             * @en Spherical linear interpolation. Commonly used in interpolation between directional vectors.
+             * @param out @zh 输出向量。 @en Output vector.
+             * @param from @zh 起点向量。 @en Start vector.
+             * @param to @zh 终点向量。 @en Destination vector.
+             * @param t @zh 插值参数。@en Interpolation parameter.
+             * @returns `out`
+             * @description
+             * @zh
+             * - 如果 `from`、`to` 中任何一个接近零向量，则结果就是 `from` 到 `to` 线性插值的结果；
+             *
+             * - 否则，如果 `from`、`to` 方向刚好接近相反，
+             * 则结果向量是满足以下条件的一个向量：结果向量和两个输入向量的夹角之比是 `t`，其长度是 `from` 到 `to` 的长度线性插值的结果；
+             *
+             * - 否则，结果是从标准化后的 `from` 到 标准化后的 `to`
+             * 进行球面线性插值的结果乘以 `from` 到 `to` 的长度线性插值后的长度。
+             * @en
+             * - If either `from` or `to` is close to zero vector,
+             * the result would be the (non-spherical) linear interpolation result from `from` to `to`.
+             *
+             * - Otherwise, if `from` and `to` have almost opposite directions,
+             * the result would be such a vector so that:
+             * The angle ratio between result vector and input vectors is `t`,
+             * the length of result vector is the linear interpolation of lengths from `from` to `to`.
+             *
+             * - Otherwise, the result would be the spherical linear interpolation result
+             * from normalized `from` to normalized `to`,
+             * then scaled by linear interpolation of lengths from `from` to `to`.
+             */
+            public static slerp = "Bad expression <((): <Out extends IVec3Like>(out: Out, from: Readonly<IVec3Like>, to: Readonly<IVec3Like>, t: number) => Out => {\n        const cacheV1 = new Vec3();\n        const cacheV2 = new Vec3();\n        const cacheV3 = new Vec3();\n        return <Out extends IVec3Like> (out: Out, from: Readonly<IVec3Like>, to: Readonly<IVec3Like>, t: number): Out => {\n            const EPSILON = 1e-5;\n            const lenFrom = Vec3.len(from);\n            const lenTo = Vec3.len(to);\n            if (lenFrom < EPSILON || lenTo < EPSILON) {\n                return Vec3.lerp(out, from, to, t);\n            }\n            const lenLerped = lerp(lenFrom, lenTo, t);\n            const dot = Vec3.dot(from, to) / (lenFrom * lenTo);\n            if (dot > 1.0 - EPSILON) {\n                // If the directions are almost same, slerp should be close to lerp.\n                return Vec3.lerp(out, from, to, t);\n            } else if (dot < -1.0 + EPSILON) {\n                // If the directions are almost opposite,\n                // every vector that orthonormal to the directions can be the rotation axis.\n                const fromNormalized = Vec3.multiplyScalar(cacheV1, from, 1.0 / lenFrom);\n                const axis = Vec3.generateOrthogonal(cacheV2, fromNormalized);\n                const angle = PI * t;\n                rotateAxisAngle(cacheV3, fromNormalized, axis, angle);\n                Vec3.multiplyScalar(out, cacheV3, lenLerped);\n                return out;\n            } else {\n                // Do not have to clamp. We done it before.\n                const dotClamped = dot;\n                const theta = acos(dotClamped) * t;\n                const fromNormalized = Vec3.multiplyScalar(cacheV1, from, 1.0 / lenFrom);\n                const toNormalized = Vec3.multiplyScalar(cacheV2, to, 1.0 / lenTo);\n                Vec3.scaleAndAdd(cacheV3, toNormalized, fromNormalized, -dotClamped);\n                Vec3.normalize(cacheV3, cacheV3);\n                Vec3.multiplyScalar(cacheV3, cacheV3, sin(theta));\n                Vec3.scaleAndAdd(cacheV3, cacheV3, fromNormalized, cos(theta));\n                Vec3.multiplyScalar(out, cacheV3, lenLerped);\n                return out;\n            }\n        };\n    })()>";
+            /**
+             * @en Generates a uniformly distributed random vector points from center to the surface of the unit sphere
+             * @zh 生成一个在单位球体上均匀分布的随机向量
+             * @param scale vector length
+             */
+            public static random<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, scale?: number): Out;
+            /**
+             * @en Vector and fourth order matrix multiplication, will complete the vector with a fourth value as one
+             * @zh 向量与四维矩阵乘法，默认向量第四位为 1。
+             */
+            public static transformMat4<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat4Like): Out;
+            /**
+             * @en Vector and fourth order matrix multiplication, will complete the vector with a fourth element as one
+             * @zh 向量与四维矩阵乘法，默认向量第四位为 0。
+             */
+            public static transformMat4Normal<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat4Like): Out;
+            /**
+             * @en Vector and third order matrix multiplication
+             * @zh 向量与三维矩阵乘法
+             */
+            public static transformMat3<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat3Like): Out;
+            /**
+             * @en Affine transformation vector
+             * @zh 向量仿射变换
+             */
+            public static transformAffine<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, m: __cocos_core_math_type_define__IMat4Like): Out;
+            /**
+             * @en Vector quaternion multiplication: q*a*q^{-1}.
+             * @zh 向量四元数乘法：q*a*q^{-1}。
+             */
+            public static transformQuat<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, q: __cocos_core_math_type_define__IQuatLike): Out;
+            /**
+             * @en Transforms the current vector with given scale, rotation and translation in order
+             * @zh 以缩放 -> 旋转 -> 平移顺序变换向量
+             */
+            public static transformRTS<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, r: __cocos_core_math_type_define__IQuatLike, t: __cocos_core_math_type_define__IVec3Like, s: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Transforms the current vector with given scale, rotation and translation in reverse order
+             * @zh 以平移 -> 旋转 -> 缩放顺序逆变换向量
+             */
+            public static transformInverseRTS<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, r: __cocos_core_math_type_define__IQuatLike, t: __cocos_core_math_type_define__IVec3Like, s: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Rotates the vector with specified angle around X axis
+             * @zh 绕 X 轴旋转向量指定弧度
+             * @param v rotation vector
+             * @param o center of rotation
+             * @param a radiance of rotation
+             */
+            public static rotateX<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, a: number): Out;
+            /**
+             * @en Rotates the vector with specified angle around Y axis
+             * @zh 绕 Y 轴旋转向量指定弧度
+             * @param v rotation vector
+             * @param o center of rotation
+             * @param a radiance of rotation
+             */
+            public static rotateY<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, a: number): Out;
+            /**
+             * @en Rotates the vector with specified angle around Z axis
+             * @zh 绕 Z 轴旋转向量指定弧度
+             * @param v rotation vector
+             * @param o center of rotation
+             * @param a radiance of rotation
+             */
+            public static rotateZ<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, a: number): Out;
+            /**
+             * @en Rotates the vector with specified angle around any n axis
+             * @zh 绕任意 n 轴旋转向量指定弧度
+             * @param v rotation vector
+             * @param o center of rotation
+             * @param n axis of rotation
+             * @param a radiance of rotation
+             */
+            public static rotateN<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, v: __cocos_core_math_type_define__IVec3Like, o: __cocos_core_math_type_define__IVec3Like, n: __cocos_core_math_type_define__IVec3Like, a: number): Out;
+            /**
+             * @en Converts the given vector to an array
+             * @zh 向量转数组
+             * @param ofs Array Start Offset
+             */
+            public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, v: __cocos_core_math_type_define__IVec3Like, ofs): Out;
+            /**
+             * @en Converts the given array to a vector
+             * @zh 数组转向量
+             * @param ofs Array Start Offset
+             */
+            public static fromArray<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
+            /**
+             * @en Check the equality of the two given vectors
+             * @zh 向量等价判断
+             */
+            public static strictEquals(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): boolean;
+            /**
+             * @en Check whether the two given vectors are approximately equivalent
+             * @zh 排除浮点数误差的向量近似等价判断
+             */
+            public static equals(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like, epsilon): boolean;
+            /**
+             * @en Calculates the radian angle between two vectors
+             * @zh 求两向量夹角弧度
+             */
+            public static angle(a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): number;
+            /**
+             * @zh 计算 `a`、`b` 两向量之间的有符号夹角。
+             *
+             * 不妨假设 `a`、`b` 是钟表上的两根指针，其中 `a` 指向 12 点整，`normal` 是任何从钟表正面指出的向量。
+             * 当 `b` **逆时针** 从 12 点走到 6 点的过程中，它们的角度变化范围为 (0°, 180°)；
+             * 当 `b` **顺时针** 从 12 点走到 6 点的过程中，它们的角度变化范围为 (0°, -180°)。
+             *
+             * 反之，如果 `normal` 是任何从钟表反面指出的向量，两种范围将对调。
+             *
+             * @en Calculates the signed angle between the two vectors `a`, `b`.
+             *
+             * Suppose that `a` and `b` are two hands on a clock, where pointing at 12 o'clock,
+             * and `normal` is arbitrary vector pointing out from the dial side of the clock.
+             * As `b` goes counterclockwise from 12 o'clock to 6 o'clock, their angle varies in the range (0°, 180°);
+             * As `b` goes clockwise from 12 o'clock to 6 o'clock, their angle varies in the range (0°, -180°).
+             *
+             * Instead, if `normal` is arbitrary vector pointing out from the opposite side of the clock,
+             * the two ranges would swap.
+             *
+             * @param a @zh 向量 `a`。 @en The vector `a`.
+             * @param b @zh 向量 `b`。 @en The vector `b`.
+             * @param normal @zh 参考向量。 @en The reference vector.
+             * @returns @zh 向量 `a` 和 `b` 之间的有符号夹角。 @en The signed angle between `a`, `b`.
+             */
+            public static signedAngle = "Bad expression <(() => {\n        const cacheCross = new Vec3();\n        return (a: Readonly<IVec3Like>, b: Readonly<IVec3Like>, normal: Readonly<IVec3Like>): number => {\n            const angle = Vec3.angle(a, b);\n            const cross = Vec3.cross(cacheCross, a, b);\n            const dot = Vec3.dot(cross, normal);\n            return dot < 0 ? -angle : angle;\n        };\n    })()>";
+            /**
+             * @en Calculates the projection vector on the specified plane
+             * @zh 计算向量在指定平面上的投影
+             * @param a projection vector
+             * @param n the normal line of specified plane
+             */
+            public static projectOnPlane<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, n: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates the projection on the specified vector
+             * @zh 计算向量在指定向量上的投影
+             * @param a projection vector
+             * @param b target vector
+             */
+            public static project<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, a: __cocos_core_math_type_define__IVec3Like, b: __cocos_core_math_type_define__IVec3Like): Out;
+            /**
+             * @en Calculates a new position from current to target no more than `maxStep` distance.
+             * @zh 计算一个新位置从当前位置移动不超过 `maxStep` 距离到目标位置。
+             * @param current current position
+             * @param target target position
+             * @param maxStep maximum moving distance
+             */
+            public static moveTowards<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, current: __cocos_core_math_type_define__IVec3Like, target: __cocos_core_math_type_define__IVec3Like, maxStep: number): Out;
+            /**
+             * @zh 生成指定向量的一个正交单位向量。如果指定的向量 **精确地** 是零向量，则返回 **精确的** 零向量。
+             * @en Generates an unit vector orthogonal to specified vector.
+             * If the specified vector is **strictly** zero vector, the result is **strict** zero vector.
+             * @param out @zh 生成的向量。@en The generated vector.
+             * @param n @zh 输入向量。该向量 **不必** 是标准化的。 @en The input vector. **Need not** to be normalized.
+             * @returns `out`
+             */
+            public static generateOrthogonal<Out extends __cocos_core_math_type_define__IVec3Like>(out: Out, n: Readonly<__cocos_core_math_type_define__IVec3Like>): Out;
+            /**
+             * @en x component.
+             * @zh x 分量。
+             */
+            public x: number;
+            /**
+             * @en y component.
+             * @zh y 分量。
+             */
+            public y: number;
+            /**
+             * @en z component.
+             * @zh z 分量。
+             */
+            public z: number;
+            constructor(v: __cocos_core_math_vec3__Vec3);
+            constructor(x?: number, y?: number, z?: number);
+            constructor(x?: number | __cocos_core_math_vec3__Vec3, y?: number, z?: number);
+            /**
+             * @en clone a Vec3 value
+             * @zh 克隆当前向量。
+             */
+            public clone(): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Set the current vector value with the given vector.
+             * @zh 设置当前向量使其与指定向量相等。
+             * @param other Specified vector
+             * @returns `this`
+             */
+            public set(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Set the value of each component of the current vector.
+             * @zh 设置当前向量的具体分量值。
+             * @param x x value
+             * @param y y value
+             * @param z z value
+             * @returns `this`
+             */
+            public set(x?: number, y?: number, z?: number): __cocos_core_math_vec3__Vec3;
+            public set(x?: number | __cocos_core_math_vec3__Vec3, y?: number, z?: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Check whether the vector approximately equals another one.
+             * @zh 判断当前向量是否在误差范围内与指定向量相等。
+             * @param other Specified vector
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public equals(other: __cocos_core_math_vec3__Vec3, epsilon): boolean;
+            /**
+             * @en Check whether the vector approximately equals another one.
+             * @zh 判断当前向量是否在误差范围内与指定分量的向量相等。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param z The z value of specified vector
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public equals3f(x: number, y: number, z: number, epsilon): boolean;
+            /**
+             * @en Check whether the current vector strictly equals another Vec3.
+             * @zh 判断当前向量是否与指定向量相等。
+             * @param other specified vector
+             * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public strictEquals(other: __cocos_core_math_vec3__Vec3): boolean;
+            /**
+             * @en Check whether the current vector strictly equals another Vec3.
+             * @zh 判断当前向量是否与指定分量的向量相等。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param z The z value of specified vector
+             * @returns Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public strictEquals3f(x: number, y: number, z: number): boolean;
+            /**
+             * @en Transform to string with vector information.
+             * @zh 返回当前向量的字符串表示。
+             * @returns The string with vector information
+             */
+            public toString(): string;
+            /**
+             * @en Calculate linear interpolation result between this vector and another one with given ratio.
+             * @zh 根据指定的插值比率，从当前向量到目标向量之间做插值。
+             * @param to Target vector
+             * @param ratio The interpolation coefficient.The range is [0,1].
+             */
+            public lerp(to: __cocos_core_math_vec3__Vec3, ratio: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Adds the current vector with another one and return this
+             * @zh 向量加法。将当前向量与指定向量的相加
+             * @param other specified vector
+             */
+            public add(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Adds the current vector with another one and return this
+             * @zh 向量加法。将当前向量与指定分量的向量相加
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param z The z value of specified vector
+             */
+            public add3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Subtracts one vector from this, and returns this.
+             * @zh 向量减法。将当前向量减去指定向量的结果。
+             * @param other specified vector
+             */
+            public subtract(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Subtracts one vector from this, and returns this.
+             * @zh 向量减法。将当前向量减去指定分量的向量
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param z The z value of specified vector
+             */
+            public subtract3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Multiplies the current vector with a number, and returns this.
+             * @zh 向量数乘。将当前向量数乘指定标量
+             * @param scalar scalar number
+             */
+            public multiplyScalar(scalar: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Multiplies the current vector with another one and return this
+             * @zh 向量乘法。将当前向量乘以与指定向量的结果赋值给当前向量。
+             * @param other specified vector
+             */
+            public multiply(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Multiplies the current vector with another one and return this
+             * @zh 向量乘法。将当前向量与指定分量的向量相乘的结果赋值给当前向量。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param z The z value of specified vector
+             */
+            public multiply3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Element-wisely divides this vector with another one, and return this.
+             * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
+             * @param other specified vector
+             */
+            public divide(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Element-wisely divides this vector with another one, and return this.
+             * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param z The z value of specified vector
+             */
+            public divide3f(x: number, y: number, z: number): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Sets each component of this vector with its negative value
+             * @zh 将当前向量的各个分量取反
+             */
+            public negative(): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Clamp the vector between minInclusive and maxInclusive.
+             * @zh 设置当前向量的值，使其各个分量都处于指定的范围内。
+             * @param minInclusive Minimum value allowed
+             * @param maxInclusive Maximum value allowed
+             * @returns `this`
+             */
+            public clampf(minInclusive: __cocos_core_math_vec3__Vec3, maxInclusive: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Calculates the dot product with another vector
+             * @zh 向量点乘。
+             * @param other specified vector
+             * @returns The result of calculates the dot product with another vector
+             */
+            public dot(other: __cocos_core_math_vec3__Vec3): number;
+            /**
+             * @en Calculates the cross product with another vector.
+             * @zh 向量叉乘。将当前向量左叉乘指定向量
+             * @param other specified vector
+             */
+            public cross(other: __cocos_core_math_vec3__Vec3): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Returns the length of this vector.
+             * @zh 计算向量的长度（模）。
+             * @returns Length of vector
+             */
+            public length(): number;
+            /**
+             * @en Returns the squared length of this vector.
+             * @zh 计算向量长度（模）的平方。
+             * @returns the squared length of this vector
+             */
+            public lengthSqr(): number;
+            /**
+             * @en Normalize the current vector.
+             * @zh 将当前向量归一化
+             */
+            public normalize(): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Transforms the vec3 with a mat4. 4th vector component is implicitly '1'
+             * @zh 将当前向量视为 w 分量为 1 的四维向量，应用四维矩阵变换到当前矩阵
+             * @param matrix matrix to transform with
+             */
+            public transformMat4(matrix: __cocos_core_math_mat4__Mat4): __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Converts the current Vec3 object to a Vec2 object by adding a z-component of 0.
+             * @zh 将当前的Vec3对象转换为一个z分量为0的Vec3对象。
+             * @returns Vec2 @en A new Vec2 object created from the current Vec3 object with z-component ignored.
+             * @zh 从当前的Vec3对象创建一个新的Vec2对象，丢弃z分量。
+             */
+            public toVec2(): __cocos_core_math_vec2__Vec2;
+        }
+        /**
+         * @en Representation of 2D vectors and points.
+         * @zh 二维向量。
+         */
+        export class __cocos_core_math_vec2__Vec2 extends __cocos_core_value_types_value_type__ValueType {
+            public static ZERO = "Bad expression <freezeVec2(0, 0)>";
+            public static ONE = "Bad expression <freezeVec2(1, 1)>";
+            public static NEG_ONE = "Bad expression <freezeVec2(-1, -1)>";
+            public static UNIT_X = "Bad expression <freezeVec2(1, 0)>";
+            public static UNIT_Y = "Bad expression <freezeVec2(0, 1)>";
+            /**
+             * @en Obtains a clone of the given vector object
+             * @zh 获得指定向量的拷贝
+             */
+            public static clone<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Copy the target vector and save the results to out vector object
+             * @zh 复制目标向量
+             */
+            public static copy<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Sets the out vector with the given x and y values
+             * @zh 设置向量值
+             */
+            public static set<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, x: number, y: number): Out;
+            /**
+             * @en Element-wise vector addition and save the results to out vector object
+             * @zh 逐元素向量加法
+             */
+            public static add<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Element-wise vector subtraction and save the results to out vector object
+             * @zh 逐元素向量减法
+             */
+            public static subtract<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Element-wise vector multiplication and save the results to out vector object
+             * @zh 逐元素向量乘法
+             */
+            public static multiply<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Element-wise vector division and save the results to out vector object
+             * @zh 逐元素向量除法
+             */
+            public static divide<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Rounds up by elements of the vector and save the results to out vector object
+             * @zh 逐元素向量向上取整
+             */
+            public static ceil<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Element-wise rounds down of the current vector and save the results to the out vector
+             * @zh 逐元素向量向下取整
+             */
+            public static floor<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Calculates element-wise minimum values and save to the out vector
+             * @zh 逐元素向量最小值
+             */
+            public static min<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Calculates element-wise maximum values and save to the out vector
+             * @zh 逐元素向量最大值
+             */
+            public static max<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out): Out;
+            /**
+             * @en Calculates element-wise round results and save to the out vector
+             * @zh 逐元素向量四舍五入取整
+             */
+            public static round<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Vector scalar multiplication and save the results to out vector object
+             * @zh 向量标量乘法
+             */
+            public static multiplyScalar<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: number): Out;
+            /**
+             * @en Element-wise multiplication and addition with the equation: a + b * scale
+             * @zh 逐元素向量乘加: A + B * scale
+             */
+            public static scaleAndAdd<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out, scale: number): Out;
+            /**
+             * @en Calculates the euclidean distance of two vectors
+             * @zh 求两向量的欧氏距离
+             */
+            public static distance<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
+            /**
+             * @en Calculates the squared euclidean distance of two vectors
+             * @zh 求两向量的欧氏距离平方
+             */
+            public static squaredDistance<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
+            /**
+             * @en Calculates the length of the vector
+             * @zh 求向量长度
+             */
+            public static len<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): number;
+            /**
+             * @en Calculates the squared length of the vector
+             * @zh 求向量长度平方
+             */
+            public static lengthSqr<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): number;
+            /**
+             * @en Sets each element to its negative value
+             * @zh 逐元素向量取负
+             */
+            public static negate<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Sets each element to its inverse value, zero value will become Infinity
+             * @zh 逐元素向量取倒数，接近 0 时返回 Infinity
+             */
+            public static inverse<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Sets each element to its inverse value, zero value will remain zero
+             * @zh 逐元素向量取倒数，接近 0 时返回 0
+             */
+            public static inverseSafe<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out): Out;
+            /**
+             * @en Sets the normalized vector to the out vector, returns a zero vector if input is a zero vector.
+             * @zh 归一化向量，输入零向量将会返回零向量。
+             */
+            public static normalize<Out extends __cocos_core_math_type_define__IVec2Like, Vec2Like extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Vec2Like): Out;
+            /**
+             * @en Calculates the dot product of the vector
+             * @zh 向量点积（数量积）
+             */
+            public static dot<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
+            /**
+             * @en Calculates the cross product of the vector
+             * @zh 向量叉积（向量积），注意二维向量的叉积为与 Z 轴平行的三维向量
+             * @override (a:Vec2, b:Vec2) => number
+             * @override [deprecated] (out:Vec3, a:Vec2, b:Vec2) => Vec3
+             */
+            public static cross(a: __cocos_core_math_type_define__IVec2Like, b: __cocos_core_math_type_define__IVec2Like): number;
+            /**
+             * @deprecated Consider use another overrides please.
+             */
+            public static cross<Out extends __cocos_core_math_type_define__IVec2Like>(out: __cocos_core_math_vec3__Vec3, a: Out, b: Out): __cocos_core_math_vec3__Vec3;
+            public static cross(out: __cocos_core_math_type_define__IVec2Like | __cocos_core_math_vec3__Vec3, a: __cocos_core_math_type_define__IVec2Like, b?: __cocos_core_math_type_define__IVec2Like): number | __cocos_core_math_vec3__Vec3;
+            /**
+             * @en Calculates the linear interpolation between two vectors with a given ratio: A + t * (B - A)
+             * @zh 逐元素向量线性插值： A + t * (B - A)
+             */
+            public static lerp<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, a: Out, b: Out, t: number): Out;
+            /**
+             * @en Generates a uniformly distributed random vector points from center to the surface of the unit sphere
+             * @zh 生成一个在单位圆上均匀分布的随机向量
+             * @param scale vector length
+             */
+            public static random<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, scale?: number): Out;
+            /**
+             * @en Vector and third order matrix multiplication, will complete the vector with a third value as one
+             * @zh 向量与三维矩阵乘法，默认向量第三位为 1。
+             */
+            public static transformMat3<Out extends __cocos_core_math_type_define__IVec2Like, MatLike extends __cocos_core_math_type_define__IMat3Like>(out: Out, a: Out, m: __cocos_core_math_type_define__IMat3Like): Out;
+            /**
+             * @en Vector and third order matrix multiplication, will complete the vector with a third and a fourth element as one
+             * @zh 向量与四维矩阵乘法，默认向量第三位为 0，第四位为 1。
+             */
+            public static transformMat4<Out extends __cocos_core_math_type_define__IVec2Like, MatLike extends __cocos_core_math_type_define__IMat4Like>(out: Out, a: Out, m: __cocos_core_math_type_define__IMat4Like): Out;
+            /**
+             * @en Gets the string representation of the given vector
+             * @zh 返回向量的字符串表示
+             */
+            public static str<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out): string;
+            /**
+             * @en Converts the given vector to an array
+             * @zh 向量转数组
+             * @param ofs Array Start Offset
+             */
+            public static toArray<Out extends __types_globals__IWritableArrayLike<number>>(out: Out, v: __cocos_core_math_type_define__IVec2Like, ofs): Out;
+            /**
+             * @en Converts the given array to a vector
+             * @zh 数组转向量
+             * @param ofs Array Start Offset
+             */
+            public static fromArray<Out extends __cocos_core_math_type_define__IVec2Like>(out: Out, arr: __types_globals__IWritableArrayLike<number>, ofs): Out;
+            /**
+             * @en Check the equality of the two given vectors
+             * @zh 向量等价判断
+             */
+            public static strictEquals<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): boolean;
+            /**
+             * @en Check whether the two given vectors are approximately equivalent
+             * @zh 排除浮点数误差的向量近似等价判断
+             */
+            public static equals<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out, epsilon): boolean;
+            /**
+             * @en Calculates the radian angle between two vectors, returns zero if either vector is a zero vector.
+             * @zh 求两向量夹角弧度，任意一个向量是零向量则返回零。
+             */
+            public static angle<Out extends __cocos_core_math_type_define__IVec2Like>(a: Out, b: Out): number;
+            /**
+             * @en x component.
+             * @zh x 分量。
+             */
+            public x: number;
+            /**
+             * @en y component.
+             * @zh y 分量。
+             */
+            public y: number;
+            constructor(other: __cocos_core_math_vec2__Vec2);
+            constructor(x?: number, y?: number);
+            constructor(x?: number | __cocos_core_math_vec2__Vec2, y?: number);
+            /**
+             * @en clone a Vec2 value
+             * @zh 克隆当前向量。
+             */
+            public clone(): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Set the current vector value with the given vector.
+             * @zh 设置当前向量使其与指定向量相等。
+             * @param other Specified vector
+             * @return `this`
+             */
+            public set(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Set the value of each component of the current vector.
+             * @zh 设置当前向量的具体分量值。
+             * @param x x value
+             * @param y y value
+             * @return `this`
+             */
+            public set(x?: number, y?: number): __cocos_core_math_vec2__Vec2;
+            public set(x?: number | __cocos_core_math_vec2__Vec2, y?: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Check whether the vector approximately equals another one.
+             * @zh 判断当前向量是否在误差范围内与指定向量相等。
+             * @param other Specified vector
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public equals(other: __cocos_core_math_vec2__Vec2, epsilon): boolean;
+            /**
+             * @en Check whether the vector approximately equals another one.
+             * @zh 判断当前向量是否在误差范围内与指定分量的向量相等。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @param epsilon The error allowed. It`s should be a non-negative number.
+             * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public equals2f(x: number, y: number, epsilon): boolean;
+            /**
+             * @en Check whether the current vector strictly equals another Vec2.
+             * @zh 判断当前向量是否与指定向量相等。
+             * @param other specified vector
+             * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public strictEquals(other: __cocos_core_math_vec2__Vec2): boolean;
+            /**
+             * @en Check whether the current vector strictly equals another Vec2.
+             * @zh 判断当前向量是否与指定分量的向量相等。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             * @return Returns `true` when the components of both vectors are equal within the specified range of error; otherwise it returns `false`.
+             */
+            public strictEquals2f(x: number, y: number): boolean;
+            /**
+             * @en Transform to string with vector information.
+             * @zh 返回当前向量的字符串表示。
+             * @returns The string with vector information
+             */
+            public toString(): string;
+            /**
+             * @en Calculate linear interpolation result between this vector and another one with given ratio.
+             * @zh 根据指定的插值比率，从当前向量到目标向量之间做插值。
+             * @param to Target vector
+             * @param ratio The interpolation coefficient.The range is [0,1].
+             */
+            public lerp(to: __cocos_core_math_vec2__Vec2, ratio: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Clamp the vector between minInclusive and maxInclusive.
+             * @zh 设置当前向量的值，使其各个分量都处于指定的范围内。
+             * @param minInclusive Minimum value allowed
+             * @param maxInclusive Maximum value allowed
+             * @return `this`
+             */
+            public clampf(minInclusive: __cocos_core_math_vec2__Vec2, maxInclusive: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Adds the current vector with another one and return this
+             * @zh 向量加法。将当前向量与指定向量的相加
+             * @param other specified vector
+             */
+            public add(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Adds the current vector with another one and return this
+             * @zh 向量加法。将当前向量与指定分量的向量相加
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             */
+            public add2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Subtracts one vector from this, and returns this.
+             * @zh 向量减法。将当前向量减去指定向量
+             * @param other specified vector
+             */
+            public subtract(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Subtracts one vector from this, and returns this.
+             * @zh 向量减法。将当前向量减去指定分量的向量
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             */
+            public subtract2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Multiplies the current vector with a number, and returns this.
+             * @zh 向量数乘。将当前向量数乘指定标量
+             * @param scalar scalar number
+             */
+            public multiplyScalar(scalar: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Multiplies the current vector with another one and return this
+             * @zh 向量乘法。将当前向量乘以与指定向量的结果赋值给当前向量。
+             * @param other specified vector
+             */
+            public multiply(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Multiplies the current vector with another one and return this
+             * @zh 向量乘法。将当前向量与指定分量的向量相乘的结果赋值给当前向量。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             */
+            public multiply2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Element-wisely divides this vector with another one, and return this.
+             * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
+             * @param other specified vector
+             */
+            public divide(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Element-wisely divides this vector with another one, and return this.
+             * @zh 向量逐元素相除。将当前向量与指定分量的向量相除的结果赋值给当前向量。
+             * @param x The x value of specified vector
+             * @param y The y value of specified vector
+             */
+            public divide2f(x: number, y: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Sets each component of this vector with its negative value
+             * @zh 将当前向量的各个分量取反
+             */
+            public negative(): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Calculates the dot product with another vector
+             * @zh 向量点乘。
+             * @param other specified vector
+             * @return The result of calculates the dot product with another vector
+             */
+            public dot(other: __cocos_core_math_vec2__Vec2): number;
+            /**
+             * @en Calculates the cross product with another vector.
+             * @zh 向量叉乘。
+             * @param other specified vector
+             * @return `out`
+             */
+            public cross(other: __cocos_core_math_vec2__Vec2): number;
+            /**
+             * @en Returns the length of this vector.
+             * @zh 计算向量的长度（模）。
+             * @return Length of vector
+             */
+            public length(): number;
+            /**
+             * @en Returns the squared length of this vector.
+             * @zh 计算向量长度（模）的平方。
+             * @return the squared length of this vector
+             */
+            public lengthSqr(): number;
+            /**
+             * @en Normalize the current vector.
+             * @zh 将当前向量归一化。
+             */
+            public normalize(): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Calculates radian angle between two vectors, returns zero if either vector is a zero vector.
+             * @zh 获取当前向量和指定向量之间的弧度，任意一个向量是零向量则返回零。
+             * @param other specified vector.
+             * @return The angle between the current vector and the specified vector.
+             */
+            public angle(other: __cocos_core_math_vec2__Vec2): number;
+            /**
+             * @en Get angle in radian between this and vector with direction.
+             * @zh 获取当前向量和指定向量之间的有符号弧度。<br/>
+             * 有符号弧度的取值范围为 (-PI, PI]，当前向量可以通过逆时针旋转有符号角度与指定向量同向。<br/>
+             * @param other specified vector
+             * @return The signed angle between the current vector and the specified vector (in radians);
+             * if there is a zero vector in the current vector and the specified vector, 0 is returned.
+             */
+            public signAngle(other: __cocos_core_math_vec2__Vec2): number;
+            /**
+             * @en Rotates the current vector by an angle in radian value. Counterclockwise is the positive direction.
+             * @zh 将当前向量进行旋转，逆时针为正方向。
+             * @param radians radians of rotation.
+             */
+            public rotate(radians: number): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Projects the current vector on another one
+             * @zh 计算当前向量在指定向量上的投影向量。
+             * @param other specified vector
+             */
+            public project(other: __cocos_core_math_vec2__Vec2): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Transforms the vec2 with a mat4. 3rd vector component is implicitly '0', 4th vector component is implicitly '1'
+             * @zh 将当前向量视为 z 分量为 0、w 分量为 1 的四维向量，<br/>
+             * 应用四维矩阵变换到当前矩阵<br/>
+             * @param matrix matrix to transform with
+             */
+            public transformMat4(matrix: __cocos_core_math_mat4__Mat4): __cocos_core_math_vec2__Vec2;
+            /**
+             * @en Converts the current Vec2 object to a Vec3 object by adding a z-component of 0.
+             * @zh 将当前的Vec2对象转换为一个z分量为0的Vec3对象。
+             * @returns Vec3 @en A new Vec3 object created from the current Vec2 object with z-component set to 0.
+             * @zh 从当前的Vec2对象创建一个新的Vec3对象，其中z分量设置为0。
+             */
+            public toVec3(): __cocos_core_math_vec3__Vec3;
+        }
+        /**
+         * @en The class for input source of 2D Axis, which is used to control the input signal of a mono input source
+         * @zh 2D 轴的 InputSource 类，该类用于控制单一输入源的输入信号
+         */
+        export class __pal_input_input_source__InputSourceAxis2D extends __pal_input_input_source__InputSource<__cocos_core_math_vec2__Vec2> {
+            /**
+             * @en Get the signal value of the input source, which returns a Vec2 object.
+             * @zh 获取输入源的信号值，该方法返回一个 Vec2 对象
+             */
+            getValue(): __cocos_core_math_vec2__Vec2;
+        }
+        /**
+         * @en The class for input source of 2D Axis, which is used to control the input signal of a composite of multi input source
+         * @zh 2D 轴的 InputSource 类，该类用于控制多个输入源组合的输入信号
+         */
+        export class __pal_input_input_source__CompositeInputSourceAxis2D extends __pal_input_input_source__InputSourceAxis2D {
+            /**
+             * @en The input source object of up direction of 2D axis
+             * @zh 2D 轴的向上的输入源对象
+             */
+            up: __pal_input_input_source__InputSourceButton;
+            /**
+             * @en The input source object of down direction of 2D axis
+             * @zh 2D 轴的向下的输入源对象
+             */
+            down: __pal_input_input_source__InputSourceButton;
+            /**
+             * @en The input source object of left direction of 2D axis
+             * @zh 2D 轴的向左的输入源对象
+             */
+            left: __pal_input_input_source__InputSourceButton;
+            /**
+             * @en The input source object of right direction of 2D axis
+             * @zh 2D 轴的向右的输入源对象
+             */
+            right: __pal_input_input_source__InputSourceButton;
+            /**
+             * @en The composite input source object on the x axis of 2D axis
+             * @zh 2D 轴在 x 轴上的组合输入源对象
+             */
+            xAxis: __pal_input_input_source__CompositeInputSourceAxis1D;
+            /**
+             * @en The composite input source object on the y axis of 2D axis
+             * @zh 2D 轴在 y 轴上的组合输入源对象
+             */
+            yAxis: __pal_input_input_source__CompositeInputSourceAxis1D;
+            constructor(options: {
+                up: __pal_input_input_source__InputSourceButton;
+                down: __pal_input_input_source__InputSourceButton;
+                left: __pal_input_input_source__InputSourceButton;
+                right: __pal_input_input_source__InputSourceButton;
+            });
+            /**
+             * @en Get the signal value of the input source, which returns a Vec2 object.
+             * @zh 获取输入源的信号值，该方法返回一个 Vec2 对象
+             */
+            getValue(): __cocos_core_math_vec2__Vec2;
+        }
+        /**
+         * @en The class for input source of dpad, whose input signal value a Vec2 object
+         * @zh 手柄方向键输入源类, 输入信号源的取值是一个 Vec2 对象
+         */
+        export class __pal_input_input_source__InputSourceDpad extends __pal_input_input_source__CompositeInputSourceAxis2D {
+        }
+        export type _pal_input__InputSourceDpad = __pal_input_input_source__InputSourceDpad;
+        /**
+         * @en The class for input source of stick, whose input signal value a Vec2 object
+         * @zh 摇杆输入源类, 输入信号源的取值是一个 Vec2 对象
+         */
+        export class __pal_input_input_source__InputSourceStick extends __pal_input_input_source__CompositeInputSourceAxis2D {
+        }
+        export type _pal_input__InputSourceStick = __pal_input_input_source__InputSourceStick;
+        /**
+         * @en The class for input source of 3D Axis, which is used to control the input signal of a mono input source
+         * @zh 3D 轴的 InputSource 类，该类用于控制单一输入源的输入信号
+         */
+        export class __pal_input_input_source__InputSourceAxis3D extends __pal_input_input_source__InputSource<__cocos_core_math_vec3__Vec3> {
+            /**
+             * @en Get the signal value of the input source, which returns a Vec3 object.
+             * @zh 获取输入源的信号值，该方法返回一个 Vec3 对象
+             */
+            getValue(): __cocos_core_math_vec3__Vec3;
+        }
+        /**
+         * @en The class for input source of position, whose input signal value a Vec3 object
+         * @zh 坐标输入源类, 输入信号源的取值是一个 Vec3 对象
+         */
+        export class __pal_input_input_source__InputSourcePosition extends __pal_input_input_source__InputSourceAxis3D {
+            /**
+             * @en Get the signal value of the input source, which returns a Vec3 object.
+             * @zh 获取输入源的信号值，该方法返回一个 Vec3 对象
+             */
+            getValue(): __cocos_core_math_vec3__Vec3;
+        }
+        export type _pal_input__InputSourcePosition = __pal_input_input_source__InputSourcePosition;
+        /**
+         * @en The class for input source of Quaternion, which is used to control the input signal of a mono input source
+         * @zh 四元数的 InputSource 类，该类用于控制单一输入源的输入信号
+         */
+        export class __pal_input_input_source__InputSourceQuat extends __pal_input_input_source__InputSource<__cocos_core_math_quat__Quat> {
+            /**
+             * @en Get the signal value of the input source, which returns a Quat object.
+             * @zh 获取输入源的信号值，该方法返回一个 Quat 对象
+             */
+            getValue(): __cocos_core_math_quat__Quat;
+        }
+        /**
+         * @en The class for input source of orientation, whose input signal value a Quat object
+         * @zh 方向输入源类, 输入信号源的取值是一个 Quat 对象
+         */
+        export class __pal_input_input_source__InputSourceOrientation extends __pal_input_input_source__InputSourceQuat {
+            /**
+             * @en Get the signal value of the input source, which returns a Quat object.
+             * @zh 获取输入源的信号值，该方法返回一个 Quat 对象
+             */
+            getValue(): __cocos_core_math_quat__Quat;
+        }
+        export type _pal_input__InputSourceOrientation = __pal_input_input_source__InputSourceOrientation;
         /**
          * Class designed for gamepad input
          */
@@ -66760,6 +71106,8 @@
             removeVideoPlayer(): void;
             createVideoPlayer(url: string): void;
             protected _bindDomEvent(): void;
+            onPause(event: Event): void;
+            onEnded(event: Event): void;
             onCanPlay(e: Event): void;
             enable(): void;
             disable(noPause?: boolean): void;
@@ -69640,6 +73988,21 @@
             NATIVE_AUDIO = 3,
             UNKNOWN_AUDIO = 4
         }
+        export enum __pal_audio_type__AudioType {
+            DOM_AUDIO = 0,
+            WEB_AUDIO = 1,
+            MINIGAME_AUDIO = 2,
+            NATIVE_AUDIO = 3,
+            UNKNOWN_AUDIO = 4
+        }
+        export interface __pal_audio_type__AudioLoadOptions {
+            /** Total network/decode readiness deadline; default 8000ms. */
+            timeoutMs?: number;
+            signal?: AbortSignal;
+            /** media keeps native URL loading; buffered needs CORS and owns a cancellable XHR + Blob URL. */
+            transport?: "media" | "buffered";
+            audioLoadMode?: __pal_audio_type__AudioType;
+        }
         /**
          * Each audio instance needs to be managed, but should not take up too much memory.
          * The `OneShotAudio` is a lite version of audio class designed for audio manager.
@@ -69664,6 +74027,20 @@
             get onEnd(): () => void | undefined;
             set onEnd(cb: () => void | undefined);
         }
+        export enum __pal_audio_type__AudioState {
+            INIT = 0,
+            PLAYING = 1,
+            PAUSED = 2,
+            STOPPED = 3,
+            INTERRUPTED = 4
+        }
+        export type __pal_audio_type__AudioBufferView = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+        export class __pal_audio_type__AudioPCMDataView {
+            constructor(arrayBufferView: __pal_audio_type__AudioBufferView, normalizeFactor: number);
+            constructor(arrayBuffer: ArrayBuffer, Ctor: __types_globals__Constructor<__pal_audio_type__AudioBufferView>, normalizeFactor: number);
+            get length(): number;
+            getData(offset: number): number;
+        }
         export class _pal_audio__AudioPlayer {
             /**
              * Destroys the player.
@@ -69675,7 +74052,7 @@
              * @param opts Load options.
              * @returns The audio player.
              */
-            static load(url: string, opts?: import('pal/audio/type').AudioLoadOptions): Promise<_pal_audio__AudioPlayer>;
+            static load(url: string, opts?: __pal_audio_type__AudioLoadOptions): Promise<_pal_audio__AudioPlayer>;
             /**
              * Asynchronously load a native audio for playing one shot.
              * This is a basic loading method for AudioPlayer.
@@ -69683,7 +74060,7 @@
              * @param opts Load options.
              * @returns The native audio such as `HTMLAudioElement` or `AudioBuffer`.
              */
-            static loadNative(url: string, opts?: import('pal/audio/type').AudioLoadOptions): Promise<unknown>;
+            static loadNative(url: string, opts?: __pal_audio_type__AudioLoadOptions): Promise<unknown>;
             /**
              * Asynchronously load an OneShotAudio instance.
              * @param url URL to the audio.
@@ -69691,7 +74068,7 @@
              * @param opts Load options.
              * @returns The OneShotAudio instance.
              */
-            static loadOneShotAudio(url: string, volume: number, opts?: import('pal/audio/type').AudioLoadOptions): Promise<_pal_audio__OneShotAudio>;
+            static loadOneShotAudio(url: string, volume: number, opts?: __pal_audio_type__AudioLoadOptions): Promise<_pal_audio__OneShotAudio>;
             /**
              * Max audio channel count allowed on current platform.
              * If the amount of playing audios exceeds the limit,
@@ -69706,12 +74083,12 @@
              * The type of this player.
              * For WEB platform, it can be `WEB_AUDIO` or `DOM_AUDIO`.
              */
-            get type(): import('pal/audio/type').AudioType;
+            get type(): __pal_audio_type__AudioType;
             /**
              * The state of this player.
              * The state would be restored to `INIT` when the audio finished its playing.
              */
-            get state(): import('pal/audio/type').AudioState;
+            get state(): __pal_audio_type__AudioState;
             /**
              * Gets or sets whether if the playing audio should be looped.
              */
@@ -69739,7 +74116,7 @@
              * Get pcm data view from specified channel.
              * @param channelIndex The channel index. 0 is left channel, 1 is right channel.
              */
-            public getPCMData(channelIndex: number): import('pal/audio/type').AudioPCMDataView | undefined;
+            public getPCMData(channelIndex: number): __pal_audio_type__AudioPCMDataView | undefined;
             /**
              * Asynchronously seeks the player's playing time onto specified location.
              * @param time Desired playing time.
@@ -69748,7 +74125,7 @@
             /**
              * Asynchronously plays the audio or resumes the audio while it is paused.
              */
-            play(): Promise<void>;
+            play(playToken?: number): Promise<void>;
             /**
              * Asynchronously pauses the playing.
              */
@@ -69757,6 +74134,9 @@
              * Asynchronously stops the playing.
              */
             stop(): Promise<void>;
+            /** Internal request retirement notification, not a physical stop completion fence. */
+            onStopRequested(cb: (playToken?: number) => void): void;
+            offStopRequested(): void;
             /**
              * Registers an callback which would be called at an interruption begin.
              * The interruption includes the show/hide events, phone call/alarm, earphones un-plugging.
@@ -69782,12 +74162,12 @@
              * Register an callback which would be called when the player finished its playing.
              * @param cb The callback.
              */
-            onEnded(cb: () => void): void;
+            onEnded(cb: (playToken?: number) => void): void;
             /**
              * Unregister the callback that registered to `onEnded`.
              * @param cb The callback. If not specified, all callback would be unregistered.
              */
-            offEnded(cb?: () => void): void;
+            offEnded(cb?: (playToken?: number) => void): void;
         }
         export interface _cocos_audio_audio_clip__AudioMeta {
             player: _pal_audio__AudioPlayer | null;
@@ -69807,6 +74187,83 @@
             ENDED = "ended"
         }
         export type _pal_audio_type__AudioBufferView = Int8Array | Uint8Array | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+        export type _air_physics_2d_box2d3__XY = {
+            x: number;
+            y: number;
+        };
+        export interface _air_physics_2d_box2d3__Observation {
+            a: number;
+            b: number;
+            id?: string;
+            /** Present on post-step snapshots; sleeping contacts are retained but were not solved. */
+            solved?: boolean;
+            normal: _air_physics_2d_box2d3__XY;
+            points: {
+                x: number;
+                y: number;
+                separation: number;
+                normalImpulse: number;
+                tangentImpulse: number;
+                localA: _air_physics_2d_box2d3__XY;
+                localB: _air_physics_2d_box2d3__XY;
+            }[];
+        }
+        export type _air_physics_2d_box2d3__Config = Record<string, unknown>;
+        export interface _air_physics_2d_box2d3__BodyState {
+            x: number;
+            y: number;
+            angle: number;
+            vx: number;
+            vy: number;
+            av: number;
+            awake: boolean;
+            enabled: boolean;
+            mass: number;
+            inertia: number;
+            localCenter: _air_physics_2d_box2d3__XY;
+            worldCenter: _air_physics_2d_box2d3__XY;
+        }
+        /** @internal Native module contract; handles are monotonic and scoped to this module instance. */
+        export interface _air_physics_2d_box2d3__Box2D3Module {
+            createWorld(gravity: _air_physics_2d_box2d3__XY, pre: (data: _air_physics_2d_box2d3__Observation, continuous: boolean) => _air_physics_2d_box2d3__Config): number;
+            destroyWorld(world: number): void;
+            createBody(world: number, config: _air_physics_2d_box2d3__Config): number;
+            destroyBody(body: number): void;
+            bodyState(body: number): _air_physics_2d_box2d3__BodyState;
+            bodyCommand(body: number, command: string, config: _air_physics_2d_box2d3__Config): void;
+            createShape(body: number, kind: string, config: _air_physics_2d_box2d3__Config): number;
+            destroyShape(shape: number): void;
+            shapeFilter(shape: number, category: number, mask: number): void;
+            shapeBounds(shape: number): {
+                lower: _air_physics_2d_box2d3__XY;
+                upper: _air_physics_2d_box2d3__XY;
+            };
+            createJoint(world: number, kind: string, a: number, b: number, config: _air_physics_2d_box2d3__Config): number;
+            destroyJoint(joint: number): void;
+            jointValid(joint: number): boolean;
+            jointTarget(joint: number, x: number, y: number): void;
+            step(world: number, delta: number, subSteps: number): void;
+            contacts(world: number): _air_physics_2d_box2d3__Observation[];
+            events(world: number): {
+                begin: {
+                    a: number;
+                    b: number;
+                }[];
+                end: {
+                    a: number;
+                    b: number;
+                }[];
+            };
+            query(world: number, kind: string, config: _air_physics_2d_box2d3__Config): any[];
+            worldCommand(world: number, command: string, config: _air_physics_2d_box2d3__Config): void;
+            stats(world: number): {
+                bodies: number;
+                shapes: number;
+                joints: number;
+                contacts: number;
+                worlds: number;
+            };
+        }
         /** @engineInternal Observes native diagnostics without changing console filtering. */
         export interface _cocos_core_platform_debug__DiagnosticLogEntry {
             severity: "warning" | "error";
@@ -70089,6 +74546,29 @@
             row0: math.Vec4;
             row1: math.Vec4;
         }
+        export interface _air_effects_vignette__AirVignetteSettings {
+            mode: "classic";
+            color: math.Color;
+            center: {
+                x: number;
+                y: number;
+            };
+            intensity: number;
+            smoothness: number;
+            roundness: number;
+            rounded: boolean;
+            opacity: number;
+        }
+        export interface _air_effects_bloom__AirBloomSettings {
+            intensity: number;
+            threshold: number;
+            softKnee: number;
+            clamp: number;
+            diffusion: number;
+            anamorphicRatio: number;
+            color: math.Color;
+            fastMode: boolean;
+        }
         export interface _cocos_rendering_custom_private__ProgramProxy {
             readonly name: string;
             readonly shader: gfx.Shader;
@@ -70258,6 +74738,8 @@
             format: gfx.Format;
             baseLevel: number;
             levelCount: number;
+            baseLayer: number;
+            layerCount: number;
         }
         /** @mangle */
         export class _cocos_gfx_webgl2_webgl2_texture__WebGL2Texture extends gfx.Texture {
@@ -70458,6 +74940,683 @@
             updateShadowUBOLight(globalDS: gfx.DescriptorSet, light: renderer.scene.Light, level?: number): void;
             updateShadowUBORange(offset: number, data: math.Mat4 | math.Color): void;
             destroy(): void;
+        }
+        export interface _air_spark_cocos_renderer__CocosRendererOptions {
+            canvas?: HTMLCanvasElement | null;
+            width?: number;
+            height?: number;
+            pixelRatio?: number;
+            engineUrl?: string;
+            antialias?: boolean;
+            alpha?: boolean;
+            ownsApp?: boolean;
+            logarithmicDepthBuffer?: boolean;
+            [key: string]: unknown;
+        }
+        /** Structural surface of the dynamically imported cocosair engine namespace, as `create()` uses it. */
+        export interface _air_spark_cocos_renderer__AirAppSurface {
+            run(scene: unknown): void | Promise<unknown>;
+            close?(): void | Promise<unknown>;
+        }
+        export interface _air_spark_cocos_renderer__AirNodeSurface {
+            addChild(node: _air_spark_cocos_renderer__AirNodeSurface): void;
+            addComponent(cameraClass: unknown): {
+                visibility: number;
+            };
+        }
+        export interface _air_spark_cocos_renderer__AirSceneSurface {
+            addChild(node: _air_spark_cocos_renderer__AirNodeSurface): void;
+        }
+        /** @mangle */
+        export interface _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPURenderPass {
+            colorAttachments: gfx.ColorAttachment[];
+            depthStencilAttachment: gfx.DepthStencilAttachment | null;
+        }
+        /** @mangle */
+        export interface _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUFramebuffer {
+            gpuRenderPass: _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPURenderPass;
+            gpuColorViews: _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUTextureView[];
+            gpuDepthStencilView: _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUTextureView | null;
+            glFramebuffer: WebGLFramebuffer | null;
+            glAttachments?: (WebGLTexture | WebGLRenderbuffer | null)[];
+            isOffscreen: boolean;
+            width: number;
+            height: number;
+        }
+        /** @mangle */
+        export class _cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer extends gfx.Framebuffer {
+            constructor();
+            getGpuFramebuffer(): _cocos_gfx_webgl2_webgl2_gpu_objects__IWebGL2GPUFramebuffer;
+            get width(): number;
+            get height(): number;
+            get needRebuild(): boolean;
+            initialize(info: Readonly<gfx.FramebufferInfo>): void;
+            destroy(): void;
+        }
+        export type _air_spark_cocos_renderer__GfxNamespace = typeof gfx;
+        export interface _air_spark_cocos_renderer__AirEngineSurface {
+            macro: {
+                ENABLE_WEBGL_ANTIALIAS: boolean;
+                ENABLE_TRANSPARENT_CANVAS: boolean;
+            };
+            createAirApp(options: {
+                canvas: HTMLCanvasElement;
+                pixelRatioCap: number;
+                diagnostics: string;
+            }): Promise<_air_spark_cocos_renderer__AirAppSurface>;
+            Scene: new (name?: string) => _air_spark_cocos_renderer__AirSceneSurface;
+            Node: new (name?: string) => _air_spark_cocos_renderer__AirNodeSurface;
+            Camera: unknown;
+            Size: new (width: number, height: number) => unknown;
+            screen: {
+                windowSize: unknown;
+            };
+            view: {
+                setDesignResolutionSize(width: number, height: number, policy: unknown): void;
+            };
+            ResolutionPolicy: {
+                EXACT_FIT: unknown;
+            };
+            director: {
+                root: {
+                    device: WebGL2Device;
+                    resize(width: number, height: number): void;
+                    mainWindow: {
+                        framebuffer: _cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer;
+                    };
+                };
+            };
+            game: {
+                pause(): void;
+            };
+            gfx: _air_spark_cocos_renderer__GfxNamespace;
+        }
+        export type _air_spark_cocos_renderer__NumericArray = Int8Array | Uint8Array | Uint8ClampedArray | Int16Array | Uint16Array | Int32Array | Uint32Array | Float32Array | Float64Array;
+        export interface _air_spark_cocos_renderer__SparkImageData {
+            width?: number;
+            height?: number;
+            depth?: number;
+            data?: _air_spark_cocos_renderer__NumericArray | null;
+            image?: _air_spark_cocos_renderer__SparkImageData;
+        }
+        export interface _air_spark_cocos_renderer__SparkLayerUpdates {
+            readonly size: number;
+            [Symbol.iterator](): Iterator<number>;
+        }
+        export interface _air_spark_cocos_renderer__SparkTexture {
+            id?: number | string;
+            uuid?: string;
+            internalFormat?: string;
+            format?: number;
+            type?: number;
+            colorSpace?: string;
+            isDataArrayTexture?: boolean;
+            isData3DTexture?: boolean;
+            isCubeTexture?: boolean;
+            isRenderTargetTexture?: boolean;
+            renderTarget?: unknown;
+            generateMipmaps?: boolean;
+            version?: number;
+            needsUpdate?: boolean;
+            unpackAlignment?: number;
+            minFilter?: number;
+            magFilter?: number;
+            wrapS?: number;
+            wrapT?: number;
+            wrapR?: number;
+            anisotropy?: number;
+            image?: _air_spark_cocos_renderer__SparkImageData | null;
+            source?: {
+                data?: _air_spark_cocos_renderer__SparkImageData;
+                dataReady?: boolean;
+            } | null;
+            layerUpdates?: _air_spark_cocos_renderer__SparkLayerUpdates;
+            clearLayerUpdates?: () => void;
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkRectLike {
+            x?: number;
+            y?: number;
+            z?: number;
+            w?: number;
+            width?: number;
+            height?: number;
+        }
+        export interface _air_spark_cocos_renderer__SparkRenderTarget {
+            width: number;
+            height: number;
+            depth?: number;
+            isCocosRenderTarget?: boolean;
+            _cocosFramebuffer?: _cocos_gfx_webgl2_webgl2_framebuffer__WebGL2Framebuffer;
+            isXRRenderTarget?: boolean;
+            isWebGLArrayRenderTarget?: boolean;
+            isWebGLCubeRenderTarget?: boolean;
+            depthBuffer?: boolean;
+            stencilBuffer?: boolean;
+            texture?: _air_spark_cocos_renderer__SparkTexture;
+            textures?: _air_spark_cocos_renderer__SparkTexture[];
+            viewport?: _air_spark_cocos_renderer__SparkRectLike;
+            scissor?: _air_spark_cocos_renderer__SparkRectLike;
+            scissorTest?: boolean;
+            _externalFramebuffer?: WebGLFramebuffer | null;
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export interface _air_spark_cocos_renderer__ViewportRect {
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }
+        export interface _air_spark_cocos_renderer__PassSet {
+            load: gfx.RenderPass;
+            clear?: gfx.RenderPass;
+        }
+        export type _air_spark_cocos_renderer__AnimationLoopCallback = (time: number, ...args: unknown[]) => void;
+        export interface _air_spark_cocos_renderer__SamplerDecl {
+            name: string;
+            type: string;
+            count: number;
+        }
+        export interface _air_spark_cocos_renderer__SamplerSlot extends _air_spark_cocos_renderer__SamplerDecl {
+            binding: number;
+        }
+        export interface _air_spark_cocos_renderer__NativeUniform {
+            type: number;
+            size: number;
+            name: string;
+            location: WebGLUniformLocation | null;
+        }
+        export interface _air_spark_cocos_renderer__MaterialEntry {
+            key: string;
+            shader: gfx.Shader;
+            program: WebGLProgram;
+            samplers: _air_spark_cocos_renderer__SamplerSlot[];
+            uniforms: _air_spark_cocos_renderer__NativeUniform[];
+            layout: gfx.DescriptorSetLayout;
+            pl: gfx.PipelineLayout;
+            ds: gfx.DescriptorSet;
+            psos: Map<string, gfx.PipelineState>;
+            vs: string;
+            fs: string;
+        }
+        export interface _air_spark_cocos_renderer__GeometryEntry {
+            signature: string;
+            attrs: gfx.Attribute[];
+            buffers: gfx.Buffer[];
+            ia: gfx.InputAssembler;
+        }
+        export interface _air_spark_cocos_renderer__InertXrShell {
+            enabled: boolean;
+            isPresenting: boolean;
+            getSession(): null;
+            getCamera(): null;
+            setAnimationLoop(callback: _air_spark_cocos_renderer__AnimationLoopCallback | null): void;
+        }
+        namespace _index { }
+        export interface _air_spark_cocos_renderer__SparkVector2Setter {
+            set(x: number, y: number): unknown;
+        }
+        export interface _air_spark_cocos_renderer__SparkVector4Setter {
+            set(x: number, y: number, z: number, w: number): unknown;
+        }
+        export interface _air_spark_cocos_renderer__SparkColorSetter {
+            setRGB(r: number, g: number, b: number): unknown;
+        }
+        /** Internal native-gfx entry caches (lifetime bookkeeping mirrors the source one for one). */
+        export interface _air_spark_cocos_renderer__TextureEntry {
+            texture: gfx.Texture;
+            signature: string;
+            version: number;
+            w: number;
+            h: number;
+            depth: number;
+            format: gfx.Format;
+            type: gfx.TextureType;
+            renderTarget: boolean;
+        }
+        export interface _air_spark_cocos_renderer__LayerEntry {
+            views: gfx.Texture[];
+            framebuffer: gfx.Framebuffer;
+        }
+        export interface _air_spark_cocos_renderer__TargetEntry {
+            signature?: string;
+            textures: _air_spark_cocos_renderer__SparkTexture[];
+            passes: _air_spark_cocos_renderer__PassSet;
+            depth?: gfx.Texture | null;
+            layers?: Map<string, _air_spark_cocos_renderer__LayerEntry>;
+            framebuffer?: gfx.Framebuffer;
+            external?: boolean;
+        }
+        export interface _air_spark_cocos_renderer__FramebufferEntry {
+            framebuffer: gfx.Framebuffer;
+            passes: _air_spark_cocos_renderer__PassSet;
+            width: number;
+            height: number;
+            views?: gfx.Texture[];
+        }
+        /** Duck-typed shapes of adapter/Spark objects this renderer reads (no algorithm, fields only). */
+        export interface _air_spark_cocos_renderer__SparkUniforms {
+            [name: string]: {
+                value: unknown;
+            } | undefined;
+        }
+        export interface _air_spark_cocos_renderer__SparkAttribute {
+            array: _air_spark_cocos_renderer__NumericArray;
+            itemSize: number;
+            count?: number;
+            normalized?: boolean;
+            version?: number;
+            isInstancedBufferAttribute?: boolean;
+            isInterleavedBufferAttribute?: boolean;
+        }
+        export interface _air_spark_cocos_renderer__SparkGeometry {
+            attributes: Record<string, _air_spark_cocos_renderer__SparkAttribute | undefined>;
+            index?: _air_spark_cocos_renderer__SparkAttribute | null;
+            instanceCount?: number;
+            drawRange?: {
+                start: number;
+                count: number;
+            };
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkLayers {
+            test(layers: unknown): boolean;
+        }
+        export interface _air_spark_cocos_renderer__SparkCamera {
+            visible?: boolean;
+            parent?: _air_spark_cocos_renderer__SparkObject | null;
+            children?: _air_spark_cocos_renderer__SparkObject[];
+            layers?: _air_spark_cocos_renderer__SparkLayers;
+            position?: sparkMath.Vector3;
+            matrix?: sparkMath.Matrix4;
+            matrixWorld?: sparkMath.Matrix4;
+            matrixWorldInverse?: sparkMath.Matrix4;
+            projectionMatrix?: sparkMath.Matrix4;
+            projectionMatrixInverse?: sparkMath.Matrix4;
+            matrixWorldAutoUpdate?: boolean;
+            isOrthographicCamera?: boolean;
+            isArrayCamera?: boolean;
+            cameras?: _air_spark_cocos_renderer__SparkCamera[];
+            viewport?: _air_spark_cocos_renderer__SparkRectLike;
+            near?: number;
+            far?: number;
+            updateMatrixWorld?: (force?: boolean) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkObject {
+            visible?: boolean;
+            children?: _air_spark_cocos_renderer__SparkObject[];
+            geometry?: _air_spark_cocos_renderer__SparkGeometry | null;
+            material?: _air_spark_cocos_renderer__SparkMaterial | _air_spark_cocos_renderer__SparkMaterial[] | null;
+            layers?: _air_spark_cocos_renderer__SparkLayers;
+            matrixWorld?: sparkMath.Matrix4;
+            renderOrder?: number;
+            onBeforeRender?: (renderer: CocosRenderer, scene: _air_spark_cocos_renderer__SparkObject, camera: _air_spark_cocos_renderer__SparkCamera | null, geometry: _air_spark_cocos_renderer__SparkGeometry | null | undefined, material: _air_spark_cocos_renderer__SparkMaterial, group: unknown) => void;
+            onAfterRender?: (renderer: CocosRenderer, scene: _air_spark_cocos_renderer__SparkObject, camera: _air_spark_cocos_renderer__SparkCamera | null, geometry: _air_spark_cocos_renderer__SparkGeometry, material: _air_spark_cocos_renderer__SparkMaterial, group: unknown) => void;
+            traverse?: (callback: (object: _air_spark_cocos_renderer__SparkObject) => void) => void;
+            updateMatrixWorld?: (force?: boolean) => void;
+        }
+        export interface _air_spark_cocos_renderer__SparkMaterial {
+            id?: number | string;
+            name?: string;
+            type?: string;
+            version?: number;
+            visible?: boolean;
+            vertexShader?: string;
+            fragmentShader?: string;
+            defines?: Record<string, string | number | boolean | undefined>;
+            wireframe?: boolean;
+            uniforms?: _air_spark_cocos_renderer__SparkUniforms;
+            premultipliedAlpha?: boolean;
+            isRawShaderMaterial?: boolean;
+            transparent?: boolean;
+            blending?: number;
+            side?: number;
+            depthTest?: boolean;
+            depthWrite?: boolean;
+            depthFunc?: number;
+            colorWrite?: boolean;
+            blendSrc?: number;
+            blendDst?: number;
+            blendSrcAlpha?: number;
+            blendDstAlpha?: number;
+            blendEquation?: number;
+            blendEquationAlpha?: number;
+            blendAlpha?: number;
+            blendColor?: sparkMath.Color;
+            polygonOffset?: boolean;
+            polygonOffsetFactor?: number;
+            polygonOffsetUnits?: number;
+            alphaToCoverage?: boolean;
+            stencilWrite?: boolean;
+            stencilFunc?: number;
+            stencilRef?: number;
+            stencilFuncMask?: number;
+            stencilWriteMask?: number;
+            stencilFail?: number;
+            stencilZFail?: number;
+            stencilZPass?: number;
+            onBeforeRender?: (renderer: CocosRenderer, scene: _air_spark_cocos_renderer__SparkObject, camera: _air_spark_cocos_renderer__SparkCamera | null, geometry: _air_spark_cocos_renderer__SparkGeometry | null | undefined, material: _air_spark_cocos_renderer__SparkMaterial, group: unknown) => void;
+            addEventListener?: (type: string, callback: () => void) => void;
+        }
+        export class _air_spark_spark_api_adapter__EventDispatcher {
+            _listeners?: Record<string, Set<any>>;
+            addEventListener(type: string, listener: any): void;
+            hasEventListener(type: string, listener: any): boolean;
+            removeEventListener(type: string, listener: any): void;
+            dispatchEvent(event: any): void;
+        }
+        export class _air_spark_spark_api_adapter__Object3D extends _air_spark_spark_api_adapter__EventDispatcher {
+            static DEFAULT_UP: sparkMath.Vector3;
+            static DEFAULT_MATRIX_AUTO_UPDATE: boolean;
+            static DEFAULT_MATRIX_WORLD_AUTO_UPDATE: boolean;
+            [key: string]: any;
+            constructor();
+            onBeforeRender(): void;
+            onAfterRender(): void;
+            onBeforeShadow(): void;
+            onAfterShadow(): void;
+            add(...objects: any[]): this;
+            remove(...objects: any[]): this;
+            removeFromParent(): this;
+            clear(): this;
+            attach(o: any): this;
+            traverse(fn: (o: any) => void): void;
+            traverseVisible(fn: (o: any) => void): void;
+            traverseAncestors(fn: (o: any) => void): void;
+            getObjectByProperty(k: string, v: any): any;
+            getObjectByName(v: any): any;
+            getObjectById(v: any): any;
+            getObjectsByProperty(k: string, v: any, result?: any[]): any[];
+            updateMatrix(): void;
+            updateMatrixWorld(force?: boolean): void;
+            updateWorldMatrix(updateParents: boolean, updateChildren: boolean): void;
+            applyMatrix4(m: sparkMath.Matrix4): this;
+            applyQuaternion(q: sparkMath.Quaternion): this;
+            setRotationFromAxisAngle(axis: sparkMath.Vector3, a: number): void;
+            setRotationFromEuler(e: sparkMath.Euler): void;
+            setRotationFromMatrix(m: sparkMath.Matrix4): void;
+            setRotationFromQuaternion(q: sparkMath.Quaternion): void;
+            rotateOnAxis(a: sparkMath.Vector3, t: number): this;
+            rotateOnWorldAxis(a: sparkMath.Vector3, t: number): this;
+            rotateX(t: number): this;
+            rotateY(t: number): this;
+            rotateZ(t: number): this;
+            translateOnAxis(a: sparkMath.Vector3, d: number): this;
+            translateX(d: number): this;
+            translateY(d: number): this;
+            translateZ(d: number): this;
+            localToWorld(v: sparkMath.Vector3): sparkMath.Vector3;
+            worldToLocal(v: sparkMath.Vector3): sparkMath.Vector3;
+            getWorldPosition(t: sparkMath.Vector3): sparkMath.Vector3;
+            getWorldQuaternion(t: sparkMath.Quaternion): sparkMath.Quaternion;
+            getWorldScale(t: sparkMath.Vector3): sparkMath.Vector3;
+            getWorldDirection(t: sparkMath.Vector3): sparkMath.Vector3;
+            lookAt(x: any, y?: number, z?: number): void;
+            copy(o: any, recursive?: boolean): this;
+            clone(recursive?: boolean): any;
+            raycast(): void;
+        }
+        export class _air_spark_spark_api_adapter__Scene extends _air_spark_spark_api_adapter__Object3D {
+            constructor();
+        }
+        export class _air_spark_spark_api_adapter__Camera extends _air_spark_spark_api_adapter__Object3D {
+            constructor();
+            updateMatrixWorld(force?: boolean): void;
+            updateWorldMatrix(a: boolean, b: boolean): void;
+            getWorldDirection(t: sparkMath.Vector3): sparkMath.Vector3;
+            copy(o: any, r?: boolean): this;
+        }
+        export interface _air_spark_cocos_spark_layer__SplatBinding {
+            node: any;
+            visible: boolean;
+        }
+        export interface _air_spark_cocos_spark_layer__SparkTarget {
+            isCocosRenderTarget: true;
+            _cocosFramebuffer: any;
+            width: number;
+            height: number;
+            depthBuffer: boolean;
+            stencilBuffer: boolean;
+            texture: {
+                colorSpace: string;
+            };
+            viewport: sparkMath.Vector4;
+            scissor: sparkMath.Vector4;
+            scissorTest: boolean;
+        }
+        export interface _air_spark_cocos_spark_layer__CocosSparkLayerOptions {
+            cc: any;
+            app: any;
+            camera: any;
+            canvas?: any;
+            sparkOptions?: Record<string, unknown>;
+            autoRender?: boolean;
+            renderHook?: "after-render" | "camera-end" | string;
+        }
+        export class _air_spark_spark_api_adapter__Texture extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor(image?: any, mapping?: number, wrapS?: number, wrapT?: number, magFilter?: number, minFilter?: number, format?: number, type?: number, anisotropy?: number, colorSpace?: string);
+            get image(): any;
+            set image(v: any);
+            set needsPMREMUpdate(v: boolean);
+            set needsUpdate(v: boolean);
+            addUpdateRange(start: number, count: number): void;
+            clearUpdateRanges(): void;
+            updateMatrix(): void;
+            clone(): any;
+            copy(t: any): this;
+            dispose(): void;
+        }
+        export class _air_spark_spark_api_adapter__RenderTarget extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor(width?: number, height?: number, options?: any);
+            _createTexture(options: any): _air_spark_spark_api_adapter__Texture;
+            get texture(): any;
+            set texture(v: any);
+            setSize(width: number, height: number, depth?: number): void;
+            dispose(): void;
+            clone(): any;
+            copy(r: any): this;
+        }
+        export class _air_spark_spark_api_adapter__WebGLRenderTarget extends _air_spark_spark_api_adapter__RenderTarget {
+            constructor(...a: any[]);
+        }
+        export class _air_spark_spark_api_adapter__Material extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor();
+            set needsUpdate(v: boolean);
+            setValues(p: any): void;
+            dispose(): void;
+            copy(m: any): this;
+            clone(): any;
+            onBeforeCompile(): void;
+            customProgramCacheKey(): string;
+        }
+        export class _air_spark_spark_api_adapter__ShaderMaterial extends _air_spark_spark_api_adapter__Material {
+            constructor(parameters?: any);
+            copy(m: any): this;
+        }
+        export class _air_spark_spark_api_adapter__RawShaderMaterial extends _air_spark_spark_api_adapter__ShaderMaterial {
+            constructor(p?: any);
+        }
+        export interface _air_spark_pmrem__PMREMRenderer {
+            autoClear: boolean;
+            toneMapping: number;
+            xr: {
+                enabled: boolean;
+            };
+            render(object3D: unknown, camera: unknown): void;
+            setRenderTarget(target: _air_spark_spark_api_adapter__WebGLRenderTarget | null, face?: number, mip?: number): void;
+            getRenderTarget(): _air_spark_spark_api_adapter__WebGLRenderTarget | null;
+            getActiveCubeFace(): number;
+            getActiveMipmapLevel(): number;
+            clear(color?: boolean, depth?: boolean, stencil?: boolean): void;
+            getClearColor(out: sparkMath.Color): sparkMath.Color;
+            compile?(object3D: unknown, camera: unknown): void;
+            _material?(material: _air_spark_spark_api_adapter__RawShaderMaterial): void;
+        }
+        export class _air_spark_spark_api_adapter__BufferGeometry extends _air_spark_spark_api_adapter__EventDispatcher {
+            [key: string]: any;
+            constructor();
+            setAttribute(n: string, a: any): this;
+            getAttribute(n: string): any;
+            deleteAttribute(n: string): this;
+            hasAttribute(n: string): boolean;
+            setIndex(a: any): this;
+            getIndex(): any;
+            setDrawRange(start: number, count: number): void;
+            addGroup(start: number, count: number, materialIndex?: number): void;
+            clearGroups(): void;
+            applyMatrix4(m: sparkMath.Matrix4): this;
+            translate(x: number, y: number, z: number): this;
+            scale(x: number, y: number, z: number): this;
+            rotateX(a: number): this;
+            rotateY(a: number): this;
+            rotateZ(a: number): this;
+            computeBoundingBox(): void;
+            dispose(): void;
+            clone(): any;
+            copy(g: any): this;
+        }
+        export class _air_spark_spark_api_adapter__OrthographicCamera extends _air_spark_spark_api_adapter__Camera {
+            constructor(left?: number, right?: number, top?: number, bottom?: number, near?: number, far?: number);
+            updateProjectionMatrix(): void;
+            setViewOffset(fullWidth: number, fullHeight: number, x: number, y: number, width: number, height: number): void;
+            clearViewOffset(): void;
+            copy(o: any, r?: boolean): this;
+        }
+        export interface _air_spark_pmrem__PMREMLevel {
+            index: number;
+            size: number;
+            mip: number;
+            sigma: number;
+            x: number;
+            y: number;
+            width: number;
+            height: number;
+        }
+        export interface _air_spark_pmrem__PMREMLayout {
+            lodMax: number;
+            cubeSize: number;
+            width: number;
+            height: number;
+            levels: _air_spark_pmrem__PMREMLevel[];
+        }
+        export interface _air_spark_pmrem__PMREMSourceTexture {
+            isCubeTexture?: boolean;
+            isRenderTargetTexture?: boolean;
+            mapping?: number;
+            image?: unknown;
+        }
+        export interface _air_spark_pmrem__PMREMSceneOptions {
+            size?: number;
+            position?: sparkMath.Vector3;
+        }
+        /**
+         * Spark 集成（SPK-04）：Three r180 形态的 CPU 数学层。
+         *
+         * 定位：本文件是上游参考实现 `spark-cocosairjs/src/air-math.js` 的 TypeScript 移植，导出名与 Three 契约
+         * 保持一致（Spark 冻结文件以 `import * as THREE` 使用 61 个成员 / 895 处引用，形状面不得收窄）。
+         * 按方案 §1.3 与 SPK-04 硬规则，本层只做「形状 + 委托」：引擎已有的算法一律转调 `cc.*`
+         * （每个导出成员上方的 @air-element 标注给出委托目标），不在 AIR 侧重建平行实现。
+         * 委托映射（实施时逐条核过引擎源码）：
+         * - Vector2/3/4 → cc.Vec2/cc.Vec3/cc.Vec4：set/copy/add/subtract/multiply/divide/multiplyScalar/scaleAndAdd/
+         *   len/lengthSqr/dot/cross/normalize/lerp/min/max/floor/ceil/round/negate/distance/squaredDistance/
+         *   transformMat3/transformMat4/transformMat4Normal/transformQuat/project/projectOnPlane/
+         *   toArray/fromArray/strictEquals/random。
+         * - Quaternion → cc.Quat：multiply/dot/len/lengthSqr/normalize/conjugate/slerp/angle/rotateTowards/
+         *   rotationTo/fromAxisAngle/fromMat3/getAxisAngle/strictEquals。
+         * - Matrix3/Matrix4 → cc.Mat3/cc.Mat4：先以 Mat4.fromArray/toArray（或 Mat3 同名）把列主序 elements
+         *   双向镜像到引擎对象，再转调 multiply/invert/transpose/determinant/multiplyScalar/frustum/ortho/lookAt/
+         *   rotate/rotateX/rotateY/rotateZ/getTranslation/fromSRT/toSRT/fromQuat/fromTranslation/fromScaling/
+         *   identity/fromMat4/inverseTransposeMat4/fromRotation/fromArray/toArray。
+         *   例外：cc.Mat4 没有 fromMat3 静态（引擎只有降阶方向 Mat3.fromMat4），故 Matrix4.setFromMatrix3 只能做
+         *   列主序索引升阶；MatrixStorage 的 copy/fromArray/toArray 也是纯索引拷贝（见第 8 条），不经引擎。
+         *   Matrix4.makeRotationFromQuaternion 转调 cc.Mat4.fromQuat（纯旋转阵），不绕道 compose。
+         * - Color → cc.Color：十六进制走 cc.Color.fromHEX，标量走 cc.clamp / cc.lerp。
+         * - Box3 → cc.geometry.AABB：fromPoints/getBoundary/transform/merge + cc.geometry.intersect（AABB-AABB）
+         *   + cc.geometry.distance.pt_point_aabb。
+         * - Ray → cc.geometry.Ray + cc.geometry.intersect（ray-AABB slab）+ cc.Vec3 原语。
+         * - clamp / MathUtils → cc 数学工具（core/math/utils.ts：clamp/lerp/toRadian/toDegree/repeat/
+         *   inverseLerp/nextPow2/random）。
+         *
+         * 精度：所有分量以 JS 原生 number（双精度）保存；引擎 cc.Mat4 / cc.Vec3 的字段同为 number
+         * （src/cocos/core/math/math-base.ts:29 的 MATH_FLOAT_ARRAY = Float64Array），
+         * 所以 elements ↔ m00..m15 的往返不会截断成 float32。
+         *
+         * 允许的薄封装 / 例外（SPK-04 要求逐条写明理由）：
+         * 1. Matrix4.elements —— 引擎 cc.Mat4 用命名字段 m00..m15（内存序即列主序，与 Three 的 elements[0..15]
+         *    一一对应，已由 Mat4.fromArray/toArray 源码核对），而 Three 契约要求可写的 `.elements` 数组；
+         *    因此这里保留数组存储并以引擎的 fromArray/toArray 做镜像，另提供 compose/decompose/makePerspective/
+         *    multiplyMatrices/applyMatrix4/invert/transpose 等 Three 命名入口（入口内部仍是转调引擎静态）。
+         * 2. Euler —— 引擎没有 Euler 类（只有 cc.Quat 与 cc.Mat3.toEuler/cc.Mat4.toEuler 的固定 YXZ、度数约定），
+         *    而 Object3D 的 rotation 契约是弧度 + 六种旋转序，故 AIR 自持薄封装（见 @air-element none:Euler）。
+         * 3. Box3 —— 引擎 AABB 是 center/halfExtents 表述，Three 契约是 min/max 命名面，
+         *    故本类只做命名适配（setFromPoints/expandByPoint/applyMatrix4 等），几何算法转调 AABB。
+         * 4. SRGBToLinear / LinearToSRGB / ColorManagement / 三个色彩空间字符串 —— 引擎的
+         *    srgbToLinear/linearToSrgb 对 x<=0、x>=1 做了端点钳制且使用除法形式（x/12.92、((x+0.055)/1.055)^2.4），
+         *    与 Three 的无钳制域 + reciprocal 乘法形式在超域与极值输入上不等价；Spark 的色板契约是后者，故自持。
+         * 5. Matrix2 —— 引擎只有 Mat3/Mat4，没有 2x2 类型，Spark 也不使用它，仅为导出面对等而自持。
+         * 6. Color 的分量存储 —— 引擎 cc.Color 底层是 Uint8ClampedArray（0..255 字节），逐分量的浮点
+         *    add/multiply/lerp/hex 语义不可委托，故 r/g/b 保持 Three 的 0..1 浮点契约，仅把十六进制解析
+         *    委托给 cc.Color.fromHEX（`Math.floor(h) & 0xffffff` 预处理后与 Three 的移位取字节完全等价）。
+         * 7. 语义分歧只在退化输入上补守卫，不改算法主体：
+         *    - Quaternion.invert 转调 cc.Quat.conjugate（Three 的 invert 即共轭；cc.Quat.invert 会再除长度平方）。
+         *    - Quaternion.normalize 在零四元数上返回单位元（引擎置零）；rotateTowards 在夹角 0 时原地返回
+         *      （引擎直接写成目标值，而反平行四元数夹角恰为 0），并把 step（弧度）换算成引擎要求的角度制。
+         *    - Vector2/3.angleTo 在零向量上返回 π/2（引擎返回 0）。
+         *    - Quaternion.setFromUnitVectors 转调 cc.Quat.rotationTo：反平行时二者选择的旋转轴不同（都合法）。
+         *    - Vector3.applyMatrix4 转调 cc.Vec3.transformMat4：w 分量为 0 时引擎不除（置 1），Three 会得到 ±Infinity。
+         *    - Vector3.projectOnVector 转调 cc.Vec3.project：引擎的退化阈值是 1e-6，Three 是 === 0。
+         *    - Matrix3.getNormalMatrix 转调 cc.Mat3.inverseTransposeMat4：引擎在奇异输入上返回 null 且不写目标，
+         *      此处按 Three 的 `invert()`（行列式 0 → 零矩阵）写零，避免读到暂存对象的残留值。
+         *    - Matrix4.decompose 转调 cc.Mat4.toSRT：缩放分量为 0 时引擎给出单位四元数，Three 原式得到 NaN；
+         *      反射时二者同样把 x 缩放取负；四元数符号另按 Three 的分支约定校正——引擎取 Quat.fromMat3 的「最大分量」
+         *      分支，Three setFromRotationMatrix 先判 trace>0（w 取正），二者对同一旋转可整体差一符号，故当引擎 w<0
+         *      且归一化旋转迹（对角元 / 引擎缩放分量，逐字段）>0 时取反对齐 Three。
+         *    - Matrix4.lookAt 转调 cc.Mat4.lookAt 取基（引擎产出 gl-matrix 视图基：3x3 为世界基的转置、平移列写
+         *      -(基·eye)，而 Three 的 Matrix4.lookAt 只要世界基的 3x3 且不写平移列）：正常输入用 cc.Mat4.transpose
+         *      把视图基转成世界基后置零 m03/m07/m11，退化输入（视线长度 0 或与 up 平行，引擎此时产出 NaN）按 Three
+         *      原文用 cc.Vec3 原语（normalize/cross）重建世界基。
+         *    - Matrix4.makePerspective 转调 cc.Mat4.frustum（同为 -1..1 深度约定）；far === Infinity 与
+         *      WebGPU 0..1（coordinateSystem === 2001）两条分支引擎无对应静态，按 Three 原式做列主序字段写入；
+         *      makeOrthographic 的 2001 分支直接映射到 cc.Mat4.ortho 的 minClipZ 参数。
+         *    - Ray.intersectBox 转调引擎 ray-AABB slab，并补两个契约空隙：空盒（±Infinity，AABB 无法表达）与
+         *      起点恰在盒面上时引擎返回出口距离（Three 要入口点）；方向分量为 0 时以 Number.EPSILON 摄动，
+         *      等价于 Three slab 的 ±Infinity 分支（引擎用 1/d 会得到 ±Infinity/NaN）。
+         *    - Box3.applyMatrix4 转调 cc.geometry.AABB.transform（极值点法），与 Three 的八顶点展开在仿射输入下同解。
+         * 8. Vector.set(...)/Matrix.set(...) 与 makeBasis/extractBasis/setPosition/setFromMatrix3 之类是纯索引映射
+         *    （Three 行主序入参 ↔ 列主序存储），不构成算法主体；MatrixStorage 的 copy/fromArray/toArray 同理。
+         * 9. Vector2/Vector4.addScalar 的加法暂存取本类实例（tmpVec2/tmpVec4）而非引擎暂存对象：引擎
+         *    cc.Vec2/cc.Vec4 的 add 静态签名是 (out: Out, a: Out, b: Out) 单类型参数，无法把引擎 Vec2/Vec4 与
+         *    本类实例混在同一次调用里（TS2345）。tmpVec2.set(v, v) 内部仍转调 cc.Vec2.set，数值与逐分量加标量等价。
+         */
+        /** BufferAttribute 的最小结构契约（避免数学层反向依赖适配层）。 */
+        export interface _air_spark_spark_math__IBindableAttribute {
+            array: ArrayLike<number>;
+            itemSize: number;
+        }
+        /** 相机矩阵的最小结构契约（project/unproject 用，适配层的 Camera 满足该形状）。 */
+        export interface _air_spark_spark_math__ICameraMatrices {
+            matrixWorld: sparkMath.Matrix4;
+            matrixWorldInverse: sparkMath.Matrix4;
+            projectionMatrix: sparkMath.Matrix4;
+            projectionMatrixInverse: sparkMath.Matrix4;
+        }
+        /**
+         * 只承载「列主序 elements 数组」的读写映射，不含算法：
+         * Matrix2/3/4 的 set/identity/copy/fromArray/toArray/equals 全是 Three 行主序入参与列主序存储之间的索引映射。
+         */
+        export class _air_spark_spark_math__MatrixStorage {
+            protected readonly _n: number;
+            elements: number[];
+            constructor(n: number);
+            set(...v: number[]): this;
+            identity(): this;
+            copy(m: _air_spark_spark_math__MatrixStorage): this;
+            fromArray(a: ArrayLike<number>, o?: number): this;
+            toArray(a?: number[], o?: number): number[];
+            equals(m: _air_spark_spark_math__MatrixStorage): boolean;
         }
     }
     export { Canvas as CanvasComponent, UIRenderer as RenderComponent, UIRenderer as UIRenderable, UIRenderer as Renderable2D, UITransform as UITransformComponent, Sprite as SpriteComponent, UIMeshRenderer as UIModelComponent, LabelOutline as LabelOutlineComponent, UIStaticBatch as UIStaticBatchComponent, UIOpacity as UIOpacityComponent, Label as LabelComponent, MaskComponent as Mask, GraphicsComponent as Graphics, MeshRenderer as ModelComponent, DirectionalLight as DirectionalLightComponent, Light as LightComponent, SphereLight as SphereLightComponent, SpotLight as SpotLightComponent, SkinnedMeshRenderer as SkinningModelComponent, SkinnedMeshBatchRenderer as BatchedSkinningModelComponent, SkinnedMeshUnit as SkinningModelUnit, Node as BaseNode, Camera as CameraComponent, ModelRenderer as RenderableComponent, Animation as AnimationComponent, SkeletalAnimation as SkeletalAnimationComponent, Button as ButtonComponent, EditBox as EditBoxComponent, Layout as LayoutComponent, ProgressBar as ProgressBarComponent, ScrollBar as ScrollBarComponent, ScrollView as ScrollViewComponent, Slider as SliderComponent, Toggle as ToggleComponent, ToggleContainer as ToggleContainerComponent, Widget as WidgetComponent, PageView as PageViewComponent, PageViewIndicator as PageViewIndicatorComponent, SafeArea as SafeAreaComponent, UICoordinateTracker as UICoordinateTrackerComponent, BlockInputEvents as BlockInputEventsComponent, AudioSource as AudioSourceComponent } from "./cocosair.module";

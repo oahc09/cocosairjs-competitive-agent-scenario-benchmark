@@ -12,11 +12,14 @@
 | 场景 | `{{SCENE}}` — `brief.md`(人读)与 `spec.json`(机读冻结规格)已拷贝至本 Arm 目录,冲突以 `spec.json` 为准 |
 | 引擎 | `{{ENGINE}}` |
 | 知识等级 | `{{KNOWLEDGE_LEVEL}}`(知识包已拷贝至本 Arm 目录 `knowledge/`) |
+| 引擎技能包 | {{SKILLS_NOTE}} |
 | dev server 端口 | `{{PORT}}`(启动 dev server 前设置环境变量 `PORT={{PORT}}`) |
 
 ## 1. 任务
 
 在本 Arm 目录的 `workspace/` 内,按 `../brief.md` 与 `../spec.json` 实现场景。
+
+**开工第一步(引擎技能包)**:{{SKILLS_STEP}}
 
 `workspace/` 是对应引擎模板的拷贝(不含自有 node_modules——构建与引擎依赖由目录上层**共享 node_modules** 沿目录向上解析提供,exFAT 去重布局,见 node_modules 与 DEDUP-NOTE),开箱即可 `npm run build`。共享资产已拷贝至本 Arm 目录 `assets/`(只读使用,不得修改)。**一切所需材料以本 Arm 目录内为准。**
 

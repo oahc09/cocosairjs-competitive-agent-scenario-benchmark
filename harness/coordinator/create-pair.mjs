@@ -126,6 +126,51 @@ function airTarballPaths() {
   return { k0: path.join(BENCH_ROOT, ...k0Rel.split('/')), full: path.join(BENCH_ROOT, ...fullRel.split('/')) };
 }
 
+// AIR 供给工件新鲜度:tgz 只是 sdkDir 的派生安装工件(2026-10-24 Owner 裁决:git 内 tgz 是
+// 旧构建快照,sdkDir 才是正典)。建 Pair 前让 tools/pack-engine.mjs 确认"现打 == 盘上",
+// 漂移则确定性重打并同步注册表 —— 必须在一切写盘之前,打包失败宁可不开轮,不留幻影 Pair。
+function ensureAirArtifacts() {
+  const packTool = path.join(BENCH_ROOT, 'tools', 'pack-engine.mjs');
+  let out;
+  try {
+    out = execFileSync(process.execPath, [packTool, '--check'], { cwd: BENCH_ROOT, encoding: 'utf8' });
+  } catch (err) {
+    if (err.status !== 2) {
+      die('AIR 工件新鲜度检查失败(pack-engine --check 退出码 ' + err.status + ')\n' + (err.stderr || err.message));
+    }
+    console.log('[create-pair] AIR tgz 落后于 sdkDir 正典,确定性重打(pack-engine)…');
+    execFileSync(process.execPath, [packTool], { cwd: BENCH_ROOT, stdio: 'inherit' });
+    return;
+  }
+  console.log('[create-pair] AIR 工件与 sdkDir 正典一致: ' + out.trim().split('\n').pop());
+}
+
+// 引擎技能包(仅 AIR):正典在 vendor/<engine>/<版本>/skills —— 那里对 Agent Run 是禁读面
+// (RUN-CONTRACT §4.5),故由 coordinator 拷进本 Arm `knowledge/skills/` 使其成为白名单内材料。
+// three 侧不需要:它的对称供给是 npm 包自带的 examples/jsm 标准件,已在安装依赖里。
+// 返回 null = 非 AIR 臂;{dir} = 可用正典;{missing} = AIR 臂但取不到正典(调用方必须 die,
+// 不允许静默降级成"无技能派发" —— 那样 K0 与技能世代会被混在同一批数据里)。
+function engineSkillsSource(engine) {
+  if (engine !== 'cocosair') return null;
+  let sdkRel = 'vendor/cocosair/1.0.0';
+  let activeVersion = null;
+  try {
+    const reg = JSON.parse(fs.readFileSync(path.join(BENCH_ROOT, 'vendor', 'engine-versions.json'), 'utf8'));
+    const e = reg.engines && reg.engines.cocosair;
+    activeVersion = e && e.activeVersion;
+    const v = e && e.versions && e.versions[activeVersion];
+    if (v && v.sdkDir) sdkRel = v.sdkDir;
+  } catch { /* 注册表缺失/损坏时沿用默认 SDK 目录,由下面的 existsSync 给出结论 */ }
+  const p = path.join(BENCH_ROOT, ...sdkRel.split('/'), 'skills');
+  if (!fs.existsSync(p)) {
+    return { missing: `AIR 技能包正典不存在: ${sdkRel}/skills(activeVersion=${activeVersion ?? '未登记'})` };
+  }
+  if (!fs.readdirSync(p).some((n) => !n.startsWith('.'))) {
+    return { missing: `AIR 技能包正典为空目录: ${sdkRel}/skills` };
+  }
+  return { dir: p };
+}
+
 function computeDependencyHashes() {
   const nm = path.join(BENCH_ROOT, 'node_modules');
   return {
@@ -311,6 +356,8 @@ function renderRunContract(tpl, v) {
     .replaceAll('{{SCENE}}', v.scene)
     .replaceAll('{{ENGINE}}', v.engine)
     .replaceAll('{{KNOWLEDGE_LEVEL}}', v.knowledge)
+    .replaceAll('{{SKILLS_NOTE}}', v.skillsNote)
+    .replaceAll('{{SKILLS_STEP}}', v.skillsStep)
     .replaceAll('{{PORT}}', String(v.port))
     .replaceAll('{{BUDGET_TOOLCALLS}}', String(v.budget.maxToolCalls))
     .replaceAll('{{BUDGET_WALLTIME_MINUTES}}', String(v.budget.maxWallTimeMinutes))
@@ -334,6 +381,7 @@ function parseArgs(argv) {
     else if (a === '--arm-swap') out.armSwap = true;
     else if (a === '--batch') out.batch = argv[++i] || 'auto';
     else if (a === '--vendored-deps') out.vendoredDeps = true;
+    else if (a === '--no-skills') out.skills = false;
     else if (a === '--help' || a === '-h') out.help = true;
     else out._.push(a);
   }
@@ -348,6 +396,7 @@ const HELP = `用法: node coordinator/create-pair.mjs --scene E03 --knowledge K
   --pilot      标记为 Pilot pair(M6 前置验证,不计入 Track B 统计)
   --arm-swap   交换 A/B 引擎分配(用于抵消 slot bias 的补充随机化,记录进 pair.json)
   --vendored-deps 把模板 node_modules 拷进 workspace(默认不拷:共享依赖向上解析,exFAT 去重布局)
+  --no-skills   不给 cocosair 臂拷贝引擎技能包(默认拷:vendor SDK 正典 skills/ → 本 Arm knowledge/skills/,并在 RUN-CONTRACT §0/§1 写明"开工第一步加载技能")
 幂等:重复执行同 batch+pairId 不覆盖已有 workspace;runner 已回填字段(startTimestamp*/status)保留。
 端口:扫描 results/ 下全部 pair.json 已用端口 + 绑定探测,从 7100 起分配,批次间不冲突。`;
 
@@ -357,13 +406,16 @@ async function main() {
     console.log(HELP);
     process.exit(args.help ? 0 : 2);
   }
-  const { scene, knowledge, rep, pilot = false, armSwap = false, batch: batchArg = 'auto', vendoredDeps = false } = args;
+  const { scene, knowledge, rep, pilot = false, armSwap = false, batch: batchArg = 'auto', vendoredDeps = false, skills: supplySkills = true } = args;
   // P0-1:track 必须显式提供(--track);--pilot 隐含 pilot。禁止默认猜测。
   const TRACKS = ['pilot', 'targeted-pilot', 'core', 'k2-ablation'];
   const trackArg = args.track;
   if (trackArg && !TRACKS.includes(trackArg)) die(`--track 取值须为: ${TRACKS.join('|')}(收到 "${trackArg}")`);
   const track = trackArg ?? (pilot ? 'pilot' : null);
   if (!track) die('--track 必须显式提供(pilot|targeted-pilot|core|k2-ablation);正式矩阵须 --track core');
+
+  // ---- 0. 引擎供给工件新鲜度(在任何写盘之前) ------------------------------
+  ensureAirArtifacts();
 
   // ---- 1. 读输入 ---------------------------------------------------------
   const briefDir = path.join(BENCH_ROOT, 'briefs', scene);
@@ -449,23 +501,56 @@ async function main() {
 
     // knowledge/、assets/、brief、spec
     copyTree(knowledgeSrc, path.join(armDir, 'knowledge'));
+    // 引擎技能包:cocosair 臂把 SDK 正典目录里的 skills 拷进本 Arm(幂等覆盖,内容随注册表版本走)
+    // 取不到正典即 die —— 静默派发"无技能 AIR 臂"会把两个供给世代的数据混进同一批次。
+    const skillsSrcSpec = supplySkills ? engineSkillsSource(engine) : null;
+    if (skillsSrcSpec && skillsSrcSpec.missing) {
+      die(`${engine} 臂要求技能供给但正典不可用:${skillsSrcSpec.missing}\n`
+        + '  处置:确认 vendor/engine-versions.json 的 activeVersion/sdkDir,或显式用 --no-skills 派发(该批次须在报告里单列)。');
+    }
+    let skills = null;
+    if (skillsSrcSpec) {
+      const skillsSrc = skillsSrcSpec.dir;
+      const skillsDest = path.join(armDir, 'knowledge', 'skills');
+      copyTree(skillsSrc, skillsDest);
+      // 哈希取"臂内实际字节"而非正典源:登记面 = Agent 可读面,rules out 拷贝不完整
+      const sh = dirTreeHash(skillsDest);
+      skills = {
+        source: path.relative(BENCH_ROOT, skillsSrc).replace(/\\/g, '/'),
+        hash: sh.hash,
+        fileCount: sh.fileCount,
+        path: `${pairId}/${armDirName}/knowledge/skills`,
+      };
+    }
+    const skillsNote = skills
+      ? `已随本 Arm 提供:引擎官方技能包 \`knowledge/skills/\`(${skills.fileCount} 个文件,${skills.source},树哈希 ${String(skills.hash).slice(0, 12)}…)。**开工第一步**:先读 \`knowledge/skills/README.md\`,再按场景需要读对应技能的 \`SKILL.md\` 与 \`references/{contracts,common-mistakes}.md\`(它们与知识包同属白名单材料)`
+      : '本引擎无额外技能包(标准件随安装依赖提供,见 `knowledge/`)';
+    const skillsStep = skills
+      ? '本臂已提供 `knowledge/skills/`(引擎方给出的行为契约,不是可选参考):在写任何代码之前先读 `knowledge/skills/README.md`,再按本场景涉及的能力打开对应技能的 `SKILL.md` 与 `references/contracts.md`、`references/common-mistakes.md`;实现过程中遇到"画不出来/无响应/数值异常"时先回查这些合同的 `common-mistakes`,再动手改代码。跳过它导致的反复试错会消耗预算。'
+      : '本臂无技能包;`knowledge/` 即全部知识面,直接进入实现。';
     copyTree(path.join(BENCH_ROOT, 'assets'), path.join(armDir, 'assets'));
     fs.copyFileSync(briefMd, path.join(armDir, 'brief.md'));
     fs.copyFileSync(specJson, path.join(armDir, 'spec.json'));
 
     // RUN-CONTRACT.md(coordinator 拥有,每次渲染覆盖)
     const contract = renderRunContract(tplText, {
-      pairId, arm, scene, engine, knowledge, port: arm === 'A' ? portA : portB, budget,
+      pairId, arm, scene, engine, knowledge, port: arm === 'A' ? portA : portB, budget, skillsNote, skillsStep,
     });
     fs.writeFileSync(path.join(armDir, 'RUN-CONTRACT.md'), contract, 'utf8');
 
     // execution.json(P1-4):时间戳由 Runner/编排方在派发与收集时盖章,Agent 不经手
     const execPath = path.join(armDir, 'execution.json');
     if (!fs.existsSync(execPath)) {
+      // 浏览器身份取自 harness/launch-config.json(钉住快照):写死版本号会随换版失真成假证据
+      let browserForHost = 'browser-unregistered';
+      try {
+        const lc = JSON.parse(fs.readFileSync(path.join(BENCH_ROOT, 'harness', 'launch-config.json'), 'utf8'));
+        if (lc.executablePath) browserForHost = lc.executablePath;
+      } catch {}
       fs.writeFileSync(execPath, JSON.stringify({
         dispatchAt: null, agentStartedAt: null, agentFinishedAt: null,
         workerId: 'local-worker-1',
-        hostFingerprint: 'E:/AIProMax 单机(RTX4060/Chrome154/Node24)',
+        hostFingerprint: `E:/AIProMax 单机(RTX4060/Node24/${browserForHost})`,
         source: 'Runner 派发时盖章(round dispatch stage);Agent 不经手,不依赖 WORKLOG',
       }, null, 2));
     }
@@ -492,11 +577,12 @@ async function main() {
       workspaceAction,
       knowledgePath: `knowledge/${knowledge}/${engine}`,
       knowledgeHash,
+      skills: skills ? { source: skills.source, hash: skills.hash, fileCount: skills.fileCount, armPath: skills.path } : null,
       port: arm === 'A' ? portA : portB,
       runContract: `${pairId}/${armDirName}/RUN-CONTRACT.md`,
       runMetaTemplate: `${pairId}/${armDirName}/RUN-META.template.json`,
     };
-    console.log(`[create-pair] arm-${arm.toLowerCase()}: engine=${engine} port=${arm === 'A' ? portA : portB} workspace=${workspaceAction} runMeta=RUN-META.template.json(待 Runner 填写)`);
+    console.log(`[create-pair] arm-${arm.toLowerCase()}: engine=${engine} port=${arm === 'A' ? portA : portB} workspace=${workspaceAction} skills=${skills ? `${skills.fileCount} files` : 'none'} runMeta=RUN-META.template.json(待 Runner 填写)`);
   }
 
   // ---- 5. 引擎包哈希 + 共享依赖哈希(FIX-C dependencyHashes) ---------------
@@ -571,6 +657,8 @@ async function main() {
     airKnowledgeHash: engines.A === 'cocosair' ? armReport.A.knowledgeHash : armReport.B.knowledgeHash,
     threeTemplateHash: engines.A === 'three' ? armReport.A.templateHash : armReport.B.templateHash,
     airTemplateHash: engines.A === 'cocosair' ? armReport.A.templateHash : armReport.B.templateHash,
+    // 引擎技能包(cocosair 臂独有供给;记来源与树哈希,便于跨批次判定"这一批的臂有没有技能")
+    airSkills: engines.A === 'cocosair' ? armReport.A.skills : armReport.B.skills,
 
     environment: {
       nodeVersion: process.version,

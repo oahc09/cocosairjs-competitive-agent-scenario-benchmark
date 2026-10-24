@@ -134,10 +134,10 @@
 
 ## WebGPU
 
-| 篇目                                                 | 状态 | 示例 |
-| ---------------------------------------------------- | ---- | ---- |
-| [WebGPURenderer](./webgpurenderer.md)                | N/A  | –    |
-| [Post-Processing 后处理](./webgpu-postprocessing.md) | N/A  | –    |
+| 篇目                                                 | 状态    | 示例           |
+| ---------------------------------------------------- | ------- | -------------- |
+| [WebGPURenderer](./webgpurenderer.md)                | PARTIAL | `webgpu-basic` |
+| [Post-Processing 后处理](./webgpu-postprocessing.md) | PARTIAL | 专项探针       |
 
 ## WebXR
 
@@ -164,7 +164,7 @@
 [Cocos 4.0 覆盖矩阵](./cocos4-coverage-matrix.md)，各主题的工作流教程见下方「Cocos 4.0 开发工作流」组。
 
 仍不包含（官方指南有此流程，但 AIR 当前发行目标或公开工作流不同）：Creator 编辑器/Inspector/
-Prefab 资源绑定、原生 JSB、各平台发布、地形、XR、WebGPU、MiniGame、Native、Spine（导出面在、
+Prefab 资源绑定、原生 JSB、各平台发布、地形、XR、MiniGame、Native、Spine（导出面在、
 浏览器验证缺，单列 `待验证`）。相关 `N/A` 篇目如实说明现状与近似替代，不做能力伪装。
 
 ## 运行示例
@@ -209,6 +209,12 @@ npm run dev                       # dev server（默认 7454）
 实现、当前证据和未验范围见[端口实施台账](../../ai/ledgers/port-gap-remediation.md)，不从目录链接推断API已发布或完整gate通过。
 
 ## 验证与台账
+
+[Graphics、SVG 与 DOM 协同](graphics-and-dom.md)：命令回放、SVG 导出、栅格渐变/纹理/孔洞、Sprite 软遮罩、显式混合继承、DOM overlay 与实验性 HTML 纹理。
+
+[原生网格、TRS 与渲染合同](engine-contract-hardening.md)：动态流局部更新、错误前置、Fog 配置保留、控制器与主光边界、只读属性和绕序检查。
+
+[K0 R2端口合同](k0-r2-porting-contracts.md)：17项暗坑的当前处置、正确顶点色宏、透明/加色配方、动态renderer通知、实例动画、Billboard尺寸与DPR坐标转换。
 
 [响应式容器、输入与棋盘缓存配方](responsive-board-recipes.md)：明确窗口/宿主容器启动、局部坐标命中、单行按钮、视觉失效、单时钟截图和独立首次接入统计。
 

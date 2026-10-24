@@ -209,6 +209,8 @@ hash 用于引擎缓存，不是安全指纹；正式证据仍应记录完整文
 
 ## 8. 原生点和线的图元合同
 
+直接构建 gfx ShaderInfo、UBO 或多纹理时，先遵守 [gfx 接入合同](gfx-integration-contracts.md)：不重复版本指令，使用匹配的 std140 元数据和唯一逻辑 set/binding；不要重复叠加后端 bindingMappings 偏移。
+
 [point-cloud-basics](../../examples/point-cloud-basics/) 使用真实 POINT_LIST 和 LINE_LIST，
 包含上半区青色点阵、下半区橙色线段及 pointSize 的像素覆盖面积断言。
 POINT_LIST 的枚举值为0，静态和动态 createMesh 均保留它；省略图元时仍默认 TRIANGLE_LIST。
@@ -225,3 +227,5 @@ PSO key 已包含 pass hash，而 pass hash 含 primitive，因此 POINT 与 LIN
 instancing、附加光照、阴影、反射和自定义管线可能创建或复用不同 IA，不能仅在普通 render queue 临时改图元。
 如后续实现 mesh 自动协调，需要统一传递 IA 图元、纳入 PSO key、明确显式 pass 覆盖优先级，
 并覆盖实例化 IA、子网格替换及全部绘制队列。点/线的 shadow shader 仍须由业务提供兼容版本。
+
+可选effect-layout输入必须为编译后的纯JSON。克隆前拒绝函数字段（issue `NON_JSON_FUNCTION`，含resource路径）与祖先循环（`NON_JSON_CYCLE`），保留`AIR_E_EFFECT_LAYOUT`总错误码；不要把带callable的活EffectAsset交给JSON预检。详见[误用诊断](interactive-diagnostics.md)。

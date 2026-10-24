@@ -1,5 +1,7 @@
 # Asset Loading and Lifetime 资源加载与生命周期
 
+动态合图原始纹理、SpriteFrame 与共享 atlas 的 session 所有权和可运行示例见 [资源所有权补充](audio-readiness-ownership.md#释放动态合图资源)。
+
 > **状态：FULL（能力）/ 本篇为统一叙述入口。** 官方 [asset/dynamic-load-resources] 与
 > [asset/release-manager] 讲资源加载与释放；AIR 的 Code First 形态下入口有三个——
 > 全局 `loadAssetAsync`、`assetManager`、`GLTFLoader`——本篇写清各自的适用边界、
@@ -95,7 +97,7 @@
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>

@@ -111,6 +111,11 @@ function stageCreate() {
     global.__pairs = (global.__pairs || []).concat([{ ...p, track: p.track || roundTrack, pairId, batchId }]);
   }
   const batch = global.__batch;
+  // 续跑护栏:向已存在批次再 create 不得抹掉历史留痕。
+  // 事故先例 B-20261017-R02 —— create 重跑把 Runner 追加的 5 条叙述性 notes 与臂状态一并重置。
+  const existingRound = (() => {
+    try { return JSON.parse(fs.readFileSync(path.join(RESULTS, batch, 'ROUND.json'), 'utf8')); } catch { return null; }
+  })();
   const round = {
     batchId: batch, createdAt: iso(), updatedAt: iso(),
     plan: { source: arg("plan") || ("--matrix " + arg("matrix")), pairs: global.__pairs },
@@ -125,6 +130,25 @@ function stageCreate() {
     stages: {},
     notes: ['Agent Run 执行说明见同目录 DISPATCH.md;执行完毕后依次 --stage collect/validate/blind/aggregate'],
   };
+  if (existingRound) {
+    const byId = new Map((existingRound.pairs || []).map(p => [p.pairId, p]));
+    round.createdAt = existingRound.createdAt;
+    for (const p of round.pairs) {
+      const old = byId.get(p.pairId);
+      if (!old) continue;
+      for (const arm of ['arm-a', 'arm-b']) {
+        if (old.arms?.[arm]?.state && old.arms[arm].state !== 'created') p.arms[arm] = old.arms[arm];
+      }
+      byId.delete(p.pairId);
+    }
+    for (const leftover of byId.values()) round.pairs.push(leftover); // 本次未请求的历史 pair 不丢
+    const seen = new Set(round.plan.pairs.map(p => p.pairId));
+    for (const p of existingRound.plan?.pairs || []) if (!seen.has(p.pairId)) round.plan.pairs.push(p);
+    const seenNote = new Set(round.notes);
+    for (const n of existingRound.notes || []) if (!seenNote.has(n)) round.notes.push(n);
+    if (existingRound.stages) round.stages = { ...existingRound.stages };
+    console.log(`[create] 续跑批次 ${batch}:保留既有 ${round.notes.length - 1} 条 notes 与臂状态(不重置)`);
+  }
   fs.mkdirSync(path.join(RESULTS, batch), { recursive: true });
   saveRound(round);
   writeDispatch(round);
@@ -143,11 +167,20 @@ function writeDispatch(round) {
     lines.push(`## ${p.pairId}`);
     for (const arm of ['a', 'b']) {
       const dir = path.join(RESULTS, round.batchId, p.pairId, 'arm-' + arm);
+      // 引擎身份只信 pair.json(arm-swap / 偶数 rep 会互换 A/B,不能按位置假设)
+      let armEngine = null;
+      try {
+        const pj = JSON.parse(fs.readFileSync(path.join(dir, '..', 'pair.json'), 'utf8'));
+        armEngine = pj?.arms?.[arm.toUpperCase()]?.engine ?? null;
+      } catch { /* pair.json 缺失时按无技能包渲染 */ }
+      const skillsStep = armEngine === 'cocosair'
+        ? `\n第一步(强制):本臂 workspace/ 之外已提供引擎官方技能包 knowledge/skills/ —— 先读 knowledge/skills/README.md,再按本场景涉及的能力读对应技能的 SKILL.md 与 references/{contracts,common-mistakes}.md,然后才写代码;出现"画不出来/无响应/数值异常"先回查 common-mistakes 再改实现。`
+        : '';
       lines.push(`### arm-${arm}(\`${path.relative(BENCH, dir)}\`)`,
         '```', `你是双引擎对照实验中的一个 Agent Run。你的唯一任务指令:严格执行工作目录中的 RUN-CONTRACT.md。`,
         '', `工作目录:${dir}`, '',
         `流程:先读 RUN-CONTRACT.md 全文(身份/预算/白名单/红线/完成合同/日志/交付),再读同目录 brief.md 与 spec.json,`,
-        `然后在 workspace/ 内实现场景、自检、写 WORKLOG.md 与 RESULT.md。预算与红线以合同为准。`,
+        `然后在 workspace/ 内实现场景、自检、写 WORKLOG.md 与 RESULT.md。预算与红线以合同为准。${skillsStep}`,
         `这是一次性 R0 自主模式:尽力交付满足完成合同的完整实现。`, '```', '');
     }
   }
@@ -394,7 +427,16 @@ function stageValidate(round, force) {
       Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 5000);
     }
   };
-  const releaseLock = () => { try { fs.rmSync(LOCK, { force: true }); } catch { /* */ } };
+  // 只删自己那把锁(锁内容 = 本进程 pid):并行会话可能已按 >10min 陈旧接管。
+  const releaseLock = () => {
+    try {
+      if (!fs.existsSync(LOCK)) return;
+      if (fs.readFileSync(LOCK, 'utf8').trim() !== String(process.pid)) return;
+      fs.rmSync(LOCK, { force: true });
+    } catch { /* */ }
+  };
+  // 抛错/die() 退出也要释放,否则下一轮验证白等 10 分钟陈旧锁(S5 实测缺陷)。
+  process.on('exit', releaseLock);
   acquireLock();
   let lastValidateEnd = 0;
   for (const j of jobs) {
@@ -462,6 +504,7 @@ function stageValidate(round, force) {
     (budgetExhausted ? `;BUDGET_EXHAUSTED ${budgetExhausted}` : '') +
     (invalidEvidence ? `;INVALID_EVIDENCE ${invalidEvidence}` : '') +
     (jobs.length ? ' → 可进入 blind/aggregate' : '(无待验臂)'));
+  releaseLock();
 }
 
 // ---------- stage: qualify(Phase 2 接入:qualification 进入 Round 状态机) ----------

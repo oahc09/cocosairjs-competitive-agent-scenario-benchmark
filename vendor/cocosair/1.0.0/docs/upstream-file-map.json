@@ -2,7 +2,7 @@
   "meta": {
     "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
     "note": "Air Path 与 Upstream Path 一致(前缀 src/)；modified 文件另行标注 reason；upstreamPath=null 表示该行为 Air 原创文件或上游产物（仓库内无对应源文件），必须 modified:true 并在 reason 说明出处",
-    "modifiedCount": 109,
+    "modifiedCount": 228,
     "pal": {
       "revision": "9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "license": "MIT",
@@ -11,11 +11,67 @@
   },
   "mapping": [
     {
+      "airPath": "src/air/physics-2d/box2d3.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR optional Box2D 3.2.0 WebAssembly backend behind original Cocos 2D component interfaces; pinned source, native compatibility bridge and separate assets. Existing extracted physics backends unchanged."
+    },
+    {
+      "airPath": "src/air/dom-overlay.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: borrowed DOM overlay bindings with native node/camera projection and deterministic restoration"
+    },
+    {
+      "airPath": "src/air/texture-sprite.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: compose native Sprite/UITransform/SpriteFrame from borrowed TextureBase with explicit anchor and refresh"
+    },
+    {
+      "airPath": "src/air/graphics-commands.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: validated drawing data, original Graphics replay and SVG serialization"
+    },
+    {
+      "airPath": "src/air/graphics-raster.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: explicit Canvas2D rich-paint rasterization into native Texture2D"
+    },
+    {
+      "airPath": "src/air/ui-blend.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: opt-in UI/particle subtree blend controller with native material instance state overrides"
+    },
+    {
+      "airPath": "src/air/effects/sprite-mask.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: owned builtin-sprite specialization for red/alpha soft and threshold masks; AIR: assign non-overlapping material block and texture bindings for WebGPU"
+    },
+    {
+      "airPath": "src/air/html-source.ts",
+      "upstreamPath": null,
+      "baseline": "AIR original",
+      "modified": true,
+      "reason": "AIR: engine-free experimental HTML-in-Canvas native texture adapter with snapshots and geometry synchronization"
+    },
+    {
       "airPath": "src/air/app.ts",
       "upstreamPath": null,
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR 原创（上游 cocos4 无 air/app.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。 2026-10-06：新增 AIR_BUILD_DATE（北京时间 yyyyMMddHHmm）与 AIR_BUILD_NUMBER（每次成功运行时编译递增，从1开始）；tools/build/build-metadata.cjs 注入，tools/build/build-number.json 持久化序号，源码默认 unbuilt/1；SOURCE_DATE_EPOCH 仅固定时间，不修改版本号。"
     },
     {
       "airPath": "src/air/bootstrap.ts",
@@ -27,16 +83,16 @@
     {
       "airPath": "src/air/builtin/builtin-effects.ts",
       "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "baseline": "Generated from cocos4 4.0.0-alpha.34 / fffd9a514a",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-effects.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR generated builtin asset from frozen MIT effect/chunk sources; reproducible compiler inputs and outputs recorded in vendor/builtin-source/manifest.json; CPU/WebGL2/WebGPU ABI aligned."
     },
     {
       "airPath": "src/air/builtin/builtin-glsl4.ts",
       "upstreamPath": null,
-      "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
+      "baseline": "Generated from cocos4 4.0.0-alpha.34 / fffd9a514a",
       "modified": true,
-      "reason": "AIR 原创（上游 cocos4 无 air/builtin/builtin-glsl4.ts）。原登记 reason=\"extraction copy\" 系 V0.x tools/analyze/dep-graph.cjs 批量生成时按「去掉 src/ 前缀」臆造 upstreamPath 所致，r26 起由 tools/verify/verify-file-map.cjs 门禁检出并更正。"
+      "reason": "AIR generated builtin asset from frozen MIT effect/chunk sources; reproducible compiler inputs and outputs recorded in vendor/builtin-source/manifest.json; CPU/WebGL2/WebGPU ABI aligned."
     },
     {
       "airPath": "src/air/builtin/builtin-material.ts",
@@ -687,7 +743,7 @@
       "upstreamPath": "cocos/3d/assets/mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved."
+      "reason": "PG-18/21: bone-space bounds use weak skeleton identity plus full bindpose data instead of trusting cached skeleton.hash; reset, dynamic data updates and destroy invalidate the cache. Weighted joint indices, attribute layout, weights, positions and bindposes reject invalid input with actionable AIR_E_SKINNING_* diagnostics. Unweighted/unused joints remain legal null bounds; only complete calculations enter the cache. Native mesh/model abstractions and upstream baseline are preserved.; ENG-01..04: native dynamic preflight, semantic partial streams, retained index validation, bounds refresh, retryable buffer allocation and cleanup. Invalid inputs commit no CPU/GPU update."
     },
     {
       "airPath": "src/cocos/3d/assets/morph-rendering.ts",
@@ -841,7 +897,7 @@
       "upstreamPath": "cocos/3d/misc/create-mesh.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
       "modified": true,
-      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文; CB-04 retain zero-valued POINT_LIST via nullish defaults for static/dynamic meshes; pass topology remains explicit."
+      "reason": "V1.2 G0 上游漂移修复：对齐 alpha.34 #336 (60f9352c56) createMesh 按最大索引值自适应 R16UI/R32UI；Air 副本逐字节等于官方原文; CB-04 retain zero-valued POINT_LIST via nullish defaults for static/dynamic meshes; pass topology remains explicit.; ENG-01/02/04: explicit capacity/index/readiness validation before out reset and allocation; omitted options retain 1024 defaults; empty typed streams reserve native layouts."
     },
     {
       "airPath": "src/cocos/3d/misc/index.ts",
@@ -1029,8 +1085,8 @@
       "airPath": "src/cocos/animation/animation-component.ts",
       "upstreamPath": "cocos/animation/animation-component.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-06: optional warning channel reports multiple same-node Animation controllers at load/play without disabling components or changing wrap defaults."
     },
     {
       "airPath": "src/cocos/animation/animation-curve.ts",
@@ -3514,8 +3570,8 @@
       "airPath": "src/cocos/gfx/base/define.ts",
       "upstreamPath": "cocos/gfx/base/define.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: packed RGB10A2UI uses its actual four-byte word size and Uint32 upload storage (WGL-05)."
     },
     {
       "airPath": "src/cocos/gfx/base/descriptor-set-layout.ts",
@@ -3535,8 +3591,8 @@
       "airPath": "src/cocos/gfx/base/device.ts",
       "upstreamPath": "cocos/gfx/base/device.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: explicit Promise-based texture readback entry, preserving synchronous WebGL API"
     },
     {
       "airPath": "src/cocos/gfx/base/framebuffer.ts",
@@ -3655,7 +3711,7 @@
       "upstreamPath": "cocos/gfx/device-manager.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: owner-approved WebGL 2-only browser rendering; WEBGL2_REQUIRED rejects unavailable/failed contexts; EmptyDevice reserved for explicit HEADLESS."
+      "reason": "AIR: owner-approved WebGL 2-only browser rendering; WEBGL2_REQUIRED rejects unavailable/failed contexts; EmptyDevice reserved for explicit HEADLESS.; AIR: WebGL2 default, explicit WebGPU selection without fallback and rejecting failed device/swapchain initialization"
     },
     {
       "airPath": "src/cocos/gfx/empty/empty-buffer.ts",
@@ -3920,8 +3976,8 @@
       "airPath": "src/cocos/gfx/webgl2/states/webgl2-sampler.ts",
       "upstreamPath": "cocos/gfx/webgl2/states/webgl2-sampler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: comparison mode/function and normalized anisotropy applied to every owned LOD sampler (WGL-02/03)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-buffer.ts",
@@ -3941,8 +3997,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-commands.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: integer external formats/clear/attributes, sampler destruction, depth bias enable/order, selected layer attachments and validated native-layout readback with GL state/resource recovery (WGL-02/04/05/06/07/08/09). Audit 2026-10-19: recover program independently of PSO identity; restore partial stencil masks; validate vertex streams/locations; reset scratch blit attachments and buffer selection."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-define.ts",
@@ -3969,22 +4025,22 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-device.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-device.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: WebGL2 half-float/integer filtering and half-float/RGB integer renderability contracts, sampler validation/cache normalization and view-preserving readback entry (WGL-01/02/03/05/09)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-framebuffer.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-framebuffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: selected-mip attachment dimensions and texture/renderbuffer rebuild tracking (WGL-08)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-gpu-objects.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-gpu-objects.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: preserve texture view mip/layer selection and comparison/anisotropy sampler state (WGL-02/03/08/09)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-input-assembler.ts",
@@ -4004,8 +4060,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-pipeline-state.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-pipeline-state.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: GPU pipeline cache keeps owned raster/depth/blend snapshots instead of mutable material state"
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-primary-command-buffer.ts",
@@ -4032,8 +4088,8 @@
       "airPath": "src/cocos/gfx/webgl2/webgl2-shader.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-shader.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR WebGL2 shader-input contract: reject caller version directives and conflicting uniform-block/sampler logical set bindings before state replacement; retain deferred GPU compilation and existing compiler logs."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-state-cache.ts",
@@ -4047,14 +4103,14 @@
       "upstreamPath": "cocos/gfx/webgl2/webgl2-swapchain.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR: getContext 普通分支 preserveDrawingBuffer=true（与 webgl-swapchain 2026-09-12 的既定 AIR 修改对齐——Code First 像素级验收与截图需要。W03 实测该遗漏使 WebGL2 帧外读回恒黑：resize/暂停后 toDataURL/readPixels 无内容；XR 分支保持上游 false）"
+      "reason": "AIR: getContext 普通分支 preserveDrawingBuffer=true（与 webgl-swapchain 2026-09-12 的既定 AIR 修改对齐——Code First 像素级验收与截图需要。W03 实测该遗漏使 WebGL2 帧外读回恒黑：resize/暂停后 toDataURL/readPixels 无内容；XR 分支保持上游 false） AIR: initialize polygon offset disabled, reset bias/framebuffer caches and invalidate pipeline/input identity on initialization (WGL-04)."
     },
     {
       "airPath": "src/cocos/gfx/webgl2/webgl2-texture.ts",
       "upstreamPath": "cocos/gfx/webgl2/webgl2-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: validate and preserve view mip/layer ranges, ownership and resized mip metadata (WGL-08/09)."
     },
     {
       "airPath": "src/cocos/gi/light-probe/auto-placement.ts",
@@ -5320,8 +5376,8 @@
       "airPath": "src/cocos/render-scene/core/program-lib.ts",
       "upstreamPath": "cocos/render-scene/core/program-lib.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "AIR: choose WebGPU binding preparation from actual device rather than a build-wide constant"
     },
     {
       "airPath": "src/cocos/render-scene/core/program-utils.ts",
@@ -5334,15 +5390,15 @@
       "airPath": "src/cocos/render-scene/core/render-scene.ts",
       "upstreamPath": "cocos/render-scene/core/render-scene.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-09: readonly directional list and warning through native diagnostic channel; mainLight selection and legacy single-directional lighting preserved."
     },
     {
       "airPath": "src/cocos/render-scene/core/render-window.ts",
       "upstreamPath": "cocos/render-scene/core/render-window.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
       "modified": true,
-      "reason": "AIR rendering contracts: forward color/depth attachment sample counts into native TextureInfo and identify color-only offscreen targets."
+      "reason": "AIR rendering contracts: forward color/depth attachment sample counts into native TextureInfo and identify color-only offscreen targets.; Orientation AUTO/LANDSCAPE policy values use Web IDENTITY transform without false resize warnings; concrete direction and invalid-value diagnostics preserved."
     },
     {
       "airPath": "src/cocos/render-scene/core/texture-buffer-pool.ts",
@@ -5390,8 +5446,8 @@
       "airPath": "src/cocos/render-scene/scene/fog.ts",
       "upstreamPath": "cocos/render-scene/scene/fog.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-05: retain requested fog type while disabled; getter/pipeline still report NONE until enabled; validate invalid types before mutation."
     },
     {
       "airPath": "src/cocos/render-scene/scene/index.ts",
@@ -6104,8 +6160,8 @@
       "airPath": "src/cocos/scene-graph/node.ts",
       "upstreamPath": "cocos/scene-graph/node.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.33 (snapshot 2026-09-12)",
-      "modified": false,
-      "reason": "extraction copy"
+      "modified": true,
+      "reason": "ENG-08: local/world TRS and setRTS reject nonfinite/non-float32/invalid numeric overload values before mutation; valid transforms and Euler degrees unchanged."
     },
     {
       "airPath": "src/cocos/scene-graph/prefab/index.ts",
@@ -6853,8 +6909,8 @@
       "airPath": "src/cocos/video/video-player-impl-web.ts",
       "upstreamPath": "cocos/video/video-player-impl-web.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 a3-video 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: idempotent windowed VideoPlayer fullscreen disable and observed native exit rejection during detach/navigation; preserve fullscreen admission and real browser diagnostics.; consume confirmed seek calibration and bind asynchronous play calibration to the original video element; restore requested playback only after Windows WebKit native loop seek, with explicit-control and element-ownership cancellation; validate current native ended state for queued callbacks and calibrate only successful still-requested plays"
     },
     {
       "airPath": "src/cocos/video/video-player-impl.ts",
@@ -7302,21 +7358,21 @@
       "upstreamPath": "public-pal/pal/input/web/keyboard-input.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; measured layout resize, coalesced ResizeObserver, zero-size reveal and explicit close cleanup via screen-layout-patch.cjs"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; measured layout resize, coalesced ResizeObserver, zero-size reveal and explicit close cleanup via screen-layout-patch.cjs; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners"
     },
     {
       "airPath": "src/pal/input/web/mouse-input.js",
       "upstreamPath": "public-pal/pal/input/web/mouse-input.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners"
     },
     {
       "airPath": "src/pal/input/web/touch-input.js",
       "upstreamPath": "public-pal/pal/input/web/touch-input.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners; AIR calls preventDefault only for cancelable canvas touch events, preserving touch retirement and dispatch (pal-source.cjs)"
     },
     {
       "airPath": "src/pal/minigame/non-minigame.js",
@@ -7351,7 +7407,7 @@
       "upstreamPath": "public-pal/pal/screen-adapter/web/screen-adapter.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; AIR host canvas binding / DPR adaptation; AIR explicit startup canvas binding (generated by startup-binding-patch.cjs), no import-time DOM wrapping/listeners"
     },
     {
       "airPath": "src/pal/system-info/enum-type/browser-type.js",
@@ -8029,8 +8085,8 @@
       "airPath": "src/cocos/rendering/post-process/post-process-builder.ts",
       "upstreamPath": "cocos/rendering/post-process/post-process-builder.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 post-process 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: restore camera projection when TAA transitions from enabled to disabled; remove residual jitter on both Web backends"
     },
     {
       "airPath": "src/cocos/rendering/post-process/utils/pass-context.ts",
@@ -8099,8 +8155,8 @@
       "airPath": "src/cocos/audio/audio-downloader.ts",
       "upstreamPath": "cocos/audio/audio-downloader.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文; AIR forwards timeoutMs, AbortSignal and explicit buffered transport to the PAL audio loader, preserving assetManager cache/retry behavior."
     },
     {
       "airPath": "src/cocos/audio/audio-manager.ts",
@@ -8113,8 +8169,8 @@
       "airPath": "src/cocos/audio/audio-source.ts",
       "upstreamPath": "cocos/audio/audio-source.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR audio cancellation: generation-owned play callbacks and clip loads (including A/B/A), immediate old-player teardown on valid clip replacement, source destruction invalidates pending one-shot loads; upstream source/header retained otherwise.; 2026-10-17 bounded audio readiness with configurable deadline/AbortSignal, metadata settlement, retry and source-local playback request results; PAL reproduced by audio-readiness-patch.cjs, frozen vendor retained.; 2026-10-18 optional play-generation end metadata and stop-request retirement; native Web Audio graph teardown and cache release are idempotent; shared operation queue unchanged (audio-playback-patch.cjs)."
     },
     {
       "airPath": "src/cocos/audio/category.json",
@@ -8134,8 +8190,8 @@
       "airPath": "src/cocos/audio/index.ts",
       "upstreamPath": "cocos/audio/index.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文"
+      "modified": true,
+      "reason": "V1.2 批次 a2-audio 回归抽取，官方原文; 2026-10-17 bounded audio readiness with configurable deadline/AbortSignal, metadata settlement, retry and source-local playback request results; PAL reproduced by audio-readiness-patch.cjs, frozen vendor retained."
     },
     {
       "airPath": "src/exports/audio.ts",
@@ -8170,7 +8226,7 @@
       "upstreamPath": "public-pal/pal/audio/type.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "Declaration emitted from the frozen MIT public audio type source by tools/build/pal-source.cjs"
+      "reason": "Declaration emitted from the frozen MIT public audio type source by tools/build/pal-source.cjs; 2026-10-17 bounded audio readiness with configurable deadline/AbortSignal, metadata settlement, retry and source-local playback request results; PAL reproduced by audio-readiness-patch.cjs, frozen vendor retained."
     },
     {
       "airPath": "src/pal/audio/type.js",
@@ -8184,21 +8240,21 @@
       "upstreamPath": "public-pal/pal/audio/web/player-dom.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-06 PAL generator makes the decorator helper local: top-level this is undefined in ESM, preserving the existing fallback function without changing frozen sources.; AIR selected canvas priority for gesture audio unlock (generated); DOM-only cancellable play attempts, immediate controls, autoplay-only gesture retries and native media release via tools/build/audio-cancellation-patch.cjs; frozen vendor and shared operation queue unchanged.; 2026-10-17 bounded audio readiness with configurable deadline/AbortSignal, metadata settlement, retry and source-local playback request results; PAL reproduced by audio-readiness-patch.cjs, frozen vendor retained.; 2026-10-18 Windows WebKit pending play pause/stop retires the native source and lazily restores URL/position/metadata on replay, without a synthetic clock or events.; 2026-10-18 optional play-generation end metadata and stop-request retirement; native Web Audio graph teardown and cache release are idempotent; shared operation queue unchanged (audio-playback-patch.cjs)."
     },
     {
       "airPath": "src/pal/audio/web/player-web.js",
       "upstreamPath": "public-pal/pal/audio/web/player-web.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-06 PAL generator makes the decorator helper local: top-level this is undefined in ESM, preserving the existing fallback function without changing frozen sources.; AIR selected canvas priority for gesture audio unlock (generated); 2026-10-17 bounded audio readiness with configurable deadline/AbortSignal, metadata settlement, retry and source-local playback request results; PAL reproduced by audio-readiness-patch.cjs, frozen vendor retained.; 2026-10-18 optional play-generation end metadata and stop-request retirement; native Web Audio graph teardown and cache release are idempotent; shared operation queue unchanged (audio-playback-patch.cjs)."
     },
     {
       "airPath": "src/pal/audio/web/player.js",
       "upstreamPath": "public-pal/pal/audio/web/player.ts",
       "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
       "modified": true,
-      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs"
+      "reason": "MIT public source TypeScript -> JavaScript, reproducible by tools/build/pal-source.cjs; 2026-10-17 bounded audio readiness with configurable deadline/AbortSignal, metadata settlement, retry and source-local playback request results; PAL reproduced by audio-readiness-patch.cjs, frozen vendor retained.; 2026-10-18 optional play-generation end metadata and stop-request retirement; native Web Audio graph teardown and cache release are idempotent; shared operation queue unchanged (audio-playback-patch.cjs)."
     },
     {
       "airPath": "src/node_modules/@cocos/box2d/index.js",
@@ -8226,7 +8282,7 @@
       "upstreamPath": "@cocos/box2d@1.0.2/package.json",
       "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
       "modified": true,
-      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/box2d/index.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。"
+      "reason": "V1.2 P1 Air 侧撰写（非上游原文）：ccbuild 的 moduleOverrides 用 `export * from` 实现虚拟模块，按 ESM 规范不转发 default，而官方物理/骨骼代码写的是默认导入；nodeResolve 的 jail=realpath(src) 又使仓库根 node_modules 不可达。故把包按真实布局复制进 src/node_modules/，本 manifest 只声明 main/type，并把 types 回指已安装包（../../../../node_modules/@cocos/box2d/index.d.ts）以复用官方声明，避免把发布包全量源码（box2d 约 92 MB）纳入仓库。 2026-10-06：types 指向 tools/build/box2d-types.cjs 从官方包生成的本地 declaration-only types/index.d.ts（64 文件约 181 KB），不再跨 engine rootDir 发射第三方 TS；运行时原字节保持。"
     },
     {
       "airPath": "src/node_modules/@cocos/cannon/build/cannon.js",
@@ -8289,14 +8345,14 @@
       "upstreamPath": "cc.config.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。"
+      "reason": "V1.2（Air 修改，上游原文为基础）四处增量：① features.air = {modules:[\"air\"]}（Air 聚合出口 unit，产物 d.ts 面由此驱动）；② moduleOverrides += {test:\"true\", spine-instantiate.ts -> air-spine-instantiate-js.ts}（计划书 D2/P2：external:emscripten/spine 资产不随快照分发）；③ includes 去掉 ./editor/exports/**（Air 无编辑器闭包）；④ r43 features += marionette / procedural-animation（按上游 cc.config.json:236-247 原文逐字段登记，两者 modules:[] 只带 intrinsicFlags MARIONETTE / PROCEDURAL_ANIMATION；默认 AIR_FEATURES 不含 ⇒ 发布产物逐字节不变，变体代价实测见 docs/notes/pose-graph-notes.md §4）。其余 30 个 feature 与 16 条 moduleOverrides 与上游逐字段一致（node 深比较 0 差异）；上游另有 25 个 feature unit 未登记 = native/minigame/编辑器向排除集（计划书 §1.3、护栏 5）；V1.2 批次 E 实测 gfx-webgpu 也留在未登记之列——登记它会把未接线的 emscripten-only 后端并入发布 d.ts（类型/产物不一致），见 UPSTREAM.md Deviation-04。 2026-10-06：treeShake.noSideEffectFiles 移除四个未抽取的 pal/input/minigame/*-input.js 声明；保留九条实际存在的文件声明及全部 moduleOverrides，不引入 MiniGame 闭包。"
     },
     {
       "airPath": "src/tsconfig.json",
       "upstreamPath": "tsconfig.json",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
-      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。"
+      "reason": "V1.2 P1（Air 修改）：显式钉住 \"rootDir\": \"./\"。ccbuild 的 dtsBundler 不带 rootDir 调 tsc，中间产物目录按「全部输入文件的最长公共根」布局；V1.2 把 @cocos/box2d 等运行库 vendored 到 src/node_modules/ 后，其 types 回指仓库根 node_modules（box2d 类型闭包约 92 MB，不入仓库），公共根上移到仓库根，emit 落到 __dts_before_bundle/src/**，而 ccbuild 生成的 virtual-cc.d.ts 仍按 __dts_before_bundle/exports/** 引用 → 解析全空，发布 d.ts 退化为 `declare module \"cc\" { export {}; }`。钉住后声明布局恒以引擎根为准（build/cocosair.module.d.ts 恢复 3.08 MB 完整面）。另：Air 版裁掉上游的 outDir/editor typedoc include 项，files 收敛为 predefine/cocos/external；@types 引用去掉 native/jest/box2d-jsb 项。V1.2 批次 E 把 ./@types/webGPU 按上游同名项回接（gfx-webgpu 后端需要 GPU* 全局类型）。批次 E / D10 另在 exclude 追加 cocos/gfx/webgpu/**、cocos/webgpu/**、exports/gfx-webgpu.ts：dtsBundler 用本配置把 exports/** 全量收进声明图，未接线的 gfx-webgpu 会被并入发布面（cc.d.ts 多出 `export class WebGPUDevice` 而默认 bundle 导出表无此符号，实测 +60,649 B 类型/产物不一致），且该 emscripten-only 子图在本快照内无法核对，故整图移出声明与核对闭包（详见 UPSTREAM.md Deviation-04）。 2026-10-06：显式 moduleResolution=node 与 Rollup bundler/root typecheck 对齐，避免 ccbuild NodeNext 回落误判 DragonBones ESM/CJS；types 接入既有 box2d、emscripten-assets 与 external-modules 声明；同步根配置对官方全注释 cannon-distance-constraint.ts 的空脚本豁免。"
     },
     {
       "airPath": "src/EngineErrorMap.md",
@@ -8386,8 +8442,8 @@
       "airPath": "src/@types/pal/audio.d.ts",
       "upstreamPath": "@types/pal/audio.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": false,
-      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+      "modified": true,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登） 2026-10-06：audio/type 的 inline import type 改用相对路径，消除发布声明中的悬空 PAL 引用；API 与运行时不变。; 2026-10-18 optional play-generation end metadata and stop-request retirement; native Web Audio graph teardown and cache release are idempotent; shared operation queue unchanged (audio-playback-patch.cjs)."
     },
     {
       "airPath": "src/@types/pal/env.d.ts",
@@ -8407,8 +8463,8 @@
       "airPath": "src/@types/pal/input.d.ts",
       "upstreamPath": "@types/pal/input.d.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
-      "modified": false,
-      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登）"
+      "modified": true,
+      "reason": "extraction copy（pal 类型声明上游原文字节一致；本行 r26 补登） 2026-10-06：input-source 的 inline import type 改用相对路径，供 ccbuild 声明 bundler 解析生成的 PAL 类型；API 与运行时不变。"
     },
     {
       "airPath": "src/@types/pal/minigame.d.ts",
@@ -8463,8 +8519,8 @@
       "airPath": "src/cocos/gfx/webgpu/instantiated.ts",
       "upstreamPath": "cocos/gfx/webgpu/instantiated.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: lazy frozen ESM shader translators, configurable asset base and rejecting initialization errors; no native device WASM path"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/override.ts",
@@ -8477,8 +8533,8 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-buffer.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: preserve raw indirect buffer byte uploads alongside Cocos draw-info snapshots"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-command-allocator.ts",
@@ -8491,15 +8547,15 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-command-buffer.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-command-buffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: explicit unsupported barriers/blits, compute pass ordering and device-loss guard; completion: native indirect dispatch validation and sampled color blit with mip/layer/region handling; snapshot per-draw blend constants and represent constant-alpha color factors; review: execute command-buffer texture uploads after pending compute and before following blit/render work instead of enqueueing unconsumed legacy commands"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-commands.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-commands.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: aligned asynchronous readback, format rejection, shader diagnostics and valid WebGPU texture creation ; completion: combined color-write masks, raw indirect argument uploads and nearest/linear color blit; renderable single-sampled 2D color upload targets include native render-attachment usage for external canvas/image copies; separate native samplers use offset 64 to avoid glTF physical texture bindings 15..27"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-core.d.ts",
@@ -8519,29 +8575,29 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-descriptor-set-layout.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: permit true empty bind groups rather than injecting dummy uniform buffers; native layout creation is lazy so unfiltered glTF templates are metadata until shader-specific projection"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-descriptor-set.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-descriptor-set.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: sparse binding resource indexing and non-filterable sampler isolation; per-set native resource identities refresh shared resized resources; depth textures use non-filtering samplers"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-device.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-device.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: explicit WebGPU admission, device limits, asynchronous readback and owned resource cleanup"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-framebuffer.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-framebuffer.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: framebuffer attachment views honor selected mip/layer and report effective dimensions"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-gpu-objects.ts",
@@ -8561,15 +8617,15 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-pipeline-layout.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: defer native pipeline creation until shader-specific bindings are known"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-pipeline-state.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-pipeline-state.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: per-shader stage-visible layouts and projected descriptor sets avoid exceeding device limits ; completion: native MIN/MAX blending instead of ADD substitution; adapt texture sample layouts to actual depth/unfilterable resources; reject simultaneous RGB constant-color and constant-alpha factors that WebGPU cannot represent; shader reflection shares the native sampler binding offset"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-queue.ts",
@@ -8582,22 +8638,22 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-render-pass.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-render-pass.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: depth-only attachments omit stencil load/store fields"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-sampler.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-sampler.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: texture-specific non-filterable sampling does not mutate shared sampler state"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-shader.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-shader.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: synchronize GLSL resource declarations with actual legacy/custom ShaderInfo bindings before WGSL conversion"
     },
     {
       "airPath": "src/cocos/gfx/webgpu/webgpu-state-cache.ts",
@@ -8617,8 +8673,8 @@
       "airPath": "src/cocos/gfx/webgpu/webgpu-texture.ts",
       "upstreamPath": "cocos/gfx/webgpu/webgpu-texture.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: native texture views respect selected mip and array layer range; depth-only sampled views retain all aspects for attachments"
     },
     {
       "airPath": "src/cocos/webgpu/instantiated.ts",
@@ -8631,8 +8687,8 @@
       "airPath": "src/exports/gfx-webgpu.ts",
       "upstreamPath": "exports/gfx-webgpu.ts",
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a)",
-      "modified": false,
-      "reason": "V1.2 批次 E1 回归抽取，官方原文"
+      "modified": true,
+      "reason": "AIR: register optional WebGPU device without exposing implementation class as a new SDK API"
     },
     {
       "airPath": "src/@types/webGPU.d.ts",
@@ -9263,6 +9319,524 @@
       "baseline": "cocos4 @ 4.0.0-alpha.34 (commit 557b06f7e636572a15a426eb8c2387f40b92798a, V1.2 G0 冻结于 fffd9a514a bump)",
       "modified": true,
       "reason": "AIR original internal weighted joint binding validation shared by realtime and baked models."
+    },
+    {
+      "airPath": "src/cocos/3d/misc/mesh-validation.ts",
+      "upstreamPath": null,
+      "baseline": "AIR engine contracts 2026-10-06",
+      "modified": true,
+      "reason": "AIR-owned native mesh validation; no parallel Mesh abstraction."
+    },
+    {
+      "airPath": "src/cocos/scene-graph/node-transform-validation.ts",
+      "upstreamPath": null,
+      "baseline": "AIR engine contracts 2026-10-06",
+      "modified": true,
+      "reason": "AIR-owned finite TRS guard used by native Node setters."
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/index.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_settings.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_math.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_draw.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_timer.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_growable_stack.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_block_allocator.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/common/b2_stack_allocator.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_distance.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collision.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_dynamic_tree.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_broad_phase.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_time_of_impact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_circle_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_polygon_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collide_circle.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collide_polygon.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_edge_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_collide_edge.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/collision/b2_chain_shape.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_time_step.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_particle.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_distance_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_area_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_friction_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_prismatic_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_revolute_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_gear_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_motor_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_mouse_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_pulley_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_rope_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_weld_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_wheel_joint.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_polygon_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_polygon_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_edge_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_edge_polygon_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_chain_circle_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_chain_polygon_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact_factory.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact_manager.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact_solver.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_island.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_world.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_stack_queue.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_voronoi_diagram.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_particle_system.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/particle/b2_particle_group.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_world_callbacks.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_contact.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_body.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/dynamics/b2_fixture.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_buoyancy_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_constant_accel_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_constant_force_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_gravity_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/controllers/b2_tensor_damping_controller.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/rope/b2_rope.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/node_modules/@cocos/box2d/types/src/box2d.d.ts",
+      "upstreamPath": null,
+      "baseline": "npm @cocos/box2d@1.0.2（上游 package.json pin）",
+      "modified": true,
+      "reason": "AIR 生成的 Box2D 声明：tools/build/box2d-types.cjs 从已安装的官方包 TS 以 TypeScript declaration-only emit 派生；types/index.d.ts 保留官方入口声明（仅统一 LF 换行）。避免 ccbuild 在 engine rootDir 外发射第三方源码，未改运行时字节。"
+    },
+    {
+      "airPath": "src/pal/input/input-source.d.ts",
+      "upstreamPath": "public-pal/pal/input/input-source.ts",
+      "baseline": "cocos4 public PAL @ 9f0e30acb31f6d670f2c0bf818d61039846a2860",
+      "modified": true,
+      "reason": "Declaration emitted from frozen MIT public input-source by tools/build/pal-source.cjs; native Vec2/Vec3/Quat types preserved."
+    },
+    {
+      "airPath": "src/air/assets/gltf/material/standard-effect.ts",
+      "upstreamPath": null,
+      "baseline": "AIR glTF adapter",
+      "modified": true,
+      "reason": "2026-10-06：原 material.ts 的 gltfEffect 与 UV_SLOTS 原逻辑提取为叶模块，physical-effect 不再反向引用材质装配模块；旧 gltfEffect 导出路径继续转发，shader/effect 行为保持。"
+    },
+    {
+      "airPath": "src/air/spark/spark-math.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: three 形状数学垫片，按 @air-element 归属逐成员复用 cc.math 元素供 vendor/spark 使用；不经根导出面可达（SPK-04）"
+    },
+    {
+      "airPath": "src/air/spark/spark-api-adapter.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: vendor/spark 所需的 three API 兼容面（对象/几何/材质/纹理/RT/加载器），按 @air-element 归属复用引擎 cc.*/gfx:* 元素或标注自持理由；构建期作为 `three` specifier 的别名目标，不进根导出面（SPK-05a）"
+    },
+    {
+      "airPath": "src/air/spark/pmrem.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: three PMREMGenerator 移植（IBL 预滤波图集），引擎无对应 PMIP 管线故自持算法体，GPU 对象经 spark-api-adapter 借用；不进根导出面（SPK-06）"
+    },
+    {
+      "airPath": "src/air/spark/cocos-renderer.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: 把 three 形状 WebGLRenderer 桥到本仓 gfx 层的渲染桥；保留惰性 renderer.xr 外壳以短路冻结代码的非 XR 分支（XR 随 SPK-10 移除，移植件 CocosXrManager 未搬运）；不进根导出面（SPK-07）"
+    },
+    {
+      "airPath": "src/air/spark/cocos-spark-layer.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: Spark 泼溅场景层，绑定 cc.Director/app 管线钩子并管理 splat 目标可见性与渲染钩子；不进根导出面（SPK-08）"
+    },
+    {
+      "airPath": "src/exports/spark.ts",
+      "upstreamPath": null,
+      "baseline": "AIR Spark integration",
+      "modified": true,
+      "reason": "AIR: 可选 feature unit `spark` 的 bundle 入口（ccbuild 声明见 src/cc.config.json），聚合集成层与生成物 `src/air/spark/generated/spark-runtime.js`；不并入 `air` 聚合、不进默认 bundle（SPK-12）"
     }
   ]
 }

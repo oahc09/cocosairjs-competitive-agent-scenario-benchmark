@@ -22,6 +22,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { tarRead, ROOT } from './build-knowledge.mjs';
+import { isInstallSurface } from './pack-engine.mjs';
 import zlib from 'node:zlib';
 
 const KNOW = path.join(ROOT, 'knowledge');
@@ -213,9 +214,13 @@ console.log('== V9: vendor 双引擎版本注册表 + SDK 目录一致性 ==');
       check('cocosair k0Tarball sha256 与注册表一致', sha256(fs.readFileSync(path.join(ROOT, v.k0Tarball))) === v.k0TarballSha256);
     }
     if (v.tarball) {
-      // 两引擎同律:sdkDir(浏览正典)↔ tarball(安装工件)逐字节一致,双源并存不可漂移
+      // 两引擎同律:sdkDir(浏览正典)↔ tarball(安装工件)逐字节一致,双源并存不可漂移。
+      // cocosair 自 2026-10-24 起 tgz 是 sdkDir 安装面的派生工件(pack-engine 口径:
+      // 剔 skills/ 与 docs/evidence/,1.4GB 证据媒体与技能供给不走 npm 安装面),
+      // 比对按同一安装面谓词过滤;three 的 tarball 覆盖整个 sdkDir,维持全树同律。
+      const surface = engine === 'cocosair' ? isInstallSurface : () => true;
       const tarEntries = tarRead(zlib.gunzipSync(fs.readFileSync(path.join(ROOT, v.tarball))));
-      const dirFiles = new Map(walk(sdk).map((p) => [p, sha256(fs.readFileSync(path.join(sdk, p)))]));
+      const dirFiles = new Map(walk(sdk).filter((p) => surface(p)).map((p) => [p, sha256(fs.readFileSync(path.join(sdk, p)))]));
       const tarMap = new Map(tarEntries.filter((x) => !x.name.endsWith('/')).map((x) => [x.name.replace(/^package\//, ''), sha256(x.data)]));
       const onlyDir = [...dirFiles.keys()].filter((p) => !tarMap.has(p));
       const onlyTar = [...tarMap.keys()].filter((p) => !dirFiles.has(p));

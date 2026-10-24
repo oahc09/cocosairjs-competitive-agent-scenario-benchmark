@@ -2,6 +2,12 @@
 
 在仓库根目录执行检查。脚本是否写入文件、需要哪些前置产物，见根目录 `AGENTS.md` 的命令表。历史版本的验收、交接、进展和体积快照已清理；它们不能证明当前版本已通过验收。
 
+## 日常 PR 快速检查
+
+默认 `Code quality / quality` 只运行构建、类型与格式、核心单测及本次改动回归，再串行验证 Driver、glass-refraction、gltf-viewer、input、Spark 五个真实浏览器示例。保留像素、功能、资源释放及关闭检查；结果是核心子集，不更新完整正典证据。
+
+完整 182 示例采集改为手动运行 `example-evidence.yml`，适用于阶段验收。下面的完整测试、外部参考审计、三浏览器矩阵和发布检查按改动范围或发布需要显式运行，不作为每个 PR 的默认门槛。旧证据失效仍须如实保留，不能冒充新 PASS。
+
 ## 源码与文档
 
 ```bash
@@ -34,7 +40,7 @@ npm run verify:perf-lifecycle
 npm run verify:release
 ```
 
-这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。V1.1 示例、DevTools 和 Gallery 的采集器分别位于 `tools/verify/example-spec-browser.cjs`、`tools/verify/devtools-examples.cjs`、`tools/verify/gallery-artifact.cjs`；按各脚本的参数说明执行完整采集，再生成 API 覆盖报告。
+这些命令需要对应浏览器环境及已构建产物。浏览器采集器会重新生成 JSON 和截图；子集结果不得用作全量验收。普通示例使用 `tools/verify/run-example-evidence-campaign.cjs` 按固定快照逐例采集，再严格合并与发布，见[完整流程](example-evidence-campaign.md)；`example-spec-browser.cjs` 仅是内部受监督 worker。DevTools 和 Gallery 的采集器分别位于 `tools/verify/devtools-examples.cjs`、`tools/verify/gallery-artifact.cjs`。对应范围完整采集后，才能生成 API 覆盖报告。
 
 历史清理不豁免当前候选的完整验收。`verify:release` 会现算候选指纹、以 `coverage-report.cjs --check` 核对库存、规格与逐 API 执行证据，并调用许可门禁；缺失、过时、授权未闭环均阻断发布。发布前还要求工作区干净。单独截图不能替代汇总和指纹检查。
 

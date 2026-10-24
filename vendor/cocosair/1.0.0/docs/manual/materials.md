@@ -152,7 +152,7 @@ shared builtins never mutated: new Material() per cube
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>
@@ -222,7 +222,7 @@ const groundNode = new Node('Ground');
 groundNode.layer = Layers.Enum.DEFAULT;
 scene.addChild(groundNode);
 const groundRenderer = groundNode.addComponent(MeshRenderer);
-groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12 }));
+groundRenderer.mesh = utils.createMesh(primitives.plane({ width: 12, length: 12, widthSegments: 1, lengthSegments: 1 }));
 const groundMaterial = new Material();
 groundMaterial.initialize({ effectName: 'builtin-standard' });
 groundMaterial.setProperty('mainColor', new Color(70, 90, 80, 255));

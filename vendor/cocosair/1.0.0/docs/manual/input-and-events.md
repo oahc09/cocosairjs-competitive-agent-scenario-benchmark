@@ -8,13 +8,13 @@
 
 ## 两层入口怎么选
 
-|          | 全局 `input` 单例                           | 节点事件（`node.on(Node.EventType.*)`）                            |
-| -------- | ------------------------------------------- | ------------------------------------------------------------------ |
-| 订阅     | `input.on(Input.EventType.TOUCH_START, cb)` | `node.on(Node.EventType.TOUCH_START, cb)`                          |
+|          | 全局 `input` 单例                                                | 节点事件（`node.on(Node.EventType.*)`）                            |
+| -------- | ---------------------------------------------------------------- | ------------------------------------------------------------------ |
+| 订阅     | `input.on(Input.EventType.TOUCH_START, cb)`                      | `node.on(Node.EventType.TOUCH_START, cb)`                          |
 | 前提     | 平台绑定已初始化；Web 键盘要求 canvas 聚焦，指针事件遵循画布通道 | 节点要有 `UITransform`（2D/UI 命中测试）且在 UI 相机可见层         |
-| 坐标     | `event.getUILocation()`（UI 坐标）          | 命中测试已完成，回调即"点在我身上"                                 |
-| 生命周期 | **不随节点销毁清理**，必须手动 `input.off`  | 随节点销毁自动清理                                                 |
-| 吞掉     | 节点命中的事件**不会**再到达全局监听        | 命中节点处理后沿父链冒泡，`event.propagationStopped = true` 可阻断 |
+| 坐标     | `event.getUILocation()`（UI 坐标）                               | 命中测试已完成，回调即"点在我身上"                                 |
+| 生命周期 | **不随节点销毁清理**，必须手动 `input.off`                       | 随节点销毁自动清理                                                 |
+| 吞掉     | 节点命中的事件**不会**再到达全局监听                             | 命中节点处理后沿父链冒泡，`event.propagationStopped = true` 可阻断 |
 
 实测语义（AIR，源自 `input.ts` 的鼠标→触摸模拟与 `pointer-event-dispatcher.ts` 的派发序）：
 一次鼠标按下 = 引擎 `_simulateEventTouch` 先派发 UI 节点的 `TOUCH_START`（命中即吞掉，全局不再收到），
@@ -23,7 +23,32 @@
 
 ## DOM 传播、滚轮与坐标合同
 
-DOM 事件传播与引擎 `input`/节点派发是两条不同的路径。Web PAL 在 canvas 的鼠标、触摸和 wheel 处理器中调用 `stopPropagation()`，阻止原生事件继续向父 DOM/window 冒泡；canvas 事件还会调用 `preventDefault()`，避免浏览器滚动等默认行为。它不阻止已执行的 window 捕获监听器，也不等同于节点的 `propagationStopped`。默认 DOM 传播策略保持不变。
+DOM 事件传播与引擎 `input`/节点派发是两条不同的路径。Web PAL 在 canvas 的鼠标、触摸、wheel 和键盘处理器中调用 `stopPropagation()`，阻止原生事件继续向父 DOM/window 冒泡；canvas 事件还会调用 `preventDefault()`，避免浏览器滚动等默认行为。它不阻止已执行的 window 捕获监听器，也不等同于节点的 `propagationStopped`。默认 DOM 传播策略保持不变。
+
+### canvas 聚焦后的 DOM 快捷键
+
+应用原先使用 window 冒泡快捷键时，点击画布后可能收不到事件。选择原生 `input`，或将该应用的快捷键改为 window capture；同一动作不要同时接两条通道。以下是应用侧绑定配方，不是新增 SDK API：
+
+```typescript
+function bindShortcuts(onShortcut: (code: string) => void): () => void {
+    const codes = new Set(['KeyR', 'KeyW', 'KeyC', 'KeyH', 'KeyM', 'Escape']);
+    const handler = (event: KeyboardEvent): void => {
+        const target = event.target;
+        if (event.repeat || event.ctrlKey || event.altKey || event.metaKey || event.shiftKey) return;
+        if (target instanceof HTMLElement && target.closest('input, textarea, select, [contenteditable]:not([contenteditable="false"])')) return;
+        if (!codes.has(event.code)) return;
+        onShortcut(event.code);
+    };
+    window.addEventListener('keydown', handler, true);
+    return () => window.removeEventListener('keydown', handler, true);
+}
+```
+
+页面卸载时调用返回的解绑函数。此配方只处理一次性快捷键；连续 held 输入还需按 source 所有权处理 keyup、blur/hidden 和取消，不能把按键释放丢在编辑控件过滤之后。window capture 先于 canvas 的转场屏蔽执行，应用必须在回调前检查其 active/session 状态。合成 dispatch 的计数验证不等于真实键盘验收。
+
+键盘推荐使用 `input.on(Input.EventType.KEY_DOWN/KEY_UP, ...)`；业务确实需要原始 DOM 键盘事件时，应使用捕获阶段，不能依赖 window 冒泡监听。已有 [createActionInput](input-action-state.md) 的 DOM 后端会处理捕获、编辑控件过滤和失焦清理，不必再安装第二套监听。
+
+按键集合必须在 canvas/window 失焦、页面隐藏和退出场景时清空，否则按住移动键后切到菜单，KEY_UP 可能在别处发生，恢复后会继续移动。[Input 示例](../../examples/input/) 演示原生按键通道与失焦清理；暂停、重开和会话切换的动作清理见[输入动作状态](input-action-state.md)。
 
 相机缩放优先只订阅一个引擎通道：
 
@@ -57,6 +82,8 @@ window.addEventListener('wheel', captureWheel, { capture: true, passive: false }
 这两个缩放实现是替代方案，不要同时启用。鼠标按下/移动/抬起还会生成 `TOUCH_*`；同一旋转操作选择 `MOUSE_*` 或 `TOUCH_*` 一路，后者可以同时接鼠标与触摸。`input` 的触摸事件会受 UI 命中吞噬规则影响，不能假定覆盖按钮的相机控制器仍能收到全局触摸。
 
 `getLocation()` 返回 canvas 左下角原点的设备坐标；`getUILocation()` 再按视口与设计分辨率换算为 UI 坐标。UI 节点局部坐标继续使用 `UITransform.convertToNodeSpaceAR()`。`getLocation(out)` 的合法出参为当前 SDK 的 `Vec2` 实例或省略参数，鼠标、触摸与无触点事件都保持这一合同并复用合法 out。普通对象、数组、`null` 等非法出参会抛 `TypeError`，`code` 为 `AIR_E_INPUT_LOCATION_OUT`，包含调用方法与期望类型。不要用设备坐标直接移动 UI 节点。
+
+原始 DOM `clientX/clientY` 是相对浏览器视口、左上原点的 CSS 像素。传入相机前，要减画布偏移、按实际 `canvas.width / rect.width` 与 `canvas.height / rect.height` 换算，再翻转 Y；不要直接乘浏览器 DPR，因为有效 DPR 可能被限制，CSS 尺寸也可能变化。引擎 `getLocation()` 已做输入换算，不要重复乘比例或翻转。普通无旋转、无边框的屏幕画布换算可复用[示例辅助函数](../../examples/shared/canvas-coordinates.ts)；离屏相机应改用其目标尺寸和业务定义的显示区域映射。
 
 ## 输入监听器异常与释放
 
@@ -152,7 +179,7 @@ state-probe 检查轮询读回。
         <!-- 官方模板 DOM 结构：pal/screen-adapter 依赖这些 id 做全屏适配 -->
         <div id="GameDiv">
             <div id="Cocos3dGameContainer">
-                <!-- #GameCanvas 必须在引擎 import 前存在（pal/screen-adapter 为模块顶层单例） -->
+                <!-- 推荐模板；也可在 import 后创建 canvas，再传给 createAirApp -->
                 <canvas id="GameCanvas"></canvas>
             </div>
         </div>
