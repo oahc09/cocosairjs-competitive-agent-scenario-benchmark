@@ -1,0 +1,551 @@
+{
+  "batchId": "B-20261023-R02",
+  "createdAt": "2026-10-23T15:44:29.866Z",
+  "updatedAt": "2026-10-24T05:29:15.313Z",
+  "plan": {
+    "source": "--matrix E01,E02,E03,E04,E05|K0|R01",
+    "pairs": [
+      {
+        "scene": "E01",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E01-K0-R01",
+        "batchId": "B-20261023-R02"
+      },
+      {
+        "scene": "E02",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E02-K0-R01",
+        "batchId": "B-20261023-R02"
+      },
+      {
+        "scene": "E03",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E03-K0-R01",
+        "batchId": "B-20261023-R02"
+      },
+      {
+        "scene": "E04",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E04-K0-R01",
+        "batchId": "B-20261023-R02"
+      },
+      {
+        "scene": "E05",
+        "knowledge": "K0",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E05-K0-R01",
+        "batchId": "B-20261023-R02"
+      }
+    ]
+  },
+  "engine": {
+    "three": {
+      "version": "0.186.1"
+    },
+    "cocosair": {
+      "tarball": "vendor/cocosair.js-1.0.0-k0.tgz",
+      "sha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565"
+    }
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:24:08.818Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 2,
+              "toolcall": 29,
+              "walltime": 12
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:07:41.255Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "PASS",
+            "classification": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 2,
+              "toolcall": 29,
+              "walltime": 143
+            },
+            "at": "2026-10-23T18:14:14.364Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:24:47.715Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 5,
+              "toolcall": 76,
+              "walltime": 21
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:08:05.489Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "PASS",
+            "classification": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 5,
+              "toolcall": 76,
+              "walltime": 143
+            },
+            "at": "2026-10-23T18:14:53.939Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T18:23:30.500Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      },
+      "qualificationStatus": "QUALIFIED"
+    },
+    {
+      "pairId": "PAIR-E02-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:25:29.656Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 4,
+              "toolcall": 40,
+              "walltime": 16
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:08:31.123Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "PASS",
+            "classification": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 4,
+              "toolcall": 40,
+              "walltime": 124
+            },
+            "at": "2026-10-23T18:15:37.533Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:26:12.090Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 7,
+              "browser": 6,
+              "toolcall": 94,
+              "walltime": 41
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:08:55.381Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "PASS",
+            "classification": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 8,
+              "browser": 6,
+              "toolcall": 94,
+              "walltime": 124
+            },
+            "at": "2026-10-23T18:16:20.235Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T18:23:30.505Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      },
+      "qualificationStatus": "QUALIFIED"
+    },
+    {
+      "pairId": "PAIR-E03-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:26:49.425Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 1,
+              "browser": 3,
+              "toolcall": 27,
+              "walltime": 17
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:09:21.495Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "budgetUsed": {
+              "build": 2,
+              "browser": 3,
+              "toolcall": 27,
+              "walltime": 83
+            },
+            "at": "2026-10-23T18:17:12.175Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:27:25.489Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 6,
+              "toolcall": 73,
+              "walltime": 34
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:09:46.140Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "PASS",
+            "classification": "PASS",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 6,
+              "toolcall": 73,
+              "walltime": 84
+            },
+            "at": "2026-10-23T18:17:48.170Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T18:23:30.509Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      },
+      "qualificationStatus": "QUALIFIED"
+    },
+    {
+      "pairId": "PAIR-E04-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "PERFORMANCE",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:28:02.730Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 6,
+              "browser": 6,
+              "toolcall": 84,
+              "walltime": 28
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:10:11.761Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "budgetUsed": {
+              "build": 7,
+              "browser": 6,
+              "toolcall": 84,
+              "walltime": 51
+            },
+            "at": "2026-10-23T18:18:25.454Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:28:33.471Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 3,
+              "browser": 5,
+              "toolcall": 87,
+              "walltime": 22
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:10:36.009Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "FAIL",
+            "classification": "UNRESOLVED",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 5,
+              "toolcall": 87,
+              "walltime": 51
+            },
+            "at": "2026-10-23T18:19:01.371Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T18:23:30.516Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      },
+      "qualificationStatus": "QUALIFIED"
+    },
+    {
+      "pairId": "PAIR-E05-K0-R01",
+      "arms": {
+        "arm-a": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "PERFORMANCE",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:29:10.887Z",
+            "classificationSource": "validate.mjs",
+            "budgetVerdict": "OK",
+            "budgetUsed": {
+              "build": 4,
+              "browser": 5,
+              "toolcall": 56,
+              "walltime": 21
+            }
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "RUNTIME",
+            "at": "2026-10-23T18:11:01.531Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "FAIL",
+            "classification": "PERFORMANCE",
+            "budgetUsed": {
+              "build": 5,
+              "browser": 5,
+              "toolcall": 56,
+              "walltime": 24
+            },
+            "at": "2026-10-23T18:19:53.603Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        },
+        "arm-b": {
+          "state": "validated",
+          "validation": {
+            "verdict": "FAIL",
+            "classification": "BUDGET_EXHAUSTED",
+            "leakScan": "CLEAN",
+            "at": "2026-10-23T18:29:43.639Z",
+            "classificationSource": "budget-check@run-round(机器计数,验证后判定;计数窗口=Agent Run 期间)",
+            "budgetVerdict": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 8,
+              "browser": 10,
+              "toolcall": 93,
+              "walltime": 20
+            },
+            "budgetExceeded": [
+              {
+                "kind": "browser",
+                "used": 10,
+                "max": 6
+              }
+            ]
+          },
+          "validationAttempt1EnvFail": {
+            "verdict": "FAIL",
+            "classification": "BUDGET_EXHAUSTED",
+            "at": "2026-10-23T18:11:25.900Z",
+            "note": "instrument env missing playwright ffmpeg; restored for force re-validate"
+          },
+          "validationAttempt2InstrumentWindow": {
+            "verdict": "FAIL",
+            "classification": "BUDGET_EXHAUSTED",
+            "budgetUsed": {
+              "build": 9,
+              "browser": 10,
+              "toolcall": 93,
+              "walltime": 24
+            },
+            "at": "2026-10-23T18:20:25.185Z",
+            "note": "窗口含首轮误验 validate 产生的计数行,walltime 被拉长;详见批次 notes"
+          }
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T18:23:30.520Z"
+      },
+      "executionTiming": {
+        "status": "PASS",
+        "startDeltaSec": 0,
+        "maxSec": 30
+      },
+      "qualificationStatus": "QUALIFIED"
+    }
+  ],
+  "stages": {
+    "preflight": {
+      "lastRunAt": "2026-10-23T18:23:30.520Z",
+      "summary": "PASS",
+      "blocked": [],
+      "pairs": 5
+    },
+    "dispatch": {
+      "lastRunAt": "2026-10-23T15:44:43.277Z",
+      "note": "双臂 dispatchAt 已盖章;请立即同批启动两臂会话"
+    },
+    "collect": {
+      "lastRunAt": "2026-10-23T18:07:22.641Z",
+      "completed": "10/10",
+      "pending": []
+    },
+    "validate": {
+      "lastRunAt": "2026-10-23T18:29:43.639Z",
+      "jobs": 10,
+      "ok": 6,
+      "fail": 4,
+      "forced": true,
+      "blockedPairs": [],
+      "budgetExhausted": 1,
+      "invalidEvidence": 0
+    },
+    "qualify": {
+      "lastRunAt": "2026-10-23T18:29:54.126Z",
+      "summary": "QUALIFIED",
+      "statuses": {
+        "PAIR-E01-K0-R01": "QUALIFIED",
+        "PAIR-E02-K0-R01": "QUALIFIED",
+        "PAIR-E03-K0-R01": "QUALIFIED",
+        "PAIR-E04-K0-R01": "QUALIFIED",
+        "PAIR-E05-K0-R01": "QUALIFIED"
+      },
+      "exitCode": 0
+    },
+    "blind": {
+      "lastRunAt": "2026-10-23T18:30:11.943Z",
+      "material": "built",
+      "visualScores": "pending-judge"
+    },
+    "aggregate": {
+      "lastRunAt": "2026-10-24T05:29:15.312Z",
+      "output": "results/aggregated.json"
+    }
+  },
+  "notes": [
+    "Agent Run 执行说明见同目录 DISPATCH.md;执行完毕后依次 --stage collect/validate/blind/aggregate",
+    "2026-10-23: 首轮 validate 因测量仪器缺件(ms-playwright ffmpeg-1011 被清空)10/10 臂误判 RUNTIME(browser 启动即败,报告 error 自证);编排会话已装回 ffmpeg,备份首轮 report 至 .validate-envfail-backup-20261023/ 并复位臂 state=completed,--force 重验为有效首验。",
+    "2026-10-23: 第二轮 validate 的 E01/E02 BUDGET_EXHAUSTED(walltime 143/124min)为仪器口径污染 —— 首轮误验(validate 自跑 build)在计数文件留下 18:0x 行,污染\"Agent Run 期间\"墙钟窗口(真实墙钟 12-21min,run-round 456 行注释明示判定窗口=Agent Run 期间)。已剔除各臂 .budget/*.count 中晚于 agentFinishedAt+60s 的仪器行(原文件备份于 .validate-envfail-backup-20261023/),第三轮 --force 重验为有效判定。E04 双臂 UNRESOLVED / E05-a PERFORMANCE 为真实探针判定,本轮兼作冷却复验,两轮结果均留档。"
+  ]
+}

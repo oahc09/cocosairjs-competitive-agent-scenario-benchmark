@@ -1,187 +1,639 @@
 {
-  "generatedAt": "2026-10-05T07:47:25.708Z",
-  "denominator": "20 Reference(方案A 清零后无合格 core 测量)",
-  "missingCount": 0,
-  "items": [
-    {
-      "key": "E01:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E01:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E02:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E02:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E03:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E03:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E04:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E04:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E05:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E05:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E06:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E06:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E07:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E07:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E08:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E08:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E09:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E09:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E10:three",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    },
-    {
-      "key": "E10:cocosair",
-      "report": true,
-      "evidenceHashMatch": true,
-      "codeReview": true,
-      "visualScoreSelfContained": true,
-      "objectiveScoreFrozen": true,
-      "totalScoreFrozen": true
-    }
-  ]
+  "gate": "G8 EVIDENCE_COMPLETENESS",
+  "auditedAt": "2026-10-17T14:28:36.548Z",
+  "generator": "harness/report/audit-evidence-g8.mjs",
+  "basis": "量尺 RULER-20261005-R02(账本 validationRevision 见各条目)+ track=core 且 qualification ∈ [\"QUALIFIED\",\"QUALIFIED_OBJECTIVE\"] 的臂",
+  "references": {
+    "checked": 20,
+    "missing": 0,
+    "detail": [
+      {
+        "key": "E01:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E01:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E02:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E02:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E03:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E03:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E04:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E04:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E05:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E05:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E06:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E06:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E07:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E07:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E08:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E08:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E09:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E09:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E10:three",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      },
+      {
+        "key": "E10:cocosair",
+        "ok": true,
+        "missing": [],
+        "items": {
+          "reportExists": true,
+          "evidenceHashMatches": true,
+          "codeReviewExists": true,
+          "visualSelfContained": true,
+          "visualEvidenceShaMatches": true,
+          "scoresFrozen": true
+        }
+      }
+    ]
+  },
+  "qualifiedArms": {
+    "checked": 44,
+    "missing": 2,
+    "detail": [
+      {
+        "pair": "B-20261005-R02/PAIR-E01-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R02/PAIR-E01-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R02/PAIR-E02-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R02/PAIR-E02-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R02/PAIR-E05-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R02/PAIR-E05-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R03/PAIR-E01-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R03/PAIR-E01-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E06-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E06-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E07-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E07-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E09-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E09-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E10-K0-R01",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261005-R04/PAIR-E10-K0-R01",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E01-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E01-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E02-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E02-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E03-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E03-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E04-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E04-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E05-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R01/PAIR-E05-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E06-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E06-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E07-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E07-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E08-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E08-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E10-K0-R02",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261006-R02/PAIR-E10-K0-R02",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E01-K0-R03",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E01-K0-R03",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E02-K0-R03",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E02-K0-R03",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E04-K0-R03",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E04-K0-R03",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E05-K0-R03",
+        "arm": "arm-a",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261016-R01/PAIR-E05-K0-R03",
+        "arm": "arm-b",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": true,
+        "missing": []
+      },
+      {
+        "pair": "B-20261017-R01/PAIR-E02-K0-R04",
+        "arm": "arm-a",
+        "engine": "cocosair",
+        "qualStatus": "QUALIFIED",
+        "ok": false,
+        "missing": [
+          "blindItemPresent"
+        ]
+      },
+      {
+        "pair": "B-20261017-R01/PAIR-E02-K0-R04",
+        "arm": "arm-b",
+        "engine": "three",
+        "qualStatus": "QUALIFIED",
+        "ok": false,
+        "missing": [
+          "blindItemPresent"
+        ]
+      }
+    ]
+  },
+  "skippedBatches": [
+    "B-20261017-R02(未鉴定)"
+  ],
+  "missingCount": 2,
+  "status": "FAIL"
 }

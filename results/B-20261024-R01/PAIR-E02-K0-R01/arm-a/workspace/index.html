@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <!-- 空 data-URI favicon:阻止浏览器请求 /favicon.ico 产生 404 噪音(无网络资源依赖) -->
+  <link rel="icon" href="data:,">
+  <title>E02 — 落日海面与孤舟</title>
+  <style>
+    /* 1280x720 视口铺满;canvas 由 JS 按 window 尺寸设置绘制缓冲 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #04060b;
+      overflow: hidden;
+      font-family: "Segoe UI", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+      color: #f3f0ea;
+    }
+    #app-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+      cursor: grab;
+    }
+    #app-canvas:active { cursor: grabbing; }
+
+    /* ---- HUD(覆盖层,不拦截画布中央的拖拽) ---- */
+    .hud {
+      position: fixed;
+      z-index: 10;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hud-title {
+      left: 26px;
+      top: 22px;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+    }
+    .hud-title .eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      opacity: 0.66;
+      margin-bottom: 6px;
+    }
+    .hud-title h1 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .hud-title .sub {
+      margin-top: 5px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      opacity: 0.55;
+    }
+    .hud-actions {
+      right: 24px;
+      top: 22px;
+      display: flex;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .hud-actions button {
+      pointer-events: auto;
+      font: inherit;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: #f6f2ea;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(16, 20, 30, 0.46);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease, transform 160ms ease;
+      white-space: nowrap;
+    }
+    .hud-actions button:hover {
+      background: rgba(34, 40, 56, 0.66);
+      border-color: rgba(255, 255, 255, 0.42);
+    }
+    .hud-actions button:active { transform: translateY(1px); }
+    .hud-actions button[data-ui="tone-toggle"]::before {
+      content: "";
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      margin-right: 8px;
+      border-radius: 50%;
+      background: #ff9c4f;
+      box-shadow: 0 0 10px #ff9c4f;
+      vertical-align: 1px;
+      transition: background 160ms ease, box-shadow 160ms ease;
+    }
+    .hud-actions button[data-ui="tone-toggle"].is-cool::before {
+      background: #8fb2ff;
+      box-shadow: 0 0 10px #8fb2ff;
+    }
+    .hud-hint {
+      left: 26px;
+      bottom: 20px;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      opacity: 0.52;
+      text-shadow: 0 1px 10px rgba(0, 0, 0, 0.6);
+    }
+    .hud-hint b { font-weight: 600; opacity: 0.85; }
+
+    /* ---- 加载 / 错误提示 ---- */
+    #loading {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      background: radial-gradient(120% 100% at 50% 30%, #1a1626 0%, #05070c 70%);
+      color: rgba(255, 240, 220, 0.86);
+      font-size: 13px;
+      letter-spacing: 0.14em;
+      transition: opacity 420ms ease;
+    }
+    #loading .bar {
+      width: 132px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.14);
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    #loading .bar i {
+      display: block;
+      width: 42%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff9c4f, #ffd9a8);
+    }
+    #loading.hidden { display: none; }
+
+    #error {
+      position: fixed;
+      left: 50%;
+      top: 18px;
+      transform: translateX(-50%);
+      z-index: 40;
+      max-width: 70vw;
+      padding: 10px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 110, 90, 0.55);
+      background: rgba(46, 12, 12, 0.86);
+      color: #ffd9d2;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+    #error[hidden] { display: none; }
+  </style>
+  <script>
+    // 页面契约(MASTER-CONTEXT §12.1):
+    //   window.__appReady — 初始 false,资产加载且首帧渲染完成后由 /dist/app.js 置 true
+    //   window.__bench    — { getState(): object, reset(): void },由 /dist/app.js 提供
+    window.__appReady = false;
+    window.__bench = null;
+  </script>
+  <!-- 引擎 import map:裸名 three / three/addons/ 指向本地 vendored 引擎,无任何网络依赖 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/dist/vendor/three.module.js",
+      "three/addons/": "/dist/vendor/addons/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="app-canvas"></canvas>
+
+  <div class="hud hud-title">
+    <div class="eyebrow">E02 · Asset Driven</div>
+    <h1>落日海面与孤舟</h1>
+    <div class="sub">three.js r186 · 程序化海面 / 运行时 GLB</div>
+  </div>
+
+  <div class="hud hud-actions" role="group" aria-label="场景控制">
+    <button id="tone-toggle" data-ui="tone-toggle" aria-label="tone-toggle 色调切换">色调:落日</button>
+    <button id="reset" data-ui="reset" aria-label="reset 重置场景">Reset</button>
+  </div>
+
+  <div class="hud hud-hint"><b>拖拽</b> 环绕 · <b>色调</b> 暖冷切换 · <b>Reset</b> 释放并重建</div>
+
+  <div id="loading" role="status">正在加载 assets/boat.glb<span class="bar"><i></i></span></div>
+  <div id="error" hidden role="alert"></div>
+
+  <script type="module" src="/dist/app.js"></script>
+</body>
+</html>

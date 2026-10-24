@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-06T02:32:24.657Z",
+  "generatedAt": "2026-10-24T09:30:11.089Z",
   "formula": "metric-spec:S1(7+5+3)+S2(30×passRate)+S3(6+4)+S4(code-review.json,缺失则 pending 不默认 5)+visual(round(Σ18×40/18));G7 未过时 formal 全 null,objective=S1+S2+S3 照常,visual 仅 provisional",
   "rulerStatus": {
     "rulerId": "RULER-20261005-R02",
@@ -19,105 +19,30 @@
       "source": "gates/G7.json",
       "formalImpact": "VALID"
     },
-    "needsRecalibration": [
-      "E09:three",
-      "E02:three",
-      "E03:three",
-      "E04:cocosair"
-    ]
+    "needsRecalibration": []
   },
   "batches": [
     {
-      "batchId": "B-20261005-R01",
-      "createdAt": "2026-10-05T02:58:17.417Z",
+      "batchId": "B-20261023-R01",
+      "createdAt": "2026-10-23T15:39:15.636Z",
       "pairs": [
         {
-          "pairId": "PAIR-E01-K0-R01",
-          "batchId": "B-20261005-R01",
+          "pairId": "PAIR-E01-K1-R01",
+          "batchId": "B-20261023-R01",
           "scene": "E01",
-          "knowledge": "K0",
+          "knowledge": "K1",
           "rep": "R01",
           "pilot": false,
-          "track": "targeted-pilot",
-          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
+          "track": "core",
+          "qualificationStatus": null,
           "arms": {
             "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7"
-              ],
-              "s4": null,
-              "s4Pending": true,
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T04:57:11.654Z"
-              },
-              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-              "passRate": 1,
-              "fps": 60.3,
-              "visual18": 13,
-              "provisionalVisualScore": 29,
-              "visualPending": false,
-              "formal": {
-                "total": null,
-                "attainment": null
-              },
-              "objective": {
-                "total": 55,
-                "attainment": null
-              },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
-              "report": "B-20261005-R01/PAIR-E01-K0-R01/arm-a/validation/report.json"
+              "status": "created",
+              "reportMissing": true
             },
             "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7"
-              ],
-              "s4": null,
-              "s4Pending": true,
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T04:57:45.927Z"
-              },
-              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-              "passRate": 1,
-              "fps": 60.2,
-              "visual18": 14,
-              "provisionalVisualScore": 31,
-              "visualPending": false,
-              "formal": {
-                "total": null,
-                "attainment": null
-              },
-              "objective": {
-                "total": 55,
-                "attainment": null
-              },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(validatorMatch)",
-              "report": "B-20261005-R01/PAIR-E01-K0-R01/arm-b/validation/report.json"
+              "status": "created",
+              "reportMissing": true
             }
           },
           "formal": {
@@ -134,148 +59,48 @@
           },
           "objective": {
             "total": {
-              "three": 55,
-              "cocosair": 55
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
               "three": null,
               "cocosair": null
             },
-            "pairedDelta": 0,
+            "pairedDelta": null,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
-            "three": 29,
-            "cocosair": 31,
+            "three": null,
+            "cocosair": null,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
-            "air": "matched",
+            "air": "engine-differs",
             "refVersion": 2,
-            "validationRevision": 11,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
+            "batchEngineSha": "467299c2",
             "ceilingEngineSha": "ddd5072a"
           }
         },
         {
-          "pairId": "PAIR-E05-K0-R01",
-          "batchId": "B-20261005-R01",
-          "scene": "E05",
-          "knowledge": "K0",
+          "pairId": "PAIR-E02-K1-R01",
+          "batchId": "B-20261023-R01",
+          "scene": "E02",
+          "knowledge": "K1",
           "rep": "R01",
           "pilot": false,
-          "track": "targeted-pilot",
-          "qualificationStatus": "LEGACY_PROVISIONAL",
+          "track": "core",
+          "qualificationStatus": null,
           "arms": {
             "three": {
-              "s1": 15,
-              "s2": 25,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6"
-              ],
-              "s4": null,
-              "s4Pending": true,
-              "objectiveTotal": 50,
-              "verdict": "FAIL",
-              "classification": "PERFORMANCE",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P1",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "PERFORMANCE",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T04:58:16.300Z"
-              },
-              "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
-              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-              "passRate": 0.8333,
-              "fps": 60.1,
-              "visual18": 13,
-              "provisionalVisualScore": 29,
-              "visualPending": false,
-              "formal": {
-                "total": null,
-                "attainment": null
-              },
-              "objective": {
-                "total": 50,
-                "attainment": null
-              },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(specMatch+validatorMatch)",
-              "report": "B-20261005-R01/PAIR-E05-K0-R01/arm-a/validation/report.json"
+              "status": "created",
+              "reportMissing": true
             },
             "cocosair": {
-              "s1": 15,
-              "s2": 25,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6"
-              ],
-              "s4": null,
-              "s4Pending": true,
-              "objectiveTotal": 50,
-              "verdict": "FAIL",
-              "classification": "PERFORMANCE",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P1",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "PERFORMANCE",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T04:58:46.001Z"
-              },
-              "specSha256": "811052441d3529607f4f175c26738fc1d7ebc43780acaf9fe8df84fbfeefdbb0",
-              "validatorProtocolHash": "1026db8716073f4f97a08da5a91be6b6e4cd7f16c647fa08ad4e9c7197000cff",
-              "passRate": 0.8333,
-              "fps": 60.2,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
-              "visualPending": false,
-              "formal": {
-                "total": null,
-                "attainment": null
-              },
-              "objective": {
-                "total": 50,
-                "attainment": null
-              },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(specMatch+validatorMatch)",
-              "report": "B-20261005-R01/PAIR-E05-K0-R01/arm-b/validation/report.json"
+              "status": "created",
+              "reportMissing": true
             }
           },
           "formal": {
@@ -292,40 +117,214 @@
           },
           "objective": {
             "total": {
-              "three": 50,
-              "cocosair": 50
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
               "three": null,
               "cocosair": null
             },
-            "pairedDelta": 0,
+            "pairedDelta": null,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
-            "three": 29,
-            "cocosair": 24,
+            "three": null,
+            "cocosair": null,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
-            "air": "matched",
+            "air": "engine-differs",
+            "refVersion": 2,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "467299c2",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E03-K1-R01",
+          "batchId": "B-20261023-R01",
+          "scene": "E03",
+          "knowledge": "K1",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": null,
+          "arms": {
+            "three": {
+              "status": "created",
+              "reportMissing": true
+            },
+            "cocosair": {
+              "status": "created",
+              "reportMissing": true
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "engine-differs",
             "refVersion": 3,
-            "validationRevision": 11,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261005-R02",
+            "batchEngineSha": "467299c2",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E04-K1-R01",
+          "batchId": "B-20261023-R01",
+          "scene": "E04",
+          "knowledge": "K1",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": null,
+          "arms": {
+            "three": {
+              "status": "created",
+              "reportMissing": true
+            },
+            "cocosair": {
+              "status": "created",
+              "reportMissing": true
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "engine-differs",
+            "refVersion": 2,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "467299c2",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E05-K1-R01",
+          "batchId": "B-20261023-R01",
+          "scene": "E05",
+          "knowledge": "K1",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": null,
+          "arms": {
+            "three": {
+              "status": "created",
+              "reportMissing": true
+            },
+            "cocosair": {
+              "status": "created",
+              "reportMissing": true
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "engine-differs",
+            "refVersion": 3,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261005-R01",
-            "batchEngineSha": "ddd5072a",
+            "batchEngineSha": "467299c2",
             "ceilingEngineSha": "ddd5072a"
           }
         }
       ]
     },
     {
-      "batchId": "B-20261005-R02",
-      "createdAt": "2026-10-05T06:59:41.416Z",
+      "batchId": "B-20261023-R02",
+      "createdAt": "2026-10-23T15:44:17.899Z",
       "pairs": [
         {
           "pairId": "PAIR-E01-K0-R01",
-          "batchId": "B-20261005-R02",
+          "batchId": "B-20261023-R02",
           "scene": "E01",
           "knowledge": "K0",
           "rep": "R01",
@@ -341,9 +340,8 @@
               "lifecycleIds": [
                 "P7"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E01-K0-R01/arm-a/validation/code-review.json",
+              "s4": null,
+              "s4Pending": true,
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -353,25 +351,25 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T07:32:21.749Z"
+                "at": "2026-10-23T18:23:30.812Z"
               },
               "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
               "passRate": 1,
-              "fps": 60.2,
-              "visual18": 13,
-              "provisionalVisualScore": 29,
+              "fps": 56.5,
+              "visual18": 16,
+              "provisionalVisualScore": 36,
               "visualPending": false,
               "formal": {
-                "total": 89,
-                "attainment": 0.91
+                "total": null,
+                "attainment": null
               },
               "objective": {
                 "total": 55,
                 "attainment": 1
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E01-K0-R01/arm-a/validation/report.json"
+              "report": "B-20261023-R02/PAIR-E01-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
               "s1": 15,
@@ -381,9 +379,8 @@
               "lifecycleIds": [
                 "P7"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E01-K0-R01/arm-b/validation/code-review.json",
+              "s4": null,
+              "s4Pending": true,
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -393,37 +390,37 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T07:32:55.157Z"
+                "at": "2026-10-23T18:24:09.094Z"
               },
               "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
               "passRate": 1,
-              "fps": 60,
-              "visual18": 17,
-              "provisionalVisualScore": 38,
+              "fps": 56.3,
+              "visual18": 13,
+              "provisionalVisualScore": 29,
               "visualPending": false,
               "formal": {
-                "total": 98,
-                "attainment": 1.03
+                "total": null,
+                "attainment": null
               },
               "objective": {
                 "total": 55,
                 "attainment": 1
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E01-K0-R01/arm-b/validation/report.json"
+              "report": "B-20261023-R02/PAIR-E01-K0-R01/arm-b/validation/report.json"
             }
           },
           "formal": {
             "total": {
-              "three": 89,
-              "cocosair": 98
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
-              "three": 0.91,
-              "cocosair": 1.03
+              "three": null,
+              "cocosair": null
             },
-            "pairedDelta": 9,
+            "pairedDelta": null,
             "visualStatus": "VALID"
           },
           "objective": {
@@ -439,14 +436,14 @@
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
-            "three": 29,
-            "cocosair": 38,
+            "three": 36,
+            "cocosair": 29,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 11,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -455,7 +452,7 @@
         },
         {
           "pairId": "PAIR-E02-K0-R01",
-          "batchId": "B-20261005-R02",
+          "batchId": "B-20261023-R02",
           "scene": "E02",
           "knowledge": "K0",
           "rep": "R01",
@@ -472,9 +469,8 @@
                 "P6",
                 "P7"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E02-K0-R01/arm-a/validation/code-review.json",
+              "s4": null,
+              "s4Pending": true,
               "objectiveTotal": 55,
               "verdict": "PASS",
               "classification": "PASS",
@@ -484,116 +480,100 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T09:16:17.852Z"
+                "at": "2026-10-23T18:24:48.005Z"
               },
               "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
               "passRate": 1,
-              "fps": 60.3,
-              "visual18": 15,
-              "provisionalVisualScore": 33,
+              "fps": 56.4,
+              "visual18": 16,
+              "provisionalVisualScore": 36,
               "visualPending": false,
               "formal": {
-                "total": 93,
-                "attainment": 1.03
+                "total": null,
+                "attainment": null
               },
               "objective": {
                 "total": 55,
                 "attainment": 1
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E02-K0-R01/arm-a/validation/report.json"
+              "report": "B-20261023-R02/PAIR-E02-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
               "s1": 15,
-              "s2": 17,
-              "s3": 4,
+              "s2": 30,
+              "s3": 10,
               "lifecycleMode": "full-set(probe-meta)",
               "lifecycleIds": [
                 "P6",
                 "P7"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E02-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 36,
-              "verdict": "FAIL",
-              "classification": "INTERACTION",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E02.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P4",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "INTERACTION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
               "inputGuard": {
                 "kind": "PASS",
                 "checked": [
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T09:17:01.624Z"
+                "at": "2026-10-23T18:25:29.962Z"
               },
               "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.5714,
-              "fps": 60.1,
+              "passRate": 1,
+              "fps": 56.4,
               "visual18": 13,
               "provisionalVisualScore": 29,
               "visualPending": false,
               "formal": {
-                "total": 70,
-                "attainment": 0.72
+                "total": null,
+                "attainment": null
               },
               "objective": {
-                "total": 36,
-                "attainment": 0.65
+                "total": 55,
+                "attainment": 1
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E02-K0-R01/arm-b/validation/report.json"
+              "report": "B-20261023-R02/PAIR-E02-K0-R01/arm-b/validation/report.json"
             }
           },
           "formal": {
             "total": {
-              "three": 93,
-              "cocosair": 70
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
-              "three": 1.03,
-              "cocosair": 0.72
+              "three": null,
+              "cocosair": null
             },
-            "pairedDelta": -23,
+            "pairedDelta": null,
             "visualStatus": "VALID"
           },
           "objective": {
             "total": {
               "three": 55,
-              "cocosair": 36
+              "cocosair": 55
             },
             "attainment": {
               "three": 1,
-              "cocosair": 0.65
+              "cocosair": 1
             },
-            "pairedDelta": -19,
+            "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
-            "three": 33,
+            "three": 36,
             "cocosair": 29,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 11,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -602,160 +582,128 @@
         },
         {
           "pairId": "PAIR-E03-K0-R01",
-          "batchId": "B-20261005-R02",
+          "batchId": "B-20261023-R02",
           "scene": "E03",
           "knowledge": "K0",
           "rep": "R01",
           "pilot": false,
           "track": "core",
-          "qualificationStatus": "LEGACY_PROVISIONAL",
+          "qualificationStatus": "QUALIFIED",
           "arms": {
             "three": {
               "s1": 15,
-              "s2": 27,
-              "s3": 4,
+              "s2": 30,
+              "s3": 10,
               "lifecycleMode": "full-set(probe-meta)",
               "lifecycleIds": [
                 "P6",
                 "P7"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E03-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 46,
-              "verdict": "FAIL",
-              "classification": "LIFECYCLE_MISUSE",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E03.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P7",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "LIFECYCLE_MISUSE",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
               "inputGuard": {
                 "kind": "PASS",
                 "checked": [
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T09:17:29.956Z"
+                "at": "2026-10-23T18:26:12.383Z"
               },
-              "specSha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
+              "specSha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.8889,
-              "fps": 60.3,
+              "passRate": 1,
+              "fps": 56.6,
               "visual18": 16,
               "provisionalVisualScore": 36,
               "visualPending": false,
               "formal": {
-                "total": 87,
-                "attainment": 0.96
-              },
-              "objective": {
-                "total": 46,
+                "total": null,
                 "attainment": null
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(specMatch)",
-              "report": "B-20261005-R02/PAIR-E03-K0-R01/arm-a/validation/report.json"
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261023-R02/PAIR-E03-K0-R01/arm-a/validation/report.json"
             },
             "cocosair": {
               "s1": 15,
-              "s2": 27,
-              "s3": 4,
+              "s2": 30,
+              "s3": 10,
               "lifecycleMode": "full-set(probe-meta)",
               "lifecycleIds": [
                 "P6",
                 "P7"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E03-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 46,
-              "verdict": "FAIL",
-              "classification": "LIFECYCLE_MISUSE",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E03.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P7",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "LIFECYCLE_MISUSE",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
               "inputGuard": {
                 "kind": "PASS",
                 "checked": [
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T09:18:02.513Z"
+                "at": "2026-10-23T18:26:49.727Z"
               },
-              "specSha256": "a4c6ebea445454c51a93af2f76b043c48beede71665bb4f98672ff15aa80d3a2",
+              "specSha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.8889,
-              "fps": 60,
-              "visual18": 14,
-              "provisionalVisualScore": 31,
+              "passRate": 1,
+              "fps": 56.3,
+              "visual18": 16,
+              "provisionalVisualScore": 36,
               "visualPending": false,
               "formal": {
-                "total": 82,
-                "attainment": 0.86
-              },
-              "objective": {
-                "total": 46,
+                "total": null,
                 "attainment": null
               },
-              "rulerStatus": "RULER_PROTOCOL_MISMATCH(specMatch)",
-              "report": "B-20261005-R02/PAIR-E03-K0-R01/arm-b/validation/report.json"
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261023-R02/PAIR-E03-K0-R01/arm-b/validation/report.json"
             }
           },
           "formal": {
             "total": {
-              "three": 87,
-              "cocosair": 82
-            },
-            "attainment": {
-              "three": 0.96,
-              "cocosair": 0.86
-            },
-            "pairedDelta": -5,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 46,
-              "cocosair": 46
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
               "three": null,
               "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": 1
             },
             "pairedDelta": 0,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
             "three": 36,
-            "cocosair": 31,
+            "cocosair": 36,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 3,
-            "validationRevision": 11,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261005-R02",
             "batchEngineSha": "ddd5072a",
@@ -764,824 +712,92 @@
         },
         {
           "pairId": "PAIR-E04-K0-R01",
-          "batchId": "B-20261005-R02",
+          "batchId": "B-20261023-R02",
           "scene": "E04",
           "knowledge": "K0",
           "rep": "R01",
           "pilot": false,
           "track": "core",
-          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E04-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T10:12:02.195Z"
-              },
-              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.1,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
-              "visualPending": false,
-              "formal": {
-                "total": 84,
-                "attainment": 1.01
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E04-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 26,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E04-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 51,
-              "verdict": "FAIL",
-              "classification": "ANIMATION",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E04.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P4",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "ANIMATION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T10:12:37.052Z"
-              },
-              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.875,
-              "fps": 59.6,
-              "visual18": 10,
-              "provisionalVisualScore": 22,
-              "visualPending": false,
-              "formal": {
-                "total": 78,
-                "attainment": 0.85
-              },
-              "objective": {
-                "total": 51,
-                "attainment": 0.93
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E04-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 84,
-              "cocosair": 78
-            },
-            "attainment": {
-              "three": 1.01,
-              "cocosair": 0.85
-            },
-            "pairedDelta": -6,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 51
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 0.93
-            },
-            "pairedDelta": -4,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 24,
-            "cocosair": 22,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E05-K0-R01",
-          "batchId": "B-20261005-R02",
-          "scene": "E05",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
           "qualificationStatus": "QUALIFIED",
           "arms": {
             "three": {
               "s1": 15,
-              "s2": 25,
+              "s2": 23,
               "s3": 10,
               "lifecycleMode": "full-set(probe-meta)",
               "lifecycleIds": [
-                "P6"
+                "P8"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E05-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 50,
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 48,
               "verdict": "FAIL",
               "classification": "PERFORMANCE",
               "classificationEvidence": {
                 "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E04.json",
                 "failedProbes": [
-                  {
-                    "probeId": "P1",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "PERFORMANCE",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T12:37:46.249Z"
-              },
-              "specSha256": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.8333,
-              "fps": 60.1,
-              "visual18": 16,
-              "provisionalVisualScore": 36,
-              "visualPending": false,
-              "formal": {
-                "total": 91,
-                "attainment": 0.99
-              },
-              "objective": {
-                "total": 50,
-                "attainment": 0.91
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E05-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R02/PAIR-E05-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T12:38:17.197Z"
-              },
-              "specSha256": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.1,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
-              "visualPending": false,
-              "formal": {
-                "total": 84,
-                "attainment": 0.95
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R02/PAIR-E05-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 91,
-              "cocosair": 84
-            },
-            "attainment": {
-              "three": 0.99,
-              "cocosair": 0.95
-            },
-            "pairedDelta": -7,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 50,
-              "cocosair": 55
-            },
-            "attainment": {
-              "three": 0.91,
-              "cocosair": 1
-            },
-            "pairedDelta": 5,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 36,
-            "cocosair": 24,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 3,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261005-R01",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        }
-      ]
-    },
-    {
-      "batchId": "B-20261005-R03",
-      "createdAt": "2026-10-05T08:02:17.781Z",
-      "note": "并行编排会话的 Core Sanity 批次(2026-10-05);曾被本会话误判 rogue 后恢复",
-      "pairs": [
-        {
-          "pairId": "PAIR-E01-K0-R01",
-          "batchId": "B-20261005-R03",
-          "scene": "E01",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R03/PAIR-E01-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T09:26:22.279Z"
-              },
-              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.3,
-              "visual18": 13.5,
-              "provisionalVisualScore": 30,
-              "visualPending": false,
-              "formal": {
-                "total": 90,
-                "attainment": 0.92
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R03/PAIR-E01-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R03/PAIR-E01-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T09:26:54.811Z"
-              },
-              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.2,
-              "visual18": 13.5,
-              "provisionalVisualScore": 30,
-              "visualPending": false,
-              "formal": {
-                "total": 90,
-                "attainment": 0.94
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R03/PAIR-E01-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 90,
-              "cocosair": 90
-            },
-            "attainment": {
-              "three": 0.92,
-              "cocosair": 0.94
-            },
-            "pairedDelta": 0,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 55
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 1
-            },
-            "pairedDelta": 0,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 30,
-            "cocosair": 30,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E02-K0-R01",
-          "batchId": "B-20261005-R03",
-          "scene": "E02",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R03/PAIR-E02-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T09:27:25.364Z"
-              },
-              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.1,
-              "visual18": 15,
-              "provisionalVisualScore": 33,
-              "visualPending": false,
-              "formal": {
-                "total": 93,
-                "attainment": 1.03
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R03/PAIR-E02-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 17,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R03/PAIR-E02-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 36,
-              "verdict": "FAIL",
-              "classification": "INTERACTION",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E02.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P4",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "INTERACTION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T09:28:06.961Z"
-              },
-              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.5714,
-              "fps": 60.2,
-              "visual18": 11.5,
-              "provisionalVisualScore": 26,
-              "visualPending": false,
-              "formal": {
-                "total": 67,
-                "attainment": 0.69
-              },
-              "objective": {
-                "total": 36,
-                "attainment": 0.65
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R03/PAIR-E02-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 93,
-              "cocosair": 67
-            },
-            "attainment": {
-              "three": 1.03,
-              "cocosair": 0.69
-            },
-            "pairedDelta": -26,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 36
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 0.65
-            },
-            "pairedDelta": -19,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 33,
-            "cocosair": 26,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        }
-      ]
-    },
-    {
-      "batchId": "B-20261005-R04",
-      "createdAt": "2026-10-05T13:21:39.635Z",
-      "pairs": [
-        {
-          "pairId": "PAIR-E06-K0-R01",
-          "batchId": "B-20261005-R04",
-          "scene": "E06",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E06-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T13:56:46.870Z"
-              },
-              "specSha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.2,
-              "visual18": 16,
-              "provisionalVisualScore": 36,
-              "visualPending": false,
-              "formal": {
-                "total": 96,
-                "attainment": 1.01
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E06-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E06-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T13:57:21.837Z"
-              },
-              "specSha256": "43e7f26e98fa27267d7afeb2c2d63400ed7281f5b068371715a5c7b81a68c051",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.3,
-              "visual18": 13,
-              "provisionalVisualScore": 29,
-              "visualPending": false,
-              "formal": {
-                "total": 89,
-                "attainment": 1.03
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E06-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 96,
-              "cocosair": 89
-            },
-            "attainment": {
-              "three": 1.01,
-              "cocosair": 1.03
-            },
-            "pairedDelta": -7,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 55
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 1
-            },
-            "pairedDelta": 0,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 36,
-            "cocosair": 29,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E07-K0-R01",
-          "batchId": "B-20261005-R04",
-          "scene": "E07",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 19,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7",
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E07-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 38,
-              "verdict": "FAIL",
-              "classification": "UNRESOLVED",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E07.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P1",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "PERFORMANCE",
-                    "unresolvedReason": null
-                  },
-                  {
-                    "probeId": "P7",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "LIFECYCLE_MISUSE",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T14:44:12.353Z"
-              },
-              "specSha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.625,
-              "fps": 60.2,
-              "visual18": 16,
-              "provisionalVisualScore": 36,
-              "visualPending": false,
-              "formal": {
-                "total": 79,
-                "attainment": 0.83
-              },
-              "objective": {
-                "total": 38,
-                "attainment": 0.69
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E07-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 8,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7",
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E07-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 27,
-              "verdict": "FAIL",
-              "classification": "UNRESOLVED",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E07.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P1",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "PERFORMANCE",
-                    "unresolvedReason": null
-                  },
                   {
                     "probeId": "P3",
                     "status": "FAIL",
                     "failedAssertions": [
                       "visual"
                     ],
-                    "domain": "ANIMATION",
+                    "domain": "PERFORMANCE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-23T18:27:25.784Z"
+              },
+              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 0.75,
+              "fps": 56.4,
+              "visual18": 16,
+              "provisionalVisualScore": 36,
+              "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 48,
+                "attainment": 0.87
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261023-R02/PAIR-E04-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 4,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P8"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 23,
+              "verdict": "FAIL",
+              "classification": "UNRESOLVED",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E04.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P2",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "visual"
+                    ],
+                    "domain": "INTERACTION",
                     "unresolvedReason": null
                   },
                   {
@@ -1592,15 +808,6 @@
                     ],
                     "domain": "STATE_MANAGEMENT",
                     "unresolvedReason": null
-                  },
-                  {
-                    "probeId": "P7",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "LIFECYCLE_MISUSE",
-                    "unresolvedReason": null
                   }
                 ]
               },
@@ -1610,644 +817,60 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-05T14:44:53.967Z"
+                "at": "2026-10-23T18:28:03.049Z"
               },
-              "specSha256": "45b81939c74ffa5b443c4171310696cd9a26e533186ce409ca85a25e36458290",
+              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.25,
-              "fps": 59.9,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
-              "visualPending": false,
-              "formal": {
-                "total": 56,
-                "attainment": 0.67
-              },
-              "objective": {
-                "total": 27,
-                "attainment": 0.49
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E07-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 79,
-              "cocosair": 56
-            },
-            "attainment": {
-              "three": 0.83,
-              "cocosair": 0.67
-            },
-            "pairedDelta": -23,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 38,
-              "cocosair": 27
-            },
-            "attainment": {
-              "three": 0.69,
-              "cocosair": 0.49
-            },
-            "pairedDelta": -11,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 36,
-            "cocosair": 24,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E08-K0-R01",
-          "batchId": "B-20261005-R04",
-          "scene": "E08",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 11,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7",
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E08-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 30,
-              "verdict": "FAIL",
-              "classification": "UNRESOLVED",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E08.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P3",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "INTERACTION",
-                    "unresolvedReason": null
-                  },
-                  {
-                    "probeId": "P6",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "ANIMATION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T15:52:52.866Z"
-              },
-              "specSha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.375,
-              "fps": 60.3,
-              "visual18": 12,
-              "provisionalVisualScore": 27,
-              "visualPending": false,
-              "formal": {
-                "total": 62,
-                "attainment": 0.65
-              },
-              "objective": {
-                "total": 30,
-                "attainment": 0.55
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E08-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 11,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7",
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E08-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 30,
-              "verdict": "FAIL",
-              "classification": "UNRESOLVED",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E08.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P3",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "INTERACTION",
-                    "unresolvedReason": null
-                  },
-                  {
-                    "probeId": "P6",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state",
-                      "visual"
-                    ],
-                    "domain": "ANIMATION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T15:53:32.563Z"
-              },
-              "specSha256": "36aa09e1aec3b07f87b5c3fca425c3dbcdd9b3c48588083e84de70307f377eca",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.375,
-              "fps": 60.1,
-              "visual18": 16,
-              "provisionalVisualScore": 36,
-              "visualPending": false,
-              "formal": {
-                "total": 71,
-                "attainment": 0.8
-              },
-              "objective": {
-                "total": 30,
-                "attainment": 0.55
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E08-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 62,
-              "cocosair": 71
-            },
-            "attainment": {
-              "three": 0.65,
-              "cocosair": 0.8
-            },
-            "pairedDelta": 9,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 30,
-              "cocosair": 30
-            },
-            "attainment": {
-              "three": 0.55,
-              "cocosair": 0.55
-            },
-            "pairedDelta": 0,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 27,
-            "cocosair": 36,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E09-K0-R01",
-          "batchId": "B-20261005-R04",
-          "scene": "E09",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E09-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T16:38:21.060Z"
-              },
-              "specSha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60,
-              "visual18": 15,
-              "provisionalVisualScore": 33,
-              "visualPending": false,
-              "formal": {
-                "total": 93,
-                "attainment": 1.05
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "ceilingBreach": true,
-              "report": "B-20261005-R04/PAIR-E09-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E09-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T16:39:11.262Z"
-              },
-              "specSha256": "59ab78e1de2d58ec65fa4d813b22b977b2829187e10013c287bedd9625454aa7",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.3,
-              "visual18": 13,
-              "provisionalVisualScore": 29,
-              "visualPending": false,
-              "formal": {
-                "total": 89,
-                "attainment": 1.03
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E09-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 93,
-              "cocosair": 89
-            },
-            "attainment": {
-              "three": 1.05,
-              "cocosair": 1.03
-            },
-            "pairedDelta": -4,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 55
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 1
-            },
-            "pairedDelta": 0,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 33,
-            "cocosair": 29,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 3,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261005-R01",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E10-K0-R01",
-          "batchId": "B-20261005-R04",
-          "scene": "E10",
-          "knowledge": "K0",
-          "rep": "R01",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P4",
-                "P5",
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E10-K0-R01/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T17:17:07.731Z"
-              },
-              "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.2,
-              "visual18": 15,
-              "provisionalVisualScore": 33,
-              "visualPending": false,
-              "formal": {
-                "total": 93,
-                "attainment": 1.01
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E10-K0-R01/arm-a/validation/report.json"
-            },
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P4",
-                "P5",
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261005-R04/PAIR-E10-K0-R01/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T17:17:43.653Z"
-              },
-              "specSha256": "83c8d350079a3e22c453446f65b28c47e3a356d3c3f9be61d525687242e0dc43",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.1,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
-              "visualPending": false,
-              "formal": {
-                "total": 84,
-                "attainment": 0.97
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261005-R04/PAIR-E10-K0-R01/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 93,
-              "cocosair": 84
-            },
-            "attainment": {
-              "three": 1.01,
-              "cocosair": 0.97
-            },
-            "pairedDelta": -9,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 55
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 1
-            },
-            "pairedDelta": 0,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 33,
-            "cocosair": 24,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        }
-      ]
-    },
-    {
-      "batchId": "B-20261006-R01",
-      "createdAt": "2026-10-05T21:47:09.612Z",
-      "pairs": [
-        {
-          "pairId": "PAIR-E01-K0-R02",
-          "batchId": "B-20261006-R01",
-          "scene": "E01",
-          "knowledge": "K0",
-          "rep": "R02",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E01-K0-R02/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T22:13:35.407Z"
-              },
-              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.2,
+              "passRate": 0.125,
+              "fps": 56.5,
               "visual18": 17,
               "provisionalVisualScore": 38,
               "visualPending": false,
               "formal": {
-                "total": 98,
-                "attainment": 1.03
+                "total": null,
+                "attainment": null
               },
               "objective": {
-                "total": 55,
-                "attainment": 1
+                "total": 23,
+                "attainment": 0.42
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E01-K0-R02/arm-a/validation/report.json"
-            },
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E01-K0-R02/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T22:14:08.491Z"
-              },
-              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.1,
-              "visual18": 12,
-              "provisionalVisualScore": 27,
-              "visualPending": false,
-              "formal": {
-                "total": 87,
-                "attainment": 0.89
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E01-K0-R02/arm-b/validation/report.json"
+              "report": "B-20261023-R02/PAIR-E04-K0-R01/arm-b/validation/report.json"
             }
           },
           "formal": {
             "total": {
-              "three": 87,
-              "cocosair": 98
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
-              "three": 0.89,
-              "cocosair": 1.03
+              "three": null,
+              "cocosair": null
             },
-            "pairedDelta": 11,
+            "pairedDelta": null,
             "visualStatus": "VALID"
           },
           "objective": {
             "total": {
-              "three": 55,
-              "cocosair": 55
+              "three": 48,
+              "cocosair": 23
             },
             "attainment": {
-              "three": 1,
-              "cocosair": 1
+              "three": 0.87,
+              "cocosair": 0.42
             },
-            "pairedDelta": 0,
+            "pairedDelta": -25,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
-            "three": 27,
+            "three": 36,
             "cocosair": 38,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 2,
-            "validationRevision": 11,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261003-R02",
             "batchEngineSha": "ddd5072a",
@@ -2255,443 +878,16 @@
           }
         },
         {
-          "pairId": "PAIR-E02-K0-R02",
-          "batchId": "B-20261006-R01",
-          "scene": "E02",
-          "knowledge": "K0",
-          "rep": "R02",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "cocosair": {
-              "s1": 15,
-              "s2": 17,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E02-K0-R02/arm-a/validation/code-review.json",
-              "objectiveTotal": 36,
-              "verdict": "FAIL",
-              "classification": "INTERACTION",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E02.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P4",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "state"
-                    ],
-                    "domain": "INTERACTION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T22:48:23.773Z"
-              },
-              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.5714,
-              "fps": 60.2,
-              "visual18": 12,
-              "provisionalVisualScore": 27,
-              "visualPending": false,
-              "formal": {
-                "total": 68,
-                "attainment": 0.7
-              },
-              "objective": {
-                "total": 36,
-                "attainment": 0.65
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E02-K0-R02/arm-a/validation/report.json"
-            },
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E02-K0-R02/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T22:48:50.679Z"
-              },
-              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60,
-              "visual18": 17,
-              "provisionalVisualScore": 38,
-              "visualPending": false,
-              "formal": {
-                "total": 98,
-                "attainment": 1.09
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "ceilingBreach": true,
-              "report": "B-20261006-R01/PAIR-E02-K0-R02/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 98,
-              "cocosair": 68
-            },
-            "attainment": {
-              "three": 1.09,
-              "cocosair": 0.7
-            },
-            "pairedDelta": -30,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 36
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 0.65
-            },
-            "pairedDelta": -19,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 38,
-            "cocosair": 27,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E03-K0-R02",
-          "batchId": "B-20261006-R01",
-          "scene": "E03",
-          "knowledge": "K0",
-          "rep": "R02",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "cocosair": {
-              "s1": 15,
-              "s2": 17,
-              "s3": 4,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E03-K0-R02/arm-a/validation/code-review.json",
-              "objectiveTotal": 36,
-              "verdict": "FAIL",
-              "classification": "INTERACTION",
-              "classificationEvidence": {
-                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
-                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E03.json",
-                "failedProbes": [
-                  {
-                    "probeId": "P2",
-                    "status": "FAIL",
-                    "failedAssertions": [
-                      "visual"
-                    ],
-                    "domain": "INTERACTION",
-                    "unresolvedReason": null
-                  }
-                ]
-              },
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T23:10:52.996Z"
-              },
-              "specSha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.5556,
-              "fps": 60,
-              "visual18": 13,
-              "provisionalVisualScore": 29,
-              "visualPending": false,
-              "formal": {
-                "total": 70,
-                "attainment": 0.73
-              },
-              "objective": {
-                "total": 36,
-                "attainment": 0.65
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E03-K0-R02/arm-a/validation/report.json"
-            },
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P6",
-                "P7"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E03-K0-R02/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T23:11:17.893Z"
-              },
-              "specSha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.3,
-              "visual18": 17,
-              "provisionalVisualScore": 38,
-              "visualPending": false,
-              "formal": {
-                "total": 98,
-                "attainment": 1.09
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "ceilingBreach": true,
-              "report": "B-20261006-R01/PAIR-E03-K0-R02/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 98,
-              "cocosair": 70
-            },
-            "attainment": {
-              "three": 1.09,
-              "cocosair": 0.73
-            },
-            "pairedDelta": -28,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 36
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 0.65
-            },
-            "pairedDelta": -19,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 38,
-            "cocosair": 29,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 3,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261005-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E04-K0-R02",
-          "batchId": "B-20261006-R01",
-          "scene": "E04",
-          "knowledge": "K0",
-          "rep": "R02",
-          "pilot": false,
-          "track": "core",
-          "qualificationStatus": "QUALIFIED",
-          "arms": {
-            "cocosair": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E04-K0-R02/arm-a/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T23:44:51.469Z"
-              },
-              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.2,
-              "visual18": 16,
-              "provisionalVisualScore": 36,
-              "visualPending": false,
-              "formal": {
-                "total": 96,
-                "attainment": 1.04
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "ceilingBreach": true,
-              "report": "B-20261006-R01/PAIR-E04-K0-R02/arm-a/validation/report.json"
-            },
-            "three": {
-              "s1": 15,
-              "s2": 30,
-              "s3": 10,
-              "lifecycleMode": "full-set(probe-meta)",
-              "lifecycleIds": [
-                "P8"
-              ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E04-K0-R02/arm-b/validation/code-review.json",
-              "objectiveTotal": 55,
-              "verdict": "PASS",
-              "classification": "PASS",
-              "inputGuard": {
-                "kind": "PASS",
-                "checked": [
-                  "specSha256",
-                  "dependencyHashes"
-                ],
-                "at": "2026-10-05T23:45:25.156Z"
-              },
-              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
-              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 1,
-              "fps": 60.3,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
-              "visualPending": false,
-              "formal": {
-                "total": 84,
-                "attainment": 1.01
-              },
-              "objective": {
-                "total": 55,
-                "attainment": 1
-              },
-              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E04-K0-R02/arm-b/validation/report.json"
-            }
-          },
-          "formal": {
-            "total": {
-              "three": 84,
-              "cocosair": 96
-            },
-            "attainment": {
-              "three": 1.01,
-              "cocosair": 1.04
-            },
-            "pairedDelta": 12,
-            "visualStatus": "VALID"
-          },
-          "objective": {
-            "total": {
-              "three": 55,
-              "cocosair": 55
-            },
-            "attainment": {
-              "three": 1,
-              "cocosair": 1
-            },
-            "pairedDelta": 0,
-            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
-          },
-          "provisionalVisualScore": {
-            "three": 24,
-            "cocosair": 36,
-            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
-          },
-          "ceilingRuler": {
-            "air": "matched",
-            "refVersion": 2,
-            "validationRevision": 11,
-            "rulerId": "RULER-20261005-R02",
-            "refFrozenUnderRuler": "RULER-20261003-R02",
-            "batchEngineSha": "ddd5072a",
-            "ceilingEngineSha": "ddd5072a"
-          }
-        },
-        {
-          "pairId": "PAIR-E05-K0-R02",
-          "batchId": "B-20261006-R01",
+          "pairId": "PAIR-E05-K0-R01",
+          "batchId": "B-20261023-R02",
           "scene": "E05",
           "knowledge": "K0",
-          "rep": "R02",
+          "rep": "R01",
           "pilot": false,
           "track": "core",
           "qualificationStatus": "QUALIFIED",
           "arms": {
-            "cocosair": {
+            "three": {
               "s1": 15,
               "s2": 25,
               "s3": 10,
@@ -2699,9 +895,8 @@
               "lifecycleIds": [
                 "P6"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E05-K0-R02/arm-a/validation/code-review.json",
+              "s4": null,
+              "s4Pending": true,
               "objectiveTotal": 50,
               "verdict": "FAIL",
               "classification": "PERFORMANCE",
@@ -2726,49 +921,206 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-06T00:38:03.617Z"
+                "at": "2026-10-23T18:28:33.776Z"
               },
               "specSha256": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
               "passRate": 0.8333,
-              "fps": 60.1,
-              "visual18": 11,
-              "provisionalVisualScore": 24,
+              "fps": 56.2,
+              "visual18": 18,
+              "provisionalVisualScore": 40,
               "visualPending": false,
               "formal": {
-                "total": 79,
-                "attainment": 0.89
+                "total": null,
+                "attainment": null
               },
               "objective": {
                 "total": 50,
                 "attainment": 0.91
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E05-K0-R02/arm-a/validation/report.json"
+              "report": "B-20261023-R02/PAIR-E05-K0-R01/arm-a/validation/report.json"
             },
-            "three": {
+            "cocosair": {
               "s1": 15,
               "s2": 20,
-              "s3": 4,
+              "s3": 10,
               "lifecycleMode": "full-set(probe-meta)",
               "lifecycleIds": [
                 "P6"
               ],
-              "s4": 5,
-              "s4Pending": false,
-              "s4Source": "results/B-20261006-R01/PAIR-E05-K0-R02/arm-b/validation/code-review.json",
-              "objectiveTotal": 39,
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 45,
               "verdict": "FAIL",
-              "classification": "INTERACTION",
+              "classification": "UNRESOLVED",
               "classificationEvidence": {
                 "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
                 "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E05.json",
                 "failedProbes": [
                   {
-                    "probeId": "P4",
+                    "probeId": "P1",
                     "status": "FAIL",
                     "failedAssertions": [
                       "visual"
+                    ],
+                    "domain": "PERFORMANCE",
+                    "unresolvedReason": null
+                  },
+                  {
+                    "probeId": "P3",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "visual"
+                    ],
+                    "domain": "SHADER",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-23T18:29:11.178Z"
+              },
+              "specSha256": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 0.6667,
+              "fps": 56.3,
+              "visual18": 6,
+              "provisionalVisualScore": 13,
+              "visualPending": false,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 45,
+                "attainment": 0.82
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261023-R02/PAIR-E05-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": 50,
+              "cocosair": 45
+            },
+            "attainment": {
+              "three": 0.91,
+              "cocosair": 0.82
+            },
+            "pairedDelta": -5,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": 40,
+            "cocosair": 13,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 3,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261005-R01",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        }
+      ]
+    },
+    {
+      "batchId": "B-20261024-R01",
+      "createdAt": "2026-10-24T05:30:47.066Z",
+      "pairs": [
+        {
+          "pairId": "PAIR-E01-K0-R01",
+          "batchId": "B-20261024-R01",
+          "scene": "E01",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": "QUALIFIED",
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-24T09:23:44.845Z"
+              },
+              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 1,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261024-R01/PAIR-E01-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 21,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 40,
+              "verdict": "FAIL",
+              "classification": "INTERACTION",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E01.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P4",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "state"
                     ],
                     "domain": "INTERACTION",
                     "unresolvedReason": null
@@ -2781,60 +1133,516 @@
                   "specSha256",
                   "dependencyHashes"
                 ],
-                "at": "2026-10-06T00:38:32.212Z"
+                "at": "2026-10-24T09:24:30.950Z"
               },
-              "specSha256": "7d2bc5559cc21abc31584f3bbc7505489643c26a79785851b30916b939e8e476",
+              "specSha256": "5ed6b649ed405c8e9e63c0d74c608706781dabb0bd1120367f46fe3c2677f2f6",
               "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
-              "passRate": 0.6667,
+              "passRate": 0.7143,
               "fps": 60.1,
-              "visual18": 16,
-              "provisionalVisualScore": 36,
-              "visualPending": false,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
               "formal": {
-                "total": 80,
-                "attainment": 0.87
+                "total": null,
+                "attainment": null
               },
               "objective": {
-                "total": 39,
-                "attainment": 0.71
+                "total": 40,
+                "attainment": 0.73
               },
               "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
-              "report": "B-20261006-R01/PAIR-E05-K0-R02/arm-b/validation/report.json"
+              "report": "B-20261024-R01/PAIR-E01-K0-R01/arm-b/validation/report.json"
             }
           },
           "formal": {
             "total": {
-              "three": 80,
-              "cocosair": 79
+              "three": null,
+              "cocosair": null
             },
             "attainment": {
-              "three": 0.87,
-              "cocosair": 0.89
+              "three": null,
+              "cocosair": null
             },
-            "pairedDelta": -1,
+            "pairedDelta": null,
             "visualStatus": "VALID"
           },
           "objective": {
             "total": {
-              "three": 39,
-              "cocosair": 50
+              "three": 55,
+              "cocosair": 40
             },
             "attainment": {
-              "three": 0.71,
-              "cocosair": 0.91
+              "three": 1,
+              "cocosair": 0.73
             },
-            "pairedDelta": 11,
+            "pairedDelta": -15,
             "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
           },
           "provisionalVisualScore": {
-            "three": 36,
-            "cocosair": 24,
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E02-K0-R01",
+          "batchId": "B-20261024-R01",
+          "scene": "E02",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": "QUALIFIED",
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 17,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 36,
+              "verdict": "FAIL",
+              "classification": "INTERACTION",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E02.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P4",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "state"
+                    ],
+                    "domain": "INTERACTION",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-24T09:25:16.144Z"
+              },
+              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 0.5714,
+              "fps": 60.2,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 36,
+                "attainment": 0.65
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261024-R01/PAIR-E02-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 17,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 36,
+              "verdict": "FAIL",
+              "classification": "INTERACTION",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E02.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P4",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "state"
+                    ],
+                    "domain": "INTERACTION",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-24T09:26:00.164Z"
+              },
+              "specSha256": "788e8531f6b5caf2841250abc71b07f014ceb33e415d00eca1c05c70cb7ca8e9",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 0.5714,
+              "fps": 60.2,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 36,
+                "attainment": 0.65
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261024-R01/PAIR-E02-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": 36,
+              "cocosair": 36
+            },
+            "attainment": {
+              "three": 0.65,
+              "cocosair": 0.65
+            },
+            "pairedDelta": 0,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E03-K0-R01",
+          "batchId": "B-20261024-R01",
+          "scene": "E03",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": "QUALIFIED",
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 27,
+              "s3": 4,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 46,
+              "verdict": "FAIL",
+              "classification": "LIFECYCLE_MISUSE",
+              "classificationEvidence": {
+                "rule": "probe-meta sidecar: 失败断言类别 x failureDomains;sidecar 缺失/多义 -> UNRESOLVED(无默认兜底)",
+                "sidecar": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\harness\\runner\\probe-meta\\E03.json",
+                "failedProbes": [
+                  {
+                    "probeId": "P7",
+                    "status": "FAIL",
+                    "failedAssertions": [
+                      "state"
+                    ],
+                    "domain": "LIFECYCLE_MISUSE",
+                    "unresolvedReason": null
+                  }
+                ]
+              },
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-24T09:26:44.705Z"
+              },
+              "specSha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 0.8889,
+              "fps": 60.2,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 46,
+                "attainment": 0.84
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261024-R01/PAIR-E03-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P6",
+                "P7"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-24T09:27:31.923Z"
+              },
+              "specSha256": "acc730fe30bf123c5ae2f1599cd628d2c95ea635b2f5cd4b025a1555c4c8ceac",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 1,
+              "fps": 60.1,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261024-R01/PAIR-E03-K0-R01/arm-b/validation/report.json"
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": 46,
+              "cocosair": 55
+            },
+            "attainment": {
+              "three": 0.84,
+              "cocosair": 1
+            },
+            "pairedDelta": 9,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
             "note": "原 visual 18→40 折算分,仅参考,非正式口径"
           },
           "ceilingRuler": {
             "air": "matched",
             "refVersion": 3,
-            "validationRevision": 11,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261005-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E04-K0-R01",
+          "batchId": "B-20261024-R01",
+          "scene": "E04",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": "LEGACY_PROVISIONAL",
+          "arms": {
+            "three": {
+              "s1": 15,
+              "s2": 30,
+              "s3": 10,
+              "lifecycleMode": "full-set(probe-meta)",
+              "lifecycleIds": [
+                "P8"
+              ],
+              "s4": null,
+              "s4Pending": true,
+              "objectiveTotal": 55,
+              "verdict": "PASS",
+              "classification": "PASS",
+              "inputGuard": {
+                "kind": "PASS",
+                "checked": [
+                  "specSha256",
+                  "dependencyHashes"
+                ],
+                "at": "2026-10-24T09:28:16.179Z"
+              },
+              "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
+              "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+              "passRate": 1,
+              "fps": 60.2,
+              "visual18": null,
+              "provisionalVisualScore": null,
+              "visualPending": true,
+              "formal": {
+                "total": null,
+                "attainment": null
+              },
+              "objective": {
+                "total": 55,
+                "attainment": 1
+              },
+              "rulerStatus": "RULER_COMPAT(engineMatch=matched,briefMatch=matched,specMatch=matched,validatorMatch=matched,toolchainMatch=matched)",
+              "report": "B-20261024-R01/PAIR-E04-K0-R01/arm-a/validation/report.json"
+            },
+            "cocosair": {
+              "status": "created",
+              "reportMissing": true
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": 55,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": 1,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 2,
+            "validationRevision": 12,
+            "rulerId": "RULER-20261005-R02",
+            "refFrozenUnderRuler": "RULER-20261003-R02",
+            "batchEngineSha": "ddd5072a",
+            "ceilingEngineSha": "ddd5072a"
+          }
+        },
+        {
+          "pairId": "PAIR-E05-K0-R01",
+          "batchId": "B-20261024-R01",
+          "scene": "E05",
+          "knowledge": "K0",
+          "rep": "R01",
+          "pilot": false,
+          "track": "core",
+          "qualificationStatus": "LEGACY_PROVISIONAL",
+          "arms": {
+            "three": {
+              "status": "created",
+              "reportMissing": true
+            },
+            "cocosair": {
+              "status": "created",
+              "reportMissing": true
+            }
+          },
+          "formal": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "visualStatus": "VALID"
+          },
+          "objective": {
+            "total": {
+              "three": null,
+              "cocosair": null
+            },
+            "attainment": {
+              "three": null,
+              "cocosair": null
+            },
+            "pairedDelta": null,
+            "basis": "S1+S2+S3(S4 待 code-review,视觉不参于 objective)"
+          },
+          "provisionalVisualScore": {
+            "three": null,
+            "cocosair": null,
+            "note": "原 visual 18→40 折算分,仅参考,非正式口径"
+          },
+          "ceilingRuler": {
+            "air": "matched",
+            "refVersion": 3,
+            "validationRevision": 12,
             "rulerId": "RULER-20261005-R02",
             "refFrozenUnderRuler": "RULER-20261005-R01",
             "batchEngineSha": "ddd5072a",
@@ -2844,276 +1652,126 @@
       ]
     }
   ],
+  "toolchainEra": {
+    "frozen": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+    "basis": "量尺账本 inputs.toolchain(Reference 重验时刷新)vs 各臂 validation/report.json 的 toolchainFingerprint",
+    "rule": "实验唯一允许变量是引擎;浏览器/Node/esbuild 换版即仪器换版 → 该对排除出 core 分组(fail closed),仅入本分层清单",
+    "matchedCount": 10,
+    "mismatchedCount": 5,
+    "matched": [
+      {
+        "pair": "B-20261023-R02/PAIR-E01-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R02/PAIR-E02-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R02/PAIR-E03-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R02/PAIR-E04-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R02/PAIR-E05-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261024-R01/PAIR-E01-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261024-R01/PAIR-E02-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261024-R01/PAIR-E03-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261024-R01/PAIR-E04-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261024-R01/PAIR-E05-K0-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      }
+    ],
+    "mismatched": [
+      {
+        "pair": "B-20261023-R01/PAIR-E01-K1-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R01/PAIR-E02-K1-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R01/PAIR-E03-K1-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R01/PAIR-E04-K1-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      },
+      {
+        "pair": "B-20261023-R01/PAIR-E05-K1-R01",
+        "observed": {
+          "three": null,
+          "cocosair": null
+        }
+      }
+    ]
+  },
   "groups": [
     {
       "scene": "E01",
-      "knowledge": "K0",
-      "n": 3,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": 9,
-        "iqr": 5.5,
-        "bootstrapCi95": [
-          0,
-          11
-        ]
-      },
-      "winTieLoss": {
-        "air": 2,
-        "tie": 1,
-        "three": 0
-      },
-      "attainmentMedian": {
-        "three": 1,
-        "air": 1,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E01-K0-R01",
-          "track": "targeted-pilot",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
-          "delta": 0
-        },
-        {
-          "pairId": "PAIR-E01-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": 9
-        },
-        {
-          "pairId": "PAIR-E01-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": 0
-        },
-        {
-          "pairId": "PAIR-E01-K0-R02",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": 11
-        }
-      ]
-    },
-    {
-      "scene": "E05",
-      "knowledge": "K0",
-      "n": 2,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": -4,
-        "iqr": 3,
-        "bootstrapCi95": [
-          -7,
-          -1
-        ]
-      },
-      "winTieLoss": {
-        "air": 0,
-        "tie": 1,
-        "three": 1
-      },
-      "attainmentMedian": {
-        "three": 0.81,
-        "air": 0.96,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E05-K0-R01",
-          "track": "targeted-pilot",
-          "qualStatus": "LEGACY_PROVISIONAL",
-          "delta": 0
-        },
-        {
-          "pairId": "PAIR-E05-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -7
-        },
-        {
-          "pairId": "PAIR-E05-K0-R02",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -1
-        }
-      ]
-    },
-    {
-      "scene": "E02",
-      "knowledge": "K0",
-      "n": 2,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": -26.5,
-        "iqr": 3.5,
-        "bootstrapCi95": [
-          -30,
-          -23
-        ]
-      },
-      "winTieLoss": {
-        "air": 0,
-        "tie": 0,
-        "three": 2
-      },
-      "attainmentMedian": {
-        "three": 1,
-        "air": 0.65,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E02-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -23
-        },
-        {
-          "pairId": "PAIR-E02-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
-          "delta": -26
-        },
-        {
-          "pairId": "PAIR-E02-K0-R02",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -30
-        }
-      ]
-    },
-    {
-      "scene": "E03",
-      "knowledge": "K0",
-      "n": 1,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": -28,
-        "iqr": null,
-        "bootstrapCi95": null
-      },
-      "winTieLoss": {
-        "air": 0,
-        "tie": 0,
-        "three": 1
-      },
-      "attainmentMedian": {
-        "three": 1,
-        "air": 0.65,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E03-K0-R01",
-          "track": "core",
-          "qualStatus": "LEGACY_PROVISIONAL",
-          "delta": -5
-        },
-        {
-          "pairId": "PAIR-E03-K0-R02",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -28
-        }
-      ]
-    },
-    {
-      "scene": "E04",
-      "knowledge": "K0",
-      "n": 1,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": 12,
-        "iqr": null,
-        "bootstrapCi95": null
-      },
-      "winTieLoss": {
-        "air": 1,
-        "tie": 0,
-        "three": 0
-      },
-      "attainmentMedian": {
-        "three": 1,
-        "air": 1,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E04-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL_TIMING",
-          "delta": -6
-        },
-        {
-          "pairId": "PAIR-E04-K0-R02",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": 12
-        }
-      ]
-    },
-    {
-      "scene": "E06",
-      "knowledge": "K0",
-      "n": 1,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": -7,
-        "iqr": null,
-        "bootstrapCi95": null
-      },
-      "winTieLoss": {
-        "air": 0,
-        "tie": 0,
-        "three": 1
-      },
-      "attainmentMedian": {
-        "three": 1,
-        "air": 1,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E06-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -7
-        }
-      ]
-    },
-    {
-      "scene": "E07",
-      "knowledge": "K0",
-      "n": 1,
-      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
-      "rawDelta": {
-        "median": -23,
-        "iqr": null,
-        "bootstrapCi95": null
-      },
-      "winTieLoss": {
-        "air": 0,
-        "tie": 0,
-        "three": 1
-      },
-      "attainmentMedian": {
-        "three": 0.69,
-        "air": 0.49,
-        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
-      },
-      "diagnosticDeltas": [
-        {
-          "pairId": "PAIR-E07-K0-R01",
-          "track": "core",
-          "qualStatus": "QUALIFIED",
-          "delta": -23
-        }
-      ]
-    },
-    {
-      "scene": "E08",
-      "knowledge": "K0",
+      "knowledge": "K1",
       "n": 0,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
@@ -3131,22 +1789,217 @@
         "air": null,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
+      "diagnosticDeltas": []
+    },
+    {
+      "scene": "E02",
+      "knowledge": "K1",
+      "n": 0,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": null,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 0,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": null,
+        "air": null,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
+      "diagnosticDeltas": []
+    },
+    {
+      "scene": "E03",
+      "knowledge": "K1",
+      "n": 0,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": null,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 0,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": null,
+        "air": null,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
+      "diagnosticDeltas": []
+    },
+    {
+      "scene": "E04",
+      "knowledge": "K1",
+      "n": 0,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": null,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 0,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": null,
+        "air": null,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
+      "diagnosticDeltas": []
+    },
+    {
+      "scene": "E05",
+      "knowledge": "K1",
+      "n": 0,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": null,
+        "iqr": null,
+        "bootstrapCi95": null
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 0,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": null,
+        "air": null,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
+      "diagnosticDeltas": []
+    },
+    {
+      "scene": "E01",
+      "knowledge": "K0",
+      "n": 2,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": -7.5,
+        "iqr": 7.5,
+        "bootstrapCi95": [
+          -15,
+          0
+        ]
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 1,
+        "three": 1
+      },
+      "attainmentMedian": {
+        "three": 1,
+        "air": 0.87,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
       "diagnosticDeltas": [
         {
-          "pairId": "PAIR-E08-K0-R01",
+          "pairId": "PAIR-E01-K0-R01",
           "track": "core",
-          "qualStatus": "QUALIFIED_OBJECTIVE_PARTIAL",
+          "qualStatus": "QUALIFIED",
+          "delta": 0
+        },
+        {
+          "pairId": "PAIR-E01-K0-R01",
+          "track": "core",
+          "qualStatus": "QUALIFIED",
+          "delta": -15
+        }
+      ]
+    },
+    {
+      "scene": "E02",
+      "knowledge": "K0",
+      "n": 2,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": 0,
+        "iqr": 0,
+        "bootstrapCi95": [
+          0,
+          0
+        ]
+      },
+      "winTieLoss": {
+        "air": 0,
+        "tie": 2,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": 0.83,
+        "air": 0.83,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
+      "diagnosticDeltas": [
+        {
+          "pairId": "PAIR-E02-K0-R01",
+          "track": "core",
+          "qualStatus": "QUALIFIED",
+          "delta": 0
+        },
+        {
+          "pairId": "PAIR-E02-K0-R01",
+          "track": "core",
+          "qualStatus": "QUALIFIED",
+          "delta": 0
+        }
+      ]
+    },
+    {
+      "scene": "E03",
+      "knowledge": "K0",
+      "n": 2,
+      "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
+      "rawDelta": {
+        "median": 4.5,
+        "iqr": 4.5,
+        "bootstrapCi95": [
+          0,
+          9
+        ]
+      },
+      "winTieLoss": {
+        "air": 1,
+        "tie": 1,
+        "three": 0
+      },
+      "attainmentMedian": {
+        "three": 0.92,
+        "air": 1,
+        "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
+      },
+      "diagnosticDeltas": [
+        {
+          "pairId": "PAIR-E03-K0-R01",
+          "track": "core",
+          "qualStatus": "QUALIFIED",
+          "delta": 0
+        },
+        {
+          "pairId": "PAIR-E03-K0-R01",
+          "track": "core",
+          "qualStatus": "QUALIFIED",
           "delta": 9
         }
       ]
     },
     {
-      "scene": "E09",
+      "scene": "E04",
       "knowledge": "K0",
       "n": 1,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
-        "median": -4,
+        "median": -25,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -3156,26 +2009,26 @@
         "three": 1
       },
       "attainmentMedian": {
-        "three": 1,
-        "air": 1,
+        "three": 0.87,
+        "air": 0.42,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
       "diagnosticDeltas": [
         {
-          "pairId": "PAIR-E09-K0-R01",
+          "pairId": "PAIR-E04-K0-R01",
           "track": "core",
           "qualStatus": "QUALIFIED",
-          "delta": -4
+          "delta": -25
         }
       ]
     },
     {
-      "scene": "E10",
+      "scene": "E05",
       "knowledge": "K0",
       "n": 1,
       "scope": "core-only(track=core 且 qualification 合格且量尺兼容);pilot/targeted-pilot/不合格对见 groupsDiagnostic",
       "rawDelta": {
-        "median": -9,
+        "median": -5,
         "iqr": null,
         "bootstrapCi95": null
       },
@@ -3185,16 +2038,16 @@
         "three": 1
       },
       "attainmentMedian": {
-        "three": 1,
-        "air": 1,
+        "three": 0.91,
+        "air": 0.82,
         "basis": "objective 对 RULER objectiveScore(量尺兼容对)"
       },
       "diagnosticDeltas": [
         {
-          "pairId": "PAIR-E10-K0-R01",
+          "pairId": "PAIR-E05-K0-R01",
           "track": "core",
           "qualStatus": "QUALIFIED",
-          "delta": -9
+          "delta": -5
         }
       ]
     }
@@ -3214,7 +2067,7 @@
       "engine": "cocosair",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 55
+        "K0": 47.5
       },
       "knowledgeGainVsK0": {}
     },
@@ -3223,7 +2076,7 @@
       "engine": "three",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 55
+        "K0": 45.5
       },
       "knowledgeGainVsK0": {}
     },
@@ -3232,97 +2085,7 @@
       "engine": "cocosair",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 36
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E05",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 44.5
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E05",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 52.5
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E06",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E06",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E07",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 38
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E07",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 27
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E09",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E09",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E10",
-      "engine": "three",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
-      },
-      "knowledgeGainVsK0": {}
-    },
-    {
-      "scene": "E10",
-      "engine": "cocosair",
-      "basis": "objective(S1+S2+S3)",
-      "medianRawByK": {
-        "K0": 55
+        "K0": 45.5
       },
       "knowledgeGainVsK0": {}
     },
@@ -3331,7 +2094,7 @@
       "engine": "three",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 55
+        "K0": 50.5
       },
       "knowledgeGainVsK0": {}
     },
@@ -3340,7 +2103,7 @@
       "engine": "cocosair",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 36
+        "K0": 55
       },
       "knowledgeGainVsK0": {}
     },
@@ -3349,7 +2112,7 @@
       "engine": "three",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 55
+        "K0": 48
       },
       "knowledgeGainVsK0": {}
     },
@@ -3358,7 +2121,25 @@
       "engine": "cocosair",
       "basis": "objective(S1+S2+S3)",
       "medianRawByK": {
-        "K0": 55
+        "K0": 23
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E05",
+      "engine": "three",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 50
+      },
+      "knowledgeGainVsK0": {}
+    },
+    {
+      "scene": "E05",
+      "engine": "cocosair",
+      "basis": "objective(S1+S2+S3)",
+      "medianRawByK": {
+        "K0": 45
       },
       "knowledgeGainVsK0": {}
     }
@@ -3376,9 +2157,9 @@
       "total": 97.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "1b4dad88266ff19e93b679f835d340e0c43a26a98e4790bbf145080f9cca8dcf"
+      "evidenceHash": "269cf8962f0579c28008e23493dd59e25d0055b1f3352b9e3621e39023288b07"
     },
     "E01/cocosair": {
       "objective": 55,
@@ -3392,9 +2173,9 @@
       "total": 95.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "c00eb1ef1904de389ae05ade75e3e41b77314957396ebda45e3c1915d1ce4cce"
+      "evidenceHash": "270a33bddfa41cc63cd9b23392ec96dd293e143d07e8fe436309c1c12079b560"
     },
     "E02/three": {
       "objective": 55,
@@ -3408,9 +2189,9 @@
       "total": 90.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "937bd8b5f696d74f2b9c8ba00361507cbc6555f224beafdc5e510dc103ab407f"
+      "evidenceHash": "2767e9b2a39990ba61d7c81e6f8929ab277d3ba6712bb4bad64428495f60b4b1"
     },
     "E02/cocosair": {
       "objective": 55,
@@ -3424,9 +2205,9 @@
       "total": 97.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "2e62941b0bd7128072ed3c4be8d75d897ff16bcb98026bd301cbcee42cbfd077"
+      "evidenceHash": "ab61c370547b20d40c1c9e9e5d7f037589ca7b8ec9df4287d9924094e435b0fb"
     },
     "E03/three": {
       "objective": 55,
@@ -3440,9 +2221,9 @@
       "total": 90.3,
       "totalLegacy": null,
       "refVersion": 3,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261005-R02",
-      "evidenceHash": "1c1fce75586dbc6b198c475296ead63f082ee37f298ae403ea1690ca560fb4fe"
+      "evidenceHash": "e9793df09440fcc35dc3ca56d0d864ff919cd41a56b75c3898ad64ee8608fe07"
     },
     "E03/cocosair": {
       "objective": 55,
@@ -3456,9 +2237,9 @@
       "total": 95.3,
       "totalLegacy": null,
       "refVersion": 3,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261005-R02",
-      "evidenceHash": "7b9d08685c705436bb064c4c7033d443de21e3a03de972ea24775ffd0845d2bc"
+      "evidenceHash": "1a915eda4ac60633f0bd1cdd90c909ed62a2910246e71f3798139d47f739c943"
     },
     "E04/three": {
       "objective": 55,
@@ -3472,9 +2253,9 @@
       "total": 83.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "8bd83017ae67d1a3c01c32ea03aa58e4a4391545b2f15b07a36f4a0656a3ff25"
+      "evidenceHash": "d9be20387ecc43ca07355c5a0c9ffe378f234ca312296239c419cffb5acfa532"
     },
     "E04/cocosair": {
       "objective": 55,
@@ -3488,9 +2269,9 @@
       "total": 92.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "49ea4246b3497c2fb052fd33689c5d9e27e11ff12f236c31e68b4504f9e641ed"
+      "evidenceHash": "10ea0628bfca79de35da57e478f2cb0eb0f534daf638c4832f29296b4d730eee"
     },
     "E05/three": {
       "objective": 55,
@@ -3504,9 +2285,9 @@
       "total": 92.3,
       "totalLegacy": null,
       "refVersion": 3,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261005-R01",
-      "evidenceHash": "4256a299dd2cc4c94bcb301f074403c65c76ac3dea0cce2772680a2b33836d93"
+      "evidenceHash": "c950d7e0e3f5380c55ad7c460c093499cc5fbf18ad5a0b807a46df0eb36df013"
     },
     "E05/cocosair": {
       "objective": 55,
@@ -3520,9 +2301,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 3,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261005-R01",
-      "evidenceHash": "225b88d6385ba9e8757fcfb7b3a8d4db8ce75b230a1d7506109cec7a74d94f43"
+      "evidenceHash": "75569a33a9e7a69e93dbc0b3ae49b4d501e930dc8b0793cc914f8fb8cdbba53e"
     },
     "E06/three": {
       "objective": 55,
@@ -3536,9 +2317,9 @@
       "total": 95.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "a78fdcf830040053e103fc5bb901ed0836ccfbe9193605d3ea7b7f5f6f826325"
+      "evidenceHash": "f636c78d78aad9a73b5c170bc8707f87f045047044b00593ad4cc13fc47bc525"
     },
     "E06/cocosair": {
       "objective": 55,
@@ -3552,9 +2333,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "0b70922f3f25eef3c760ebbd2f84285f2d7ad44949ddc986fb24b41ec3180ca6"
+      "evidenceHash": "9f4e2265abd3c26f56e9fd88d57232f0e05126d972a26c82b8779d9e9c970d33"
     },
     "E07/three": {
       "objective": 55,
@@ -3568,9 +2349,9 @@
       "total": 95.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "3304305c55019899cf361fa303aaeae577f0450ece0849c0efd5e5685141f219"
+      "evidenceHash": "fbe17ffbf8fc30307b9e9b3c304701d6191c3cbdd3f349a256c6ed2d3073d21a"
     },
     "E07/cocosair": {
       "objective": 55,
@@ -3584,9 +2365,9 @@
       "total": 83.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "ba185fa58414f4d78f1bc5488a6c2e70115230b46e6d7358699de28190b9f895"
+      "evidenceHash": "86c4bd6c2e764043d473056e56d71506725b065f7de01865d74ec92d0570c7bb"
     },
     "E08/three": {
       "objective": 55,
@@ -3600,9 +2381,9 @@
       "total": 95.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "53dcce67504b4b7a713dcae0c7035808a389e50cbdf485d8773be5aa41c45424"
+      "evidenceHash": "cf21c45844dce5c6d2540fda7a72c48948901d63a9ea6bc6686c2e001d686af5"
     },
     "E08/cocosair": {
       "objective": 55,
@@ -3616,9 +2397,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "48272e0bc94143090b26ddc641fa1baebf28541c8e19b991f9d2781c48250a2d"
+      "evidenceHash": "1384b0b20a73236f49f0876297333e151775e83ad1d9a49a9239754e86f69d15"
     },
     "E09/three": {
       "objective": 55,
@@ -3632,9 +2413,9 @@
       "total": 88.3,
       "totalLegacy": null,
       "refVersion": 3,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261005-R01",
-      "evidenceHash": "464f3dd85ade4de2fa0ef67b8c86fe567e71a91496006cf43e3d6a56fcc3be16"
+      "evidenceHash": "28aec593159f9c2d22f888280e37cf9cd71b5c509addd1dd86a6e0b55ef8e4e0"
     },
     "E09/cocosair": {
       "objective": 55,
@@ -3648,9 +2429,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 3,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261005-R01",
-      "evidenceHash": "0c5373452e0fa9ac9b462908faa14dba8a94aebaa64b0d1872796ac766ff4672"
+      "evidenceHash": "044708c5063f3049ad7b0d62a1d0fa8666a4beef561b3d1b667e78843cda2037"
     },
     "E10/three": {
       "objective": 55,
@@ -3664,9 +2445,9 @@
       "total": 92.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "34d1c1c935d8c1470bc392b1194fbb0e03300c533e45f80f1cf5fb54a08338d0"
+      "evidenceHash": "95100e6874bb944f05f738df050e4178183ba11632af38547ff72c80e3d067be"
     },
     "E10/cocosair": {
       "objective": 55,
@@ -3680,9 +2461,9 @@
       "total": 86.3,
       "totalLegacy": null,
       "refVersion": 2,
-      "validationRevision": 11,
+      "validationRevision": 12,
       "frozenUnderRuler": "RULER-20261003-R02",
-      "evidenceHash": "2fbfaaa7cabe6576f4073fed7f362199180441b31e06fbf60c620c255ddbfd5a"
+      "evidenceHash": "e03e3eeea4c99d225d712ac81e768fb58b80d62c172670d02299d4f9ded2f98f"
     }
   },
   "notes": [
@@ -3692,6 +2473,7 @@
     "FIX-B:S4 读 arm-*/validation/code-review.json(structure/antiPatterns/total/reviewer/protocolHash);缺失 → s4=null+s4Pending:true,不以 5 分填充。",
     "FIX-B:attainment>1.03 → arm.ceilingBreach:true + rulerStatus.needsRecalibration(量尺可能被低估,需重校准;不截断)。",
     "新批次无盲评时 provisionalVisualScore=null(visualPending),补跑 build-blind + judge 后重跑本脚本回填。",
-    "KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效;G7 未过期间以 objective 口径计算。"
+    "KnowledgeGain 仅统计非 pilot pair;K1/K2 批次出现后自动生效;G7 未过期间以 objective 口径计算。",
+    "仪器换版分层见 toolchainEra:量尺冻结指纹=nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40;与之不同的对不进 core 分组(历史数据保留原样,Re-validation 时须显式 CHROME_V,否则 reference-versions.mjs 会沿用旧账本 Chrome 版本)。"
   ]
 }

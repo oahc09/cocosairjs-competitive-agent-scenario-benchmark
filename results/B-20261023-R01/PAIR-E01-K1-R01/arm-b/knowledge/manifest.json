@@ -1,0 +1,642 @@
+{
+  "engine": "cocosair",
+  "level": "K1",
+  "version": "cocosair.js@1.0.0",
+  "curatedAt": "2026-10-02",
+  "sources": [
+    "vendor/cocosair.js-1.0.0.tgz (package/README.md)",
+    "引擎仓库 E:\\AIProMax\\github\\cocosair.js/docs: README、webgl2-only.md、manual/*.md(60 篇)、guides/(6)、reference/(10)、notes/(11)、gltf/(4) — markdown 全量"
+  ],
+  "domainCoverage": {
+    "Scene setup": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/creating-a-scene.md",
+        "docs/manual/scenegraph.md"
+      ]
+    },
+    "Camera": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/cameras.md"
+      ]
+    },
+    "Material": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/materials.md",
+        "docs/manual/material-table.md"
+      ]
+    },
+    "Animation": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/animation-system.md",
+        "docs/guides/skinned-model.md"
+      ]
+    },
+    "Asset load": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/load-gltf.md",
+        "docs/manual/asset-loading-and-lifetime.md",
+        "docs/guides/asset-loading.md",
+        "docs/gltf/gltf-runtime.md"
+      ]
+    },
+    "Input": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/input-and-events.md"
+      ]
+    },
+    "Shader": {
+      "status": "yes",
+      "evidence": [
+        "docs/manual/custom-shaders.md",
+        "docs/manual/uniform-types.md"
+      ]
+    },
+    "Postprocess": {
+      "status": "limitation documented",
+      "evidence": [
+        "docs/manual/post-processing.md",
+        "docs/manual/how-to-use-post-processing.md",
+        "docs/notes/post-process-notes.md"
+      ]
+    },
+    "Particles": {
+      "status": "limitation documented",
+      "evidence": [
+        "docs/notes/particle-2d-notes.md"
+      ]
+    }
+  },
+  "curationRule": "不含当前 benchmark 场景答案型内容",
+  "excludedForScope": [
+    {
+      "name": "tank-battle / tetris-classic / match3-classic / collector-dodge / contra-action",
+      "reason": "完整小游戏, 属应用而非引擎通用模式"
+    },
+    {
+      "name": "math-* / node-* / mesh-* / texture2d-* 等单元式 API 演示",
+      "reason": "API 微演示, 覆盖面已由 K1 文档承担"
+    },
+    {
+      "name": "examples/files.json / gallery.html / index.html / shared/",
+      "reason": "示例库运行时基础设施, 非知识内容"
+    },
+    {
+      "name": "examples/*/assets/",
+      "reason": "示例私有 GLB/纹理等运行资产不随知识包分发(体积与许可), benchmark 资产由 harness 单独下发"
+    },
+    {
+      "name": "docs/manual/examples/",
+      "reason": "manual 可运行 demo(44 个 html), 官方手册正文(markdown)已收录; html demo 按策划边界排除"
+    },
+    {
+      "name": "docs/evidence/ 与 docs 根部 *.json(extraction/test/inventory 类)",
+      "reason": "引擎抽取 QA 台账(约 8MB), 面向引擎维护者而非应用 Agent"
+    }
+  ],
+  "notes": "K1 Agent Run 使用完整 tarball(vendor/cocosair.js-1.0.0.tgz, 含 docs)安装; 知识包收录 docs markdown 全量共 106 文件。Postprocess/3D Particles 按引擎现状记为 limitation documented(2D 粒子 only, 代码级后处理不可稳定使用)。",
+  "files": [
+    {
+      "path": "README.md",
+      "sha256": "cb217ca3851d6ae810e2467c21f9f871807589d3f2f76de7be9a34e6818076df",
+      "bytes": 11555
+    },
+    {
+      "path": "docs/README.md",
+      "sha256": "fced6e13f84ccc40bf308a0bb0e3f05f821b5e9e1f3dac9c79465d843557cf9d",
+      "bytes": 1638
+    },
+    {
+      "path": "docs/gltf/gltf-catalog.md",
+      "sha256": "baeb6a00208a23d1d64f2caf2052dac5b4ac257ea40b13eebf589e39c0d16ba1",
+      "bytes": 3571
+    },
+    {
+      "path": "docs/gltf/gltf-decoder-deployment.md",
+      "sha256": "d4cb09fa40efbc81e40426f526359195604a8276c41c9b6eacdf845a54e62ae9",
+      "bytes": 5394
+    },
+    {
+      "path": "docs/gltf/gltf-extension-reference.md",
+      "sha256": "a64b61dd2d88cc25a90f24e740b1c4534653f4526191fd4a9ee218600d16fc4a",
+      "bytes": 9059
+    },
+    {
+      "path": "docs/gltf/gltf-runtime.md",
+      "sha256": "e97dcdd790b5cc5fdad18e1f5d5c8dd7a2f4450b175c40778e29af3a5696b92a",
+      "bytes": 16797
+    },
+    {
+      "path": "docs/guides/agent-development.md",
+      "sha256": "ed2f932f9d2b79ebffd49669098e8d451507af63104fc01a557346823222495a",
+      "bytes": 7077
+    },
+    {
+      "path": "docs/guides/asset-loading.md",
+      "sha256": "49d40dd316cde0548fc2c9e60f11f2a3d07c82367d54aa33df46a3faa057d567",
+      "bytes": 1848
+    },
+    {
+      "path": "docs/guides/code-first.md",
+      "sha256": "2c1befe341492dae65182c44259efb859cff3c7ce77dca0d825ec5a39088945b",
+      "bytes": 2321
+    },
+    {
+      "path": "docs/guides/engine-development.md",
+      "sha256": "e1e500be9b77163ee1132bd889fe12899aed2262d3569ec566bb41ba31ca061c",
+      "bytes": 3575
+    },
+    {
+      "path": "docs/guides/runtime-inspection.md",
+      "sha256": "0d52b0afb409620c83ffe3dbd5c5e7e425b49e23d7403025b879b05cc0d595f3",
+      "bytes": 7663
+    },
+    {
+      "path": "docs/guides/skinned-model.md",
+      "sha256": "89a6cdc73db1593e95ff0c5cd76baf71bb459f275ba5925f07a53d9eba0d80a7",
+      "bytes": 2547
+    },
+    {
+      "path": "docs/manual/2d-assets-and-effects.md",
+      "sha256": "5b78a2562a89014bbee045198b765efc3d94661aeaa7b49dd6a734e9337aa1b3",
+      "bytes": 4624
+    },
+    {
+      "path": "docs/manual/2d-ui.md",
+      "sha256": "032125bf2d024ddaf9333f72bae001ac7bf235991ac5b0c0a327556710cf1395",
+      "bytes": 4600
+    },
+    {
+      "path": "docs/manual/align-html-elements-to-3d.md",
+      "sha256": "45bdc0967411824ea0e0bb3732c052b6532d5d7aff3b3e4a50bfd358570d8314",
+      "bytes": 16125
+    },
+    {
+      "path": "docs/manual/animation-system.md",
+      "sha256": "0dd4db8655aa5184014eddfdce1c41a565a4cbc2ccd9eee6f08808a2b3f2526f",
+      "bytes": 20215
+    },
+    {
+      "path": "docs/manual/asset-loading-and-lifetime.md",
+      "sha256": "564313c1a0bc99df54e479d6fc1452f2b3667d8305f439433a228c5a35cda720",
+      "bytes": 15944
+    },
+    {
+      "path": "docs/manual/audio-video-webview.md",
+      "sha256": "b675294ebf32b4cf006abae8433c7b27f5335591fe2d0f36c54b6076e076ecd7",
+      "bytes": 4949
+    },
+    {
+      "path": "docs/manual/backgrounds.md",
+      "sha256": "e84df9966665c3f94f3dc9df558fc217b733de7280738e857dfbdfea586bbaad",
+      "bytes": 17327
+    },
+    {
+      "path": "docs/manual/billboards.md",
+      "sha256": "52b015b127358ff9459b64688884a11ea46c62478b0024105deed20555cc6bdf",
+      "bytes": 16038
+    },
+    {
+      "path": "docs/manual/cameras.md",
+      "sha256": "edae0a0c959375cbfbb29309f5538a255c5b0c25ea76dca0608e341f28375b0b",
+      "bytes": 11482
+    },
+    {
+      "path": "docs/manual/canvas-textures.md",
+      "sha256": "bfec8fcbde51c1d70b7febc98d7f609f4c5fdb9c5061077470d1e15286450797",
+      "bytes": 15801
+    },
+    {
+      "path": "docs/manual/capturing-screenshots.md",
+      "sha256": "57884fa0c48c6738c79185e5cd3842dbaca583205697655ecb9e88d129e18950",
+      "bytes": 4037
+    },
+    {
+      "path": "docs/manual/cleanup.md",
+      "sha256": "d452c1a3059a7f43f243ec009015d21e67705a18b36e373117d7f27a3b89b78d",
+      "bytes": 21148
+    },
+    {
+      "path": "docs/manual/cocos4-coverage-matrix.md",
+      "sha256": "dfc71e73ab3eaf865bc34ee3bd4a235919ab69a7c7a9cafe68db010b888d6d01",
+      "bytes": 32119
+    },
+    {
+      "path": "docs/manual/color-management.md",
+      "sha256": "e7934973d808010524887cfff208e66dec185110bdfc6774fd9e71829008bca5",
+      "bytes": 13681
+    },
+    {
+      "path": "docs/manual/component-lifecycle.md",
+      "sha256": "f15371851907202036327c43f73f4862e103389aa53c7b7d9f398422dab4fdb5",
+      "bytes": 19283
+    },
+    {
+      "path": "docs/manual/creating-a-scene.md",
+      "sha256": "7b5adb983ae4e8bc3321204bbd3695b3a9a8dd3094a093d60e0370247bc2d849",
+      "bytes": 12115
+    },
+    {
+      "path": "docs/manual/creating-text.md",
+      "sha256": "3cac8b2b04e06b3766c1f0d136f0374d45f454c5a1f5500420e4ea528e650553",
+      "bytes": 5760
+    },
+    {
+      "path": "docs/manual/custom-buffergeometry.md",
+      "sha256": "0697af45d93339c08b15b21c81797e59d1c7cef99821be7e0523c77c1def96d2",
+      "bytes": 10653
+    },
+    {
+      "path": "docs/manual/custom-shaders.md",
+      "sha256": "ca22374a01ba142a7aeed3bf59226a7471bc0492dceb6b950388981fcc3636c5",
+      "bytes": 10053
+    },
+    {
+      "path": "docs/manual/debugging-glsl.md",
+      "sha256": "4e1283aa9cbc553950b9563a1523820b26cb599cfb384383989dbe0b5c722bde",
+      "bytes": 4185
+    },
+    {
+      "path": "docs/manual/debugging-javascript.md",
+      "sha256": "95b037452669ef18924775ea492912b479f8e96b0d455dbecae5f472872f9cc6",
+      "bytes": 12717
+    },
+    {
+      "path": "docs/manual/drawing-lines.md",
+      "sha256": "1b6b847282f4dc7cb6362836046719d075a0d8ce8f560f46cbc6c513e03bfcc9",
+      "bytes": 19313
+    },
+    {
+      "path": "docs/manual/faq.md",
+      "sha256": "2a79af57049b74eea00f0ad3da1d20c56dc664ed67f2e67793d78faaa39695c4",
+      "bytes": 3174
+    },
+    {
+      "path": "docs/manual/fog.md",
+      "sha256": "2c374d0d21c689f4aec1b7ab0b34a1074efdf66bd078069c38a6473355ef1c84",
+      "bytes": 9676
+    },
+    {
+      "path": "docs/manual/fundamentals.md",
+      "sha256": "016dd62138b0d739c40daf78595548a5af751193939d4b3d2bb52ffe5a54f48d",
+      "bytes": 12004
+    },
+    {
+      "path": "docs/manual/game.md",
+      "sha256": "15531ff81b8dc208dd6cde60671ac946f4b99d954ae21b00cfac89bc58da3a59",
+      "bytes": 21858
+    },
+    {
+      "path": "docs/manual/how-to-create-vr-content.md",
+      "sha256": "53394958ae830e16e1208299d6402d640a8cae24b87a89fe9797f862f0259fdf",
+      "bytes": 2462
+    },
+    {
+      "path": "docs/manual/how-to-dispose-of-objects.md",
+      "sha256": "7c99880be6b290cdd4c39977833061a0777d1c6ee39471ac64ceb358f3db9605",
+      "bytes": 12825
+    },
+    {
+      "path": "docs/manual/how-to-update-things.md",
+      "sha256": "bdf8f699ab8b7c8b29ac620e133f22476080179181ba6b2ccc3e30d1d938b33f",
+      "bytes": 12705
+    },
+    {
+      "path": "docs/manual/how-to-use-post-processing.md",
+      "sha256": "576d3d581d7f92dd3d15d9e512986df4988910844b3f8d9a6f13a7e17a6bffea",
+      "bytes": 11215
+    },
+    {
+      "path": "docs/manual/index.md",
+      "sha256": "09327912e80134ecd619908ef36ad7fb60b40878adaffca0516951eae8906567",
+      "bytes": 15944
+    },
+    {
+      "path": "docs/manual/indexed-textures.md",
+      "sha256": "1c9295bc151854f2c081fa030d946b4364379ac2f65a39b5c755e5f1ddcc80ac",
+      "bytes": 18789
+    },
+    {
+      "path": "docs/manual/input-and-events.md",
+      "sha256": "4e4f6482789bb1f75977d3323c668da739b4599e64c55b46f26f2d976c14edac",
+      "bytes": 22680
+    },
+    {
+      "path": "docs/manual/installation.md",
+      "sha256": "45a22e770e7b6bd45e58906408bf47c967c4d9c4b6111e5da005876566737eca",
+      "bytes": 15549
+    },
+    {
+      "path": "docs/manual/libraries-and-plugins.md",
+      "sha256": "388fb5fcc8ef04a964d47ab3de8feea9e952973ff8bddd9eccd9b17be748a07a",
+      "bytes": 2313
+    },
+    {
+      "path": "docs/manual/lights.md",
+      "sha256": "f3c39496c9a09600fd22845814805ab2f70ff2bcd04c1e9a3b3fe5fac2b35a7a",
+      "bytes": 18463
+    },
+    {
+      "path": "docs/manual/load-gltf.md",
+      "sha256": "df56ffc86b75cf8c2d159c06a1ebf26743019f28d5ac1e3c278d09a26585eb8b",
+      "bytes": 16603
+    },
+    {
+      "path": "docs/manual/load-obj.md",
+      "sha256": "928bec02683a4dcff63e91658e4cb7b6aa0c7eeb4daae263cf5a686b33a0d777",
+      "bytes": 2321
+    },
+    {
+      "path": "docs/manual/loading-3d-models.md",
+      "sha256": "cb9127da54bb5890af9e1992ac4368462a2379d082a64c5a8425b7815fa00a9b",
+      "bytes": 19112
+    },
+    {
+      "path": "docs/manual/material-table.md",
+      "sha256": "32f6632b0417413a2bb68303e30ca5bc4a5a6cbae99a25ac81d5c8566cbeaf5d",
+      "bytes": 10980
+    },
+    {
+      "path": "docs/manual/materials.md",
+      "sha256": "f8bae76bcaa85a6ff7a424c62b87f2dae0baa5888c7dd2ef916ff508a33dc468",
+      "bytes": 11421
+    },
+    {
+      "path": "docs/manual/matrix-transformations.md",
+      "sha256": "937ec05cad2f724ebde6a614fb04b26c549d056e2a3a4a99f241186aa64e7ac7",
+      "bytes": 14136
+    },
+    {
+      "path": "docs/manual/multiple-scenes.md",
+      "sha256": "8b6549ed3f6b153bc00bd3694fcc0d62a39b39e44cb0227616bec300a03ea35b",
+      "bytes": 14242
+    },
+    {
+      "path": "docs/manual/offscreencanvas.md",
+      "sha256": "3b30dd36431f1ba5cab477b267c8470b3fa39d42062b8e8186fe7da8a0544092",
+      "bytes": 2990
+    },
+    {
+      "path": "docs/manual/optimize-lots-of-objects-animated.md",
+      "sha256": "42b3a40b2bb5400314ae804a70bc2c4969f6a72455a0f3706e3d9564c87cd88a",
+      "bytes": 13682
+    },
+    {
+      "path": "docs/manual/optimize-lots-of-objects.md",
+      "sha256": "1e4c60d45aaa27cfad25bf22f60ddd79d706ff3145e6c3def74a3a7576ff7ec9",
+      "bytes": 15190
+    },
+    {
+      "path": "docs/manual/physics-2d-and-3d.md",
+      "sha256": "2e7935064b70f68833d5f617022d2f9f0aa6faf52fb966f9895410343d8168ef",
+      "bytes": 6158
+    },
+    {
+      "path": "docs/manual/physics.md",
+      "sha256": "6a1054dcd03857c19d34f34c849ab6cfa0276a2bedcbdb364460d77e9158e807",
+      "bytes": 6553
+    },
+    {
+      "path": "docs/manual/picking.md",
+      "sha256": "28ba78c91b10e8610181026e7809833dd0c669afe1e7a523e40b071fac431d36",
+      "bytes": 18026
+    },
+    {
+      "path": "docs/manual/post-processing.md",
+      "sha256": "27ca861f35d8fee7150853510d029328e2887c039ba583004c9ee492142c102f",
+      "bytes": 3526
+    },
+    {
+      "path": "docs/manual/prerequisites.md",
+      "sha256": "763bf7261b0e4f557994ac8d33fd17dd95e4000e4eade6b919130133e23293a3",
+      "bytes": 1877
+    },
+    {
+      "path": "docs/manual/primitives.md",
+      "sha256": "97f9f005022b7612a46f474df2d3e840a21abfec89108c403acaf9468e919a1a",
+      "bytes": 15335
+    },
+    {
+      "path": "docs/manual/rendering-on-demand.md",
+      "sha256": "484ee9a8aef94cf15296b6bd72a03ba3adf2d90a53597fcae7b43cf2100327a8",
+      "bytes": 13178
+    },
+    {
+      "path": "docs/manual/rendertargets.md",
+      "sha256": "4eb92c59d6b1221073946d40090b61e80e5e3c2866a38adca97f46774ac79760",
+      "bytes": 11927
+    },
+    {
+      "path": "docs/manual/responsive.md",
+      "sha256": "34f2a3d78399333ba69a25436cf57037467e633b205d7cfac86a1454dc69f34d",
+      "bytes": 13374
+    },
+    {
+      "path": "docs/manual/scenegraph.md",
+      "sha256": "e1a62d012bb0f634f28e4073ea65b6d25e59d981589925ca8edad83a9f450143",
+      "bytes": 10847
+    },
+    {
+      "path": "docs/manual/script-component-workflow.md",
+      "sha256": "fbe3461965286134466a3f947c277e0517c847fdf9674c1c8ea70cb2a3e82776",
+      "bytes": 15489
+    },
+    {
+      "path": "docs/manual/setup.md",
+      "sha256": "a7dffaca4199f51cf515f48c26127f6612a468d44506f43647487023faabb47b",
+      "bytes": 9586
+    },
+    {
+      "path": "docs/manual/shadertoy.md",
+      "sha256": "21a794d4fbe0d2533324fef4ce134514d49d66f2f809a50d6aa5853152ea697e",
+      "bytes": 4818
+    },
+    {
+      "path": "docs/manual/shadows.md",
+      "sha256": "c95d81728006a72b173ce34869e2d5ace7e7da4926f707ffa074de1e3888d406",
+      "bytes": 4748
+    },
+    {
+      "path": "docs/manual/textures.md",
+      "sha256": "29708510b30cb62091f65a4f6bdc0aeca48262c4bd26d3decdfb65ff9fec51f8",
+      "bytes": 10842
+    },
+    {
+      "path": "docs/manual/tips.md",
+      "sha256": "6012330d68f75f4c6b4e1c5fbf94312a0d5995dfcc748144c99c72f9f1eab345",
+      "bytes": 11000
+    },
+    {
+      "path": "docs/manual/transparency.md",
+      "sha256": "1fd6a67cf9c61985c5181556bf1135e6577f095392ce704742df2b52c6c76473",
+      "bytes": 15094
+    },
+    {
+      "path": "docs/manual/ui-layout-and-interaction.md",
+      "sha256": "381072ab12da01df0bc6d7021443e24f601005edb50ed19cf3eccb731c13bed2",
+      "bytes": 4041
+    },
+    {
+      "path": "docs/manual/uniform-types.md",
+      "sha256": "7726d333ed5e72e4c4c83768a59ef804fc50fd37d4e706b74f3ebd5b3af023a4",
+      "bytes": 13439
+    },
+    {
+      "path": "docs/manual/useful-links.md",
+      "sha256": "900fb79924372a44702f7c03dc701888c86d1203ee2be82797ae78543726c9d8",
+      "bytes": 1674
+    },
+    {
+      "path": "docs/manual/voxel-geometry.md",
+      "sha256": "ba2d76be85fd45b82f275518821766eeddf63a24266188c4c699a998e44b7acb",
+      "bytes": 18998
+    },
+    {
+      "path": "docs/manual/webgl-compatibility-check.md",
+      "sha256": "1ca18f4d657d393a213b2eac3c98fdc7e877c538665894048fe7e2e06f6f4f74",
+      "bytes": 15309
+    },
+    {
+      "path": "docs/manual/webgpu-postprocessing.md",
+      "sha256": "706d0ba197f930031f43195d4676f900c2b6fc7712c6cd462abe451fca95601d",
+      "bytes": 2734
+    },
+    {
+      "path": "docs/manual/webgpurenderer.md",
+      "sha256": "632060b994e109fa559ec3163af250d29a324b27434b1de41e2c559fdbe9c4a9",
+      "bytes": 3982
+    },
+    {
+      "path": "docs/manual/webxr-basics.md",
+      "sha256": "ee99d163078f3d9414eddf2547825b0deda449763594711951483533227175cf",
+      "bytes": 2872
+    },
+    {
+      "path": "docs/manual/webxr-look-to-select.md",
+      "sha256": "d6c8b2518b1bec074b6b9cf72360b2cc9807b39392e48646368e70c2a24487df",
+      "bytes": 3156
+    },
+    {
+      "path": "docs/manual/webxr-point-to-select.md",
+      "sha256": "f4d2d6033b14e234f3a801ffaf163bc6823dc28b579ce3e47e1dd9d152af6da7",
+      "bytes": 2730
+    },
+    {
+      "path": "docs/notes/audio-notes.md",
+      "sha256": "58c91d1b4e80ee850d7360bfba39ce8bdf6a173f0db97a52f5fb4e0d09022bd8",
+      "bytes": 10216
+    },
+    {
+      "path": "docs/notes/dragonbones-notes.md",
+      "sha256": "338335abef12c6895df53c45c95b9a157303a0d69d8580b89e308d975b23371c",
+      "bytes": 19558
+    },
+    {
+      "path": "docs/notes/particle-2d-notes.md",
+      "sha256": "cf4213f0841c5112546d49dac3692c17a635ccceefbd6e6b8ae399084a5282c7",
+      "bytes": 12290
+    },
+    {
+      "path": "docs/notes/physics-3d-notes.md",
+      "sha256": "6bcd22998906f38d589eb83eb58ef097d83bc0b7890bc5e9069fe4b8c09d50c3",
+      "bytes": 34978
+    },
+    {
+      "path": "docs/notes/physics-asset-sourcing.md",
+      "sha256": "f3b629c4ca57880947475e2e6f1e5cf1a0e593a2f953fe882899fa06f9d97815",
+      "bytes": 7786
+    },
+    {
+      "path": "docs/notes/pose-graph-notes.md",
+      "sha256": "201903e98b9ca9b88c9f0388eb5ba378c959b1f621e8cc0caa74c1b551389ee7",
+      "bytes": 11125
+    },
+    {
+      "path": "docs/notes/post-process-notes.md",
+      "sha256": "06004a9888154afe766169daf7adffce79e4ef55c2f8acbd072e16913d5baeb8",
+      "bytes": 3093
+    },
+    {
+      "path": "docs/notes/spine-asset-sourcing.md",
+      "sha256": "1af5e4b989177f08e1ef9139828d0f2b164eee2efae6ae5d5a101a2cdbcb5768",
+      "bytes": 5496
+    },
+    {
+      "path": "docs/notes/tiled-map-notes.md",
+      "sha256": "2e206ba7ca92546d634878c6eb4ba2903cd3baf0b13363491369733cd280c73b",
+      "bytes": 10718
+    },
+    {
+      "path": "docs/notes/video-notes.md",
+      "sha256": "0943d17b208d9341f41156560472a982617350306c3bfedcc8f5380399dfd239",
+      "bytes": 13901
+    },
+    {
+      "path": "docs/notes/webview-notes.md",
+      "sha256": "9143a487caf5c1e947b51d110191988238cdbd43de9a72d7cb11fca8c8d5a575",
+      "bytes": 13931
+    },
+    {
+      "path": "docs/reference/api-scenario-gap-matrix.md",
+      "sha256": "ba2f8cce0307e5635c59ffc197329f45a62571d4f0ec9935aa1f30c78aa58576",
+      "bytes": 49335
+    },
+    {
+      "path": "docs/reference/api-stability.md",
+      "sha256": "83ddd912a6f2b9febda28bad85f86e94837d14cb56a76995f3ac45096900c79a",
+      "bytes": 5675
+    },
+    {
+      "path": "docs/reference/example-specification.md",
+      "sha256": "786bbfba7fdaef07120ec46fd070f3178badeab21afed33d2f20e839766c356f",
+      "bytes": 19369
+    },
+    {
+      "path": "docs/reference/owner-decisions.md",
+      "sha256": "b3ce8974dec0d6f22e1c236e969cd89665b16cf6333dadabd518cbc8ffa08310",
+      "bytes": 77086
+    },
+    {
+      "path": "docs/reference/pal-source.md",
+      "sha256": "648346f085a443648be49565d4a4272e053d44e8ec83a642296a6d49291c5c50",
+      "bytes": 2877
+    },
+    {
+      "path": "docs/reference/release-review.md",
+      "sha256": "69d9602bc6a32a03fe704796c879a520c3c2ad8a629831ccf109b0caf10d083a",
+      "bytes": 4483
+    },
+    {
+      "path": "docs/reference/repository-layout.md",
+      "sha256": "93a654a0e740647e8429f31b19e6f89c26d3f97a59f1aeeb1edb0687147e4d03",
+      "bytes": 4773
+    },
+    {
+      "path": "docs/reference/scope-decisions.md",
+      "sha256": "da4b1fa831101bef87f0610e0272b4e97af54400235c85f458e0de3be88f0e4e",
+      "bytes": 19166
+    },
+    {
+      "path": "docs/reference/verification.md",
+      "sha256": "1c7d12896add2e9e11ef718ecb2c7f0b9939c13a20136b7c77a60d8e64bd8bb7",
+      "bytes": 3060
+    },
+    {
+      "path": "docs/reference/web-features.md",
+      "sha256": "7174a240591fb984ae52f89293ba7b1f28683865cb43300e3cb56e1864e3a99f",
+      "bytes": 1971
+    },
+    {
+      "path": "docs/webgl2-only.md",
+      "sha256": "b8295f0a8826ade20a9dc41c6ac3def11aa50593be0008471a3f090337f9ba8c",
+      "bytes": 2283
+    }
+  ],
+  "totalFiles": 107,
+  "totalBytes": 1240031
+}

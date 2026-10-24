@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1280, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <!-- 空 data-URI favicon:阻止浏览器请求 /favicon.ico 产生 404 噪音(无网络资源依赖) -->
+  <link rel="icon" href="data:,">
+  <title>Orrery — Solar System Instrument</title>
+  <style>
+    :root {
+      --ink: #dfe8f7;
+      --ink-dim: #8fa2bd;
+      --line: rgba(150, 190, 235, 0.18);
+      --glass: rgba(12, 20, 34, 0.72);
+      --accent: #7fe3ff;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #03050b;
+      overflow: hidden;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+    }
+    #app-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      touch-action: none;
+    }
+    /* 暗角:纯装饰覆盖层,不接收指针事件,不遮挡拾取 */
+    #vignette {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: radial-gradient(ellipse at 50% 46%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.45) 100%);
+      z-index: 1;
+    }
+    .hud {
+      position: fixed;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* ---- 左下角标题 / 提示 ---- */
+    #brand {
+      left: 22px;
+      bottom: 18px;
+      pointer-events: none;
+      user-select: none;
+    }
+    #brand h1 {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.34em;
+      color: #cfe2fa;
+      text-shadow: 0 0 18px rgba(120, 200, 255, 0.35);
+    }
+    #brand p {
+      margin: 5px 0 0;
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      color: var(--ink-dim);
+    }
+
+    /* ---- 右下/右上:Reset ---- */
+    #reset-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 6;
+      padding: 8px 16px;
+      font: 600 12px/1 "Segoe UI", Arial, sans-serif;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--ink);
+      background: linear-gradient(180deg, rgba(30, 44, 66, 0.9), rgba(14, 22, 36, 0.9));
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      cursor: pointer;
+      transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+    #reset-btn:hover {
+      color: #fff;
+      border-color: rgba(127, 227, 255, 0.6);
+      background: linear-gradient(180deg, rgba(40, 60, 88, 0.95), rgba(18, 28, 44, 0.95));
+    }
+    #reset-btn:active { transform: translateY(1px); }
+
+    /* ---- 底部中央:时间倍率五档 ---- */
+    #speed-panel {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      z-index: 6;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      background: var(--glass);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+    }
+    #speed-panel .hud-title {
+      margin-right: 4px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      color: var(--ink-dim);
+      text-transform: uppercase;
+    }
+    .speed {
+      min-width: 46px;
+      padding: 7px 9px;
+      font: 600 12px/1 "Segoe UI", Arial, sans-serif;
+      color: var(--ink-dim);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(150, 190, 235, 0.14);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: color 0.12s ease, border-color 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+    }
+    .speed:hover { color: #fff; border-color: rgba(127, 227, 255, 0.45); }
+    .speed.active {
+      color: #041018;
+      background: linear-gradient(180deg, #a9f0ff, #55c8ea);
+      border-color: #bff4ff;
+      box-shadow: 0 0 14px rgba(110, 220, 255, 0.55);
+    }
+
+    /* ---- 信息卡(默认隐藏,由点击行星驱动) ---- */
+    #info-card {
+      position: fixed;
+      top: 78px;
+      right: 20px;
+      width: 268px;
+      z-index: 6;
+      padding: 14px 16px 12px;
+      background: linear-gradient(180deg, rgba(16, 26, 42, 0.92), rgba(9, 15, 26, 0.92));
+      border: 1px solid rgba(127, 227, 255, 0.32);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 46px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(127, 227, 255, 0.06) inset;
+      transform-origin: top right;
+      animation: card-in 0.18s ease-out;
+    }
+    #info-card.hidden { display: none; }
+    @keyframes card-in {
+      from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+      to { opacity: 1; transform: none; }
+    }
+    #info-card header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      padding-bottom: 9px;
+      border-bottom: 1px solid rgba(127, 227, 255, 0.16);
+    }
+    #ic-name {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #eaf6ff;
+    }
+    #ic-type {
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    #ic-fields {
+      margin: 10px 0 0;
+      display: grid;
+      gap: 7px;
+      font-size: 12px;
+    }
+    #ic-fields > div {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    #ic-fields dt {
+      color: var(--ink-dim);
+      letter-spacing: 0.04em;
+    }
+    #ic-fields dd {
+      margin: 0;
+      color: #f2f7ff;
+      font-variant-numeric: tabular-nums;
+    }
+    #ic-fields dd small { color: var(--ink-dim); font-size: 10.5px; }
+    .ic-hint {
+      margin: 11px 0 0;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: rgba(143, 162, 189, 0.75);
+    }
+  </style>
+  <script>
+    // 页面契约(MASTER-CONTEXT §12.1):
+    //   window.__appReady — 初始 false,应用首帧渲染完成后由 /dist/app.js 置 true
+    //   window.__bench    — { getState(): object, reset(): void },由 /dist/app.js 提供
+    window.__appReady = false;
+    window.__bench = null;
+  </script>
+  <!-- 引擎 import map:裸名 three / three/addons/ 指向本地 vendored 引擎,无任何网络依赖 -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "/dist/vendor/three.module.js",
+      "three/addons/": "/dist/vendor/addons/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="app-canvas"></canvas>
+  <div id="vignette"></div>
+
+  <div id="brand" class="hud">
+    <h1>ORRERY</h1>
+    <p>click a planet to inspect &middot; drag to orbit &middot; wheel to zoom</p>
+  </div>
+
+  <button id="reset-btn" data-ui="reset" aria-label="reset" title="Restore initial state">Reset</button>
+
+  <div id="speed-panel" role="group" aria-label="time scale controls">
+    <span class="hud-title">Time</span>
+    <button class="speed" data-ui="speed-0.5x" data-speed="0.5" aria-label="speed-0.5x" aria-pressed="false">0.5x</button>
+    <button class="speed active" data-ui="speed-1x" data-speed="1" aria-label="speed-1x" aria-pressed="true">1x</button>
+    <button class="speed" data-ui="speed-2x" data-speed="2" aria-label="speed-2x" aria-pressed="false">2x</button>
+    <button class="speed" data-ui="speed-4x" data-speed="4" aria-label="speed-4x" aria-pressed="false">4x</button>
+    <button class="speed" data-ui="speed-8x" data-speed="8" aria-label="speed-8x" aria-pressed="false">8x</button>
+  </div>
+
+  <aside id="info-card" data-ui="info-card" class="hidden" aria-live="polite" aria-label="planet information">
+    <header>
+      <h2 id="ic-name">&mdash;</h2>
+      <span id="ic-type">&mdash;</span>
+    </header>
+    <dl id="ic-fields">
+      <div><dt>Orbit radius</dt><dd id="ic-orbit">&mdash;</dd></div>
+      <div><dt>Orbital period</dt><dd id="ic-period">&mdash;</dd></div>
+      <div><dt>Diameter</dt><dd id="ic-diameter">&mdash;</dd></div>
+      <div><dt>Moons</dt><dd id="ic-moons">&mdash;</dd></div>
+      <div><dt>Orbit angle</dt><dd id="ic-angle">&mdash;</dd></div>
+    </dl>
+    <p class="ic-hint">click empty space to dismiss</p>
+  </aside>
+
+  <script type="module" src="/dist/app.js"></script>
+</body>
+</html>

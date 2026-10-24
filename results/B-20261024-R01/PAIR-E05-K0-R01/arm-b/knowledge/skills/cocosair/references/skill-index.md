@@ -1,0 +1,11 @@
+# Legacy skill index
+
+Use the generated [suite index](../../index.json) or [readable index](../../INDEX.md).
+This compatibility path will remain for at least two release cycles; it is not a separately maintained routing source.
+The first three historical rows remain below. The [complete original inventory](skill-index-archive.md) retains all old rows and provenance on demand.
+
+| Skill                    | Coverage                                                                                                                                               | Key classes/functions                                                 | Inline sources (canonical)                                                                                                          |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `cocosair` (this router) | router, Code First discipline, canonical minimal code pattern, the three-tier capability-surface wording                                               | `createAirApp`, `Scene`, `AirApp`, `AirAppOptions`                    | `README.md`, `AGENTS.md`, `docs/manual/runtime-capability-layers.md`                                                                |
+| `cocosair-project-setup` | installation, the single main entry, importmap and canvas admission, TS consumption, `AIR_FEATURES` variants and the default 26-feature surface        | entries: `.`, `./bootstrap`, `./html-source` (`package.json` exports) | `docs/manual/installation.md`, `build/README.md`, `tools/build/build.cjs`, `docs/reference/web-features.md`                         |
+| `cocosair-application`   | `createAirApp` options, `run`/`close` and full-page reload, single-runtime admission, designResolution and screenMode, `pixelRatioCap`, context health | `createAirApp`, `AirApp`, `AirAppOptions`, `AirContextHealth`         | `docs/manual/safe-startup-and-release.md`, `docs/webgl2-only.md`, `src/air/bootstrap.ts`, `src/air/app.ts`, `src/air/app-config.ts` |

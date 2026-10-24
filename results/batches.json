@@ -1,19 +1,22 @@
 {
-  "updatedAt": "2026-10-05T21:47:26.521Z",
+  "updatedAt": "2026-10-24T05:31:05.932Z",
   "batches": [
     {
-      "batchId": "B-20261005-R01",
-      "createdAt": "2026-10-05T02:58:17.417Z",
+      "batchId": "B-20261023-R01",
+      "createdAt": "2026-10-23T15:39:15.636Z",
       "pairs": [
-        "PAIR-E01-K0-R01",
-        "PAIR-E05-K0-R01"
+        "PAIR-E01-K1-R01",
+        "PAIR-E02-K1-R01",
+        "PAIR-E03-K1-R01",
+        "PAIR-E04-K1-R01",
+        "PAIR-E05-K1-R01"
       ],
-      "lastPairAt": "2026-10-05T02:58:21.224Z",
-      "pairCount": 2
+      "lastPairAt": "2026-10-23T15:39:41.003Z",
+      "pairCount": 5
     },
     {
-      "batchId": "B-20261005-R02",
-      "createdAt": "2026-10-05T06:59:41.416Z",
+      "batchId": "B-20261023-R02",
+      "createdAt": "2026-10-23T15:44:17.899Z",
       "pairs": [
         "PAIR-E01-K0-R01",
         "PAIR-E02-K0-R01",
@@ -21,46 +24,22 @@
         "PAIR-E04-K0-R01",
         "PAIR-E05-K0-R01"
       ],
-      "lastPairAt": "2026-10-05T06:59:55.404Z",
+      "lastPairAt": "2026-10-23T15:44:29.858Z",
       "pairCount": 5
     },
     {
-      "batchId": "B-20261005-R03",
-      "createdAt": "2026-10-05T08:02:17.781Z",
+      "batchId": "B-20261024-R01",
+      "createdAt": "2026-10-24T05:30:47.066Z",
       "pairs": [
         "PAIR-E01-K0-R01",
-        "PAIR-E02-K0-R01"
+        "PAIR-E02-K0-R01",
+        "PAIR-E03-K0-R01",
+        "PAIR-E04-K0-R01",
+        "PAIR-E05-K0-R01"
       ],
-      "lastPairAt": "2026-10-05T08:02:24.472Z",
-      "pairCount": 2,
-      "note": "并行编排会话的 Core Sanity 批次(2026-10-05);曾被本会话误判 rogue 后恢复"
-    },
-    {
-      "batchId": "B-20261005-R04",
-      "createdAt": "2026-10-05T13:21:39.635Z",
-      "pairs": [
-        "PAIR-E06-K0-R01",
-        "PAIR-E07-K0-R01",
-        "PAIR-E08-K0-R01",
-        "PAIR-E09-K0-R01",
-        "PAIR-E10-K0-R01"
-      ],
-      "lastPairAt": "2026-10-05T13:21:57.335Z",
-      "pairCount": 5
-    },
-    {
-      "batchId": "B-20261006-R01",
-      "createdAt": "2026-10-05T21:47:09.612Z",
-      "pairs": [
-        "PAIR-E01-K0-R02",
-        "PAIR-E02-K0-R02",
-        "PAIR-E03-K0-R02",
-        "PAIR-E04-K0-R02",
-        "PAIR-E05-K0-R02"
-      ],
-      "lastPairAt": "2026-10-05T21:47:26.521Z",
+      "lastPairAt": "2026-10-24T05:31:05.932Z",
       "pairCount": 5
     }
   ],
-  "note": "方案 A Owner 裁决:toolCalls 保持 hard 合同;历史数据全清;下次 round create --track core 从 B-<今日>-R01 开始"
+  "note": "方案 A Owner 裁决:toolCalls 保持 hard 合同;历史数据全清(2026-10-24 执行:删除 2026-10-05..10-18 共 11 个批次目录含 R97 残批,及注册表幻影条目 R98/R99);下次 round create --track core 从 B-<今日>-R01 开始"
 }

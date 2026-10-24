@@ -1,0 +1,157 @@
+{
+  "batchId": "B-20261023-R01",
+  "createdAt": "2026-10-23T15:39:41.013Z",
+  "updatedAt": "2026-10-23T15:44:09.430Z",
+  "plan": {
+    "source": "--matrix E01,E02,E03,E04,E05|K1|R01",
+    "pairs": [
+      {
+        "scene": "E01",
+        "knowledge": "K1",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E01-K1-R01",
+        "batchId": "B-20261023-R01"
+      },
+      {
+        "scene": "E02",
+        "knowledge": "K1",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E02-K1-R01",
+        "batchId": "B-20261023-R01"
+      },
+      {
+        "scene": "E03",
+        "knowledge": "K1",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E03-K1-R01",
+        "batchId": "B-20261023-R01"
+      },
+      {
+        "scene": "E04",
+        "knowledge": "K1",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E04-K1-R01",
+        "batchId": "B-20261023-R01"
+      },
+      {
+        "scene": "E05",
+        "knowledge": "K1",
+        "rep": "R01",
+        "track": "core",
+        "pairId": "PAIR-E05-K1-R01",
+        "batchId": "B-20261023-R01"
+      }
+    ]
+  },
+  "engine": {
+    "three": {
+      "version": "0.186.1"
+    },
+    "cocosair": {
+      "tarball": "vendor/cocosair.js-1.0.0-k0.tgz",
+      "sha256": "ddd5072a887c34556262e05424a46d6b8c8b5fdaa8023408b0696143a7a30565"
+    }
+  },
+  "pairs": [
+    {
+      "pairId": "PAIR-E01-K1-R01",
+      "arms": {
+        "arm-a": {
+          "state": "created"
+        },
+        "arm-b": {
+          "state": "created"
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T15:40:58.422Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E02-K1-R01",
+      "arms": {
+        "arm-a": {
+          "state": "created"
+        },
+        "arm-b": {
+          "state": "created"
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T15:40:58.437Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E03-K1-R01",
+      "arms": {
+        "arm-a": {
+          "state": "created"
+        },
+        "arm-b": {
+          "state": "created"
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T15:40:58.452Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E04-K1-R01",
+      "arms": {
+        "arm-a": {
+          "state": "created"
+        },
+        "arm-b": {
+          "state": "created"
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T15:40:58.466Z"
+      }
+    },
+    {
+      "pairId": "PAIR-E05-K1-R01",
+      "arms": {
+        "arm-a": {
+          "state": "created"
+        },
+        "arm-b": {
+          "state": "created"
+        }
+      },
+      "preflight": {
+        "status": "PASS",
+        "reasons": [],
+        "checkedAt": "2026-10-23T15:40:58.482Z"
+      }
+    }
+  ],
+  "stages": {
+    "preflight": {
+      "lastRunAt": "2026-10-23T15:40:58.482Z",
+      "summary": "PASS",
+      "blocked": [],
+      "pairs": 5
+    },
+    "dispatch": {
+      "lastRunAt": "2026-10-23T15:41:01.888Z",
+      "note": "双臂 dispatchAt 已盖章;请立即同批启动两臂会话"
+    }
+  },
+  "notes": [
+    "Agent Run 执行说明见同目录 DISPATCH.md;执行完毕后依次 --stage collect/validate/blind/aggregate",
+    "ABANDONED 2026-10-23: 切片选择错误(K1×R01),Owner 指示全新开始 K0 全量轮,不沿用断点续跑切片推断;E01 双臂派发 2.5min 后即停,无 RESULT.md,未推进任何后续阶段。目录原样保留(永不删除),不作数。"
+  ]
+}

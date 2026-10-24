@@ -1,0 +1,646 @@
+{
+  "runId": "RUN-PAIR-E02-K0-R01-b",
+  "generatedAt": "2026-10-24T09:26:39.365Z",
+  "results": [
+    {
+      "probeId": "P1",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-24T09:26:25.086Z",
+      "precondition": {
+        "expr": "__appReady",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "__appReady",
+            "met": true,
+            "source": "session"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:1500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 1500
+            },
+            "raw": "wait:1500",
+            "performed": "waited 1500ms"
+          }
+        ],
+        "durationMs": 1504
+      },
+      "stateAssertion": {
+        "expr": "$.assetLoaded == true && $.assetRequests >= 1",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "nonBlank",
+        "params": {
+          "region": "full",
+          "minLitPixelRatio": 0.05
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.05,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "litRatio": 0.7821,
+              "background": [
+                86,
+                38,
+                41
+              ]
+            }
+          ],
+          "worstLitRatio": 0.7821
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.8576445611806198,
+            "z": 0
+          },
+          "wavePhase": 0.526,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 28.8838456780052,
+          "epoch": 0,
+          "frame": 29,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.32965761143442374,
+            "z": 0
+          },
+          "wavePhase": 2.0429000000059605,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 59.73715651107263,
+          "epoch": 0,
+          "frame": 116,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "shots": [
+          "P1-before.png",
+          "P1-vis.png",
+          "P1-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 2224
+      }
+    },
+    {
+      "probeId": "P2",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-24T09:26:27.310Z",
+      "precondition": {
+        "expr": "P1 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P1 passed",
+            "met": true,
+            "source": "probe P1",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:500",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 500
+            },
+            "raw": "wait:500",
+            "performed": "waited 500ms"
+          }
+        ],
+        "durationMs": 502
+      },
+      "stateAssertion": {
+        "expr": "$.after.wavePhase != $.before.wavePhase",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "lower:60%",
+          "minMotionPixelRatio": 0.01
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.01,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 288,
+                "w": 1280,
+                "h": 432
+              },
+              "diffRatio": 0.751
+            }
+          ],
+          "worstDiffRatio": 0.751
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.42786116666570373,
+            "z": 0
+          },
+          "wavePhase": 2.7595999999940406,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 59.99193385781285,
+          "epoch": 0,
+          "frame": 120,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 1.1914981204995634,
+            "z": 0
+          },
+          "wavePhase": 4.776400000005964,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 59.99193385781285,
+          "epoch": 0,
+          "frame": 120,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "shots": [
+          "P2-before.png",
+          "P2-motion-a.png",
+          "P2-motion-b.png",
+          "P2-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 1500
+      },
+      "timings": {
+        "totalMs": 3438
+      }
+    },
+    {
+      "probeId": "P3",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-24T09:26:30.748Z",
+      "precondition": {
+        "expr": "P2 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P2 passed",
+            "met": true,
+            "source": "probe P2",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "wait:300",
+        "steps": [
+          {
+            "verb": "wait",
+            "arg": {
+              "ms": 300
+            },
+            "raw": "wait:300",
+            "performed": "waited 300ms"
+          }
+        ],
+        "durationMs": 308
+      },
+      "stateAssertion": {
+        "expr": "$.after.boatPosition.y != $.before.boatPosition.y",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "motion",
+        "params": {
+          "region": "center:40%",
+          "minMotionPixelRatio": 0.002
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.002,
+          "spanMs": 500,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 384,
+                "y": 216,
+                "w": 512,
+                "h": 288
+              },
+              "diffRatio": 0.8205
+            }
+          ],
+          "worstDiffRatio": 0.8205
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.5996631044787194,
+            "z": 0
+          },
+          "wavePhase": 6.209700000002987,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 60,
+          "epoch": 0,
+          "frame": 121,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.38736352087062814,
+            "z": 0
+          },
+          "wavePhase": 7.426299999997031,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 60,
+          "epoch": 0,
+          "frame": 121,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "shots": [
+          "P3-before.png",
+          "P3-motion-a.png",
+          "P3-motion-b.png",
+          "P3-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 900
+      },
+      "timings": {
+        "totalMs": 2714
+      }
+    },
+    {
+      "probeId": "P4",
+      "weight": 1,
+      "status": "FAIL",
+      "startedTs": "2026-10-24T09:26:33.462Z",
+      "precondition": {
+        "expr": "P3 passed",
+        "met": true,
+        "outcome": "PASS",
+        "details": [
+          {
+            "part": "P3 passed",
+            "met": true,
+            "source": "probe P3",
+            "status": "PASS"
+          }
+        ]
+      },
+      "action": {
+        "raw": "drag:(0.50,0.50)->(0.78,0.50)",
+        "steps": [
+          {
+            "verb": "drag",
+            "arg": {
+              "from": {
+                "x": 0.5,
+                "y": 0.5
+              },
+              "to": {
+                "x": 0.78,
+                "y": 0.5
+              }
+            },
+            "raw": "drag:(0.50,0.50)->(0.78,0.50)",
+            "performed": "drag (640,360)->(998,360)"
+          }
+        ],
+        "durationMs": 400
+      },
+      "stateAssertion": {
+        "expr": "($.after.cameraAzimuth - $.before.cameraAzimuth > 20) || ($.before.cameraAzimuth - $.after.cameraAzimuth > 20)",
+        "ok": false,
+        "value": false,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "minDiffPixelRatio": 0.02
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "minRatio": 0.02,
+          "mode": "before-after",
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "diffRatio": 0.9668
+            }
+          ],
+          "bestDiffRatio": 0.9668
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.9189857614218205,
+            "z": 0
+          },
+          "wavePhase": 8.909900000005981,
+          "toneMix": 0,
+          "cameraAzimuth": 35,
+          "fps": 60,
+          "epoch": 0,
+          "frame": 121,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 1.1230115061623578,
+            "z": 0
+          },
+          "wavePhase": 10.026700000003006,
+          "toneMix": 0,
+          "cameraAzimuth": 92.27999999999997,
+          "fps": 59.991933857362184,
+          "epoch": 0,
+          "frame": 120,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "shots": [
+          "P4-before.png",
+          "P4-delta.png",
+          "P4-after.png"
+        ],
+        "networkSince": [],
+        "sampleWindowMs": 200
+      },
+      "timings": {
+        "totalMs": 2248
+      }
+    },
+    {
+      "probeId": "P5",
+      "weight": 1,
+      "status": "PASS",
+      "startedTs": "2026-10-24T09:26:35.710Z",
+      "precondition": {
+        "expr": "P4 passed",
+        "met": false,
+        "outcome": "FAIL",
+        "details": [
+          {
+            "part": "P4 passed",
+            "met": false,
+            "source": "probe P4",
+            "status": "FAIL"
+          }
+        ]
+      },
+      "action": {
+        "raw": "click:ui#tone-toggle",
+        "steps": [
+          {
+            "verb": "click",
+            "arg": {
+              "kind": "ui",
+              "name": "tone-toggle"
+            },
+            "raw": "click:ui#tone-toggle",
+            "performed": "click @ (49,734) ui=tone-toggle"
+          }
+        ],
+        "durationMs": 78
+      },
+      "stateAssertion": {
+        "expr": "$.toneMix > 0.7",
+        "ok": true,
+        "value": true,
+        "error": null
+      },
+      "visualAssertion": {
+        "ok": true,
+        "type": "pixelDelta",
+        "params": {
+          "region": "full",
+          "metric": "avgColorShift",
+          "minShift": 8
+        },
+        "notes": [],
+        "expect": null,
+        "metrics": {
+          "metric": "avgColorShift",
+          "minShift": 8,
+          "perRegion": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "w": 1280,
+                "h": 720
+              },
+              "avgColorShift": 85.97
+            }
+          ],
+          "bestShift": 85.97
+        }
+      },
+      "evidence": {
+        "stateBefore": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.7771168080624974,
+            "z": 0
+          },
+          "wavePhase": 11.359900000005991,
+          "toneMix": 0,
+          "cameraAzimuth": 92.27999999999997,
+          "fps": 60,
+          "epoch": 0,
+          "frame": 121,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "stateAfter": {
+          "engine": "cocosair",
+          "assetLoaded": true,
+          "assetRequests": 1,
+          "boatPosition": {
+            "x": 0,
+            "y": 0.5251762744469981,
+            "z": 0
+          },
+          "wavePhase": 13.726799999997061,
+          "toneMix": 1,
+          "cameraAzimuth": 92.27999999999997,
+          "fps": 60.00100842039975,
+          "epoch": 0,
+          "frame": 120,
+          "seaVertices": 5184,
+          "error": null
+        },
+        "shots": [
+          "P5-before.png",
+          "P5-delta.png",
+          "P5-after.png"
+        ],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 3496
+      },
+      "ranDespitePredecessor": true,
+      "predecessor": "P4",
+      "failedPreconditionParts": [
+        "P4 passed"
+      ]
+    },
+    {
+      "probeId": "P6",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-24T09:26:39.206Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P4"
+        ]
+      }
+    },
+    {
+      "probeId": "P7",
+      "weight": 1,
+      "status": "SKIPPED_BY_DEPENDENCY",
+      "startedTs": "2026-10-24T09:26:39.206Z",
+      "precondition": null,
+      "action": {
+        "raw": "click:ui#reset",
+        "steps": [],
+        "durationMs": 0
+      },
+      "stateAssertion": null,
+      "visualAssertion": null,
+      "evidence": {
+        "stateBefore": null,
+        "stateAfter": null,
+        "shots": [],
+        "networkSince": []
+      },
+      "timings": {
+        "totalMs": 0
+      },
+      "skippedBy": {
+        "kind": "fullPassDeps",
+        "notPassed": [
+          "P6"
+        ]
+      }
+    }
+  ]
+}

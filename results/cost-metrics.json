@@ -1,324 +1,271 @@
 {
-  "generatedAt": "2026-10-06T02:20:00.025Z",
-  "source": "机器口径:各臂 execution.json.toolCallsEvidence(宿主运行时 tool_uses)+ 起止时戳;双臂齐备的 pair 才计入,缺任一臂整对排除",
+  "generatedAt": "2026-10-24T09:30:11.361Z",
+  "source": "机器口径:各臂 execution.json.toolCallsEvidence(宿主运行时 tool_uses);该字段缺失的臂回退 workspace/.budget/toolcall.count 行数(toolcall-recorder 逐调用落盘,与 qualification 同事实源),两口径逐臂记入 evidence;双臂齐备的 pair 才计入,缺任一臂整对排除",
   "coverage": {
     "batches": [
-      "B-20261005-R02",
-      "B-20261005-R04",
-      "B-20261006-R01"
+      "B-20261023-R02",
+      "B-20261024-R01"
     ],
-    "pairs": 15
+    "pairs": 10
   },
   "runs": [
     {
-      "pair": "E01-K0-R01 @ B-20261005-R02",
+      "pair": "E01-K0-R01 @ B-20261023-R02",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
       "three": {
-        "toolUses": 34,
-        "durationSec": 1139,
-        "tokens": null
+        "toolUses": 29,
+        "durationSec": 717,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
       },
       "cocosair": {
-        "toolUses": 80,
-        "durationSec": 1839,
-        "tokens": null
+        "toolUses": 76,
+        "durationSec": 1217,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": 47
+    },
+    {
+      "pair": "E02-K0-R01 @ B-20261023-R02",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+      "three": {
+        "toolUses": 40,
+        "durationSec": 933,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 94,
+        "durationSec": 2453,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": 54
+    },
+    {
+      "pair": "E03-K0-R01 @ B-20261023-R02",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+      "three": {
+        "toolUses": 27,
+        "durationSec": 971,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 73,
+        "durationSec": 1988,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
       },
       "dTools": 46
     },
     {
-      "pair": "E02-K0-R01 @ B-20261005-R02",
+      "pair": "E04-K0-R01 @ B-20261023-R02",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
       "three": {
-        "toolUses": 45,
-        "durationSec": 1831,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 86,
-        "durationSec": 3469,
-        "tokens": null
-      },
-      "dTools": 41
-    },
-    {
-      "pair": "E03-K0-R01 @ B-20261005-R02",
-      "three": {
-        "toolUses": 42,
-        "durationSec": 1418,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 49,
-        "durationSec": 2618,
-        "tokens": null
-      },
-      "dTools": 7
-    },
-    {
-      "pair": "E04-K0-R01 @ B-20261005-R02",
-      "three": {
-        "toolUses": 63,
-        "durationSec": 2309,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 40,
-        "durationSec": 923,
-        "tokens": null
-      },
-      "dTools": -23
-    },
-    {
-      "pair": "E05-K0-R01 @ B-20261005-R02",
-      "three": {
-        "toolUses": 41,
-        "durationSec": 4372,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 58,
-        "durationSec": 4104,
-        "tokens": null
-      },
-      "dTools": 17
-    },
-    {
-      "pair": "E06-K0-R01 @ B-20261005-R04",
-      "three": {
-        "toolUses": 34,
-        "durationSec": 1391,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 63,
-        "durationSec": 2023,
-        "tokens": null
-      },
-      "dTools": 29
-    },
-    {
-      "pair": "E07-K0-R01 @ B-20261005-R04",
-      "three": {
-        "toolUses": 42,
-        "durationSec": 1596,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 95,
-        "durationSec": 2776,
-        "tokens": null
-      },
-      "dTools": 53
-    },
-    {
-      "pair": "E08-K0-R01 @ B-20261005-R04",
-      "three": {
-        "toolUses": 90,
-        "durationSec": 2708,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 124,
-        "durationSec": 3994,
-        "tokens": null
-      },
-      "dTools": 34
-    },
-    {
-      "pair": "E09-K0-R01 @ B-20261005-R04",
-      "three": {
-        "toolUses": 70,
-        "durationSec": 1512,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 98,
-        "durationSec": 2646,
-        "tokens": null
-      },
-      "dTools": 28
-    },
-    {
-      "pair": "E10-K0-R01 @ B-20261005-R04",
-      "three": {
-        "toolUses": 24,
-        "durationSec": 624,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 85,
-        "durationSec": 2168,
-        "tokens": null
-      },
-      "dTools": 61
-    },
-    {
-      "pair": "E01-K0-R02 @ B-20261006-R01",
-      "three": {
-        "toolUses": 25,
-        "durationSec": 878,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 82,
-        "durationSec": 1518,
-        "tokens": null
-      },
-      "dTools": 57
-    },
-    {
-      "pair": "E02-K0-R02 @ B-20261006-R01",
-      "three": {
-        "toolUses": 45,
-        "durationSec": 1654,
-        "tokens": null
-      },
-      "cocosair": {
         "toolUses": 84,
-        "durationSec": 2006,
-        "tokens": null
-      },
-      "dTools": 39
-    },
-    {
-      "pair": "E03-K0-R02 @ B-20261006-R01",
-      "three": {
-        "toolUses": 43,
-        "durationSec": 1012,
-        "tokens": null
+        "durationSec": 1645,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
       },
       "cocosair": {
-        "toolUses": 81,
-        "durationSec": 1296,
-        "tokens": null
+        "toolUses": 87,
+        "durationSec": 1299,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
       },
-      "dTools": 38
+      "dTools": 3
     },
     {
-      "pair": "E04-K0-R02 @ B-20261006-R01",
-      "three": {
-        "toolUses": 49,
-        "durationSec": 1874,
-        "tokens": null
-      },
-      "cocosair": {
-        "toolUses": 90,
-        "durationSec": 1984,
-        "tokens": null
-      },
-      "dTools": 41
-    },
-    {
-      "pair": "E05-K0-R02 @ B-20261006-R01",
+      "pair": "E05-K0-R01 @ B-20261023-R02",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
       "three": {
         "toolUses": 56,
-        "durationSec": 1726,
-        "tokens": null
+        "durationSec": 1201,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
       },
       "cocosair": {
-        "toolUses": 107,
-        "durationSec": 3104,
-        "tokens": null
+        "toolUses": 93,
+        "durationSec": 1196,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
       },
-      "dTools": 51
+      "dTools": 37
+    },
+    {
+      "pair": "E01-K0-R01 @ B-20261024-R01",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+      "three": {
+        "toolUses": 59,
+        "durationSec": 482,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 78,
+        "durationSec": 488,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": 19
+    },
+    {
+      "pair": "E02-K0-R01 @ B-20261024-R01",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+      "three": {
+        "toolUses": 75,
+        "durationSec": 809,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 120,
+        "durationSec": 995,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": 45
+    },
+    {
+      "pair": "E03-K0-R01 @ B-20261024-R01",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+      "three": {
+        "toolUses": 68,
+        "durationSec": 631,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 94,
+        "durationSec": 678,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": 26
+    },
+    {
+      "pair": "E04-K0-R01 @ B-20261024-R01",
+      "instrument": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40",
+      "three": {
+        "toolUses": 89,
+        "durationSec": 2951,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 170,
+        "durationSec": 4117,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": 81
+    },
+    {
+      "pair": "E05-K0-R01 @ B-20261024-R01",
+      "instrument": "unknown",
+      "three": {
+        "toolUses": 61,
+        "durationSec": 2564,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "cocosair": {
+        "toolUses": 55,
+        "durationSec": 2549,
+        "tokens": null,
+        "evidence": "workspace/.budget/toolcall.count(行数)"
+      },
+      "dTools": -6
     }
   ],
   "totals": {
     "three": {
-      "toolUses": 703,
-      "durationSec": 26044
+      "toolUses": 588,
+      "durationSec": 12904
     },
     "cocosair": {
-      "toolUses": 1222,
-      "durationSec": 36468
+      "toolUses": 940,
+      "durationSec": 16980
+    },
+    "byInstrument": {
+      "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40": {
+        "pairs": 9,
+        "toolRatio": 1.68,
+        "wallTimeRatio": 1.4
+      },
+      "unknown": {
+        "pairs": 1,
+        "toolRatio": 0.9,
+        "wallTimeRatio": 0.99
+      }
     }
   },
   "pairedDeltasAirMinusThree": {
     "perPair": [
       {
-        "pair": "E01-K0-R01 @ B-20261005-R02",
+        "pair": "E01-K0-R01 @ B-20261023-R02",
+        "dTools": 47,
+        "dSec": 500
+      },
+      {
+        "pair": "E02-K0-R01 @ B-20261023-R02",
+        "dTools": 54,
+        "dSec": 1520
+      },
+      {
+        "pair": "E03-K0-R01 @ B-20261023-R02",
         "dTools": 46,
-        "dSec": 700
+        "dSec": 1017
       },
       {
-        "pair": "E02-K0-R01 @ B-20261005-R02",
-        "dTools": 41,
-        "dSec": 1638
+        "pair": "E04-K0-R01 @ B-20261023-R02",
+        "dTools": 3,
+        "dSec": -346
       },
       {
-        "pair": "E03-K0-R01 @ B-20261005-R02",
-        "dTools": 7,
-        "dSec": 1200
+        "pair": "E05-K0-R01 @ B-20261023-R02",
+        "dTools": 37,
+        "dSec": -5
       },
       {
-        "pair": "E04-K0-R01 @ B-20261005-R02",
-        "dTools": -23,
-        "dSec": -1386
+        "pair": "E01-K0-R01 @ B-20261024-R01",
+        "dTools": 19,
+        "dSec": 6
       },
       {
-        "pair": "E05-K0-R01 @ B-20261005-R02",
-        "dTools": 17,
-        "dSec": -268
+        "pair": "E02-K0-R01 @ B-20261024-R01",
+        "dTools": 45,
+        "dSec": 186
       },
       {
-        "pair": "E06-K0-R01 @ B-20261005-R04",
-        "dTools": 29,
-        "dSec": 632
+        "pair": "E03-K0-R01 @ B-20261024-R01",
+        "dTools": 26,
+        "dSec": 47
       },
       {
-        "pair": "E07-K0-R01 @ B-20261005-R04",
-        "dTools": 53,
-        "dSec": 1180
+        "pair": "E04-K0-R01 @ B-20261024-R01",
+        "dTools": 81,
+        "dSec": 1166
       },
       {
-        "pair": "E08-K0-R01 @ B-20261005-R04",
-        "dTools": 34,
-        "dSec": 1286
-      },
-      {
-        "pair": "E09-K0-R01 @ B-20261005-R04",
-        "dTools": 28,
-        "dSec": 1134
-      },
-      {
-        "pair": "E10-K0-R01 @ B-20261005-R04",
-        "dTools": 61,
-        "dSec": 1544
-      },
-      {
-        "pair": "E01-K0-R02 @ B-20261006-R01",
-        "dTools": 57,
-        "dSec": 640
-      },
-      {
-        "pair": "E02-K0-R02 @ B-20261006-R01",
-        "dTools": 39,
-        "dSec": 352
-      },
-      {
-        "pair": "E03-K0-R02 @ B-20261006-R01",
-        "dTools": 38,
-        "dSec": 284
-      },
-      {
-        "pair": "E04-K0-R02 @ B-20261006-R01",
-        "dTools": 41,
-        "dSec": 110
-      },
-      {
-        "pair": "E05-K0-R02 @ B-20261006-R01",
-        "dTools": 51,
-        "dSec": 1378
+        "pair": "E05-K0-R01 @ B-20261024-R01",
+        "dTools": -6,
+        "dSec": -15
       }
     ],
     "aggregate": {
-      "toolRatio": 1.74,
-      "wallTimeRatio": 1.4,
+      "toolRatio": 1.6,
+      "wallTimeRatio": 1.32,
       "tokenRatio": "n/a"
     },
-    "interpretation": "K0 下 AIR 臂工具调用系统性更贵(机器口径,15 对一致方向 14 对);token 比值待新切片累积(toolsEvidence.tokens 自 2026-10-06 起记录)"
+    "interpretation": "K0 下 AIR 臂工具调用系统性更贵(机器口径,10 对一致方向 9 对);token 比值待新切片累积(toolsEvidence.tokens 自 2026-10-06 起记录)"
   },
   "notes": [
     "已知保守性:个别臂(如 E05@B-20261005-R02)的计数含派发失败重试前的部分工作,使用时注意;",
     "durationSec 为 agentStartedAt→agentFinishedAt 全跨度,含臂内等待,偏保守;",
-    "token 口径:宿主不持久化每臂 token;toolCallsEvidence.tokens 字段自 2026-10-06 起由 Runner 在派发后回填(subagent usage),存量批次无法补录。"
+    "token 口径:宿主不持久化每臂 token;toolCallsEvidence.tokens 字段自 2026-10-06 起由 Runner 在派发后回填(subagent usage),存量批次无法补录。",
+    "跨仪器提示:R03 起的臂用 .budget 行数口径,且批次所属测量仪器(浏览器工具链)不同 —— 成本比只宜同仪器内比较,分层见 results/aggregated.json 的 toolchainEra。"
   ]
 }

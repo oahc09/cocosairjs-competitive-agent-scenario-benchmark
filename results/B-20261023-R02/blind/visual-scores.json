@@ -1,0 +1,32 @@
+{
+  "batchId": "B-20261023-R02",
+  "generatedAt": "2026-10-23T19:48:35.683Z",
+  "protocol": "double-judge average(metric-spec §8)+ pass-3 中位数决裁(E03/E05 双 pass 总分差 >6:E03-side2 17vs7、E05-side1 18vs2);pass-3 以像素差分/亮密度交叉验证(E05-side1 判定 >95% 纯黑严重退化);0 unreliable;consistency 30/30 matchesTheme",
+  "passes": [
+    "judge-pass-1.json",
+    "judge-pass-2.json",
+    "judge-pass-3.json(E03/E05 决裁)"
+  ],
+  "pairs": {
+    "PAIR-E01-K0-R01": {
+      "three": 16,
+      "cocosair": 13
+    },
+    "PAIR-E02-K0-R01": {
+      "cocosair": 13,
+      "three": 16
+    },
+    "PAIR-E03-K0-R01": {
+      "three": 16,
+      "cocosair": 16
+    },
+    "PAIR-E04-K0-R01": {
+      "cocosair": 17,
+      "three": 16
+    },
+    "PAIR-E05-K0-R01": {
+      "cocosair": 6,
+      "three": 18
+    }
+  }
+}

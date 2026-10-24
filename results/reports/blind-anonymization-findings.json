@@ -27,5 +27,16 @@
       "在完成前,preference 统计维持 G7 既有参考口径(§8.3 人工抽检未做,超 20% 不一致即回退 BLOCKED 的条款不变)"
     ]
   },
-  "ownerAuthorization": "Owner 2026-10-05 指示按 Runner 最佳建议执行(会话内指令)"
+  "ownerAuthorization": "Owner 2026-10-05 指示按 Runner 最佳建议执行(会话内指令)",
+  "findings": [
+    {
+      "foundAt": "2026-10-23T19:48:35.708Z",
+      "batch": "B-20261023-R02",
+      "item": "CMP-E03 side2(PAIR-E03-K0-R01/arm-b,cocosair)",
+      "what": "judge-pass-2 在截图中发现疑似引擎名字样 \"cocoaisl\"(HUD/文案层面)",
+      "handling": "按协议如实记录、未采信、不影响评分;Agent 产物层泄漏,建议 Owner 复核 E03 arm-b 页面文案并纳入下轮 brief 红线检查",
+      "judges": "pass-2 记录;pass-1 未报告"
+    }
+  ],
+  "updatedAt": "2026-10-23T19:48:35.708Z"
 }

@@ -1,0 +1,48 @@
+{
+  "generator": "bench-runner-scratch/cleanup-record-20261017.mjs",
+  "action": "EVIDENCE_CLEANUP_REGENERABLE_ONLY",
+  "at": "2026-10-17T14:30:23.596Z",
+  "authorizedBy": "Owner 指令「清理今天之前的测试轮数据」+ 口径 A(只清可再生产物,Owner 选 No preference 按推荐执行)",
+  "scope": {
+    "batches": [
+      "B-20261005-R01",
+      "B-20261005-R02",
+      "B-20261005-R03",
+      "B-20261005-R04",
+      "B-20261006-R01",
+      "B-20261006-R02",
+      "B-20261016-R01"
+    ],
+    "notTouched": "今日批次 B-20261017-R01 / B-20261017-R02 未清理(不在\"今天之前\"范围内)"
+  },
+  "rule": {
+    "include": [
+      "git 判定为 ignored 的媒体(截图 png/jpg/webp、录屏 webm、模型 glb 副本、blind/ 盲评材料)",
+      "各臂 workspace/dist 构建产物(git ignored,.gitignore 头部自述\"可恢复:根目录 npm install + 各工作区 npm run build\";validate.mjs 每次跑自己重建)"
+    ],
+    "exclude": [
+      "git 跟踪文件(comm 对账 = 0 命中):validation/video.webm 与 initial/mid/final.png 属 .gitignore 例外②「Pilot 不可再生证据」",
+      "_revalidate-archive/ 与 revisions/ 下的媒体(首验失败留档,红线\"两次结果都留档\")",
+      "*.log(build.log 等,量小且不属媒体,不 gratuitous 删除)",
+      "pair.json / QUALIFICATION.json / ROUND.json / 各臂 validation/report.json / RUN-META.json / execution.json / workspace 源码 —— 判定唯一事实源全部保留"
+    ]
+  },
+  "counts": {
+    "deletedFiles": 18609,
+    "deletedRealBytesApprox": "1157 MB(分类统计按 MB 取整)",
+    "freedDiskBytesMeasured": 5575540736,
+    "keptIgnoredFiles": 165
+  },
+  "exFATNote": "E: 为 exFAT,16175 个 dist 碎片文件占盘 4.25GB(真实仅 550MB)—— 空间大头是簇 slack,故删碎片文件确实有效",
+  "verification": {
+    "gitTrackedInDeleteList": 0,
+    "gitStatusTrackedDeletions": 0,
+    "g8EvidenceAuditAfterCleanup": "Reference 20/20 通过;合格 core 臂 42/44(2 项缺失 = B-20261017-R01/PAIR-E02-K0-R04 blindItemPresent,系今日批次盲评 visual-scores.json 尚未回填,与本次清理无关)"
+  },
+  "regeneration": {
+    "blindMaterials": "node run.mjs build-blind --batch <B-*>",
+    "workspaceDist": "cd <臂>/workspace && npm run build(依赖根 node_modules)",
+    "validationMedia": "node harness/runner/validate.mjs --workspace <dir> --spec briefs/<E>/spec.json --out <dir>(会重建 dist 并重录屏/截图)"
+  },
+  "deleteListArchive": "bench-runner-scratch/delete-list.txt(18609 行相对路径,逐文件可追溯)"
+}

@@ -1,0 +1,107 @@
+{
+  "runId": "RUN-PAIR-E04-K0-R01-a",
+  "generatedAt": "2026-10-23T18:09:46.436Z",
+  "harnessVersion": "1.0.0",
+  "workspace": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261023-R02\\PAIR-E04-K0-R01\\arm-a\\workspace",
+  "spec": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261023-R02\\PAIR-E04-K0-R01\\arm-a\\spec.json",
+    "briefId": "E04",
+    "briefVersion": "1.0.2",
+    "sha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556"
+  },
+  "pairId": null,
+  "engine": null,
+  "specSha256": "90475c367ba10e87ce85d0f62baa2b8a223e2b58e2d45f1a0b8efdf382661556",
+  "validatorProtocolHash": "0c9659aa7f98d4497bea8732a4e883e10623e1717213dba1a20770032b2393b0",
+  "validatorProtocolComponents": {
+    "probeExecutorSha256": "adbf558fe1c93b1fba3eb3bb1ca9d6aeb92f6bb84138626d37320b8c13477804",
+    "validateSha256": "f4918a29a37be9eadc54725ece444dc0e60992ab40116a642262dc873036ec60"
+  },
+  "pairMeta": {
+    "path": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261023-R02\\PAIR-E04-K0-R01\\pair.json",
+    "pairId": "PAIR-E04-K0-R01",
+    "batchId": "B-20261023-R02",
+    "sceneId": "E04",
+    "knowledge": "K0",
+    "loadError": null
+  },
+  "build": {
+    "ok": true,
+    "exitCode": 0,
+    "durationMs": 2026,
+    "attempts": 1,
+    "logFile": "build.log",
+    "timedOut": false,
+    "log": "$ npm run build\n\n> bench-template-three@1.0.0 build\n> node scripts/count.mjs build && node scripts/build.mjs\n\n[count] build #7 -> .budget/build.count\n\n  dist\\app.js  25.1kb\n\nDone in 9ms\n[build] esbuild: src/main.js -> dist/app.js (external: three, three/addons/*)\n[build] vendor: three.module.js (662772 bytes)\n[build] vendor: three.core.js (1458113 bytes)\n[build] vendor: examples/jsm -> dist/vendor/addons (500 files)\n[build] wrote dist/index.html (relative-path variant)\n[build] self-check OK: dist/app.js, dist/vendor/three.module.js, dist/vendor/addons/controls/OrbitControls.js, dist/index.html\n[build] OK\n\n[exit code 0] duration 2025ms\n"
+  },
+  "serve": {
+    "port": 51124,
+    "root": "E:\\AIProMax\\Y2026M10\\cocosairjs-competitive-agent-scenario-benchmark\\results\\B-20261023-R02\\PAIR-E04-K0-R01\\arm-a\\workspace"
+  },
+  "ready": {
+    "appReady": false,
+    "benchReady": false,
+    "durationMs": null
+  },
+  "console": {
+    "errors": 0,
+    "warnings": 0,
+    "uncaughtErrors": 0
+  },
+  "consoleErrors": 0,
+  "uncaught": [],
+  "probes": [],
+  "probeResults": "probe-results.json",
+  "probePassRate": 0,
+  "fps": null,
+  "perf": null,
+  "downloads": [],
+  "networkEvents": {
+    "count": 1,
+    "totalBytes": 1476
+  },
+  "screenshots": [],
+  "video": null,
+  "artifacts": [
+    "source-sha.json",
+    "build.log",
+    "network.json",
+    "serve-log.json",
+    "perf.json"
+  ],
+  "classification": "RUNTIME",
+  "failureCategory": "RUNTIME",
+  "verdict": "FAIL",
+  "error": "browserType.launchPersistentContext: Executable doesn't exist at C:\\Users\\caosh\\AppData\\Local\\ms-playwright\\ffmpeg-1011\\ffmpeg-win64.exe\n╔═════════════════════════════════════════════════════════════════╗\n║ Video rendering requires ffmpeg binary.                         ║\n║ Downloading it will not affect any of the system-wide settings. ║\n║ Please run the following command:                               ║\n║                                                                 ║\n║     npx playwright install ffmpeg                               ║\n║                                                                 ║\n║ <3 Playwright Team                                              ║\n╚═════════════════════════════════════════════════════════════════╝\nCall log:\n\u001b[2m  - <launching> E:\\AIProMax\\Y2026M10\\chrome-pin-155.0.8059.40\\chrome.exe --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=C:\\Users\\caosh\\AppData\\Local\\Temp\\bench-profile-1XnIng --remote-debugging-pipe about:blank\u001b[22m\n\u001b[2m  - <launched> pid=29172\u001b[22m\n\u001b[2m  - [pid=29172] <gracefully close start>\u001b[22m\n\u001b[2m  - [pid=29172] <process did exit: exitCode=0, signal=null>\u001b[22m\n\u001b[2m  - [pid=29172] starting temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=29172] finished temporary directories cleanup\u001b[22m\n\u001b[2m  - [pid=29172] <gracefully close end>\u001b[22m\n",
+  "scoreInputs": {
+    "s1": {
+      "buildPass": false,
+      "readyNoError": false,
+      "firstShotNonBlank": false,
+      "firstShotLitRatio": null
+    },
+    "s2": {
+      "passedWeight": 0,
+      "totalWeight": 0,
+      "probePassRate": 0,
+      "behaviorItemsCount": 12
+    },
+    "s3": {
+      "lifecycleProbePassed": false,
+      "lifecycleProbeId": null,
+      "fpsMet": false,
+      "minFps": 30
+    }
+  },
+  "inputGuard": {
+    "kind": "PASS",
+    "checked": [
+      "specSha256",
+      "dependencyHashes"
+    ],
+    "at": "2026-10-23T18:09:46.442Z"
+  },
+  "durationMs": 24921,
+  "finishedAt": "2026-10-23T18:10:11.338Z",
+  "toolchainFingerprint": "nodev24.14.0+esbuild0.28.2+chrome155.0.8059.40"
+}
